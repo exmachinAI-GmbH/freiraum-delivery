@@ -1,0 +1,22 @@
+# Secrets & lokale Konfiguration
+.env
+.env.*
+*.local
+secrets/
+*.pem
+*.key
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Sprach-Artefakte
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
