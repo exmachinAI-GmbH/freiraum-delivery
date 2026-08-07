@@ -4,7 +4,7 @@
 |---|---|
 | **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag. **Sie existiert noch nicht** (Blatt 26:28, :178) |
 | Vorgesehener Ablageort | `03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/` — **Vorschlag, nicht gezeichnet.** Überschreibbar mit `FREIRAUM_ANLAGE` |
-| **Prüfsumme der Anlage** | `PLATZHALTER — 64 Hex-Zeichen, SHA-256, einzutragen mit der Zeichnung` |
+| **Prüfsumme der Anlage** | `ded747a7a98bcc7fa11442b92e0d09a244c0b4ee2051f10fb251bdb68300274d` — gezeichnet 07.08.2026, Nachweis in `Anlage_Bauverfahren_zeichnung.md` |
 | Nachgerechnet mit | `./install.sh --pruefsumme` · Regel: `shasum -a 256 <Anlage>` |
 | Ausführbare Fassung | **diese Datei** |
 | Bauauftrag | erteilt 06.08.2026 · Endtermin 31.08.2026 (Bauauftrag :1, :39, :40) |
@@ -149,7 +149,7 @@ führt deshalb alle Glieder:
 |---|---|---|
 | 1 | **Commit-Hash** des geprüften Standes | führbar |
 | 2 | **Prüfsumme des Bauauftrags** — ohne sie gilt der Durchstich als veraltet (K23-M20) | **Der Auftrag hat heute keine Prüfsumme** (V-13, Blatt 26:179). Bis dahin: *gesperrt* |
-| 3 | **Prüfsumme der Anlage „Bauverfahren"** | **Anlage existiert nicht.** Bis dahin: *gesperrt* |
+| 3 | **Prüfsumme der Anlage** | **belegt** — gezeichnet am 07.08.2026, nachgerechnet von `./install.sh --pruefsumme` |
 | 4 | **Migrationsstand** — welche Dateien, in welcher Reihenfolge, gegen welches Basisschema | führbar |
 | 5 | **Abhängigkeitsstände** — Lockfiles, Abbild-Digests, Postgres-Version | führbar |
 | 6 | **Modell-, Prompt-, Wissens-, Richtlinien- und Vorlagenstand** (K23-M18 wörtlich) | führbar |
