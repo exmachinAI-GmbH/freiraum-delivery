@@ -19,7 +19,7 @@ Auftraggebers.
 | **Betroffene Klausel** | K23 Abschnitt 6, **Gate 5** — *Selbstfreigabe oder fehlender Rollentrennung* |
 | **Kritikalität** | **kritisch** — Gate 5 zählt zu den sperrenden Freigabe-Gates. Nach K23-M04 sperrt eine kritische Klausel ohne belegenden Test die Freigabe, solange keine gültige befristete Annahmeentscheidung vorliegt |
 | **Befund** | Branch-Schutz ist auf privaten Repositories des freien GitHub-Plans nicht verfügbar. Gemessen am 07.08.2026: `gh api repos/exmachinai/freiraum-delivery/branches/main/protection` → **403 „Upgrade to GitHub Pro or make this repository public"** |
-| **Entscheidung** | **GitHub Team wird nicht gebucht, A. Han wird nicht als Mitarbeiter aufgenommen** — Weisung M. Veils vom 07.08.2026. Das Repo bleibt privat (BV-25 Nr. 150) |
+| **Entscheidung** | Ursprünglich am 07.08.2026: kein Abonnement, kein zusätzlicher Mitarbeiter (BV-25 Nr. 150). **Am selben Tag überholt — siehe Nachtrag unten.** Das Repo bleibt privat |
 | **Was dadurch nicht greift** | `enforce_admins` · `require_code_owner_reviews` · erzwungene Prüfungen (Tor 1 als Pflichtcheck) · Verbot direkter Pushes auf `main` · `require_last_push_approval`. Die Datei `.github/CODEOWNERS` liegt vor, wirkt aber ohne Branch-Schutz nicht |
 | **Träger** | M. Veil |
 | **Annahmeentscheidung** | **gezeichnet am 07.08.2026** (BV-25 Nr. 150) |
@@ -40,6 +40,35 @@ nicht im Repo. Sie sind durch BV-25 Nr. 165 personell benannt: **A. Han**.
 **Der Widerspruch, der bleibt:** Die zweite natürliche Person (A. Han) hat **keinen Zugang zum
 Repository** — einziger Mitarbeiter ist `exmachinai`. Solange das so ist, ist der zweite Blick
 auf den **Code** eine Aussage auf Papier. Auf die Abnahmezeichnung wirkt das nicht.
+
+### Nachtrag vom 07.08.2026, abends — die Lage hat sich geändert
+
+**GitHub Team ist abonniert.** Gemessen: die Organisation `exmachinAI-GmbH` führt den Plan
+`team` mit zwei Sitzen und unbegrenzt privaten Repositories; das angemeldete Konto ist dort
+Admin.
+
+**Der Branch-Schutz greift trotzdem nicht — das Repo liegt am falschen Ort.**
+
+| | gemessen am 07.08.2026 |
+|---|---|
+| Eigentümer von `freiraum-delivery` | persönliches Konto **`exmachinai`** (Typ: User) |
+| Repos der Organisation `exmachinAI-GmbH` | **null** |
+| `GET /repos/…/branches/main/protection` | weiterhin **403** |
+
+GitHub Team ist ein **Organisations**plan. Für ein privates Repository unter einem
+persönlichen Konto verlangt GitHub den Plan **Pro** — ein anderes Abonnement. Das
+Abonnement läuft damit ins Leere, solange das Repo nicht der Organisation gehört.
+
+**RR-01 bleibt deshalb offen — aber der Weg zur Schließung ist jetzt kurz und kostet
+nichts mehr:** das Repository in die Organisation übertragen, A. Han einen der beiden
+Sitze geben, Branch-Schutz setzen. Danach greift Gate 5 mechanisch, und dieses Restrisiko
+wird geschlossen statt getragen.
+
+Die Schritte im Einzelnen stehen in
+`03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/Zugaenge_und_Rollen_260807.md`.
+**Die Entscheidung über den Umzug steht aus.**
+
+---
 
 ### Ersatzmaßnahmen, die ohne Branch-Schutz greifen
 
