@@ -23,7 +23,7 @@ Auftraggebers.
 | **Was dadurch nicht greift** | `enforce_admins` · `require_code_owner_reviews` · erzwungene Prüfungen (Tor 1 als Pflichtcheck) · Verbot direkter Pushes auf `main` · `require_last_push_approval`. Die Datei `.github/CODEOWNERS` liegt vor, wirkt aber ohne Branch-Schutz nicht |
 | **Träger** | M. Veil |
 | **Annahmeentscheidung** | **gezeichnet am 07.08.2026** (BV-25 Nr. 150) |
-| **Frist** | **⟨offen — einzutragen⟩.** Vorschlag: *vor dem ersten Mandanten mit echten Daten* — derselbe Auslöser, den das Projekt für die Risikoannahme zum zweiten Faktor gewählt hat (K00 S95 · P5). **Nach K23-M04 erlischt eine Annahmeentscheidung mit Fristablauf; danach sperrt die Klausel wie eine kritische, ohne dass es einer neuen Entscheidung bedarf.** Ohne eingetragene Frist ist die Annahme unbefristet — und das lässt K23-M04 nicht zu |
+| **Frist** | **Vor dem ersten Mandanten mit echten Daten** — gezeichnet am 07.08.2026 von M. Veil. Derselbe Auslöser, den das Projekt für die Risikoannahme zum zweiten Faktor gewählt hat (K00 S95 · P5). **Nach K23-M04 erlischt die Annahmeentscheidung mit Fristablauf; danach sperrt die Klausel wie eine kritische, ohne dass es einer neuen Entscheidung bedarf** — es braucht dann Branch-Schutz oder eine neue, begründete Annahme |
 
 ### Was genau offen ist — und was nicht
 
@@ -64,4 +64,6 @@ Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 ist der erste.
 
 ---
 
-*Angelegt am 07.08.2026. Frist zu RR-01 einzutragen.*
+*Angelegt am 07.08.2026. RR-01 vollständig: Träger M. Veil, Annahmeentscheidung und Frist
+gezeichnet am 07.08.2026. Die Frist ist ereignisgebunden, nicht kalendarisch — sie greift mit
+dem ersten Mandanten, dessen `tenant.datenart` von `SYNTHETISCH` auf `ECHT` wechselt.*
