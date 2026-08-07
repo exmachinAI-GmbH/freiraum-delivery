@@ -151,17 +151,39 @@ jobs:
       - name: Zweiter Lauf aendert Schema UND Daten nicht
         # Bauauftrag §9 Tor I Nr. 4 (:647) und Meilenstein M1 (:215) verlangen
         # BEIDE Vergleiche. Ein reiner Schemavergleich misst zu wenig.
+        #
+        # VERGLICHEN WIRD DER INHALT, NICHT DIE DARSTELLUNG. Zwei Quellen von
+        # Rauschen wuerden das Gate sonst dauerhaft falsch rot melden -- gemessen
+        # am 07.08.2026 mit M30 gegen PostgreSQL 16.14:
+        #
+        #   1. pg_dump schreibt je Lauf ein zufaelliges \restrict/\unrestrict.
+        #      Es beschreibt nichts an der Datenbank.
+        #   2. M30 schreibt retention_rule fuer PROJEKT_VORVERTRAG mit
+        #      "ON CONFLICT (class) DO UPDATE" bei jedem Lauf neu (M30:134-141).
+        #      Der INHALT bleibt gleich, die Zeile wandert physisch. Ein
+        #      --data-only-Abzug gibt Heap-Reihenfolge wieder, keine Ordnung.
+        #
+        # Deshalb: Rauschzeilen entfernen, Daten vor dem Vergleich sortieren.
+        # Das senkt keinen Pruefwert (K23-D05) -- ein Zufallswert misst nichts.
+        # M30 selbst wird NICHT angefasst: ihre Pruefsumme stimmt mit dem
+        # gezeichneten N2-Abnahmenachweis vom 06.08.2026 ueberein.
         run: |
           set -euo pipefail
+          entrausche() { grep -vE '^\\(un)?restrict ' "$1"; }
           for m in migrations/*.sql; do
             psql -v ON_ERROR_STOP=1 -q -f "$m"
           done
           pg_dump --schema-only --no-owner > /tmp/schema_2.sql
           pg_dump --data-only  --no-owner --column-inserts > /tmp/daten_2.sql
-          diff -u /tmp/schema_1.sql /tmp/schema_2.sql \
+          entrausche /tmp/schema_1.sql       > /tmp/s1.txt
+          entrausche /tmp/schema_2.sql       > /tmp/s2.txt
+          entrausche /tmp/daten_1.sql | sort > /tmp/d1.txt
+          entrausche /tmp/daten_2.sql | sort > /tmp/d2.txt
+          diff -u /tmp/s1.txt /tmp/s2.txt \
             || { echo "::error::Zweiter Lauf veraendert das Schema"; exit 1; }
-          diff -u /tmp/daten_1.sql /tmp/daten_2.sql \
+          diff -u /tmp/d1.txt /tmp/d2.txt \
             || { echo "::error::Zweiter Lauf veraendert die Daten"; exit 1; }
+          echo "Zweiter Lauf: Schema und Daten inhaltsgleich."
 
       - name: Negativfaelle — jeder scheitert an SEINER Bedingung
         # Bauauftrag §9 Tor I Nr. 6 (:649) · README.md:34 · offener Punkt O-K23-7
