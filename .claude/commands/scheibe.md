@@ -1,0 +1,88 @@
+---
+description: Baut die vertikale Scheibe $ARGUMENTS von der Klausel bis zur Vorlage
+argument-hint: Scheibennummer (z. B. 1)
+---
+
+Baue die vertikale **Scheibe $ARGUMENTS** nach dieser Pipeline. Eine Scheibe ist ein
+Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder durchgeht
+(G1, Blatt 11:25 · Definition of Done Blatt 11:46–48).
+
+1. **Verfassung prüfen.** `./install.sh --pruefsumme`. Stimmt die Prüfsumme der Anlage
+   „Bauverfahren" nicht mit dem Kopf der `CLAUDE.md` überein: **STOP**, Meldung an den
+   Founder. Es wird nicht gebaut, sondern gefragt.
+   **Heute meldet dieser Schritt planmäßig „gesperrt": die Anlage existiert nicht**
+   (Blatt 26:28, :178). Bis zu ihrer Zeichnung läuft jeder Lauf mit dem Kopfvermerk
+   *Verfassung nicht belegt*.
+
+2. **Klauseln laden.** Erzeuge oder lies `nachweise/klauselregister/register.json`:
+   `python3 werkzeuge/klauselregister.py --konzepte "$FREIRAUM_KONZEPTE" \`
+   `  --pflege nachweise/klauselregister/pflege.json \`
+   `  --ziel nachweise/klauselregister/register.json --markdown nachweise/klauselregister/register.md`
+   Schneide daraus **genau** die Klauseln der Scheibe $ARGUMENTS. Nie „lies alle 1231".
+   Fehlt einer Klausel das **Akzeptanzkriterium**, liefert es der in derselben Zeile
+   eingetragene fachliche Eigentümer nach; bis dahin bleibt der Bauauftrag unvollständig
+   (K23-M02, K23:57). Die Klausel geht als Rückfrage hinaus, nicht in den Bau.
+   **Die Zuordnung Klausel → Scheibe existiert heute nicht** — sie ist zu erarbeiten, ehe
+   dieser Schritt trägt. Der Harness erfindet sie nicht.
+
+3. **Voraussetzungen prüfen.** Für Scheibe 1: V0 (N2 gegen die Zielumgebung), V1 (L2
+   Identitätsvertrag), V2 (L1 Zeilenschutz), V3 (H07-Postfächer), V4 (dünner L3-Träger und
+   **eine freigegebene** Vorlage), V5 (L4-Eintrag je aufgerufenem Agenten, vollständig) —
+   Blatt 11:76–85. Für jede spätere Scheibe: die Breite der Vorgängerscheibe steht.
+   Fehlt eine Voraussetzung: Schwelle **S2** (Blatt 11:202) — *Meldung, die Freigabe wird
+   jetzt fällig.*
+
+4. **Planen vor Delegation.** Schreibe `arbeit/Plaene/scheibe_$ARGUMENTS_plan.md`:
+   Ziel der Scheibe · die neue Breite · Klauselliste mit Akzeptanzkriterium ·
+   berührte Dateien · Migrationsbedarf · Fehlerpfade, die abbiegen müssen ·
+   die drei Riegel (Zweckbestimmung · Unterschrift und beide Häkchen · Siegel;
+   Blatt 11:59, :67, :72–74).
+   Zwischen Bau und Prüfung wird **nichts** geteilt außer diesem Plan **ohne** den
+   Abschnitt „berührte Dateien".
+
+5. **Bau-Agent beauftragen.** Ziel · Ausgabeformat · Grenzen · Aufwand · Quellen
+   (`vorlagen/subagent-auftrag.md` der Konzept-Fabrik). Gib ihm die Klauselliste, den Plan
+   und die Schreibgrenzen mit. Er schreibt Code — **keine Datei unter `pruefungen/`**.
+
+6. **Prüf-Agent GLEICHZEITIG und BLIND beauftragen.** Er bekommt **nur** Klauselwortlaut
+   und Akzeptanzkriterium. Kein Code, kein Dateiname, kein Ausschnitt, keine
+   Fehlermeldung aus dem Bau, kein Gesprächskontext. Er schreibt nach `pruefungen/`.
+   Läuft auf einem **anderen Modell** als der Bau (F27). Beide Aufträge gehen im selben Zug
+   hinaus — nacheinander wäre der zweite nicht mehr blind.
+
+7. **Lauf.** Frische Datenbank, Schema, Migrationen, Seeds, dann der Faden:
+   `./aufbau.sh` (Prüfumgebung, **kein** Pilotlauf, `aufbau.sh`:11–14) → `./pruefungen/lauf.sh`.
+   Der Lauf biegt **mindestens einmal je Fehlerpfad** ab; ein reiner Erfolgsweg gilt als
+   nicht durchgeführt (K23-M07, K23:62). Jeder Negativfall scheitert an **seiner** Bedingung,
+   die Meldung im Wortlaut wird protokolliert (Bauauftrag :649; offener Punkt O-K23-7).
+
+8. **Gates messen.** Tor 1 mechanisch (CI-Lauf oder lokal derselbe Ablauf), dann die
+   fünfzehn sperrenden Gates aus K23 Abschn. 6 (:239–255). Jedes Ergebnis trägt **genau
+   einen** Zustand: bestanden · fehlgeschlagen · gesperrt · nicht ausgeführt (K23-M22).
+   Fehlgeschlagen und gesperrt tragen Befund, Verantwortlichen und Frist.
+   Bei Fehlschlag: höchstens **drei** Anläufe, danach Eskalation (übertragene Hausregel,
+   nicht gezeichnet). **Kein Prüfwert wird gesenkt und kein Prüffall gelöscht** (K23-D05).
+
+9. **Manifest schreiben.** `nachweise/manifeste/scheibe_$ARGUMENTS_<Laufkennung>.json`
+   mit allen acht Gliedern aus `CLAUDE.md` §4, maschinenlesbar, mit Prüfsumme über sich
+   selbst (K23-M18). Glied 2 und 3 tragen bis auf Weiteres *gesperrt* — der Bauauftrag hat
+   keine Prüfsumme (V-13), die Anlage existiert nicht. Danach Klauselregister,
+   Herkunftsgraph und Restrisikoliste fortschreiben. Jedes kritische Restrisiko braucht eine
+   **gezeichnete** Annahmeentscheidung — die Liste allein genügt nicht (Blatt 11:137).
+
+10. **Fremdmodell anfordern** (Tor 3, einmal je Scheibenabnahme, C-4): frische Instanz,
+    getrennter Kontext, Prüfung gegen **Roh-Evidenz**, nicht gegen Erklärungen des Baus.
+    Der Harness schreibt dieses Review **nie selbst**.
+
+11. **Vorlage schnüren.** `arbeit/Vorlagen/scheibe_$ARGUMENTS_vorlage.md`: erreichte
+    Klauseln mit Nachweis · Gate-Tabelle · Manifestprüfsumme · offene Punkte ·
+    Restrisiken mit Träger und Frist · **leerer** Zeichnungsblock.
+    Melde nur dieses Paket als Übergabe. **Kein Feld der menschlichen Entscheidung wird
+    ausgefüllt**, kein Zweig zusammengeführt, kein Deployment ausgelöst.
+
+**Kontext-Hygiene:** eine Scheibe je Sitzung, davor `/clear`. Aller Zustand liegt in Git,
+`arbeit/` und `nachweise/` — nie im Gespräch.
+
+**Nie:** eine Prüfdatei aus dem Bau heraus ändern · dem Prüf-Agenten Code zeigen · einen
+grünen Lauf melden, der nichts gemessen hat · `ABNAHME` oder `IN_PROD` setzen · gegen
+Echtdaten prüfen · K22 anfassen · eine offene Frage still entscheiden.
