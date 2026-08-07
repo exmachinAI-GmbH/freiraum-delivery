@@ -1,0 +1,8 @@
+# Wer diese Dateien aendert, aendert die Steuerung selbst.
+# Wirkt erst mit Branch-Schutz auf main -- der ist auf dem heutigen Plan
+# fuer private Repositories nicht verfuegbar (siehe Entscheidungsvorlage, A-7).
+/CLAUDE.md            @exmachinai
+/.claude/             @exmachinai
+/.github/             @exmachinai
+/pruefungen/          @exmachinai
+/schema/              @exmachinai

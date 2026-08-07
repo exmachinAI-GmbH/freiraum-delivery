@@ -1,0 +1,282 @@
+# =====================================================================
+# FREIRAUM Coding-Harness · Tor 1 — mechanisch
+#
+# ACHTUNG: "Tor 1" ist eine Messstufe DIESES HARNESS. Es ist NICHT Tor I
+# des Bauauftrags (Auftragsreife, geschlossen am 06.08.2026).
+#
+# Tor 1 misst, ob der Stand zur Quelle passt. Es ist ein TEIL-Orakel:
+# "Kompilierbarer Code kann fachlich falsch sein" (Blatt 26:51). Tor 2
+# (blinde Prueffaelle), Tor 3 (Fremdmodell) und Tor 4 (Mensch) laufen
+# ausserhalb dieser Datei.
+#
+# Kein Deployment. Keine Geheimnisse. Keine Zielumgebung.
+# Ein Lauf, der nicht messen kann, meldet GESPERRT — nie gruen (K23-M22).
+# =====================================================================
+name: Tor 1
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tor1-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PGHOST: localhost
+  PGPORT: "5432"
+  PGUSER: postgres
+  PGPASSWORD: pruefstand
+  PGDATABASE: freiraum_ci
+
+jobs:
+
+  # -------------------------------------------------------------------
+  lint:
+    name: Tor 1a · Lint und Geheimnisschranke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Geheimnisschranke (K23-D09)
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -nE '(^|/)\.env|\.pem$|\.key$|(^|/)secrets/'; then
+            echo "::error::Geheimnisverdacht im Versionsstand"; exit 1
+          fi
+          if git grep -nIE '(BEGIN [A-Z ]*PRIVATE KEY|xox[baprs]-|sk-[A-Za-z0-9]{20,})' \
+               -- . ':!.github/workflows/tore.yml'; then
+            echo "::error::Schluesselmuster im Versionsstand"; exit 1
+          fi
+
+      - name: Shell-Lint
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          mapfile -t skripte < <(git ls-files '*.sh')
+          if [ "${#skripte[@]}" -eq 0 ]; then
+            echo "::error::keine Shell-Skripte gefunden — Tor 1a GESPERRT"; exit 1
+          fi
+          for s in "${skripte[@]}"; do bash -n "$s"; done
+          shellcheck -S warning "${skripte[@]}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Python-Lint
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q werkzeuge mail
+          pip install --quiet ruff
+          ruff check werkzeuge mail
+
+      - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
+        run: |
+          set -euo pipefail
+          REG=nachweise/klauselregister/register.json
+          if [ -n "${FREIRAUM_KONZEPTE:-}" ] && [ -d "${FREIRAUM_KONZEPTE}" ]; then
+            python3 werkzeuge/klauselregister.py \
+              --konzepte "$FREIRAUM_KONZEPTE" \
+              --pflege nachweise/klauselregister/pflege.json \
+              --ziel "$REG" --markdown nachweise/klauselregister/register.md
+          elif [ -f "$REG" ]; then
+            echo "Konzeptordner nicht im Lauf — der mitgefuehrte Stand wird geprueft."
+            python3 - "$REG" <<'PY'
+          import json, sys
+          r = json.load(open(sys.argv[1]))
+          z = r["zaehlung"]
+          print(z["klauseln"], "Klauseln · ohne Akzeptanzkriterium",
+                z["ohne_akzeptanzkriterium"], "· ohne Test", z["ohne_test"])
+          for b in r["befunde"]:
+              print("BEFUND", b)
+          sys.exit(1 if r["befunde"] else 0)
+          PY
+          else
+            echo "::error::Kein Klauselregister — Tor 1a GESPERRT (K23-M01, K23-M22)."
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: klauselregister
+          path: nachweise/klauselregister/
+          if-no-files-found: warn
+
+  # -------------------------------------------------------------------
+  migration:
+    name: Tor 1b · Migration gegen frische Datenbank
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: pruefstand
+          POSTGRES_DB: freiraum_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Basisschema vorhanden?
+        run: |
+          set -euo pipefail
+          if [ ! -f schema/freiraum_datamodel.sql ]; then
+            echo "::error::schema/freiraum_datamodel.sql fehlt — Tor 1b GESPERRT."
+            echo "Ohne Grundwahrheit misst dieser Lauf nichts (Rangfolge Rang 1)."
+            exit 1
+          fi
+
+      - name: Schema und Migrationen einspielen
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -q -f schema/freiraum_datamodel.sql
+          for m in migrations/*.sql; do
+            [ -e "$m" ] || { echo "::error::keine Migration gefunden"; exit 1; }
+            echo "== $m"
+            psql -v ON_ERROR_STOP=1 -q -f "$m"
+          done
+          pg_dump --schema-only --no-owner > /tmp/schema_1.sql
+          pg_dump --data-only  --no-owner --column-inserts > /tmp/daten_1.sql
+
+      - name: Zweiter Lauf aendert Schema UND Daten nicht
+        # Bauauftrag §9 Tor I Nr. 4 (:647) und Meilenstein M1 (:215) verlangen
+        # BEIDE Vergleiche. Ein reiner Schemavergleich misst zu wenig.
+        #
+        # VERGLICHEN WIRD DER INHALT, NICHT DIE DARSTELLUNG. Zwei Quellen von
+        # Rauschen wuerden das Gate sonst dauerhaft falsch rot melden -- gemessen
+        # am 07.08.2026 mit M30 gegen PostgreSQL 16.14:
+        #
+        #   1. pg_dump schreibt je Lauf ein zufaelliges \restrict/\unrestrict.
+        #      Es beschreibt nichts an der Datenbank.
+        #   2. M30 schreibt retention_rule fuer PROJEKT_VORVERTRAG mit
+        #      "ON CONFLICT (class) DO UPDATE" bei jedem Lauf neu (M30:134-141).
+        #      Der INHALT bleibt gleich, die Zeile wandert physisch. Ein
+        #      --data-only-Abzug gibt Heap-Reihenfolge wieder, keine Ordnung.
+        #
+        # Deshalb: Rauschzeilen entfernen, Daten vor dem Vergleich sortieren.
+        # Das senkt keinen Pruefwert (K23-D05) -- ein Zufallswert misst nichts.
+        # M30 selbst wird NICHT angefasst: ihre Pruefsumme stimmt mit dem
+        # gezeichneten N2-Abnahmenachweis vom 06.08.2026 ueberein.
+        run: |
+          set -euo pipefail
+          entrausche() { grep -vE '^\\(un)?restrict ' "$1"; }
+          for m in migrations/*.sql; do
+            psql -v ON_ERROR_STOP=1 -q -f "$m"
+          done
+          pg_dump --schema-only --no-owner > /tmp/schema_2.sql
+          pg_dump --data-only  --no-owner --column-inserts > /tmp/daten_2.sql
+          entrausche /tmp/schema_1.sql       > /tmp/s1.txt
+          entrausche /tmp/schema_2.sql       > /tmp/s2.txt
+          entrausche /tmp/daten_1.sql | sort > /tmp/d1.txt
+          entrausche /tmp/daten_2.sql | sort > /tmp/d2.txt
+          diff -u /tmp/s1.txt /tmp/s2.txt \
+            || { echo "::error::Zweiter Lauf veraendert das Schema"; exit 1; }
+          diff -u /tmp/d1.txt /tmp/d2.txt \
+            || { echo "::error::Zweiter Lauf veraendert die Daten"; exit 1; }
+          echo "Zweiter Lauf: Schema und Daten inhaltsgleich."
+
+      - name: Negativfaelle — jeder scheitert an SEINER Bedingung
+        # Bauauftrag §9 Tor I Nr. 6 (:649) · README.md:34 · offener Punkt O-K23-7
+        run: |
+          set -euo pipefail
+          anzahl=0
+          shopt -s nullglob
+          for f in migrations/negativfaelle/*.sql; do
+            erwartet=$(sed -n 's/^-- erwartet: *//p' "$f" | head -1)
+            if [ -z "$erwartet" ]; then
+              echo "::error::$f nennt keine erwartete Bedingung (-- erwartet: <name>)"
+              exit 1
+            fi
+            if psql -v ON_ERROR_STOP=1 -q -f "$f" >/tmp/aus.txt 2>&1; then
+              echo "::error::$f ist DURCHGELAUFEN — die Bedingung fehlt"
+              exit 1
+            fi
+            if ! grep -qF "$erwartet" /tmp/aus.txt; then
+              echo "::error::$f scheitert an der falschen Bedingung. Erwartet: $erwartet"
+              sed -n '1,5p' /tmp/aus.txt
+              exit 1
+            fi
+            echo "  OK $(basename "$f") — abgewiesen durch $erwartet"
+            anzahl=$((anzahl + 1))
+          done
+          if [ "$anzahl" -lt 4 ]; then
+            echo "::error::nur $anzahl Negativfaelle gefunden, mindestens vier verlangt"
+            exit 1
+          fi
+
+  # -------------------------------------------------------------------
+  prueflauf:
+    name: Tor 1c · Prueflauf gegen die blinden Prueffaelle
+    runs-on: ubuntu-latest
+    needs: [migration]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: pruefstand
+          POSTGRES_DB: freiraum_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bestand herstellen — sonst misst der Prueflauf eine leere Datenbank
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          psql -v ON_ERROR_STOP=1 -q -f schema/freiraum_datamodel.sql
+          for m in migrations/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$m"; done
+          for s in seeds/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$s"; done
+
+      - name: Prueflauf
+        run: |
+          set -euo pipefail
+          if [ ! -x pruefungen/lauf.sh ]; then
+            echo "::error::pruefungen/lauf.sh fehlt — Tor 1c GESPERRT (K23-M22)"
+            exit 1
+          fi
+          mkdir -p nachweise/manifeste
+          ./pruefungen/lauf.sh --bericht nachweise/manifeste/tor1_${{ github.run_id }}.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prueflauf
+          path: nachweise/manifeste/
+          if-no-files-found: warn
+
+  # -------------------------------------------------------------------
+  sperre:
+    name: Tor 1 · Sperre
+    runs-on: ubuntu-latest
+    needs: [lint, migration, prueflauf]
+    if: always()
+    steps:
+      - name: Ergebnis feststellen
+        run: |
+          set -euo pipefail
+          echo "lint=${{ needs.lint.result }}"
+          echo "migration=${{ needs.migration.result }}"
+          echo "prueflauf=${{ needs.prueflauf.result }}"
+          if [ "${{ needs.lint.result }}" != "success" ] \
+          || [ "${{ needs.migration.result }}" != "success" ] \
+          || [ "${{ needs.prueflauf.result }}" != "success" ]; then
+            echo "::error::Tor 1 sperrt. Kein Bau erreicht Tor 2 (K23-D01)."
+            exit 1
+          fi
+          echo "Tor 1 bestanden. Tor 2 bis 4 laufen ausserhalb dieser Datei."

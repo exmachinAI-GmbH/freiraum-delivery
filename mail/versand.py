@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """FREIRAUM · B2 · Versandweg fuer Einladung und Anmeldecode.
 
     python3 mail/versand.py code   --an michael.veil@exmachinai.com
@@ -30,7 +29,6 @@ import os
 import secrets
 import smtplib
 import sys
-from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 
 try:
@@ -71,9 +69,8 @@ def absender_pruefen():
     erlaubt = os.environ.get("FREIRAUM_ABSENDER_DOMAENE", "freiraum.top").lower()
     if domaene != erlaubt:
         raise SystemExit(
-            "Absender %s liegt nicht in %s. Die SPF-Kette von %s endet auf -all; "
-            "eine Mail von einer anderen Domaene wird beim Empfaenger abgewiesen."
-            % (ABSENDER, erlaubt, erlaubt))
+            f"Absender {ABSENDER} liegt nicht in {erlaubt}. Die SPF-Kette von {erlaubt} endet auf -all; "
+            "eine Mail von einer anderen Domaene wird beim Empfaenger abgewiesen.")
 
 
 def nachweis(conn, actor_id, art, empfaenger, status, note=None, provider_id=None):
@@ -83,6 +80,17 @@ def nachweis(conn, actor_id, art, empfaenger, status, note=None, provider_id=Non
             " provider_id, provider_note) VALUES (%s,%s,%s,%s,%s,%s,%s)",
             (actor_id, art, empfaenger, ABSENDER, status, provider_id, note))
     conn.commit()
+
+
+class VersandFehler(RuntimeError):
+    """Der Versandweg selbst ist gescheitert -- Server abgelehnt, Verbindung weg,
+    Anmeldung verweigert.
+
+    Eigene Klasse, damit die aufrufenden Stellen sie ENG fangen koennen. Bis zum
+    07.08.2026 stand dort `except Exception`; das fing auch einen Tippfehler im
+    Code und schrieb ihn als Zustellnachweis mit Status FEHLER weg -- ein
+    Programmierfehler haette wie ein stummer Mailserver ausgesehen.
+    Befund BEF-C2 aus dem ersten Lauf des Coding-Harness."""
 
 
 def senden(empfaenger, betreff, text):
@@ -99,7 +107,7 @@ def senden(empfaenger, betreff, text):
         antwort = s.send_message(m)
     # send_message liefert die Empfaenger, die NICHT angenommen wurden.
     if antwort:
-        raise RuntimeError("Vom Server abgelehnt: %s" % antwort)
+        raise VersandFehler(f"Vom Server abgelehnt: {antwort}")
 
 
 def anmeldecode(conn, empfaenger):
@@ -108,8 +116,8 @@ def anmeldecode(conn, empfaenger):
                     (empfaenger,))
         zeile = cur.fetchone()
     if not zeile:
-        raise SystemExit("Kein Konto zu %s. Ein Code fuer ein unbekanntes Konto "
-                         "wird nicht ausgestellt." % empfaenger)
+        raise SystemExit(f"Kein Konto zu {empfaenger}. Ein Code fuer ein unbekanntes Konto "
+                         "wird nicht ausgestellt.")
     actor_id, name = zeile
 
     code = code_erzeugen()
@@ -125,25 +133,25 @@ def anmeldecode(conn, empfaenger):
         ablauf = cur.fetchone()[0]
     conn.commit()
 
-    text = ("Guten Tag %s,\n\n"
-            "Ihr Anmeldecode lautet: %s\n\n"
-            "Er ist %d Minuten gueltig und genau einmal verwendbar.\n"
+    text = (f"Guten Tag {name},\n\n"
+            f"Ihr Anmeldecode lautet: {code}\n\n"
+            f"Er ist {CODE_FRIST_MINUTEN} Minuten gueltig und genau einmal verwendbar.\n"
             "Fordern Sie einen neuen an, verliert dieser sofort seine Gueltigkeit.\n\n"
             "Wenn Sie sich nicht angemeldet haben, ignorieren Sie diese Nachricht.\n\n"
-            "FREIRAUM\n" % (name, code, CODE_FRIST_MINUTEN))
+            "FREIRAUM\n")
     try:
         senden(empfaenger, "Ihr FREIRAUM-Anmeldecode", text)
-    except Exception as f:
+    except (VersandFehler, smtplib.SMTPException, OSError) as f:
         nachweis(conn, actor_id, "ANMELDECODE", empfaenger, "FEHLER", str(f)[:500])
         # Der Code bleibt entwertet zurueck: er wurde nie zugestellt.
         with conn.cursor() as cur:
             cur.execute("UPDATE login_code SET superseded_at=now() WHERE actor_id=%s"
                         " AND consumed_at IS NULL AND superseded_at IS NULL", (actor_id,))
         conn.commit()
-        raise SystemExit("Versand gescheitert, im Nachweis vermerkt: %s" % f)
+        raise SystemExit(f"Versand gescheitert, im Nachweis vermerkt: {f}")
     nachweis(conn, actor_id, "ANMELDECODE", empfaenger, "UEBERGEBEN",
-             provider_id="%s:%s" % (SMTP_HOST, SMTP_PORT))
-    print("Code an %s uebergeben, gueltig bis %s" % (empfaenger, ablauf.isoformat()))
+             provider_id=f"{SMTP_HOST}:{SMTP_PORT}")
+    print(f"Code an {empfaenger} uebergeben, gueltig bis {ablauf.isoformat()}")
 
 
 def einladung(conn, empfaenger, link):
@@ -154,19 +162,19 @@ def einladung(conn, empfaenger, link):
     actor_id = zeile[0] if zeile else None
     name = zeile[1] if zeile else empfaenger
 
-    text = ("Guten Tag %s,\n\n"
+    text = (f"Guten Tag {name},\n\n"
             "Sie wurden zu FREIRAUM eingeladen. Ueber diesen Link legen Sie Ihren "
-            "Zugang an:\n\n%s\n\n"
+            f"Zugang an:\n\n{link}\n\n"
             "Der Link ist einmalig. Ein neuer Link entwertet diesen.\n\n"
-            "FREIRAUM\n" % (name, link))
+            "FREIRAUM\n")
     try:
         senden(empfaenger, "Ihre Einladung zu FREIRAUM", text)
-    except Exception as f:
+    except (VersandFehler, smtplib.SMTPException, OSError) as f:
         nachweis(conn, actor_id, "EINLADUNG", empfaenger, "FEHLER", str(f)[:500])
-        raise SystemExit("Versand gescheitert, im Nachweis vermerkt: %s" % f)
+        raise SystemExit(f"Versand gescheitert, im Nachweis vermerkt: {f}")
     nachweis(conn, actor_id, "EINLADUNG", empfaenger, "UEBERGEBEN",
-             provider_id="%s:%s" % (SMTP_HOST, SMTP_PORT))
-    print("Einladung an %s uebergeben" % empfaenger)
+             provider_id=f"{SMTP_HOST}:{SMTP_PORT}")
+    print(f"Einladung an {empfaenger} uebergeben")
 
 
 def main():
