@@ -32,7 +32,7 @@ FELDER = ["wortlaut", "herkunft", "dokumentversion", "eigentuemer", "kritikalita
           "akzeptanzkriterium", "test", "teststand", "ergebnis", "evidenz"]
 GEPFLEGT = FELDER[3:]
 ART = {"M": "MUSS", "D": "DARF NICHT", "G": "GILT"}
-ERWARTET = [f"K{i:02d}" for i in range(0, 26)]
+ERWARTET = [f"K{i:02d}" for i in range(26)]
 GESPERRT = {
     "K22": "gesperrt - nicht Gegenstand des Bauauftrags (F28; Bauauftrag Abschn. 1 und 8)",
     "K24": "nicht vergeben (K23-M01, Beschluss S27)",
