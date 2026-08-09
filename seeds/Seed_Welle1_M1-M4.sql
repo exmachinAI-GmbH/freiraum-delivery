@@ -40,53 +40,69 @@ VALUES
   ('Q-OMG-1', 'OMG-00001', 'WEB', 'EXTERN',
    'https://www.omg.org/spec/BPMN/2.0.2/',
    'Methode', 'Prozessnotation',
-   'OMG Specification License -- Nutzung zur Erstellung und Verbreitung von Software ausdruecklich erlaubt; Weiterverbreitung des Dokuments selbst nicht',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   OMG Specification License -- Nutzung zur Erstellung und Verbreitung von Software ausdruecklich erlaubt; Weiterverbreitung des Dokuments selbst nicht
+   'LicenseRef-OMG-Specification',
    'FIXED', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   ('Q-OMG-2', 'OMG-00002', 'API', 'EXTERN',
    'https://www.omg.org/spec/BPMN/20100501/BPMN20.xsd',
    'Methode', 'Prozessnotation',
-   'OMG Specification License -- Schemadateien ausdruecklich zur kommerziellen Implementierung freigegeben',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   OMG Specification License -- Schemadateien ausdruecklich zur kommerziellen Implementierung freigegeben
+   'LicenseRef-OMG-Specification',
    'FIXED', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   ('Q-BMI-1', 'BMI-00001', 'WEB', 'EXTERN',
    'https://www.orghandbuch.de/Webs/OHB/DE/Organisationshandbuch/6_MethodenTechniken/61_Erhebungstechniken/erhebungstechniken-node.html',
    'Methode', 'Prozessaufnahme',
-   'ACHTUNG NUR VERWEIS: BMI-Standardhinweis, Urheberrecht bei der Bundesrepublik. '
-   'Verlinken und Zitieren zulaessig, TEXTUEBERNAHME NICHT ohne schriftliche Zustimmung. '
-   'Sobald ein Agent daraus Fliesstext rendert, ist die Quelle unzulaessig (O-QD-2)',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   ACHTUNG NUR VERWEIS: BMI-Standardhinweis, Urheberrecht bei der Bundesrepublik.
+   --   Verlinken und Zitieren zulaessig, TEXTUEBERNAHME NICHT ohne schriftliche Zustimmung.
+   --   Sobald ein Agent daraus Fliesstext rendert, ist die Quelle unzulaessig (O-QD-2).
+   'LicenseRef-BMI-Nur-Verweis',
    'DYNAMIC', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   -- FUNKTIONSWISSEN
   ('Q-ESCO-1', 'ESC-00001', 'API', 'EXTERN',
    'https://esco.ec.europa.eu/',
    'Funktion', 'Personalwesen',
-   'Creative Commons Attribution 4.0 -- kommerzielle Nutzung und Bearbeitung erlaubt, Namensnennung noetig',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   Creative Commons Attribution 4.0 -- kommerzielle Nutzung und Bearbeitung erlaubt, Namensnennung noetig
+   'CC-BY-4.0',
    'DYNAMIC', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   ('Q-GII-1', 'GII-00001', 'WEB', 'EXTERN',
    'https://www.gesetze-im-internet.de/hgb/',
    'Funktion', 'Rechnungswesen',
-   'Paragraf 5 Absatz 1 Urheberrechtsgesetz -- amtliches Werk, gemeinfrei, keine Einschraenkung',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   Paragraf 5 Absatz 1 Urheberrechtsgesetz -- amtliches Werk, gemeinfrei, keine Einschraenkung
+   'LicenseRef-UrhG-5-1-Amtliches-Werk',
    'DYNAMIC', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   -- BRANCHENWISSEN  (branchenneutral in Welle 1, Retail Banking folgt in Welle 2)
   ('Q-GII-2', 'GII-00002', 'WEB', 'EXTERN',
    'https://www.gesetze-im-internet.de/gwg_2017/',
    'Branche', 'Regulatorik',
-   'Paragraf 5 Absatz 1 Urheberrechtsgesetz -- amtliches Werk, gemeinfrei',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   Paragraf 5 Absatz 1 Urheberrechtsgesetz -- amtliches Werk, gemeinfrei
+   'LicenseRef-UrhG-5-1-Amtliches-Werk',
    'DYNAMIC', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   ('Q-18F-1', 'GH-00001', 'GITHUB', 'EXTERN',
    'https://github.com/18F/methods',
    'Methode', 'Nutzerzentrierte Gestaltung',
-   'CC0 1.0 Universal -- gemeinfrei, keinerlei Auflage. Einzige Quelle im Bestand ohne jede Bedingung',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   CC0 1.0 Universal -- gemeinfrei, keinerlei Auflage. Einzige Quelle im Bestand ohne jede Bedingung
+   'CC0-1.0',
    'FIXED', 'DRAFT', 'Kuration', DATE '2026-08-01'),
 
   ('Q-ARC-1', 'ARC-00001', 'WEB', 'EXTERN',
    'https://arc42.org/',
    'Methode', 'Anforderungsdokumentation',
-   'CC BY-SA 4.0 -- kommerzielle Nutzung erlaubt, Namensnennung und Weitergabe unter gleichen Bedingungen',
+   -- Lizenzbedingungen im Wortlaut (haben im Schema kein eigenes Feld, O-K08-12):
+   --   CC BY-SA 4.0 -- kommerzielle Nutzung erlaubt, Namensnennung und Weitergabe unter gleichen Bedingungen
+   'CC-BY-SA-4.0',
    'FIXED', 'DRAFT', 'Kuration', DATE '2026-08-01');
 
 -- ---------------------------------------------------------------------

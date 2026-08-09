@@ -12,7 +12,8 @@ Dropbox kann sie holen.
 | | |
 |---|---|
 | Herkunft | `02_AGENT_HARNESS_KONZEPTE/ITERATION_2/arbeit/Seed_Welle1_M1-M4.sql` |
-| Aufgenommen am | **09.08.2026** |
+| Aufgenommen am | **09.08.2026**, neu gezogen am selben Tag nach der Behebung von BEF-D1 |
+| Änderung am Original | **09.08.2026:** acht Lizenzwerte auf SPDX-Schreibweise gebracht (`LicenseRef-…` bzw. Kurzname), der Wortlaut je Zeile als Kommentar erhalten. Auf Weisung beider Founder. Vorher wies M30 den Seed mit `lizenz_spdx_form` ab |
 | Prüfsumme bei Aufnahme | siehe `Seed_Welle1_M1-M4.sha256` |
 | Änderungsregel | **keine.** Weicht die Prüfsumme vom Original ab, ist die Kopie ungültig — nicht das Original |
 
