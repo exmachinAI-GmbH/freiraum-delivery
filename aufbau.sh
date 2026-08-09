@@ -13,6 +13,9 @@
 #
 #      ./aufbau.sh              nur Datenbank
 #      ./aufbau.sh --mail       zusaetzlich Testempfaenger (Mailpit)
+#      ./aufbau.sh --ci         die Datenbank, die Tor 1b und pruefungen/lauf.sh
+#                               erwarten: DDL + migrations/*.sql, OHNE Vorlaeufer
+#                               und OHNE Seed. Name freiraum_ci, Port 55433.
 #
 #  WICHTIG: Das hier ist eine PRUEFumgebung, kein Pilotlauf. Der Pilot
 #  braucht nach K20-M21 und F36 eine EIGENE, unberuehrte Datenbank --
@@ -58,6 +61,29 @@ pruefe_eingang() {
   fi
 }
 for f in "$DDL" "$VORLAEUFER" "$M30" "$SEED"; do pruefe_eingang "$f"; done
+
+# --- CI-Fassung ------------------------------------------------------
+# Tor 1b und pruefungen/lauf.sh messen gegen eine ANDERE Datenbank als die
+# Pruefumgebung unten: freiraum_ci, gebaut aus DDL + migrations/*.sql, ohne
+# die Vorlaeufermigration und ohne Seed. Bis zum 09.08.2026 baute sie nur die
+# CI selbst -- lokal war Tor 1b nicht nachvollziehbar (Befund BEF-D4).
+if [ "${1:-}" = "--ci" ]; then
+  CI=freiraum-ci
+  echo "CI-Fassung: DDL + migrations/*.sql, ohne Vorlaeufer, ohne Seed"
+  docker rm -f "$CI" >/dev/null 2>&1 || true
+  docker run -d --name "$CI" -e POSTGRES_PASSWORD=pilot -e POSTGRES_DB=freiraum_ci \
+    -p 55433:5432 postgres:16 >/dev/null
+  for _ in $(seq 1 30); do docker exec "$CI" pg_isready -U postgres >/dev/null 2>&1 && break; sleep 2; done
+  ladeci() { docker cp "$1" "$CI:/tmp/x.sql" >/dev/null; docker exec "$CI" psql -U postgres -d freiraum_ci -v ON_ERROR_STOP=1 -q -f /tmp/x.sql; }
+  echo "  Schema v2.9"; ladeci "$DDL"
+  for m in "$HIER"/migrations/*.sql; do echo "  $(basename "$m")"; ladeci "$m"; done
+  echo
+  echo "Fertig. Das ist die Datenbank, die pruefungen/lauf.sh erwartet:"
+  echo "  PGHOST=localhost PGPORT=55433 PGUSER=postgres PGDATABASE=freiraum_ci \\"
+  echo "    bash pruefungen/lauf.sh"
+  echo "  Abbau: docker rm -f $CI"
+  exit 0
+fi
 
 echo "1/6 · Datenbank starten"
 docker rm -f "$C" >/dev/null 2>&1 || true

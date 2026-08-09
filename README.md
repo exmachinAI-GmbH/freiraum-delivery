@@ -5,11 +5,33 @@ darüber.
 
 ## Anfangen
 
+**Voraussetzungen:** Docker (die Prüfdatenbank läuft im Container) · Python 3.11 ·
+**ein Postgres-Client** (`psql`). Ohne `psql` bricht `pruefungen/lauf.sh` ohne Meldung ab —
+siehe `nachweise/befunde/BEF-D_260809.md`, BEF-D3.
+
 ```bash
+brew install libpq && brew link --force libpq     # macOS; oder postgresql-client
 git clone <repo> && cd freiraum-delivery
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-./aufbau.sh            # Pruefdatenbank: Schema v2.9, Migration 260801, M30, Seed, B1
+./aufbau.sh            # Pruefumgebung: DDL, Vorlaeufer 260801, M30, Seed, B1
 ```
+
+### Zwei Datenbanken, und sie sind nicht dasselbe
+
+| | Name · Port | gebaut aus | wofür |
+|---|---|---|---|
+| **Prüfumgebung** | `freiraum` · 55432 | DDL + `_vorlaeufer/260801` + M30 + Seed + B1 | entwickeln, B1/B2 nachvollziehen |
+| **Tor 1b** | `freiraum_ci` · 55433 | DDL + `migrations/*.sql` — ohne Vorläufer, ohne Seed | `pruefungen/lauf.sh`, dasselbe wie in der CI |
+
+```bash
+./aufbau.sh --ci
+PGHOST=localhost PGPORT=55433 PGUSER=postgres PGDATABASE=freiraum_ci bash pruefungen/lauf.sh
+```
+
+**Warum getrennt:** 260801 führt `customer_needs_avv` ein; die M30-Prüffälle legen einen
+Kunden ohne AVV an und werden dagegen abgewiesen. Gegen DDL+M30 laufen sie **110 von 110**.
+Bis zum 09.08.2026 baute `freiraum_ci` nur die CI — Tor 1b war lokal nicht nachvollziehbar
+(`nachweise/befunde/BEF-D_260809.md`, BEF-D4).
 
 **Mehr ist nicht nötig.** Seit dem 09.08.2026 bringt das Repo alle Eingaben selbst mit — es
 gibt keinen Pfad mehr in eine Dropbox und keinen auf einen bestimmten Rechner. Wer klonen
