@@ -74,7 +74,10 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m compileall -q werkzeuge mail
-          pip install --quiet ruff
+          # Festgeschriebene Fassung statt "neuestes ruff": ein Lauf, dessen
+          # Pruefwerkzeug sich unter der Hand aendert, misst zwei Staende
+          # gegeneinander (K23-M18 Glied 5, Glied 7).
+          pip install --quiet -r requirements.txt
           ruff check werkzeuge mail
 
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)

@@ -2,13 +2,13 @@
 
 | Feld | Wert |
 |---|---|
-| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag. **Sie existiert noch nicht** (Blatt 26:28, :178) |
-| Vorgesehener Ablageort | `03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/` — **Vorschlag, nicht gezeichnet.** Überschreibbar mit `FREIRAUM_ANLAGE` |
+| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag — **gezeichnet von M. Veil am 07.08.2026**; für den Auftragnehmer zeichnet A. Han (Nr. 158), seine Unterschrift steht aus |
+| Ablageort | `03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/` — **bewusst außerhalb dieses Repos**: `--pruefsumme` misst diese Datei *gegen* die Anlage; lägen beide hier, änderte ein Commit beide Seiten. Überschreibbar mit `FREIRAUM_ANLAGE` |
 | **Prüfsumme der Anlage** | `ded747a7a98bcc7fa11442b92e0d09a244c0b4ee2051f10fb251bdb68300274d` — gezeichnet 07.08.2026, Nachweis in `Anlage_Bauverfahren_zeichnung.md` |
 | Nachgerechnet mit | `./install.sh --pruefsumme` · Regel: `shasum -a 256 <Anlage>` |
 | Ausführbare Fassung | **diese Datei** |
 | Bauauftrag | erteilt 06.08.2026 · Endtermin 31.08.2026 (Bauauftrag :1, :39, :40) |
-| Repo | `exmachinai/freiraum-delivery` — GitHub ist Wahrheit, kein Klon in Dropbox (`03_AGENT_HARNESS_CODING/README.md`:21–23) |
+| Repo | `exmachinai/freiraum-delivery` — GitHub ist Wahrheit, kein Klon in Dropbox. **Seit 09.08.2026 bringt das Repo alle Bau-Eingaben selbst mit**; außerhalb liegen nur noch die Anlage, ihre Zeichnung und das Zugangsblatt, je mit Grund (`03_AGENT_HARNESS_CODING/README.md`) |
 
 **Zwei Texte, eine Sache.** Gezeichnet wird die Anlage, ausgeführt wird diese Datei.
 Bei Abweichung gilt die **Anlage**. Stimmt die Prüfsumme oben nicht, redet diese Datei über
@@ -148,7 +148,7 @@ führt deshalb alle Glieder:
 | Glied | Wert | Stand |
 |---|---|---|
 | 1 | **Commit-Hash** des geprüften Standes | führbar |
-| 2 | **Prüfsumme des Bauauftrags** — ohne sie gilt der Durchstich als veraltet (K23-M20) | **Der Auftrag hat heute keine Prüfsumme** (V-13, Blatt 26:179). Bis dahin: *gesperrt* |
+| 2 | **Prüfsumme des Bauauftrags** — ohne sie gilt der Durchstich als veraltet (K23-M20) | **belegt seit 07.08.2026:** Fassung v1.1, `3341362f8962af9d48de4afdc863284d5261e9ede3c997fb32bd83933186e43d`, gezeichnet von M. Veil (Nachweis `03_N5_BAUAUFTRAG_v1.1_zeichnung.md`). Die Gegenzeichnung des Auftragnehmers steht aus |
 | 3 | **Prüfsumme der Anlage** | **belegt** — gezeichnet am 07.08.2026, nachgerechnet von `./install.sh --pruefsumme` |
 | 4 | **Migrationsstand** — welche Dateien, in welcher Reihenfolge, gegen welches Basisschema | führbar |
 | 5 | **Abhängigkeitsstände** — Lockfiles, Abbild-Digests, Postgres-Version | führbar |
