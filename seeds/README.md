@@ -1,8 +1,25 @@
 # seeds/ · Seed-Läufe
 
-**Noch leer.** Erster Seed bei Baustart: Übernahme von `Seed_Welle1_M1-M4.sql` aus der
-Konzeptfabrik (`arbeit/`) — Welle 1: 8 Quellen, 6 Bausteine, 12 Vorlagen, 2 Richtlinien.
+`Seed_Welle1_M1-M4.sql` ist **Welle 1**: 8 Quellen, 6 Bausteine, 12 Vorlagen, 2 Richtlinien.
+Sie wird von `aufbau.sh` als Schritt 5 geladen.
 
-Regeln: Nach dem Laden **Vier-Augen-Prüfung je Baustein nach K14**, erst dann verdrahten.
-Ausschließlich synthetische Daten. Die 15 Chatvorlagen bleiben inhaltsleer, bis
-O-K25-2/O-BEF-1 entschieden ist (Founder-Beschlussvorlage in der Konzeptfabrik).
+**Es ist eine Kopie, kein Original.** Das Original liegt in der Konzept-Fabrik unter
+`02_AGENT_HARNESS_KONZEPTE/ITERATION_2/arbeit/Seed_Welle1_M1-M4.sql`. Die Kopie liegt hier
+aus demselben Grund wie das DDL in `schema/`: **ein Lauf gegen eine Quelle, die er nicht
+selbst mitbringt, ist nicht reproduzierbar** — und weder die CI noch ein Teammitglied ohne
+Dropbox kann sie holen.
+
+| | |
+|---|---|
+| Herkunft | `02_AGENT_HARNESS_KONZEPTE/ITERATION_2/arbeit/Seed_Welle1_M1-M4.sql` |
+| Aufgenommen am | **09.08.2026**, neu gezogen am selben Tag nach der Behebung von BEF-D1 |
+| Änderung am Original | **09.08.2026:** acht Lizenzwerte auf SPDX-Schreibweise gebracht (`LicenseRef-…` bzw. Kurzname), der Wortlaut je Zeile als Kommentar erhalten. Auf Weisung beider Founder. Vorher wies M30 den Seed mit `lizenz_spdx_form` ab |
+| Prüfsumme bei Aufnahme | siehe `Seed_Welle1_M1-M4.sha256` |
+| Änderungsregel | **keine.** Weicht die Prüfsumme vom Original ab, ist die Kopie ungültig — nicht das Original |
+
+## Regeln beim Laden
+
+Nach dem Laden **Vier-Augen-Prüfung je Baustein nach K14**, erst dann verdrahten.
+Ausschließlich synthetische Daten. Die 15 Gesprächsvorlagen bleiben inhaltsleer, bis
+**O-K25-2** entschieden ist — *wo der Inhalt einer Vorlage liegt, wenn `template` kein
+Inhaltsfeld hat*. Der Punkt steht im Handover vom 07.08. als **MV-E2** und sperrt V4.

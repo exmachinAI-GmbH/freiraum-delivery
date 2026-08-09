@@ -13,4 +13,5 @@ Legt in einer frischen Datenbank an:
    (K20-M04/M05 · K20-G11)
 
 Abnahme: `SELECT count(*) FROM platform_admin WHERE status='AKTIV'` = 1.
-Abnahmeprotokoll → Dropbox `03_AGENT_HARNESS_CODING/10_PILOT_VORBEDINGUNGEN/B1_Installation/`.
+Abnahmeprotokoll → `nachweise/vorbedingungen/B1_installation/` *(am 09.08.2026 aus der
+Dropbox hierher gezogen)*.

@@ -1,0 +1,16 @@
+# FREIRAUM Coding-Harness · Abhaengigkeiten, festgeschrieben
+#
+# Angelegt am 09.08.2026. Bis dahin gab es keine Liste: die .venv war 43 MB
+# gross und liess sich auf einem anderen Rechner nicht nachbauen. Nach
+# K23-M18 Glied 5 gehoeren die Abhaengigkeitsstaende ohnehin ins Manifest --
+# ohne festgeschriebene Versionen ist dieses Glied nicht fuehrbar.
+#
+# Die Versionen sind die am 09.08.2026 tatsaechlich benutzten, nicht geraten.
+#
+#   python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+#
+# Alles Uebrige im Repo ist Standardbibliothek (argparse, datetime, email,
+# hashlib, json, os, pathlib, re, secrets, smtplib, sys).
+
+psycopg[binary]==3.2.13   # mail/versand.py, pruefungen/ -- Postgres-Zugriff
+ruff==0.16.1              # Tor 1a, gleiche Fassung wie .github/workflows/tore.yml

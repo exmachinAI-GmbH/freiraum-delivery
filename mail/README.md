@@ -1,7 +1,8 @@
 # mail/ · B2 E-Mail-Versand
 
 **Stand 02.08.2026: gegen einen lokalen Testempfänger abgenommen, echter Versand offen.**
-Protokoll: Dropbox `03_AGENT_HARNESS_CODING/10_PILOT_VORBEDINGUNGEN/B2_Mailversand/`.
+Protokoll: `nachweise/vorbedingungen/B2_mailversand/` *(am 09.08.2026 aus der Dropbox
+hierher gezogen)*.
 
 ## Entschieden (Founder, 02.08.2026)
 
