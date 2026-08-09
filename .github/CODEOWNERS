@@ -1,8 +1,37 @@
 # Wer diese Dateien aendert, aendert die Steuerung selbst.
-# Wirkt erst mit Branch-Schutz auf main -- der ist auf dem heutigen Plan
-# fuer private Repositories nicht verfuegbar (siehe Entscheidungsvorlage, A-7).
-/CLAUDE.md            @exmachinai
-/.claude/             @exmachinai
-/.github/             @exmachinai
-/pruefungen/          @exmachinai
-/schema/              @exmachinai
+#
+# Stand 09.08.2026. Zwei Kennungen, beide Mitglied der Organisation
+# exmachinAI-GmbH (Plan team, 2 von 2 Sitzen belegt):
+#   @exmachinai   Auftraggeber, abnehmender Plattform-Admin
+#   @AndrewExma   zeichnet fuer den Auftragnehmer (Nr. 158), zweite
+#                 natuerliche Person nach K23-M21 und K14 (Nr. 165)
+# Wer welche Rolle traegt, steht in nachweise/rollen.md; die Personendaten
+# liegen ausserhalb dieses Repos.
+#
+# WIRKT ERST MIT BRANCH-SCHUTZ AUF main. Der ist verfuegbar, sobald das Repo
+# der Organisation gehoert -- unter einem persoenlichen Konto antwortet die
+# API mit 403 "Upgrade to GitHub Pro". Solange bleibt Gate 5 aus K23
+# (keine Selbstfreigabe) nicht mechanisch erzwungen: Restrisiko RR-01.
+
+# --- Die Steuerung selbst: beide muessen zustimmen ---------------------
+/CLAUDE.md            @exmachinai @AndrewExma
+/.github/             @exmachinai @AndrewExma
+
+# --- Blindheit der Pruefung (K23-D05, F27) -----------------------------
+# Wer hier schreibt, kann einen Pruefwert senken, damit ein Lauf besteht.
+/pruefungen/          @exmachinai @AndrewExma
+
+# --- Grundwahrheit und mitgelieferte Eingaben --------------------------
+# Kopien mit Aenderungsregel "keine". Eine Aenderung hier ist entweder ein
+# Fehler oder eine Nachfuehrung aus der Konzept-Fabrik -- nie beilaeufig.
+/schema/              @exmachinai @AndrewExma
+/migrations/_vorlaeufer/  @exmachinai @AndrewExma
+/seeds/               @exmachinai @AndrewExma
+/migrations/M30__pilot_sammelmigration.sql  @exmachinai @AndrewExma
+
+# --- Nachweise ---------------------------------------------------------
+# Ein Nachweis, den einer allein aendern kann, belegt nur ihn selbst.
+/nachweise/           @exmachinai @AndrewExma
+
+# --- Agentensteuerung --------------------------------------------------
+/.claude/             @exmachinai @AndrewExma

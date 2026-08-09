@@ -64,9 +64,26 @@ nichts mehr:** das Repository in die Organisation übertragen, A. Han einen der 
 Sitze geben, Branch-Schutz setzen. Danach greift Gate 5 mechanisch, und dieses Restrisiko
 wird geschlossen statt getragen.
 
-Die Schritte im Einzelnen stehen in
-`03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/Zugaenge_und_Rollen_260807.md`.
-**Die Entscheidung über den Umzug steht aus.**
+### Nachtrag 09.08.2026 — von drei Voraussetzungen sind zwei erfüllt
+
+| | Stand am 07.08. | Stand am 09.08. |
+|---|---|---|
+| Entscheidung über den Umzug | stand aus | **gezeichnet** (M. Veil, 07.08.2026) |
+| A. Han in der Organisation | Einladung offen, Kennung unbekannt | **Mitglied**, Kennung `@AndrewExma`; 2 von 2 Sitzen belegt |
+| Repo gehört der Organisation | nein | **weiterhin nein** — `exmachinai`, persönliches Konto |
+| Branch-Schutz | 403 | **weiterhin 403** |
+
+**Es fehlt genau ein Handgriff:** die Übertragung. Sie verlangt den Eigentümer des
+persönlichen Kontos; ein Werkzeug kann sie hier nicht auslösen.
+
+Alles danach ist vorbereitet und liegt als **`install/nach_umzug.sh`** bei — Fernadresse,
+Branch-Schutz mit allen vier Tor-1-Prüfungen als Pflicht, `enforce_admins`, Pflichtreview
+über CODEOWNERS. Das Skript prüft zuerst, ob der Umzug vollzogen ist, und tut ohne
+`--setzen` nichts.
+
+**RR-01 wird geschlossen, wenn das Skript gelaufen ist und sein Nachweis vorliegt** — nicht
+vorher, und nicht auf Zuruf. Ein Restrisiko, das man für geschlossen erklärt, ohne die
+Sperre zu messen, ist genau das, wogegen K23-M04 geschrieben ist.
 
 ---
 
