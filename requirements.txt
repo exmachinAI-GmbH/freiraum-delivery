@@ -14,3 +14,15 @@
 
 psycopg[binary]==3.2.13   # mail/versand.py, pruefungen/ -- Postgres-Zugriff
 ruff==0.16.1              # Tor 1a, gleiche Fassung wie .github/workflows/tore.yml
+
+# --- Scheibe 1 · Anmeldung (10.08.2026) -------------------------------
+# Serverseitig gerendert, kein getrenntes Frontend: K03-M13 verlangt, dass
+# jede Pruefung der Anmeldung serverseitig erfolgt -- "eine Pruefung allein
+# in der Oberflaeche gilt als nicht erfolgt". Wo es keine Logik im Browser
+# gibt, kann sie auch nicht dorthin rutschen.
+# Technologiewahl gez. A. Han 10.08.2026 (der Bauauftrag legt keine fest).
+fastapi==0.128.8          # Serverpfad
+jinja2==3.1.6             # Vorlagen, EN-01 aus K19
+uvicorn==0.39.0           # Laufzeit
+itsdangerous==2.2.0       # signiertes Sitzungsmerkmal
+python-multipart==0.0.20  # Formularannahme in POST /anmeldung (fastapi Form)
