@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startseite · FREIRAUM</title>
+  {#
+    DAS IST NICHT EN-02. EN-02 ist die Startseite aus K19 Abschn. 6 -- links
+    Gespraech, rechts "Ihre Anwendungen" -- und gehoert nicht zu Scheibe 1
+    ("alles hinter der Startseite" ist ausgenommen). Diese Seite ist das
+    Gegenufer des Durchstichs: sie zeigt, dass eine gueltige Sitzung besteht,
+    welches eine Portal sie oeffnet (K03-M11), und sie beendet sie wieder.
+    Sie wird von EN-02 abgeloest, nicht erweitert.
+
+    Der Name der Schaltflaeche folgt der Kopfleiste aus K19: [Ausloggen].
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 34rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    dl { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem;
+         margin: 0 0 1.25rem; }
+    dt { font-weight: 600; }
+    dd { margin: 0; }
+    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
+             cursor: pointer; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1>Startseite</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+    <dl>
+      <dt>Angemeldet als</dt><dd>{{ anzeigename }}</dd>
+      <dt>Portal</dt><dd>{{ portal }}</dd>
+    </dl>
+    <form method="post" action="/abmelden">
+      <button type="submit">Ausloggen</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>

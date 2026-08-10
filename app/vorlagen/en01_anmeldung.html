@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anmeldung · FREIRAUM</title>
+  {#
+    EN-01 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet (K19-M01).
+    Der Kasten der Quelle:
+
+      ╭─ EN-01 · Anmeldung ───────────────────────────── [offen] ─╮
+      │  Zugang: offen  │
+      │  E-Mail-Adresse   [vorbelegt aus der Einladung        ]   │
+      │  Zugangscode      [sechsstellig                      ]    │
+      │  Einmal-Link 24 Stunden gueltig, danach neuer Link ueber  │
+      │  Ihre Ansprechperson.                                     │
+      │  [Anmelden]                                               │
+      ╰───────────────────────────────────────────────────────────╯
+
+    K19-D06 haelt fest, was hier NICHT stehen darf: keine Restlaufzeit, kein
+    Rueckwaertszaehler, kein Ablaufzeitpunkt als Datum. Die Dauer "24 Stunden"
+    steht als Klartext in der Quelle und bleibt (K19-M10).
+    Dieselbe Maske traegt beide Portale (K03-G04, K19 Abschn. 6 und 7);
+    getrennt wird das Ergebnis, nicht die Maske.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 28rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem 1.25rem 1.5rem; }
+    .kopf { display: flex; justify-content: space-between; gap: 1rem;
+            align-items: baseline; margin: 0 0 .25rem; }
+    h1 { font-size: 1.25rem; margin: 0; }
+    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    label { display: block; font-weight: 600; margin: 1rem 0 .25rem; }
+    input { width: 100%; box-sizing: border-box; padding: .55rem .6rem;
+            font: inherit; border: 1px solid currentColor; border-radius: .25rem; }
+    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
+    button { margin-top: 1.25rem; padding: .6rem 1.2rem; font: inherit;
+             border-radius: .25rem; cursor: pointer; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <div class="kopf">
+      <h1 id="titel">EN-01 · Anmeldung</h1>
+    </div>
+    <p class="marke">Zugang: offen</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13, Abschn. 5.1). role="alert"
+      traegt die Meldung an die Vorlesehilfe, ohne den Fokus zu ziehen.
+      Der Text kommt IMMER aus MELDUNG_MISSERFOLG -- diese Vorlage kennt
+      keinen zweiten Wortlaut (K03-M16).
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <form method="post" action="/anmeldung" novalidate>
+      {#
+        Bewusst OHNE required/pattern/minlength. K03-M13: eine Pruefung allein
+        in der Oberflaeche gilt als nicht erfolgt. Ein Browser, der eine leere
+        oder fuenfstellige Eingabe selbst abfaengt, verhindert nicht den
+        Fehler -- er verhindert die Messung, ob der Server ihn abfaengt.
+        Feldreihenfolge = Fokusreihenfolge, ohne tabindex (K19-M13).
+      #}
+      <label for="email">E-Mail-Adresse</label>
+      <input id="email" name="email" type="email" autocomplete="username"
+             autocapitalize="off" spellcheck="false" autofocus
+             value="{{ adresse or '' }}">
+
+      <label for="code">Zugangscode</label>
+      <input id="code" name="code" type="text" inputmode="numeric"
+             autocomplete="one-time-code" maxlength="6"
+             aria-describedby="codehinweis">
+      <p class="hinweis" id="codehinweis">Sechsstellig, aus der Nachricht an
+        Ihre E-Mail-Adresse.</p>
+
+      <p class="hinweis">Einmal-Link 24 Stunden gueltig, danach neuer Link
+        ueber Ihre Ansprechperson.</p>
+
+      <button type="submit">Anmelden</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>

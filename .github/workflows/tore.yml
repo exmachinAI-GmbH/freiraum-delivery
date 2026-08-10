@@ -73,12 +73,15 @@ jobs:
       - name: Python-Lint
         run: |
           set -euo pipefail
-          python3 -m compileall -q werkzeuge mail
+          # app/ seit 10.08.2026 (Scheibe 1 · Anmeldung). Ohne den Zusatz
+          # laeuft Tor 1a gruen an dem Verzeichnis vorbei, in dem der
+          # Serverpfad steht -- ein gruener Lauf, der nichts misst.
+          python3 -m compileall -q werkzeuge mail app
           # Festgeschriebene Fassung statt "neuestes ruff": ein Lauf, dessen
           # Pruefwerkzeug sich unter der Hand aendert, misst zwei Staende
           # gegeneinander (K23-M18 Glied 5, Glied 7).
           pip install --quiet -r requirements.txt
-          ruff check werkzeuge mail
+          ruff check werkzeuge mail app
 
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |
