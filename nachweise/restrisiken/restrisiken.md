@@ -12,7 +12,7 @@ Auftraggebers.
 
 ---
 
-## RR-01 · Gate 5 ist im Repo nicht mechanisch erzwungen
+## RR-01 · Gate 5 ist im Repo nicht mechanisch erzwungen — **GESCHLOSSEN am 09.08.2026**
 
 | Feld | Wert |
 |---|---|
@@ -52,8 +52,8 @@ Admin.
 | | gemessen am 07.08.2026 |
 |---|---|
 | Eigentümer von `freiraum-delivery` | persönliches Konto **`exmachinai`** (Typ: User) |
-| Repos der Organisation `exmachinAI-GmbH` | **null** |
-| `GET /repos/…/branches/main/protection` | weiterhin **403** |
+| Repos der Organisation `exmachinAI-GmbH` | null *(Stand 07.08.; seit 09.08.: eines — dieses)* |
+| `GET /repos/…/branches/main/protection` | 403 *(Stand 07.08.; seit 09.08.: gesetzt, siehe oben)* |
 
 GitHub Team ist ein **Organisations**plan. Für ein privates Repository unter einem
 persönlichen Konto verlangt GitHub den Plan **Pro** — ein anderes Abonnement. Das
@@ -64,7 +64,42 @@ nichts mehr:** das Repository in die Organisation übertragen, A. Han einen der 
 Sitze geben, Branch-Schutz setzen. Danach greift Gate 5 mechanisch, und dieses Restrisiko
 wird geschlossen statt getragen.
 
-### Nachtrag 09.08.2026 — von drei Voraussetzungen sind zwei erfüllt
+## GESCHLOSSEN am 09.08.2026 — Gate 5 greift mechanisch
+
+**Nicht behauptet, gemessen.** Ein Versuch, mit dem **Admin-Konto** direkt auf `main` zu
+schreiben, wurde abgewiesen:
+
+```
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote: - Changes must be made through a pull request.
+remote: - 4 of 4 required status checks are expected.
+```
+
+**Der Schutz hat den Auftraggeber selbst abgewiesen.** Das ist der Nachweis, auf den es
+ankommt — ein Schutz, der Admins ausnimmt, schützt nichts.
+
+| Was | Wert |
+|---|---|
+| Repository | `exmachinAI-GmbH/freiraum-delivery` — Organisation, privat |
+| `enforce_admins` | **true** |
+| Pflichtprüfungen | **4 von 4**: Tor 1a · Tor 1b · Tor 1c · Tor 1 Sperre |
+| Pflichtreview | 1, mit **CODEOWNERS-Pflicht** |
+| `require_last_push_approval` | **true** — niemand gibt seinen eigenen letzten Push frei |
+| `dismiss_stale_reviews` | true · Force-Push: **aus** · Löschen von `main`: **aus** |
+| Mitarbeiter | `exmachinai` (admin) · **`AndrewExma` (push)** |
+
+**Damit ist die Voraussetzung von Gate 5 aus K23 erfüllt** — keine Selbstfreigabe, keine
+fehlende Rollentrennung. Das Restrisiko ist **geschlossen**, nicht getragen: die
+Annahmeentscheidung vom 07.08.2026 (Träger M. Veil, Frist *„vor dem ersten Mandanten mit
+echten Daten"*) läuft damit ins Leere, weil der Grund entfallen ist.
+
+**Die Probe hat sich selbst bestätigt:** Auch dieses Blatt kann nicht mehr direkt auf `main`
+geschrieben werden. Es kommt über einen Pull Request, der einen Review von `@AndrewExma`
+braucht — der erste Vorgang, der Gate 5 durchläuft.
+
+---
+
+### Wie es dahin kam — Nachtrag 09.08.2026
 
 | | Stand am 07.08. | Stand am 09.08. |
 |---|---|---|
