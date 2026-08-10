@@ -249,6 +249,18 @@ jobs:
           for m in migrations/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$m"; done
           for s in seeds/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$s"; done
 
+      # Die Klausel-Prueffaelle pruefen gegen einen LAUFENDEN Server. Ohne
+      # .venv/bin/uvicorn kann der Prueflauf ihn nicht starten und meldet
+      # GESPERRT -- ehrlich, aber gemessen ist dann nichts. Gemessen am
+      # 10.08.2026: lokal 30 von 30, in CI waere derselbe Stand ungemessen
+      # durchgelaufen, weil dieser Auftrag als einziger keine Abhaengigkeiten
+      # installierte.
+      - name: Anwendung bereitstellen — sonst misst Tor 1c die Anwendung nicht
+        run: |
+          set -euo pipefail
+          python -m venv .venv
+          .venv/bin/pip install --quiet -r requirements.txt
+
       - name: Prueflauf
         run: |
           set -euo pipefail
