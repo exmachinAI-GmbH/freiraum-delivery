@@ -152,18 +152,158 @@ done
 
 # ---------------------------------------------------------------------
 # 3 · Die Klausel-Prueffaelle des blinden Pruef-Agenten
+#
+#     Sie pruefen gegen einen LAUFENDEN Server, nicht gegen eine Datei.
+#     Aufbauen muss ihn dieser Lauf: eigene Wegwerfdatenbank, eigener
+#     Server auf einem FREIEN Port, danach beides weg.
+#
+#     Warum ein freier Port und kein fester: Am 10.08.2026 hielt ein
+#     vergessener uvicorn aus einem frueheren Lauf den Port 8099. Der
+#     neue Server startete nie ("address already in use"), und zehn
+#     Faelle meldeten Fehlschlaege gegen den ALTEN Stand. Ein Ergebnis,
+#     das nach Messung aussah und keine war.
+#
+#     Rueckgabewerte des Prueflaufs (sein eigener Vertrag):
+#       0  alle Faelle bestanden
+#       2  ABBRUCH -- die Aufbaupruefung nach F07 hat nicht getragen,
+#          es wurde NICHTS gemessen  -> GESPERRT, nicht fehlgeschlagen
+#       *  Faelle gescheitert                        -> fehlgeschlagen
 # ---------------------------------------------------------------------
 echo
 echo "== Klausel-Prueffaelle =="
-anzahl=0
-for f in pruefungen/klauseln/*.sql pruefungen/klauseln/*.sh; do anzahl=$((anzahl+1)); done
-if [ "$anzahl" -eq 0 ]; then
+
+klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
+  local lauf="$1" kennung="$2"
+  local daten="${lauf%_lauf.sh}_daten.sql"
+  local db="klausel_${kennung}_$$"
+  local port pfeffer schluessel pid=0 log rc summe
+
+  [ -f "$daten" ] || {
+    echo "   $kennung — GESPERRT: $daten fehlt"
+    merke "$kennung" gesperrt "Datendatei fehlt"; return; }
+  [ -x .venv/bin/uvicorn ] || {
+    echo "   $kennung — GESPERRT: .venv/bin/uvicorn fehlt"
+    merke "$kennung" gesperrt "uvicorn fehlt"; return; }
+
+  # Aufraeumen in JEDEM Ausgang -- auch bei Abbruch mitten im Lauf.
+  # Ohne das bleibt ein Server stehen und vergiftet den naechsten Lauf,
+  # genau wie am 10.08.2026.
+  # Jede Zeile einzeln entschaerft. "wait" auf einen getoeteten Prozess
+  # liefert 143 (128+SIGTERM) -- unter "set -e" beendet das die ganze
+  # Kette, und zwar VOR dem Aufraeumen der Datenbank und vor dem
+  # Ergebnisteil des Laufs. Gemessen am 10.08.2026: 30 von 30 bestanden,
+  # danach Rueckgabewert 143 und keine Summenzeile. Ein bestandener Lauf,
+  # der als Fehlschlag endete -- und eine Wegwerfdatenbank, die blieb.
+  aufraeumen() {
+    if [ "$pid" -gt 0 ]; then
+      kill "$pid" 2>/dev/null || true
+      wait "$pid" 2>/dev/null || true
+    fi
+    psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
+    return 0
+  }
+  trap aufraeumen RETURN
+
+  # Beide Werte je Lauf neu und nur hier bekannt. Ein fest verdrahteter
+  # Pfeffer im Prueflauf waere ein Geheimnis im Repo (K23-D09).
+  #
+  # Sie entstehen VOR der Datenlage, nicht danach: anmeldung_daten.sql
+  # liest FREIRAUM_CODE_PFEFFER selbst (\getenv) und beendet sich sonst
+  # mit \quit -- und \quit gibt NULL zurueck. Ohne den Wert legte psql
+  # also nichts an und meldete Erfolg. Gemessen am 10.08.2026: die
+  # Pruefdatenbank blieb leer, der Lauf brach erst spaeter an der
+  # fehlenden Sicht ab. Derselbe Fehlertyp wie BEF-D3 -- ein stiller
+  # Nichtlauf, der wie ein Erfolg aussieht.
+  pfeffer=$(python3 -c 'import secrets;print(secrets.token_hex(16))')
+  schluessel=$(python3 -c 'import secrets;print(secrets.token_hex(32))')
+  port=$(python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()')
+  log="$(mktemp)"
+
+  if ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
+    echo "   $kennung — GESPERRT: Wegwerfdatenbank aus $PGDATABASE nicht anlegbar"
+    merke "$kennung" gesperrt "Vorlage $PGDATABASE nicht kopierbar"; return
+  fi
+  if ! FREIRAUM_CODE_PFEFFER="$pfeffer" \
+       psql -d "$db" -v ON_ERROR_STOP=1 -q -f "$daten" >"$log" 2>&1; then
+    echo "   $kennung — GESPERRT: $daten laeuft nicht durch"
+    head -5 "$log" | sed 's/^/      /'
+    rm -f "$log"
+    merke "$kennung" gesperrt "Datenlage nicht herstellbar"; return
+  fi
+  # Gegenprobe zum \quit-Fall: ein Rueckgabewert von null beweist NICHT,
+  # dass etwas entstanden ist. Eine Datendatei, die ihre Vorbedingung
+  # nicht erfuellt sieht, meldet das und beendet sich mit \quit -- also
+  # mit null. Geprueft wird deshalb ihre Meldung, nicht ihr Rueckgabewert.
+  # Bewusst gegen das Wort ABBRUCH und nicht gegen ein einzelnes Objekt:
+  # der Prueflauf darf nicht wissen muessen, WAS die Datei anlegt.
+  if grep -q 'ABBRUCH' "$log" 2>/dev/null; then
+    echo "   $kennung — GESPERRT: $daten hat abgebrochen und trotzdem null gemeldet"
+    grep 'ABBRUCH' "$log" | head -3 | sed 's/^/      /'
+    rm -f "$log"
+    merke "$kennung" gesperrt "Datendatei brach ab, Rueckgabewert null"; return
+  fi
+
+  FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
+  FREIRAUM_CODE_PFEFFER="$pfeffer" \
+  FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+    .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  pid=$!
+
+  # Warten, bis er antwortet -- und aufgeben, statt ewig zu haengen.
+  local i=0
+  until curl -sS -o /dev/null --max-time 2 "http://127.0.0.1:$port/gesundheit" 2>/dev/null; do
+    i=$((i+1))
+    if [ "$i" -ge 50 ] || ! kill -0 "$pid" 2>/dev/null; then
+      echo "   $kennung — GESPERRT: Server kam nicht hoch (Port $port)"
+      head -5 "$log" | sed 's/^/      /'
+      rm -f "$log"
+      merke "$kennung" gesperrt "Server startete nicht"; return
+    fi
+    sleep 0.2
+  done
+
+  set +e
+  aus=$(FREIRAUM_PRUEF_URL="http://127.0.0.1:$port" \
+        FREIRAUM_CODE_PFEFFER="$pfeffer" \
+        FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+        PGDATABASE="$db" \
+        "$lauf" 2>&1)
+  rc=$?
+  set -e
+  rm -f "$log"
+
+  summe=$(printf '%s\n' "$aus" | sed -n 's/^SUMME: //p' | head -1)
+  case "$rc" in
+    0) echo "   $kennung — ${summe:-bestanden}"
+       merke "$kennung" bestanden "${summe:-ohne Summenzeile}" ;;
+    2) # F07: die Aufbaupruefung des Prueflaufs hat nicht getragen.
+       # Dann ist kein einziger Fall gelaufen -- das ist GESPERRT.
+       printf '%s\n' "$aus" | grep '^ABBRUCH' | head -1 | sed 's/^/      /' || true
+       echo "   $kennung — GESPERRT: Aufbaupruefung (F07) hat nicht getragen"
+       merke "$kennung" gesperrt "F07-Abbruch, nichts gemessen" ;;
+    *) printf '%s\n' "$aus" | grep -E 'GESCHEITERT|GESPERRT' | head -12 | sed 's/^/      /' || true
+       echo "::error::$kennung — ${summe:-Faelle gescheitert}"
+       merke "$kennung" fehlgeschlagen "${summe:-ohne Summenzeile}" ;;
+  esac
+}
+
+shopt -s nullglob
+klauselfaelle=(pruefungen/klauseln/*_lauf.sh)
+
+if [ "${#klauselfaelle[@]}" -eq 0 ]; then
   echo "   keine vorhanden — GESPERRT, nicht bestanden (K23-M22)"
   echo "   Sie entstehen je Scheibe durch den blinden Pruef-Agenten."
   merke "Klausel-Prueffaelle" gesperrt "noch keine Scheibe gebaut"
+elif [ "$PSQL_DA" = nein ]; then
+  for f in "${klauselfaelle[@]}"; do
+    kennung=$(basename "$f" _lauf.sh)
+    echo "   $kennung — GESPERRT: $PSQL_GRUND"
+    merke "$kennung" gesperrt "$PSQL_GRUND"
+  done
 else
-  echo "   $anzahl Datei(en) — noch nicht angebunden, GESPERRT"
-  merke "Klausel-Prueffaelle" gesperrt "$anzahl Datei(en), Anbindung fehlt"
+  for f in "${klauselfaelle[@]}"; do
+    klausellauf "$f" "$(basename "$f" _lauf.sh)"
+  done
 fi
 
 # ---------------------------------------------------------------------
