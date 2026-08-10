@@ -26,6 +26,7 @@ verschickt ihn; ob er stimmt, prueft die Anwendung.
 import argparse
 import hashlib
 import os
+import re
 import secrets
 import smtplib
 import sys
@@ -41,13 +42,65 @@ except ImportError:  # pragma: no cover
 CODE_STELLEN = 6
 CODE_FRIST_MINUTEN = 10
 
+# ---------------------------------------------------------------------
+# Wohin diese Datei schreibt und sendet, wird AUSDRUECKLICH gewaehlt.
+#
+# BEF-L2-1, gemessen am 10.08.2026: DSN und SMTP_HOST trugen Vorgabewerte auf
+# localhost. Fehlte die Umgebung, schrieb der Versand in die oertliche
+# Pruefdatenbank und schickte an einen oertlichen Mailfaenger -- und meldete
+# ERFOLG. Ein Zustelltest haette damit den echten Weg nie beruehrt und trotzdem
+# gruen gemeldet. Genau das ist die Messung, die B2/AH-11 verlangt.
+#
+# Regel: FREIRAUM_UMGEBUNG=lokal setzt die oertlichen Werte -- und sagt es.
+#        Sonst sind FREIRAUM_SMTP_HOST und FREIRAUM_DSN Pflicht.
+#        Ein stiller Rueckfall auf localhost gibt es nicht mehr.
+# ---------------------------------------------------------------------
+UMGEBUNG = os.environ.get("FREIRAUM_UMGEBUNG", "").strip().lower()
+LOKAL = UMGEBUNG == "lokal"
+
 ABSENDER = os.environ.get("FREIRAUM_ABSENDER", "noreply@freiraum.top")
-SMTP_HOST = os.environ.get("FREIRAUM_SMTP_HOST", "localhost")
-SMTP_PORT = int(os.environ.get("FREIRAUM_SMTP_PORT", "1025"))
+SMTP_HOST = os.environ.get("FREIRAUM_SMTP_HOST") or ("localhost" if LOKAL else None)
+SMTP_PORT = int(os.environ.get("FREIRAUM_SMTP_PORT") or (1025 if LOKAL else 587))
 SMTP_USER = os.environ.get("FREIRAUM_SMTP_USER")
 SMTP_PASS = os.environ.get("FREIRAUM_SMTP_PASS")
-SMTP_TLS = os.environ.get("FREIRAUM_SMTP_TLS", "0") == "1"
-DSN = os.environ.get("FREIRAUM_DSN", "postgresql://postgres:pilot@localhost:55432/freiraum")
+# Ausserhalb der oertlichen Umgebung ist TLS die Vorgabe. Anmeldedaten ueber
+# eine ungesicherte Verbindung waeren das groessere Uebel als ein Fehlschlag.
+SMTP_TLS = (os.environ.get("FREIRAUM_SMTP_TLS") or ("0" if LOKAL else "1")) == "1"
+DSN = os.environ.get("FREIRAUM_DSN") or (
+    "postgresql://postgres:pilot@localhost:55432/freiraum" if LOKAL else None
+)
+
+
+def _dsn_ohne_geheimnis(dsn):
+    """Das Kennwort wird nie mitgedruckt -- auch nicht in einer Hinweiszeile
+    (K23-D09: keine Zugangswerte in Log, Manifest oder Fehlerausgabe)."""
+    return re.sub(r"://([^:/@]+):[^@]*@", r"://\1:***@", dsn or "")
+
+
+def umgebung_pruefen():
+    """Sagt vor dem ersten Schreibvorgang, wohin geschrieben und gesendet wird.
+
+    Der Satz ist kein Schmuck: Er ist der Beleg, dass ein Zustelltest den
+    echten Dienst beruehrt hat und nicht einen Fänger auf demselben Rechner."""
+    fehlend = [n for n, w in (("FREIRAUM_SMTP_HOST", SMTP_HOST),
+                              ("FREIRAUM_DSN", DSN)) if not w]
+    if fehlend:
+        raise SystemExit(
+            "Nicht gesetzt: " + ", ".join(fehlend) + ".\n"
+            "Entweder die Werte angeben, oder fuer die oertliche Pruefumgebung\n"
+            "ausdruecklich FREIRAUM_UMGEBUNG=lokal setzen.\n"
+            "Ein stiller Rueckfall auf localhost ist nicht vorgesehen (BEF-L2-1)."
+        )
+    print(
+        "Umgebung: {} · SMTP {}:{} · TLS {} · Anmeldung {} · DB {}".format(
+            "LOKAL (Pruefumgebung)" if LOKAL else "Dienst",
+            SMTP_HOST, SMTP_PORT,
+            "an" if SMTP_TLS else "aus",
+            "ja" if SMTP_USER else "nein",
+            _dsn_ohne_geheimnis(DSN),
+        ),
+        file=sys.stderr,
+    )
 
 
 def code_erzeugen():
@@ -206,6 +259,7 @@ def main():
     ap.add_argument("--link", default="https://freiraum.top/einladung/…")
     a = ap.parse_args()
 
+    umgebung_pruefen()
     absender_pruefen()
     with psycopg.connect(DSN) as conn:
         if a.art == "code":

@@ -79,7 +79,11 @@ if [ "${1:-}" = "--ci" ]; then
   for m in "$HIER"/migrations/*.sql; do echo "  $(basename "$m")"; ladeci "$m"; done
   echo
   echo "Fertig. Das ist die Datenbank, die pruefungen/lauf.sh erwartet:"
-  echo "  PGHOST=localhost PGPORT=55433 PGUSER=postgres PGDATABASE=freiraum_ci \\"
+  # PGPASSWORD gehoert dazu: der Container wird oben mit POSTGRES_PASSWORD=pilot
+  # erzeugt, und psql ueber TCP verlangt es. Ohne diese Angabe fragt psql
+  # interaktiv nach und der Lauf scheitert an der Anmeldung statt zu messen.
+  # Gemessen am 10.08.2026 -- die Zeile war seit dem 09.08. nicht ausfuehrbar.
+  echo "  PGHOST=localhost PGPORT=55433 PGUSER=postgres PGDATABASE=freiraum_ci PGPASSWORD=pilot \\"
   echo "    bash pruefungen/lauf.sh"
   echo "  Abbau: docker rm -f $CI"
   exit 0
