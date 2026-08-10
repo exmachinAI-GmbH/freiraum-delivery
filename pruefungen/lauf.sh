@@ -42,11 +42,34 @@ merke() {  # kennung · zustand · anmerkung
 }
 
 # ---------------------------------------------------------------------
+# 0 · Ist das Werkzeug ueberhaupt da?
+#
+#     BEF-D3, gemessen am 10.08.2026: Ohne psql gab dieser Lauf die
+#     Ueberschrift "== Migrationsprueffaelle ==" aus und starb dann
+#     WORTLOS -- er kam nicht einmal bis zu seiner eigenen ::error::-Zeile.
+#     Die Ursache steht in Abschnitt 1; sie traf JEDE psql-Stoerung, nicht
+#     nur das fehlende Werkzeug (unerreichbare Datenbank ebenso, gemessen).
+#
+#     K23-M22: was nicht gemessen werden konnte, ist GESPERRT, nicht bestanden.
+# ---------------------------------------------------------------------
+PSQL_DA=ja
+PSQL_GRUND="ohne psql nicht messbar"   # wird genauer, sobald der Grund bekannt ist
+if ! command -v psql >/dev/null 2>&1; then
+  PSQL_DA=nein
+  echo "::error::psql ist nicht im PATH — dieser Lauf misst NICHTS."
+  echo "   Abhilfe: brew install libpq && brew link --force libpq"
+  merke "Werkzeug-psql" gesperrt "psql nicht im PATH"
+fi
+
+# ---------------------------------------------------------------------
 # 1 · Die Prueffaelle der Sammelmigration
 # ---------------------------------------------------------------------
 echo "== Migrationsprueffaelle =="
 P=pruefungen/migration/M30__pruefung.sql
-if [ ! -f "$P" ]; then
+if [ "$PSQL_DA" = nein ]; then
+  echo "   GESPERRT — ohne psql nicht messbar"
+  merke "M30-Prueffaelle" gesperrt "psql fehlt"
+elif [ ! -f "$P" ]; then
   echo "::error::$P fehlt — GESPERRT"
   merke "M30-Prueffaelle" gesperrt "Datei fehlt"
 else
@@ -55,9 +78,36 @@ else
     echo "   $summe"
     merke "M30-Prueffaelle" bestanden "${summe:-ohne Summenzeile}"
   else
-    printf '%s\n' "$aus" | grep -E 'GESCHEITERT|FEHLER|SUMME' | head -20
-    echo "::error::Migrationsprueffaelle nicht bestanden"
-    merke "M30-Prueffaelle" fehlgeschlagen "$(printf '%s' "$aus" | grep -c 'GESCHEITERT') Fehlschlaege"
+    # HIER starb der Lauf. Ohne "|| true" beendet ein grep OHNE Treffer
+    # (Rueckgabewert 1) unter "set -euo pipefail" das ganze Skript -- und zwar
+    # VOR der ::error::-Zeile darunter. Der Fehlerzweig kam also nie dazu, den
+    # Fehler zu melden. Betroffen war jede psql-Stoerung, deren Ausgabe keines
+    # der drei Muster enthaelt: fehlendes psql, unerreichbare Datenbank,
+    # falsche Anmeldung (BEF-D3, gemessen 10.08.2026).
+    if printf '%s\n' "$aus" | grep -q '^psql: error:'; then
+      # psql selbst kam nicht durch: Verbindung, Anmeldung, fehlende Datenbank.
+      # Dann wurde NICHTS gemessen -- das ist GESPERRT, nicht fehlgeschlagen.
+      # Der Unterschied ist der ganze Punkt von K23-M22: "gemessen und schlecht"
+      # ist ein Ergebnis, "nicht gemessen" ist keines.
+      printf '%s\n' "$aus" | head -5 | sed 's/^/   /'
+      echo "::error::Datenbank nicht erreichbar — GESPERRT, nicht gemessen"
+      merke "M30-Prueffaelle" gesperrt "psql kam nicht durch"
+      PSQL_DA=nein   # die Negativfaelle brauchen es gar nicht erst zu versuchen
+      PSQL_GRUND="Datenbank nicht erreichbar"
+    else
+      gefiltert=$(printf '%s\n' "$aus" | grep -E 'GESCHEITERT|FEHLER|SUMME' | head -20 || true)
+      if [ -n "$gefiltert" ]; then
+        printf '%s\n' "$gefiltert"
+      else
+        # Kein bekanntes Muster? Dann die Rohausgabe zeigen. Eine Stoerung, die
+        # das Filtermuster NICHT kennt, ist die interessantere -- nicht die,
+        # die man wegwirft.
+        printf '%s\n' "$aus" | head -20 | sed 's/^/   /'
+      fi
+      echo "::error::Migrationsprueffaelle nicht bestanden"
+      anz=$(printf '%s' "$aus" | grep -c 'GESCHEITERT' || true)
+      merke "M30-Prueffaelle" fehlgeschlagen "${anz:-0} Fehlschlaege"
+    fi
   fi
 fi
 
@@ -69,6 +119,11 @@ echo "== Negativfaelle =="
 shopt -s nullglob
 for f in migrations/negativfaelle/*.sql; do
   kennung=$(basename "$f" .sql)
+  if [ "$PSQL_DA" = nein ]; then
+    echo "   $kennung — GESPERRT: $PSQL_GRUND"
+    merke "$kennung" gesperrt "$PSQL_GRUND"
+    continue
+  fi
   erwartet=$(sed -n 's/^-- erwartet: *//p' "$f" | head -1)
   if [ -z "$erwartet" ]; then
     echo "   $kennung — GESPERRT: nennt keine erwartete Bedingung"
@@ -78,6 +133,13 @@ for f in migrations/negativfaelle/*.sql; do
   if aus=$(psql -v ON_ERROR_STOP=1 -q -f "$f" 2>&1); then
     echo "   $kennung — DURCHGELAUFEN, die Bedingung fehlt"
     merke "$kennung" fehlgeschlagen "durchgelaufen statt abgewiesen"
+  elif printf '%s\n' "$aus" | grep -q '^psql: error:'; then
+    # Nicht "falsche Bedingung", sondern gar keine Messung. Ohne diese Zeile
+    # meldete ein Verbindungsabbruch vier FEHLSCHLAEGE -- und ein Fehlschlag
+    # klingt nach einem Ergebnis (BEF-D3, gemessen 10.08.2026).
+    echo "   $kennung — GESPERRT: psql kam nicht durch, nichts gemessen"
+    printf '%s\n' "$aus" | head -2 | sed 's/^/      /'
+    merke "$kennung" gesperrt "psql kam nicht durch"
   elif printf '%s' "$aus" | grep -qF "$erwartet"; then
     echo "   $kennung — scheitert an $erwartet"
     merke "$kennung" bestanden "$erwartet"
@@ -137,5 +199,17 @@ if [ "$fehl" -gt 0 ]; then
 fi
 if [ "$gesperrt" -gt 0 ]; then
   echo "::warning::Tor 1c: $gesperrt Punkt(e) GESPERRT — nicht gemessen, nicht bestanden"
+fi
+
+# Ein Lauf ohne einen einzigen bestandenen Punkt hat NICHTS gemessen und darf
+# nicht mit "kein Fehlschlag" enden. Sonst haette die Sperre aus Abschnitt 0
+# den Fehler nur verschoben: statt wortlos zu sterben, meldete der Lauf alles
+# GESPERRT -- und weil ein GESPERRT den Lauf nicht sperrt, waere er GRUEN
+# durchgelaufen, ohne eine einzige Zeile SQL ausgefuehrt zu haben.
+# CLAUDE.md Abschn. 6: "Einen gruenen Lauf melden, der nichts gemessen hat"
+# steht unter dem, was nie getan wird (K23-M22).
+if [ "$ok" -eq 0 ]; then
+  echo "::error::Tor 1c: kein einziger Punkt bestanden — der Lauf hat nichts gemessen."
+  exit 1
 fi
 echo "Tor 1c: kein Fehlschlag."
