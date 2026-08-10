@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Einladung annehmen · FREIRAUM</title>
+  {#
+    Die Bestaetigungsseite zur Einloesung. K19 fuehrt fuer sie KEINEN
+    eigenen Kasten -- diese Seite erfindet deshalb keine Kennung "EN-0x",
+    sondern uebernimmt Aufbau, Zugangsmarke (K19-M03) und Statusansage
+    (K19-M13) von EN-01. Eine erfundene Bildschirmnummer waere Umfang, den
+    niemand gezeichnet hat.
+
+    WARUM ES DIESE SEITE UEBERHAUPT GIBT: Der Link aus der Mail loest nichts
+    aus. Mailscanner rufen Links vorab ab, um sie zu pruefen; ein GET, das
+    einloest, waere von einem solchen Abruf verbraucht, bevor der Mensch die
+    Nachricht sieht. Die Einloesung braucht deshalb einen zweiten,
+    ausdruecklichen Schritt -- das verdeckte Feld und diese Schaltflaeche.
+
+    K19-D06 gilt auch hier: keine Restlaufzeit, kein Rueckwaertszaehler, kein
+    Ablaufzeitpunkt als Datum.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 28rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem 1.25rem 1.5rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
+    button { margin-top: 1.25rem; padding: .6rem 1.2rem; font: inherit;
+             border-radius: .25rem; cursor: pointer; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1>Einladung annehmen</h1>
+    <p class="marke">Zugang: offen</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). Der Text kommt IMMER aus
+      MELDUNG_MISSERFOLG -- diese Vorlage kennt keinen zweiten Wortlaut und
+      keine Fallunterscheidung.
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    {% if token %}
+      <p>Sie schalten damit Ihren Zugang frei. Danach melden Sie sich mit
+        Ihrer E-Mail-Adresse und einem Code an.</p>
+
+      <form method="post" action="/einladung">
+        {#
+          Der Token wandert aus der Adresszeile in den Rumpf des POST. Das
+          ist nicht Kosmetik: eine Adresszeile steht im Verlauf des Browsers,
+          im Zugriffsprotokoll des Servers und im Referrer der naechsten
+          Seite -- ein Rumpf steht in keinem davon (K20-M08, K23-D09).
+        #}
+        <input type="hidden" name="token" value="{{ token }}">
+        <button type="submit">Einladung annehmen</button>
+      </form>
+
+      <p class="hinweis">Der Link gilt einmal. Ist er verfallen, fordern Sie
+        einen neuen ueber Ihre Ansprechperson an.</p>
+    {% else %}
+      <p class="hinweis">Fordern Sie einen neuen Einladungslink ueber Ihre
+        Ansprechperson an.</p>
+    {% endif %}
+  </div>
+</main>
+</body>
+</html>

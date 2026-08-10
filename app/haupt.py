@@ -12,6 +12,11 @@ Der Vertrag der Scheibe:
     GET  /anmeldung   200, Formular mit email und code
     POST /anmeldung   Erfolg -> 303 auf "/", Cookie fr_sitzung
                       sonst  -> 200 mit der einen Meldung, KEIN Cookie
+    GET  /einladung   200, Bestaetigungsseite mit verdecktem Feld token.
+                      AENDERT NICHTS. Ohne tragenden Parameter: 200 mit der
+                      einen Meldung der Einloesung
+    POST /einladung   Erfolg -> 303 auf "/anmeldung"
+                      sonst  -> 200 mit der einen Meldung, KEINE Aenderung
     GET  /            ohne gueltige Sitzung -> 303 auf "/anmeldung"
     POST /abmelden    303 auf "/anmeldung", Sitzung beendet
     GET  /gesundheit  200 {"status":"ok"}, ohne Sitzung erreichbar
@@ -20,6 +25,7 @@ Der Import von app.datenbank steht bewusst am Anfang: fehlt einer der drei
 Pflichtwerte der Umgebung, bricht er hier ab -- beim START, nicht beim ersten
 Anmeldeversuch (Befund BEF-L2-1 vom 10.08.2026).
 """
+import logging
 from pathlib import Path
 
 import psycopg
@@ -29,6 +35,8 @@ from fastapi.templating import Jinja2Templates
 
 from app.anmeldung import MELDUNG_MISSERFOLG, anmelden
 from app.datenbank import verbindung
+from app.einladung import MELDUNG_MISSERFOLG as MELDUNG_EINLADUNG
+from app.einladung import einloesen, token_traegt
 from app.sitzung import (
     KEKS_NAME,
     keks_loeschen,
@@ -43,6 +51,37 @@ from app.sitzung import (
 VORLAGEN = Jinja2Templates(directory=str(Path(__file__).parent / "vorlagen"))
 
 app = FastAPI(title="FREIRAUM · Anmeldung", docs_url=None, redoc_url=None)
+
+
+class TokenAusDemProtokoll(logging.Filter):
+    """Verdeckt die Abfragezeichenfolge von /einladung im Zugriffsprotokoll.
+
+    K20-M08 und K23-D09: der Klartext-Token steht NIE in einem Log. Das
+    Zugriffsprotokoll von uvicorn schreibt die volle Anfragezeile, also auch
+    "?token=...". Der Einladungslink ist ein Zugangswert -- wer das Protokoll
+    lesen darf, koennte damit jede noch offene Einladung einloesen, ohne die
+    Datenbank je gesehen zu haben.
+
+    Deshalb traegt der Vertrag den Token beim POST im Rumpf; nur der erste
+    Aufruf aus der Mail kann ihn ueberhaupt in der Adresszeile fuehren, und
+    genau diese Zeile wird hier gekuerzt. Der Pfad bleibt stehen, damit der
+    Betrieb den Aufruf noch sieht.
+
+    Der Filter haengt an der Ausgabe und ersetzt sie nicht: geht er ins
+    Leere -- anderes Format, anderer Server --, bleibt die Zeile wie sie war.
+    Ein Protokollfilter darf kein Protokoll verschlucken.
+    """
+
+    def filter(self, satz):
+        args = getattr(satz, "args", None)
+        if isinstance(args, tuple) and len(args) >= 3 and isinstance(args[2], str):
+            pfad = args[2]
+            if pfad.startswith("/einladung?"):
+                satz.args = args[:2] + ("/einladung?token=<verdeckt>",) + args[3:]
+        return True
+
+
+logging.getLogger("uvicorn.access").addFilter(TokenAusDemProtokoll())
 
 
 @app.exception_handler(psycopg.OperationalError)
@@ -114,6 +153,62 @@ def anmeldung_absenden(request: Request,
     antwort = RedirectResponse("/", status_code=UMLEITUNG)
     keks_setzen(antwort, sitzung_id)
     antwort.headers["Cache-Control"] = "no-store"
+    return antwort
+
+
+def _einladungsseite(request, token=None, meldung=None):
+    antwort = VORLAGEN.TemplateResponse(
+        request, "einladung.html", {"token": token, "meldung": meldung})
+    # no-store: der Token steht im verdeckten Feld dieser Seite und hat in
+    # keinem Zwischenspeicher etwas verloren. no-referrer: sonst reicht der
+    # Browser die Adresszeile -- mitsamt Token -- an das naechste Ziel weiter
+    # (K20-M08, K23-D09).
+    antwort.headers["Cache-Control"] = "no-store"
+    antwort.headers["Referrer-Policy"] = "no-referrer"
+    return antwort
+
+
+@app.get("/einladung", response_class=HTMLResponse)
+def einladungsmaske(request: Request, token: str = ""):
+    """Zeigt die Bestaetigung. AENDERT NICHTS -- keine Zeile, keine Verbindung.
+
+    Diese Route ruehrt die Datenbank nicht an. Zwei Gruende, beide zwingend:
+
+    1. Ein Mailscanner ruft Links vorab ab. Loeste dieser Aufruf ein, waere
+       die Einladung verbraucht, bevor der Mensch sie sieht -- und der Weg
+       fuehrte fuer ihn ins Leere (K20-D10: der verfallene Link fuehrt zu
+       einem neuen Vorgang, nicht zu einer Verlaengerung).
+
+    2. Wuerde hier nachgesehen, ob es den Streuwert gibt, waere die Antwort
+       ein Orakel: Bestaetigungsseite heisst "diese Einladung existiert",
+       Meldung heisst "diese nicht". Wer Links durchprobiert, haette damit
+       ein Verzeichnis der offenen Einladungen. Also entscheidet hier
+       ausschliesslich, ob ueberhaupt ein Wert vorliegt; ob er traegt,
+       entscheidet erst der POST -- und der sagt es niemandem.
+    """
+    if not token_traegt(token):
+        return _einladungsseite(request, meldung=MELDUNG_EINLADUNG)
+    return _einladungsseite(request, token=token)
+
+
+@app.post("/einladung")
+def einladung_annehmen(request: Request, token: str = Form(default="")):
+    with verbindung() as conn:
+        erfolg = einloesen(conn, token)
+
+    if not erfolg:
+        # 200 mit der einen Meldung. Die Seite kommt OHNE Token zurueck: ein
+        # Link, der nicht mehr traegt, gehoert nicht noch einmal angeboten --
+        # eine zweite Schaltflaeche waere die Einladung, es noch einmal zu
+        # versuchen, und jeder Versuch ist derselbe Misserfolg (K20-D10).
+        return _einladungsseite(request, meldung=MELDUNG_EINLADUNG)
+
+    # 303 auf EN-01. Der Zugang ist frei, angemeldet ist damit niemand: die
+    # Einloesung ist keine bestaetigte zweite Stufe, und eine Sitzung entsteht
+    # nur aus einer solchen (K03-M09). Der naechste Schritt ist der Code.
+    antwort = RedirectResponse("/anmeldung", status_code=UMLEITUNG)
+    antwort.headers["Cache-Control"] = "no-store"
+    antwort.headers["Referrer-Policy"] = "no-referrer"
     return antwort
 
 
