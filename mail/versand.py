@@ -114,6 +114,28 @@ def streuwert(code, pfeffer=""):
     return hashlib.sha256((pfeffer + code).encode("utf-8")).hexdigest()
 
 
+def pfeffer():
+    """Der Pfeffer aus der Umgebung -- Entscheidung D vom 10.08.2026.
+
+    Befund BEF-B2-2: bis dahin wurde der Parameter oben nie belegt. Ein
+    SHA-256 ueber sechs Ziffern ohne Pfeffer ist ueber alle 1 000 000
+    Kandidaten in gemessenen 0,17 Sekunden zurueckgerechnet -- wer login_code
+    lesen darf, kennt damit jeden Code.
+
+    Nie in der Datenbank, nie im Bau, spaeter aus dem Schluesseltresor ueber
+    die verwaltete Identitaet. Fehlt er, wird kein Code ausgestellt: ein
+    Vorgabewert waere ein fest verdrahtetes Geheimnis (Befund BEF-L2-1), und
+    ein hier anders gepfefferter Wert passt nachher zu keiner Anmeldung.
+    """
+    wert = os.environ.get("FREIRAUM_CODE_PFEFFER")
+    if not wert:
+        raise SystemExit(
+            "FREIRAUM_CODE_PFEFFER ist nicht gesetzt. Ohne Pfeffer waere der "
+            "abgelegte Pruefwert in Sekunden zurueckgerechnet (Entscheidung D "
+            "vom 10.08.2026, Befund BEF-B2-2). Es wird kein Code ausgestellt.")
+    return wert
+
+
 def absender_pruefen():
     """Der Absender muss in der Domaene liegen, fuer die die SPF-Kette gilt.
     Sonst geht die Mail raus und kommt nie an -- der unangenehmste Fehler,
@@ -182,7 +204,7 @@ def anmeldecode(conn, empfaenger):
         cur.execute(
             "INSERT INTO login_code (actor_id, code_hash) VALUES (%s,%s)"
             " RETURNING expires_at",
-            (actor_id, streuwert(code)))
+            (actor_id, streuwert(code, pfeffer())))
         ablauf = cur.fetchone()[0]
     conn.commit()
 
