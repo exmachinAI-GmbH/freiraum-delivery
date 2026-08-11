@@ -30,16 +30,20 @@
 #   PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE
 #                           Vorgabe localhost/55433/postgres/pilot/freiraum_pruef
 #
-# OFFENE VERTRAGSSTELLE (siehe Abschlussbericht des Pruef-Agenten):
-#   Das FORMAT der Datei hinter FREIRAUM_PRUEF_MAILFANG ist nirgends
-#   benannt, wo dieser Agent lesen darf (mail/** ist ihm verboten). Die
-#   Extraktion in mailfang_token() unten ist deshalb ABSICHTLICH tolerant
-#   gegen mehrere plausible Formen (JSON-Zeilen, ein JSON-Array, Freitext
-#   in Bloecken) und faellt, wenn sie die Mail nicht eindeutig der
-#   Empfaenger-Adresse zuordnen kann, auf GESPERRT zurueck statt auf einen
-#   falschen Fehlschlag. Stimmt das tatsaechliche Format nicht mit einer
-#   der drei Annahmen ueberein, bleibt MG-09 GESPERRT und muss nach
-#   Klaerung des Formats nachgezogen werden.
+# MAILFANG-FORMAT (verbindlich nachgereicht -- vormals offene
+# Vertragsstelle, siehe Abschlussbericht des Pruef-Agenten): die Datei
+# enthaelt die rohen Zeilen der SMTP-DATA-Phase, also Kopfzeilen, eine
+# Leerzeile, dann den Rumpf -- so, wie der Versand sie geschrieben hat.
+# Nach jeder Nachricht folgt genau eine Trennzeile
+# "--- Ende der Nachricht ---". Mehrere Nachrichten stehen in
+# Reihenfolge ihres Eingangs hintereinander. mailfang_token() unten
+# liest GENAU dieses Format. Die vormals versuchsweise mitgefuehrten
+# Formen (JSON-Zeilen, ein JSON-Array, ungebundener Freitext in
+# Absaetzen) sind entfernt: ohne den verbindlichen Vertrag waren sie
+# blosse Vermutungen, und ein Fund gegen eine falsche Vermutung misst
+# nichts (K23-D05). Findet die Funktion die Mail trotzdem nicht
+# eindeutig der Empfaenger-Adresse zugeordnet, faellt MG-09 weiterhin
+# auf GESPERRT zurueck statt auf einen falschen Fehlschlag.
 #
 # ANNAHME aus versand_lauf.sh uebernommen (dort VE-08-Kommentar): die
 # Maske /einladung/senden vergibt IMMER EXMA/Plattform-Admin, es gibt
@@ -147,101 +151,58 @@ sitzungszahl() { [ -f "$ARBEIT/$1.kopf" ] || { printf '0'; return; }
 rumpf()        { printf '%s' "$ARBEIT/$1.rumpf"; }
 
 # Die einzige Stelle, an der die Extraktion des Einladungslinks aus der
-# gefangenen Mail geschieht (siehe die offene Vertragsstelle im Kopf
-# dieser Datei). $1 Pfad zur Mailfang-Datei, $2 Empfaengeradresse.
+# gefangenen Mail geschieht -- gegen das jetzt verbindliche Mailfang-
+# Format (siehe Kopf dieser Datei): rohe SMTP-DATA-Zeilen je Nachricht
+# (Kopfzeilen, eine Leerzeile, Rumpf), Nachrichten in Reihenfolge ihres
+# Eingangs hintereinander, je durch die Zeile
+# "--- Ende der Nachricht ---" getrennt.
+# $1 Pfad zur Mailfang-Datei, $2 Empfaengeradresse.
 # Ausgabe: der Klartext-Token auf stdout.
 # Rueckgabewert: 0 = eindeutig der Adresse zugeordnet gefunden,
-#                3 = ein Treffer gefunden, aber NICHT der Adresse zuordenbar,
+#                3 = ein Token gefunden, aber in KEINER Nachricht, deren
+#                    Kopfzeilen die Adresse nennen,
 #                2 = kein Treffer,  1 = Datei nicht lesbar.
 mailfang_token() {
   python3 - "$1" "$2" <<'PY'
-import json, re, sys
+import re, sys
 
 pfad, empfaenger = sys.argv[1], sys.argv[2].lower()
 try:
     text = open(pfad, encoding="utf-8", errors="replace").read()
 except OSError:
     sys.exit(1)
+text = text.replace('\r\n', '\n')
+
+# Nachrichten trennen: jede endet mit der Zeile
+# "--- Ende der Nachricht ---" fuer sich allein.
+trenner = re.compile(r'^[ \t]*---[ \t]*Ende der Nachricht[ \t]*---[ \t]*\n?', re.MULTILINE)
+nachrichten = [n for n in trenner.split(text) if n.strip()]
 
 muster = re.compile(r'token=([A-Za-z0-9_\-\.]{6,})')
 kandidat = None
-eingegrenzt = False
+token_irgendwo_gesehen = False
 
-# 1) JSON-Zeilen: eine gefangene Mail je Zeile.
-json_zeilen_gesehen = False
-for zeile in text.splitlines():
-    zeile = zeile.strip()
-    if not zeile:
-        continue
-    try:
-        obj = json.loads(zeile)
-    except ValueError:
-        continue
-    json_zeilen_gesehen = True
-    blob = json.dumps(obj, ensure_ascii=False)
-    if empfaenger in blob.lower():
-        treffer = muster.findall(blob)
-        if treffer:
-            kandidat = treffer[-1]
-            eingegrenzt = True
-
-# 2) Ganze Datei als EIN JSON-Array/-Objekt.
-if kandidat is None and not json_zeilen_gesehen:
-    try:
-        obj = json.loads(text)
-        eintraege = obj if isinstance(obj, list) else [obj]
-        for eintrag in eintraege:
-            blob = json.dumps(eintrag, ensure_ascii=False)
-            if empfaenger in blob.lower():
-                treffer = muster.findall(blob)
-                if treffer:
-                    kandidat = treffer[-1]
-                    eingegrenzt = True
-    except ValueError:
-        pass
-
-# 3) Freitext, Format unbekannt: in Leerzeile-getrennte Absaetze zerlegt
-#    und ein GLEITENDES FENSTER ab jedem Absatz, der die Adresse nennt.
-#    WICHTIG: eine einzelne Nachricht traegt in Kopf-vor-Koerper-Form oft
-#    selbst blanke Zeilen zwischen Kopfzeilen und Koerper -- ein exakter
-#    Blockvergleich (Adresse UND Link im selben Absatz) reisst dann die
-#    Empfaengerzeile vom Link im Koerper derselben Nachricht ab (so
-#    gemessen bei einer ersten Fassung dieser Funktion: die Adresse stand
-#    im einen Absatz, der Link zwei Absaetze weiter, und kein einzelner
-#    Absatz trug beides). Das Fenster laeuft deshalb ueber mehrere
-#    Absaetze weiter, bricht aber ab, sobald ein NEUER Absatz eine ANDERE
-#    @pruef.example-Adresse nennt -- das Zeichen, dass eine andere
-#    Nachricht beginnt. Steht mehr als eine Mail an dieselbe Adresse in
-#    der Datei, gewinnt die LETZTE (die juengste).
-if kandidat is None:
-    absaetze = re.split(r'\n\s*\n', text)
-    andere_adresse = re.compile(r'[A-Za-z0-9._%+\-]+@pruef\.example')
-    for i, absatz in enumerate(absaetze):
-        if empfaenger not in absatz.lower():
-            continue
-        fenster = []
-        for j in range(i, min(i + 8, len(absaetze))):
-            if j > i:
-                gefundene = {a.lower() for a in andere_adresse.findall(absaetze[j])}
-                if gefundene and empfaenger not in gefundene:
-                    break  # eine andere Nachricht beginnt
-            fenster.append(absaetze[j])
-            treffer = muster.findall('\n\n'.join(fenster))
-            if treffer:
-                kandidat = treffer[-1]
-                eingegrenzt = True
-
-# 4) Letzter Ausweg: irgendein Treffer in der ganzen Datei, NICHT nach
-#    Empfaenger eingegrenzt.
-if kandidat is None:
-    treffer = muster.findall(text)
+# Je Nachricht: Kopfzeilen vor der ersten Leerzeile, Rumpf danach.
+# Zugeordnet wird ausschliesslich ueber die Kopfzeilen -- ein Treffer im
+# Rumpf einer FREMDEN Nachricht (z.B. weil die Adresse dort zufaellig
+# als Text vorkommt) zaehlt nicht als Zuordnung. Stehen mehrere
+# Nachrichten an dieselbe Adresse in der Datei (z.B. nach einem
+# erneuten Versand), gewinnt die LETZTE -- die Nachrichten stehen nach
+# Vertrag in Reihenfolge ihres Eingangs.
+for nachricht in nachrichten:
+    teile = re.split(r'\n[ \t]*\n', nachricht, maxsplit=1)
+    kopf = teile[0]
+    rumpf = teile[1] if len(teile) == 2 else ''
+    treffer = muster.findall(rumpf) or muster.findall(kopf)
     if treffer:
-        kandidat = treffer[-1]
+        token_irgendwo_gesehen = True
+        if empfaenger in kopf.lower():
+            kandidat = treffer[-1]
 
 if kandidat is None:
-    sys.exit(2)
+    sys.exit(3 if token_irgendwo_gesehen else 2)
 print(kandidat)
-sys.exit(0 if eingegrenzt else 3)
+sys.exit(0)
 PY
 }
 
@@ -409,9 +370,25 @@ fi
 # MG-03 · K20-D02 · Portal EXMA auf PLANNED: keine Einladung, KEINE
 #         Mitgliedschaft. Gegenprobe: MG-01 (EXMA ENABLED, derselbe
 #         Vorgang legt Einladung UND Mitgliedschaft an).
+#
+#         Berichtigung C (Blatt 63, 11.08.2026 -- derselbe Fehlertyp und
+#         dieselbe Loesung wie VE-08 in versand_lauf.sh, Blatt 60):
+#         beide zulaessigen Ausgaenge sind 303 -- Erfolg (?gesendet=1)
+#         UND Sitzungsabbruch (/anmeldung). Steht EXMA auf PLANNED,
+#         findet die Portalbestimmung kein freigeschaltetes Portal, und
+#         DAS BEENDET DIE SITZUNG des Einladenden (nicht nur diesen
+#         Aufruf) -- fail-closed landet der Aufruf mit 303 auf
+#         /anmeldung, exakt das vom Vertrag gedeckte Verhalten ("Ohne
+#         gueltige Sitzung -> 303 auf /anmeldung"). Der Statuscode
+#         allein unterscheidet die beiden Ausgaenge darum NICHT;
+#         unterschieden wird am Location-Kopf. Gemessen werden weiter
+#         GENAU DIESELBEN Kernbedingungen wie vorher -- (1) keine
+#         Einladung, (2) keine Mitgliedschaft -- nur der Statuscheck ist
+#         jetzt zielgenau statt pauschal.
 # =====================================================================
 db "UPDATE portal SET release_status='PLANNED' WHERE code='EXMA'" >/dev/null
 st=$(post_einladung_senden 'mg_geplant@pruef.example' 'Pruef MG Geplant' mg03 "$KEKS")
+ziel="$(kopfzeile mg03 location)"
 db "UPDATE portal SET release_status='ENABLED' WHERE code='EXMA'" >/dev/null
 inv_entstanden="$(dbz "SELECT count(*) FROM invitation WHERE mail='mg_geplant@pruef.example'")"
 mit_entstanden="$(dbz "SELECT count(*) FROM membership m JOIN actor a ON a.id=m.actor_id
@@ -419,9 +396,41 @@ mit_entstanden="$(dbz "SELECT count(*) FROM membership m JOIN actor a ON a.id=m.
 m=""
 [ "${inv_entstanden:-1}" = "0" ] || m="$m es entstand eine Einladung, obwohl EXMA auf PLANNED stand;"
 [ "${mit_entstanden:-1}" = "0" ] || m="$m es entstand eine Mitgliedschaft, obwohl EXMA auf PLANNED stand (K20-D02);"
-[ "$st" = "303" ] && m="$m der Vorgang meldete 303 (Erfolg), obwohl EXMA auf PLANNED stand;"
-[ -z "$m" ] && ok MG-03 "Portal EXMA auf PLANNED: keine Einladung und keine Mitgliedschaft entstehen (K20-D02; beobachteter Status: $st)" \
+[ "$st" = "303" ] || m="$m Status $st statt 303 (beide zulaessigen Ausgaenge -- Erfolg wie Sitzungsabbruch -- sind 303);"
+case "$ziel" in
+  */einladung/senden\?gesendet=1)
+    m="$m die Antwort fuehrt auf die Erfolgsseite ?gesendet=1, obwohl EXMA auf PLANNED stand (K20-D02);" ;;
+  *"/anmeldung"*)
+    : ;;  # fail-closed: keine gueltige Sitzung mangels freigeschaltetem Portal -> 303 auf /anmeldung, vom Vertrag gedeckt
+  *)
+    m="$m Location '$ziel' ist weder die Erfolgsseite noch /anmeldung -- kein vom Vertrag gedeckter Ausgang;" ;;
+esac
+[ -z "$m" ] && ok MG-03 "Portal EXMA auf PLANNED: keine Einladung und keine Mitgliedschaft entstehen, die Antwort fuehrt nicht auf die Erfolgsseite (K20-D02; Location: '$ziel', Berichtigung Blatt 63 C)" \
             || nok MG-03 "PLANNED-Portal:$m"
+
+# =====================================================================
+# Sitzung NEU herstellen -- MG-03 hat das Portal EXMA kurzzeitig auf
+# PLANNED geschaltet. Die Portalbestimmung fand daraufhin kein
+# freigeschaltetes Portal, und DAS BEENDET DIE SITZUNG des Einladenden
+# dauerhaft, nicht nur den einzelnen Aufruf (BEFUND S-1, 10.08.2026:
+# eine Sperre sperrt AUS, sie haengt nicht aus -- fuer ein
+# abgeschaltetes Portal gilt nach Blatt 63 C dieselbe Folge). $KEKS ist
+# ab hier wertlos. Jeder Fall unterhalb, der die Sitzung des
+# Einladenden weiter braucht (MG-05, MG-06, MG-09), meldet sich NEU an
+# -- sonst liefe er, wie bis zur Berichtigung gemessen, ins Leere
+# (Location /anmeldung statt der eigentlich geprueften Bedingung).
+# Bleibt die Neuanmeldung selbst erfolglos, wird $KEKS auf leer
+# gesetzt; die betroffenen Faelle melden dann GESPERRT statt an einer
+# falschen Bedingung zu scheitern (F07).
+# =====================================================================
+db "INSERT INTO login_code (actor_id, code_hash, issued_at, expires_at)
+    SELECT id, pruef_codewert('700002', '$FREIRAUM_CODE_PFEFFER'), now(), now() + interval '10 minutes'
+      FROM actor WHERE email = 'einladend@pruef.example'" >/dev/null
+st=$(post_anmeldung 'einladend@pruef.example' '700002' anmeldung_neu)
+KEKS="$(sitzungswert anmeldung_neu)"
+if [ "$st" != "303" ] || [ -z "$KEKS" ]; then
+  KEKS=""
+fi
 
 # =====================================================================
 # MG-04 · K03-M11 · "genau ein Portal, bestimmt ueber membership. Genau
@@ -465,7 +474,9 @@ MG05_AKTID="$(dbz "SELECT id FROM actor WHERE email='mg_wiederholt@pruef.example
 alte_id="$(dbz "SELECT id FROM invitation WHERE actor_id='$MG05_AKTID' AND status='VERSANDT'")"
 alter_attempt="$(dbz "SELECT attempt FROM invitation WHERE id='$alte_id'")"
 mzahl_vor="$(dbz "SELECT count(*) FROM membership WHERE actor_id='$MG05_AKTID'")"
-if [ -z "$alte_id" ] || [ -z "$alter_attempt" ] || [ "${mzahl_vor:-0}" != "1" ]; then
+if [ -z "$KEKS" ]; then
+  sperr MG-05 "Erneuter Versand nicht pruefbar: die Sitzung des Einladenden liess sich nach MG-03 nicht neu herstellen"
+elif [ -z "$alte_id" ] || [ -z "$alter_attempt" ] || [ "${mzahl_vor:-0}" != "1" ]; then
   sperr MG-05 "Erneuter Versand nicht pruefbar: die vorbereitete offene Einladung oder ihre Mitgliedschaft fuer mg_wiederholt@ fehlt (mzahl_vor=${mzahl_vor:-?})"
 else
   st=$(post_einladung_senden 'mg_wiederholt@pruef.example' 'Pruef MG Wiederholt Erneut' mg05 "$KEKS")
@@ -525,7 +536,9 @@ MG06_AKTID="$(dbz "SELECT id FROM actor WHERE email='mg_aktiv@pruef.example'")"
 mg06_invid="$(dbz "SELECT id FROM invitation WHERE actor_id='$MG06_AKTID' AND status='EINGELOEST'")"
 mg06_redeemed_vor="$(dbz "SELECT redeemed_at::text FROM invitation WHERE id='$mg06_invid'")"
 mg06_mzahl_vor="$(dbz "SELECT count(*) FROM membership WHERE actor_id='$MG06_AKTID'")"
-if [ -z "$mg06_invid" ] || [ -z "$mg06_redeemed_vor" ] || [ "${mg06_mzahl_vor:-0}" != "1" ]; then
+if [ -z "$KEKS" ]; then
+  sperr MG-06 "Gefaehrlichster Fall nicht pruefbar: die Sitzung des Einladenden liess sich nach MG-03 nicht neu herstellen"
+elif [ -z "$mg06_invid" ] || [ -z "$mg06_redeemed_vor" ] || [ "${mg06_mzahl_vor:-0}" != "1" ]; then
   sperr MG-06 "Gefaehrlichster Fall nicht pruefbar: die vorbereitete eingeloeste Einladung oder ihre Mitgliedschaft fuer mg_aktiv@ fehlt (mzahl_vor=${mg06_mzahl_vor:-?})"
 else
   zeile_vor="$(dbz "SELECT portal_code || '|' || role_id || '|' || tenant_scope
@@ -640,7 +653,9 @@ fi
 #         Nebenwirkungen isoliert, dieser Fall prueft den Faden am
 #         Stueck, wie ein echter eingeladener Nutzer ihn durchlaeuft.
 # =====================================================================
-if [ -z "$MAILFANG" ]; then
+if [ -z "$KEKS" ]; then
+  sperr MG-09 "Ganzer Faden nicht pruefbar: die Sitzung des Einladenden liess sich nach MG-03 nicht neu herstellen"
+elif [ -z "$MAILFANG" ]; then
   sperr MG-09 'FREIRAUM_PRUEF_MAILFANG ist nicht gesetzt -- ohne die gefangenen Mails ist der Link aus der Einladung nicht auffindbar, der ganze Faden also nicht pruefbar'
 elif [ ! -r "$MAILFANG" ]; then
   sperr MG-09 "FREIRAUM_PRUEF_MAILFANG='$MAILFANG' ist nicht lesbar"
@@ -660,8 +675,8 @@ else
     token="$(mailfang_token "$MAILFANG" 'mg_faden@pruef.example')" || mailfang_rc=$?
     case "$mailfang_rc" in
       0) : ;;
-      3) sperr MG-09 "Ein Einladungslink wurde in $MAILFANG gefunden, aber NICHT eindeutig mg_faden@pruef.example zugeordnet -- Format der Mailfang-Datei weicht von den drei versuchten Annahmen ab (offener Punkt, siehe Abschlussbericht)" ;;
-      2) sperr MG-09 "Kein Einladungslink fuer mg_faden@pruef.example in $MAILFANG gefunden (offener Punkt: Format der Mailfang-Datei, siehe Abschlussbericht)" ;;
+      3) sperr MG-09 "In $MAILFANG wurde ein Einladungstoken gefunden, aber KEINE Nachricht darin nennt mg_faden@pruef.example in ihren Kopfzeilen -- die Zuordnung nach dem verbindlichen Mailfang-Format (siehe Kopf dieser Datei) misslingt" ;;
+      2) sperr MG-09 "Kein Einladungstoken fuer mg_faden@pruef.example in $MAILFANG gefunden (Format: siehe Kopf dieser Datei)" ;;
       *) sperr MG-09 "$MAILFANG konnte nicht gelesen werden" ;;
     esac
 
