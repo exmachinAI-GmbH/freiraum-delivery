@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Einladung senden · FREIRAUM</title>
+  {#
+    Die Maske des Verwaltenden. Wie bei app/vorlagen/einladung.html gilt:
+    K19 fuehrt fuer diesen Bildschirm KEINEN eigenen Kasten, den dieser
+    Harness einsehen kann -- also erfindet diese Seite keine Kennung
+    "EX-0x", sondern uebernimmt Aufbau, Zugangsmarke (K19-M03) und
+    Statusansage (K19-M13) von EN-01. Eine erfundene Bildschirmnummer waere
+    Umfang, den niemand gezeichnet hat.
+
+    ZWEI FELDER, NICHT MEHR. Der Vertrag dieser Scheibe nennt `email` und
+    `anzeigename`. Kein Feld fuer das Portal: das kommt aus der Sitzung des
+    Einladenden. Kein Feld fuer die Frist: sie steht am Mandanten und nicht
+    in der Einladung (K20-G08). Kein Feld fuer den Grund: die Nachweisliste
+    `invitation_decision` verlangt einen, der Vertrag sieht ihn nicht vor --
+    als offener Punkt gemeldet, nicht stillschweigend erfunden.
+
+    K20-D03: der Link wird nie erneut angezeigt. Diese Seite zeigt ihn
+    deshalb auch nach dem Erfolg nicht -- weder ganz noch gekuerzt, weder
+    als Text noch als Adresse. Wer ihn braucht, hat die Mail.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 28rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem 1.25rem 1.5rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    label { display: block; font-weight: 600; margin: 1rem 0 .25rem; }
+    input { width: 100%; box-sizing: border-box; padding: .55rem .6rem;
+            font: inherit; border: 1px solid currentColor; border-radius: .25rem; }
+    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
+    button { margin-top: 1.25rem; padding: .6rem 1.2rem; font: inherit;
+             border-radius: .25rem; cursor: pointer; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1>Einladung senden</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). Anders als bei Anmeldung und
+      Einloesung traegt sie hier je nach Fall einen ANDEREN Wortlaut: vor der
+      Maske steht ein angemeldeter Verwaltender, und K20-G01 verlangt, dass
+      eine Sperre begruendet angezeigt wird. Die Meldungen des
+      Einladungswaechters stehen im Wortlaut der Datenbank darin (K20-G04);
+      diese Vorlage formuliert nichts um.
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Die eingeladene Person erhaelt einen Einmal-Link an die angegebene
+      Adresse. Damit schaltet sie ihren Zugang frei; danach meldet sie sich
+      mit Adresse und Code an.</p>
+
+    <form method="post" action="/einladung/senden" novalidate>
+      {#
+        Bewusst OHNE required/pattern. K03-M13 gilt sinngemaess auch hier:
+        eine Pruefung allein in der Oberflaeche gilt als nicht erfolgt. Ein
+        Browser, der die leere Eingabe selbst abfaengt, verhindert nicht den
+        Fehler -- er verhindert die Messung, ob der Server ihn abfaengt.
+        Feldreihenfolge = Fokusreihenfolge, ohne tabindex (K19-M13).
+
+        Die Eingaben stehen nach einer Ablehnung wieder in den Feldern: wer
+        eine Adresse abgewiesen bekommt, soll sie berichtigen und nicht neu
+        tippen.
+      #}
+      <label for="email">E-Mail-Adresse</label>
+      <input id="email" name="email" type="email" autocomplete="off"
+             autocapitalize="off" spellcheck="false" autofocus
+             value="{{ adresse or '' }}">
+
+      <label for="anzeigename">Anzeigename</label>
+      <input id="anzeigename" name="anzeigename" type="text"
+             autocomplete="off" value="{{ anzeigename or '' }}">
+
+      <p class="hinweis">Der Link gilt einmal und laeuft nach der Frist des
+        Mandanten ab. Ein erneuter Versand widerruft den vorherigen Link.</p>
+
+      <button type="submit">Einladung senden</button>
+    </form>
+
+    {# K19-D06: keine Restlaufzeit, kein Rueckwaertszaehler, kein
+       Ablaufzeitpunkt als Datum. Deshalb steht oben "nach der Frist des
+       Mandanten" und keine Stundenzahl. #}
+    <p class="hinweis">Angemeldet als {{ einladender }} · Portal
+      {{ portal }}</p>
+  </div>
+</main>
+</body>
+</html>
