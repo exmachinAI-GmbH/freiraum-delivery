@@ -758,8 +758,31 @@ if [ -z "$echt" ]; then
 fi
 if [ -z "$echt" ]; then
   sperr AN-26 'serverseitige Pruefung nicht messbar: es liess sich kein echtes Sitzungscookie beschaffen'
+elif [ "${#echt}" -lt 2 ]; then
+  sperr AN-26 "serverseitige Pruefung nicht messbar: das echte Sitzungscookie ist mit ${#echt} Zeichen zu kurz, um daraus eine Faelschung auf Byteebene zu bilden"
 else
-  gefaelscht="$(printf '%s' "$echt" | sed 's/.$//')X"
+  # Die Faelschung muss auf BYTEEBENE wirken, nicht auf Zeichenebene.
+  # Das Sitzungsmerkmal ist nutzlast.signatur; die Signatur sind 20 Byte
+  # HMAC in ungepolstertem Base64 (itsdangerous URLSafeSerializer). Bei
+  # ungepolstertem Base64 traegt AUSSCHLIESSLICH das LETZTE Zeichen
+  # Fuellbits, die beim Decodieren verworfen werden -- bei 20 Byte sind es
+  # 4 bedeutungstragende und 2 verworfene Bits. Ein Vorgehen, das nur
+  # dieses letzte Zeichen ersetzt, erzeugt deshalb manchmal ein BYTEGLEICHES
+  # Cookie: verschiedene Zeichen decodieren auf dieselben Bytes, der Server
+  # nimmt die "Faelschung" zu Recht an. Gemessen ueber 20000 damit erzeugte
+  # Merkmale: 1220 Annahmen (6,10 %), immer beim Endzeichen 'U'.
+  #
+  # Die VORLETZTE Stelle ist davon nicht betroffen: Fuellbits treten bei
+  # ungepolstertem Base64 -- unabhaengig von der Signaturlaenge -- immer
+  # ausschliesslich im letzten Zeichen auf, nie im vorletzten. Das
+  # vorletzte Zeichen gehoert immer zu einer vollen 6-Bit-Gruppe aus
+  # echten Signaturbytes; jede Aenderung dort aendert die decodierten
+  # Bytes zwingend. Nachgerechnet mit itsdangerous (Salz fr_sitzung_v1)
+  # ueber 220000 so erzeugte Faelschungen: 0 Annahmen.
+  vorletzte_pos=$((${#echt} - 2))
+  vorletztes_zeichen="${echt:vorletzte_pos:1}"
+  if [ "$vorletztes_zeichen" = "A" ]; then ersatz="B"; else ersatz="A"; fi
+  gefaelscht="${echt:0:vorletzte_pos}${ersatz}${echt:vorletzte_pos+1}"
   kennung="$(dbz "SELECT id FROM actor WHERE email='positiv@pruef.example'")"
   m=""
   s1=$(hole / an26a "$gefaelscht");        [ "$s1" = "200" ] && m="$m verfaelschtes Cookie liefert 200;"
