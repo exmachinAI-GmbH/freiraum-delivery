@@ -136,16 +136,60 @@ def pfeffer():
     return wert
 
 
+def absender_domaene_falsch():
+    """Der Grund, wenn der Absender nicht in der SPF-Domaene liegt -- sonst None.
+
+    Die Bedingung steht seit dem 11.08.2026 hier und nicht mehr in
+    `absender_pruefen()`: sie wird an zwei Stellen gebraucht, und zwei
+    Kopien derselben Regel driften auseinander. Der Wortlaut ist unveraendert.
+    """
+    domaene = ABSENDER.rsplit("@", 1)[-1].lower()
+    erlaubt = os.environ.get("FREIRAUM_ABSENDER_DOMAENE", "freiraum.top").lower()
+    if domaene != erlaubt:
+        return (
+            f"Absender {ABSENDER} liegt nicht in {erlaubt}. Die SPF-Kette von {erlaubt} endet auf -all; "
+            "eine Mail von einer anderen Domaene wird beim Empfaenger abgewiesen.")
+    return None
+
+
 def absender_pruefen():
     """Der Absender muss in der Domaene liegen, fuer die die SPF-Kette gilt.
     Sonst geht die Mail raus und kommt nie an -- der unangenehmste Fehler,
     weil er wie ein Erfolg aussieht."""
-    domaene = ABSENDER.rsplit("@", 1)[-1].lower()
-    erlaubt = os.environ.get("FREIRAUM_ABSENDER_DOMAENE", "freiraum.top").lower()
-    if domaene != erlaubt:
-        raise SystemExit(
-            f"Absender {ABSENDER} liegt nicht in {erlaubt}. Die SPF-Kette von {erlaubt} endet auf -all; "
-            "eine Mail von einer anderen Domaene wird beim Empfaenger abgewiesen.")
+    grund = absender_domaene_falsch()
+    if grund:
+        raise SystemExit(grund)
+
+
+def versandweg_fehlt():
+    """Was fehlt, damit eine Mail ueberhaupt hinausgehen kann -- als LISTE.
+
+    Dieselben Bedingungen wie `umgebung_pruefen()` und `absender_pruefen()`,
+    nur ohne SystemExit. Der Grund fuer die zweite Ausdrucksform: SystemExit
+    erbt von BaseException. Ein Kommandozeilenwerkzeug darf sich damit
+    beenden; in einem Serverpfad faengt es niemand ab, und der Arbeiter geht
+    mit. Ein Server muss antworten, nicht sterben.
+
+    FREIRAUM_DSN steht bewusst NICHT darin: eine aufrufende Anwendung bringt
+    ihre eigene Verbindung mit (app/datenbank.py, eigener Pflichtwert).
+    Geprueft wird hier allein der Weg der Mail.
+
+    Ohne diese Pruefung faellt smtplib still auf den eigenen Rechner
+    zurueck: SMTP_HOST ist dann None, und smtplib.SMTP(None, 587) verbindet
+    sich mit localhost. Genau der stille Rueckfall, den BEF-L2-1 am
+    10.08.2026 verboten hat -- hier nur eine Ebene tiefer, in der
+    Standardbibliothek.
+    """
+    gruende = []
+    if not SMTP_HOST:
+        gruende.append(
+            "FREIRAUM_SMTP_HOST ist nicht gesetzt und FREIRAUM_UMGEBUNG ist nicht "
+            "'lokal'. Ein stiller Rueckfall auf localhost ist nicht vorgesehen "
+            "(BEF-L2-1).")
+    grund = absender_domaene_falsch()
+    if grund:
+        gruende.append(grund)
+    return gruende
 
 
 def nachweis(conn, actor_id, art, empfaenger, status, note=None, provider_id=None):
@@ -230,6 +274,26 @@ def anmeldecode(conn, empfaenger):
 
 
 def einladung(conn, empfaenger, link):
+    """Die Einladungsmail. Rueckgabe: die Kennung des benutzten Versandwegs.
+
+    GEAENDERT AM 11.08.2026, als app/einladung_senden.py diese Funktion in
+    Betrieb nahm. Zwei Stellen waren fuer ein Kommandozeilenwerkzeug richtig
+    und fuer einen Serverpfad falsch:
+
+      1. Der Fehlschlag loeste SystemExit aus. SystemExit erbt von
+         BaseException; Starlette faengt es nicht, und der Arbeiter geht mit.
+         Jetzt VersandFehler -- die Klasse, die es dafuer seit dem
+         07.08.2026 gibt (Befund BEF-C2). `main()` macht daraus wieder
+         SystemExit, die Ausgabe der Kommandozeile ist unveraendert.
+      2. Die Erfolgszeile ging mit der Empfaengeradresse auf die Ausgabe.
+         Am Terminal des Betreibers ist das seine eigene Eingabe; aus einem
+         Serverprozess heraus waere es eine unmaskierte Personenangabe im
+         Protokoll (K23-D09). Sie steht jetzt in `main()`.
+
+    Der Zustellnachweis bleibt, wo er war: auf BEIDEN Wegen. Ohne ihn ist
+    eine fehlgeschlagene Einladung nicht von einer nicht gesendeten zu
+    unterscheiden (Bauauftrag B2).
+    """
     with conn.cursor() as cur:
         cur.execute("SELECT id, display_name FROM actor WHERE lower(email)=lower(%s)",
                     (empfaenger,))
@@ -242,14 +306,15 @@ def einladung(conn, empfaenger, link):
             f"Zugang an:\n\n{link}\n\n"
             "Der Link ist einmalig. Ein neuer Link entwertet diesen.\n\n"
             "FREIRAUM\n")
+    weg = f"{SMTP_HOST}:{SMTP_PORT}"
     try:
         senden(empfaenger, "Ihre Einladung zu FREIRAUM", text)
     except (VersandFehler, smtplib.SMTPException, OSError) as f:
         nachweis(conn, actor_id, "EINLADUNG", empfaenger, "FEHLER", str(f)[:500])
-        raise SystemExit(f"Versand gescheitert, im Nachweis vermerkt: {f}")
+        raise VersandFehler(f"Versand gescheitert, im Nachweis vermerkt: {f}") from f
     nachweis(conn, actor_id, "EINLADUNG", empfaenger, "UEBERGEBEN",
-             provider_id=f"{SMTP_HOST}:{SMTP_PORT}")
-    print(f"Einladung an {empfaenger} uebergeben")
+             provider_id=weg)
+    return weg
 
 
 def main():
@@ -265,7 +330,15 @@ def main():
         if a.art == "code":
             anmeldecode(conn, a.an)
         else:
-            einladung(conn, a.an, a.link)
+            # Die Ausgabe steht hier und nicht in einladung(): am Terminal
+            # ist die Adresse die eigene Eingabe des Betreibers, im
+            # Serverprotokoll waere sie eine unmaskierte Personenangabe
+            # (K23-D09).
+            try:
+                einladung(conn, a.an, a.link)
+            except VersandFehler as f:
+                raise SystemExit(str(f)) from f
+            print(f"Einladung an {a.an} uebergeben")
     return 0
 
 

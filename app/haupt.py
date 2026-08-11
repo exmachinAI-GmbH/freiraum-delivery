@@ -17,6 +17,11 @@ Der Vertrag der Scheibe:
                       einen Meldung der Einloesung
     POST /einladung   Erfolg -> 303 auf "/anmeldung"
                       sonst  -> 200 mit der einen Meldung, KEINE Aenderung
+    GET  /einladung/senden   ohne gueltige Sitzung -> 303 auf "/anmeldung"
+                      sonst 200, Formular mit email und anzeigename
+    POST /einladung/senden   Erfolg -> 303 auf
+                      "/einladung/senden?gesendet=1"
+                      sonst  -> 200 mit BENANNTER Meldung, Eingaben bleiben
     GET  /            ohne gueltige Sitzung -> 303 auf "/anmeldung"
     POST /abmelden    303 auf "/anmeldung", Sitzung beendet
     GET  /gesundheit  200 {"status":"ok"}, ohne Sitzung erreichbar
@@ -37,6 +42,7 @@ from app.anmeldung import MELDUNG_MISSERFOLG, anmelden
 from app.datenbank import verbindung
 from app.einladung import MELDUNG_MISSERFOLG as MELDUNG_EINLADUNG
 from app.einladung import einloesen, token_traegt
+from app.einladung_senden import MELDUNG_GESENDET, einladung_senden
 from app.sitzung import (
     KEKS_NAME,
     keks_loeschen,
@@ -209,6 +215,88 @@ def einladung_annehmen(request: Request, token: str = Form(default="")):
     antwort = RedirectResponse("/anmeldung", status_code=UMLEITUNG)
     antwort.headers["Cache-Control"] = "no-store"
     antwort.headers["Referrer-Policy"] = "no-referrer"
+    return antwort
+
+
+def _zurueck_auf_en01(merkmal):
+    """Ohne gueltige Sitzung fuehrt kein Weg weiter -- K03-D01, kein Teil-Zugang.
+
+    Dieselbe Antwort wie auf der Startseite: 303 auf EN-01, und ein
+    vorhandenes, aber nicht mehr tragendes Merkmal wird geloescht. Es stehen
+    zu lassen hiesse, dem Browser zu suggerieren, er sei angemeldet.
+    """
+    antwort = RedirectResponse("/anmeldung", status_code=UMLEITUNG)
+    if merkmal:
+        keks_loeschen(antwort)
+    antwort.headers["Cache-Control"] = "no-store"
+    return antwort
+
+
+def _versandseite(request, stand, meldung=None, adresse=None, anzeigename=None):
+    antwort = VORLAGEN.TemplateResponse(
+        request, "einladung_senden.html",
+        {"meldung": meldung, "adresse": adresse, "anzeigename": anzeigename,
+         "einladender": stand["anzeigename"], "portal": stand["portal"]})
+    # Die Maske traegt die Eingabe zurueck und nennt den angemeldeten
+    # Verwaltenden; in einem Zwischenspeicher hat beides nichts verloren.
+    antwort.headers["Cache-Control"] = "no-store"
+    return antwort
+
+
+@app.get("/einladung/senden", response_class=HTMLResponse)
+def versandmaske(request: Request, gesendet: str = ""):
+    """Das Formular des Verwaltenden. AENDERT NICHTS.
+
+    `gesendet` traegt keine Angabe zum Vorgang -- es ist die Quittung nach
+    der Umleitung des POST und nichts weiter. Der Link steht nicht darin und
+    wird auch nicht nachgeschlagen (K20-D03: nie erneut angezeigt).
+    """
+    merkmal = request.cookies.get(KEKS_NAME)
+    with verbindung() as conn:
+        stand = sitzung_pruefen(conn, merkmal_lesen(merkmal))
+
+    if stand is None:
+        return _zurueck_auf_en01(merkmal)
+
+    return _versandseite(request, stand,
+                         meldung=MELDUNG_GESENDET if gesendet else None)
+
+
+@app.post("/einladung/senden")
+def versand_absenden(request: Request,
+                     email: str = Form(default=""),
+                     anzeigename: str = Form(default="")):
+    """Konto, Einladung, Nachweis und Mail -- der Weg steht in app/einladung_senden.py.
+
+    Die Sitzung wird auch hier gegen die Datenbank gehalten und nicht aus
+    dem GET von vorhin geglaubt: zwischen Maske und Absenden koennen
+    Minuten liegen, eine Sperre wirkt sofort (K03-D01, K03-M17).
+
+    Erfolg endet in einer UMLEITUNG und nicht in einer Seite. Sonst legt ein
+    Neuladen des Browsers dieselbe Einladung ein zweites Mal an -- und die
+    zweite widerruft nach K20-M13 die erste, die gerade per Mail unterwegs
+    ist.
+    """
+    merkmal = request.cookies.get(KEKS_NAME)
+    with verbindung() as conn:
+        stand = sitzung_pruefen(conn, merkmal_lesen(merkmal))
+        if stand is None:
+            return _zurueck_auf_en01(merkmal)
+
+        meldung = einladung_senden(conn, stand, email, anzeigename,
+                                   request.base_url)
+
+    if meldung is not None:
+        # 200 mit BENANNTER Meldung, Eingaben bleiben stehen. Anders als bei
+        # Anmeldung und Einloesung gibt es hier mehrere Wortlaute: vor der
+        # Maske steht ein angemeldeter Verwaltender, dem die Sperre begruendet
+        # angezeigt wird (K20-G01, K20-G04).
+        return _versandseite(request, stand, meldung=meldung,
+                             adresse=email, anzeigename=anzeigename)
+
+    antwort = RedirectResponse("/einladung/senden?gesendet=1",
+                               status_code=UMLEITUNG)
+    antwort.headers["Cache-Control"] = "no-store"
     return antwort
 
 
