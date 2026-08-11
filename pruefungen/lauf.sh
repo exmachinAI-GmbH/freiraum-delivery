@@ -208,6 +208,12 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
         wait "$p" 2>/dev/null || true
       fi
     done
+    # Zum Nachsehen aufheben, wenn ausdruecklich verlangt. Ohne das laesst
+    # sich ein Fehlschlag beim Mailweg nur erraten -- und Raten ist genau das,
+    # was dieser Harness nicht tut.
+    if [ -n "${FREIRAUM_PRUEF_MAILFANG_BEHALTEN:-}" ] && [ -s "$mailfang" ]; then
+      cp "$mailfang" "$FREIRAUM_PRUEF_MAILFANG_BEHALTEN/${kennung}_mailfang.txt" 2>/dev/null || true
+    fi
     rm -f "$mailfang" 2>/dev/null || true
     psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
     return 0
@@ -251,6 +257,7 @@ def bedienen(draht):
     f = draht.makefile("rwb")
     f.write(b"220 mailfaenger\r\n"); f.flush()
     im_rumpf = False
+    gesammelt = []
     while True:
         zeile = f.readline()
         if not zeile:
@@ -258,12 +265,38 @@ def bedienen(draht):
         if im_rumpf:
             if zeile.strip() == b".":
                 im_rumpf = False
-                with open(ziel, "ab") as d:
-                    d.write(b"\n--- Ende der Nachricht ---\n")
+                # ENTPACKT ablegen, nicht roh. Gemessen am 11.08.2026: Der
+                # Versand schickt "quoted-printable", weil der Text Umlaute
+                # traegt. Darin wird aus "token=" ein "token=3D", und die
+                # weiche Zeilenumbruchregel zerreisst den Token nach 76
+                # Zeichen mitten im Wort:
+                #
+                #   http://.../einladung?token=3DCyOBPzxOhrUXAspZw3kx6Sw5T=
+                #   _grivRI
+                #
+                # Ein Prueffall, der das selbst zusammensetzen muesste,
+                # baute MIME nach -- in einer Shell, ungeprueft, und still
+                # falsch, sobald sich die Kodierung aendert. Der Empfaenger
+                # einer Mail entpackt sie; der Prueffall spielt den
+                # Empfaenger. Also entpackt der Faenger.
+                import email, email.policy
+                roh = b"".join(gesammelt)
+                text = ""
+                try:
+                    n = email.message_from_bytes(roh, policy=email.policy.default)
+                    teil = n.get_body(preferencelist=("plain",)) or n
+                    text = teil.get_content()
+                    kopf = "".join(f"{k}: {v}\n" for k, v in n.items())
+                except Exception:
+                    # Nicht entpackbar? Dann roh ablegen und nichts verbergen.
+                    kopf, text = "", roh.decode("utf-8", "replace")
+                with open(ziel, "a", encoding="utf-8") as d:
+                    d.write(kopf + "\n" + text + "\n--- Ende der Nachricht ---\n")
+                gesammelt = []
                 f.write(b"250 angenommen\r\n"); f.flush()
             else:
-                with open(ziel, "ab") as d:
-                    d.write(zeile)
+                # Punkt-Verdopplung der SMTP-Regel zuruecknehmen
+                gesammelt.append(zeile[1:] if zeile.startswith(b"..") else zeile)
             continue
         befehl = zeile.upper()
         if befehl.startswith(b"DATA"):
