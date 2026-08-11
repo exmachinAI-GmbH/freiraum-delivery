@@ -172,11 +172,18 @@ done
 echo
 echo "== Klausel-Prueffaelle =="
 
+freier_port() {
+  # Port 0 binden und den zugeteilten melden. Ein fester Port hat am
+  # 10.08.2026 zehn Faelle gegen einen alten Server messen lassen.
+  python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()'
+}
+
 klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   local lauf="$1" kennung="$2"
   local daten="${lauf%_lauf.sh}_daten.sql"
   local db="klausel_${kennung}_$$"
   local port pfeffer schluessel pid=0 log rc summe
+  local smtp_port smtp_pid=0 mailfang
 
   [ -f "$daten" ] || {
     echo "   $kennung — GESPERRT: $daten fehlt"
@@ -195,10 +202,13 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   # danach Rueckgabewert 143 und keine Summenzeile. Ein bestandener Lauf,
   # der als Fehlschlag endete -- und eine Wegwerfdatenbank, die blieb.
   aufraeumen() {
-    if [ "$pid" -gt 0 ]; then
-      kill "$pid" 2>/dev/null || true
-      wait "$pid" 2>/dev/null || true
-    fi
+    for p in "$pid" "$smtp_pid"; do
+      if [ "${p:-0}" -gt 0 ] 2>/dev/null; then
+        kill "$p" 2>/dev/null || true
+        wait "$p" 2>/dev/null || true
+      fi
+    done
+    rm -f "$mailfang" 2>/dev/null || true
     psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
     return 0
   }
@@ -216,8 +226,60 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   # Nichtlauf, der wie ein Erfolg aussieht.
   pfeffer=$(python3 -c 'import secrets;print(secrets.token_hex(16))')
   schluessel=$(python3 -c 'import secrets;print(secrets.token_hex(32))')
-  port=$(python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()')
+  port=$(freier_port)
+  smtp_port=$(freier_port)
   log="$(mktemp)"
+  mailfang="$(mktemp)"
+
+  # Der Mailfaenger. Ohne ihn misst dieser Lauf den Bau nicht, sondern seine
+  # eigene Unvollstaendigkeit: mail/versand.py prueft den Versandweg, BEVOR
+  # etwas entsteht (BEF-L2-1 eine Ebene tiefer), und weist ohne erreichbaren
+  # Dienst den ganzen Vorgang ab. Der Erfolgsweg antwortet dann mit 200 statt
+  # 303 -- und fuenf Faelle melden Fehlschlaege gegen eine Anwendung, die
+  # nichts falsch gemacht hat. Gemessen am 11.08.2026.
+  #
+  # Bewusst hier und nicht als Werkzeug im Repo: Die Umgebung herzustellen ist
+  # Sache des Laufs. Ein Faenger, den der Bau-Agent pflegen muesste, waere eine
+  # Pruefeinrichtung in seiner Hand.
+  python3 - "$smtp_port" "$mailfang" <<'PY' >/dev/null 2>&1 &
+import socket, sys, threading
+lauscher = socket.socket()
+lauscher.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+lauscher.bind(("127.0.0.1", int(sys.argv[1]))); lauscher.listen(16)
+ziel = sys.argv[2]
+def bedienen(draht):
+    f = draht.makefile("rwb")
+    f.write(b"220 mailfaenger\r\n"); f.flush()
+    im_rumpf = False
+    while True:
+        zeile = f.readline()
+        if not zeile:
+            break
+        if im_rumpf:
+            if zeile.strip() == b".":
+                im_rumpf = False
+                with open(ziel, "ab") as d:
+                    d.write(b"\n--- Ende der Nachricht ---\n")
+                f.write(b"250 angenommen\r\n"); f.flush()
+            else:
+                with open(ziel, "ab") as d:
+                    d.write(zeile)
+            continue
+        befehl = zeile.upper()
+        if befehl.startswith(b"DATA"):
+            im_rumpf = True
+            f.write(b"354 los\r\n")
+        elif befehl.startswith(b"QUIT"):
+            f.write(b"221 tschuess\r\n"); f.flush(); break
+        else:
+            f.write(b"250 ok\r\n")
+        f.flush()
+    draht.close()
+while True:
+    draht, _ = lauscher.accept()
+    threading.Thread(target=bedienen, args=(draht,), daemon=True).start()
+PY
+  smtp_pid=$!
 
   if ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
     echo "   $kennung — GESPERRT: Wegwerfdatenbank aus $PGDATABASE nicht anlegbar"
@@ -246,6 +308,8 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
   FREIRAUM_CODE_PFEFFER="$pfeffer" \
   FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+  FREIRAUM_UMGEBUNG=lokal \
+  FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
     .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
   pid=$!
 
@@ -267,6 +331,7 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
         FREIRAUM_CODE_PFEFFER="$pfeffer" \
         FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
         PGDATABASE="$db" \
+        FREIRAUM_PRUEF_MAILFANG="$mailfang" \
         "$lauf" 2>&1)
   rc=$?
   set -e
