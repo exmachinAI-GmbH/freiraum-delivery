@@ -183,7 +183,7 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   local daten="${lauf%_lauf.sh}_daten.sql"
   local db="klausel_${kennung}_$$"
   local port pfeffer schluessel pid=0 log rc summe
-  local smtp_port smtp_pid=0 mailfang
+  local smtp_port smtp_pid=0 mailfang gescheitert geblockt
 
   [ -f "$daten" ] || {
     echo "   $kennung — GESPERRT: $daten fehlt"
@@ -380,8 +380,25 @@ PY
        echo "   $kennung — GESPERRT: Aufbaupruefung (F07) hat nicht getragen"
        merke "$kennung" gesperrt "F07-Abbruch, nichts gemessen" ;;
     *) printf '%s\n' "$aus" | grep -E 'GESCHEITERT|GESPERRT' | head -12 | sed 's/^/      /' || true
-       echo "::error::$kennung — ${summe:-Faelle gescheitert}"
-       merke "$kennung" fehlgeschlagen "${summe:-ohne Summenzeile}" ;;
+       # Sind ALLE nicht bestandenen Faelle gesperrt, ist der Lauf nicht
+       # fehlgeschlagen -- er hat einen Bereich nicht messen koennen. K23-M22
+       # kennt vier Zustaende, und "gesperrt" ist keiner davon "fehlgeschlagen".
+       # Die Regel steht seit dem 09.08.2026 weiter unten in dieser Datei und
+       # galt bisher nur fuer die Migrations- und Negativfaelle; hier wurde sie
+       # nachgezogen (Vermerk Blatt 64, 11.08.2026).
+       #
+       # Kein Fall wird dadurch nachgiebiger und kein gesperrter Fall gilt als
+       # bestanden. Nur der NAME des Ergebnisses wird richtig.
+       gescheitert=$(printf '%s\n' "$aus" | sed -n 's/^SUMME:.*bestanden, \([0-9][0-9]*\) gescheitert.*/\1/p' | head -1)
+       geblockt=$(printf '%s\n' "$aus" | sed -n 's/^davon GESPERRT[^:]*: *\([0-9][0-9]*\).*/\1/p' | head -1)
+       if [ -n "${gescheitert:-}" ] && [ -n "${geblockt:-}" ] \
+          && [ "$geblockt" -gt 0 ] && [ "$gescheitert" -eq "$geblockt" ]; then
+         echo "::warning::$kennung — ${summe:-ohne Summenzeile}; alle offenen Punkte GESPERRT, keiner gescheitert"
+         merke "$kennung" gesperrt "${summe:-ohne Summenzeile}"
+       else
+         echo "::error::$kennung — ${summe:-Faelle gescheitert}"
+         merke "$kennung" fehlgeschlagen "${summe:-ohne Summenzeile}"
+       fi ;;
   esac
 }
 
