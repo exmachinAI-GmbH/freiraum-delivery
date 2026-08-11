@@ -6,7 +6,8 @@ schreibend: der Streuwert kam von Hand in die Datenbank, und
 mail/versand.py bekam den fertigen Link als Parameter. Damit war der Weg
 "Verwaltender laedt jemanden ein" nirgends gebaut.
 
-Acht Klauseln bestimmen den Zuschnitt:
+Zehn Klauseln bestimmen den Zuschnitt -- acht seit dem Versand, zwei seit
+Blatt 62 (K20-M04, K20-M05):
 
   K20-M07  Ein neuer Zugang entsteht ueber eine Einladung: Zeile in
            `invitation` mit Konto, Portal, Adresse, Streuwert, Versand- und
@@ -31,17 +32,27 @@ Acht Klauseln bestimmen den Zuschnitt:
            Zaehler. Dieser Pfad schreibt deshalb nirgends ABGELAUFEN --
            der Ablauf ergibt sich aus `expires_at` und der Uhr (K20-M22,
            K20-G03).
-  K20-D02  Kein Versand fuer ein Portal mit release_status = PLANNED.
-           Geprueft wird gegen die Sicht `portal_enabled`, nicht gegen
-           `portal` -- dieselbe Regel, die app/sitzung.py beim Anmelden
-           fuehrt (F04, K13).
+  K20-D02  Kein Versand und KEINE MITGLIEDSCHAFT fuer ein Portal mit
+           release_status = PLANNED. Geprueft wird gegen die Sicht
+           `portal_enabled`, nicht gegen `portal` -- dieselbe Regel, die
+           app/sitzung.py beim Anmelden fuehrt (F04, K13).
   K20-D04  Eine Einladung ausserhalb der Domaenenschranke entsteht nicht --
            "auch nicht auf Zuruf, auch nicht fuer einen Verwaltenden". Die
            Schranke haelt der Ausloeser `invitation_guard_trg`; dieser Pfad
            baut sie NICHT nach, er laesst sie zu Wort kommen (siehe
            _waechtermeldung).
-  K20-M18  Jede Aenderung an Zugang und Einladung steht mit Zeitpunkt,
-           handelnder Instanz sowie Wert davor und danach in `event`.
+  K20-M18  Jede Aenderung an Zugang, Rolle, MITGLIEDSCHAFT und Einladung steht
+           mit Zeitpunkt, handelnder Instanz sowie Wert davor und danach in
+           `event`. Die handelnde Instanz ist hier durchgehend der Einladende
+           aus der Sitzung -- auch fuer die Mitgliedschaft (Blatt 62, Grund
+           fuer Moeglichkeit A). `object_ref` traegt die Form ART:<...>
+           (Blatt 60 B), hier MEMBERSHIP:<actor_id>.
+  K20-M04  Ein Zugang besteht als Zeile in `membership` aus Konto, Portal,
+           Rolle und Reichweite. Alle vier bilden den Schluessel.
+  K20-M05  Eine Zeile oeffnet genau EIN Portal. Deshalb legt dieser Pfad
+           genau eine Zeile an und prueft das anschliessend nach, statt es
+           anzunehmen (K13-D07: kein Zugang wirkt in zwei Portalen ohne je
+           eigene Mitgliedschaft).
 
 UND HIER GILT DAS GEGENTEIL DER ANMELDUNG: die Meldungen sind
 unterscheidbar. Bei Anmeldung (K03-M16) und Einloesung (K20-D10) steht ein
@@ -52,14 +63,32 @@ hilft niemandem und widerspricht K20-G01 ("Die Sperre wird begruendet
 angezeigt, nie stillschweigend gesetzt") und K20-G04 ("Die Meldungen des
 Einladungswaechters werden am Ort der Ablehnung angezeigt ... im Wortlaut").
 
-WAS HIER NICHT STEHT: die Mitgliedschaft. Ob sie beim Versand oder bei der
-Einloesung entsteht, liegt den Foundern als Blatt 62 vor und ist NICHT
-entschieden. Es entsteht deshalb keine `membership`-Zeile und auch keine
-vorbereitete Stelle dafuer (CLAUDE.md Abschn. 6: keine offene Frage still
-entscheiden). Folge, ausdruecklich benannt: das eingeladene Konto kann sich
-nach der Einloesung noch NICHT anmelden -- app/sitzung.py verlangt genau
-ein Portal ueber `membership` (K03-M11) und findet keines. Der Faden bleibt
-offen, bis Blatt 62 gezeichnet ist.
+DIE MITGLIEDSCHAFT STEHT SEIT DEM 11.08.2026 HIER. Blatt 62 ist an diesem Tag
+von beiden Foundern gezeichnet, Moeglichkeit A: sie entsteht beim VERSAND, in
+derselben Transaktion wie die Einladung. Keine Einladung ohne Mitgliedschaft,
+keine Mitgliedschaft ohne Einladung.
+
+Der tragende Grund ist K20-M18 und nicht die Bequemlichkeit: die Klausel
+verlangt zu jeder Aenderung an einer Mitgliedschaft die HANDELNDE INSTANZ.
+Beim Versand ist das der Einladende -- er hat entschieden, jemandem Zugang zu
+geben. Bei der Einloesung waere es der Eingeladene, und der Nachweis lautete
+"X hat X eine Mitgliedschaft verschafft". Das waere nicht unschoen, sondern
+unwahr.
+
+Die Kehrseite gehoert dazu und ist mitgezeichnet: Widerruf und Ablauf
+ENTFERNEN die Mitgliedschaft wieder, im selben Serverpfad und derselben
+Transaktion (Blatt 62 Abschn. 6, Zeichnung Nr. 2). Sonst bliebe zu jeder
+verfallenen Einladung eine Zugangszeile stehen, die die Lesesicht
+`platform_admin` mit auflistet -- sie filtert nicht nach Kontozustand.
+
+Bis zum 11.08.2026 fehlte die Zeile ganz, und der Teilschnitt aus Blatt 57
+lief deshalb nicht am Stueck durch: ein eingeloestes Konto kam nicht durch
+EN-01, weil app/sitzung.py genau ein Portal ueber `membership` verlangt
+(K03-M11) und keines fand.
+
+WAS HIER NICHT STEHT, und zwar weiterhin: die Einloesung legt KEINE
+Mitgliedschaft an. Sie besteht dann schon. app/einladung.py bleibt in diesem
+Punkt unveraendert.
 """
 import logging
 import os
@@ -152,6 +181,11 @@ MELDUNG_VERSAND = (
 MELDUNG_ABGEWIESEN = (
     "Die Einladung wurde von der Datenbank abgewiesen. Es wurde nichts "
     "geaendert.")
+
+MELDUNG_MITGLIEDSCHAFT = (
+    "Fuer dieses Portal liesse sich kein Zugang einrichten -- es fuehrt "
+    "nicht genau eine Rolle. Es wurde nichts angelegt, und es liegt nicht an "
+    "Ihren Angaben. Bitte verstaendigen Sie den Betrieb.")
 
 
 class _Abweisung(Exception):
@@ -290,11 +324,14 @@ def _konto_sichern(conn, einladender, adresse, name):
     oeffnen. Zugriff zwischen zwei Mandanten ist eines der fuenfzehn
     sperrenden Gates (K23 Abschn. 6).
 
-    `user_code` bleibt leer. K20-M24 laesst ihn den Server aus einem
-    portal- und ROLLENbezogenen Praefix bilden -- die Rolle steht in der
-    `membership`, und die ist ausdruecklich nicht Gegenstand (Blatt 62).
-    Eine Kennung mit geratenem Praefix waere nach K20-M24 nicht
-    wiederverwendbar und damit dauerhaft falsch. Offener Punkt.
+    `user_code` bleibt leer. Seit Blatt 62 steht die Rolle fest, der GRUND
+    fuer die Luecke ist damit ein anderer geworden, die Luecke selbst
+    bleibt: K20-M24 verlangt Praefix UND fortlaufende Nummer, bei
+    Eindeutigkeitskonflikt wiederholt und niemals wiederverwendet. Weder das
+    Praefixverzeichnis noch der Nummernkreis sind gebaut, und eine Kennung
+    mit geratenem Praefix waere nach K20-M24 dauerhaft falsch -- sie ist
+    nicht wiederverwendbar. Weiterhin offener Punkt, jetzt ohne Bezug auf
+    Blatt 62.
     """
     zeilen = conn.execute(
         "SELECT id, tenant_id FROM actor WHERE lower(email) = %s"
@@ -323,6 +360,150 @@ def _konto_sichern(conn, einladender, adresse, name):
     return neu[0]
 
 
+def mitgliedschaft_entfernen(conn, einladender, einladung):
+    """Die Mitgliedschaft zu einer widerrufenen oder abgelaufenen Einladung.
+
+    Blatt 62, Zeichnung Nr. 2: "im Serverpfad des Widerrufs, gemeinsam mit
+    K20-M13" -- nicht in einem eigenen Aufraeumlauf. Der Aufrufer hat die
+    Einladungszeile soeben auf WIDERRUFEN gesetzt und uebergibt ihre Kennung;
+    die Anweisung laeuft in derselben Transaktion.
+
+    ANGESPROCHEN wird die Zeile ueber die EINLADUNG, nicht ueber Konto und
+    Portal aus dem Aufrufer. Der Bezug steht damit in der Datenbank und nicht
+    in zwei Argumenten, die auseinanderlaufen koennen: `i.actor_id` und
+    `i.portal_code` sind genau die beiden Werte, aus denen die Zeile beim
+    Versand entstanden ist.
+
+    ZWEI BEDINGUNGEN HALTEN SIE ZURUECK, und beide haben einen eigenen Grund:
+
+    1. `i.status <> 'EINGELOEST'` -- eine bereits eingeloeste Einladung
+       entfernt NIE eine Mitgliedschaft. Nach K20-D05 fuehrt ohnehin allein
+       VERSANDT -> WIDERRUFEN, die Bedingung koennte also nie greifen; sie
+       steht trotzdem ausdruecklich da. Eine Bedingung, die man weglaesst,
+       weil ein anderer Pfad sie heute erfuellt, ist keine Bedingung, sondern
+       eine Annahme ueber fremden Code.
+
+    2. Kein anderer TRAEGER mehr. Die Mitgliedschaft besteht, solange das
+       Konto zu diesem Portal eine offene (VERSANDT) oder eine eingeloeste
+       Einladung hat. Ist noch eine da, bleibt die Zeile stehen.
+
+    Bedingung 2 ist der Grund, warum die REIHENFOLGE beim erneuten Versand
+    (K20-M13) keine Falle ist. Sie wirkt in beide Richtungen:
+
+      widerrufen -> entfernen -> neu anlegen -> anlegen   = eine Zeile
+      widerrufen -> neu anlegen -> anlegen -> entfernen   = eine Zeile
+                    (das Entfernen findet die neue offene Einladung und
+                     laesst die Zeile stehen; das Anlegen faellt auf den
+                     Schluesselkonflikt und tut nichts, siehe unten)
+
+    Und sie ist genau die Regel, die ein spaeterer Aufraeumlauf braucht: wer
+    eingeloest hat und danach eine zweite, verfallende Einladung bekommt,
+    verliert seinen Zugang nicht. Der arbeitende Nutzer bleibt drin.
+
+    ZUM WAECHTER `membership_platform_admin_guard`: er laeuft AFTER DELETE
+    FOR EACH STATEMENT und zaehlt Konten mit `status = 'AKTIV'` und
+    EXMA-Mitgliedschaft. Ein eingeladenes, noch nicht eingeloestes Konto steht
+    auf WARTET_2FA und zaehlt nie mit -- das Entfernen seiner Mitgliedschaft
+    kann die Zahl nicht senken. Nachgemessen am 11.08.2026, nicht geglaubt.
+
+    Rueckgabe: nichts. Wo nichts zu entfernen war, steht auch keine
+    Nachweiszeile -- K20-M18 verlangt sie zu jeder AENDERUNG, und was sich
+    nicht geaendert hat, wird nicht behauptet.
+    """
+    entfernt = conn.execute(
+        "WITH weg AS ("
+        " DELETE FROM membership m"
+        "  USING invitation i"
+        "  WHERE i.id = %s"
+        "    AND m.actor_id = i.actor_id"
+        "    AND m.portal_code = i.portal_code"
+        "    AND i.status <> 'EINGELOEST'"
+        "    AND NOT EXISTS (SELECT 1 FROM invitation t"
+        "                     WHERE t.actor_id = i.actor_id"
+        "                       AND t.portal_code = i.portal_code"
+        "                       AND t.status IN ('VERSANDT','EINGELOEST'))"
+        " RETURNING m.actor_id, m.portal_code, m.role_id)"
+        " SELECT w.actor_id, w.portal_code::text, r.name"
+        "   FROM weg w JOIN role r ON r.id = w.role_id",
+        (einladung,)).fetchall()
+
+    for konto, portal, rolle in entfernt:
+        _nachweis(conn, einladender, "MITGLIEDSCHAFT_ENTFERNT",
+                  "MEMBERSHIP:" + str(konto), "Loeschung",
+                  f"{portal}/{rolle} -> <keine Mitgliedschaft>")
+
+
+def _mitgliedschaft_anlegen(conn, einladender, konto):
+    """Die eine Zeile in `membership`. Blatt 62 A · K20-M04 · K20-M05.
+
+    Alle vier Schluesselspalten sind durch den Versand bestimmt:
+
+      actor_id     das eingeladene Konto
+      portal_code  das Portal der Einladung -- dasselbe, das `_anlegen`
+                   nach `invitation.portal_code` schreibt
+      role_id      die EINE Rolle dieses Portals. In Release 1 fuehrt `role`
+                   genau zwei Zeilen, eine je freigeschaltetem Portal
+                   (F08, K01-M22)
+      tenant_scope `actor.tenant_id` des EINGELADENEN Kontos
+
+    `tenant_scope` kommt aus der Kontozeile und nicht aus der Sitzung des
+    Einladenden, obwohl beide denselben Wert tragen: `_konto_sichern` weist
+    ein Konto eines anderen Mandanten ab. Gelesen wird trotzdem der Wert, der
+    tatsaechlich in der Zeile steht -- dieselbe Regel wie beim Nachweis.
+
+    K20-D02 steht auch hier im Weg, und zwar mit demselben Verbund auf
+    `portal_enabled` wie bei der Einladung: fuer ein Portal auf PLANNED wird
+    keine Rolle vergeben und keine Mitgliedschaft angelegt. Trifft die Auswahl
+    nichts, entsteht keine Zeile -- fail-closed (K20-G01).
+
+    ON CONFLICT DO NOTHING ist kein Zugestaendnis, sondern die zweite Haelfte
+    der Reihenfolgesicherung aus `mitgliedschaft_entfernen`. Der Schluessel
+    ist (actor_id, portal_code, role_id, tenant_scope); ein zweites INSERT
+    derselben Werte scheitert. Das trifft nicht nur den erneuten Versand: wird
+    ein Konto eingeladen, das seine Einladung bereits EINGELOEST hat, findet
+    K20-D05 nichts zu widerrufen, die Mitgliedschaft steht noch -- und ein
+    hartes INSERT liefe in eine Eindeutigkeitsverletzung, die der Aufrufer als
+    MELDUNG_GLEICHZEITIG deuten wuerde. Falsche Meldung, richtiger Bestand.
+    Hier tut das INSERT dann nichts, und weil nichts geschah, entsteht auch
+    keine Nachweiszeile.
+
+    DANACH WIRD GEZAEHLT, in derselben Transaktion. Dieselbe Bauart wie die
+    Abnahme in install/01_betreiber_und_erstadmin.sql: der Vertrag verlangt
+    "genau eine Mitgliedschaft", also wird genau das gemessen und nicht aus
+    dem Verlauf geschlossen. Die Zaehlung faengt beides ab -- ein Portal ohne
+    Rolle (keine Zeile) und ein Portal mit zwei Rollen (zwei Zeilen, und
+    K20-M05 waere gebrochen). Stimmt sie nicht, faellt der ganze Versand
+    zurueck.
+    """
+    neu = conn.execute(
+        "WITH neu AS ("
+        " INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)"
+        " SELECT a.id, r.portal_code, r.id, a.tenant_id"
+        "   FROM actor a"
+        "   JOIN role r ON r.portal_code = %s"
+        "   JOIN portal_enabled p ON p.code = r.portal_code"
+        "  WHERE a.id = %s"
+        " ON CONFLICT DO NOTHING"
+        " RETURNING actor_id, portal_code, role_id)"
+        " SELECT n.actor_id, n.portal_code::text, r.name"
+        "   FROM neu n JOIN role r ON r.id = n.role_id",
+        (einladender["portal"], konto)).fetchall()
+
+    bestand = conn.execute(
+        "SELECT count(*) FROM membership"
+        " WHERE actor_id = %s AND portal_code = %s",
+        (konto, einladender["portal"])).fetchone()[0]
+    if bestand != 1:
+        PROTOKOLL.error("Mitgliedschaft nicht eindeutig: %s Zeilen fuer "
+                        "Portal %s", bestand, einladender["portal"])
+        raise _Abweisung(MELDUNG_MITGLIEDSCHAFT)
+
+    for kennung, portal, rolle in neu:
+        _nachweis(conn, einladender, "MITGLIEDSCHAFT_ANGELEGT",
+                  "MEMBERSHIP:" + str(kennung), "Neuanlage",
+                  f"<keine Mitgliedschaft> -> {portal}/{rolle}")
+
+
 def _vorherige_widerrufen(conn, einladender, konto):
     """K20-M13 · K20-D05: zuerst widerrufen, dann zaehlen.
 
@@ -342,6 +523,15 @@ def _vorherige_widerrufen(conn, einladender, konto):
     bei 1 (Vorgabe der Tabelle). Eine abgelaufene Einladung steht
     weiterhin auf VERSANDT (K20-M22: kein Lauf schreibt ABGELAUFEN) und
     wird deshalb hier widerrufen und mitgezaehlt.
+
+    UND SEIT BLATT 62 nimmt der Widerruf die Mitgliedschaft mit -- hier, in
+    derselben Transaktion, unmittelbar hinter der Anweisung, die den Zustand
+    gesetzt hat. Es ist zugleich die einzige Stelle im Bestand, an der eine
+    ABGELAUFENE Einladung aufgeraeumt wird: nach K20-M22 schreibt kein Lauf
+    ABGELAUFEN, eine verfallene Einladung steht weiter auf VERSANDT und wird
+    beim naechsten Versand hier widerrufen. Der Ablauf OHNE folgenden Versand
+    raeumt heute niemand auf -- als offener Punkt gemeldet, nicht still
+    entschieden.
     """
     widerrufen = conn.execute(
         "UPDATE invitation i SET status = 'WIDERRUFEN'"
@@ -355,11 +545,12 @@ def _vorherige_widerrufen(conn, einladender, konto):
     _nachweis(conn, einladender, "EINLADUNG_WIDERRUFEN",
               "INVITATION:" + str(widerrufen[0]), "Aenderung",
               f"{widerrufen[1]} -> {widerrufen[2]}")
+    mitgliedschaft_entfernen(conn, einladender, widerrufen[0])
     return widerrufen[3] + 1
 
 
 def _anlegen(conn, einladender, konto, adresse, streu):
-    """Die Einladungszeile. K20-M07, K20-M11, K20-D02.
+    """Die Einladungszeile UND die Mitgliedschaft. K20-M07, K20-M11, K20-D02.
 
     Der Ablaufzeitpunkt wird von der DATENBANK gerechnet, aus
     `tenant.invite_ttl_hours` des Mandanten, dem das eingeladene Konto
@@ -385,6 +576,21 @@ def _anlegen(conn, einladender, konto, adresse, streu):
     dem Verwaltenden, was los ist; die zweite haelt auch dann, wenn das
     Portal zwischen den beiden Anweisungen abgeschaltet wird. Trifft die
     Auswahl nichts, entsteht keine Zeile -- fail-closed (K20-G01).
+
+    DIE REIHENFOLGE, seit Blatt 62 vollstaendig:
+
+      1. Portal freigeschaltet?                        (K20-D02)
+      2. vorherige Einladung widerrufen -- und damit
+         ihre Mitgliedschaft entfernen                 (K20-M13, Blatt 62)
+      3. neue Einladung                                (K20-M07)
+      4. Mitgliedschaft dazu                           (Blatt 62 A)
+
+    Schritt 2 steht vor 3, weil K20-M13 es so verlangt und weil
+    `invitation_offen_uq` keine zweite offene Einladung zulaesst. Fuer die
+    Mitgliedschaft ist die Reihenfolge dennoch nicht tragend: beide Anweisungen
+    sind gegen die jeweils andere abgesichert (siehe dort). Alles zusammen in
+    EINER Transaktion -- keine Einladung ohne Mitgliedschaft, keine
+    Mitgliedschaft ohne Einladung (K20-M22, Blatt 62).
     """
     if conn.execute("SELECT 1 FROM portal_enabled WHERE code = %s",
                     (einladender["portal"],)).fetchone() is None:
@@ -409,6 +615,7 @@ def _anlegen(conn, einladender, konto, adresse, streu):
     _nachweis(conn, einladender, "EINLADUNG_VERSANDT",
               "INVITATION:" + str(neu[0]), "Neuanlage",
               "<keine Einladung> -> " + neu[1])
+    _mitgliedschaft_anlegen(conn, einladender, konto)
     return neu[0]
 
 
@@ -446,6 +653,10 @@ def _zuruecknehmen(conn, einladender, kennung):
                 _nachweis(conn, einladender, "EINLADUNG_WIDERRUFEN",
                           "INVITATION:" + str(zurueck[0]), "Aenderung",
                           f"{zurueck[1]} -> {zurueck[2]}")
+                # Blatt 62: derselbe Serverpfad, dieselbe Transaktion. Ohne
+                # diese Zeile bliebe nach einem Zustellfehlschlag ein Zugang
+                # zu einer Einladung stehen, die niemand hat.
+                mitgliedschaft_entfernen(conn, einladender, zurueck[0])
     except psycopg.errors.CheckViolation:
         PROTOKOLL.error("Einladung nach Versandfehler nicht widerrufen: der "
                         "Waechter hat den Widerruf abgewiesen.")
@@ -465,7 +676,9 @@ def einladung_senden(conn, einladender, email, anzeigename, anfrage_basis):
       2. Versandweg. VOR jedem Schreibvorgang -- ein Konto und eine
          Einladung anzulegen, von denen von vornherein feststeht, dass ihre
          Mail nicht hinausgeht, waere Muell im Bestand.
-      3. Konto, Widerruf und Einladung in EINER Transaktion (K20-M22).
+      3. Konto, Widerruf, Einladung und Mitgliedschaft in EINER Transaktion
+         (K20-M22, Blatt 62). Scheitert eine der vier Stellen, entsteht
+         keine der anderen.
       4. Erst danach die Mail. Andersherum gaebe es einen Link in der Welt,
          den die Datenbank nicht kennt -- dieselbe Ueberlegung wie beim
          Anmeldecode (mail/versand.py:201).
@@ -509,6 +722,15 @@ def einladung_senden(conn, einladender, email, anzeigename, anfrage_basis):
         # Hier kommt der Einladungswaechter zu Wort: Domaenenschranke
         # (K20-D04, K20-M10) und Fristobergrenze (K20-M11). Sein Wortlaut
         # geht unveraendert nach draussen (K20-G04).
+        #
+        # Seit Blatt 62 kann an derselben Stelle auch
+        # `membership_platform_admin_guard` melden -- er haengt am Entfernen
+        # der Mitgliedschaft und wirft mit demselben Fehlercode. Sein Satz
+        # ("Mindestens ein aktiver Plattform-Admin muss bestehen bleiben")
+        # nennt keine Betriebsangabe und keine Person und darf deshalb
+        # denselben Weg nach draussen nehmen. Ausloesen kann ihn dieser Pfad
+        # nach der Messung vom 11.08.2026 nicht: das eingeladene Konto steht
+        # auf WARTET_2FA und wird vom Waechter nicht gezaehlt.
         return _waechtermeldung(fehler)
 
     try:
