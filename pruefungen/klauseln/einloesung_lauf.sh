@@ -202,14 +202,26 @@ hat_meldung el02 || m="$m die Meldung fehlt oder weicht ab;"
             || nok EL-02 "Fehlender Parameter:$m"
 
 # =====================================================================
-# EL-03 · Vertrag + K03-G01 · Unbekannter Token: 200 mit derselben Meldung.
+# EL-03 · Vertrag (berichtigt, Blatt 60, 11.08.2026) + K03-G01 ·
+#         GET sieht bei einem TRAGENDEN Wert grundsaetzlich nicht nach,
+#         ob der Token traegt -- es liefert IMMER die Bestaetigungsseite.
+#         Ein unbekannter Token muss darum dieselbe Bestaetigungsseite
+#         bekommen wie ein gueltiger (EL-01): kein Formularunterschied,
+#         keine Meldung, byteidentisch nach Normierung. Das ist die
+#         Ununterscheidbarkeit aus K03-G01 -- verschoben von der Meldung
+#         (alter Vertrag) auf die Bestaetigungsseite (berichtigter
+#         Vertrag). Ob der Token traegt, sagt allein POST (siehe EL-16).
 # =====================================================================
 st=$(hole "/einladung?token=$TOK_UNBEKANNT" el03)
-cp "$ARBEIT/el03.rumpf" "$ARBEIT/gleich_unbekannt.rumpf" 2>/dev/null
 m=""
 [ "$st" = "200" ] || m="$m Status $st statt 200;"
-hat_meldung el03 || m="$m die Meldung fehlt oder weicht ab;"
-[ -z "$m" ] && ok EL-03 'GET /einladung mit unbekanntem Token: 200 mit der einen Meldung, faellt fail-closed (K03-G01)' \
+grep -Eqi '<form[^>]*method=["'"'"']?post' "$(rumpf el03)" || m="$m kein Formular mit method=post -- keine Bestaetigungsseite;"
+hat_verdecktes_tokenfeld el03 || m="$m kein verdecktes Feld name=\"token\" -- keine Bestaetigungsseite;"
+hat_meldung el03 && m="$m die Meldung erscheint -- GET hat nachgesehen, ob der Token traegt, das verbietet der berichtigte Vertrag;"
+normiere "$ARBEIT/el01.rumpf" > "$ARBEIT/norm_el01_get" 2>/dev/null
+normiere "$ARBEIT/el03.rumpf" > "$ARBEIT/norm_el03_get" 2>/dev/null
+cmp -s "$ARBEIT/norm_el01_get" "$ARBEIT/norm_el03_get" || m="$m die Bestaetigungsseite unterscheidet sich (nach Normierung) von der eines gueltigen Tokens -- GET verraet, ob der Token existiert;"
+[ -z "$m" ] && ok EL-03 'GET /einladung mit unbekanntem Token: 200, dieselbe Bestaetigungsseite wie bei einem gueltigen Token, GET sieht nicht nach (K03-G01, Berichtigung Blatt 60)' \
             || nok EL-03 "Unbekannter Token:$m"
 
 # =====================================================================
@@ -277,10 +289,12 @@ m=""
 #         Zeitmarke aus EL-05 entstand eine Ereigniszeile, die sich der
 #         Einladung oder dem Konto zuordnen laesst, mit benannter Instanz.
 #
-#         Die genaue Spaltenbelegung (welches Feld die Einladung
-#         referenziert) ist im gemessenen Bestand nicht festgelegt --
-#         object_ref ist Freitext. Gemessen wird darum tolerant gegen
-#         beide plausiblen Traeger (Einladungs- oder Kontokennung).
+#         Berichtigung B (Blatt 60, 11.08.2026): event.object_ref traegt
+#         die getypte Form "INVITATION:<uuid>" bzw. "ACTOR:<uuid>" -- fuer
+#         ALLE Nachweiszeilen, nicht nur diese. Vorher gegen die nackte
+#         Kennung tolerant geprueft; das ist seit der Zeichnung eine
+#         Verwaesserung, keine Vorsicht mehr -- die Form liegt fest und
+#         wird jetzt EXAKT geprueft, nicht mehr tolerant.
 # =====================================================================
 akteur_id="$(dbz "SELECT actor_id::text FROM pruef_einladung_lage WHERE email='el_positiv@pruef.example'")"
 einladung_id="$(dbz "SELECT invitation_id::text FROM pruef_einladung_lage WHERE email='el_positiv@pruef.example'")"
@@ -290,11 +304,11 @@ else
   treffer="$(dbz "SELECT count(*) FROM event
                     WHERE occurred_at >= '$zeitmarke_el05'::timestamptz
                       AND actor_label IS NOT NULL
-                      AND (object_ref = '$einladung_id' OR object_ref = '$akteur_id')")"
+                      AND (object_ref = 'INVITATION:$einladung_id' OR object_ref = 'ACTOR:$akteur_id')")"
   if [ "${treffer:-0}" -ge 1 ]; then
-    ok EL-08 "Nach der Einloesung steht eine Nachweiszeile in event mit Zeitpunkt und handelnder Instanz (K20-M18; $treffer Zeile(n))"
+    ok EL-08 "Nach der Einloesung steht eine Nachweiszeile in event mit Zeitpunkt, handelnder Instanz und object_ref im Wortlaut INVITATION:<uuid> bzw. ACTOR:<uuid> (K20-M18, Berichtigung Blatt 60; $treffer Zeile(n))"
   else
-    nok EL-08 'keine Nachweiszeile in event nach der Einloesung gefunden, die sich der Einladung oder dem Konto zuordnen laesst (K20-M18)'
+    nok EL-08 'keine Nachweiszeile in event nach der Einloesung gefunden, deren object_ref exakt INVITATION:<invitation_id> oder ACTOR:<actor_id> lautet (K20-M18, Berichtigung Blatt 60)'
   fi
 fi
 
@@ -377,17 +391,25 @@ hat_meldung el13 || m="$m die Meldung fehlt oder weicht ab;"
             || nok EL-13 "GESPERRTES Konto:$m"
 
 # =====================================================================
-# EL-14 · Vertrag + K03-G01 · GET auf einen nicht mehr gueltigen Token
-#         (hier: bereits eingeloest) zeigt ebenfalls die EINE Meldung,
-#         nicht die Bestaetigungsseite -- "traegt er nicht" gilt fuer GET
-#         wie fuer POST.
+# EL-14 · Vertrag (berichtigt, Blatt 60, 11.08.2026) + K03-G01 · GET auf
+#         einen nicht mehr gueltigen Token (hier: bereits eingeloest)
+#         bekommt ebenfalls die Bestaetigungsseite, NICHT die Meldung --
+#         GET sieht grundsaetzlich nicht nach, ob ein vorliegender Wert
+#         traegt. Dieselbe Ununterscheidbarkeit wie EL-03, hier an einem
+#         zweiten, andersartig ungueltigen Token (verbraucht statt
+#         unbekannt) gemessen -- byteidentisch nach Normierung gegen
+#         EL-01.
 # =====================================================================
 st=$(hole "/einladung?token=$TOK_VERBRAUCHT" el14)
 m=""
 [ "$st" = "200" ] || m="$m Status $st statt 200;"
-hat_meldung el14 || m="$m die Meldung fehlt oder weicht ab;"
-hat_verdecktes_tokenfeld el14 && m="$m die Bestaetigungsseite wird trotz ungueltigem Token angezeigt;"
-[ -z "$m" ] && ok EL-14 'GET mit einem nicht mehr gueltigen Token liefert ebenfalls die eine Meldung, nicht die Bestaetigungsseite' \
+grep -Eqi '<form[^>]*method=["'"'"']?post' "$(rumpf el14)" || m="$m kein Formular mit method=post -- keine Bestaetigungsseite;"
+hat_verdecktes_tokenfeld el14 || m="$m kein verdecktes Feld name=\"token\" -- die Bestaetigungsseite wird trotz vorliegendem Wert nicht angezeigt;"
+hat_meldung el14 && m="$m die Meldung erscheint -- GET hat nachgesehen, ob der Token traegt, das verbietet der berichtigte Vertrag;"
+normiere "$ARBEIT/el01.rumpf" > "$ARBEIT/norm_el01_get" 2>/dev/null
+normiere "$ARBEIT/el14.rumpf" > "$ARBEIT/norm_el14_get" 2>/dev/null
+cmp -s "$ARBEIT/norm_el01_get" "$ARBEIT/norm_el14_get" || m="$m die Bestaetigungsseite unterscheidet sich (nach Normierung) von der eines gueltigen Tokens -- GET verraet, ob der Token existiert;"
+[ -z "$m" ] && ok EL-14 'GET mit einem nicht mehr gueltigen (bereits eingeloesten) Token: dieselbe Bestaetigungsseite wie bei einem gueltigen Token, GET sieht nicht nach (K03-G01, Berichtigung Blatt 60)' \
             || nok EL-14 "GET auf ungueltigen Token:$m"
 
 # =====================================================================
@@ -400,6 +422,11 @@ hat_verdecktes_tokenfeld el14 && m="$m die Bestaetigungsseite wird trotz unguelt
 #         siehe Abschlussbericht.)
 # =====================================================================
 st=$(post_einladung "$TOK_UNBEKANNT" el15)
+# Berichtigung A (Blatt 60): GET sieht bei unbekanntem Token nicht mehr
+# nach (siehe EL-03) -- die Auskunft "traegt/traegt nicht" faellt jetzt
+# allein bei POST. Diese Antwort ist darum die richtige Quelle fuer den
+# Ununterscheidbarkeits-Vergleich in EL-16, nicht mehr das GET aus EL-03.
+cp "$ARBEIT/el15.rumpf" "$ARBEIT/gleich_unbekannt.rumpf" 2>/dev/null
 m=""
 [ "$st" = "200" ] || m="$m Status $st statt 200;"
 hat_meldung el15 || m="$m die Meldung fehlt oder weicht ab;"
@@ -408,9 +435,15 @@ grep -qF "$TOK_UNBEKANNT" "$(rumpf el15)" && m="$m die Fehlerausgabe enthaelt de
             || nok EL-15 "Klartext in der Fehlerausgabe:$m"
 
 # =====================================================================
-# EL-16 · K03-G01 · UNUNTERSCHEIDBARKEIT im Wortlaut.
-#         Verglichen: fehlender Parameter, unbekannter Token, abgelaufen,
-#         bereits eingeloest, widerrufen, gesperrtes Konto.
+# EL-16 · K03-G01 · UNUNTERSCHEIDBARKEIT im Wortlaut -- der POST-Seite.
+#         Verglichen: fehlender Parameter (GET, unveraendert durch
+#         Berichtigung A -- "fehlt oder ist leer" bleibt 200+Meldung auch
+#         unter dem berichtigten Vertrag), unbekannter Token (POST, seit
+#         Berichtigung A/Blatt 60 hierher verschoben statt GET -- siehe
+#         EL-03/EL-15), abgelaufen, bereits eingeloest, widerrufen,
+#         gesperrtes Konto (alle POST). Die GET-seitige
+#         Ununterscheidbarkeit (gueltiger vs. unbekannter vs. verbrauchter
+#         Token) messen jetzt EL-03 und EL-14 gegen die Bestaetigungsseite.
 # =====================================================================
 faelle="leer unbekannt abgelaufen verbraucht eingeloest widerrufen gesperrt"
 m=""
@@ -439,7 +472,7 @@ fi
 if [ "$vollzaehlig" != "1" ]; then
   sperr EL-16 "Ununterscheidbarkeit nicht messbar:$m"
 elif [ -z "$m" ]; then
-  ok EL-16 'Fehlender Parameter, unbekannter, abgelaufener, bereits eingeloester, widerrufener Token und gesperrtes Konto liefern denselben Wortlaut (K03-G01)'
+  ok EL-16 'Fehlender Parameter (GET) sowie unbekannter, abgelaufener, bereits eingeloester, widerrufener Token und gesperrtes Konto (POST) liefern denselben Wortlaut (K03-G01, Berichtigung Blatt 60)'
 else
   nok EL-16 "Ununterscheidbarkeit:$m"
 fi

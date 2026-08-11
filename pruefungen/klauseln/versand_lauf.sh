@@ -359,21 +359,39 @@ fi
 #         4.1 des Konzepts) -- der Fall schaltet EXMA selbst kurzzeitig
 #         auf PLANNED und stellt es sofort danach zurueck (siehe auch
 #         den cleanup()-Trap oben, der das bei jedem Ausgang absichert).
-#         Gemessen wird NUR die eine Bedingung, die K20-D02 verbietet:
-#         es DARF keine Einladung entstehen -- unabhaengig davon, ueber
-#         welchen Statuscode der Server das im Einzelnen zeigt, denn
-#         der Vertrag legt fuer diesen Fall (Zielportal selbst
-#         abgeschaltet) keinen bestimmten Code fest.
+#
+#         Berichtigung C (Blatt 60, 11.08.2026): beide zulaessigen
+#         Ausgaenge sind 303 -- Erfolg (?gesendet=1) UND Sitzungsabbruch
+#         (/anmeldung). Steht EXMA auf PLANNED, findet die Sitzungspruefung
+#         kein freigeschaltetes Portal, die Sitzung endet, und der Aufruf
+#         landet fail-closed auf /anmeldung -- das deckt der Vertrag
+#         bereits ab ("Ohne gueltige Sitzung -> 303 auf /anmeldung").
+#         Der Statuscode allein unterscheidet die beiden Ausgaenge darum
+#         NICHT; unterschieden wird am Location-Kopf. Gemessen werden
+#         zwei Bedingungen: (1) es entsteht KEINE Einladung -- die
+#         Kernbedingung aus K20-D02, unveraendert --, und (2) die Antwort
+#         fuehrt NICHT auf die Erfolgsseite ?gesendet=1; landet sie
+#         stattdessen auf /anmeldung, ist das der beschriebene
+#         fail-closed-Weg und zulaessig. Jedes andere Ziel ist ein Fund.
 #         Gegenprobe: VE-04 (EXMA ENABLED, derselbe Vorgang traegt).
 # =====================================================================
 db "UPDATE portal SET release_status='PLANNED' WHERE code='EXMA'" >/dev/null
 st=$(post_einladung 'geplant@pruef.example' 'Pruef Geplant' ve08 "$KEKS")
+ziel="$(kopfzeile ve08 location)"
 db "UPDATE portal SET release_status='ENABLED' WHERE code='EXMA'" >/dev/null
 entstanden="$(dbz "SELECT count(*) FROM invitation WHERE mail='geplant@pruef.example'")"
 m=""
 [ "${entstanden:-1}" = "0" ] || m="$m es entstand eine Einladung, obwohl EXMA auf PLANNED stand (K20-D02);"
-[ "$st" = "303" ] && m="$m der Vorgang meldete 303 (Erfolg), obwohl EXMA auf PLANNED stand;"
-[ -z "$m" ] && ok VE-08 "Portal EXMA auf PLANNED: kein Versand, keine Einladung entsteht (K20-D02; beobachteter Status: $st)" \
+[ "$st" = "303" ] || m="$m Status $st statt 303 (beide zulaessigen Ausgaenge -- Erfolg wie Sitzungsabbruch -- sind 303);"
+case "$ziel" in
+  */einladung/senden\?gesendet=1)
+    m="$m die Antwort fuehrt auf die Erfolgsseite ?gesendet=1, obwohl EXMA auf PLANNED stand (K20-D02);" ;;
+  *"/anmeldung"*)
+    : ;;  # fail-closed: keine gueltige Sitzung mangels freigeschaltetem Portal -> 303 auf /anmeldung, vom Vertrag gedeckt
+  *)
+    m="$m Location '$ziel' ist weder die Erfolgsseite noch /anmeldung -- kein vom Vertrag gedeckter Ausgang;" ;;
+esac
+[ -z "$m" ] && ok VE-08 "Portal EXMA auf PLANNED: keine Einladung entsteht, die Antwort fuehrt nicht auf die Erfolgsseite (K20-D02; Location: '$ziel', Berichtigung Blatt 60)" \
             || nok VE-08 "PLANNED-Portal:$m"
 
 # =====================================================================
