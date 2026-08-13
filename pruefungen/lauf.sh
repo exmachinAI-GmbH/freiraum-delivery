@@ -172,11 +172,18 @@ done
 echo
 echo "== Klausel-Prueffaelle =="
 
+freier_port() {
+  # Port 0 binden und den zugeteilten melden. Ein fester Port hat am
+  # 10.08.2026 zehn Faelle gegen einen alten Server messen lassen.
+  python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()'
+}
+
 klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   local lauf="$1" kennung="$2"
   local daten="${lauf%_lauf.sh}_daten.sql"
   local db="klausel_${kennung}_$$"
   local port pfeffer schluessel pid=0 log rc summe
+  local smtp_port smtp_pid=0 mailfang gescheitert geblockt
 
   [ -f "$daten" ] || {
     echo "   $kennung — GESPERRT: $daten fehlt"
@@ -195,10 +202,19 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   # danach Rueckgabewert 143 und keine Summenzeile. Ein bestandener Lauf,
   # der als Fehlschlag endete -- und eine Wegwerfdatenbank, die blieb.
   aufraeumen() {
-    if [ "$pid" -gt 0 ]; then
-      kill "$pid" 2>/dev/null || true
-      wait "$pid" 2>/dev/null || true
+    for p in "$pid" "$smtp_pid"; do
+      if [ "${p:-0}" -gt 0 ] 2>/dev/null; then
+        kill "$p" 2>/dev/null || true
+        wait "$p" 2>/dev/null || true
+      fi
+    done
+    # Zum Nachsehen aufheben, wenn ausdruecklich verlangt. Ohne das laesst
+    # sich ein Fehlschlag beim Mailweg nur erraten -- und Raten ist genau das,
+    # was dieser Harness nicht tut.
+    if [ -n "${FREIRAUM_PRUEF_MAILFANG_BEHALTEN:-}" ] && [ -s "$mailfang" ]; then
+      cp "$mailfang" "$FREIRAUM_PRUEF_MAILFANG_BEHALTEN/${kennung}_mailfang.txt" 2>/dev/null || true
     fi
+    rm -f "$mailfang" 2>/dev/null || true
     psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
     return 0
   }
@@ -216,8 +232,87 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   # Nichtlauf, der wie ein Erfolg aussieht.
   pfeffer=$(python3 -c 'import secrets;print(secrets.token_hex(16))')
   schluessel=$(python3 -c 'import secrets;print(secrets.token_hex(32))')
-  port=$(python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1]);s.close()')
+  port=$(freier_port)
+  smtp_port=$(freier_port)
   log="$(mktemp)"
+  mailfang="$(mktemp)"
+
+  # Der Mailfaenger. Ohne ihn misst dieser Lauf den Bau nicht, sondern seine
+  # eigene Unvollstaendigkeit: mail/versand.py prueft den Versandweg, BEVOR
+  # etwas entsteht (BEF-L2-1 eine Ebene tiefer), und weist ohne erreichbaren
+  # Dienst den ganzen Vorgang ab. Der Erfolgsweg antwortet dann mit 200 statt
+  # 303 -- und fuenf Faelle melden Fehlschlaege gegen eine Anwendung, die
+  # nichts falsch gemacht hat. Gemessen am 11.08.2026.
+  #
+  # Bewusst hier und nicht als Werkzeug im Repo: Die Umgebung herzustellen ist
+  # Sache des Laufs. Ein Faenger, den der Bau-Agent pflegen muesste, waere eine
+  # Pruefeinrichtung in seiner Hand.
+  python3 - "$smtp_port" "$mailfang" <<'PY' >/dev/null 2>&1 &
+import socket, sys, threading
+lauscher = socket.socket()
+lauscher.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+lauscher.bind(("127.0.0.1", int(sys.argv[1]))); lauscher.listen(16)
+ziel = sys.argv[2]
+def bedienen(draht):
+    f = draht.makefile("rwb")
+    f.write(b"220 mailfaenger\r\n"); f.flush()
+    im_rumpf = False
+    gesammelt = []
+    while True:
+        zeile = f.readline()
+        if not zeile:
+            break
+        if im_rumpf:
+            if zeile.strip() == b".":
+                im_rumpf = False
+                # ENTPACKT ablegen, nicht roh. Gemessen am 11.08.2026: Der
+                # Versand schickt "quoted-printable", weil der Text Umlaute
+                # traegt. Darin wird aus "token=" ein "token=3D", und die
+                # weiche Zeilenumbruchregel zerreisst den Token nach 76
+                # Zeichen mitten im Wort:
+                #
+                #   http://.../einladung?token=3DCyOBPzxOhrUXAspZw3kx6Sw5T=
+                #   _grivRI
+                #
+                # Ein Prueffall, der das selbst zusammensetzen muesste,
+                # baute MIME nach -- in einer Shell, ungeprueft, und still
+                # falsch, sobald sich die Kodierung aendert. Der Empfaenger
+                # einer Mail entpackt sie; der Prueffall spielt den
+                # Empfaenger. Also entpackt der Faenger.
+                import email, email.policy
+                roh = b"".join(gesammelt)
+                text = ""
+                try:
+                    n = email.message_from_bytes(roh, policy=email.policy.default)
+                    teil = n.get_body(preferencelist=("plain",)) or n
+                    text = teil.get_content()
+                    kopf = "".join(f"{k}: {v}\n" for k, v in n.items())
+                except Exception:
+                    # Nicht entpackbar? Dann roh ablegen und nichts verbergen.
+                    kopf, text = "", roh.decode("utf-8", "replace")
+                with open(ziel, "a", encoding="utf-8") as d:
+                    d.write(kopf + "\n" + text + "\n--- Ende der Nachricht ---\n")
+                gesammelt = []
+                f.write(b"250 angenommen\r\n"); f.flush()
+            else:
+                # Punkt-Verdopplung der SMTP-Regel zuruecknehmen
+                gesammelt.append(zeile[1:] if zeile.startswith(b"..") else zeile)
+            continue
+        befehl = zeile.upper()
+        if befehl.startswith(b"DATA"):
+            im_rumpf = True
+            f.write(b"354 los\r\n")
+        elif befehl.startswith(b"QUIT"):
+            f.write(b"221 tschuess\r\n"); f.flush(); break
+        else:
+            f.write(b"250 ok\r\n")
+        f.flush()
+    draht.close()
+while True:
+    draht, _ = lauscher.accept()
+    threading.Thread(target=bedienen, args=(draht,), daemon=True).start()
+PY
+  smtp_pid=$!
 
   if ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
     echo "   $kennung — GESPERRT: Wegwerfdatenbank aus $PGDATABASE nicht anlegbar"
@@ -246,6 +341,8 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
   FREIRAUM_CODE_PFEFFER="$pfeffer" \
   FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+  FREIRAUM_UMGEBUNG=lokal \
+  FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
     .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
   pid=$!
 
@@ -267,6 +364,7 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
         FREIRAUM_CODE_PFEFFER="$pfeffer" \
         FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
         PGDATABASE="$db" \
+        FREIRAUM_PRUEF_MAILFANG="$mailfang" \
         "$lauf" 2>&1)
   rc=$?
   set -e
@@ -282,8 +380,25 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
        echo "   $kennung — GESPERRT: Aufbaupruefung (F07) hat nicht getragen"
        merke "$kennung" gesperrt "F07-Abbruch, nichts gemessen" ;;
     *) printf '%s\n' "$aus" | grep -E 'GESCHEITERT|GESPERRT' | head -12 | sed 's/^/      /' || true
-       echo "::error::$kennung — ${summe:-Faelle gescheitert}"
-       merke "$kennung" fehlgeschlagen "${summe:-ohne Summenzeile}" ;;
+       # Sind ALLE nicht bestandenen Faelle gesperrt, ist der Lauf nicht
+       # fehlgeschlagen -- er hat einen Bereich nicht messen koennen. K23-M22
+       # kennt vier Zustaende, und "gesperrt" ist keiner davon "fehlgeschlagen".
+       # Die Regel steht seit dem 09.08.2026 weiter unten in dieser Datei und
+       # galt bisher nur fuer die Migrations- und Negativfaelle; hier wurde sie
+       # nachgezogen (Vermerk Blatt 64, 11.08.2026).
+       #
+       # Kein Fall wird dadurch nachgiebiger und kein gesperrter Fall gilt als
+       # bestanden. Nur der NAME des Ergebnisses wird richtig.
+       gescheitert=$(printf '%s\n' "$aus" | sed -n 's/^SUMME:.*bestanden, \([0-9][0-9]*\) gescheitert.*/\1/p' | head -1)
+       geblockt=$(printf '%s\n' "$aus" | sed -n 's/^davon GESPERRT[^:]*: *\([0-9][0-9]*\).*/\1/p' | head -1)
+       if [ -n "${gescheitert:-}" ] && [ -n "${geblockt:-}" ] \
+          && [ "$geblockt" -gt 0 ] && [ "$gescheitert" -eq "$geblockt" ]; then
+         echo "::warning::$kennung — ${summe:-ohne Summenzeile}; alle offenen Punkte GESPERRT, keiner gescheitert"
+         merke "$kennung" gesperrt "${summe:-ohne Summenzeile}"
+       else
+         echo "::error::$kennung — ${summe:-Faelle gescheitert}"
+         merke "$kennung" fehlgeschlagen "${summe:-ohne Summenzeile}"
+       fi ;;
   esac
 }
 

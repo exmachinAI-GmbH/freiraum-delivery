@@ -107,7 +107,7 @@ def sitzung_pruefen(conn, sitzung_id):
     if not sitzung_id:
         return None
     zeile = conn.execute(
-        "SELECT s.id, s.actor_id, a.display_name, a.status,"
+        "SELECT s.id, s.actor_id, a.display_name, a.status, a.tenant_id,"
         "       s.ended_at IS NOT NULL AS beendet,"
         "       now() - s.last_activity_at > make_interval(mins => %s) AS untaetig,"
         "       now() - s.started_at      > make_interval(hours => %s) AS ueberalt"
@@ -116,7 +116,8 @@ def sitzung_pruefen(conn, sitzung_id):
         (UNTAETIG_MINUTEN, ABSOLUT_STUNDEN, sitzung_id)).fetchone()
     if zeile is None:
         return None
-    kennung, actor_id, name, status, beendet, untaetig, ueberalt = zeile
+    (kennung, actor_id, name, status, mandant,
+     beendet, untaetig, ueberalt) = zeile
 
     if beendet or untaetig or ueberalt:
         # Abgelaufen heisst beendet, nicht "gilt halt nicht mehr". Ohne
@@ -156,5 +157,10 @@ def sitzung_pruefen(conn, sitzung_id):
         "UPDATE auth_session SET last_activity_at = now()"
         " WHERE id = %s AND ended_at IS NULL", (kennung,))
 
+    # `mandant` seit dem 11.08.2026: der Versand der Einladung schreibt den
+    # Mandanten in den Nachweis (K20-M18) und legt das eingeladene Konto in
+    # ihm an. Er kommt aus derselben gepruften Zeile wie Name und Portal --
+    # ein zweiter Zugriff waere eine zweite Wahrheit, die zwischen beiden
+    # Abfragen auseinanderlaufen kann.
     return {"sitzung_id": kennung, "actor_id": actor_id,
-            "anzeigename": name, "portal": portal}
+            "anzeigename": name, "mandant": mandant, "portal": portal}
