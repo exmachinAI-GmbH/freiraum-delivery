@@ -31,6 +31,8 @@ export PGHOST PGPORT PGUSER PGDATABASE
 
 ok=0; fehl=0; gesperrt=0
 zeilen=""
+# Glied 7 nach K23-M18 verlangt Beginn UND Ende. Der Beginn ist jetzt.
+BEGINN="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 merke() {  # kennung · zustand · anmerkung
   zeilen="${zeilen}${zeilen:+,}{\"kennung\":\"$1\",\"zustand\":\"$2\",\"anmerkung\":\"$3\"}"
@@ -443,6 +445,30 @@ if [ -n "$BERICHT" ]; then
 }
 JSON
   echo "Bericht: $BERICHT"
+
+  # ---------------------------------------------------------------------
+  # Das Manifest nach K23-M18 -- acht Glieder, nicht vier Zahlen.
+  #
+  # BEFUND AH-7 (Handover 11.08.2026): "nachweise/manifeste/ existiert im
+  # Git-Baum nicht. Der ganze 11.08. hat gemessen und nichts hinterlassen."
+  # Der Bericht oben ist eine Zusammenfassung des Laufs; ein MANIFEST ist
+  # etwas anderes -- es sagt, GEGEN WELCHEN STAND gemessen wurde, mit
+  # welchen Werkzeugen, gegen welche Eingaben, und macht sich selbst
+  # nachrechenbar (Glied 8).
+  #
+  # Es entsteht NEBEN dem Bericht, nicht statt seiner: der Bericht ist die
+  # Auskunft ueber das Ergebnis, das Manifest die ueber die Umstaende.
+  # ---------------------------------------------------------------------
+  MANIFEST="${BERICHT%.json}_manifest.json"
+  if [ -x .venv/bin/python ]; then
+    .venv/bin/python werkzeuge/manifest.py \
+      --ziel "$MANIFEST" --ergebnisse "$BERICHT" --beginn "$BEGINN" || {
+        echo "::warning::Manifest konnte nicht erzeugt werden — der Lauf hat "
+        echo "::warning::gemessen, aber nichts Nachrechenbares hinterlassen (K23-M18)."
+      }
+  else
+    echo "::warning::.venv/bin/python fehlt — kein Manifest (K23-M18 unerfuellt)."
+  fi
 fi
 
 # Ein Fehlschlag sperrt. Ein GESPERRT sperrt NICHT den Lauf selbst -- es wird
