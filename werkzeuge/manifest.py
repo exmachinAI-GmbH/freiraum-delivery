@@ -80,7 +80,15 @@ def werkzeugfassung(name, *args):
 # ---------------------------------------------------------------------
 def glied1():
     hash_ = lauf("git", "rev-parse", "HEAD")
-    schmutz = lauf("git", "status", "--porcelain")
+    # Die eigene Ausgabe zaehlt NICHT als Schmutz. Sonst erklaerte sich jedes
+    # Manifest fuer ungueltig, weil es sich gerade selbst geschrieben hat --
+    # gemessen am 13.08.2026 beim ersten Lauf gegen einen sauberen Baum.
+    # Ebenso wenig zaehlen die Arbeitsbaeume der Agenten unter .claude/:
+    # sie gehoeren nie ins Repo und sagen nichts ueber den gelaufenen Stand.
+    roh = lauf("git", "status", "--porcelain") or ""
+    schmutz = "\n".join(
+        z for z in roh.splitlines()
+        if not z[3:].startswith(("nachweise/manifeste/", ".claude/")))
     # Ein Commit-Hash bei schmutzigem Arbeitsbaum LUEGT: der Stand, der lief,
     # steht in keinem Commit. Das wird ausgewiesen, nicht verschwiegen.
     return {
