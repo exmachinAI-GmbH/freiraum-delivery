@@ -1,0 +1,78 @@
+# =====================================================================
+# FREIRAUM Coding-Harness · Tor 3 — der fremde Blick
+#
+# GETRENNT VON tore.yml, mit Absicht. Tor 1 misst je Aenderung; Tor 3
+# kommt nach C-4 (Blatt 26:30, gezeichnet) "einmal je Scheibenabnahme,
+# nicht je Aenderung". Beides in einer Datei zu fuehren, hiesse den
+# Unterschied einzuebnen, auf dem Tor 3 beruht.
+#
+# DIESER LAUF ERZEUGT KEIN REVIEW. Er prueft, ob ein abgelegtes Blatt
+# vollstaendig, gezeichnet und pruefsummiert ist. Das Review selbst
+# entsteht ausserhalb dieses Harness, bei einer frischen Instanz mit
+# getrenntem Kontext, angefordert von einem Menschen
+# (.claude/commands/scheibe.md:73: "Der Harness schreibt dieses Review
+# nie selbst").
+#
+# Kein Netzzugriff auf ein Modell. Keine Geheimnisse. Keine Zielumgebung.
+# Ein Lauf, der nicht messen kann, meldet GESPERRT -- nie gruen (K23-M22).
+# =====================================================================
+name: Tor 3
+
+on:
+  # Der Regelfall: die Scheibenabnahme wird von Hand angestossen.
+  workflow_dispatch:
+    inputs:
+      scheibe:
+        description: "Kennung der Scheibe (leer = alle abgelegten Blaetter)"
+        required: false
+        type: string
+
+  # Der Zusatzfall: ein Pull Request, der eine Scheibenabnahme TRAEGT,
+  # wird mit dem Etikett `scheibenabnahme` versehen. Ohne das Etikett
+  # laeuft hier nichts -- sonst waere Tor 3 doch wieder ein Gate je
+  # Aenderung, und C-4 sagt ausdruecklich das Gegenteil.
+  pull_request:
+    types: [labeled, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tor3-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fremdreview:
+    name: Tor 3 · Nachweis des fremden Blicks
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.pull_request.labels.*.name, 'scheibenabnahme')
+    steps:
+      # Ganze Historie: das Blatt nennt einen Commit-Hash, und der wird
+      # gegen dieses Repo geprueft. Mit einem flachen Klon faende
+      # `git cat-file` ihn nicht und meldete faelschlich "nicht auffindbar".
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Nachweis pruefen
+        run: |
+          set -euo pipefail
+          if [ ! -x pruefungen/tor3.sh ]; then
+            echo "::error::pruefungen/tor3.sh fehlt — Tor 3 GESPERRT (K23-M22)"
+            exit 1
+          fi
+          ./pruefungen/tor3.sh "${{ inputs.scheibe }}"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fremdreview
+          path: nachweise/fremdreview/
+          if-no-files-found: warn
