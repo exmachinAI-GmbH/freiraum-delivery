@@ -22,6 +22,12 @@
 --   psql -h localhost -p 55433 -U postgres -d <wegwerfdatenbank> \
 --        -v ON_ERROR_STOP=1 -f anmeldecode_daten.sql
 --
+-- OPTIONAL (AC-16, ERWEITERUNG 2026-08-14, siehe Abschn. 4b): NUR wenn
+-- zusaetzlich FREIRAUM_ECHTVERSAND=ja UND FREIRAUM_PRUEF_ECHT_EMPFAENGER
+-- (eine echte Adresse bei einem fremden Anbieter) gesetzt sind, legt
+-- diese Datei ein sechstes Konto fuer die echte Zustellung an. Ohne
+-- beides bleibt es bei den fuenf synthetischen Konten.
+--
 -- Die Datei ist WIEDERHOLBAR: sie setzt ihre Testkonten, Einladungen und
 -- fluechtigen Spuren (login_code, login_attempt, auth_session) zurueck,
 -- statt sie zu loeschen. EVENT ist Nachweis (append-only) und wird darum
@@ -141,6 +147,68 @@ ON CONFLICT (id) DO UPDATE SET
 -- der Fall selbst (AC-09). Zur Sicherheit hier ausdruecklich entfernt,
 -- falls ein frueherer, anders gearteter Lauf sie angelegt haette.
 DELETE FROM actor WHERE email = 'ac_unbekannt@pruef.example';
+
+-- ---------------------------------------------------------------------
+-- 4b · ERWEITERUNG 2026-08-14 (Nachrechnung M2, AUFTRAG 2 / AC-16) --
+--     Teilaussage 1 der M2-Nachrechnung ("eine echte Zustellung mit
+--     abgelesenem Mailkopf") haengt bisher an einem EINZELLAUF vom
+--     10.08.2026. Diese Umgebung kann selbst keine echte Mail an einen
+--     fremden Anbieter schicken (die SMTP-Zugangsdaten liegen im
+--     Passwortmanager, nicht hier -- siehe
+--     nachweise/vorbedingungen/B2_mailversand/B2_Zugangsablage_260806.md).
+--     Darum NUR dann ein sechstes Konto anlegen, wenn der Aufrufer
+--     ausdruecklich eine echte, fremde Adresse mitgibt: doppelt
+--     geschuetzt durch FREIRAUM_ECHTVERSAND=ja UND
+--     FREIRAUM_PRUEF_ECHT_EMPFAENGER. Ohne beides bleibt es bei den
+--     fuenf synthetischen Konten aus Abschnitt 4 (K23-M12: nur
+--     synthetische Daten) -- eine echte, fremde Adresse ist bewusst
+--     NIE eine Vorgabe. anmeldecode_lauf.sh AC-16 misst gegen genau
+--     dieses Konto, mit demselben Klartext-Token wie hier gesetzt.
+-- ---------------------------------------------------------------------
+\getenv echtversand FREIRAUM_ECHTVERSAND
+\getenv echt_empfaenger FREIRAUM_PRUEF_ECHT_EMPFAENGER
+\if :{?echtversand}
+\else
+\set echtversand ''
+\endif
+\if :{?echt_empfaenger}
+\else
+\set echt_empfaenger ''
+\endif
+SELECT (:'echtversand' = 'ja' AND :'echt_empfaenger' <> '')::text AS echt_an \gset
+
+\if :echt_an
+  DELETE FROM login_code    WHERE actor_id IN (SELECT id FROM actor WHERE email = :'echt_empfaenger');
+  DELETE FROM auth_session  WHERE actor_id IN (SELECT id FROM actor WHERE email = :'echt_empfaenger');
+  DELETE FROM login_attempt WHERE email = :'echt_empfaenger';
+  DELETE FROM invitation    WHERE actor_id IN (SELECT id FROM actor WHERE email = :'echt_empfaenger');
+  DELETE FROM membership    WHERE actor_id IN (SELECT id FROM actor WHERE email = :'echt_empfaenger');
+
+  INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+  VALUES ('00000000-0000-4000-8000-000000000ac7',
+          '00000000-0000-4000-8000-0000000000ad', :'echt_empfaenger',
+          'Pruef AC Echtversand', 'EMAIL_CODE', 'WARTET_2FA', current_date)
+  ON CONFLICT (id) DO UPDATE SET
+    email = EXCLUDED.email, display_name = EXCLUDED.display_name,
+    mfa_method = EXCLUDED.mfa_method, status = EXCLUDED.status,
+    status_before_lock = NULL, last_login_at = NULL;
+
+  INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+  SELECT '00000000-0000-4000-8000-000000000ac7', 'ENDUSER', r.id, '00000000-0000-4000-8000-0000000000ad'
+    FROM role r WHERE r.portal_code = 'ENDUSER' AND r.name = 'Endnutzer'
+  ON CONFLICT DO NOTHING;
+
+  -- Klartext-Token (das AC-16 in anmeldecode_lauf.sh sendet):
+  --   tok-ac-echtversand-9e2f5c8b1a4d0716
+  INSERT INTO invitation (actor_id, portal_code, mail, token_hash, sent_at, expires_at, status)
+  VALUES ('00000000-0000-4000-8000-000000000ac7', 'ENDUSER', :'echt_empfaenger',
+          pruef_tokenwert('tok-ac-echtversand-9e2f5c8b1a4d0716', :'pfeffer'),
+          now(), now() + interval '23 hours', 'VERSANDT');
+
+  \echo 'AC-16: Echtversand-Konto fuer' :echt_empfaenger 'angelegt (FREIRAUM_ECHTVERSAND=ja).'
+\else
+  \echo 'AC-16: FREIRAUM_ECHTVERSAND=ja und/oder FREIRAUM_PRUEF_ECHT_EMPFAENGER fehlen -- kein Echtversand-Konto angelegt, AC-16 meldet GESPERRT.'
+\endif
 
 -- ---------------------------------------------------------------------
 -- 5 · Alten Lauf zuruecksetzen (fluechtige Spuren; die Konten selbst

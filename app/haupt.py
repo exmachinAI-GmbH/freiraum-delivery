@@ -1,4 +1,5 @@
-# umsetzt: K03-D01, K03-G01, K03-M05, K03-M13, K20-M08, K20-M25, K23-D09
+# umsetzt: K03-D01, K03-G01, K03-M05, K03-M13, K13-M05, K20-M08, K20-M25,
+#          K23-D09
 """FREIRAUM · Scheibe 1 · die Routen.
 
     .venv/bin/uvicorn app.haupt:app --port 8099
@@ -19,10 +20,13 @@ Der Vertrag der Scheibe:
     POST /einladung   Erfolg -> 303 auf "/anmeldung"; im selben Vorgang geht
                       der Anmeldecode hinaus (seit 14.08.2026, K03-M05)
                       sonst  -> 200 mit der einen Meldung, KEINE Aenderung
-    GET  /einladung/senden   ohne gueltige Sitzung -> 303 auf "/anmeldung"
+    GET  /einladung/senden   ohne gueltige Sitzung -> 303 auf "/anmeldung";
+                      mit gueltiger Sitzung ohne EXMA-Mitgliedschaft -> 303
+                      auf "/" (K13-M05, K19 EX-10)
                       sonst 200, Formular mit email und anzeigename
     POST /einladung/senden   Erfolg -> 303 auf
                       "/einladung/senden?gesendet=1"
+                      ohne EXMA-Mitgliedschaft -> 303 auf "/"
                       sonst  -> 200 mit BENANNTER Meldung, Eingaben bleiben
     GET  /            ohne gueltige Sitzung -> 303 auf "/anmeldung"
     POST /abmelden    303 auf "/anmeldung", Sitzung beendet
@@ -239,6 +243,63 @@ def _zurueck_auf_en01(merkmal):
     return antwort
 
 
+# Das Portal, dessen Mitgliedschaft zum Einladen berechtigt. Als Konstante
+# und nicht als Zeichenkette in zwei Routen: zwei Stellen laufen auseinander.
+PORTAL_VERWALTUNG = "EXMA"
+
+
+def _ohne_einladerecht(stand):
+    """K13-M05: darf diese Sitzung den Einladeweg ueberhaupt betreten?
+
+    BEFUND F2 der Fremdpruefung vom 14.08.2026: Bis heute genuegte eine
+    aktive Sitzung mit genau einem freigeschalteten Portal. Damit durfte
+    auch ein Konto des ENDUSER-Portals einladen. Der Vertrag sagt etwas
+    anderes, und zwar an drei Stellen:
+
+      K13-M05  "Jeder Aufruf aus einer Oberflaeche MUSS ueber den Serverpfad
+               laufen. Der Serverpfad prueft aktives Konto, MITGLIEDSCHAFT,
+               ROLLE, Mandant und Objektbezug, bevor er liest oder schreibt."
+               Konto, Mandant und Objektbezug hielt app/sitzung.py laengst --
+               Mitgliedschaft und Rolle wurden nur GEZAEHLT, nie GEPRUEFT.
+      K19      schema/K19_screens.yaml, EX-10/einladung_senden, Feld
+               `berechtigung`: "serverseitig: EXMA-Mitgliedschaft im
+               Serverpfad (K13-M05)". Und EX-09/nutzer_einladen: "ohne sie
+               endet jeder Aufruf ausser EX-01 auf EX-01".
+      K20-M02  Release 1 fuehrt je Portal GENAU EINE Rolle -- Plattform-Admin
+               fuer EXMA, Endnutzer fuer ENDUSER (F08, K14-G04: ausdruecklich
+               kein Rechte-Baukasten). Die Mitgliedschaft im EXMA-Portal IST
+               deshalb die Rolle Plattform-Admin. Diese Pruefung erfindet
+               also keine Berechtigungsregel; sie liest die eine, die es gibt.
+
+    GEPRUEFT WIRD DAS PORTAL DER SITZUNG, nicht eine zweite Abfrage: das
+    Portal in `stand` stammt aus derselben gepruften Zeile wie Konto und
+    Mandant und ist ueber `portal_enabled` gegen K20-D02 gehalten
+    (app/sitzung.py, portal_bestimmen). Ein zweiter Zugriff waere eine zweite
+    Wahrheit, die zwischen beiden Abfragen auseinanderlaufen kann.
+    """
+    return stand["portal"] != PORTAL_VERWALTUNG
+
+
+def _kein_einladerecht():
+    """Die Antwort auf einen Aufruf ohne EXMA-Mitgliedschaft: 303 auf "/".
+
+    KEIN TEIL-ZUGANG, aber auch keine Abmeldung. Die Sitzung ist gueltig --
+    sie traegt nur dieses Formular nicht. Deshalb ausdruecklich NICHT
+    `_zurueck_auf_en01`: das loescht den Keks und wuerfe eine einwandfreie
+    Sitzung hinaus, was kein Vertragssatz verlangt. K19 fuehrt fuer EX-09
+    "endet jeder Aufruf ausser EX-01 auf EX-01" -- den Einstieg des eigenen
+    Portals. Der Einstieg, den DIESE Sitzung hat, ist "/".
+
+    KEINE MELDUNG. Anders als beim Versand (K20-G01, angemeldeter
+    Verwaltender vor seiner eigenen Eingabe) stuende hier ein Satz auf dem
+    Bildschirm, der die Existenz eines Verwaltungswegs bestaetigt, den diese
+    Person nicht hat. Die Umleitung ist die Antwort.
+    """
+    antwort = RedirectResponse("/", status_code=UMLEITUNG)
+    antwort.headers["Cache-Control"] = "no-store"
+    return antwort
+
+
 def _versandseite(request, stand, meldung=None, adresse=None, anzeigename=None):
     antwort = VORLAGEN.TemplateResponse(
         request, "einladung_senden.html",
@@ -264,6 +325,11 @@ def versandmaske(request: Request, gesendet: str = ""):
 
     if stand is None:
         return _zurueck_auf_en01(merkmal)
+    if _ohne_einladerecht(stand):
+        # Schon das FORMULAR ist gesperrt, nicht erst das Absenden. K19 fuehrt
+        # EX-10 als Bildschirm des Verwaltenden; wer ihn nicht betreten darf,
+        # bekommt ihn nicht zu sehen (K13-M05).
+        return _kein_einladerecht()
 
     return _versandseite(request, stand,
                          meldung=MELDUNG_GESENDET if gesendet else None)
@@ -289,6 +355,12 @@ def versand_absenden(request: Request,
         stand = sitzung_pruefen(conn, merkmal_lesen(merkmal))
         if stand is None:
             return _zurueck_auf_en01(merkmal)
+        if _ohne_einladerecht(stand):
+            # Erneut und nicht nur im GET: zwischen Formular und Absenden
+            # koennen Minuten liegen, und ein POST erreicht diese Route auch
+            # ohne vorheriges GET. Eine Pruefung, die nur die Maske haelt,
+            # ist keine serverseitige Pruefung (K13-M05, K03-M13).
+            return _kein_einladerecht()
 
         meldung = einladung_senden(conn, stand, email, anzeigename,
                                    request.base_url)

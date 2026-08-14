@@ -395,6 +395,75 @@ esac
             || nok VE-08 "PLANNED-Portal:$m"
 
 # =====================================================================
+# VE-09 · Negativ · K03-M25 + K01-M15 · Mandantenuebergreifende Auskunft
+#         (F1 aus der Fremdpruefung, behoben, aber bislang ungemessen --
+#         14.08.2026). fremdmandant@pruef.example traegt ein Konto in
+#         einem ZWEITEN, synthetischen Mandanten (siehe versand_daten.sql,
+#         Abschnitt 7b). Nach K01-M15 gilt dieses Objekt fuer die Sitzung
+#         von einladend@ (Betreiber-Mandant) als NICHT VORHANDEN; nach
+#         K03-M25 darf die Fehlermeldung nicht preisgeben, ob ein Konto
+#         existiert.
+#
+#         Der Fall verlangt darum KEINE feste Erwartung, sondern misst
+#         DIFFERENTIELL gegen eine echte Unbekannte
+#         (niemals-existent@pruef.example, existiert nirgends): beide
+#         Anfragen tragen denselben Anzeigenamen, damit nur die Adresse
+#         variiert. Verglichen werden Statuscode, Location-Ziel, ob eine
+#         Einladungszeile entsteht, und -- wo die Antwort ueberhaupt
+#         Wortlaut traegt (Status 200) -- der Wortlaut selbst (mit der
+#         jeweils eingegebenen Adresse ausgeblendet, da ein Eingabe-Echo
+#         allein nichts preisgibt). Jede Abweichung ist ein Fund.
+# =====================================================================
+adresse_fremd='fremdmandant@pruef.example'
+adresse_unbek='niemals-existent@pruef.example'
+
+vor_fremd="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_fremd'")"
+vor_unbek="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_unbek'")"
+
+st_fremd=$(post_einladung "$adresse_fremd" 'Pruef Abgleich' ve09fremd "$KEKS")
+ziel_fremd="$(kopfzeile ve09fremd location)"
+st_unbek=$(post_einladung "$adresse_unbek" 'Pruef Abgleich' ve09unbek "$KEKS")
+ziel_unbek="$(kopfzeile ve09unbek location)"
+
+nach_fremd="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_fremd'")"
+nach_unbek="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_unbek'")"
+neu_fremd=$(( nach_fremd - vor_fremd ))
+neu_unbek=$(( nach_unbek - vor_unbek ))
+
+m=""
+[ "$st_fremd" = "$st_unbek" ] || m="$m Statuscode unterscheidet sich: fremd=$st_fremd unbekannt=$st_unbek (K03-M25);"
+[ "$ziel_fremd" = "$ziel_unbek" ] || m="$m Location-Ziel unterscheidet sich: fremd='$ziel_fremd' unbekannt='$ziel_unbek' (K03-M25);"
+[ "$neu_fremd" = "$neu_unbek" ] || m="$m es entsteht unterschiedlich oft eine Einladungszeile: fremd=$neu_fremd unbekannt=$neu_unbek (K01-M15);"
+
+# Wortlaut nur vergleichbar, wo ueberhaupt Wortlaut steht (200); bei 303
+# traegt der Rumpf keine fachliche Aussage, dort tragen Status+Location
+# oben bereits die ganze Messung. Die je eigene Adresse wird vor dem
+# Vergleich ausgeblendet, denn ein Echo der eigenen Eingabe (Vertrag:
+# "Eingaben bleiben stehen") ist erwartet und fuer sich kein Fund.
+if [ "$st_fremd" = "200" ] && [ "$st_unbek" = "200" ]; then
+  sed "s|$adresse_fremd|ADRESSE_AUSGEBLENDET|g" "$(rumpf ve09fremd)" > "$ARBEIT/ve09fremd.blank"
+  sed "s|$adresse_unbek|ADRESSE_AUSGEBLENDET|g" "$(rumpf ve09unbek)" > "$ARBEIT/ve09unbek.blank"
+  diff -q "$ARBEIT/ve09fremd.blank" "$ARBEIT/ve09unbek.blank" >/dev/null 2>&1 \
+    || m="$m der Wortlaut der Antwort (Adresse ausgeblendet) unterscheidet sich zwischen fremd und unbekannt (K03-M25);"
+fi
+
+[ -z "$m" ] && ok VE-09 "Konto in fremdem Mandanten vs. echte Unbekannte: Statuscode, Location und Zeilenentstehung sind ununterscheidbar (K01-M15, K03-M25)" \
+            || nok VE-09 "Mandantenuebergreifende Auskunft:$m"
+
+# =====================================================================
+# F2 (14.08.2026): KEIN Fall gebaut. Der Fremdbefund verlangt eine
+# Rollenpruefung beim Einladen (Verwaltungsrolle statt blosser Ein-Portal-
+# Mitgliedschaft). Das Klauselregister (nachweise/klauselregister/
+# register.json, 1231 Zeilen) wurde mit den Stichworten Rolle, Berechtigung,
+# Plattform-Admin, einladen, Rollentrennung, Verwaltend* durchsucht -- in
+# K20 (46 Zeilen), K03, K01, K14, K19, K21. Ergebnis: K01-M22/K20-M02
+# legen fuer Release 1 GENAU EINE Rolle je Portal fest (EXMA: Plattform-
+# Admin), und K20-D01 haelt ausdruecklich fest, dass ein Rechte-Baukasten
+# in Release 1 NICHT ausgewertet wird. Keine Klausel verlangt eine von
+# der Portal-Mitgliedschaft UNTERSCHEIDBARE Rollenpruefung beim Versand.
+# NICHT PRUEFBAR aus der Klausel -- ein Fall dafuer wuerde eine Regel
+# pruefen, die niemand gezeichnet hat.
+# =====================================================================
 printf '\n'
 [ "$gesperrt" -gt 0 ] && printf 'davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): %s\n' "$gesperrt"
 printf 'SUMME: %s von %s bestanden, %s gescheitert\n' "$bestanden" "$gesamt" "$gescheitert"

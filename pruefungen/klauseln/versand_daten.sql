@@ -190,6 +190,42 @@ SELECT '00000000-0000-4000-9000-000000000003', 'EXMA', 'wiederholt@pruef.example
        now() - interval '2 hours', now() + interval '18 hours', 'VERSANDT', 1;
 
 -- ---------------------------------------------------------------------
+-- 7b · ZWEITER Mandant mit einem Konto -- Grundlage fuer den
+--      mandantenuebergreifenden Auskunftsfall (K01-M15 + K03-M25,
+--      14.08.2026, F1 aus der Fremdpruefung). Das Konto liegt INNERHALB
+--      der Domaenenschranke des Betreiber-Mandanten (sonst wuerde die
+--      Domaenenschranke K20-M10/K20-D04 den Fall verdecken, nicht die
+--      Mandantengrenze) -- gehoert aber einem ZWEITEN, synthetischen
+--      Mandanten (K23-M12: rein erfundene Daten, keine echte Firma).
+--      K01-M15: ein Objekt eines fremden Mandanten gilt als nicht
+--      vorhanden -- versand_lauf.sh prueft daher NICHT gegen eine feste
+--      Erwartung, sondern vergleicht die Antwort auf diese Adresse
+--      GEGEN die Antwort auf eine echte Unbekannte.
+-- ---------------------------------------------------------------------
+INSERT INTO tenant (id, kind, name, customer_code, legal_space, invite_domain, invite_ttl_hours)
+VALUES ('00000000-0000-4000-9000-0000000000c1', 'CUSTOMER', 'Pruef Fremdmandant GmbH', 'DE-PRF', 'DE',
+        NULL, 24)
+ON CONFLICT (id) DO UPDATE SET
+  name           = EXCLUDED.name,
+  customer_code  = EXCLUDED.customer_code,
+  legal_space    = EXCLUDED.legal_space;
+
+INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+VALUES ('00000000-0000-4000-9000-000000000004',
+        '00000000-0000-4000-9000-0000000000c1',
+        'fremdmandant@pruef.example', 'Pruef Fremdmandant', 'EMAIL_CODE', 'AKTIV', current_date)
+ON CONFLICT (id) DO UPDATE SET
+  tenant_id    = EXCLUDED.tenant_id,
+  display_name = EXCLUDED.display_name,
+  mfa_method   = EXCLUDED.mfa_method,
+  status       = 'AKTIV';
+
+INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+SELECT '00000000-0000-4000-9000-000000000004', 'ENDUSER', r.id, '00000000-0000-4000-9000-0000000000c1'
+  FROM role r WHERE r.portal_code = 'ENDUSER' AND r.name = 'Endnutzer'
+ON CONFLICT DO NOTHING;
+
+-- ---------------------------------------------------------------------
 -- 8 · Sicht auf die Lage -- versand_lauf.sh prueft damit den AUFBAU
 --     unmittelbar vor dem ersten Fall erneut (die Daten koennten
 --     zwischenzeitlich durch einen fruehen Teil desselben Laufs
@@ -265,11 +301,31 @@ BEGIN
     fehler := fehler || 'wiederholt@ traegt nicht genau eine offene Einladung mit attempt=1; ';
   END IF;
 
-  -- (f) Die drei dynamischen Fallziele existieren NOCH NICHT -- sonst
-  --     misst der zugehoerige Fall nicht die Neuanlage, sondern einen
-  --     Rest aus einem fruehen Teil desselben Laufs.
+  -- (e2) F1 (14.08.2026, K01-M15 + K03-M25): der zweite, synthetische
+  --      Mandant steht, und fremdmandant@ gehoert IHM -- nicht dem
+  --      Betreiber-Mandanten aus (a). Ohne diese Trennung wuerde VE-09
+  --      keinen mandantenuebergreifenden Fall pruefen, sondern einen
+  --      gewoehnlichen Treffer im eigenen Mandanten.
+  IF NOT EXISTS (SELECT 1 FROM tenant
+                  WHERE id = '00000000-0000-4000-9000-0000000000c1'
+                    AND kind = 'CUSTOMER') THEN
+    fehler := fehler || 'der zweite (synthetische) Mandant fuer den F1-Fall fehlt; ';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM actor
+                  WHERE email = 'fremdmandant@pruef.example'
+                    AND status = 'AKTIV'
+                    AND tenant_id = '00000000-0000-4000-9000-0000000000c1') THEN
+    fehler := fehler || 'fremdmandant@ ist nicht AKTIV oder haengt nicht am zweiten Mandanten; ';
+  END IF;
+
+  -- (f) Die dynamischen Fallziele existieren NOCH NICHT -- sonst misst
+  --     der zugehoerige Fall nicht die Neuanlage, sondern einen Rest aus
+  --     einem fruehen Teil desselben Laufs. niemals-existent@ ist die
+  --     echte Unbekannte, gegen die VE-09 fremdmandant@ misst (F1,
+  --     14.08.2026).
   IF EXISTS (SELECT 1 FROM actor
-              WHERE email IN ('neu@pruef.example','geplant@pruef.example','niemand@fremde-domaene.example')) THEN
+              WHERE email IN ('neu@pruef.example','geplant@pruef.example','niemand@fremde-domaene.example',
+                               'niemals-existent@pruef.example')) THEN
     fehler := fehler || 'ein dynamisches Fallziel existiert bereits vor dem ersten HTTP-Fall; ';
   END IF;
 

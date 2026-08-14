@@ -38,6 +38,28 @@
 #                            etwas (F07).
 #   PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE
 #                            Vorgabe localhost/55433/postgres/pilot/freiraum_pruef
+#   FREIRAUM_ECHTVERSAND     OPTIONAL, nur AC-16 (ERWEITERUNG 2026-08-14).
+#                            "ja" schaltet die echte Zustellung an einen
+#                            fremden Anbieter frei. Ohne "ja" meldet AC-16
+#                            GESPERRT -- nicht uebersprungen, nicht gruen.
+#   FREIRAUM_SMTP_HOST/USER/PASS/TLS
+#                            OPTIONAL, nur AC-16 -- dieselben vier Namen
+#                            wie in B2_Zugangsablage_260806.md Abschn. 3
+#                            (Zugangsdaten aus dem macOS-Schluesselbund).
+#   FREIRAUM_PRUEF_ECHT_EMPFAENGER
+#                            OPTIONAL, nur AC-16 -- eine echte Adresse bei
+#                            einem fremden Anbieter. Dasselbe Konto muss
+#                            zuvor mit denselben zwei Werten (plus
+#                            FREIRAUM_ECHTVERSAND=ja) in
+#                            anmeldecode_daten.sql Abschn. 4b angelegt
+#                            worden sein.
+#   FREIRAUM_PRUEF_ECHT_MAILKOPF
+#                            OPTIONAL, nur AC-16 -- Pfad zu einer Datei mit
+#                            dem beim fremden Anbieter TATSAECHLICH
+#                            zugestellten Mailkopf. Dieser Lauf kann nicht
+#                            selbst in ein fremdes Postfach schauen (analog
+#                            zu FREIRAUM_PRUEF_MAILFANG fuer den lokalen
+#                            Testempfaenger, nur eben nicht automatisierbar).
 #
 # MASSSTAB F07: Vor dem ersten Fall wird der AUFBAU geprueft. Ein Fall,
 # der an einem fehlenden Datensatz oder einer fremden Bedingung
@@ -75,6 +97,24 @@
 #       Serverausgabe/Logs. Ungemessen bedeutet hier: niemand hat
 #       hingesehen, nicht "Codes stehen nie in Logs" ist geprueft
 #       (P6, 2026-08-14).
+#   (6) K20-M18s dritter Bestandteil ("Wert davor und danach") ist fuer
+#       den Anmeldungs-Nachweis (AC-15/AC-17) NICHT geprueft: der
+#       schreibende Ausloeser session_event_writer (migrations/M30, Nr.
+#       16 Punkt 11) setzt event.value fuer action=ANMELDUNG ueberhaupt
+#       nicht -- gemessen an der laufenden Datenbank ist die Spalte dort
+#       NULL, nicht etwa leer befuellt. Ob K20-M18 auf eine Anmeldung
+#       (Sitzungsneuanlage, kein Bestandswechsel eines vorhandenen
+#       Zugangs) ueberhaupt in vollem Umfang zutrifft -- mit einem
+#       "davor" fuer eine Neuanlage -- sagt der Klauselwortlaut nicht.
+#       AC-15/AC-17 messen darum eng: Zeitpunkt und handelnde Instanz,
+#       nicht das dritte Element. NICHT PRUEFBAR aus der Klausel
+#       (ERWEITERUNG 2026-08-14).
+#   (7) AC-16 (echte Zustellung) ist auf FREIRAUM_ECHTVERSAND=ja plus
+#       SMTP-Zugangsdaten UND einen zuvor mit anmeldecode_daten.sql
+#       angelegten Empfaenger angewiesen, die in einer abgeschlossenen
+#       Pruefumgebung fehlen. Ohne sie meldet AC-16 GESPERRT -- das ist
+#       die ehrliche Aussage, nicht "bestanden" und nicht "uebersprungen"
+#       (ERWEITERUNG 2026-08-14).
 #
 # =====================================================================
 # UEBERARBEITUNG 2026-08-14: Eine adversarische Gegenpruefung hat 24
@@ -108,6 +148,34 @@
 #        gesetzt), ungefilterte Gesamtzahl als eigene Bedingung ergaenzt.
 #        AC-08/AC-09 von K03-M25 auf K03-M16 umgehaengt -- M25 handelt
 #        vom Einladungsbefehl, nicht von der Anmeldung.
+# =====================================================================
+# ERWEITERUNG 2026-08-14 (Nachrechnung M2, AUFTRAG 1 + 2): M2s Nachrechnung
+# fuehrt vier Teilaussagen; zwei davon waren luecken- bzw. einzellaufbelegt:
+#   AUFTRAG 1 (Teilaussage 2, "die Tabelle event traegt die Anmeldung"):
+#     AC-15 (positiv) und AC-17 (Negativfall) ergaenzt. Grundlage NICHT
+#     geraten, sondern aus migrations/M30 gelesen: der Ausloeser
+#     session_event_writer (Stufe 6a, "Anmelde-Ausloeser", Nr. 16 Punkt
+#     11) schreibt bei JEDEM INSERT auf auth_session eine Zeile nach
+#     event mit action='ANMELDUNG', object_ref='SESSION:<id>',
+#     change_type='Neuanlage' -- live gegen freiraum_ci nachgerechnet
+#     (occurred_at/actor_id/actor_label gesetzt, value NULL, siehe
+#     Randbemerkung (6) oben). AC-15 misst object_ref/action/Zeitpunkt/
+#     handelnde Instanz nach der erfolgreichen Anmeldung aus AC-01/AC-02;
+#     AC-17 misst denselben Fall NACH einer gescheiterten Anmeldung
+#     (ac_gegenprobe@, AC-08) und erwartet WEDER eine auth_session- NOCH
+#     eine event-Zeile -- der Trigger haengt am INSERT auf auth_session,
+#     eine gescheiterte Anmeldung legt keine Sitzung an.
+#   AUFTRAG 2 (Teilaussage 1, "eine echte Zustellung mit abgelesenem
+#     Mailkopf"): AC-16 ergaenzt. Fuehrt die echte Zustellung NUR aus,
+#     wenn FREIRAUM_ECHTVERSAND=ja gesetzt ist und alle Zugangswerte
+#     vorliegen (siehe B2_Zugangsablage_260806.md) -- sonst GESPERRT mit
+#     einer Meldung, die WAS fehlt und WAS zu tun ist benennt (SPR-9).
+#     Gemessene Kopffelder (DKIM-Signature d=freiraum.top,
+#     Authentication-Results dkim=pass/spf=pass/dmarc=pass) aus
+#     B2_Abnahmeprotokoll.md Abschn. 5/6 uebernommen, nicht erfunden --
+#     dieselben Felder, die der Einzellauf vom 10.08.2026 abgelesen hat.
+#     Ohne einen bestandenen AC-16-Lauf bleibt Teilaussage 1 weiterhin
+#     nur durch diesen Einzellauf belegt.
 # =====================================================================
 # NACHBESSERUNG 2026-08-14 (S3): Die S1-Haertung von db()/dbz() wirkte
 # nicht. Gemessen mit einem Stub-psql, der auf stderr einen Fehler schreibt
@@ -838,6 +906,144 @@ else
   [ "${mails_nach14:-0}" = "${mails_vor14:-0}" ] || m="$m im Mailfang stehen nach dem zweiten Versuch mehr Mails an $E_KETTE (${mails_vor14:-0} -> ${mails_nach14:-0});"
   [ -z "$m" ] && ok AC-14 "K20-D10, K03-G01, K03-M15" "Eine nicht erfolgreiche Einloesung (Token bereits EINGELOEST) stellt keinen Anmeldecode aus: kein 303, login_code-Zaehler unveraendert, keine weitere Mail (K20-D10, K03-G01, K03-M15 -- Gegenstueck zu AC-01)" \
               || nok AC-14 "K20-D10, K03-G01, K03-M15" "Gegenstueck zu AC-01:$m"
+fi
+pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+
+# =====================================================================
+# AC-15 · K20-M18 (positiv) · Teilaussage 2 der M2-Nachrechnung: "die
+#         Tabelle event traegt die ANMELDUNG" (nicht die Einloesung --
+#         das messen AC-10/AC-11 bereits). Grundlage NICHT geraten:
+#         migrations/M30 Stufe 6a (session_event_writer, Nr. 16 Punkt
+#         11) schreibt bei jedem INSERT auf auth_session eine Zeile nach
+#         event mit action='ANMELDUNG', object_ref='SESSION:<id>' -- live
+#         nachgerechnet (siehe ERWEITERUNG 2026-08-14 im Kopf dieser
+#         Datei). Gemessen wird NACH der erfolgreichen Anmeldung aus
+#         AC-01/AC-02: steht fuer dieselbe Sitzung eine Nachweiszeile mit
+#         Zeitpunkt (occurred_at) und aufloesbarer handelnder Instanz
+#         (actor_id/actor_label)? Das dritte Element der Klausel ("Wert
+#         davor und danach") ist hier NICHT geprueft -- siehe Randbemerkung
+#         (6) im Kopf dieser Datei.
+# =====================================================================
+if [ -z "$kette_id" ] || [ -z "$CODE_KETTE" ]; then
+  sperr AC-15 "K20-M18" "Nachweis der Anmeldung nicht pruefbar: AC-01/AC-02 haben keine erfolgreiche Anmeldung fuer $E_KETTE geliefert"
+else
+  sitzung_ac15="$(dbz "SELECT id::text FROM auth_session WHERE actor_id='$kette_id' ORDER BY started_at DESC LIMIT 1")"
+  if [ -z "$sitzung_ac15" ]; then
+    nok AC-15 "K20-M18" "nach der erfolgreichen Anmeldung (AC-02) steht keine Zeile in auth_session fuer $E_KETTE -- ohne Sitzungsanlage schreibt der Ausloeser session_event_writer (migrations/M30) auch keine Nachweiszeile"
+  else
+    treffer15="$(dbz "SELECT count(*) FROM event e JOIN actor a ON a.id = e.actor_id
+                        WHERE e.object_ref = 'SESSION:$sitzung_ac15'
+                          AND e.action = 'ANMELDUNG'
+                          AND e.occurred_at IS NOT NULL
+                          AND e.actor_label IS NOT NULL AND length(trim(e.actor_label)) > 0")"
+    [ "${treffer15:-0}" -ge 1 ] && ok AC-15 "K20-M18" "Nach der erfolgreichen Anmeldung steht eine Nachweiszeile in event, die die Anmeldung traegt: Zeitpunkt (occurred_at) und aufloesbare handelnde Instanz (actor_id/actor_label) gesetzt, action=ANMELDUNG, object_ref=SESSION:<id> (K20-M18; migrations/M30 session_event_writer; $treffer15 Zeile(n))" \
+                || nok AC-15 "K20-M18" "die Sitzung $sitzung_ac15 fuer $E_KETTE besteht, aber es fehlt eine passende event-Zeile mit action=ANMELDUNG, gesetztem Zeitpunkt und aufloesbarer handelnder Instanz (K20-M18)"
+  fi
+fi
+pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+
+# =====================================================================
+# AC-16 · Teilaussage 1 der M2-Nachrechnung (echte Zustellung) -- siehe
+#         ERWEITERUNG 2026-08-14 im Kopf dieser Datei und Randbemerkung
+#         (7). HINWEIS: Ohne einen bestandenen Lauf dieses Falls stuetzt
+#         sich Teilaussage 1 ("eine echte Zustellung mit abgelesenem
+#         Mailkopf") weiterhin NUR auf den Einzellauf vom 10.08.2026
+#         (Zustellung an einen fremden Anbieter, Mailkopf abgelesen:
+#         dkim=pass, spf=pass, dmarc=pass) -- nicht auf einen
+#         wiederholbaren Prueflauf.
+#
+#         Diese Pruefumgebung kann selbst KEINE echte Mail an einen
+#         fremden Anbieter schicken: die SMTP-Zugangsdaten liegen im
+#         macOS-Schluesselbund von A. Han, nicht hier
+#         (nachweise/vorbedingungen/B2_mailversand/B2_Zugangsablage_260806.md
+#         Abschn. 2/3 -- dort auch die vier erwarteten Umgebungsnamen).
+#         Dieser Fall fuehrt die echte Zustellung darum NUR aus, wenn
+#         FREIRAUM_ECHTVERSAND=ja gesetzt ist UND alle noetigen Werte
+#         vorliegen -- sonst GESPERRT mit einer Meldung, die sagt WAS
+#         fehlt und WAS zu tun ist (SPR-9). Kein Uebergehen, kein
+#         stillschweigendes Bestehen.
+#
+#         Kopffelder als Beleg (B2_Abnahmeprotokoll.md Abschn. 5/6): "am
+#         zugestellten Kopf geprueft, ob DKIM-Signature mit
+#         d=freiraum.top erscheint und ob die DMARC-Auswertung des
+#         Empfaengers greift". Gemessen werden darum DKIM-Signature
+#         (d=freiraum.top) sowie ein Authentication-Results-Feld mit
+#         dkim=pass, spf=pass, dmarc=pass -- dieselben Felder wie im
+#         Einzellauf vom 10.08.2026.
+#
+#         Diese Umgebung kann nicht selbst in ein fremdes Postfach
+#         schauen; FREIRAUM_PRUEF_ECHT_MAILKOPF benennt darum eine vom
+#         Aufrufer bereitgestellte Datei mit dem tatsaechlich beim
+#         fremden Anbieter zugestellten Mailkopf (analog zu
+#         FREIRAUM_PRUEF_MAILFANG fuer den lokalen Testempfaenger). Das
+#         Pruefkonto muss zuvor mit denselben Werten in
+#         anmeldecode_daten.sql (Abschn. 4b) angelegt worden sein.
+# =====================================================================
+echt_fehlt=""
+[ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]        || echt_fehlt="$echt_fehlt FREIRAUM_ECHTVERSAND=ja setzen;"
+[ -n "${FREIRAUM_SMTP_HOST:-}" ]              || echt_fehlt="$echt_fehlt FREIRAUM_SMTP_HOST fehlt;"
+[ -n "${FREIRAUM_SMTP_USER:-}" ]              || echt_fehlt="$echt_fehlt FREIRAUM_SMTP_USER fehlt;"
+[ -n "${FREIRAUM_SMTP_PASS:-}" ]              || echt_fehlt="$echt_fehlt FREIRAUM_SMTP_PASS fehlt (macOS-Schluesselbund, siehe B2_Zugangsablage_260806.md);"
+[ -n "${FREIRAUM_SMTP_TLS:-}" ]               || echt_fehlt="$echt_fehlt FREIRAUM_SMTP_TLS fehlt (Vorgabe 1);"
+[ -n "${FREIRAUM_PRUEF_ECHT_EMPFAENGER:-}" ]  || echt_fehlt="$echt_fehlt FREIRAUM_PRUEF_ECHT_EMPFAENGER fehlt -- eine echte Adresse bei einem fremden Anbieter, mit anmeldecode_daten.sql vorbereitet;"
+[ -n "${FREIRAUM_PRUEF_ECHT_MAILKOPF:-}" ]    || echt_fehlt="$echt_fehlt FREIRAUM_PRUEF_ECHT_MAILKOPF fehlt -- Pfad zum beim fremden Anbieter tatsaechlich abgelesenen Mailkopf;"
+# wie FREIRAUM_CODE_PFEFFER oben: ein Hochkomma liesse sich hier nicht
+# sicher in SQL setzen (die Adresse geht unten direkt in eine dbz()-Abfrage).
+case "${FREIRAUM_PRUEF_ECHT_EMPFAENGER:-}" in *"'"*) echt_fehlt="$echt_fehlt FREIRAUM_PRUEF_ECHT_EMPFAENGER enthaelt ein Hochkomma -- das Pruefskript kann es nicht sicher in SQL setzen;";; esac
+
+if [ -n "$echt_fehlt" ]; then
+  sperr AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung nicht ausgefuehrt -- fehlt:$echt_fehlt Teilaussage 1 der M2-Nachrechnung bleibt ohne diesen Lauf nur durch den Einzellauf vom 10.08.2026 belegt, nicht durch einen wiederholbaren Prueflauf."
+else
+  konto_ac16="$(dbz "SELECT count(*) FROM actor WHERE email = '$FREIRAUM_PRUEF_ECHT_EMPFAENGER'")"
+  pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+  if [ "${konto_ac16:-0}" != "1" ]; then
+    sperr AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Kein Pruefkonto fuer FREIRAUM_PRUEF_ECHT_EMPFAENGER=$FREIRAUM_PRUEF_ECHT_EMPFAENGER gefunden -- anmeldecode_daten.sql mit denselben FREIRAUM_ECHTVERSAND=ja und FREIRAUM_PRUEF_ECHT_EMPFAENGER zuerst einspielen."
+  else
+    st_echt=$(post_einladung "tok-ac-echtversand-9e2f5c8b1a4d0716" ac16)
+    m=""
+    [ "$st_echt" = "303" ] || m="$m Status $st_echt statt 303 auf die Einloesung fuer $FREIRAUM_PRUEF_ECHT_EMPFAENGER;"
+    if [ ! -s "$FREIRAUM_PRUEF_ECHT_MAILKOPF" ]; then
+      m="$m die Datei FREIRAUM_PRUEF_ECHT_MAILKOPF ($FREIRAUM_PRUEF_ECHT_MAILKOPF) ist leer oder fehlt nach dem Versand -- ohne sie ist der beim fremden Anbieter zugestellte Mailkopf nicht lesbar;"
+    else
+      kopf_echt="$(cat "$FREIRAUM_PRUEF_ECHT_MAILKOPF")"
+      printf '%s' "$kopf_echt" | grep -qi 'd=freiraum\.top' || m="$m DKIM-Signature mit d=freiraum.top nicht im abgelesenen Kopf gefunden;"
+      printf '%s' "$kopf_echt" | grep -qi 'dkim=pass'        || m="$m dkim=pass nicht im abgelesenen Kopf gefunden;"
+      printf '%s' "$kopf_echt" | grep -qi 'spf=pass'         || m="$m spf=pass nicht im abgelesenen Kopf gefunden;"
+      printf '%s' "$kopf_echt" | grep -qi 'dmarc=pass'       || m="$m dmarc=pass nicht im abgelesenen Kopf gefunden;"
+    fi
+    [ -z "$m" ] && ok AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung an $FREIRAUM_PRUEF_ECHT_EMPFAENGER durchgefuehrt und am zugestellten Mailkopf abgelesen: DKIM-Signature d=freiraum.top, Authentication-Results dkim=pass/spf=pass/dmarc=pass (B2_Abnahmeprotokoll.md Abschn. 5/6) -- Teilaussage 1 der M2-Nachrechnung damit wiederholbar belegt, nicht mehr nur durch den Einzellauf vom 10.08.2026" \
+                || nok AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung:$m"
+  fi
+fi
+pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+
+# =====================================================================
+# AC-17 · K20-M18 (Negativfall) · Gegenstueck zu AC-15: eine GESCHEITERTE
+#         Anmeldung darf keinen Anmeldungs-Nachweiseintrag erzeugen.
+#         Grundlage NICHT geraten: der Ausloeser session_event_writer
+#         (migrations/M30, Stufe 6a) haengt ausschliesslich am INSERT auf
+#         auth_session; ohne Sitzungsanlage feuert kein Trigger. Der
+#         Klauselwortlaut selbst nennt fuer den Fehlerfall keine eigene
+#         "als gescheitert gekennzeichnete" Zeile -- gemessen wird darum
+#         das, was der Wortlaut UND der gefundene Ausloeser hergeben:
+#         weder eine auth_session- noch eine event-Zeile mit
+#         action=ANMELDUNG fuer das betroffene Konto.
+#
+#         Traeger: ac_gegenprobe@ (AC-08, falscher Code an einem echten,
+#         frisch eingeloesten Konto -- die einzige Anmeldung, die fuer
+#         dieses Konto im gesamten Lauf versucht wird, und sie schlaegt
+#         fehl).
+# =====================================================================
+if [ -z "$gegenprobe_id" ]; then
+  sperr AC-17 "K20-M18" 'Negativfall (gescheiterte Anmeldung) nicht pruefbar: actor_id von ac_gegenprobe@ (AC-08) fehlt'
+else
+  keine_sitzung17="$(dbz "SELECT count(*) FROM auth_session WHERE actor_id='$gegenprobe_id'")"
+  keine_zeile17="$(dbz "SELECT count(*) FROM event WHERE actor_id='$gegenprobe_id' AND action='ANMELDUNG'")"
+  m=""
+  [ "${keine_sitzung17:-0}" = "0" ] || m="$m fuer $E_GEGENPROBE besteht trotz gescheiterter Anmeldung (AC-08, falscher Code) eine auth_session-Zeile;"
+  [ "${keine_zeile17:-0}" = "0" ] || m="$m fuer $E_GEGENPROBE steht trotz gescheiterter Anmeldung eine event-Zeile mit action=ANMELDUNG;"
+  [ -z "$m" ] && ok AC-17 "K20-M18" "Eine gescheiterte Anmeldung (falscher Code an echtem Konto, AC-08) erzeugt keinen Anmeldungs-Nachweiseintrag: keine auth_session-Zeile, keine event-Zeile mit action=ANMELDUNG (K20-M18; session_event_writer haengt am INSERT auf auth_session)" \
+              || nok AC-17 "K20-M18" "Negativfall Anmeldungs-Nachweis:$m"
 fi
 pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
 

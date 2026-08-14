@@ -63,6 +63,13 @@ hilft niemandem und widerspricht K20-G01 ("Die Sperre wird begruendet
 angezeigt, nie stillschweigend gesetzt") und K20-G04 ("Die Meldungen des
 Einladungswaechters werden am Ort der Ablehnung angezeigt ... im Wortlaut").
 
+DIESE UNTERSCHEIDBARKEIT HAT SEIT DEM 14.08.2026 EINE GRENZE, und sie steht
+in K03-M25: "Fehlermeldungen geben nicht preis, ob ein Konto existiert." Eine
+Meldung darf sagen, was der Verwaltende falsch eingegeben hat -- sie darf
+nicht sagen, wer sonst noch ein Konto hat. Die eine Meldung, die das tat, ist
+entfallen; die Begruendung steht bei _konto_sichern (Befund F1 der
+Fremdpruefung vom 14.08.2026).
+
 DIE MITGLIEDSCHAFT STEHT SEIT DEM 11.08.2026 HIER. Blatt 62 ist an diesem Tag
 von beiden Foundern gezeichnet, Moeglichkeit A: sie entsteht beim VERSAND, in
 derselben Transaktion wie die Einladung. Keine Einladung ohne Mitgliedschaft,
@@ -154,10 +161,16 @@ MELDUNG_PORTAL = (
     "Fuer dieses Portal wird nicht eingeladen: es ist noch nicht "
     "freigeschaltet.")
 
-MELDUNG_FREMDER_MANDANT = (
-    "Zu dieser Adresse besteht bereits ein Konto bei einem anderen "
-    "Mandanten. Eine Einladung ueber die Mandantengrenze hinweg wird nicht "
-    "ausgestellt.")
+# HIER STAND MELDUNG_FREMDER_MANDANT ("Zu dieser Adresse besteht bereits ein
+# Konto bei einem anderen Mandanten ..."). Sie ist am 14.08.2026 entfallen,
+# nicht umformuliert: sie war eine Auskunft ueber den Bestand eines fremden
+# Mandanten und verstiess gegen K03-M25 ("Fehlermeldungen geben nicht preis,
+# ob ein Konto existiert"), K01-M15 und K02-D05. Die Begruendung im ganzen
+# steht in _konto_sichern; dort ist auch der verbleibende Rest benannt, der
+# im Datenmodell sitzt und nicht in app/.
+#
+# Sie kommt nicht als milderer Wortlaut zurueck. Ein eigener Zweig, der genau
+# beim fremden Treffer anschlaegt, bleibt ein Orakel -- gleich wie hoeflich.
 
 MELDUNG_MEHRDEUTIG = (
     "Zu dieser Adresse bestehen mehrere Konten, die sich nur in der Gross- "
@@ -316,13 +329,58 @@ def _konto_sichern(conn, einladender, adresse, name):
     nicht gegenseitig ueberholen: der zweite wartet und findet dann das
     Konto des ersten vor, statt ein zweites anzulegen.
 
-    UEBER DIE MANDANTENGRENZE wird nicht eingeladen. Findet sich die
-    Adresse bei einem anderen Mandanten, ist der Versand abgewiesen: die
-    Einladung wuerde sonst gegen die Domaenenschranke und die Frist eines
-    FREMDEN Mandanten geprueft (der Waechter liest sie ueber
+    UEBER DIE MANDANTENGRENZE wird nicht eingeladen -- und seit dem
+    14.08.2026 wird sie auch nicht mehr ABGEFRAGT. Die Abfrage sucht
+    ausschliesslich im Mandanten der Sitzung.
+
+    BEFUND F1 der Fremdpruefung vom 14.08.2026: Bis heute suchte diese
+    Stelle global nach lower(email), unterschied danach eigenen von fremdem
+    Mandanten und zeigte im fremden Fall eine EIGENE Meldung ("Konto bei
+    einem anderen Mandanten"). Wer einladen durfte, konnte damit Adressen
+    durchprobieren und erfuhr, welche bei einem anderen Mandanten
+    registriert sind. Der Vertrag verbietet das dreifach:
+
+      K03-M25  Der Einladungsbefehl prueft Zielmandant, Nachweis und
+               Domaene -- "Fehlermeldungen geben nicht preis, ob ein Konto
+               existiert." Genau das tat die alte Meldung, im Klartext.
+      K01-M15  "Jeder Lese- und Schreibzugriff MUSS auf den Mandanten der
+               angemeldeten Sitzung eingeschraenkt sein. Ein Objekt eines
+               fremden Mandanten gilt als NICHT VORHANDEN."
+      K02-D05  "Ein Bestand eines fremden Mandanten DARF NICHT sichtbar,
+               zaehlbar oder verdichtet erreichbar sein."
+
+    K01-M15 entscheidet auch die Bauform. Eine bloss neutraler formulierte
+    Meldung genuegt NICHT: ein eigener Zweig, der genau dann anschlaegt,
+    wenn drueben ein Konto steht, ist auch mit hoeflichem Wortlaut ein
+    Orakel. Nach K01-M15 ist die fremde Zeile nicht vorhanden -- also
+    sieht diese Abfrage sie nicht, und es gibt keinen Zweig mehr.
+
+    K20-G01 ("die Sperre wird begruendet angezeigt") steht dem nicht
+    entgegen: es gibt hier keine Sperre mehr zu begruenden. Aus Sicht des
+    Mandanten der Sitzung ist an dieser Adresse nichts, und der Weg laeuft
+    weiter wie bei jeder unbekannten Adresse. Wo zwei Klauseln denselben
+    Fall regeln, gilt die naeher stehende: K03-M25 spricht ueber die
+    Fehlermeldungen DIESES Befehls.
+
+    WAS DANN PASSIERT, und es ist der Rest des Befundes: Der Pfad legt ein
+    neues Konto an, und die ZEICHENGENAUE, PLATTFORMWEITE Eindeutigkeit auf
+    actor.email weist das ab -- UniqueViolation, Transaktion zurueck,
+    MELDUNG_GLEICHZEITIG. Es entsteht nichts, die Mandantengrenze haelt
+    also weiterhin. Aber der Wortlaut jener Meldung ("zeitgleich eine
+    andere Einladung") trifft diesen Fall nicht, und ein Aufrufer kann
+    Erfolg und Abweisung immer noch unterscheiden. Dieser Rest ist NICHT
+    in app/ zu schliessen: er sitzt in "UNIQUE (email)" des gezeichneten
+    Modells, das eine Adresse plattformweit einmal zulaesst. Ein Modell mit
+    Eindeutigkeit je Mandant waere die Behebung; das ist ein
+    Migrationsnachtrag und als offener Punkt gemeldet, nicht hier gebaut.
+
+    Der urspruengliche Grund der Abweisung bleibt richtig und bleibt
+    gewahrt: eine Einladung an ein fremdes Konto wuerde gegen Schranke und
+    Frist eines FREMDEN Mandanten geprueft (der Waechter liest sie ueber
     invitation.actor_id) und einem fremden Konto ein Portal dieses Hauses
     oeffnen. Zugriff zwischen zwei Mandanten ist eines der fuenfzehn
-    sperrenden Gates (K23 Abschn. 6).
+    sperrenden Gates (K23 Abschn. 6). Er wird jetzt von der Datenbank
+    gehalten statt von einer auskunftsfreudigen Meldung.
 
     `user_code` bleibt leer. Seit Blatt 62 steht die Rolle fest, der GRUND
     fuer die Luecke ist damit ein anderer geworden, die Luecke selbst
@@ -334,17 +392,19 @@ def _konto_sichern(conn, einladender, adresse, name):
     Blatt 62.
     """
     zeilen = conn.execute(
-        "SELECT id, tenant_id FROM actor WHERE lower(email) = %s"
+        "SELECT id FROM actor"
+        " WHERE lower(email) = %s AND tenant_id = %s"
         " ORDER BY id FOR UPDATE",
-        (adresse,)).fetchall()
+        (adresse, einladender["mandant"])).fetchall()
 
     if len(zeilen) > 1:
+        # Mehrdeutig ist jetzt eine Aussage UEBER DEN EIGENEN MANDANTEN --
+        # zwei Konten desselben Hauses, die sich nur in der Schreibweise
+        # unterscheiden. Das ist keine Auskunft ueber Fremde (K01-M15).
         raise _Abweisung(MELDUNG_MEHRDEUTIG)
 
     if zeilen:
-        kennung, mandant = zeilen[0]
-        if mandant != einladender["mandant"]:
-            raise _Abweisung(MELDUNG_FREMDER_MANDANT)
+        kennung = zeilen[0][0]
         # Der Anzeigename eines BESTEHENDEN Kontos bleibt, wie er ist. Ihn
         # ueber das Einladungsformular zu ueberschreiben waere eine zweite,
         # unbenannte Aenderung an einem fremden Konto -- mit eigenem
@@ -447,8 +507,9 @@ def _mitgliedschaft_anlegen(conn, einladender, konto):
       tenant_scope `actor.tenant_id` des EINGELADENEN Kontos
 
     `tenant_scope` kommt aus der Kontozeile und nicht aus der Sitzung des
-    Einladenden, obwohl beide denselben Wert tragen: `_konto_sichern` weist
-    ein Konto eines anderen Mandanten ab. Gelesen wird trotzdem der Wert, der
+    Einladenden, obwohl beide denselben Wert tragen: `_konto_sichern` sucht
+    seit dem 14.08.2026 ausschliesslich im Mandanten der Sitzung und legt
+    Neuanlagen ebendort an (K01-M15). Gelesen wird trotzdem der Wert, der
     tatsaechlich in der Zeile steht -- dieselbe Regel wie beim Nachweis.
 
     K20-D02 steht auch hier im Weg, und zwar mit demselben Verbund auf
