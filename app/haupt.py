@@ -1,3 +1,4 @@
+# umsetzt: K03-D01, K03-G01, K03-M05, K03-M13, K20-M08, K20-M25, K23-D09
 """FREIRAUM · Scheibe 1 · die Routen.
 
     .venv/bin/uvicorn app.haupt:app --port 8099
@@ -15,7 +16,8 @@ Der Vertrag der Scheibe:
     GET  /einladung   200, Bestaetigungsseite mit verdecktem Feld token.
                       AENDERT NICHTS. Ohne tragenden Parameter: 200 mit der
                       einen Meldung der Einloesung
-    POST /einladung   Erfolg -> 303 auf "/anmeldung"
+    POST /einladung   Erfolg -> 303 auf "/anmeldung"; im selben Vorgang geht
+                      der Anmeldecode hinaus (seit 14.08.2026, K03-M05)
                       sonst  -> 200 mit der einen Meldung, KEINE Aenderung
     GET  /einladung/senden   ohne gueltige Sitzung -> 303 auf "/anmeldung"
                       sonst 200, Formular mit email und anzeigename
@@ -211,7 +213,12 @@ def einladung_annehmen(request: Request, token: str = Form(default="")):
 
     # 303 auf EN-01. Der Zugang ist frei, angemeldet ist damit niemand: die
     # Einloesung ist keine bestaetigte zweite Stufe, und eine Sitzung entsteht
-    # nur aus einer solchen (K03-M09). Der naechste Schritt ist der Code.
+    # nur aus einer solchen (K03-M09). Der naechste Schritt ist der Code --
+    # und er ist seit dem 14.08.2026 unterwegs, wenn diese Zeile laeuft:
+    # app/einladung.py stellt ihn nach dem Festschreiben der Einloesung aus
+    # (K03-M05). Scheitert der Versand, bleibt es bei dieser Umleitung. Die
+    # Einloesung hat getragen, und der Fehlschlag steht im Versandnachweis --
+    # nicht auf dem Bildschirm.
     antwort = RedirectResponse("/anmeldung", status_code=UMLEITUNG)
     antwort.headers["Cache-Control"] = "no-store"
     antwort.headers["Referrer-Policy"] = "no-referrer"
