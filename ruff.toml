@@ -27,7 +27,15 @@
 # Tor 1a ausgefuehrt und muss gruen laufen. Ausgenommen ist ihre Schreibweise,
 # nicht ihre Wirkung.
 #
-# Faellt die Ausnahme weg, sobald die Fabrik ihre Fassung angleicht.
+# BEFRISTET. Der Endzustand ist nicht diese Ausnahme, sondern derselbe
+# Regelsatz auf beiden Seiten. Beantragt als CHG-K00-11 (Anlass BEF-E4,
+# Traeger A. Han, vor Pilotstart). Abschlussnachweis: `ruff check werkzeuge
+# mail app` ist gruen OHNE diese Datei, und k19_screens_lint.py meldet
+# unveraendert 0 FEHLER / 12 HINWEISE. Dann faellt der Block hier weg --
+# und mit ihm die Datei, wenn nichts anderes darin steht.
+#
+# Eine Ausnahme, die niemand befristet, wird dauerhaft. Sie hat dann
+# dieselbe Wirkung wie ein exclude, nur unauffaelliger.
 "werkzeuge/k19_screens_lint.py" = [
     "UP031",    # Prozentformat statt Formatangaben -- 15 Stellen, Stil
     "UP009",    # UTF-8-Kopfzeile ueberfluessig -- steht so im Original
