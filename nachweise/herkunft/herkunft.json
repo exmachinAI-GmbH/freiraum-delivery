@@ -11302,6 +11302,34 @@
       "beleg": "install/01_betreiber_und_erstadmin.sql:6"
     },
     {
+      "von": "K02-M02",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:6"
+    },
+    {
+      "von": "K02-M07",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:6"
+    },
+    {
+      "von": "K02-M08",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:6"
+    },
+    {
+      "von": "K02-M10",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:6"
+    },
+    {
       "von": "K02-M25",
       "nach": "install/01_betreiber_und_erstadmin.sql",
       "art": "klausel_umsetzung",
@@ -11316,6 +11344,13 @@
       "beleg": "install/01_betreiber_und_erstadmin.sql:7"
     },
     {
+      "von": "K03-M08",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:7"
+    },
+    {
       "von": "K20-G11",
       "nach": "install/01_betreiber_und_erstadmin.sql",
       "art": "klausel_umsetzung",
@@ -11324,6 +11359,13 @@
     },
     {
       "von": "K20-M04",
+      "nach": "install/01_betreiber_und_erstadmin.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "install/01_betreiber_und_erstadmin.sql:8"
+    },
+    {
+      "von": "K20-M05",
       "nach": "install/01_betreiber_und_erstadmin.sql",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
@@ -11871,9 +11913,9 @@
     {
       "von": "K15-M01",
       "nach": "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql",
-      "art": "klausel_umsetzung",
-      "staerke": "erwaehnt",
-      "beleg": "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql:6"
+      "art": "klausel_test",
+      "staerke": "belegt",
+      "beleg": "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql"
     },
     {
       "von": "K03-D01",
@@ -12086,6 +12128,13 @@
       "beleg": "pruefungen/klauseln/mitgliedschaft_daten.sql"
     },
     {
+      "von": "K20-D02",
+      "nach": "pruefungen/klauseln/mitgliedschaft_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/mitgliedschaft_daten.sql"
+    },
+    {
       "von": "K20-D05",
       "nach": "pruefungen/klauseln/mitgliedschaft_daten.sql",
       "art": "klausel_test",
@@ -12108,6 +12157,13 @@
     },
     {
       "von": "K20-M13",
+      "nach": "pruefungen/klauseln/mitgliedschaft_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/mitgliedschaft_daten.sql"
+    },
+    {
+      "von": "K20-M18",
       "nach": "pruefungen/klauseln/mitgliedschaft_daten.sql",
       "art": "klausel_test",
       "staerke": "genannt",
@@ -12458,6 +12514,38 @@
       "anmerkung": "110 von 110 bestanden, 0 gescheitert"
     },
     {
+      "von": "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql",
+      "nach": "nachweise/manifeste/tor1c_260813.json",
+      "art": "test_nachweis",
+      "staerke": "bestanden",
+      "beleg": "nachweise/manifeste/tor1c_260813.json · N1_frist_ge_mindestfrist",
+      "anmerkung": "frist_ge_mindestfrist"
+    },
+    {
+      "von": "migrations/negativfaelle/N2_mail_fehler_braucht_grund.sql",
+      "nach": "nachweise/manifeste/tor1c_260813.json",
+      "art": "test_nachweis",
+      "staerke": "bestanden",
+      "beleg": "nachweise/manifeste/tor1c_260813.json · N2_mail_fehler_braucht_grund",
+      "anmerkung": "mail_fehler_braucht_grund"
+    },
+    {
+      "von": "migrations/negativfaelle/N3_pseudonym_vor_frist.sql",
+      "nach": "nachweise/manifeste/tor1c_260813.json",
+      "art": "test_nachweis",
+      "staerke": "bestanden",
+      "beleg": "nachweise/manifeste/tor1c_260813.json · N3_pseudonym_vor_frist",
+      "anmerkung": "pseudonym_vor_frist"
+    },
+    {
+      "von": "migrations/negativfaelle/N4_tagesfrist_positiv.sql",
+      "nach": "nachweise/manifeste/tor1c_260813.json",
+      "art": "test_nachweis",
+      "staerke": "bestanden",
+      "beleg": "nachweise/manifeste/tor1c_260813.json · N4_tagesfrist_positiv",
+      "anmerkung": "tagesfrist_positiv"
+    },
+    {
       "von": "pruefungen/klauseln/anmeldung_lauf.sh",
       "nach": "nachweise/manifeste/tor1c_260813.json",
       "art": "test_nachweis",
@@ -12616,43 +12704,43 @@
     },
     "1_umsetzung_ohne_klausel": {
       "frage": "Welche gebaute Datei sagt nicht, wofür sie da ist?",
-      "anzahl": 8,
+      "anzahl": 2,
       "eintraege": [
         "install/nach_umzug.sh",
-        "install/pruefe_b1.sh",
-        "install/pruefe_schranke.sh",
-        "mail/__init__.py",
-        "migrations/negativfaelle/N2_mail_fehler_braucht_grund.sql",
-        "migrations/negativfaelle/N3_pseudonym_vor_frist.sql",
-        "migrations/negativfaelle/N4_tagesfrist_positiv.sql",
-        "migrations/pruefe_negativfaelle.sh"
+        "mail/__init__.py"
       ]
     },
     "2_klausel_mit_test_ohne_umsetzung": {
       "frage": "Was wird gemessen, das niemand gebaut hat?",
-      "anzahl": 5,
+      "anzahl": 6,
       "eintraege": [
         "K03-M05",
         "K03-M06",
+        "K15-M01",
         "K23-D05",
         "K23-M18",
         "K23-M22"
       ]
     },
     "3_umsetzung_ohne_belegten_test": {
-      "frage": "Welche gebaute Anforderung prüft niemand?",
-      "anzahl": 44,
+      "frage": "Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?",
+      "anzahl": 46,
       "eintraege": [
         "K01-M22",
         "K01-M28",
         "K01-M38",
         "K02-G02",
         "K02-M01",
+        "K02-M02",
+        "K02-M07",
+        "K02-M08",
+        "K02-M10",
         "K02-M25",
         "K03-G04",
         "K03-G09",
         "K03-G10",
         "K03-M04",
+        "K03-M08",
         "K03-M18",
         "K03-M21",
         "K03-M26",
@@ -12665,7 +12753,6 @@
         "K13-M22",
         "K14-M13",
         "K15-G10",
-        "K15-M01",
         "K18-M27",
         "K19-D06",
         "K19-M01",
@@ -12676,7 +12763,6 @@
         "K20-G03",
         "K20-G08",
         "K20-M04",
-        "K20-M05",
         "K20-M06",
         "K20-M09",
         "K20-M11",
@@ -12685,43 +12771,22 @@
         "K20-M24",
         "K20-M25",
         "K21-M19",
-        "K23-D09",
         "K25-M31"
+      ],
+      "prueffall_vorhanden_lauf_nicht_belegt": [
+        "K20-M05",
+        "K23-D09"
       ]
     },
     "4_test_ohne_nachweis": {
       "frage": "Welcher Prüffall ist noch nie in einem Protokoll gelaufen?",
-      "anzahl": 2,
-      "eintraege": [
-        "pruefungen/lauf.sh",
-        "pruefungen/tor3.sh"
-      ]
+      "anzahl": 0,
+      "eintraege": []
     },
     "5_nachweis_ohne_test": {
       "frage": "Welches Protokoll führt eine Kennung ohne Prüffall?",
-      "anzahl": 4,
-      "eintraege": [
-        {
-          "kennung": "N1_frist_ge_mindestfrist",
-          "zustand": "bestanden",
-          "bericht": "nachweise/manifeste/tor1c_260813.json"
-        },
-        {
-          "kennung": "N2_mail_fehler_braucht_grund",
-          "zustand": "bestanden",
-          "bericht": "nachweise/manifeste/tor1c_260813.json"
-        },
-        {
-          "kennung": "N3_pseudonym_vor_frist",
-          "zustand": "bestanden",
-          "bericht": "nachweise/manifeste/tor1c_260813.json"
-        },
-        {
-          "kennung": "N4_tagesfrist_positiv",
-          "zustand": "bestanden",
-          "bericht": "nachweise/manifeste/tor1c_260813.json"
-        }
-      ]
+      "anzahl": 0,
+      "eintraege": []
     },
     "6_bildschirm_ohne_abbild": {
       "frage": "Welcher Bildschirm des Vertrags ist nicht gebaut?",
@@ -12773,18 +12838,19 @@
     },
     "_zahlen": {
       "klauseln_gesamt": 1231,
-      "vom_code_genannt": 83,
+      "vom_code_genannt": 87,
       "davon_erklaert": 0,
-      "davon_nur_erwaehnt": 83,
+      "davon_nur_erwaehnt": 87,
       "vom_code_genannt_mit_test": 41,
-      "vom_code_genannt_ohne_test": 42,
-      "vom_code_genannt_ohne_belegten_test": 44,
-      "vom_code_genannt_kritisch_ohne_test": 18,
+      "vom_code_genannt_ohne_test": 46,
+      "vom_code_genannt_ohne_belegten_test": 48,
+      "vom_code_genannt_kritisch_ohne_test": 20,
       "kritisch_laut_triage": 405,
       "tote_verweise": 0,
       "bildschirme_im_vertrag": 33,
       "bildschirme_mit_abbild": 1,
-      "bildschirme_nur_erwaehnt": 2
+      "bildschirme_nur_erwaehnt": 2,
+      "bildschirme_gemessen": true
     }
   }
 }

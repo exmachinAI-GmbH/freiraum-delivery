@@ -66,6 +66,33 @@ WURZEL = pathlib.Path(__file__).resolve().parent.parent
 # nicht importiert: die beiden Werkzeuge sollen unabhaengig lauffaehig sein.
 KLAUSEL_MUSTER = re.compile(r"\bK\d{2}-[MDG]\d{2}\b")
 
+# Die Kurzform. Im Bestand steht haeufig "K02-M01/M02/M07/M08/M10" -- eine
+# Kennung, danach nur noch die Nummern. Ein Muster, das nur die Langform kennt,
+# liest davon das erste Glied und uebersieht den Rest.
+# Gemessen am 14.08.2026: fuenf Anforderungen fehlten dadurch vollstaendig im
+# Graphen, drei davon nach der Triage kritisch.
+KETTE_MUSTER = re.compile(r"\bK(\d{2})-([MDG])(\d{2})((?:/(?:[MDG])?\d{2})+)")
+
+
+def kennungen(text):
+    """Alle Anforderungskennungen eines Textes -- Langform und Kurzform.
+
+    In der Kurzform erbt ein Glied ohne Buchstaben die Art des ersten Glieds:
+    "K02-M01/M02" sind K02-M01 und K02-M02, "K03-M05/D07" sind K03-M05 und
+    K03-D07.
+    """
+    gefunden = set(KLAUSEL_MUSTER.findall(text))
+    for m in KETTE_MUSTER.finditer(text):
+        konzept, art = m.group(1), m.group(2)
+        gefunden.add(f"K{konzept}-{art}{m.group(3)}")
+        for teil in m.group(4).strip("/").split("/"):
+            if not teil:
+                continue
+            a = teil[0] if teil[0].isalpha() else art
+            nr = teil[1:] if teil[0].isalpha() else teil
+            gefunden.add(f"K{konzept}-{a}{nr}")
+    return gefunden
+
 # "umsetzt:" in jeder Kommentarform, die im Repo vorkommt:
 #   # umsetzt: K20-M07       Python, Shell
 #   -- umsetzt: K02-M14      SQL
@@ -86,7 +113,19 @@ UMSETZUNGSENDUNGEN = {".py", ".sql", ".sh", ".html"}
 #   _abgeloest/   was ersetzt wurde
 # Beide tragen die Aenderungsregel "keine". Wer sie mitzaehlt, schreibt dem
 # Bau eine Umsetzung zu, die er nicht geschrieben hat.
-AUSGENOMMEN = ("/_vorlaeufer/", "/_abgeloest/")
+AUSGENOMMEN = ("/_vorlaeufer/", "/_abgeloest/", "/negativfaelle/")
+
+# Skripte, die INNERHALB der Bauordner messen statt bauen. Ein Negativfall und
+# ein Pruefskript sind Pruefung; wer sie als Umsetzung zaehlt, meldet eine
+# gebaute Anforderung, wo nur eine gemessene steht.
+AUSGENOMMEN_NAMEN = ("pruefe_",)
+
+# Startskripte des Harness -- sie starten Prueffaelle, sie sind keine.
+LAUFWERKZEUGE = {"pruefungen/lauf.sh", "pruefungen/tor3.sh"}
+
+# Wo Prueffaelle liegen. Die Negativfaelle stehen unter migrations/, gehoeren
+# aber zur Pruefung -- sie werden dort gesucht, nicht im Bau.
+PRUEFORTE = ("pruefungen", "migrations/negativfaelle")
 
 # Die sieben Fragen nach isolierten Ergebnissen, in Anzeigereihenfolge.
 FRAGEN = (
@@ -100,8 +139,13 @@ FRAGEN = (
 )
 
 
-def dateien(wurzel, orte, endungen):
-    """Alle Dateien unter den genannten Ordnern mit den genannten Endungen."""
+def dateien(wurzel, orte, endungen, ausgenommen=AUSGENOMMEN, namen=AUSGENOMMEN_NAMEN):
+    """Alle Dateien unter den genannten Ordnern mit den genannten Endungen.
+
+    `ausgenommen` und `namen` schneiden weg, was an dieser Stelle nicht gemeint
+    ist. Fuer die Pruefseite werden beide leer uebergeben -- dort sind
+    Pruefskripte der Gegenstand, nicht die Ausnahme.
+    """
     gefunden = []
     for ort in orte:
         p = wurzel / ort
@@ -110,7 +154,9 @@ def dateien(wurzel, orte, endungen):
         for d in p.rglob("*"):
             if not d.is_file() or d.suffix not in endungen:
                 continue
-            if any(a in "/" + str(d.relative_to(wurzel)) for a in AUSGENOMMEN):
+            if any(a in "/" + str(d.relative_to(wurzel)) for a in ausgenommen):
+                continue
+            if d.name.startswith(namen):
                 continue
             gefunden.append(d)
     return sorted(gefunden)
@@ -161,7 +207,7 @@ def kante_klausel_umsetzung(wurzel):
         erklaert, erwaehnt = set(), set()
 
         for nr, zeile in enumerate(text.splitlines(), start=1):
-            treffer = set(KLAUSEL_MUSTER.findall(zeile))
+            treffer = kennungen(zeile)
             if not treffer:
                 continue
             if UMSETZT_MUSTER.search(zeile):
@@ -201,16 +247,27 @@ def kante_klausel_test(wurzel, belegte_laeufe):
     Berichtsprotokoll mit Zustand "bestanden" gefuehrt sind.
     """
     kanten = []
-    for pfad in dateien(wurzel, ("pruefungen",), {".sh", ".sql", ".py"}):
+    for pfad in prueffaelle(wurzel):
         rel = str(pfad.relative_to(wurzel))
-        text = lies(pfad)
-        for k in sorted(set(KLAUSEL_MUSTER.findall(text))):
+        for k in sorted(kennungen(lies(pfad))):
             kanten.append({
                 "von": k, "nach": rel, "art": "klausel_test",
                 "staerke": "belegt" if rel in belegte_laeufe else "genannt",
                 "beleg": rel,
             })
     return kanten
+
+
+def prueffaelle(wurzel):
+    """Alle Dateien der Pruefseite, einschliesslich der Startskripte.
+
+    Die Negativfaelle liegen unter migrations/, gehoeren aber hierher: sie
+    messen, sie bauen nicht. Die Startskripte bleiben drin, weil auch sie
+    Anforderungen nennen; aus der Frage "welcher Prueffall lief nie" werden sie
+    getrennt herausgenommen (LAUFWERKZEUGE).
+    """
+    return dateien(wurzel, PRUEFORTE, {".sh", ".sql", ".py"},
+                   ausgenommen=(), namen=())
 
 
 # ---------------------------------------------------------------------
@@ -246,6 +303,7 @@ def kante_test_nachweis(wurzel):
             kandidaten = [
                 f"pruefungen/klauseln/{kennung}_lauf.sh",
                 f"pruefungen/klauseln/{kennung}_daten.sql",
+                f"migrations/negativfaelle/{kennung}.sql",
             ]
             if kennung == "M30-Prueffaelle":
                 kandidaten = ["pruefungen/migration/M30__pruefung.sql"]
@@ -290,7 +348,13 @@ def bildschirme(wurzel):
     """
     quelle = wurzel / "schema" / "K19_screens.yaml"
     if not quelle.is_file():
-        return [], {}, [], {}
+        # Lautlos 0 zu melden waere die schmeichelhafteste Lesart: aus
+        # "32 von 33 fehlen" wuerde "nichts fehlt". Nicht gemessen ist
+        # gesperrt, nicht bestanden (K23-M22).
+        print(f"::warning::Das Vertragsblatt {quelle} liegt nicht vor. "
+              "Die Bildschirmzahlen sind GESPERRT -- nicht gemessen. "
+              "Naechster Schritt: Pfad pruefen.", file=sys.stderr)
+        return None, {}, [], {}
     vertrag = []
     for zeile in lies(quelle).splitlines():
         m = re.match(r"\s*-\s*id:\s*(\S+)", zeile)
@@ -325,8 +389,11 @@ def bildschirme(wurzel):
 # Die sechs Fragen nach der Einsamkeit
 # ---------------------------------------------------------------------
 def isolation(kanten, register, ohne_bezug, vertrag, abbilder, ohne_abbild,
-              berichte_ohne_zuordnung, bildschirm_erwaehnungen, kritisch):
+              berichte_ohne_zuordnung, bildschirm_erwaehnungen, kritisch,
+              wurzel):
     alle = {z["klausel"] for z in register["zeilen"]}
+    vertrag_gemessen = vertrag is not None
+    vertrag = vertrag or []
 
     roh_umgesetzt = {k["von"] for k in kanten
                      if k["art"] == "klausel_umsetzung" and k["staerke"] == "erklaert"}
@@ -346,8 +413,18 @@ def isolation(kanten, register, ohne_bezug, vertrag, abbilder, ohne_abbild,
     belegt = {k["von"] for k in kanten
               if k["art"] == "klausel_test" and k["staerke"] == "belegt"} & alle
 
-    testdateien = {k["nach"] for k in kanten if k["art"] == "klausel_test"}
+    # Grundmenge fuer "welcher Prueffall lief nie": ALLE Prueffalldateien, nicht
+    # nur die, die eine Kennung nennen. Ein Prueffall ohne Kennung im Text
+    # koennte sonst strukturell nie erscheinen. Ohne die Startskripte.
+    testdateien = {str(p.relative_to(wurzel)) for p in prueffaelle(wurzel)} - LAUFWERKZEUGE
     gelaufen = {k["von"] for k in kanten if k["art"] == "test_nachweis"}
+
+    # "gesperrt" ist nicht "fehlt" (K23-M22). Eine Anforderung, deren Prueffall
+    # existiert und gesperrt oder gescheitert ist, gehoert nicht in dieselbe
+    # Liste wie eine, die niemand prueft.
+    mit_lauf = {k["von"] for k in kanten if k["art"] == "klausel_test"} & alle
+    gar_kein_prueffall = sorted((umgesetzt | erwaehnt) - mit_lauf)
+    lauf_nicht_belegt = sorted(((umgesetzt | erwaehnt) & mit_lauf) - belegt)
 
     return {
         "7_toter_verweis": {
@@ -367,9 +444,10 @@ def isolation(kanten, register, ohne_bezug, vertrag, abbilder, ohne_abbild,
             "eintraege": sorted(getestet - umgesetzt - erwaehnt),
         },
         "3_umsetzung_ohne_belegten_test": {
-            "frage": "Welche gebaute Anforderung prüft niemand?",
-            "anzahl": len(sorted((umgesetzt | erwaehnt) - belegt)),
-            "eintraege": sorted((umgesetzt | erwaehnt) - belegt),
+            "frage": "Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?",
+            "anzahl": len(gar_kein_prueffall),
+            "eintraege": gar_kein_prueffall,
+            "prueffall_vorhanden_lauf_nicht_belegt": lauf_nicht_belegt,
         },
         "4_test_ohne_nachweis": {
             "frage": "Welcher Prüffall ist noch nie in einem Protokoll gelaufen?",
@@ -402,9 +480,10 @@ def isolation(kanten, register, ohne_bezug, vertrag, abbilder, ohne_abbild,
                 len(((umgesetzt | erwaehnt) & kritisch) - getestet) if kritisch else None,
             "kritisch_laut_triage": len(kritisch) if kritisch else None,
             "tote_verweise": len(tote),
-            "bildschirme_im_vertrag": len(vertrag),
-            "bildschirme_mit_abbild": len(abbilder),
+            "bildschirme_im_vertrag": len(vertrag) if vertrag_gemessen else None,
+            "bildschirme_mit_abbild": len(abbilder) if vertrag_gemessen else None,
             "bildschirme_nur_erwaehnt": len(bildschirm_erwaehnungen),
+            "bildschirme_gemessen": vertrag_gemessen,
         },
     }
 
@@ -458,7 +537,7 @@ def bauen(wurzel, register_pfad):
         },
         "isolation": isolation(kanten, register, ohne_bezug, vertrag,
                                abbilder, ohne_abbild, ohne_zuordnung,
-                               bs_erwaehnt, kritikalitaet(wurzel)),
+                               bs_erwaehnt, kritikalitaet(wurzel), wurzel),
     }
 
 
@@ -494,14 +573,21 @@ def markdown(g):
         t += [
             f"| **davon als kritisch vorgeschlagen** | **{z['vom_code_genannt_kritisch_ohne_test']}** |",
         ]
+    if z["bildschirme_gemessen"]:
+        t += [
+            f"| Bildschirme im Vertrag | {z['bildschirme_im_vertrag']} |",
+            f"| davon gebaut | {z['bildschirme_mit_abbild']} |",
+        ]
+    else:
+        t += ["| Bildschirme | **GESPERRT** — das Vertragsblatt liegt nicht vor |"]
     t += [
-        f"| Bildschirme im Vertrag | {z['bildschirme_im_vertrag']} |",
-        f"| davon gebaut | {z['bildschirme_mit_abbild']} |",
         "",
         "Die Zeile *davon als kritisch vorgeschlagen* ist die, auf die es ankommt:",
-        "**gebaut, als kritisch eingestuft, von niemandem geprüft.** Die Einstufung",
-        "*kritisch* ist ein Vorschlag aus der Triage, keine Feststellung — die trifft",
-        "ein Mensch.",
+        "**im Code genannt, als kritisch vorgeschlagen, von keinem Prüffall gemessen.**",
+        "Solange die Zeile *als umgesetzt erklärt* auf 0 steht, hat **keine** Datei eine",
+        "Umsetzung erklärt; die bloße Nennung kann auch das Gegenteil bedeuten. Die",
+        "Einstufung *kritisch* ist ein Vorschlag aus der Triage, keine Feststellung — die",
+        "trifft ein Mensch.",
         "",
         "**Der Unterschied zwischen *erklärt* und *erwähnt*, und warum er wichtig ist:**",
         "Eine Datei gilt erst dann als Umsetzung einer Anforderung, wenn sie eine Zeile",
@@ -510,6 +596,16 @@ def markdown(g):
         "dass hier **nicht** danach gehandelt wird. Eine reine Textsuche hätte das als",
         "Umsetzung gezählt und den Graphen zum Lügen gebracht.",
         "",
+    ]
+    if z["davon_erklaert"] == 0:
+        t += [
+            "> **Achtung — diese Trennung ist heute wirkungslos.** Keine einzige Datei im",
+            "> Bau trägt eine Zeile `umsetzt:`. Alle Zahlen unterhalb von *vom gebauten Code",
+            "> genannt* beruhen deshalb auf bloßen Erwähnungen. `app/__init__.py`:15 nennt",
+            "> eine Anforderung sogar unter der Überschrift *Was hier NICHT liegt*.",
+            "",
+        ]
+    t += [
         "## Die sieben Fragen nach isolierten Ergebnissen",
         "",
         "| | Frage | Anzahl |",
@@ -639,8 +735,11 @@ def main():
         print(f"  davon KRITISCH ohne Prueffall:   "
               f"{z['vom_code_genannt_kritisch_ohne_test']}"
               f"  (Kritikalitaet: Vorschlag der Triage, keine Feststellung)")
-    print(f"  Bildschirme im Vertrag:          {z['bildschirme_im_vertrag']}"
-          f"  · gebaut: {z['bildschirme_mit_abbild']}")
+    if z["bildschirme_gemessen"]:
+        print(f"  Bildschirme im Vertrag:          {z['bildschirme_im_vertrag']}"
+              f"  · gebaut: {z['bildschirme_mit_abbild']}")
+    else:
+        print("  Bildschirme:                     GESPERRT -- Vertragsblatt fehlt")
     print()
     for s in FRAGEN:
         e = g["isolation"][s]
