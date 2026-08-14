@@ -1,0 +1,1056 @@
+version: "1.2"
+status: FREIGABEKANDIDAT
+source: arbeit/Entwürfe/K19_entwurf.md
+rules:
+  exactly_one_access_mark: true
+  exactly_one_owner: true
+  manual_screen_copies_forbidden: true
+  accessibility: WCAG_2_2
+  # 05.08.2026, Entscheidung E11 (gez. M. Veil, 4.8.): jede Aktion fuehrt die
+  # sieben Angaben aus K19-M14. Die Lint-Regel prueft das; ein Serverbefehl mit
+  # Platzhalter ist ein HINWEIS, kein Fehler -- der Namensraum ist bewusst
+  # offen gelassen worden, statt ihn zu erfinden.
+  every_action_complete_m14: true
+# =====================================================================
+# AKTIONSBLOCK nach K19-M14, ergaenzt am 5.8.2026 (Entscheidung E11)
+#
+# K19-M14 woertlich: "Jede Aktion MUSS in der Maschinenquelle Eingabe,
+# Serverbefehl, Berechtigungspruefung, Lade-, Leer-, Erfolgs- und
+# Fehlerzustand referenzieren. Ein UI-Zustand ersetzt keine serverseitige
+# Autorisierung."
+#
+# GEZAEHLT AM 5.8.2026: 33 Bildschirme · 105 Aktionen · 89 verschiedene
+# Serverbefehle · NULL Platzhalter. Der frueher hier stehende Satz
+# ('32 · 100 · alle als Platzhalter') beschrieb den Stand vor der
+# Benennung und vor EN-04a -- gefunden im Auftragsreview (Befund B07).
+# Wer den Kopf liest statt die Liste, baut den falschen Umfang.
+#
+# DER NAMENSRAUM IST AM 5.8.2026 GEZEICHNET (BV-6 Nr. 67, gez. M. Veil).
+# Er ist nicht erfunden, sondern ABGELEITET: K01-M27 und K01-M28 nennen
+# bereits zwei Serverbefehle beim Namen -- create_app_after_fit und
+# change_app_state. Beide sind gezeichnet; jede andere Konvention haette
+# ihnen ab dem ersten Tag widersprochen.
+#
+# Daraus gilt: <taetigkeit>_<gegenstand>[_<naeheres>], Kleinschreibung mit
+# Unterstrich, englisch, KEIN Praefix und KEIN Punkt. Der Gegenstand ist
+# eine Sache, die es gibt -- Tabelle, Spalte, Begriff aus dem Konzept --
+# nie die Beschriftung der Schaltflaeche.
+#
+# 105 Aktionen tragen 89 verschiedene Befehle: einige stehen an
+# mehreren Bildschirmen, weil sie dieselbe serverseitige Wirkung ausloesen.
+# Ein Name je Sache -- zwei Namen fuer dasselbe waeren der haeufigste
+# Fehler dieser Arbeit gewesen.
+#
+# Jede Aktion ist von einem zweiten Lauf gegen die ASCII-Kaesten des
+# K19-Entwurfs geprueft worden: fehlt eine Aktion, steht eine zuviel
+# darin, ist eine Berechtigung in Wahrheit ein UI-Zustand, wurde ein
+# Befehl erfunden. Nachgezaehlt: 0 erfundene Befehle, 0 Strukturfehler.
+# =====================================================================
+screens:
+  - id: EN-01
+    access: offen
+    owner: K03
+    aktionen:
+      - kennung: anmelden
+        eingabe: "E-Mail-Adresse (aus der Einladung vorbelegt) und sechsstelliger Code per E-Mail; actor.email ist zugleich der Anmeldename (K03-M03, K03-M05)"
+        serverbefehl: "create_session_by_email_code"
+        berechtigung: "serverseitig (K03-M13): Zeile in actor vorhanden, status AKTIV oder WARTET_2FA; GESPERRT wird abgewiesen (K03-D01). Welches Portal sich oeffnet, ergibt membership gegen portal_enabled (K20, K13)"
+        zustand_laden: "Code wird geprueft, [Anmelden] inaktiv; die Meldung gibt nicht preis, ob ein Konto besteht (K03-M25)"
+        zustand_leer: "Adresse oder Code fehlt — [Anmelden] ausgeblendet, Hinweis nennt das fehlende Feld (K19-M06)"
+        zustand_erfolg: "Sitzung eroeffnet, last_login_at gesetzt; WARTET_2FA wird im selben Vorgang AKTIV (K03-M09); genau ein Portal oeffnet sich (K03-D02)"
+        zustand_fehler: "falscher Code, unbekanntes Konto oder Einmal-Link aelter als 24 Stunden — dieselbe Meldung fuer alle drei Faelle, Verbleib auf EN-01, kein Teil-Zugang (K03-G01, K19 Abschn. 4.2); nach fuenf Fehlversuchen 15 Minuten gedrosselt (K03-M16)"
+
+  - id: EN-02
+    access: nach_anmeldung
+    owner: K01
+    aktionen:
+      - kennung: neue_anwendung_erstellen
+        eingabe: "keine — einer der vier gleichrangigen Vorschlaege, keiner ist vorausgewaehlt"
+        serverbefehl: "open_direct_prototype_check"
+        berechtigung: "serverseitig: gueltige Sitzung, actor.status = AKTIV, Mandant der Sitzung (K01-M13, K01-M15, K01-D07). Hier entsteht keine Zeile in app — die entsteht erst nach GEEIGNET (K01-M27)"
+        zustand_laden: "Vorpruefung 1 laedt, Schaltflaeche inaktiv"
+        zustand_leer: "entfaellt — Einstiegsaktion ohne eigenen Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EN-03 geoeffnet, Vorpruefung 1 von 2; es entsteht weder eine Zeile in app (K01-M27) noch eine in fit_check — der Eignungs-Check beginnt erst auf EN-04"
+        zustand_fehler: "Vorpruefung 1 nicht ladbar — Meldung, kein Vorgang, Verbleib auf EN-02 (fail-closed, K01-G01)"
+      - kennung: erklaervideo_ansehen
+        eingabe: "keine"
+        serverbefehl: "open_explainer_video"
+        berechtigung: "angemeldete Sitzung mit actor.status = AKTIV; kein Bestand der Anwendung wird beruehrt"
+        zustand_laden: "Video wird geladen"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Video laeuft, der Gespraechsstand der Startseite bleibt erhalten"
+        zustand_fehler: "Video nicht erreichbar — Hinweis an seiner Stelle, die uebrigen drei Vorschlaege bleiben bedienbar"
+      - kennung: termin_vereinbaren
+        eingabe: "keine"
+        serverbefehl: "request_contact_appointment"
+        berechtigung: "angemeldete Sitzung; die Ansprechperson stammt aus contact des eigenen Mandanten (Eigentuemer K11), nie aus einem fremden (K01-D08)"
+        zustand_laden: "Weg zum Gespraech laedt"
+        zustand_leer: "keine gueltige Ansprechperson hinterlegt (contact.is_valid) — statt der Schaltflaeche ein Hinweis mit dem Ersatzweg aus dem Nutzerhandbuch (K19-M06)"
+        zustand_erfolg: "Gespraech mit der Ansprechperson angestossen"
+        zustand_fehler: "Weg nicht erreichbar — Hinweis mit Ersatzweg, kein Vorgang angelegt"
+      - kennung: etwas_eigenes_eintippen
+        eingabe: "keine — oeffnet das Feld Nachricht; der Text wird erst mit [Senden] uebergeben"
+        serverbefehl: "open_message_input"
+        berechtigung: "angemeldete Sitzung mit actor.status = AKTIV (K01-M13)"
+        zustand_laden: "entfaellt — die Aktion setzt nur den Schreibfokus"
+        zustand_leer: "entfaellt — Einstiegsaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "das Feld Nachricht hat den Fokus, kein Vorgang entstanden"
+        zustand_fehler: "Gespraechsspalte nicht bedienbar — Hinweis; die drei uebrigen Vorschlaege bleiben erreichbar"
+      - kennung: nachricht_senden
+        eingabe: "Freitext im Feld Nachricht; der Text ist Daten, eine darin enthaltene Anweisung wird nicht ausgefuehrt (K01-M16)"
+        serverbefehl: "send_chat_message"
+        berechtigung: "serverseitig: Sitzung und Mandant der Sitzung (K01-M15); vor der Uebergabe an ein Sprachmodell wird maskiert (K01-M17), und der Modellpfad braucht einen vollstaendigen Eintrag (K01-M31)"
+        zustand_laden: "Antwort wird erzeugt, [Senden] inaktiv"
+        zustand_leer: "leeres Feld — [Senden] ausgeblendet, Hinweis nennt die fehlende Eingabe (K19-M06)"
+        zustand_erfolg: "Beitrag steht im Gespraech; Herkunft und Bearbeitungszustand sind getrennt ausgewiesen (K19-G03, K19-G09)"
+        zustand_fehler: "Maskierung oder Modellpfad nicht verfuegbar — Abbruch ohne Antwort, der Text bleibt im Feld stehen (fail-closed, K01-G14)"
+      - kennung: fortfuehren
+        eingabe: "Karte einer eigenen Anwendung (app.id) mit laufendem Gespraech, app.sealed_at leer"
+        serverbefehl: "resume_app"
+        berechtigung: "serverseitig: app.tenant_id = Mandant der Sitzung; eine Anwendung eines fremden Mandanten gilt als nicht vorhanden (K01-M15, K01-D08)"
+        zustand_laden: "Karten aus app geladen; der Zustandsname stammt aus lifecycle_state_label je ui_locale (K01-M11, Traeger K11)"
+        zustand_leer: "keine Anwendung vorhanden — an Stelle der Karten ein Hinweis; Sortierung und Wortlaut sind offen (O-K01-19)"
+        zustand_erfolg: "genau die gespeicherte Stelle derselben Stufe, kein Neubeginn der Stufe (K01-M10)"
+        zustand_fehler: "Stand nicht lesbar — Meldung, die Karte bleibt stehen, kein Sprung an den Anfang der Stufe"
+      - kennung: ansehen
+        eingabe: "Karte einer eigenen Anwendung mit gesetztem app.sealed_at"
+        serverbefehl: "open_app_readonly"
+        berechtigung: "wie fortfuehren; zusaetzlich serverseitig nur lesend — zurueckliegende Stufen sind nicht bedienbar (K01-D12, K19-G07)"
+        zustand_laden: "Anwendung wird geladen"
+        zustand_leer: "entfaellt — die Aktion erscheint nur an einer Karte mit gesetztem Siegel; nie zugleich mit [Fortfuehren] (Begruendung nach K19-M06)"
+        zustand_erfolg: "Anwendung in Nur-Ansicht; das Anzeigelabel Angebot angefragt ist aus app.sealed_at abgeleitet (K01-G02, K19-G04)"
+        zustand_fehler: "Anwendung nicht lesbar — Meldung, die Karte bleibt stehen, kein Ersatzweg (fail-closed, K01-M25)"
+
+  - id: EN-03
+    access: nach_anmeldung
+    owner: K04
+    aktionen:
+      - kennung: check_starten
+        eingabe: "keine — die erste der fuenf Fragen wird geoeffnet (K04-M02, K04-M22)"
+        serverbefehl: "start_direct_prototype_check"
+        berechtigung: "serverseitig: gueltige Sitzung, actor.status = AKTIV (K03-D01, K01-D07), Mandantenschnitt der Sitzung (K01-M15, K02). Kein Bezug auf fit_check — fit_question, fit_option und fit_check tragen allein den Eignungs-Check (EN-04); der Direkt-Prototyp-Check hat keinen Traeger im Datenmodell (O-K04-10)"
+        zustand_laden: "Frage 1 wird geladen, beide Schaltflaechen inaktiv bis geladen"
+        zustand_leer: "entfaellt — Einstiegsaktion ohne eigenen Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EN-03a geoeffnet, Frage 1 von 5"
+        zustand_fehler: "Fragenfluss nicht ladbar — Meldung, Verbleib auf EN-03; [Ueberspringen] bleibt offen, es entsteht kein Vorschlag"
+      - kennung: ueberspringen
+        eingabe: "keine"
+        serverbefehl: "start_fit_check"
+        berechtigung: "serverseitig: ueberspringbar ist allein der Direkt-Prototyp-Check; der Eignungs-Check folgt zwingend (K04-M02, K04-D01)"
+        zustand_laden: "Vorpruefung 2 laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EN-04 geoeffnet; es entsteht kein Vorschlag und kein Arbeitsdokument"
+        zustand_fehler: "Wechsel fehlgeschlagen — Meldung, Verbleib auf EN-03, kein Vorgang angelegt (fail-closed, K04-G04)"
+
+  - id: EN-03a
+    access: nach_anmeldung
+    owner: K04
+    aktionen:
+      - kennung: frage_beantworten
+        eingabe: "je Frage genau eine der drei Antwortmoeglichkeiten, fuenf Fragen nacheinander; Wortlaut und Zuordnung aus K04 Abschn. 5.0 (K04-M22)"
+        serverbefehl: "answer_direct_prototype_check_question"
+        berechtigung: "serverseitig: actor.status = AKTIV (K03-D01, K01-D07), Mandantenschnitt der Sitzung (K01-M15, K02). Die Auswertung — Vetorecht der Fragen 5 und 1, Zaehlung der Fragen 2 bis 4 — laeuft auf dem Server; der Bildschirm liefert kein Ergebnis mit (K04-M23, K04-M24). Welche Tabelle Fragen und Antworten traegt, ist offen (O-K04-10)"
+        zustand_laden: "naechste Frage wird geladen; beide Weiterwege inaktiv, bis das Ergebnis vorliegt"
+        zustand_leer: "Frage ohne Antwort — der Weiterweg ist ausgeblendet, der Hinweis nennt die offene Frage (K19-M06)"
+        zustand_erfolg: "Antwort uebernommen; naechste Frage oder Ergebnis mit genau einem Begruendungssatz, der die ausschlaggebende Antwort nennt (K04-M25)"
+        zustand_fehler: "Antwort fehlt oder die Auswertung scheitert — der Vorschlag lautet Anwendung, und der Grund wird genannt (K04-D11, fail-closed). Abbruch des Flusses fuehrt ohne Vorschlag nach EN-03 zurueck"
+      - kennung: arbeitsdokument
+        eingabe: "keine — Weiterweg nach dem Vorschlag; er ist auch gegen den Vorschlag waehlbar (K04-M03)"
+        serverbefehl: "create_direct_prototype"
+        berechtigung: "serverseitig: das Arbeitsdokument entsteht in direct_prototype (Eigentuemer K07), nie in app; CHECK app_is_verified schliesst das aus (K01-M04, K04-D07)"
+        zustand_laden: "Uebergabe an den Weg Arbeitsdokument laeuft"
+        zustand_leer: "entfaellt — Weiterweg ohne eigenen Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EN-12; der Direkt-Prototyp bleibt ungeprueft und ist nie Gegenstand einer Angebotsanfrage (K04-G05)"
+        zustand_fehler: "Uebergabe gescheitert — Verbleib in Vorpruefung 1, kein Dokument angelegt (fail-closed, K04 Abschn. 6)"
+      - kennung: vorpruefung_2
+        eingabe: "keine"
+        serverbefehl: "start_fit_check"
+        berechtigung: "serverseitig: actor.status = AKTIV, Mandantenschnitt der Sitzung; der Eignungs-Check ist nicht ueberspringbar (K04-D01)"
+        zustand_laden: "EN-04 laedt"
+        zustand_leer: "entfaellt — Weiterweg ohne eigenen Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EN-04 geoeffnet; der Vorschlag aus Vorpruefung 1 entscheidet nichts (K04-M03)"
+        zustand_fehler: "Wechsel fehlgeschlagen — Meldung, Vorschlag und Antworten bleiben erhalten"
+
+  - id: EN-04
+    access: nach_anmeldung
+    owner: K04
+    aktionen:
+      - kennung: antwort_waehlen
+        eingabe: "genau eine fit_option je fit_question (fit_answer_aktiv_uq, Eigentuemer K04)"
+        serverbefehl: "create_fit_answer"
+        berechtigung: "serverseitig: Sitzung des angemeldeten Nutzers; fit_check.tenant_id ist Pflicht und muss der Mandant der Sitzung sein (K04-M10, K04-D08, K02)"
+        zustand_laden: "Fragen aus fit_question/fit_option geladen; Schaltflaechen inaktiv bis geladen"
+        zustand_leer: "keine Antwort gewaehlt — [Weiter] ausgeblendet, Hinweis nennt die fehlende Frage (K19-M06)"
+        zustand_erfolg: "Antwort gespeichert, naechste Frage oder Ergebnis"
+        zustand_fehler: "Speichern fehlgeschlagen — Meldung, Antwort bleibt waehlbar, kein Datenverlust"
+      - kennung: antwort_aendern
+        eingabe: "vorhandene fit_answer wird zurueckgenommen (superseded_at), neue Wahl"
+        serverbefehl: "supersede_fit_answer"
+        berechtigung: "wie antwort_waehlen; Zuruecknahme nur am eigenen fit_check. Auch nach einem Halt zulaessig — Antwort aendern ist einer der drei Auswege (K04-M08), obwohl completed_at gesetzt ist. Eine zweite offene Antwort auf dieselbe Frage weist fit_answer_aktiv_uq ab (K04-M14, K04-M15)"
+        zustand_laden: "bisherige Wahl markiert"
+        zustand_leer: "entfaellt — Aktion existiert nur bei vorhandener Antwort (Begruendung: K19-M06)"
+        zustand_erfolg: "alte Antwort traegt superseded_at, neue ist aktiv; outcome wird neu berechnet (K04 Abschn. 4.4)"
+        zustand_fehler: "Zuruecknahme fehlgeschlagen — alte Antwort bleibt unveraendert gueltig; entfernt wird keine Zeile (K04-D03)"
+      - kennung: weiter
+        eingabe: "alle drei Fragen beantwortet (fit_answer je question_code, nicht zurueckgenommen)"
+        serverbefehl: "evaluate_fit_check"
+        berechtigung: "serverseitig: outcome wird aus is_eligible der gewaehlten Optionen berechnet, nie vom Client uebergeben (K04-M13, fail-closed)"
+        zustand_laden: "Pruefung laeuft, [Weiter] inaktiv"
+        zustand_leer: "unbeantwortete Frage — [Weiter] ausgeblendet, Hinweis (K19-M06)"
+        zustand_erfolg: "GEEIGNET -> EN-04a (Zweckbestimmung); jedes Ergebnis ausser OFFEN traegt completed_at (fit_done_needs_ts, K04-M12)"
+        zustand_fehler: "NICHT_GEEIGNET -> Halt-Feld an Stelle des Weiterwegs, begruendet mit der aufhaltenden Antwort und mit den drei Auswegen (K04-M08, K04-M09); kein Gespraech, keine Anwendung (K04-D04). Scheitert die Pruefung selbst, bleiben die Antworten erhalten und der Versuch ist wiederholbar"
+      - kennung: termin
+        eingabe: "keine"
+        serverbefehl: "request_contact_appointment"
+        berechtigung: "angemeldeter Nutzer; die Ansprechperson stammt aus contact des eigenen Mandanten (Eigentuemer K11)"
+        zustand_laden: "Weg zum Gespraech laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Gespraech mit der Ansprechperson angestossen (K04-M08)"
+        zustand_fehler: "Weg nicht erreichbar — Hinweis mit Ersatzweg aus dem Nutzerhandbuch"
+      - kennung: zur_uebersicht
+        eingabe: "keine"
+        serverbefehl: "open_app_list"
+        berechtigung: "angemeldeter Nutzer"
+        zustand_laden: "Uebersicht laedt"
+        zustand_leer: "entfaellt — Verweisaktion (Begruendung nach K19-M06)"
+        zustand_erfolg: "Uebersicht angezeigt; das Ergebnis des Checks bleibt bestehen und wird nicht getilgt (K04-D03)"
+        zustand_fehler: "Rueckkehr fehlgeschlagen — Meldung, der Check bleibt geoeffnet"
+
+  # EN-04a · Zweckbestimmung. Neu am 05.08.2026, Zeichnung T3.
+  # EN-04 verwies im Erfolgsfall seit jeher auf diesen Bildschirm; es gab ihn
+  # nicht. Damit rief keine der katalogisierten Aktionen create_app_after_fit
+  # auf -- den einzigen Weg zu einer Anwendungszeile (K01-M27). Der Inhalt
+  # stammt aus K04-M19 bis M21, nicht aus einem Entwurf.
+  - id: EN-04a
+    access: nach_anmeldung
+    owner: K04
+    aktionen:
+      - kennung: zweckfrage_beantworten
+        eingabe: "zwei getrennte Ja/Nein-Antworten: Bewertung von Menschen (Anhang III) und verbotene Praktik (Art. 5)"
+        serverbefehl: "create_purpose_declaration"
+        berechtigung: "serverseitig: Sitzung des angemeldeten Nutzers; nur zum eigenen fit_check mit outcome = GEEIGNET; der Schritt ist kein fit_question und beruehrt die drei Dimensionen der Eignung nicht (K04-M19)"
+        zustand_laden: "beide Fragen geladen, [Weiter] inaktiv bis beide beantwortet sind"
+        zustand_leer: "eine der beiden Fragen unbeantwortet — [Weiter] ausgeblendet, Hinweis nennt die fehlende Frage (K19-M06)"
+        zustand_erfolg: "Erklaerung gespeichert. Auswertung in dieser Reihenfolge, der zweiten Frage kommt der Vorrang zu (K04-M20: bei Treffer in Frage 2 tritt die Ablehnung an die Stelle der Kenntnisnahme): Treffer in Frage 2 -> Halt-Feld, auch wenn Frage 1 ebenfalls zutrifft; sonst Treffer in Frage 1 -> Kenntnisnahme; sonst kein Treffer -> anwendung_anlegen, danach EN-05"
+        zustand_fehler: "Speichern fehlgeschlagen — keine Anwendung, keine Stufe 01; die Antworten bleiben erhalten und der Versuch ist wiederholbar (fail-closed)"
+      - kennung: kenntnis_nehmen
+        eingabe: "Bestaetigung zur Warnung: Anhang III kann greifen, der Kunde bringt die Anwendung als Anbieter unter eigenem Namen in Verkehr und traegt die Pflichten aus Art. 9, 11, 14, 17 und 43"
+        serverbefehl: "create_purpose_acknowledgement"
+        berechtigung: "nur nach Treffer in Frage 1; die Kenntnisnahme bleibt als Nachweis erhalten und geht in das Uebergabe-Paket ein (K04-M21, Eigentuemer K10)"
+        zustand_laden: "Warnung und Pflichtenhinweis geladen, [Kenntnis genommen] inaktiv bis gelesen"
+        zustand_leer: "entfaellt — die Aktion erscheint nur bei Treffer in Frage 1 (Begruendung nach K19-M06)"
+        zustand_erfolg: "Nachweis geschrieben -> anwendung_anlegen, danach EN-05. Der Nachweis allein oeffnet keine Anwendung; die Zeile entsteht ausschliesslich ueber create_app_after_fit (K01-M27)"
+        zustand_fehler: "Nachweis nicht schreibbar — kein Weiterweg, keine Anwendung. Ohne Nachweis ist die Auskunftspflicht nach Art. 25 Abs. 4 nicht belegbar (K04-M21, fail-closed)"
+      - kennung: anwendung_anlegen
+        eingabe: "abgeschlossener fit_check mit outcome = GEEIGNET, vorliegender Zweckbestimmung und -- bei Treffer in Frage 1 -- vorliegender Kenntnisnahme"
+        serverbefehl: "create_app_after_fit"
+        berechtigung: "ausschliesslich serverseitig; er prueft in derselben Transaktion Eignung GEEIGNET, aktives Konto, Mandantenzugehoerigkeit, legal_space = DE und currency = EUR (K01-M27, Eigentuemer K01). Bei Treffer in Frage 1 der Zweckbestimmung ist die Kenntnisnahme zusaetzliche Vorbedingung (K04-M21) -- ohne sie ist die Auskunftspflicht nach Art. 25 Abs. 4 nicht belegbar. Ein nullbarer Fremdschluessel im Schema ist keine Erlaubnis, ihn zu umgehen"
+        zustand_laden: "Anlage laeuft, alle Schaltflaechen inaktiv"
+        zustand_leer: "entfaellt — die Aktion setzt einen bestandenen Eignungs-Check voraus (Begruendung nach K19-M06)"
+        zustand_erfolg: "Anwendungszeile angelegt, fit_check.app_id gesetzt, Verlaufszeile DISCOVERY erzeugt -> EN-05"
+        zustand_fehler: "eine der fuenf Pruefungen scheitert — abgewiesen, keine Zeile, Grund benannt; der Eignungsriegel weist auch den Umweg ab (K01-M27, fail-closed)"
+      - kennung: antwort_aendern
+        eingabe: "Rueckweg zu EN-04, bestehende Antwort wird zurueckgenommen"
+        serverbefehl: "supersede_fit_answer"
+        berechtigung: "wie in EN-04; einer der drei Auswege nach einem Halt (K04-M08)"
+        zustand_laden: "bisherige Wahl markiert"
+        zustand_leer: "entfaellt — die Aktion existiert nur bei vorhandener Antwort (Begruendung nach K19-M06)"
+        zustand_erfolg: "alte Antwort traegt superseded_at, EN-04 oeffnet erneut"
+        zustand_fehler: "Zuruecknahme fehlgeschlagen — die alte Antwort bleibt unveraendert gueltig; entfernt wird keine Zeile (K04-D03)"
+      - kennung: termin
+        eingabe: "keine"
+        serverbefehl: "request_contact_appointment"
+        berechtigung: "angemeldeter Nutzer; die Ansprechperson stammt aus contact des eigenen Mandanten (Eigentuemer K11)"
+        zustand_laden: "Weg zum Gespraech laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Gespraech mit der Ansprechperson angestossen (K04-M08)"
+        zustand_fehler: "Weg nicht erreichbar — Hinweis mit Ersatzweg aus dem Nutzerhandbuch"
+      # Dritter Ausweg. Er fehlte -- der Wireframe zeigte ihn, die
+      # Maschinenquelle nicht. K04-M08 verlangt genau drei; zwei sind zwei.
+      # Gefunden im Tor-3-Delta-Review vom 05.08.2026.
+      - kennung: zur_uebersicht
+        eingabe: "keine"
+        serverbefehl: "open_overview"
+        berechtigung: "angemeldeter Nutzer; die Uebersicht zeigt ausschliesslich Anwendungen des eigenen Mandanten (K14-D07)"
+        zustand_laden: "Uebersicht laedt"
+        zustand_leer: "keine Anwendung vorhanden — die Uebersicht nennt den Weg zur Vorpruefung (K19-M06)"
+        zustand_erfolg: "EN-02 Uebersicht; der Eignungs-Check bleibt mit seinem Ergebnis erhalten und ist wieder aufrufbar (K04-D03)"
+        zustand_fehler: "Uebersicht nicht erreichbar — Hinweis, der Halt bleibt bestehen"
+
+  - id: EN-05
+    access: nach_anmeldung
+    owner: K05
+    aktionen:
+      - kennung: thema_waehlen
+        eingabe: "ein Thema aus zwoelf Vorschlaegen oder freie Eingabe ueber Was anderes (K05-M01, K05-M02)"
+        serverbefehl: "record_topic"
+        berechtigung: "Serverpfad prueft Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K05-M24, K13 Abschn. 3); Vorbedingung ist ein fit_check mit outcome GEEIGNET (Eigentuemer K04)"
+        zustand_laden: "zwoelf Themen geladen; die Gespraechsspalte bleibt inaktiv, bis sie stehen"
+        zustand_leer: "kein Thema gewaehlt — die Stufe bleibt an der Eingangsfrage, rechts entsteht kein Eintrag (K19-M06)"
+        zustand_erfolg: "Thema als Beitrag im INTERVIEW_PROTOCOL-Stand gefuehrt (K05-M25, Traeger document, Eigentuemer K10)"
+        zustand_fehler: "Speichern fehlgeschlagen — Meldung, Auswahl bleibt stehen, ein unvollstaendiger Dreischritt wird nicht sichtbar (K05-M26)"
+      - kennung: einordnung_beantworten
+        eingabe: "je eine Antwort in fester Reihenfolge Branche, Funktionsbereich, Anwendung; je Frage eine offene Alternative Andere ... (K05-M03, K05-M04)"
+        serverbefehl: "record_classification"
+        berechtigung: "Serverpfad wie thema_waehlen; Mandantenschnitt ueber app.tenant_id (Eigentuemer K01)"
+        zustand_laden: "Antwortlisten als versionierte Konfigurationsdaten geladen (O-K05-6)"
+        zustand_leer: "unbeantwortete Frage — die Folgefrage erscheint nicht, die Zeile rechts bleibt leer (K05-M03)"
+        zustand_erfolg: "Antwort rechts unter Branche, Funktion oder Anwendung sichtbar, mit genau einer Herkunftsmarke (K05-M11)"
+        zustand_fehler: "Reihenfolge verletzt oder Speichern fehlgeschlagen — abgewiesen, bisherige Antworten bleiben unveraendert (K05-G01)"
+      - kennung: ziele_waehlen
+        eingabe: "Mehrfachauswahl aus sieben Zielen und + Anderes Ziel; die Klickreihenfolge ist der Rang (K05-M05, K05-G04)"
+        serverbefehl: "record_goals"
+        berechtigung: "Serverpfad wie thema_waehlen; der Rang ist Angabe des Nutzers und wird nicht vom System bewertet (K05-G04)"
+        zustand_laden: "Zielliste geladen; Rangziffern entstehen erst mit der Auswahl"
+        zustand_leer: "kein Ziel gewaehlt — die Rangliste rechts bleibt leer; der Weiterweg ist ausgeblendet, an seiner Stelle steht der Hinweis auf das fehlende Ziel (K19-M06)"
+        zustand_erfolg: "Ziele rechts mit Rangziffern 1 2 3 in der Reihenfolge der Auswahl"
+        zustand_fehler: "Rang nicht eindeutig uebernehmbar oder Speichern fehlgeschlagen — abgewiesen, Auswahl bleibt unveraendert"
+      - kennung: ausgangsproblem_bestaetigen
+        eingabe: "ausdrueckliche Bestaetigung der zusammengefassten Beschreibung ueber Ja, weiter zum Interview (K05-M06)"
+        serverbefehl: "confirm_initial_problem"
+        berechtigung: "serverseitig: ohne bestaetigtes Ausgangsproblem kein Namensschritt; Pruefung am eigenen app-Datensatz des eigenen Mandanten (Eigentuemer K01)"
+        zustand_laden: "Zusammenfassung wird gestellt, Schaltflaeche inaktiv bis sie steht"
+        zustand_leer: "ohne zusammengefasstes Ausgangsproblem ist die Schaltflaeche ausgeblendet, an ihrer Stelle steht der Hinweis auf die fehlende Beschreibung (K05-G05, K19-M06)"
+        zustand_erfolg: "Bestaetigung gespeichert; der Namensvorschlag erscheint (K05-M07)"
+        zustand_fehler: "Bestaetigung nicht speicherbar — Stufe bleibt ORIENTIERUNG, die Beschreibung bleibt korrigierbar"
+      - kennung: name_bestaetigen
+        eingabe: "Name im ueberschreibbaren Feld; der Vorschlag traegt die Marke KI-Vorschlag, jedes Feld mit Vorschlag ist zugleich Eingabefeld (K05-M07, K05-D04)"
+        serverbefehl: "confirm_app_name"
+        berechtigung: "serverseitig: Schreibrecht auf app.name des eigenen Mandanten (Eigentuemer K01); der Stufenwechsel wird serverseitig gesetzt, nie vom Client uebergeben"
+        zustand_laden: "Vorschlag der Modelle geladen, Feld gefuellt und aenderbar"
+        zustand_leer: "Feld leer oder Marke fehlt — abgelehnt, Stufe bleibt ORIENTIERUNG (K05-G01, K05-G06, K05-D04)"
+        zustand_erfolg: "app.name gesetzt; app.journey_phase von ORIENTIERUNG auf INTERVIEW (K01); Protokolleintrag in event mit source = PORTAL_ACTION (K02); weiter nach EN-06"
+        zustand_fehler: "Schreibbefehl oder Protokolleintrag gescheitert — alles zurueckgerollt, kein Teilwechsel, Stufe bleibt ORIENTIERUNG (K05-M08)"
+
+  - id: EN-06
+    access: nach_anmeldung
+    owner: K05
+    aktionen:
+      - kennung: vorschlag_waehlen
+        eingabe: "einer der angebotenen Vorschlaege zur Fachfrage; die Vorschlaege begrenzen die Antwortmenge nicht (K05-M09, K05-D05)"
+        serverbefehl: "record_interview_answer"
+        berechtigung: "Serverpfad prueft Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K05-M24); RLS leitet den Mandanten ueber document.app_id auf app.tenant_id ab (K05-M27)"
+        zustand_laden: "Frage und Vorschlaege geladen; rechts stehen bis dahin nur die Teilnehmer (K05-M16)"
+        zustand_leer: "keine Antwort — die Frage bleibt offen stehen, rechts entsteht kein Eintrag (K19-M06)"
+        zustand_erfolg: "Eintrag rechts mit genau einer Herkunftsmarke (K05-M11)"
+        zustand_fehler: "Marke nicht eindeutig bestimmbar oder Speichern fehlgeschlagen — kein Eintrag rechts, Meldung, Antwort bleibt waehlbar (K05-D02)"
+      - kennung: freitext_antworten
+        eingabe: "eigener Wortlaut im Freitextfeld, getippt oder diktiert; diktierter Text ist vor dem Senden sichtbar und aenderbar (K05-M09, K05-M21)"
+        serverbefehl: "record_interview_answer"
+        berechtigung: "Serverpfad wie vorschlag_waehlen; der Text gilt als Daten, eine darin enthaltene Handlungsanweisung wird nicht ausgefuehrt (K05-M22, K05-M29)"
+        zustand_laden: "Feld bedienbar, Senden inaktiv, solange kein Text vorliegt"
+        zustand_leer: "leeres Feld — Senden wirkt nicht, rechts entsteht kein Eintrag (K19-M06)"
+        zustand_erfolg: "Eintrag rechts mit Marke Ihre Angabe; personenbezogene Angaben werden vor jedem Modellaufruf maskiert (K05-M11, K05-M23)"
+        zustand_fehler: "Maskierung oder Modellpfad unvollstaendig — kein Aufruf, die Frage bleibt unbeantwortet stehen (K05-G01)"
+      - kennung: datei_anhaengen
+        eingabe: "ein Dokument als Antwort auf die Fachfrage; eine angehaengte Datei ist eine Antwort, kein Wissensmodul (K05-M09, K05-G09)"
+        serverbefehl: "upload_interview_document"
+        berechtigung: "Serverpfad wie vorschlag_waehlen; Ablage und Metadaten mandantengebunden ueber document.app_id auf app.tenant_id (K05-M27)"
+        zustand_laden: "Uebertragung laeuft; Pruefung auf Typ, Groesse, Malware und aktiven Inhalt (K05-M29)"
+        zustand_leer: "keine Datei gewaehlt — kein Eintrag rechts (K19-M06)"
+        zustand_erfolg: "Eintrag rechts mit Marke Ihre Angabe; die Datei geht in den INTERVIEW_PROTOCOL-Stand ein (K05-M25, Eigentuemer K10)"
+        zustand_fehler: "nicht pruefbare Datei bleibt in Quarantaene — Meldung mit Grund, kein Eintrag rechts (K05-M29)"
+      - kennung: frage_ignorieren
+        eingabe: "keine; die gestellte Fachfrage wird uebersprungen (K05-M10)"
+        serverbefehl: "skip_interview_question"
+        berechtigung: "serverseitig am eigenen, noch nicht abgeschlossenen Gespraech des eigenen Mandanten (K05-M24)"
+        zustand_laden: "Vermerk wird geschrieben, Schaltflaeche inaktiv"
+        zustand_leer: "entfaellt — die Aktion braucht keinen Bestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "rechts steht ausschliesslich der Wortlaut (Frage uebersprungen), ohne Marke; nachholbar bis Bin fertig mit dem Interview (K05-M10, O-K05-7)"
+        zustand_fehler: "Vermerk nicht schreibbar — abgelehnt, die Frage bleibt offen; sie verschwindet nie spurlos (K05-D01)"
+      - kennung: zwischenspeichern
+        eingabe: "keine; der erreichte Gespraechsstand mit Marken und Uebersprungvermerken (K05-M15)"
+        serverbefehl: "save_interview_progress"
+        berechtigung: "serverseitig: Schreibrecht am eigenen Gespraechsstand; Dreischritt Datei, document-Zeile, event in dieser Reihenfolge (K05-M26)"
+        zustand_laden: "Speichern laeuft, Schaltflaeche inaktiv"
+        zustand_leer: "entfaellt — die Aktion steht erst ab Stufe 02 und immer mit vorhandenem Stand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Stand ueberlebt das Abmelden; der juengste event-Eintrag verweist in object_ref auf Dokumentkennung und Hash (K05-M15, K05-M26)"
+        zustand_fehler: "unvollstaendiger Dreischritt wird nicht sichtbar — Meldung, der vorige Stand bleibt gueltig"
+      - kennung: interview_beenden
+        eingabe: "keine; der vorliegende Gespraechsstand wird an K06 uebergeben (K05-M19)"
+        serverbefehl: "complete_interview"
+        berechtigung: "serverseitig: Uebergabe an K06 und Setzen von app.journey_phase auf UEBERSICHT (Eigentuemer K01); der Client uebergibt keine Stufe"
+        zustand_laden: "Uebergabe laeuft, Schaltflaeche inaktiv"
+        zustand_leer: "entfaellt — ohne Gespraechsstand gibt es keine Uebergabe (Begruendung nach K19-M06)"
+        zustand_erfolg: "journey_phase = UEBERSICHT (K01), Protokolleintrag in event mit source = PORTAL_ACTION (K02), weiter nach EN-07"
+        zustand_fehler: "Uebergabe oder Protokolleintrag gescheitert — alles zurueckgerollt, journey_phase bleibt INTERVIEW (K05-M19)"
+
+  - id: EN-07
+    access: nach_anmeldung
+    owner: K06
+    aktionen:
+      - kennung: kachel_bearbeiten
+        eingabe: "Klartext genau einer der sechs Kacheln; die fest zugeordnete Herkunftsmarke bleibt stehen (K06-M01, K06-M02, K06-G02)"
+        serverbefehl: "update_concept_artifact"
+        berechtigung: "serverseitig: eigener app-Datensatz des eigenen Mandanten (K06-M26, K13 Abschn. 3); Anzeige und Bearbeitung nur bei abgeschlossenem review_run mit passed = wahr und ohne offenen BLOCKER (K06-D01, K06-M03)"
+        zustand_laden: "Kachel geladen, Marke sichtbar"
+        zustand_leer: "entfaellt — die Kachel entsteht erst nach bestandener Pruefung (Begruendung nach K19-M06)"
+        zustand_erfolg: "Aenderung uebernommen; sie erzeugt einen neuen artifact_version-Stand (K06-M29), womit ein zuvor gesetztes Haekchen seine Zuordnung verliert (K06-M28)"
+        zustand_fehler: "Speichern fehlgeschlagen — die Kachel bleibt im letzten bestandenen Stand, kein Teilstand wird sichtbar"
+      - kennung: offene_punkte_oeffnen
+        eingabe: "keine; der Bereich der offenen Punkte klappt auf (K06-M15)"
+        serverbefehl: "list_open_points"
+        berechtigung: "serverseitig: Leserecht am eigenen app-Datensatz des eigenen Mandanten (K06-M26, K13 Abschn. 3)"
+        zustand_laden: "Liste wird aufgeloest"
+        zustand_leer: "keine offenen Punkte — der Bereich sagt das ausdruecklich, statt leer zu bleiben (K19-M06)"
+        zustand_erfolg: "offene Punkte sichtbar; Quelle sind die Befunde der Schwere HINWEIS in review_finding und die versionierte Liste bei K10"
+        zustand_fehler: "Liste nicht aufloesbar — der Bereich bleibt zu, Meldung mit Grund, kein Platzhalter (K06-G01)"
+      - kennung: interview_protokoll_oeffnen
+        eingabe: "keine; der Bereich zeigt das Interview-Protokoll (K06-M15)"
+        serverbefehl: "read_document"
+        berechtigung: "serverseitig: document mit kind = INTERVIEW_PROTOCOL zum eigenen app-Datensatz (Eigentuemer K10); Mandant ueber document.app_id auf app.tenant_id"
+        zustand_laden: "Datei wird aufgeloest"
+        zustand_leer: "entfaellt — ohne Interview gibt es keine Stufe 03 (Begruendung nach K19-M06)"
+        zustand_erfolg: "Protokoll mit Herkunftsmarken und Uebersprungvermerken sichtbar (K05-M18)"
+        zustand_fehler: "Dokument nicht aufloesbar — der Abruf wird abgewiesen, kein Ersatzdokument (K06-G01)"
+      - kennung: memos_oeffnen
+        eingabe: "keine; Memo Betriebsrat und Memo Datenschutz ansehen und einzeln laden (K06-M15)"
+        serverbefehl: "read_document"
+        berechtigung: "serverseitig: document mit kind = MEMO zum eigenen app-Datensatz (Eigentuemer K10), Leserecht des angemeldeten Kontos"
+        zustand_laden: "beide Memos werden aufgeloest"
+        zustand_leer: "fehlt ein Memo, wird der Bereich nicht halb gezeigt — abgewiesen mit Grund (K06-G01)"
+        zustand_erfolg: "beide Memos sichtbar und ladbar; FREIRAUM versendet sie nicht (K09-D04)"
+        zustand_fehler: "Abruf fehlgeschlagen — Meldung, kein Platzhalter und keine leere Datei"
+      - kennung: haekchen_setzen
+        eingabe: "genau ein Haekchen: Ich habe die sechs Konzepte geprueft (K06-M16)"
+        serverbefehl: "confirm_concept_version"
+        berechtigung: "serverseitig: setzbar nur bei abgeschlossenem review_run mit passed = wahr, ohne offenen BLOCKER, zum angezeigten artifact_version (K06-D09, K06-D01). Die ausgeblendete Weiter-Schaltflaeche ist Anzeige, kein Schutz"
+        zustand_laden: "Pruefstand wird gelesen; das Kaestchen bleibt inaktiv, bis er vorliegt"
+        zustand_leer: "kein bestandener Prueflauf — das Kaestchen ist nicht setzbar, an der Stelle des Weiterwegs steht der Pruefhinweis (K06-M16, K19-M06)"
+        zustand_erfolg: "eine Transaktion: event-Eintrag zum genauen Artefaktstand (K02, K06-M28), app.journey_phase von UEBERSICHT auf PROTOTYP (K01), Projektvertrag Familie 2 erzeugt (K06-M19)"
+        zustand_fehler: "scheitert ein Schritt, wird alles zurueckgerollt — journey_phase bleibt UEBERSICHT, das Haekchen gilt als nicht gesetzt (K06-M17, K06-M18)"
+      - kennung: weiter_zum_prototyp
+        eingabe: "keine; der Weiterweg erscheint erst mit gesetztem Haekchen (K06-M16)"
+        serverbefehl: "open_prototype_preview"
+        berechtigung: "serverseitig: Eintritt in Stufe 04 nur mit app.journey_phase = PROTOTYP und passendem event-Nachweis des Haekchens (K06-M28, K06-D08). Ein ausgeblendeter Weiterweg ist keine Berechtigung"
+        zustand_laden: "Stufe 04 laedt"
+        zustand_leer: "ohne Haekchen steht an seiner Stelle der Pruefhinweis, nicht der Weiterweg (K06-M16, K19-M06)"
+        zustand_erfolg: "EN-08 geoeffnet"
+        zustand_fehler: "Eintritt abgewiesen — Meldung mit Grund, Stufe 03 bleibt geoeffnet (K06-G01)"
+      - kennung: alles_herunterladen
+        eingabe: "keine; sechs Konzepte, offene Punkte, Interview-Protokoll und beide Memos als Sammelabruf (K06-M15)"
+        serverbefehl: "download_document_bundle"
+        berechtigung: "serverseitig je Dokument: document.app_id auf app.tenant_id und Leserecht des angemeldeten Kontos (Eigentuemer K10, K13 Abschn. 3)"
+        zustand_laden: "Sammelabruf wird zusammengestellt"
+        zustand_leer: "entfaellt — nach bestandener Pruefung ist die Liste nie leer (Begruendung nach K19-M06)"
+        zustand_erfolg: "Sammelabruf ausgeliefert"
+        zustand_fehler: "ein Dokument nicht aufloesbar — der gesamte Abruf wird abgewiesen, nie durch einen Platzhalter ersetzt (K06-G01)"
+
+  - id: EN-08
+    access: nach_gesetztem_haekchen
+    owner: K07
+    aktionen:
+      - kennung: darstellung_umschalten
+        eingabe: "Wahl zwischen breiter und schmaler Darstellung — Desktop oder Mobil (K07-M04)"
+        serverbefehl: "switch_prototype_viewport"
+        berechtigung: "serverseitig je Aufruf: Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K13 Abschn. 3); Eintritt in Stufe 04 nur mit app.journey_phase = PROTOTYP und passendem event-Nachweis des Haekchens (K06-M28, K06-D08); ein Bestand eines fremden Mandanten gilt als nicht vorhanden (K07-D08)"
+        zustand_laden: "Vorschau wird in der gewaehlten Breite neu aufgebaut"
+        zustand_leer: "entfaellt — ohne Vorschau gibt es die Stufe nicht (Begruendung nach K19-M06)"
+        zustand_erfolg: "Vorschau bedienbar, Beispieldaten unveraendert (K07-M01, K07-M02)"
+        zustand_fehler: "Vorschau nicht erreichbar — Meldung mit Grund, der bestaetigte Stand bleibt erhalten (K07-M26)"
+      - kennung: zoom_aendern
+        eingabe: "Verkleinern oder Vergroessern der Darstellung (K07-M04)"
+        serverbefehl: "change_prototype_zoom"
+        berechtigung: "serverseitig je Aufruf: Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K13 Abschn. 3); die Zoomstufe aendert keinen Bestand"
+        zustand_laden: "Darstellung wird neu gezeichnet"
+        zustand_leer: "entfaellt — Darstellungsaktion ohne eigenen Bestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Vorschau in der gewaehlten Groesse, Inhalt unveraendert"
+        zustand_fehler: "Grenze der Zoomstufen erreicht — Hinweis, die Darstellung bleibt unveraendert"
+      - kennung: vorschau_neu_laden
+        eingabe: "keine; die Vorschau wird erneut geholt (K07-M04)"
+        serverbefehl: "reload_prototype_preview"
+        berechtigung: "serverseitig je Abruf: Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K13 Abschn. 3); der Vorschaucode laeuft isoliert, ohne Plattform-Geheimnisse und ohne freien Netzzugang (K07-M21)"
+        zustand_laden: "Vorschau wird geholt, die Bedienung bleibt inaktiv"
+        zustand_leer: "entfaellt — die Vorschau entsteht aus den bestaetigten Konzepten und ist nie leer (Begruendung nach K19-M06)"
+        zustand_erfolg: "bedienbare Maske mit Beispieldaten; darunter stehen die geltenden fachlichen Regeln (K07-M01, K07-M03)"
+        zustand_fehler: "Vorschau nicht erzeugbar — Meldung mit Grund, der bestaetigte Stand geht nicht verloren (K07-M26)"
+      - kennung: feilwunsch_waehlen
+        eingabe: "einer der vier Vorschlaege: Schrift groesser, mehr Kontrast, Schaltflaeche umbenennen, Feld ausblenden (K07-M05)"
+        serverbefehl: "change_prototype_ui"
+        berechtigung: "serverseitig: revisionsgebundener, idempotenter Befehl prueft Konto, Mandant, erwartete Revision und den erlaubten UI-Bereich; Zahlen, Rechenlogik, Pruefregeln und Freigabestufen sind gesperrt (K07-M19, K07-M20, K07-D01)"
+        zustand_laden: "Aenderung wird gegen den erlaubten UI-Bereich geprueft und angewandt"
+        zustand_leer: "entfaellt — Feilen ist freiwillig; ohne Wunsch geschieht nichts (K07-G02)"
+        zustand_erfolg: "Aenderung im Gespraech bestaetigt und unmittelbar in der Vorschau sichtbar; Vorschau, Revision und Protokolleintrag werden gemeinsam wirksam (K07-M07, K07-M19)"
+        zustand_fehler: "betrifft der Wunsch Betraege, Rechenlogik, Pruefregeln oder Freigabestufen — begruendet abgelehnt mit Weg zur Ansprechperson, die Vorschau bleibt unveraendert (K07-D01, K07-D03)"
+      - kennung: feilen_beenden
+        eingabe: "keine; das Feilen wird abgeschlossen (K07-M06)"
+        serverbefehl: "complete_prototype"
+        berechtigung: "serverseitig: Vorbedingungen der Stufe geprueft, danach app.journey_phase fortgeschrieben (Eigentuemer K01); der Client uebergibt keine Stufe (K07-M10)"
+        zustand_laden: "Rueckfrage steht: danach sind keine Aenderungen mehr moeglich, zurueck oder abschliessen (K07-M09)"
+        zustand_leer: "entfaellt — der Eintrag steht von Anfang an bereit (K07-M06, Begruendung nach K19-M06)"
+        zustand_erfolg: "abgeschlossen: journey_phase von PROTOTYP auf ANGEBOT (K01), Protokolleintrag in event (K02), weiter nach EN-09"
+        zustand_fehler: "Vorbedingung nicht erfuellt oder Protokolleintrag gescheitert — abgelehnt, alles zurueckgerollt, Stufe 04 bleibt geoeffnet (K07-M10, fail-closed nach K01 Abschn. 3)"
+
+  - id: EN-09
+    access: nach_gesetztem_haekchen
+    owner: K09
+    aktionen:
+      - kennung: unterschrift_eingeben
+        eingabe: "getippter Name, mindestens drei Zeichen; nicht vorbelegt und nicht aus einem frueheren Vorgang uebernommen (K09-M03, K09-D06)"
+        serverbefehl: "validate_offer_request_preconditions"
+        berechtigung: "serverseitig: eigener app-Datensatz des eigenen Mandanten und app.journey_phase = ANGEBOT (K09-M09); die Sperre in der Oberflaeche ist eine Anzeige, kein Schutz (K09-M08)"
+        zustand_laden: "Freigabeblock geladen, Feld leer"
+        zustand_leer: "leer oder kuerzer als drei Zeichen — gilt als nicht gesetzt, eine eigene Zeile der Fehlliste nennt das (K09-M03, K09-M07)"
+        zustand_erfolg: "Unterschrift liegt vor; belegt wird sie im Bestaetigungsdokument, nicht in einer app-Spalte (K09-G08, K09-M17)"
+        zustand_fehler: "Eingabe nicht uebernehmbar — Meldung, die Schaltflaeche bleibt ausgegraut, kein Siegel"
+      - kennung: haekchen_unverbindlichkeit_setzen
+        eingabe: "erstes Haekchen: die Anfrage ist unverbindlich, die offenen Punkte sind bekannt (K09-M04)"
+        serverbefehl: "validate_offer_request_preconditions"
+        berechtigung: "serverseitig: eigener app-Datensatz des eigenen Mandanten und app.journey_phase = ANGEBOT (K09-M09); beim Absenden erneut geprueft (K09-M08); fuer dieses Haekchen fuehrt das Datenmodell keine Spalte (K09-G08)"
+        zustand_laden: "offene Punkte werden aufgeloest"
+        zustand_leer: "nicht gesetzt — eine eigene Zeile der Fehlliste unter der ausgegrauten Schaltflaeche (K09-M07)"
+        zustand_erfolg: "Vorbedingung erfuellt; der Beleg entsteht im Bestaetigungsdokument (K09-M17)"
+        zustand_fehler: "offene Punkte nicht aufloesbar — das Haekchen bleibt ungesetzt, kein Platzhalter tritt an die Stelle der Liste (K09-D05)"
+      - kennung: haekchen_memoempfang_setzen
+        eingabe: "zweites Haekchen: beide Memos wurden uebergeben, die Weitergabe im Haus liegt beim Kunden (K09-M05)"
+        serverbefehl: "validate_offer_request_preconditions"
+        berechtigung: "serverseitig: die Empfangsbestaetigung entsteht nur im selben Akt wie das Siegel — CHECK ack_needs_seal an app (K09-D07, Prueffall T22)"
+        zustand_laden: "beide Memos werden aufgeloest (Eigentuemer K10)"
+        zustand_leer: "nicht gesetzt — eine eigene Zeile der Fehlliste (K09-M07)"
+        zustand_erfolg: "Vorbedingung erfuellt; app.mitbestimmung_ack_at wird erst beim Absenden gemeinsam mit sealed_at gesetzt (K09-M11)"
+        zustand_fehler: "Versuch, die Bestaetigung ohne Siegel zu schreiben — von ack_needs_seal abgewiesen; FREIRAUM versendet die Memos nicht (K09-D04)"
+      - kennung: angebot_anfordern
+        eingabe: "alle drei Vorbedingungen zugleich: Unterschrift und beide Haekchen (K09-M02, K09-M06)"
+        serverbefehl: "seal_app_for_offer_request"
+        berechtigung: "serverseitig: die drei Vorbedingungen erneut geprueft, app.journey_phase = ANGEBOT, sealed_at noch leer (K09-M08 bis K09-M11); app.open_points wird aus der versionierten Liste bei K10 gerechnet, bei Drift wird abgewiesen (K09-M19); der Austritt aus lifecycle_state DISCOVERY laeuft im selben Vorgang, CHECK sealed_needs_state sichert das Ergebnis (K09-M12, K09-M18). Die ausgegraute Schaltflaeche ist eine Anzeige, kein Schutz"
+        zustand_laden: "Pruefseite zeigt Unterschrift, beide Erklaerungen, offene Punkte und Empfaengeradresse; erst die erneute Bestaetigung loest den Befehl aus (K09-M16)"
+        zustand_leer: "solange eine Vorbedingung fehlt, bleibt die Schaltflaeche ausgegraut — darunter je fehlender Vorbedingung eine Zeile im Klartext (K09-M06, K09-M07)"
+        zustand_erfolg: "eine Transaktion: lifecycle_state von DISCOVERY nach IN_BEARBEITUNG (K01), sealed_at und mitbestimmung_ack_at mit identischem Zeitpunkt, Bestaetigungsdokument bei K10, Protokolleintrag in event mit Projektnummer (K02); weiter nach EN-10 (K09-M11, K09-M15, K09-M18)"
+        zustand_fehler: "ein Schritt scheitert — alles zurueckgerollt, kein halber Abschluss; ein bereits gesetztes Siegel weist ein zweites Absenden ab, ohne einen Zeitpunkt zu ueberschreiben (K09-M10, K09-D10)"
+      - kennung: dokument_einzeln_abrufen
+        eingabe: "genau ein Eintrag der Liste: eines der sechs Konzepte, das Interview-Protokoll, eines der beiden Memos oder die Liste der offenen Punkte (K09-M14)"
+        serverbefehl: "read_document"
+        berechtigung: "serverseitig je Abruf: document.app_id auf app.tenant_id und Leserecht des angemeldeten Kontos (Eigentuemer K10, K13 Abschn. 3)"
+        zustand_laden: "Dokument wird aufgeloest"
+        zustand_leer: "entfaellt — die Liste fuehrt auf beiden Bildschirmen stets dieselben Eintraege (K09-M14, Begruendung nach K19-M06)"
+        zustand_erfolg: "Dokument ausgeliefert; kein Betrag ist darin enthalten (K09-D02, K09-D03)"
+        zustand_fehler: "nicht aufloesbares Dokument — der Abruf wird abgewiesen, nie durch Platzhalter, leere Datei oder Hinweistext ersetzt (K09-D05)"
+      - kennung: alle_herunterladen
+        eingabe: "keine; Sammelabruf derselben Dokumentenliste (K09-M14)"
+        serverbefehl: "download_document_bundle"
+        berechtigung: "wie dokument_einzeln_abrufen, je Dokument einzeln geprueft (K10, K13 Abschn. 3)"
+        zustand_laden: "Sammelabruf wird zusammengestellt"
+        zustand_leer: "entfaellt — Verweisaktion auf eine feste Liste (Begruendung nach K19-M06)"
+        zustand_erfolg: "Sammelabruf ausgeliefert; kein Betrag ist darin enthalten (K09-D02, K09-D03)"
+        zustand_fehler: "ein Dokument nicht aufloesbar — der ganze Sammelabruf wird abgewiesen, nie ersetzt (K09-D05)"
+  - id: EN-10
+    access: nach_gesetztem_haekchen
+    owner: K09
+    aktionen:
+      - kennung: alle_herunterladen
+        eingabe: "keine; die Liste steht fest — sechs Konzepte, Interview-Protokoll, zwei Memos, Liste der offenen Punkte (K09-M14)"
+        serverbefehl: "download_all_documents"
+        berechtigung: "eigene app der Sitzung mit gesetztem app.sealed_at; Mandantenschnitt serverseitig (K01-M15); die Dokumente selbst fuehrt K10"
+        zustand_laden: "Sammelabruf wird zusammengestellt, Schaltflaeche inaktiv bis fertig"
+        zustand_leer: "entfaellt — Begruendung: die Liste ist vollzaehlig oder der Abruf wird abgewiesen (K09-D05); ein leeres Paket entsteht nicht"
+        zustand_erfolg: "Sammelabruf uebergeben, die Bestaetigungsseite bleibt unveraendert geoeffnet"
+        zustand_fehler: "ein Dokument nicht aufloesbar — Abruf abgewiesen, kein Platzhalter, keine leere Datei, kein Teilpaket (K09-D05); Meldung mit Nachschlagekennung (K16-M26)"
+
+  - id: EN-11
+    access: nach_anmeldung
+    owner: K01
+    aktionen:
+      - kennung: fortfuehren
+        eingabe: "Auswahl genau einer Karte; app.sealed_at der Anwendung ist leer"
+        serverbefehl: "resume_app"
+        berechtigung: "app.tenant_id gleich Mandant der Sitzung, geprueft ueber die RLS-Policies (K01-M15, K01-M30); ein fremder Bestand gilt als nicht vorhanden"
+        zustand_laden: "Karten aus app und app_state_aktuell geladen, Zustandsname aus lifecycle_state_label; Bedienelement inaktiv bis geladen"
+        zustand_leer: "keine Anwendung vorhanden — keine Karte und damit keine Aktion; der Einstieg fuehrt allein ueber die Startseite (K01-M12)"
+        zustand_erfolg: "Gespraech oeffnet an der gespeicherten Stelle, dieselbe Stufe, kein Neubeginn (K01-M10)"
+        zustand_fehler: "Stelle nicht aufloesbar oder Sitzung abgelaufen — Rueckfuehrung auf EN-01, keine Karte sichtbar, der gespeicherte Stand bleibt erhalten"
+      - kennung: ansehen
+        eingabe: "Auswahl genau einer Karte mit gesetztem app.sealed_at"
+        serverbefehl: "open_app_readonly"
+        berechtigung: "wie fortfuehren; zusaetzlich serverseitig Nur-Ansicht — nach gesetztem app.sealed_at steht kein Schreibweg mehr offen (K09-D08); die fehlende Bearbeiten-Schaltflaeche (K16-M22) ist nur die Anzeige dieser Pruefung, nie ihr Ersatz (K16-M02)"
+        zustand_laden: "abgeschlossenes Gespraech wird geladen"
+        zustand_leer: "entfaellt — Begruendung: die Aktion besteht nur an einer Karte mit gesetztem Siegel (K19-M06)"
+        zustand_erfolg: "Gespraech als Nur-Ansicht geoeffnet; die Karte traegt den abgeleiteten Namen Angebot angefragt (K16-M15, F21)"
+        zustand_fehler: "Ansicht nicht ladbar — Meldung mit Nachschlagekennung (K16-M26); kein Ruecksprung in ein bearbeitbares Gespraech"
+
+  - id: EN-12
+    access: nach_anmeldung
+    owner: K07
+    aktionen:
+      - kennung: laden
+        eingabe: "Auswahl genau einer Zeile aus direct_prototype mit leerem deleted_at"
+        serverbefehl: "download_direct_prototype"
+        berechtigung: "Konto, Mandant und Objektstatus bei jedem Aufruf serverseitig geprueft (K07-M22); eine fremde oder erratene Kennung antwortet wie nicht vorhanden (K07-D08)"
+        zustand_laden: "Arbeitsdokument wird bereitgestellt, Zeile ohne Bedienelement bis bereit"
+        zustand_leer: "kein Direkt-Prototyp vorhanden — der abgesetzte Bereich bleibt mit dem Hinweis nicht beauftragbar stehen (K07-M14), keine Zeile, keine Aktion"
+        zustand_erfolg: "Datei uebergeben, Name nach dem Muster aus Datum, Uhrzeit und Thema (K07-M15); Marken Arbeitsdokument und ungeprueft bleiben stehen"
+        zustand_fehler: "Ablage nicht erreichbar oder Zeile bereits entfernt — Abruf abgewiesen, Zeile unveraendert, Meldung mit Nachschlagekennung (K16-M26)"
+      - kennung: teilen
+        eingabe: "Auswahl genau einer Zeile; der Freigabezugang wird serververmittelt erzeugt, nie ein Ablage-Verweis ausgegeben"
+        serverbefehl: "share_direct_prototype"
+        berechtigung: "objekt- und mandantengebundener Freigabezugang, bei jedem Abruf erneut serverseitig geprueft, rate-limitiert (K07-M23)"
+        zustand_laden: "Freigabezugang wird erzeugt"
+        zustand_leer: "entfaellt — Begruendung: die Aktion besteht nur an einer vorhandenen Zeile (K19-M06)"
+        zustand_erfolg: "Zugang angezeigt mit Empfaengerzweck, Ablauf nach 14 Tagen und Widerruf (K07-M23)"
+        zustand_fehler: "Zugang nicht erzeugbar, abgelaufen oder widerrufen — Abruf abgewiesen, die Zeile bleibt ungeteilt, der Grund wird genannt"
+      - kennung: papierkorb
+        eingabe: "Auswahl genau einer Zeile; gemeint ist das Entfernen nach K07-M16"
+        serverbefehl: "delete_direct_prototype"
+        berechtigung: "Konto, Mandant und Objektstatus je Aufruf serverseitig geprueft (K07-M22); der Direkt-Prototyp ist das einzige Objekt, das der Nutzer selbst entfernen darf (K07-G05, benannte Ausnahme zu F36)"
+        zustand_laden: "Entfernen laeuft, Zeile inaktiv"
+        zustand_leer: "entfaellt — Begruendung: die Aktion besteht nur an einer vorhandenen Zeile (K19-M06)"
+        zustand_erfolg: "direct_prototype.deleted_at gesetzt, Zeile aus der Liste genommen; die Aufbewahrung laeuft nach K15 weiter"
+        zustand_fehler: "Entfernen fehlgeschlagen oder Aufbewahrung unklar — abgewiesen, Zeile bleibt unveraendert sichtbar, keine automatische Entfernung bei Unklarheit (K07-M24)"
+
+  - id: EN-13
+    access: nach_anmeldung
+    owner: K16
+    aktionen:
+      - kennung: speichern
+        eingabe: "Anzeigename und E-Mail des eigenen Kontos (actor.display_name, actor.email; Eigentuemer K03)"
+        serverbefehl: "update_actor_profile"
+        berechtigung: "nur das Konto der eigenen Sitzung; eine heikle Aenderung verlangt eine erneute Anmeldung, serverseitig erzwungen (K16-M02, K16-D03); actor.email bleibt eindeutig"
+        zustand_laden: "Profilwerte geladen, [Speichern] inaktiv bis geladen"
+        zustand_leer: "Pflichtfeld leer — [Speichern] ausgeblendet, die Marke am Feld nennt die Bedingung (K16-M03, K16-M06)"
+        zustand_erfolg: "Werte geschrieben, Rueckmeldung am selben Ort (K16-M07)"
+        zustand_fehler: "Serverpruefung abgelehnt — Stand unveraendert, kein Teilschreiben, Fokus bleibt am ausloesenden Feld (K16-M07, K16-M25)"
+
+  - id: EN-14
+    access: nach_anmeldung
+    owner: K16
+    aktionen:
+      - kennung: senden
+        eingabe: "Text der Nebenfrage im Feld des Fensters; eigener Verlauf, getrennt vom Gespraech (K16-M19)"
+        serverbefehl: "ask_side_question"
+        berechtigung: "angemeldetes Konto; der getrennte Aufrufweg fuehrt serverseitig kein Schreibrecht auf die Anwendung (K16-M19, K16-D07) — die ausgeblendete Uebernehmen-Schaltflaeche (K16-D08) ist nur die Anzeige davon"
+        zustand_laden: "Antwort wird erzeugt, [Senden] inaktiv"
+        zustand_leer: "kein Text eingegeben — [Senden] ausgeblendet, der Hinweis nennt die Bedingung (K16-M03)"
+        zustand_erfolg: "Antwort erscheint ausschliesslich im Fenster; der Satz, dass der Inhalt nicht in die Anwendung einfliesst, bleibt sichtbar (K16-M20)"
+        zustand_fehler: "getrennter Weg nicht herstellbar — das Fenster oeffnet nicht, keine Antwort, kein Ersatzweg ueber das Gespraech (K16 Abschn. 6 S4, fail-closed)"
+  - id: EX-01
+    access: offen
+    owner: K03
+    aktionen:
+      - kennung: anmelden
+        eingabe: "E-Mail-Adresse (`actor.email`, plattformweit eindeutig) und sechsstelliger Code per E-Mail (`actor.mfa_method` = EMAIL_CODE, K03-M05)"
+        serverbefehl: "create_session_by_email_code"
+        berechtigung: "serverseitig (K03-M13): Konto vorhanden, `actor.status` = AKTIV, Code gueltig und noch nicht verbraucht (K03-M15); welches Portal sich oeffnet, ergibt die Mitgliedschaft (`membership`, Eigentuemer K20), geprueft gegen die Sicht `portal_enabled` (K13-M04)"
+        zustand_laden: "Pruefung laeuft, [Anmelden] inaktiv; kein Zwischenstand wird angezeigt"
+        zustand_leer: "Adresse oder Code fehlt — [Anmelden] ausgeblendet, Hinweis nennt das fehlende Feld (K19-M06)"
+        zustand_erfolg: "Sitzung eroeffnet, `actor.last_login_at` gesetzt; genau ein Portal oeffnet sich (K03-D02) — hier EX-02"
+        zustand_fehler: "unbekanntes Konto, falscher Code, WARTET_2FA oder GESPERRT — dieselbe Meldung fuer alle Faelle, ohne die Existenz eines Kontos preiszugeben (K03-M16); nach fuenf Fehlversuchen 15 Minuten Drosselung; kein Teil-Zugang, kein Ersatzweg (K03-D01)"
+
+  - id: EX-02
+    access: nach_anmeldung
+    owner: K13
+    aktionen:
+      - kennung: zurueck
+        eingabe: "keine"
+        serverbefehl: "open_previous_area"
+        berechtigung: "jeder Aufruf laeuft ueber den Serverpfad und prueft Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug (K13-M05); ein Verlaufseintrag im Browser ersetzt die Pruefung nicht"
+        zustand_laden: "vorherige Arbeitsflaeche laedt, Navigation bleibt bedienbar"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "vorherige Arbeitsflaeche gefuellt; nur ein Bereich zur Zeit"
+        zustand_fehler: "kein vorheriger Schritt oder Ziel nicht erreichbar — Meldung mit Korrelations-ID (K13-G12), Rahmen bleibt stehen"
+      - kennung: hauptmenue
+        eingabe: "keine"
+        serverbefehl: "list_portal_areas"
+        berechtigung: "Mitgliedschaft im Portal EXMA (`membership.portal_code` = EXMA, Eigentuemer K20) gegen die Sicht `portal_enabled` (K13-M04); ein Bereich ohne Mitgliedschaft erscheint nicht und ist auch ueber die Adresse nicht erreichbar"
+        zustand_laden: "Navigationseintraege werden geladen"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Navigation im Vordergrund; die Arbeitsflaeche fuehrt weiterhin genau einen Bereich"
+        zustand_fehler: "Navigation nicht ladbar — Meldung, kein Teilmenue aus einem alten Stand (K13-D08)"
+      - kennung: schrift_kleiner
+        eingabe: "keine"
+        serverbefehl: "decrease_zoom"
+        berechtigung: "gueltige Sitzung mit Mitgliedschaft EXMA (`membership`, Eigentuemer K20), geprueft im Serverpfad (K13-M05); die Darstellungsgroesse traegt keinen eigenen Datenzugriff"
+        zustand_laden: "entfaellt — die Anzeige wird ohne Nachladen von Inhalten umgestellt"
+        zustand_leer: "entfaellt — Anzeigeaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Darstellung verkleinert; der Inhalt der Arbeitsflaeche bleibt unveraendert"
+        zustand_fehler: "kleinste Stufe erreicht — Schaltflaeche ausgegraut mit Marke fuer den Grund (K19-M07); Darstellung bleibt wie sie ist"
+      - kennung: schrift_groesser
+        eingabe: "keine"
+        serverbefehl: "increase_zoom"
+        berechtigung: "gueltige Sitzung mit Mitgliedschaft EXMA (`membership`, Eigentuemer K20), geprueft im Serverpfad (K13-M05); die Darstellungsgroesse traegt keinen eigenen Datenzugriff"
+        zustand_laden: "entfaellt — die Anzeige wird ohne Nachladen von Inhalten umgestellt"
+        zustand_leer: "entfaellt — Anzeigeaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Darstellung vergroessert; Inhalt unveraendert, schmale Darstellung bleibt verlustfrei (K19-M13)"
+        zustand_fehler: "groesste Stufe erreicht — Schaltflaeche ausgegraut mit Marke fuer den Grund (K19-M07)"
+      - kennung: kontrast
+        eingabe: "keine"
+        serverbefehl: "set_contrast"
+        berechtigung: "gueltige Sitzung mit Mitgliedschaft EXMA (`membership`, Eigentuemer K20), geprueft im Serverpfad (K13-M05); der Wechsel der Darstellung traegt keinen eigenen Datenzugriff"
+        zustand_laden: "entfaellt — der Wechsel wirkt sofort"
+        zustand_leer: "entfaellt — Anzeigeaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "kontrastreiche Darstellung aktiv; Namen, Rollen und Werte bleiben programmatisch bestimmbar (K19-M13)"
+        zustand_fehler: "Wechsel nicht moeglich — Meldung, die bisherige Darstellung bleibt bestehen"
+      - kennung: hilfe
+        eingabe: "keine"
+        serverbefehl: "open_help"
+        berechtigung: "gueltige Sitzung mit Mitgliedschaft EXMA (`membership`, Eigentuemer K20), geprueft im Serverpfad (K13-M05); die Bedienhilfe zeigt keine mandantengebundenen Daten"
+        zustand_laden: "Hilfetext laedt, Arbeitsflaeche bleibt sichtbar"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Hilfe zur Bedienung geoeffnet; die Regeln dazu fuehrt K16"
+        zustand_fehler: "Hilfe nicht erreichbar — Meldung, Rahmen und Arbeitsflaeche bleiben stehen"
+      - kennung: ausloggen
+        eingabe: "keine"
+        serverbefehl: "end_session"
+        berechtigung: "die Sitzung wird serverseitig beendet (K13-M05); ein Verwerfen im Browser gilt nicht als Abmeldung"
+        zustand_laden: "Abmeldung laeuft, Navigation gesperrt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "Sitzung beendet, Rueckkehr auf EX-01; jeder weitere Aufruf endet auf EX-01"
+        zustand_fehler: "Abmeldung schlaegt fehl — die Sitzung gilt weiter als offen, Meldung mit Aufforderung zum erneuten Versuch; unabhaengig davon endet sie nach 30 Minuten Untaetigkeit, spaetestens nach acht Stunden (K03-M17)"
+
+  - id: EX-03
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: legende
+        eingabe: "keine"
+        serverbefehl: "list_lifecycle_state_labels"
+        berechtigung: "gueltige Sitzung mit Mitgliedschaft EXMA (`membership`, Eigentuemer K20), geprueft im Serverpfad (K13-M05); gelesen wird `lifecycle_state_label` je `ui_locale` (K11-M12), kein mandantengebundener Bestand"
+        zustand_laden: "Zustandsnamen werden geladen; die Legende oeffnet erst danach"
+        zustand_leer: "entfaellt — die Legende haengt nicht an der Kundenliste und bleibt auch ohne Kunden vollstaendig"
+        zustand_erfolg: "acht Betriebszustaende im Klartext, je Anzeigesprache genau ein Text"
+        zustand_fehler: "fehlende Zeile in `lifecycle_state_label` — Anzeige verweigert, kein Ersatz aus dem technischen Wert (K11-M13, fail-closed)"
+      - kennung: neuen_kunden_anlegen
+        eingabe: "keine"
+        serverbefehl: "open_customer_form"
+        berechtigung: "serverseitig: Mitgliedschaft im Portal EXMA mit dem Geltungsbereich des Betreibers (`membership.portal_code` = EXMA, `membership.tenant_scope`; Sicht `platform_admin`, Eigentuemer K20). Eine ausgeblendete Schaltflaeche ist keine Berechtigung (K19-M14)"
+        zustand_laden: "Anlagemaske laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EX-06 geoeffnet, Maske leer; der Kunden-Code wird dort nicht eingegeben (K02-D10)"
+        zustand_fehler: "Maske nicht erreichbar oder Berechtigung verweigert — abgelehnt, Kundenliste bleibt stehen, kein Mandant entsteht"
+
+  - id: EX-04
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: zustand_waehlen
+        eingabe: "genau ein Wert aus `lifecycle_state` (acht Werte, F21); das abgeleitete Anzeigelabel *In Klaerung* erscheint nur zur Anzeige und ist nicht waehlbar (K11-D03, K19-G04)"
+        serverbefehl: "change_app_state"
+        berechtigung: "serverseitig: Uebergang gegen die von K14 freigegebene, versionierte Uebergangsmatrix (K11-M24); Wechsel nach ABNAHME und IN_PROD nur mit Nachweis und im Vier-Augen-Verfahren (K11-M28 bis K11-M30, K11-D10); Mandantenbezug im Serverpfad (K13-M05)"
+        zustand_laden: "Zustandsnamen aus `lifecycle_state_label` je `ui_locale` geladen; die Auswahlliste bleibt bis dahin gesperrt"
+        zustand_leer: "Kunde ohne Anwendung — keine Zeile und keine Auswahlliste, an ihrer Stelle ein Hinweis (K19-M06)"
+        zustand_erfolg: "`app.lifecycle_state` (Eigentuemer K01), `app_state_history` und `event` (Eigentuemer K02) atomar geschrieben (K11-M10); `app_state_aktuell` zeigt den neuen Zustand seit heute"
+        zustand_fehler: "unzulaessiger Uebergang, abgeleitetes Label gewaehlt, ueberlappender Zeitraum oder fehlender Nachweis — abgelehnt, alles zurueckgerollt, der bisherige Zustand bleibt sichtbar (K11-M09, K11-D10, fail-closed)"
+      - kennung: stammdaten_oeffnen
+        eingabe: "keine"
+        serverbefehl: "load_customer"
+        berechtigung: "serverseitig: Mandant der Zeile gegen `membership.tenant_scope` (Eigentuemer K20); beim Geltungsbereich des Betreibers gilt die Pruefung nach K02-M21 auf denselben Kundenmandanten"
+        zustand_laden: "Kundendialog laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EX-05 geoeffnet, Stammdaten und Ansprechpartner sichtbar"
+        zustand_fehler: "fremder Mandant oder Dialog nicht erreichbar — abgelehnt, keine Fremdzeile, kein Teilbestand (K02-D05, K13-M05)"
+
+  - id: EX-05
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: einladungslink_senden
+        eingabe: "ein Ansprechpartner mit `contact.mail` und gesetzter Marke `contact.is_valid` (K11-M04); Firmenname, Vorname, Nachname und Telefon liegen am Mandanten vor (K11-M07)"
+        serverbefehl: "send_invitation"
+        berechtigung: "serverseitiger, idempotenter Einladungsbefehl (K03-M25): Zielmandant, Entscheidungsnachweis zur Einladungsschranke (K03-M23) und exakter Vergleich mit `tenant.invite_domain` (K03-M24); Frist aus `tenant.invite_ttl_hours` (K02-M10). Der Einladungssatz gehoert K20"
+        zustand_laden: "Versand laeuft, der Weg ist waehrenddessen inaktiv"
+        zustand_leer: "keine gueltige Adresse hinterlegt — der Weg bleibt ausgeblendet, nicht ausgegraut (K11-M07, fail-closed)"
+        zustand_erfolg: "Einladung in `invitation` eingerichtet (Eigentuemer K20), `invitation.expires_at` aus der Frist des Mandanten; die Stammdaten werden dabei nicht geschrieben (K11-M06)"
+        zustand_fehler: "fehlender Entscheidungsnachweis, abweichende Domaene oder Providerausfall — kein Versand, Meldung ohne Preisgabe der Kontoexistenz, Nachweis- und Alarmpfad nach K03-M26 (fail-closed)"
+      - kennung: weitere_person
+        eingabe: "Vorname und Nachname als Pflicht (`contact.vorname`, `contact.nachname`, K11-M03); Telefon (`contact.tel`) und Adresse (`contact.mail`) sind im Serverbefehl Pflicht (K11-M25); die Platznummer vergibt der Server als naechsten freien Wert 1 bis 3"
+        serverbefehl: "create_contact"
+        berechtigung: "serverseitig: `contact.tenant_id` gleich dem Mandanten der geoeffneten Zeile; Wertebereich von `contact.position` 1 bis 3 und Eindeutigkeit von Mandant und Platznummer (K11-M02, K11-D05)"
+        zustand_laden: "vorhandene Ansprechpartner geladen, freier Platz ermittelt"
+        zustand_leer: "noch kein Ansprechpartner — Platz 1 wird angeboten, an der Stelle der Liste steht ein Hinweis (K19-M06)"
+        zustand_erfolg: "Zeile in `contact` mit der naechsten Platznummer; `contact.is_valid` bleibt auf nicht geprueft, bis die Formatpruefung der Adresse laeuft (K11-M04)"
+        zustand_fehler: "vierte Person oder belegter Platz — abgelehnt, kein Ueberschreiben (K11-D05); Entfernen eines Ansprechpartners gibt es in Release 1 nicht (K11-M23)"
+      - kennung: stammdaten_speichern
+        eingabe: "Firma (`tenant.name`), Rechtsform (`tenant.legal_form`, fuenf Werte), Domaene und Anschrift (`tenant.address`); `tenant.customer_code` ist unveraenderlich und wird nicht eingegeben (K11-D04, K02-D06)"
+        serverbefehl: "update_customer_master_data"
+        berechtigung: "serverseitig: Mandant der Sitzung gegen `membership.tenant_scope` (Eigentuemer K20), Bedingungen `customer_needs_code` und `customer_code_fmt` (Eigentuemer K02); jeder Schreibvorgang erzeugt genau einen Eintrag in `event` (K02-M12)"
+        zustand_laden: "Stammdaten geladen, [Stammdaten speichern] inaktiv bis geladen"
+        zustand_leer: "Firmenname fehlt — Schaltflaeche ausgeblendet, Hinweis nennt das Feld (K02-M03, K19-M06)"
+        zustand_erfolg: "nur der Abschnitt Stammdaten geschrieben, der Abschnitt Ansprechpartner bleibt unberuehrt (K11-M05); Protokolleintrag mit Wert vorher und Wert jetzt (K02-M15)"
+        zustand_fehler: "Schreibvorgang oder Protokolleintrag scheitert — alles zurueckgerollt, die Eingaben bleiben stehen (K02-D04); beim Wechsel zwischen den Abschnitten warnt die Oberflaeche mit speichern, verwerfen oder bleiben (K11-M22)"
+
+  - id: EX-06
+    access: nach_anmeldung
+    owner: K02
+    aktionen:
+      - kennung: einladungslink_senden
+        eingabe: "Firmenname, Vorname, Nachname, Telefon und eine gueltige Adresse liegen zusammen vor (K11-M07)"
+        serverbefehl: "send_invitation"
+        berechtigung: "serverseitiger, idempotenter Einladungsbefehl (K03-M25) mit Zielmandant, Entscheidungsnachweis (K03-M23) und exaktem Domaenenvergleich gegen `tenant.invite_domain` (K03-M24); Frist aus `tenant.invite_ttl_hours` (K02-M10)"
+        zustand_laden: "Versand laeuft"
+        zustand_leer: "ein Pflichtfeld fehlt oder die Adresse ist ungueltig — der Weg bleibt ausgeblendet, nicht ausgegraut (K11-M07, K19-M06)"
+        zustand_erfolg: "Einladung in `invitation` eingerichtet (Eigentuemer K20). Der Kunde ist damit nicht angelegt (K11-M06)"
+        zustand_fehler: "Versand scheitert oder Nachweis fehlt — keine Einladung, die Maske bleibt mit den Eingaben stehen; wird das Fenster vorher geschlossen, besteht eine Einladung ohne Kunden (K11 Abschn. 4.1)"
+      - kennung: kunde_anlegen
+        eingabe: "Firmenname als Pflicht (`tenant.name`, K02-M03); `tenant.kind` = CUSTOMER; `tenant.legal_space` = DE (F35) und `tenant.processing_region` mit der Vorgabe `swedencentral` (K02-M08)"
+        serverbefehl: "create_customer"
+        berechtigung: "serverseitig: Bedingungen `customer_needs_code` und `customer_code_fmt` an `tenant` (K02-M04, K02-M05); der Kunden-Code wird fortlaufend in derselben Transaktion vergeben und der Namensraum `DE-Z..` dabei uebersprungen (K02-M26, K02-M27); Anlagerecht aus der Mitgliedschaft mit dem Geltungsbereich des Betreibers (Sicht `platform_admin`, Eigentuemer K20)"
+        zustand_laden: "Anlage laeuft, [Kunde anlegen] inaktiv"
+        zustand_leer: "ein Pflichtfeld fehlt — Schaltflaeche ausgeblendet, Hinweis nennt das Feld (K19-M06)"
+        zustand_erfolg: "Mandant angelegt, Kunden-Code vergeben, `contact` auf Platz 1 geschrieben, Protokolleintrag mit Anfangswert (K02-M15, K11 Abschn. 4.1)"
+        zustand_fehler: "Kunden-Code bereits vergeben, Muster verletzt, kein freier Code ausserhalb des reservierten Namensraums oder Protokolleintrag scheitert — abgelehnt, kein Mandant, kein Ausweichen in `DE-Z..` (K02-M26, K02-M28, K02-D04, K02-D11)"
+  - id: EX-07
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: suchen
+        eingabe: "ein Suchtext ueber alle vier Spalten zugleich — Projekt-Nr., Anwendung, Kunde, Zustand; technischer Zustandsname und abgeleitete Anzeige sind getrennt indexiert (K11-G09, K11-M20)"
+        serverbefehl: "search_app"
+        berechtigung: "EXMA-Mitgliedschaft, im Serverpfad geprueft (membership mit portal_code EXMA, Sicht platform_admin — Eigentuemer K20); Reichweite aus membership.tenant_scope (K13-M05)"
+        zustand_laden: "Liste laedt, bis dahin keine Trefferzahl"
+        zustand_leer: "kein Treffer — leere Liste mit Hinweis auf den Suchtext; einen eigenen Zustandsfilter gibt es in dieser Sicht nicht (K11-G09)"
+        zustand_erfolg: "Teilmenge der vier Spalten, gruppiert nach Kunde, darin nach laufender Nummer"
+        zustand_fehler: "Suche fehlgeschlagen — Meldung, der Suchtext bleibt stehen, kein Rueckfall auf eine ungefilterte Ersatzliste (K13-D08)"
+
+  - id: EX-08
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: zustand_aendern
+        eingabe: "ein Wert aus lifecycle_state (acht Werte); das abgeleitete Anzeigelabel erscheint in der Auswahlliste nur zur Anzeige und ist nicht waehlbar (K11-D03, F21)"
+        serverbefehl: "change_app_state"
+        berechtigung: "serverseitig: der Uebergang wird gegen die K14-freigegebene, versionierte Uebergangsmatrix geprueft (K11-M24); nach ABNAHME und IN_PROD zusaetzlich Nachweis und Vier-Augen (K11-M28 bis K11-M30)"
+        zustand_laden: "Auswahlliste aus lifecycle_state_label je ui_locale geladen; fehlt eine Zeile, wird die Anzeige verweigert statt aus dem technischen Wert gebildet (K11-M13)"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: jede Anwendung traegt immer einen Betriebszustand"
+        zustand_erfolg: "app.lifecycle_state, app_state_history und event atomar geschrieben; app_state_aktuell zeigt den neuen Zustand seit heute (K11-M10)"
+        zustand_fehler: "unzulaessiger Uebergang, abgeleitetes Label oder ueberlappender Zeitraum — abgelehnt, alles zurueckgerollt, der alte Zustand bleibt sichtbar (K11-G01)"
+      - kennung: angebotspreis_speichern
+        eingabe: "ganze Zahl ab null in der kleinsten Einheit von app.currency; uebernommen erst mit [Speichern], nicht beim Tippen (K11-M15)"
+        serverbefehl: "set_app_offer_price"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft im Serverpfad (K13-M05); app.offer_price_cents ist allein ueber den EXMA-Serverpfad schreibbar, das Schema kennt keine spaltenweise Regel — die Grenze wird beim Zusammenstellen der Antwort gezogen (K13-M14, K11-D06)"
+        zustand_laden: "zuletzt gesicherter Betrag angezeigt, [Speichern] inaktiv bis zur Aenderung"
+        zustand_leer: "kein Betrag gesetzt — das Feld bleibt leer, ein Preis gilt als nicht vergeben"
+        zustand_erfolg: "app.offer_price_cents geschrieben, Protokolleintrag mit Wert vorher und Wert jetzt (event, Eigentuemer K02)"
+        zustand_fehler: "negativer oder nicht ganzzahliger Betrag — abgelehnt, der zuletzt gesicherte Betrag bleibt stehen (K11-M16)"
+      - kennung: alle_herunterladen
+        eingabe: "keine; genommen wird der Dokumentbestand dieser Anwendung (document.app_id, Eigentuemer K10)"
+        serverbefehl: "download_app_documents"
+        berechtigung: "serverseitig: die Anwendung muss im Geltungsbereich der EXMA-Mitgliedschaft liegen; die Mandantengrenze traegt zweifach — Autorisierung im Serverpfad und Policies im Bestand (K13-M05, K13-M08)"
+        zustand_laden: "Paket wird zusammengestellt, Schaltflaeche inaktiv"
+        zustand_leer: "kein Dokument vorhanden — Schaltflaeche ausgegraut mit Marke, kein leeres Paket (K19-M07, K19-D09)"
+        zustand_erfolg: "ZIP mit dem vollstaendigen Dokumentbestand ausgeliefert"
+        zustand_fehler: "Zusammenstellung fehlgeschlagen — Meldung, kein Teilpaket; die Einzeldateien bleiben ladbar"
+      - kennung: test_harness_laden
+        eingabe: "keine; hoechstens eine Zeile test_harness je Anwendung (test_harness.app_id ist Primaerschluessel, Eigentuemer K10)"
+        serverbefehl: "download_test_harness"
+        berechtigung: "serverseitig: wie alle_herunterladen — Anwendung im Geltungsbereich der EXMA-Mitgliedschaft, geprueft im Serverpfad (K13-M05)"
+        zustand_laden: "Datei wird bereitgestellt"
+        zustand_leer: "keine Zeile in test_harness — Schaltflaeche ausgegraut mit Marke, kein Ersatzpaket (K19-M07, K19-D09)"
+        zustand_erfolg: "ZIP des erzeugten Test-Harness ausgeliefert"
+        zustand_fehler: "Bereitstellung fehlgeschlagen — Meldung, kein Rueckfall auf einen frueheren Stand (K13-D08)"
+
+  - id: EX-09
+    access: nach_anmeldung
+    owner: K20
+    aktionen:
+      - kennung: link_erneut_senden
+        eingabe: "eine Zeile der Nutzertabelle mit actor.status WARTET_2FA; bei jedem anderen Status besteht die Aktion nicht"
+        serverbefehl: "resend_invitation"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft (Sicht platform_admin); der Vorgaenger wird zuerst auf WIDERRUFEN gesetzt und attempt erhoeht, sonst greift der Teilindex invitation_offen_uq auf VERSANDT (K20-M12, K20-M13)"
+        zustand_laden: "Versand laeuft, Schaltflaeche inaktiv"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: ohne den Status WARTET_2FA ist die Schaltflaeche ausgeblendet"
+        zustand_erfolg: "genau eine offene Einladung mit neuem Streuwert und der Frist des Mandanten; die Anzeige nennt den vorherigen Link als ungueltig (K20-M25)"
+        zustand_fehler: "Widerruf oder Neuanlage scheitert — beides zurueckgerollt, die bisherige Einladung bleibt unveraendert (K20-M22)"
+      - kennung: sperren
+        eingabe: "eine Zeile mit actor.status AKTIV oder WARTET_2FA; das eigene Konto ist ausgenommen"
+        serverbefehl: "set_actor_lock"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft (Sicht platform_admin); nicht das eigene Konto (F15, K20-G06) und mindestens ein aktiver Plattform-Admin bleibt bestehen; letzte Schranke ist der Trigger actor_platform_admin_guard auf actor"
+        zustand_laden: "Pruefung laeuft, die Zeile ist inaktiv"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: die Aktion haengt an einer vorhandenen Zeile, nicht an einem Bestand"
+        zustand_erfolg: "status_before_lock gesichert, status GESPERRT; die Schaltflaeche heisst danach Entsperren, schreibt den gesicherten Wert zurueck und leert das Feld (K20-M16)"
+        zustand_fehler: "eigenes Konto oder letzter aktiver Plattform-Admin — abgelehnt im Wortlaut des Datenmodells, der Zustand bleibt unveraendert (K20-G01)"
+      - kennung: loeschen
+        eingabe: "eine Zeile der Nutzertabelle; entfernt wird ausschliesslich die membership des EXMA-Portals (K20-M19)"
+        serverbefehl: "remove_membership"
+        berechtigung: "serverseitig drei Pruefungen vor dem Befehl: nicht das eigene Konto, nicht der letzte aktive Plattform-Admin, versiegelter Erst-Admin erst bei zweitem aktivem Plattform-Admin (K20-G05, K20-M20); letzte Datenbankschranke ist allein die Membership-Invariante, getragen vom Trigger membership_platform_admin_guard"
+        zustand_laden: "Pruefung laeuft; vor der Bestaetigung wird die Auswirkung benannt (K20-M20)"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: die Aktion haengt an einer vorhandenen Zeile"
+        zustand_erfolg: "membership des Zielportals entfernt, offene Einladung desselben Portals atomar WIDERRUFEN; actor (Eigentuemer K03) und andere Portale bleiben bestehen (K20-M19)"
+        zustand_fehler: "versiegelter Erst-Admin ohne zweiten aktiven Plattform-Admin — Schaltflaeche ausgegraut mit Marke (K19-M07); ein dennoch gestellter Aufruf wird im Serverpfad begruendet abgewiesen, der Zugang bleibt (K20-M20)"
+      - kennung: nutzer_einladen
+        eingabe: "keine; die Aktion oeffnet das Einladungsformular EX-10"
+        serverbefehl: "open_invitation_form"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft (Sicht platform_admin, Eigentuemer K20); ohne sie endet jeder Aufruf ausser EX-01 auf EX-01 (K13-M05)"
+        zustand_laden: "Formular laedt"
+        zustand_leer: "entfaellt — Verweisaktion ohne Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EX-10 Einladung geoeffnet; die Nutzertabelle bleibt unveraendert"
+        zustand_fehler: "Formular nicht erreichbar — Meldung, kein Ersatzweg zum Versand"
+
+  - id: EX-10
+    access: nach_anmeldung
+    owner: K20
+    aktionen:
+      - kennung: einladung_senden
+        eingabe: "Name freiwillig — bleibt er leer, wird er aus der Adresse gebildet; E-Mail Pflicht; Rolle fest auf Plattform-Admin und ausgegraut (K20-M02, K19-M07)"
+        serverbefehl: "send_invitation"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft im Serverpfad (K13-M05); Format nach invitation_mail_fmt, Domaenenschranke tenant.invite_domain und Frist tenant.invite_ttl_hours ueber invitation_guard_trg; hoechstens eine offene Einladung je Konto (K20-M09 bis K20-M12); Zielportal nur mit release_status ENABLED (K20-D02)"
+        zustand_laden: "Versand laeuft, [Einladung senden] inaktiv"
+        zustand_leer: "keine Adresse eingetragen — [Einladung senden] ausgeblendet, Hinweis nennt das Pflichtfeld (K19-M06)"
+        zustand_erfolg: "Zeile in invitation mit status VERSANDT, attempt 1 und nur dem Streuwert in token_hash; Einmal-Link mit der Frist des Mandanten, angezeigt als 24 Stunden (K19-G08); das Konto steht in EX-09 als WARTET_2FA"
+        zustand_fehler: "Adresse ausserhalb der Domaene, Frist ueberschritten oder bereits eine offene Einladung — abgelehnt im Wortlaut des Datenmodells, es entsteht keine Zeile (K20-G01)"
+
+  - id: EX-11
+    access: nach_anmeldung
+    owner: K08
+    aktionen:
+      - kennung: register_anzeigen
+        eingabe: "keine; die Schaltflaeche waehlt den freigegebenen Bestand"
+        serverbefehl: "list_knowledge_source_released"
+        berechtigung: "serverseitig: Lesetor ist die Sicht knowledge_source_released mit status RELEASED; die Sicht ist kein Schreibschutz, die Sperre liegt im Serverpfad (K08-G03, K13-M05)"
+        zustand_laden: "Bestand wird gezaehlt; die Zahl in Klammern nennt ihn"
+        zustand_leer: "kein freigegebener Eintrag — leere Liste mit Hinweis, nie Rueckfall auf die Entwuerfe (K08-D09)"
+        zustand_erfolg: "Registeransicht je Zeile mit Kennung, Register-Nr., Bereich, Domaene, Lizenz, Status und Modus"
+        zustand_fehler: "Sicht nicht erreichbar — Meldung und leere Liste, kein Ersatzbestand (K08-G04)"
+      - kennung: entwuerfe_anzeigen
+        eingabe: "keine; die Schaltflaeche waehlt den Bestand ausserhalb des Registers"
+        serverbefehl: "list_knowledge_source_draft"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft im Serverpfad (K13-M05); Lesetor ist knowledge_source_draft mit status ungleich RELEASED; dieser Bestand liegt nicht an der Brokerkante und ist fuer Agenten nicht vorhanden (K08-D02, K08-G02)"
+        zustand_laden: "Bestand wird gezaehlt"
+        zustand_leer: "kein Entwurf — leere Liste mit Hinweis, nie Rueckfall auf das Register (K08-D09)"
+        zustand_erfolg: "Entwurfsansicht; je Zeile stehen die Aktionen dieses Bildschirms zur Verfuegung"
+        zustand_fehler: "Sicht nicht erreichbar — Meldung und leere Liste, nie Rueckfall auf das Register (K08 Abschn. 6)"
+      - kennung: suchen
+        eingabe: "Freitext oder Feldkuerzel — typ, status, bereich, lizenz, herkunft, angelegt; die Suche wirkt in der gewaehlten Ansicht"
+        serverbefehl: "search_knowledge_source"
+        berechtigung: "serverseitig: die Suche laeuft im Serverpfad gegen dieselbe Sicht wie die Ansicht (K13-M05); in der Registeransicht erzeugt ein Entwurf weder Treffer noch Hinweis auf seine Existenz (K08-D02)"
+        zustand_laden: "Treffer werden ermittelt"
+        zustand_leer: "kein Treffer — leere Liste, der Hinweis nennt Suchtext und gewaehlte Ansicht"
+        zustand_erfolg: "Teilmenge der gewaehlten Ansicht"
+        zustand_fehler: "Suche fehlgeschlagen — Meldung, kein ungefiltertes Ersatzergebnis (K13-D08)"
+      - kennung: aendern
+        eingabe: "Felder einer Zeile mit status ungleich RELEASED — Typ, Herkunft, Bezug, Fundstelle, Wissensbereich, Domaene, Lizenz, Modus"
+        serverbefehl: "update_knowledge_source"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft, Rolle und Objektbezug im Serverpfad geprueft (K13-M05); geaendert wird nur ausserhalb des Registers; eine Projektquelle ohne project_ref weist die Bedingung project_source_needs_ref ab (K08-M04, K08-D06)"
+        zustand_laden: "Zeile geladen, Schaltflaechen inaktiv bis geladen"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: die Aktion besteht nur an einer vorhandenen Entwurfszeile"
+        zustand_erfolg: "Zeile gespeichert und weiterhin Entwurf; ein Aendern erzeugt nie einen Registereintrag (K08-M06)"
+        zustand_fehler: "Pflichtangabe oder Bezug fehlt — abgelehnt, die Zeile bleibt unveraendert (K08-G04)"
+      - kennung: freigeben
+        eingabe: "eine Entwurfszeile mit ausgefuellter Kurzbeschreibung und Lizenzangabe (K08-M07, K08-M17)"
+        serverbefehl: "release_knowledge_source"
+        berechtigung: "serverseitig: zwei verschiedene Personen ueber die Vier-Augen-Freigabe (Traeger approval mit sod_editor_ne_approver, Eigentuemer K14, F19); kein UI-Zustand ersetzt diese Pruefung"
+        zustand_laden: "Freigabe wird geprueft"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: die Aktion besteht nur an einer vorhandenen Entwurfszeile"
+        zustand_erfolg: "status RELEASED, register_no atomar vergeben und danach unveraenderlich (K08-M24); Protokolleintrag (event, Eigentuemer K02)"
+        zustand_fehler: "fehlende Kurzbeschreibung, fehlende Lizenz oder identische zweite Person — Freigabe verweigert, die Zeile bleibt Entwurf; bis zur neuen Datenmodell-Version bleibt die Schaltflaeche ausgeblendet, weil die Kurzbeschreibung noch nicht speicherbar ist (K08-M23, O-K19-4)"
+      - kennung: zurueckziehen
+        eingabe: "eine Zeile mit status RELEASED"
+        serverbefehl: "retire_knowledge_source"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft, Rolle und Objektbezug im Serverpfad geprueft (K13-M05); der Statuswechsel auf RETIRED laeuft ausschliesslich ueber diesen Pfad, die Zeile wird nie getilgt (K08-M14, K08-M24, K08-D03)"
+        zustand_laden: "Wechsel laeuft"
+        zustand_leer: "entfaellt — Begruendung nach K19-M06: die Aktion besteht nur an einer freigegebenen Zeile"
+        zustand_erfolg: "status RETIRED, die Quelle steht wieder in den Entwuerfen; Protokolleintrag (event, Eigentuemer K02)"
+        zustand_fehler: "Wechsel fehlgeschlagen — die Zeile bleibt im Register, nichts wird getilgt; ein Entfernen aus dem Verzeichnis bleibt ausgeschlossen, solange eine Zuordnung auf die Quelle zeigt (K08-D03, K08-D07)"
+
+  - id: EX-12
+    access: nach_anmeldung
+    owner: K08
+    aktionen:
+      - kennung: einzeleintrag
+        eingabe: "Formular mit Typ aus knowledge_type, Adresse als source_ref, Name, Bereich und Tags; bei origin PROJEKT zusaetzlich project_ref"
+        serverbefehl: "create_knowledge_source"
+        berechtigung: "serverseitig: EXMA-Mitgliedschaft, Rolle und Mandant im Serverpfad geprueft (K13-M05); dort weist die Bedingung project_source_needs_ref eine Projektquelle ohne Bezug ab (K08-M04); kein Aufnahmeweg schreibt unmittelbar RELEASED (K08-M20)"
+        zustand_laden: "Formular geladen, Schaltflaeche inaktiv bis geladen"
+        zustand_leer: "Pflichtangabe fehlt — die Schaltflaeche ist ausgeblendet, der Hinweis nennt die fehlende Angabe (K19-M06)"
+        zustand_erfolg: "eine Zeile in knowledge_source mit status DRAFT, sichtbar in knowledge_source_draft"
+        zustand_fehler: "Typ ausserhalb von knowledge_type oder fehlender Bezug — abgelehnt, es entsteht keine Zeile (K08-D05, K08-G04)"
+      - kennung: massen_upload
+        eingabe: "eine Datei mit einer Zeile je Quelle"
+        serverbefehl: "import_knowledge_source"
+        berechtigung: "serverseitig: dieselbe Pruefung des Serverpfads wie beim Einzeleintrag (K13-M05); jede Zeile durchlaeuft danach dieselben Bedingungen; auch dieser Weg legt ausschliesslich Entwuerfe an (K08-M20, K08-D04)"
+        zustand_laden: "Datei wird zeilenweise geprueft"
+        zustand_leer: "Datei ohne gueltige Zeile — es entsteht kein Entwurf, der Bericht nennt jede abgelehnte Zeile (K08-M26)"
+        zustand_erfolg: "je gueltiger Zeile ein Entwurf; Bericht mit Import-Kennung und Ergebnis je Zeile, eine Wiederholung erzeugt keine Dublette (K08-M26)"
+        zustand_fehler: "ungueltige Zeilen bleiben abgelehnt und werden im Bericht benannt; RELEASED entsteht auf diesem Weg nie (K08-M26)"
+  - id: EX-13
+    access: nach_anmeldung
+    owner: K18
+    aktionen:
+      - kennung: aendern
+        eingabe: "gewaehlte Vorlage (template.id) und nicht inhaltliche Korrektur an der laufenden Versionszeile (template_version, K18 Abschn. 4.1)"
+        serverbefehl: "correct_template_version"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); Vorlagen der Gruppe POLICY weist der Serverpfad ab — Pflegeort ist M4 (K18-D06, Eigentuemer K21)"
+        zustand_laden: "Vorlage und geltender Stand aus template_aktuell geladen; Felder inaktiv bis geladen"
+        zustand_leer: "kein geltender Stand zur Vorlage — [Aendern] ausgeblendet, Hinweis nennt die fehlende Versionszeile (K19-M06, K18-G11 fail-closed)"
+        zustand_erfolg: "Korrektur an der laufenden Versionszeile gespeichert; Protokolleintrag in event (K18-M22, Eigentuemer K02)"
+        zustand_fehler: "inhaltliche Aenderung erkannt oder Versionszeile bereits RELEASED — abgelehnt, Hinweis verweist auf [Neue Version], gespeicherter Stand unveraendert (K18-M14, K18-D04)"
+      - kennung: neue_version
+        eingabe: "Versionsnummer, Gueltigkeitszeitraum, Bearbeiter und Aenderungsvermerk zur gewaehlten template.id (template_version, K18-M11, K18-M15)"
+        serverbefehl: "create_template_version"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); der Uebergang auf RELEASED verlangt zwei verschiedene Personen (approval, CHECK sod_editor_ne_approver, K18-M17, Eigentuemer K14)"
+        zustand_laden: "Versionsnummer und Zeitraum werden geprueft, [Neue Version] inaktiv"
+        zustand_leer: "Versionsnummer oder Zeitraum fehlt — [Neue Version] ausgeblendet, Hinweis nennt das fehlende Feld (K19-M06)"
+        zustand_erfolg: "Versionszeile mit status DRAFT in einer Transaktion geschrieben (K18-M23); nach Vier-Augen-Freigabe RELEASED, template_aktuell zeigt den neuen Stand"
+        zustand_fehler: "Versionsnummer belegt oder Gueltigkeitszeitraum ueberschneidet sich (Ausschluss-Constraint auf template_version) — abgelehnt, Grund am Feld, kein Stand geaendert (K18-M12, fail-closed)"
+      - kennung: export
+        eingabe: "Bestand des Moduls M2 (module.display_code); die Ausfuhr zieht das Modul, nicht eine ausgewaehlte Zeile"
+        serverbefehl: "export_module"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); reiner Leseweg ohne Rueckweg in Kopf- oder Versionszeile (K18-G12); module.internal_key wird nicht ausgegeben (K18-D01)"
+        zustand_laden: "Datei wird erzeugt, [Export] inaktiv"
+        zustand_leer: "Modul ohne Vorlage — [Export] ausgeblendet, Hinweis nennt den leeren Bestand (K19-M06)"
+        zustand_erfolg: "Datei erzeugt und angeboten; Kopf- und Versionszeilen unveraendert (K18-G12)"
+        zustand_fehler: "Erzeugung fehlgeschlagen — Meldung mit Nachschlagekennung, keine Teildatei, kein Stand geaendert"
+
+  - id: EX-14
+    access: nach_anmeldung
+    owner: K17
+    aktionen:
+      - kennung: im_werkzeug_oeffnen
+        eingabe: "gewaehlte Katalogzeile (agent.name mit agent.model_ref_id); keine Feldeingabe"
+        serverbefehl: "open_agent_in_foundry"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); der Portalpfad ist lesend — Modell, Schluessel und Werkzeuge sind im Portal nicht schreibbar (K17-D05, K17-D14)"
+        zustand_laden: "Katalogzeile mit Modellverweis aus agent und model_ref geladen; Schaltflaeche inaktiv bis geladen"
+        zustand_leer: "entfaellt — Verweisaktion an einer vorhandenen Katalogzeile (Begruendung nach K19-M06)"
+        zustand_erfolg: "Weg in das Pflegewerkzeug geoeffnet; im Portal bleibt jeder Wert unveraendert (K17-G04)"
+        zustand_fehler: "Weg nicht erreichbar — begruendete Meldung, Katalogzeile bleibt lesbar, kein Wert geaendert (K17-M24 fail-closed)"
+
+  - id: EX-15
+    access: nach_anmeldung
+    owner: K21
+    aktionen:
+      - kennung: neue_richtlinie
+        eingabe: "policy.id nach Muster ^P-[A-Z]+-[0-9]{3}$, Name und Geltungsbereich (policy.scope, in der Anwendung Pflicht nach K21-M03) sowie erste Versionszeile mit Version, Gueltigkeitszeitraum, Bearbeiter und Aenderungsvermerk (policy_version, K21-M06, K21-M09)"
+        serverbefehl: "create_policy"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); Weg A ist der Regelweg, die Richtlinie entsteht nicht freigegeben (K21-M10); RELEASED verlangt zwei verschiedene Personen (approval, CHECK sod_editor_ne_approver, K21-M11, Eigentuemer K14)"
+        zustand_laden: "Kennung und Gueltigkeitszeitraum werden geprueft, [Neue Richtlinie] inaktiv"
+        zustand_leer: "Kennung, Name oder Geltungsbereich fehlt — [Neue Richtlinie] ausgeblendet, Hinweis nennt das fehlende Feld (K19-M06)"
+        zustand_erfolg: "Kopfzeile und Versionszeile in einer Transaktion geschrieben (K21-M16), Stand nicht freigegeben; Protokolleintrag in event (K21-M15, Eigentuemer K02)"
+        zustand_fehler: "Muster verletzt, Kennung belegt oder Gueltigkeitszeitraum ueberschneidet sich (Ausschluss-Constraint auf policy_version) — abgelehnt, Grund am Feld, keine Kopfzeile ohne Versionszeile (K21-G07 fail-closed)"
+  - id: EX-16
+    access: nach_anmeldung
+    owner: K11
+    aktionen:
+      - kennung: zuruecksetzen
+        eingabe: "die fuenf Filter Kunde oder Nutzer, Projektnummer, von, bis und Quelle werden geleert (K11-M17)"
+        serverbefehl: "list_events"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); die neu gelesene Menge bleibt am Mandantenschnitt (K11-D09, Schnitt K02, Durchsetzung im Serverpfad K13)"
+        zustand_laden: "Liste wird neu gelesen, Filterfelder inaktiv"
+        zustand_leer: "entfaellt — die Aktion leert die Filterfelder und traegt keinen eigenen Datenbestand; auch bei leerer Treffermenge bleibt sie der Ausweg (K11 Abschn. 4.4, Begruendung nach K19-M06)"
+        zustand_erfolg: "Ausgangszustand hergestellt, Liste neueste zuerst"
+        zustand_fehler: "Neuladen fehlgeschlagen — Meldung, die zuletzt angezeigte Menge bleibt stehen, Filter unveraendert"
+      - kennung: ausfuhr_csv
+        eingabe: "die gefilterte Treffermenge aus event (occurred_at, project_no, tenant_id oder actor_label, action, object_ref, change_type, value, source)"
+        serverbefehl: "export_events_csv"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); keine Zeile und keine Ausfuhr ueber die Mandantengrenze (K11-D09, Schnitt K02, Durchsetzung im Serverpfad K13)"
+        zustand_laden: "Datei wird erzeugt, [Ausfuhr als CSV] inaktiv"
+        zustand_leer: "leere Treffermenge — Datei mit Kopfzeile ohne Datenzeilen (K11-M19)"
+        zustand_erfolg: "genau die gefilterte Menge als UTF-8 mit fester Spaltenreihenfolge und ISO-8601-Zeitpunkten in UTC (K11-M26); event bleibt unveraendert"
+        zustand_fehler: "Erzeugung fehlgeschlagen — Meldung mit Nachschlagekennung, keine Teildatei, kein Eintrag geaendert (K11-D07)"
+      - kennung: ausfuhr_sql
+        eingabe: "dieselbe gefilterte Treffermenge aus event wie bei ausfuhr_csv"
+        serverbefehl: "export_events_sql"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); keine Zeile und keine Ausfuhr ueber die Mandantengrenze (K11-D09, Schnitt K02, Durchsetzung im Serverpfad K13)"
+        zustand_laden: "Datei wird erzeugt, [als SQL] inaktiv"
+        zustand_leer: "leere Treffermenge — Datei mit Kopfzeile ohne Datenzeilen (K11-M19)"
+        zustand_erfolg: "genau die gefilterte Menge als korrekt gequotete Datenzeilen ohne ausfuehrbare Verwaltungsbefehle (K11-M26); event bleibt unveraendert"
+        zustand_fehler: "Erzeugung fehlgeschlagen — Meldung mit Nachschlagekennung, keine Teildatei, kein Eintrag geaendert (K11-D07)"
+
+  - id: EX-17
+    access: nach_anmeldung
+    owner: K16
+    aktionen:
+      - kennung: zugaenge_oeffnen
+        eingabe: "keine"
+        serverbefehl: "list_actors"
+        berechtigung: "Mitgliedschaft im Betriebs-Portal (membership.portal_code = 'EXMA', Eigentuemer K20); EX-09 prueft die Zugangsverwaltung serverseitig erneut — der Weg dorthin erteilt kein Recht (K16-M02, K16-D03)"
+        zustand_laden: "EX-09 laedt, [Oeffnen] inaktiv"
+        zustand_leer: "entfaellt — Verweisaktion ohne eigenen Datenbestand (Begruendung nach K19-M06)"
+        zustand_erfolg: "EX-09 Zugaenge und Nutzer angezeigt; keine Einstellung veraendert"
+        zustand_fehler: "Weg nicht erreichbar — begruendete Meldung mit Nachschlagekennung, EX-17 bleibt geoeffnet (K16-M05, K16-M26)"
