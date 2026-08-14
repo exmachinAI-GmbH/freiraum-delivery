@@ -1,9 +1,9 @@
 {
   "vorbemerkung": "Testmanifest nach K23-M18. Acht Glieder, jedes einzeln gefuellt oder ausdruecklich leer. Die Pruefsumme ueber dieses Manifest steht in der Nebendatei gleichen Namens mit der Endung .sha256.",
   "lauf": "Tor 1c",
-  "erstellt": "2026-08-14T19:16:52+00:00",
+  "erstellt": "2026-08-14T19:54:20+00:00",
   "glied_1_commit": {
-    "commit": "65a47d58df8ceec47f40bff0dd79ad3d1691956a",
+    "commit": "65ff68c9cd00dd208fddf71024cb35e6fc19e3f3",
     "zweig": "scheibe/anmeldecode-weg",
     "arbeitsbaum_sauber": true,
     "abweichende_dateien": [],
@@ -72,8 +72,8 @@
     "anmerkung": "Dieser Lauf ruft kein Modell auf; Modell-, Prompt-, Wissens- und Richtlinienstand sind leer, weil es sie in diesem Lauf nicht gibt -- nicht, weil sie nicht gemessen wurden. Der Vorlagenstand ist der Bildschirmvertrag nach K19-M01; die Vorlagen unter app/vorlagen/ sind seine Abbilder."
   },
   "glied_7_werkzeuge_und_zeit": {
-    "beginn": "2026-08-14T19:16:22Z",
-    "ende": "2026-08-14T19:16:52+00:00",
+    "beginn": "2026-08-14T19:53:50Z",
+    "ende": "2026-08-14T19:54:20+00:00",
     "werkzeuge": {
       "psql": "psql (PostgreSQL) 18.6",
       "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)",
@@ -103,15 +103,15 @@
       "migrations/negativfaelle/N4_tagesfrist_positiv.sql": "695fe668fcb1abc5887c633091002f14b48516bb17bbfd1cc0b961e29b5666ad",
       "pruefungen/migration/M30__pruefung.sql": "fc2a2341eea474aaa6637083d127d79ecc073b6c5615a1d8e314d133e032d319",
       "pruefungen/klauseln/anmeldecode_daten.sql": "bb08aea64990d9f5fa4a21b7220985f9e023ecc12b407ea4f0d434c2a2015d25",
-      "pruefungen/klauseln/anmeldecode_lauf.sh": "7e3f847ed73b15179863ac8f56909c6bcb270e1899f5fbe94ca770d899d33d5d",
+      "pruefungen/klauseln/anmeldecode_lauf.sh": "8a3f0e1d66c41562fa81f53191a6357694a0a8f8ec133340eee29c0cca5b366a",
       "pruefungen/klauseln/anmeldung_daten.sql": "b37de5151d761f8161261053770361da883f85a98a56c2e4cf5d4f9e9940ea7c",
-      "pruefungen/klauseln/anmeldung_lauf.sh": "c84090c92b62127ef0dc2408b17e84700c766cf212a34ad740432a74223058e1",
+      "pruefungen/klauseln/anmeldung_lauf.sh": "49214d00e1e9a2df8d7a7f85a0cba2beaee35b1b89e697a5cdeef0f96a7f4df3",
       "pruefungen/klauseln/einloesung_daten.sql": "f338d1d8d1404a6189aed4eb157eaea613df7faef1911e956d15bf00d5124b31",
-      "pruefungen/klauseln/einloesung_lauf.sh": "a1ddde4a881ff6b360eef29a604139055dcabe75ddd5f17edc42319cacad5be4",
+      "pruefungen/klauseln/einloesung_lauf.sh": "df005f48102f3192dfa19eddac7d742386021c4d0235f1c4e75703854c16d0f5",
       "pruefungen/klauseln/mitgliedschaft_daten.sql": "b0c1f3c8048c3404fa9cc6e24bf4a3fb59a42616ddcfcf918b5ce7308b019630",
-      "pruefungen/klauseln/mitgliedschaft_lauf.sh": "77046b99f3f70900ae4e675a46eb2c48363a4c7e7e189dc1ef4691826c81d931",
+      "pruefungen/klauseln/mitgliedschaft_lauf.sh": "7e072e2092f04b8c43ebf2385527cf4cd51d916e512cf4e8d29de12d3e97db3c",
       "pruefungen/klauseln/versand_daten.sql": "af9be78dfef39c5936bda3241123075b06b5cd7785e4bc41fe3ece684be33370",
-      "pruefungen/klauseln/versand_lauf.sh": "982c468a2633db88133097d5c765565e7c77182fc72e9c24e71d1a01d2b1581d",
+      "pruefungen/klauseln/versand_lauf.sh": "bd1c3b2f141a270bcaa26c56e48389fa17969a9ccec928fa9c2608b821e9f912",
       "pruefungen/lauf.sh": "e658293ec88ea4509372c1b3cb754ef3536153d0ba8d7b03b33cf3c7f203ca1c",
       "app/__init__.py": "1a1866ab6db02c01284c662395c7dbc1b47bf3264922e01fe3f9d3b317ace10a",
       "app/anmeldung.py": "64a78d4a2c15f76a893467f7eaa934aa49c12edcd300c48f187ac89a2b20b3d1",
