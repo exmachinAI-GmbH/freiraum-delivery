@@ -3,6 +3,10 @@ description: Misst einen bestehenden Stand gegen die Klauseln — ohne zu bauen
 argument-hint: Scheibennummer, Klausel (K13-M07) oder "alles"
 ---
 
+**Wie du schreibst.** Jeder Text, den dieser Lauf erzeugt — Bericht, Manifesttext, Befund —
+folgt `CONTRIBUTING.md` (Regeln `SPR-1` bis `SPR-9`). Lies die Datei, bevor du den ersten
+Text schreibst. Besonders `SPR-7`: Nur behaupten, was gemessen wurde, mit der Messung dabei.
+
 Miss den **vorliegenden** Stand gegen $ARGUMENTS. **Dieses Kommando baut nicht.** Es
 ändert keine Datei außer den Nachweisen unter `nachweise/` und dem Bericht unter
 `arbeit/Bauberichte/`. Findest du einen Mangel, schreibst du ihn auf — du behebst ihn nicht.
