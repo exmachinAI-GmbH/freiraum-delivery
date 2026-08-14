@@ -130,6 +130,27 @@ jobs:
             exit 1
           fi
 
+      # Herkunftsgraph nach K23-M03 · Bedingung 4 des Tor II.
+      #
+      # Dieser Schritt SPERRT NICHT. Der Graph ist ein Nachweis, keine
+      # Abnahmebedingung; eine fehlende Kante ist ein Projektbefund. Die Anlage
+      # Baustrategie sagt dazu: eine Verletzung von Steuerungsregeln ist
+      # "ein Projektbefund, niemals eine zusaetzliche Abnahmebedingung".
+      #
+      # Was er erzwingt, ist allein die FUEHRUNG des Nachweises: weicht der
+      # mitgefuehrte Stand vom neu gerechneten ab, ist die abgelegte Sicht
+      # veraltet -- und das wird gemeldet, nicht verschwiegen.
+      - name: Herkunftsgraph — fuehren und auf Aktualitaet pruefen (K23-M03)
+        run: |
+          set -euo pipefail
+          python3 werkzeuge/herkunft.py
+          if ! git diff --quiet -- nachweise/herkunft/; then
+            echo "::warning::Der abgelegte Herkunftsgraph ist nicht der gerechnete."
+            echo "   Naechster Schritt: python3 werkzeuge/herkunft.py ausfuehren"
+            echo "   und nachweise/herkunft/ mit einchecken."
+            git --no-pager diff --stat -- nachweise/herkunft/
+          fi
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
