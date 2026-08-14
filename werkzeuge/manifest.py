@@ -75,6 +75,34 @@ def werkzeugfassung(name, *args):
     return a.splitlines()[0].strip() if a else None
 
 
+def yaml_kopfwert(pfad, schluessel):
+    """Einen Schluessel aus dem Kopf einer YAML-Datei lesen -- ohne PyYAML.
+
+    Nur der KOPF: gelesen wird bis zur ersten eingerueckten oder mit '-'
+    beginnenden Zeile. Damit kann ein gleichnamiger Schluessel weiter unten
+    im Rumpf den Kopfwert nicht ueberschreiben.
+
+    Das Repo bleibt abhaengigkeitsfrei, wo es geht (requirements.txt:
+    "Alles Uebrige im Repo ist Standardbibliothek"). Fuer zwei Werte aus
+    einem Dateikopf ist eine Bibliothek der teurere Weg -- und jede
+    Abhaengigkeit mehr ist ein Stand mehr in Glied 5.
+    """
+    p = WURZEL / pfad
+    if not p.is_file():
+        return None
+    for roh in p.read_text(encoding="utf-8").splitlines():
+        if not roh.strip() or roh.lstrip().startswith("#"):
+            continue
+        if roh[:1].isspace() or roh.lstrip().startswith("-"):
+            break                      # Kopf zu Ende
+        if ":" not in roh:
+            continue
+        k, v = roh.split(":", 1)
+        if k.strip() == schluessel:
+            return v.strip().strip('"').strip("'") or None
+    return None
+
+
 # ---------------------------------------------------------------------
 # Glied 1 · Commit-Hash des geprueften Standes
 # ---------------------------------------------------------------------
@@ -192,19 +220,44 @@ def glied5(dsn_teile):
 # Glied 6 · Modell-, Prompt-, Wissens-, Richtlinien- und Vorlagenstand
 # ---------------------------------------------------------------------
 def glied6():
-    # Tor 1c ruft kein Modell auf und liest keine Vorlage. Die Felder sind
-    # deshalb LEER -- und das steht hier, statt dass sie fehlen. K23-M22
-    # unterscheidet "nicht vorhanden" von "nicht gemessen"; hier ist es das
-    # erste, und ab der ersten Vorschau wird daraus das zweite.
+    # Tor 1c ruft kein Modell auf. Vier der fuenf Felder sind deshalb LEER --
+    # und das steht hier, statt dass sie fehlen. K23-M22 unterscheidet "nicht
+    # vorhanden" von "nicht gemessen"; bei diesen vieren ist es das erste, und
+    # ab der ersten Vorschau wird daraus das zweite.
+    #
+    # DER VORLAGENSTAND IST SEIT DEM 14.08.2026 GEFUELLT. Er war bis dahin
+    # None -- mit derselben Begruendung wie die anderen vier, und die war
+    # falsch: die Anwendung liest sehr wohl Vorlagen. app/vorlagen/ fuehrt
+    # vier Jinja-Vorlagen, und alle vier berufen sich in ihren Kommentaren
+    # auf K19 (M01, M03, M13, D06, M10), ohne eine Fassung zu nennen. Ein
+    # Lauf, der Vorlagen rendert und seinen Vorlagenstand mit None ausweist,
+    # meldet "gibt es nicht" ueber etwas, das es gibt.
+    #
+    # Getragen wird der Stand von der Maschinenquelle, nicht von den vier
+    # Dateien: K19-M01 macht sie zur einzigen pflegbaren Screenquelle, die
+    # Vorlagen sind ihre Abbilder. Wer wissen will, gegen welchen
+    # Bildschirmvertrag dieser Lauf gemessen hat, rechnet die Summe nach.
+    vorlage = "schema/K19_screens.yaml"
     return {
         "modellstand": None,
         "promptstand": None,
         "wissensstand": None,
         "richtlinienstand": None,
-        "vorlagenstand": None,
-        "anmerkung": "Dieser Lauf ruft kein Modell auf und liest keine Vorlage. "
-                     "Die fuenf Staende sind leer, weil es sie in diesem Lauf "
-                     "nicht gibt -- nicht, weil sie nicht gemessen wurden.",
+        "vorlagenstand": {
+            "datei": vorlage,
+            "sha256": streuwert(vorlage),
+            "hinterlegt": hinterlegte_summe("schema/K19_screens.sha256"),
+            "fassung": yaml_kopfwert(vorlage, "version"),
+            "status": yaml_kopfwert(vorlage, "status"),
+            "abbilder": sorted(
+                f"app/vorlagen/{p.name}"
+                for p in (WURZEL / "app" / "vorlagen").glob("*.html")),
+        },
+        "anmerkung": "Dieser Lauf ruft kein Modell auf; Modell-, Prompt-, Wissens- "
+                     "und Richtlinienstand sind leer, weil es sie in diesem Lauf "
+                     "nicht gibt -- nicht, weil sie nicht gemessen wurden. Der "
+                     "Vorlagenstand ist der Bildschirmvertrag nach K19-M01; die "
+                     "Vorlagen unter app/vorlagen/ sind seine Abbilder.",
     }
 
 
