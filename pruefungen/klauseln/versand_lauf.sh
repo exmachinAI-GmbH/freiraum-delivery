@@ -67,8 +67,59 @@ trap cleanup EXIT
 
 abbruch() { printf 'ABBRUCH: %s\n' "$1"; printf 'SUMME: 0 von 0 bestanden, 0 gescheitert\n'; exit 2; }
 
-db()  { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1"; }
-dbz() { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" | head -1; }
+# S1/S3 (14.08.2026, Muster aus pruefungen/klauseln/anmeldecode_lauf.sh
+# uebernommen -- dort steht der volle Befund im Dateikopf): db()/dbz()
+# fingen bisher nur stdout ab. Schlug die SQL fehl (z.B. eine
+# string_agg-Abfrage ohne Spaltenalias -- genau das war hier der Fall,
+# siehe die AUFBAUPRUEFUNG unten), blieb stdout leer -- ein
+# "[ -z ... ]"-Test las das als "alles in Ordnung". Die Aufbaupruefung
+# lief damit blind und meldete zugleich Erfolg.
+#
+# Ein direkter abbruch()-Aufruf AUS db()/dbz() heraus wirkt nicht: beide
+# laufen ueberwiegend in einer Kommandosubstitution ("x=\"\$(dbz ...)\"")
+# oder einer Pipe -- ein exit dort beendet nur die Unterschale, nicht den
+# Lauf. Neue Bauart: bei einem SQL-Fehler geben beide Funktionen NICHTS
+# auf stdout aus, schreiben den psql-Fehlertext nach stderr (sichtbar,
+# unabhaengig von Unterschale/Pipe) und legen die Markierungsdatei
+# $ARBEIT/sql.marke an. Die Elternschale prueft diese Markierung mit
+# pruefe_sql_marke() an den Stellen, an denen ein falscher Wert Schaden
+# anrichten wuerde -- dort wirkt exit, weil pruefe_sql_marke NICHT in
+# einer Unterschale laeuft. Aufruf mindestens: nach der
+# Erreichbarkeitspruefung, nach der Aufbaupruefung und am Ende jedes
+# Fallblocks.
+db()  { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        printf '%s\n' "$aus"; }
+dbz() { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        # BERICHTIGT AM 14.08.2026, gemessen: "printf '%s'" laesst den
+        # Zeilenumbruch weg. Die Fassung davor leitete psql direkt durch
+        # ("psql ... | head -1") und gab ihn mit aus. Jeder Fall, der mit
+        # "| wc -l" zaehlt, bekam dadurch 0 statt 1 -- AN-07 und AN-08
+        # meldeten "keine Zeile in auth_session" und sperrten, obwohl die
+        # Zeile existierte. Eine leere Ausgabe bleibt leer, wie vorher.
+        [ -n "$aus" ] || return 0
+        printf '%s\n' "$aus" | head -1; }
+
+# Wird direkt in der Elternschale aufgerufen (NIE in einer Kommando-
+# substitution) -- nur dort beendet abbruch()s exit den ganzen Lauf.
+pruefe_sql_marke() {
+  if [ -s "$ARBEIT/sql.marke" ]; then
+    abbruch "$(cat "$ARBEIT/sql.marke")"
+  fi
+}
 
 # ---------------------------------------------------------------------
 # Werkzeug
@@ -118,7 +169,14 @@ hat_hex64()    { grep -Eq '[0-9a-fA-F]{64}' "$ARBEIT/$1.rumpf" 2>/dev/null; }
 command -v curl  >/dev/null 2>&1 || abbruch 'curl fehlt.'
 command -v psql  >/dev/null 2>&1 || abbruch 'psql fehlt.'
 
-db 'SELECT 1' >/dev/null 2>&1 || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+# S3 (14.08.2026, aus anmeldecode_lauf.sh uebernommen): kein "2>&1" mehr auf
+# diesen Aufruf -- das wuerde die eigene Diagnosemeldung von db() (jetzt auf
+# stderr) mit demselben ">/dev/null" verschlucken, das nur den psql-Aufruf
+# selbst stummschalten soll. Eine nicht erreichbare Datenbank endete
+# dadurch STUMM; jetzt steht ein Satz da (Diagnose von db() plus der
+# nachgestellte abbruch()-Text).
+db 'SELECT 1' >/dev/null || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+pruefe_sql_marke
 
 [ -n "${FREIRAUM_CODE_PFEFFER:-}" ] || abbruch 'FREIRAUM_CODE_PFEFFER ist nicht gesetzt -- derselbe Wert wie am Server ist noetig, sonst stimmt kein Pruefwert (F07).'
 case "$FREIRAUM_CODE_PFEFFER" in *"'"*) abbruch "FREIRAUM_CODE_PFEFFER enthaelt ein Hochkomma; das Pruefskript kann es nicht sicher in SQL setzen.";; esac
@@ -128,27 +186,45 @@ if [ "$(hole /gesundheit vorpruefung)" != "200" ]; then
 fi
 
 lage="$(dbz "SELECT count(*) FROM pg_views WHERE viewname='pruef_versand_lage'")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $lage leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Sicht fehlt" statt mit dem echten
+# SQL-Fehler gemeldet.
+pruefe_sql_marke
 [ "$lage" = "1" ] || abbruch 'Sicht pruef_versand_lage fehlt -- versand_daten.sql zuerst einspielen.'
 
 # AUFBAUPRUEFUNG (F07): dieselben Bedingungen wie in versand_daten.sql,
 # hier aber unmittelbar vor dem Lauf -- die Daten koennten zwischenzeitlich
 # durch einen fruehen Teil desselben Laufs veraendert worden sein.
+#
+# S1 (14.08.2026, BEFUND): KEINE der sechs Teilabfragen trug einen
+# Spaltenalias. Die Ergebnisspalte hiess damit "?column?", string_agg(m,
+# ' ') griff auf eine Spalte, die es so nicht gab, psql brach mit "column
+# \"m\" does not exist" ab (nachgerechnet gegen eine laufende Datenbank:
+# Rueckgabewert 1, Fehlertext auf stderr), und die UNGEHAERTETE dbz()
+# (siehe Haertung oben) hat diesen Fehler bis zu diesem Fund verschluckt:
+# leeres stdout, "[ -z "$aufbau" ]" las das als "alles in Ordnung". Die
+# Aufbaupruefung lief damit blind und meldete zugleich Erfolg. Jetzt:
+# Alias "AS m" an jeder Teilabfrage.
 aufbau="$(dbz "
 SELECT string_agg(m, ' ') FROM (
-  SELECT 'bootstrapadmin:' || status || '/' || exma_mitglied FROM pruef_versand_lage
+  SELECT 'bootstrapadmin:' || status || '/' || exma_mitglied AS m FROM pruef_versand_lage
    WHERE email='bootstrapadmin@pruef.example' AND (status<>'AKTIV' OR exma_mitglied<1)
   UNION ALL
-  SELECT 'einladend:' || status || '/' || exma_mitglied || '/' || offene_codes FROM pruef_versand_lage
+  SELECT 'einladend:' || status || '/' || exma_mitglied || '/' || offene_codes AS m FROM pruef_versand_lage
    WHERE email='einladend@pruef.example' AND (status<>'AKTIV' OR exma_mitglied<1 OR offene_codes<>1)
   UNION ALL
-  SELECT 'wiederholt:' || status || '/' || einladungen_offen || '/' || coalesce(attempt_max::text,'-') FROM pruef_versand_lage
+  SELECT 'wiederholt:' || status || '/' || einladungen_offen || '/' || coalesce(attempt_max::text,'-') AS m FROM pruef_versand_lage
    WHERE email='wiederholt@pruef.example' AND (status<>'WARTET_2FA' OR einladungen_offen<>1 OR coalesce(attempt_max,-1)<>1)
   UNION ALL
-  SELECT 'portal_exma:' || release_status FROM portal WHERE code='EXMA' AND release_status<>'ENABLED'
+  SELECT 'portal_exma:' || release_status AS m FROM portal WHERE code='EXMA' AND release_status<>'ENABLED'
   UNION ALL
-  SELECT 'tenant_domaene_oder_frist_falsch' FROM tenant
+  SELECT 'tenant_domaene_oder_frist_falsch' AS m FROM tenant
    WHERE id='$TENANT_ID' AND (invite_domain IS DISTINCT FROM 'pruef.example' OR invite_ttl_hours<>24)
 ) t")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $aufbau leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Aufbau in Ordnung" durchgehen (der
+# urspruengliche S1-Befund, nur an dieser Stelle).
+pruefe_sql_marke
 [ -z "$aufbau" ] || abbruch "Datenlage taugt nicht (F07): $aufbau -- versand_daten.sql neu einspielen."
 
 # Der Fristwert und die Domaenenschranke werden aus der DB gelesen statt
@@ -156,6 +232,7 @@ SELECT string_agg(m, ' ') FROM (
 # (K20-G04), und eine zweite Stelle mit demselben Wert waere Drift.
 DOMAENE="$(dbz "SELECT invite_domain FROM tenant WHERE id='$TENANT_ID'")"
 FRIST_STUNDEN="$(dbz "SELECT invite_ttl_hours FROM tenant WHERE id='$TENANT_ID'")"
+pruefe_sql_marke  # S3 (14.08.2026): ein SQL-Fehler hier darf nicht als leere Domaene/Frist durchgehen.
 MELDUNG_DOMAENE="Nur Adressen der Domaene @${DOMAENE} sind zulaessig"
 
 # ---------------------------------------------------------------------
@@ -182,6 +259,7 @@ m=""
 case "$ziel" in *"/anmeldung"*) : ;; *) m="$m Location '$ziel' zeigt nicht auf /anmeldung;";; esac
 [ -z "$m" ] && ok VE-01 'GET /einladung/senden ohne Sitzung fuehrt mit 303 auf /anmeldung' \
             || nok VE-01 "GET ohne Sitzung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-02 · Vertrag · GET /einladung/senden mit Sitzung -- die Maske
@@ -195,6 +273,7 @@ grep -Eqi 'name=["'"'"']?anzeigename["'"'"' >/]' "$(rumpf ve02)" || m="$m kein F
 grep -Eqi '<button|type=["'"'"']?submit' "$(rumpf ve02)" || m="$m kein Absendeknopf;"
 [ -z "$m" ] && ok VE-02 'GET /einladung/senden liefert mit Sitzung 200 und das Formular mit email und anzeigename' \
             || nok VE-02 "GET mit Sitzung entspricht dem Vertrag nicht:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-03 · K20-G01 (fail-closed) · POST /einladung/senden ohne Sitzung
@@ -213,6 +292,7 @@ case "$ziel" in *"/anmeldung"*) : ;; *) m="$m Location '$ziel' zeigt nicht auf /
 [ "${entstanden:-1}" = "0" ] || m="$m es entstand eine Einladung ohne Sitzung;"
 [ -z "$m" ] && ok VE-03 'POST /einladung/senden ohne Sitzung: kein Vorgang, keine Einladung entsteht (K20-G01)' \
             || nok VE-03 "POST ohne Sitzung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-04 · POSITIVKONTROLLE · Vertrag + K20-M07 + K20-M08
@@ -261,6 +341,7 @@ hat_hex64 ve04b && m="$m die Bestaetigungsseite enthaelt eine 64-stellige Hexfol
 
 [ -z "$m" ] && ok VE-04 'Sitzung, Adresse in der Domaene, freigeschaltetes Portal: 303 auf ?gesendet=1, Einladung mit Konto/Portal/Streuwert/Fristen entsteht, kein Klartext-Token sichtbar (K20-M07, K20-M08)' \
             || nok VE-04 "Positivfall:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-05 · K20-M18 · Nachweiszeile mit Zeitpunkt und der HANDELNDEN
@@ -292,6 +373,7 @@ else
   [ -z "$m" ] && ok VE-05 "Nachweiszeile zu INVITATION:$invid traegt Zeitpunkt und die Sitzung (einladend@pruef.example) als handelnde Instanz, nicht den Eingeladenen (K20-M18)" \
               || nok VE-05 "Nachweis:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-06 · Negativ · K20-D04 + K20-M10 · Domaenenschranke
@@ -308,6 +390,7 @@ hat_text ve06 'niemand@fremde-domaene.example' || m="$m die eingegebene Adresse 
 [ "${entstanden:-1}" = "0" ] || m="$m es entstand trotzdem eine Einladung ausserhalb der Domaene (K20-D04);"
 [ -z "$m" ] && ok VE-06 "Adresse ausserhalb @${DOMAENE}: 200 mit der Waechtermeldung im Wortlaut, keine Einladung entsteht (K20-D04, K20-M10, K20-G04)" \
             || nok VE-06 "Domaenenschranke:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-07 · POSITIVFALL mit drei Bedingungen · K20-M12 + K20-M13 + K20-D05
@@ -351,6 +434,7 @@ else
   [ -z "$m" ] && ok VE-07 "Erneuter Versand: alte Einladung WIDERRUFEN (nicht ABGELAUFEN/EINGELOEST), attempt $alter_attempt->$neuer_attempt, wieder genau eine offene (K20-M12, K20-M13, K20-D05)" \
               || nok VE-07 "Erneuter Versand:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # VE-08 · Negativ · K20-D02 · Kein Versand fuer ein Portal mit
@@ -393,7 +477,78 @@ case "$ziel" in
 esac
 [ -z "$m" ] && ok VE-08 "Portal EXMA auf PLANNED: keine Einladung entsteht, die Antwort fuehrt nicht auf die Erfolgsseite (K20-D02; Location: '$ziel', Berichtigung Blatt 60)" \
             || nok VE-08 "PLANNED-Portal:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
+# =====================================================================
+# VE-09 · Negativ · K03-M25 + K01-M15 · Mandantenuebergreifende Auskunft
+#         (F1 aus der Fremdpruefung, behoben, aber bislang ungemessen --
+#         14.08.2026). fremdmandant@pruef.example traegt ein Konto in
+#         einem ZWEITEN, synthetischen Mandanten (siehe versand_daten.sql,
+#         Abschnitt 7b). Nach K01-M15 gilt dieses Objekt fuer die Sitzung
+#         von einladend@ (Betreiber-Mandant) als NICHT VORHANDEN; nach
+#         K03-M25 darf die Fehlermeldung nicht preisgeben, ob ein Konto
+#         existiert.
+#
+#         Der Fall verlangt darum KEINE feste Erwartung, sondern misst
+#         DIFFERENTIELL gegen eine echte Unbekannte
+#         (niemals-existent@pruef.example, existiert nirgends): beide
+#         Anfragen tragen denselben Anzeigenamen, damit nur die Adresse
+#         variiert. Verglichen werden Statuscode, Location-Ziel, ob eine
+#         Einladungszeile entsteht, und -- wo die Antwort ueberhaupt
+#         Wortlaut traegt (Status 200) -- der Wortlaut selbst (mit der
+#         jeweils eingegebenen Adresse ausgeblendet, da ein Eingabe-Echo
+#         allein nichts preisgibt). Jede Abweichung ist ein Fund.
+# =====================================================================
+adresse_fremd='fremdmandant@pruef.example'
+adresse_unbek='niemals-existent@pruef.example'
+
+vor_fremd="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_fremd'")"
+vor_unbek="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_unbek'")"
+
+st_fremd=$(post_einladung "$adresse_fremd" 'Pruef Abgleich' ve09fremd "$KEKS")
+ziel_fremd="$(kopfzeile ve09fremd location)"
+st_unbek=$(post_einladung "$adresse_unbek" 'Pruef Abgleich' ve09unbek "$KEKS")
+ziel_unbek="$(kopfzeile ve09unbek location)"
+
+nach_fremd="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_fremd'")"
+nach_unbek="$(dbz "SELECT count(*) FROM invitation WHERE mail='$adresse_unbek'")"
+neu_fremd=$(( nach_fremd - vor_fremd ))
+neu_unbek=$(( nach_unbek - vor_unbek ))
+
+m=""
+[ "$st_fremd" = "$st_unbek" ] || m="$m Statuscode unterscheidet sich: fremd=$st_fremd unbekannt=$st_unbek (K03-M25);"
+[ "$ziel_fremd" = "$ziel_unbek" ] || m="$m Location-Ziel unterscheidet sich: fremd='$ziel_fremd' unbekannt='$ziel_unbek' (K03-M25);"
+[ "$neu_fremd" = "$neu_unbek" ] || m="$m es entsteht unterschiedlich oft eine Einladungszeile: fremd=$neu_fremd unbekannt=$neu_unbek (K01-M15);"
+
+# Wortlaut nur vergleichbar, wo ueberhaupt Wortlaut steht (200); bei 303
+# traegt der Rumpf keine fachliche Aussage, dort tragen Status+Location
+# oben bereits die ganze Messung. Die je eigene Adresse wird vor dem
+# Vergleich ausgeblendet, denn ein Echo der eigenen Eingabe (Vertrag:
+# "Eingaben bleiben stehen") ist erwartet und fuer sich kein Fund.
+if [ "$st_fremd" = "200" ] && [ "$st_unbek" = "200" ]; then
+  sed "s|$adresse_fremd|ADRESSE_AUSGEBLENDET|g" "$(rumpf ve09fremd)" > "$ARBEIT/ve09fremd.blank"
+  sed "s|$adresse_unbek|ADRESSE_AUSGEBLENDET|g" "$(rumpf ve09unbek)" > "$ARBEIT/ve09unbek.blank"
+  diff -q "$ARBEIT/ve09fremd.blank" "$ARBEIT/ve09unbek.blank" >/dev/null 2>&1 \
+    || m="$m der Wortlaut der Antwort (Adresse ausgeblendet) unterscheidet sich zwischen fremd und unbekannt (K03-M25);"
+fi
+
+[ -z "$m" ] && ok VE-09 "Konto in fremdem Mandanten vs. echte Unbekannte: Statuscode, Location und Zeilenentstehung sind ununterscheidbar (K01-M15, K03-M25)" \
+            || nok VE-09 "Mandantenuebergreifende Auskunft:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
+
+# =====================================================================
+# F2 (14.08.2026): KEIN Fall gebaut. Der Fremdbefund verlangt eine
+# Rollenpruefung beim Einladen (Verwaltungsrolle statt blosser Ein-Portal-
+# Mitgliedschaft). Das Klauselregister (nachweise/klauselregister/
+# register.json, 1231 Zeilen) wurde mit den Stichworten Rolle, Berechtigung,
+# Plattform-Admin, einladen, Rollentrennung, Verwaltend* durchsucht -- in
+# K20 (46 Zeilen), K03, K01, K14, K19, K21. Ergebnis: K01-M22/K20-M02
+# legen fuer Release 1 GENAU EINE Rolle je Portal fest (EXMA: Plattform-
+# Admin), und K20-D01 haelt ausdruecklich fest, dass ein Rechte-Baukasten
+# in Release 1 NICHT ausgewertet wird. Keine Klausel verlangt eine von
+# der Portal-Mitgliedschaft UNTERSCHEIDBARE Rollenpruefung beim Versand.
+# NICHT PRUEFBAR aus der Klausel -- ein Fall dafuer wuerde eine Regel
+# pruefen, die niemand gezeichnet hat.
 # =====================================================================
 printf '\n'
 [ "$gesperrt" -gt 0 ] && printf 'davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): %s\n' "$gesperrt"

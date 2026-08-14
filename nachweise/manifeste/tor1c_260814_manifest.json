@@ -1,0 +1,197 @@
+{
+  "vorbemerkung": "Testmanifest nach K23-M18. Acht Glieder, jedes einzeln gefuellt oder ausdruecklich leer. Die Pruefsumme ueber dieses Manifest steht in der Nebendatei gleichen Namens mit der Endung .sha256.",
+  "lauf": "Tor 1c",
+  "erstellt": "2026-08-14T19:54:20+00:00",
+  "glied_1_commit": {
+    "commit": "65ff68c9cd00dd208fddf71024cb35e6fc19e3f3",
+    "zweig": "scheibe/anmeldecode-weg",
+    "arbeitsbaum_sauber": true,
+    "abweichende_dateien": [],
+    "anmerkung": null
+  },
+  "glied_2_bauauftrag": {
+    "gegenstand": "Bauauftrag N5, Fassung v1.1 (07.08.2026)",
+    "sha256": "3341362f8962af9d48de4afdc863284d5261e9ede3c997fb32bd83933186e43d",
+    "herkunft": "CLAUDE.md Abschn. 4 -- uebernommen, nicht in diesem Lauf gemessen",
+    "liegt_im_repo": false,
+    "nachrechnen_mit": "shasum -a 256 <Bauauftrag> gegen den Wert in CLAUDE.md"
+  },
+  "glied_3_anlage": {
+    "gegenstand": "Anlage Bauverfahren (gez. M. Veil 07.08.2026)",
+    "sha256": "ded747a7a98bcc7fa11442b92e0d09a244c0b4ee2051f10fb251bdb68300274d",
+    "herkunft": "CLAUDE.md Kopf -- uebernommen, nicht in diesem Lauf gemessen",
+    "liegt_im_repo": false,
+    "nachrechnen_mit": "./install.sh --pruefsumme",
+    "claude_md_sha256": "94c2e33b3d867ace99c1bed68be452ca58face50ac551a19b6d998f974af7f14"
+  },
+  "glied_4_migrationsstand": {
+    "basisschema": {
+      "datei": "schema/freiraum_datamodel.sql",
+      "sha256": "cb37d5fe6ef7652458eb6f6cf2b201400aa6e5ff61b2396800bf5b4e48e46e96",
+      "hinterlegt": "cb37d5fe6ef7652458eb6f6cf2b201400aa6e5ff61b2396800bf5b4e48e46e96"
+    },
+    "migrationen_in_reihenfolge": [
+      {
+        "datei": "migrations/M30__pilot_sammelmigration.sql",
+        "sha256": "1af077c540f910d3871ad3b459c5bdeff51034274cbb6b680c065eb3fd2fac4d",
+        "hinterlegt": "1af077c540f910d3871ad3b459c5bdeff51034274cbb6b680c065eb3fd2fac4d"
+      }
+    ],
+    "seeds_in_reihenfolge": [
+      {
+        "datei": "seeds/Seed_Welle1_M1-M4.sql",
+        "sha256": "a22ab0de44c90e3a38ab3859585e8e53d5cc72d3e43011e9f3873afd802b5902"
+      }
+    ]
+  },
+  "glied_5_abhaengigkeiten": {
+    "python": "3.9.6",
+    "requirements_txt_sha256": "676fac9ac8f4c13c7eaaca8b07ddc468cf2e1c80caa4e52f263fe9f8bd3a944e",
+    "postgres_server_version": "16.14 (Debian 16.14-1.pgdg13+1)",
+    "abbild_digest_anwendung": null,
+    "anmerkung_abbild": "Die Anwendung laeuft nicht in einem Behaelter; ein Abbild-Digest besteht fuer sie nicht. Offener Punkt zu K23-M18 Glied 5."
+  },
+  "glied_6_modell_und_vorlagen": {
+    "modellstand": null,
+    "promptstand": null,
+    "wissensstand": null,
+    "richtlinienstand": null,
+    "vorlagenstand": {
+      "datei": "schema/K19_screens.yaml",
+      "sha256": "4f186ce15bcf170f1d7d667aa602975e565e1e3278bec8c3600eb4ff03fec5d4",
+      "hinterlegt": "4f186ce15bcf170f1d7d667aa602975e565e1e3278bec8c3600eb4ff03fec5d4",
+      "fassung": "1.2",
+      "status": "FREIGABEKANDIDAT",
+      "abbilder": [
+        "app/vorlagen/einladung.html",
+        "app/vorlagen/einladung_senden.html",
+        "app/vorlagen/en01_anmeldung.html",
+        "app/vorlagen/start.html"
+      ]
+    },
+    "anmerkung": "Dieser Lauf ruft kein Modell auf; Modell-, Prompt-, Wissens- und Richtlinienstand sind leer, weil es sie in diesem Lauf nicht gibt -- nicht, weil sie nicht gemessen wurden. Der Vorlagenstand ist der Bildschirmvertrag nach K19-M01; die Vorlagen unter app/vorlagen/ sind seine Abbilder."
+  },
+  "glied_7_werkzeuge_und_zeit": {
+    "beginn": "2026-08-14T19:53:50Z",
+    "ende": "2026-08-14T19:54:20+00:00",
+    "werkzeuge": {
+      "psql": "psql (PostgreSQL) 18.6",
+      "bash": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)",
+      "curl": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.0",
+      "python3": "Python 3.9.6",
+      "uvicorn": "Running uvicorn 0.39.0 with CPython 3.9.6 on Darwin",
+      "shellcheck": null
+    },
+    "umgebung": {
+      "PGHOST": "localhost",
+      "PGPORT": "55433",
+      "PGDATABASE": "freiraum_ci",
+      "rechner": "MacBook-Air-von-Michael.local",
+      "system": "Darwin 25.4.0",
+      "in_ci": false,
+      "ci_lauf": null
+    }
+  },
+  "glied_8_pruefsummen": {
+    "eingaben": {
+      "schema/freiraum_datamodel.sql": "cb37d5fe6ef7652458eb6f6cf2b201400aa6e5ff61b2396800bf5b4e48e46e96",
+      "migrations/M30__pilot_sammelmigration.sql": "1af077c540f910d3871ad3b459c5bdeff51034274cbb6b680c065eb3fd2fac4d",
+      "seeds/Seed_Welle1_M1-M4.sql": "a22ab0de44c90e3a38ab3859585e8e53d5cc72d3e43011e9f3873afd802b5902",
+      "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql": "b74bc64ceeb564d0a0b5933f6c883184c42a766adb31fb933a86b7206336aa25",
+      "migrations/negativfaelle/N2_mail_fehler_braucht_grund.sql": "0ab99c87e78edcaafec19b856e0ee3a51310f763926176feecc06971fa77898e",
+      "migrations/negativfaelle/N3_pseudonym_vor_frist.sql": "9581464995d1da448471256bc42a12e80eb2ffd910b33b8655ea2b3164dc2ff2",
+      "migrations/negativfaelle/N4_tagesfrist_positiv.sql": "695fe668fcb1abc5887c633091002f14b48516bb17bbfd1cc0b961e29b5666ad",
+      "pruefungen/migration/M30__pruefung.sql": "fc2a2341eea474aaa6637083d127d79ecc073b6c5615a1d8e314d133e032d319",
+      "pruefungen/klauseln/anmeldecode_daten.sql": "bb08aea64990d9f5fa4a21b7220985f9e023ecc12b407ea4f0d434c2a2015d25",
+      "pruefungen/klauseln/anmeldecode_lauf.sh": "8a3f0e1d66c41562fa81f53191a6357694a0a8f8ec133340eee29c0cca5b366a",
+      "pruefungen/klauseln/anmeldung_daten.sql": "b37de5151d761f8161261053770361da883f85a98a56c2e4cf5d4f9e9940ea7c",
+      "pruefungen/klauseln/anmeldung_lauf.sh": "49214d00e1e9a2df8d7a7f85a0cba2beaee35b1b89e697a5cdeef0f96a7f4df3",
+      "pruefungen/klauseln/einloesung_daten.sql": "f338d1d8d1404a6189aed4eb157eaea613df7faef1911e956d15bf00d5124b31",
+      "pruefungen/klauseln/einloesung_lauf.sh": "df005f48102f3192dfa19eddac7d742386021c4d0235f1c4e75703854c16d0f5",
+      "pruefungen/klauseln/mitgliedschaft_daten.sql": "b0c1f3c8048c3404fa9cc6e24bf4a3fb59a42616ddcfcf918b5ce7308b019630",
+      "pruefungen/klauseln/mitgliedschaft_lauf.sh": "7e072e2092f04b8c43ebf2385527cf4cd51d916e512cf4e8d29de12d3e97db3c",
+      "pruefungen/klauseln/versand_daten.sql": "af9be78dfef39c5936bda3241123075b06b5cd7785e4bc41fe3ece684be33370",
+      "pruefungen/klauseln/versand_lauf.sh": "bd1c3b2f141a270bcaa26c56e48389fa17969a9ccec928fa9c2608b821e9f912",
+      "pruefungen/lauf.sh": "e658293ec88ea4509372c1b3cb754ef3536153d0ba8d7b03b33cf3c7f203ca1c",
+      "app/__init__.py": "1a1866ab6db02c01284c662395c7dbc1b47bf3264922e01fe3f9d3b317ace10a",
+      "app/anmeldung.py": "64a78d4a2c15f76a893467f7eaa934aa49c12edcd300c48f187ac89a2b20b3d1",
+      "app/datenbank.py": "df44ad3b5a9fbfed06025b1b189200c8bbdaa242da8516ba1a3e3ca250e00307",
+      "app/einladung.py": "d1783dbcfa4e9d80aa9ad2e00ebc81e19d3bef7994d65c36cd47a7205a7873d3",
+      "app/einladung_senden.py": "716f25810d3e082363596db57741de278d34d9c2189766afab7bdb71fb654a3e",
+      "app/haupt.py": "6af29aff93f1f774c6ac934d94e1cae074857ba5e850975b351ace1483bd75e7",
+      "app/sitzung.py": "a76c1ee59136583ea68c4aca76437ddab6698d8d89a3fc1dd38fc4aad8ed20e0",
+      "app/vorlagen/einladung.html": "36f3f4a5834e71ad7e7ed7be4f1ddbbbb1032a4404043ff4e90b1ba0077ee9ce",
+      "app/vorlagen/einladung_senden.html": "43f7dd2f75d953ae712e94b06994560f5d163a4dfc98dde3b5db940d3732c198",
+      "app/vorlagen/en01_anmeldung.html": "95615fbe33aaf345ddc1979c6171b88af6f049993b6e90185f717a5987c6f191",
+      "app/vorlagen/start.html": "4e414b952354987f85fcebb10e8c0437b3ca936b18bee8c9e002ba918af3d99a",
+      "mail/__init__.py": "5cdde70099eeb9c64aeae23e976d846668b4d3a33ba341ba3cf994661510861d",
+      "mail/versand.py": "0a0a4e60ab26aa495f787d2c64a01b4c1cd7149a7a8c3caea2c7e56b154de72f",
+      "requirements.txt": "676fac9ac8f4c13c7eaaca8b07ddc468cf2e1c80caa4e52f263fe9f8bd3a944e",
+      "CLAUDE.md": "94c2e33b3d867ace99c1bed68be452ca58face50ac551a19b6d998f974af7f14"
+    },
+    "anzahl_eingaben": 34,
+    "ergebnisdatei_sha256": "4525917f878d87287115cfbf62d9f81c4507c03ad76eed6e5c46a66e7cb867af",
+    "manifest_sha256": "steht in der Nebendatei <manifest>.sha256 -- eine Pruefsumme im Manifest kann nicht ueber das Manifest gehen, sie waere Teil dessen, was sie sichert"
+  },
+  "ergebnisse": {
+    "lauf": "Tor 1c",
+    "bestanden": 8,
+    "fehlgeschlagen": 0,
+    "gesperrt": 2,
+    "umgebung": "localhost:55433/freiraum_ci",
+    "migration_sha256": "1af077c540f910d3871ad3b459c5bdeff51034274cbb6b680c065eb3fd2fac4d",
+    "prueffaelle_sha256": "fc2a2341eea474aaa6637083d127d79ecc073b6c5615a1d8e314d133e032d319",
+    "ergebnisse": [
+      {
+        "kennung": "M30-Prueffaelle",
+        "zustand": "bestanden",
+        "anmerkung": "110 von 110 bestanden, 0 gescheitert"
+      },
+      {
+        "kennung": "N1_frist_ge_mindestfrist",
+        "zustand": "bestanden",
+        "anmerkung": "frist_ge_mindestfrist"
+      },
+      {
+        "kennung": "N2_mail_fehler_braucht_grund",
+        "zustand": "bestanden",
+        "anmerkung": "mail_fehler_braucht_grund"
+      },
+      {
+        "kennung": "N3_pseudonym_vor_frist",
+        "zustand": "bestanden",
+        "anmerkung": "pseudonym_vor_frist"
+      },
+      {
+        "kennung": "N4_tagesfrist_positiv",
+        "zustand": "bestanden",
+        "anmerkung": "tagesfrist_positiv"
+      },
+      {
+        "kennung": "anmeldecode",
+        "zustand": "gesperrt",
+        "anmerkung": "16 von 17 bestanden, 1 gescheitert"
+      },
+      {
+        "kennung": "anmeldung",
+        "zustand": "bestanden",
+        "anmerkung": "30 von 30 bestanden, 0 gescheitert"
+      },
+      {
+        "kennung": "einloesung",
+        "zustand": "bestanden",
+        "anmerkung": "18 von 18 bestanden, 0 gescheitert"
+      },
+      {
+        "kennung": "mitgliedschaft",
+        "zustand": "gesperrt",
+        "anmerkung": "8 von 9 bestanden, 1 gescheitert"
+      },
+      {
+        "kennung": "versand",
+        "zustand": "bestanden",
+        "anmerkung": "9 von 9 bestanden, 0 gescheitert"
+      }
+    ]
+  }
+}

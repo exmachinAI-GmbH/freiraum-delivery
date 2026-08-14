@@ -1,0 +1,10 @@
+{
+  "lauf": "Tor 1c",
+  "bestanden": 8,
+  "fehlgeschlagen": 0,
+  "gesperrt": 2,
+  "umgebung": "localhost:55433/freiraum_ci",
+  "migration_sha256": "1af077c540f910d3871ad3b459c5bdeff51034274cbb6b680c065eb3fd2fac4d",
+  "prueffaelle_sha256": "fc2a2341eea474aaa6637083d127d79ecc073b6c5615a1d8e314d133e032d319",
+  "ergebnisse": [{"kennung":"M30-Prueffaelle","zustand":"bestanden","anmerkung":"110 von 110 bestanden, 0 gescheitert"},{"kennung":"N1_frist_ge_mindestfrist","zustand":"bestanden","anmerkung":"frist_ge_mindestfrist"},{"kennung":"N2_mail_fehler_braucht_grund","zustand":"bestanden","anmerkung":"mail_fehler_braucht_grund"},{"kennung":"N3_pseudonym_vor_frist","zustand":"bestanden","anmerkung":"pseudonym_vor_frist"},{"kennung":"N4_tagesfrist_positiv","zustand":"bestanden","anmerkung":"tagesfrist_positiv"},{"kennung":"anmeldecode","zustand":"gesperrt","anmerkung":"16 von 17 bestanden, 1 gescheitert"},{"kennung":"anmeldung","zustand":"bestanden","anmerkung":"30 von 30 bestanden, 0 gescheitert"},{"kennung":"einloesung","zustand":"bestanden","anmerkung":"18 von 18 bestanden, 0 gescheitert"},{"kennung":"mitgliedschaft","zustand":"gesperrt","anmerkung":"8 von 9 bestanden, 1 gescheitert"},{"kennung":"versand","zustand":"bestanden","anmerkung":"9 von 9 bestanden, 0 gescheitert"}]
+}

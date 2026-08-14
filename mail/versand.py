@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# umsetzt: K03-M05, K03-M15, K03-M25, K03-M26, K23-D09
 """FREIRAUM · B2 · Versandweg fuer Einladung und Anmeldecode.
 
     python3 mail/versand.py code   --an michael.veil@exmachinai.com
@@ -19,6 +20,13 @@ liegen hier drei Dinge zusammen, die sonst auseinanderdriften:
   3. Der Absender ist fest auf die Betreiber-Domaene gebunden. Ein anderer
      Absender wuerde an der SPF-Kette von freiraum.top scheitern -- sie endet
      auf -all und erlaubt ausschliesslich den Hausanbieter.
+
+SEIT DEM 14.08.2026 RUFT DIE ANWENDUNG BEIDE FUNKTIONEN. `einladung()` seit dem
+11.08. aus app/einladung_senden.py, `anmeldecode()` seit heute aus
+app/einladung.py. Beide sind deshalb serverfaehig gebaut: sie beenden keinen
+Prozess, sie melden mit einer Ausnahme, und keine von ihnen schreibt eine
+Adresse auf die Ausgabe (K03-M26, K23-D09). Die Zeilen fuer den Betreiber
+stehen in `main()`.
 
 WAS HIER NICHT STEHT: die Anmeldung selbst. Diese Datei stellt den Code aus und
 verschickt ihn; ob er stimmt, prueft die Anwendung.
@@ -126,10 +134,27 @@ def pfeffer():
     die verwaltete Identitaet. Fehlt er, wird kein Code ausgestellt: ein
     Vorgabewert waere ein fest verdrahtetes Geheimnis (Befund BEF-L2-1), und
     ein hier anders gepfefferter Wert passt nachher zu keiner Anmeldung.
+
+    GEAENDERT AM 14.08.2026 (Gegenpruefung, Fund B2): bis dahin SystemExit --
+    die LETZTE solche Stelle im Serverpfad. Gerufen wird diese Funktion aus
+    `anmeldecode()`, und der einzige Aufrufer dort, `_anmeldecode_senden()` in
+    app/einladung.py, faengt VersandFehler und CodeNichtAusgestellt. SystemExit
+    erbt von BaseException, kam an beiden vorbei und haette den Arbeiter
+    mitgenommen -- wegen eines FEHLENDEN Umgebungswertes, also genau dann, wenn
+    ohnehin kein Code entsteht.
+
+    Die bisherige Begruendung ("am Terminal die einzige Diagnose") traegt
+    nicht: `main()` setzt CodeNichtAusgestellt in SystemExit(str(f)) um, im
+    selben Wortlaut, auf demselben Weg (K03-G01: sperren, und die Sperre dem
+    Betreiber begruenden). Der Text unten ist deshalb UNVERAENDERT; allein die
+    Klasse ist eine andere.
+
+    CodeNichtAusgestellt steht weiter unten in dieser Datei. Der Name wird beim
+    Aufruf aufgeloest und nicht beim Uebersetzen -- die Reihenfolge traegt.
     """
     wert = os.environ.get("FREIRAUM_CODE_PFEFFER")
     if not wert:
-        raise SystemExit(
+        raise CodeNichtAusgestellt(
             "FREIRAUM_CODE_PFEFFER ist nicht gesetzt. Ohne Pfeffer waere der "
             "abgelegte Pruefwert in Sekunden zurueckgerechnet (Entscheidung D "
             "vom 10.08.2026, Befund BEF-B2-2). Es wird kein Code ausgestellt.")
@@ -201,6 +226,37 @@ def nachweis(conn, actor_id, art, empfaenger, status, note=None, provider_id=Non
     conn.commit()
 
 
+# WOERTLICH, und ohne Auskunft. K03-M25 verlangt, dass eine Fehlermeldung
+# nicht preisgibt, ob ein Konto besteht. Der Satz nennt deshalb weder die
+# Adresse noch den Grund -- dieselbe Bauart wie MELDUNG_MISSERFOLG in
+# app/anmeldung.py, und aus demselben Grund: eine zweite Fassung derselben
+# Meldung ist der Anfang der Fallunterscheidung, und die Fallunterscheidung
+# ist hier die Kontoauskunft.
+MELDUNG_KEIN_CODE = "Es wurde kein Anmeldecode ausgestellt."
+
+
+class CodeNichtAusgestellt(RuntimeError):
+    """Es ist kein Anmeldecode entstanden -- und warum, sagt diese Ausnahme nicht.
+
+    Eigene Klasse NEBEN VersandFehler, weil die beiden Faelle verschieden
+    weiterzubehandeln sind: ein gescheiterter Versandweg ist ein Betriebsfehler
+    und hinterlaesst eine Zeile in `mail_delivery`; ein nicht ausgestellter
+    Code hat nie einen Versand versucht und hinterlaesst deshalb auch keinen
+    Zustellnachweis.
+
+    Wo es um ein KONTO geht, ist ihr Wortlaut MELDUNG_KEIN_CODE und traegt
+    weder Adresse noch Grund (K03-M25, K23-D09).
+
+    SEIT DEM 14.08.2026 gibt es einen zweiten Wortlaut: `pfeffer()` meldet mit
+    derselben Klasse, dass FREIRAUM_CODE_PFEFFER fehlt (Fund B2). Das ist keine
+    Kontoauskunft -- der Satz nennt einen Umgebungswert und sonst nichts, und
+    er faellt fuer jedes Konto gleich. Die Regel dazu ist eng: der Wortlaut
+    einer Ausnahme dieser Klasse geht NIE auf einen Nutzerbildschirm. Er geht
+    auf das Terminal des Betreibers (`main()`) oder gar nirgendwo hin
+    (app/einladung.py protokolliert einen eigenen Satz ohne str(f)).
+    """
+
+
 class VersandFehler(RuntimeError):
     """Der Versandweg selbst ist gescheitert -- Server abgelehnt, Verbindung weg,
     Anmeldung verweigert.
@@ -229,15 +285,118 @@ def senden(empfaenger, betreff, text):
         raise VersandFehler(f"Vom Server abgelehnt: {antwort}")
 
 
-def anmeldecode(conn, empfaenger):
+def konto_aufloesen(conn, adresse):
+    """Die EINE Kontokennung zu einer Adresse -- oder gar keine.
+
+    NEU AM 14.08.2026 (Gegenpruefung, Fund B1). Bis dahin loeste
+    `anmeldecode()` die Adresse selbst auf, mit
+    "lower(email)=lower(%s)" und fetchone(). Die Eindeutigkeit auf actor.email
+    ist aber SCHREIBWEISENGENAU -- "CREATE UNIQUE INDEX actor_email_key ON
+    actor (email)". Beides zusammen ergibt eine Mehrdeutigkeit: anna@pruef.test
+    und Anna@pruef.test lassen sich nebeneinander anlegen (gemessen am
+    10.08.2026), die Abfrage findet BEIDE, und fetchone() nimmt eine davon --
+    welche, bestimmt die Zeilenreihenfolge, die PostgreSQL nicht zusichert.
+
+    Die Auswirkung war hier groesser als bei der Anmeldung: der Ausloeser
+    haette die offenen Codes eines FREMDEN Kontos entwertet, und die Anrede der
+    Mail haette den Namen dieses fremden Kontos getragen -- an eine Adresse,
+    die ihm nicht gehoert (K23-D09).
+
+    Also dieselbe Bauart wie app/anmeldung.py:113-143: fetchall() und die harte
+    Forderung "genau eine". Null Zeilen heisst unbekannt, zwei heissen
+    mehrdeutig -- beides sperrt, mit demselben einen Wortlaut (K03-G01: was
+    nicht pruefbar ist, sperrt; K03-M25: die Meldung sagt nicht, was der Fall
+    war).
+
+    Die Wurzel liegt im Schema und nicht hier: richtig waere ein eindeutiger
+    Index ueber lower(email). Das ist eine Aenderung am gezeichneten Modell und
+    gehoert in einen Migrationsnachtrag, nicht in diesen Pfad -- wortgleich der
+    Vermerk in app/anmeldung.py.
+
+    WER DIESE FUNKTION BRAUCHT: allein `main()`, also das Terminal. Der
+    Serverpfad loest nicht ein zweites Mal auf; er reicht die Kennung durch,
+    die er beim Freischalten ohnehin schon in der Hand hatte
+    (app/einladung.py:_vollzug).
+    """
     with conn.cursor() as cur:
-        cur.execute("SELECT id, display_name FROM actor WHERE lower(email)=lower(%s)",
-                    (empfaenger,))
+        cur.execute("SELECT id FROM actor WHERE lower(email)=lower(%s) ORDER BY id",
+                    (adresse,))
+        zeilen = cur.fetchall()
+    if len(zeilen) != 1:
+        raise CodeNichtAusgestellt(MELDUNG_KEIN_CODE)
+    return zeilen[0][0]
+
+
+def anmeldecode(conn, actor_id, empfaenger):
+    """Der Anmeldecode. Rueckgabe: der Ablaufzeitpunkt, wie die Datenbank ihn setzt.
+
+    GEAENDERT AM 14.08.2026, als app/einladung.py diese Funktion in Betrieb
+    nahm. Bis dahin rief sie allein `main()` auf -- ein Anmeldecode entstand
+    nur, wenn ein Betreiber ihn von Hand am Terminal ausloeste. Drei Stellen
+    waren fuer ein Kommandozeilenwerkzeug richtig und fuer einen Serverpfad
+    falsch. Die ersten beiden sind dieselben, die `einladung()` am 11.08.2026
+    umgebaut hat; die dritte gibt es dort nicht:
+
+      1. BEIDE Fehlerfaelle loesten SystemExit aus. SystemExit erbt von
+         BaseException; Starlette faengt es nicht, und der Arbeiter geht mit.
+         Jetzt VersandFehler fuer den gescheiterten Versand und
+         CodeNichtAusgestellt fuer den Fall ohne Konto. `main()` macht aus
+         beiden wieder SystemExit.
+      2. Die Erfolgszeile ging mit der Empfaengeradresse auf die Ausgabe. Am
+         Terminal des Betreibers ist das seine eigene Eingabe; aus einem
+         Serverprozess heraus waere es eine unmaskierte Personenangabe im
+         Protokoll (K23-D09, K03-M26: "Codes und vollstaendige E-Mail-Adressen
+         stehen nie in Logs"). Sie steht jetzt in `main()`. Diese Funktion gibt
+         allein den Ablaufzeitpunkt zurueck -- er nennt niemanden.
+      3. NEU GEGENUEBER einladung(): der Satz "Kein Konto zu <Adresse>" war
+         eine Kontoauskunft. K03-M25 verlangt ausdruecklich, dass eine
+         Fehlermeldung nicht preisgibt, ob ein Konto besteht -- und die Adresse
+         stand obendrein darin. AUS DIESER FUNKTION ist beides weg; hier gilt
+         der eine Wortlaut MELDUNG_KEIN_CODE.
+         Am Terminal steht der Satz seit dem 14.08.2026 wieder, und zwar in
+         `main()` (Gegenpruefung, Fund B5). Der Verzicht war zu weit gegriffen:
+         K03-M25 schuetzt den NUTZER vor der Auskunft, und der Betreiber am
+         Terminal hat die Adresse selbst eingetippt -- ihm sagt sie nichts, was
+         er nicht schon weiss. K03-G01 verlangt umgekehrt, dass eine Sperre
+         begruendet angezeigt wird. Der Serverpfad hat davon nichts: er sieht
+         MELDUNG_KEIN_CODE, und dabei bleibt es.
+
+    DIE KONTOKENNUNG KOMMT SEIT DEM 14.08.2026 VON AUSSEN (Gegenpruefung, Fund
+    B1). Vorher stand hier eine zweite, eigene Aufloesung der Adresse -- und
+    zwar eine mehrdeutige (die Begruendung steht bei `konto_aufloesen()`). Der
+    Serverpfad hatte die Kennung laengst: app/einladung.py:_vollzug() hat sie
+    aus der Zeile, die er soeben freigeschaltet hat, und warf sie bis dahin
+    weg. Zweimal aufloesen heisst: zweimal etwas anderes treffen koennen. Jetzt
+    wird durchgereicht, und `main()` loest genau einmal auf.
+
+    Die Anrede kommt danach ueber die KENNUNG, nicht ueber die Adresse -- der
+    Primaerschluessel trifft hoechstens eine Zeile. Die Adresse steht trotzdem
+    mit in der Bedingung: sie ist der Empfaenger der Mail, und wenn sie nicht
+    zu der Kennung gehoert, gehen Code und Anrede an einen Fremden. Passt
+    beides nicht zusammen, entsteht kein Code (fail-closed, K03-G01).
+
+    DER LETZTE SystemExit IST WEG (Fund B2): `pfeffer()` meldet seit dem
+    14.08.2026 mit CodeNichtAusgestellt. Bis dahin beendete er den Prozess --
+    im Serverpfad an `_anmeldecode_senden()` vorbei, weil SystemExit von
+    BaseException erbt. Am Terminal aendert sich nichts: `main()` gibt den
+    unveraenderten Wortlaut aus.
+
+    Der Zustellnachweis bleibt, wo er war: auf BEIDEN Wegen. Ohne ihn ist ein
+    fehlgeschlagener Versand nicht von einem nicht erfolgten zu unterscheiden
+    (Bauauftrag B2). Wo gar kein Versand versucht wurde -- kein Konto --, steht
+    auch keine Zeile: was nicht geschehen ist, wird nicht behauptet.
+    """
+    # Ueber die Kennung, und die Adresse muss zu ihr gehoeren. Der
+    # Primaerschluessel ist eindeutig -- fetchone() ist hier kein Griff ins
+    # Ungewisse mehr, sondern trifft hoechstens eine Zeile.
+    with conn.cursor() as cur:
+        cur.execute("SELECT display_name FROM actor"
+                    " WHERE id=%s AND lower(email)=lower(%s)",
+                    (actor_id, empfaenger))
         zeile = cur.fetchone()
     if not zeile:
-        raise SystemExit(f"Kein Konto zu {empfaenger}. Ein Code fuer ein unbekanntes Konto "
-                         "wird nicht ausgestellt.")
-    actor_id, name = zeile
+        raise CodeNichtAusgestellt(MELDUNG_KEIN_CODE)
+    name = zeile[0]
 
     code = code_erzeugen()
 
@@ -258,19 +417,33 @@ def anmeldecode(conn, empfaenger):
             "Fordern Sie einen neuen an, verliert dieser sofort seine Gueltigkeit.\n\n"
             "Wenn Sie sich nicht angemeldet haben, ignorieren Sie diese Nachricht.\n\n"
             "FREIRAUM\n")
+    # ValueError und UnicodeError stehen seit dem 14.08.2026 mit im Tupel
+    # (Gegenpruefung, Fund B7). Nicht als Bequemlichkeit, sondern gemessen an
+    # `senden()`: EmailMessage weist einen To-Header mit CR oder LF mit einem
+    # ValueError ab (Zeile 249, Kopfzeileneinschleusung), und ein Empfaenger,
+    # den der Server nicht kodieren kann, endet in einem UnicodeError. Beide
+    # kamen an diesem Zweig vorbei -- und damit an der FEHLER-Zeile in
+    # mail_delivery UND an der Entwertung des soeben ausgestellten Codes.
+    # Zurueck blieb ein gueltiger Code, den niemand bekommen hat, und kein
+    # Zustellnachweis: genau der Zustand, den Bauauftrag B2 ausschliesst.
+    #
+    # ZWEI BENANNTE KLASSEN, kein "except Exception". Ein Tippfehler in diesem
+    # Modul soll weiter als Programmierfehler herausfallen und nicht als
+    # stummer Mailserver im Nachweis stehen (Befund BEF-C2 vom 07.08.2026).
     try:
         senden(empfaenger, "Ihr FREIRAUM-Anmeldecode", text)
-    except (VersandFehler, smtplib.SMTPException, OSError) as f:
+    except (VersandFehler, smtplib.SMTPException, OSError,
+            ValueError, UnicodeError) as f:
         nachweis(conn, actor_id, "ANMELDECODE", empfaenger, "FEHLER", str(f)[:500])
         # Der Code bleibt entwertet zurueck: er wurde nie zugestellt.
         with conn.cursor() as cur:
             cur.execute("UPDATE login_code SET superseded_at=now() WHERE actor_id=%s"
                         " AND consumed_at IS NULL AND superseded_at IS NULL", (actor_id,))
         conn.commit()
-        raise SystemExit(f"Versand gescheitert, im Nachweis vermerkt: {f}")
+        raise VersandFehler(f"Versand gescheitert, im Nachweis vermerkt: {f}") from f
     nachweis(conn, actor_id, "ANMELDECODE", empfaenger, "UEBERGEBEN",
              provider_id=f"{SMTP_HOST}:{SMTP_PORT}")
-    print(f"Code an {empfaenger} uebergeben, gueltig bis {ablauf.isoformat()}")
+    return ablauf
 
 
 def einladung(conn, empfaenger, link):
@@ -328,7 +501,44 @@ def main():
     absender_pruefen()
     with psycopg.connect(DSN) as conn:
         if a.art == "code":
-            anmeldecode(conn, a.an)
+            # Dieselbe Aufteilung wie bei der Einladung: die Ausgabe steht
+            # hier und nicht in anmeldecode(). Am Terminal ist die Adresse die
+            # eigene Eingabe des Betreibers, im Serverprotokoll waere sie eine
+            # unmaskierte Personenangabe (K23-D09, K03-M26).
+            #
+            # DIE BETREIBERDIAGNOSE STEHT SEIT DEM 14.08.2026 WIEDER HIER
+            # (Gegenpruefung, Fund B5). Am 14.08. war sie mit dem Umbau auf den
+            # Serverpfad ersatzlos entfallen; der Betreiber sah am Terminal
+            # denselben nichtssagenden Satz wie der Nutzer im Browser und
+            # konnte nicht mehr unterscheiden, ob die Adresse falsch war oder
+            # der Versand scheiterte. K03-M25 verbietet die Auskunft dem
+            # NUTZER; der Betreiber hat die Adresse selbst eingetippt, ihm
+            # sagt sie nichts, was er nicht schon weiss. K03-G01 verlangt
+            # umgekehrt, dass eine Sperre begruendet ANGEZEIGT wird.
+            #
+            # Deshalb die Aufteilung in zwei Zweige: die Aufloesung des Kontos
+            # steht fuer sich, und nur SIE traegt die Diagnose. Alles, was
+            # danach kommt -- fehlender Pfeffer, gescheiterter Versand --,
+            # behaelt seinen eigenen Wortlaut. Ein Zweig ueber beides haette
+            # die Meldung aus `pfeffer()` verschluckt und dem Betreiber ein
+            # fehlendes Konto gemeldet, wo ein Umgebungswert fehlt.
+            #
+            # OFFEN, benannt und nicht entschieden: `konto_aufloesen()` sperrt
+            # auch bei ZWEI Konten, die sich nur in der Schreibweise
+            # unterscheiden. Am Terminal erscheint dafuer derselbe Satz wie
+            # fuer "kein Konto". Ob der mehrdeutige Fall dem Betreiber einen
+            # eigenen Wortlaut wert ist, entscheidet ein Mensch -- es waere
+            # eine zweite Meldung, und die wird hier nicht erfunden.
+            try:
+                actor_id = konto_aufloesen(conn, a.an)
+            except CodeNichtAusgestellt as f:
+                raise SystemExit(f"Kein Konto zu {a.an}. Ein Code fuer ein unbekanntes Konto "
+                                 "wird nicht ausgestellt.") from f
+            try:
+                ablauf = anmeldecode(conn, actor_id, a.an)
+            except (CodeNichtAusgestellt, VersandFehler) as f:
+                raise SystemExit(str(f)) from f
+            print(f"Code an {a.an} uebergeben, gueltig bis {ablauf.isoformat()}")
         else:
             # Die Ausgabe steht hier und nicht in einladung(): am Terminal
             # ist die Adresse die eigene Eingabe des Betreibers, im
