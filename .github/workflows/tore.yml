@@ -83,6 +83,27 @@ jobs:
           pip install --quiet -r requirements.txt
           ruff check werkzeuge mail app
 
+      # Der Bildschirmvertrag ist Grundwahrheit wie die DDL, nur fuer die
+      # Oberflaeche. Bis zum 14.08.2026 lag er allein in der Konzept-Fabrik:
+      # vier Vorlagen unter app/vorlagen/ beriefen sich auf K19-M01, ohne
+      # eine Fassung zu nennen, und kein Lauf hat je eine K19-Klausel
+      # gemessen. Geprueft wird gegen die MITGEFUEHRTE Kopie -- ein Lauf,
+      # der auf die Dropbox zugreifen muesste, ist nicht reproduzierbar.
+      - name: UI-Vertrag — K19-M03 und K19-M14 (schema/K19_screens.yaml)
+        run: |
+          set -euo pipefail
+          if [ ! -f schema/K19_screens.yaml ]; then
+            echo "::error::schema/K19_screens.yaml fehlt — Tor 1a GESPERRT (K23-M22)."
+            echo "Ohne Bildschirmvertrag misst dieser Lauf die Oberflaeche nicht."
+            exit 1
+          fi
+          # Die Kopie gegen ihre hinterlegte Summe. Aenderungsregel "keine":
+          # weicht sie ab, ist die KOPIE ungueltig -- nicht das Original.
+          ( cd schema && shasum -a 256 -c K19_screens.sha256 ) \
+            || { echo "::error::schema/K19_screens.yaml weicht von der hinterlegten Pruefsumme ab"; exit 1; }
+          # HINWEIS blockiert nicht, FEHLER schon (Exit 1).
+          python3 werkzeuge/k19_screens_lint.py schema/K19_screens.yaml
+
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |
           set -euo pipefail
