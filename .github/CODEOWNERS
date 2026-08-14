@@ -16,6 +16,12 @@
 # --- Die Steuerung selbst: beide muessen zustimmen ---------------------
 /CLAUDE.md            @exmachinai @AndrewExma
 /.github/             @exmachinai @AndrewExma
+# Die Sprachvorgabe steuert, wie hier ueber die Arbeit gesprochen wird -- und
+# regelt den Bestandsschutz. Wer sie allein aendern koennte, koennte den
+# Bestandsschutz allein streichen.
+/CONTRIBUTING.md      @exmachinai @AndrewExma
+/.gitmessage          @exmachinai @AndrewExma
+/AGENTS.md            @exmachinai @AndrewExma
 
 # --- Blindheit der Pruefung (K23-D05, F27) -----------------------------
 # Wer hier schreibt, kann einen Pruefwert senken, damit ein Lauf besteht.

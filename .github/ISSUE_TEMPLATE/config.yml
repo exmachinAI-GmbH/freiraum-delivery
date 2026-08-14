@@ -1,0 +1,12 @@
+# Leere Issues sind abgeschaltet: ein Punkt ohne Anlass, ohne Nachstellweg und
+# ohne Fertigkriterium kostet später mehr Zeit, als die Vorlage jetzt kostet.
+# Wer eine der beiden Vorlagen nicht passend findet, nimmt "Aufgabe" und
+# streicht, was nicht zutrifft.
+blank_issues_enabled: false
+
+contact_links:
+  - name: Wie hier geschrieben wird
+    url: https://github.com/exmachinAI-GmbH/freiraum-delivery/blob/main/CONTRIBUTING.md
+    about: >-
+      Die Vorgabe für Texte in diesem Repository: verständlich für eine Person
+      ohne IT-Hintergrund, mit genug Kontext, um ohne Rückfrage zu entscheiden.

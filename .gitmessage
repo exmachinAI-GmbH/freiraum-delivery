@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Betreffzeile: was sich IN DER SACHE ändert -- nicht, welche Datei angefasst
+# wurde. Höchstens 72 Zeichen, kein Punkt am Ende. Diese Zeile hier ersetzen:
+
+<was sich in der Sache ändert>
+
+Anlass:
+  Warum war das nötig, und wie ist es aufgefallen?
+
+Änderung:
+  Was ist jetzt anders?
+
+Wirkung:
+  Was merkt man davon? Wer muss deshalb etwas anders machen?
+
+Nicht geändert:
+  Was man vielleicht erwartet hätte, aber bewusst so geblieben ist.
+
+Gemessen:
+  Welcher Befehl, welches Ergebnis. Wenn nichts gemessen wurde:
+  "nicht gemessen" -- das ist eine zulässige Angabe, Schweigen nicht.
+
+# ---------------------------------------------------------------------------
+# Die vier Fragen vor dem Absenden (CONTRIBUTING.md, Abschnitt 4):
+#
+#   1. Könnte die zeichnende Person allein aus diesem Text freigeben,
+#      ohne den Code zu öffnen?
+#   2. Ist jede Kennung (K23-M04, Tor 1b, F05, BEF-D3 ...) und jedes
+#      Fachwort bei der ersten Nennung erklärt?
+#   3. Steht da, was gleich bleibt und was jemand jetzt anders machen muss?
+#   4. Ist jede Erfolgsaussage mit einer Messung belegt -- oder ausdrücklich
+#      als ungemessen gekennzeichnet?
+#
+# Alle Zeilen, die mit '#' beginnen, verschwinden beim Speichern.
+# Vollständige Vorgabe: CONTRIBUTING.md
+# ---------------------------------------------------------------------------

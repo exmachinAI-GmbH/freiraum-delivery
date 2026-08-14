@@ -3,6 +3,12 @@ description: Baut die vertikale Scheibe $ARGUMENTS von der Klausel bis zur Vorla
 argument-hint: Scheibennummer (z. B. 1)
 ---
 
+**Wie du schreibst.** Jeder Text, den dieser Lauf erzeugt — Plan, Baubericht, Manifesttext,
+Vorlage, Übergabemeldung, Commit-Nachricht, Beschreibung des Antrags — folgt
+`CONTRIBUTING.md` (Regeln `SPR-1` bis `SPR-9`). Lies die Datei, bevor du den ersten Text
+schreibst. Die Beschreibung des Antrags muss allein tragen: die freigebende Person soll
+entscheiden können, ohne den Code zu öffnen.
+
 Baue die vertikale **Scheibe $ARGUMENTS** nach dieser Pipeline. Eine Scheibe ist ein
 Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder durchgeht
 (G1, Blatt 11:25 · Definition of Done Blatt 11:46–48).

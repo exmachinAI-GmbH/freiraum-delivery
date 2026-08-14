@@ -69,6 +69,27 @@ for d in arbeit nachweise pruefungen werkzeuge schema migrations/negativfaelle; 
   [ -f "$d/.gitkeep" ] || : > "$d/.gitkeep"
 done
 
+# Commit-Vorlage eintragen. Sie oeffnet sich bei 'git commit' ohne -m im Editor
+# und stellt die vier Fragen aus CONTRIBUTING.md -- ohne sie bleibt die
+# Sprachvorgabe ein Text, den niemand zum richtigen Zeitpunkt sieht.
+# '-e .git' statt 'git rev-parse --git-dir': rev-parse sucht nach OBEN weiter.
+# Laege dieser Ordner ohne eigenes .git in einem fremden Git-Arbeitsstand,
+# truege rev-parse die Vorlage in DESSEN Konfiguration ein -- dort gibt es keine
+# .gitmessage, und jeder 'git commit' des Fremdrepos braeche danach ab.
+# '-e' statt '-f', damit 'git worktree' (dort ist .git eine Datei) mit abgedeckt ist.
+if [ -f .gitmessage ] && [ -e .git ]; then
+  git config commit.template .gitmessage
+  echo "OK Commit-Vorlage eingetragen (.gitmessage) -- Vorgabe: CONTRIBUTING.md"
+elif [ ! -f .gitmessage ]; then
+  echo "!  .gitmessage fehlt -- Commit-Vorlage NICHT eingetragen."
+  echo "   Folge: bei 'git commit' steht kein Vorlagentext im Editor."
+  echo "   Naechster Schritt: git checkout main -- .gitmessage, dann ./install.sh erneut."
+else
+  echo "!  Kein eigener Git-Arbeitsstand (kein .git) -- Commit-Vorlage NICHT eingetragen."
+  echo "   Vermutlich als ZIP entpackt statt geklont."
+  echo "   Naechster Schritt: mit 'git clone' holen und dort ./install.sh ausfuehren."
+fi
+
 grep -q '^\.env' .gitignore || { echo "X  .gitignore schuetzt .env nicht -- abgebrochen"; exit 1; }
 if git ls-files | grep -qE '(^|/)\.env|\.pem$|\.key$'; then
   echo "X  Geheimnisverdacht im Versionsstand. Einrichtung abgebrochen (K23-D09)."
