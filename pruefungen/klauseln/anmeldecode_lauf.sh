@@ -276,7 +276,14 @@ dbz() { local aus
           printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
           return 1
         fi
-        printf '%s' "$aus" | head -1; }
+        # BERICHTIGT AM 14.08.2026, gemessen: "printf '%s'" laesst den
+        # Zeilenumbruch weg. Die Fassung davor leitete psql direkt durch
+        # ("psql ... | head -1") und gab ihn mit aus. Jeder Fall, der mit
+        # "| wc -l" zaehlt, bekam dadurch 0 statt 1 -- AN-07 und AN-08
+        # meldeten "keine Zeile in auth_session" und sperrten, obwohl die
+        # Zeile existierte. Eine leere Ausgabe bleibt leer, wie vorher.
+        [ -n "$aus" ] || return 0
+        printf '%s\n' "$aus" | head -1; }
 
 # S3 (2026-08-14): wird direkt in der Elternschale aufgerufen (NIE in einer
 # Kommandosubstitution) -- nur dort beendet abbruch()s exit den ganzen Lauf.

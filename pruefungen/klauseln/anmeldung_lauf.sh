@@ -59,8 +59,59 @@ sperr() { gesamt=$((gesamt+1)); gescheitert=$((gescheitert+1)); gesperrt=$((gesp
 
 abbruch() { printf 'ABBRUCH: %s\n' "$1"; printf 'SUMME: 0 von 0 bestanden, 0 gescheitert\n'; exit 2; }
 
-db()  { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1"; }
-dbz() { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" | head -1; }
+# S1/S3 (14.08.2026, Muster aus pruefungen/klauseln/anmeldecode_lauf.sh
+# uebernommen -- dort steht der volle Befund im Dateikopf): db()/dbz()
+# fingen bisher nur stdout ab. Schlug die SQL fehl (z.B. eine
+# string_agg-Abfrage ohne Spaltenalias -- genau das war hier der Fall,
+# siehe die AUFBAUPRUEFUNG unten), blieb stdout leer -- ein
+# "[ -z ... ]"-Test las das als "alles in Ordnung". Die Aufbaupruefung
+# lief damit blind und meldete zugleich Erfolg.
+#
+# Ein direkter abbruch()-Aufruf AUS db()/dbz() heraus wirkt nicht: beide
+# laufen ueberwiegend in einer Kommandosubstitution ("x=\"\$(dbz ...)\"")
+# oder einer Pipe -- ein exit dort beendet nur die Unterschale, nicht den
+# Lauf. Neue Bauart: bei einem SQL-Fehler geben beide Funktionen NICHTS
+# auf stdout aus, schreiben den psql-Fehlertext nach stderr (sichtbar,
+# unabhaengig von Unterschale/Pipe) und legen die Markierungsdatei
+# $ARBEIT/sql.marke an. Die Elternschale prueft diese Markierung mit
+# pruefe_sql_marke() an den Stellen, an denen ein falscher Wert Schaden
+# anrichten wuerde -- dort wirkt exit, weil pruefe_sql_marke NICHT in
+# einer Unterschale laeuft. Aufruf mindestens: nach der
+# Erreichbarkeitspruefung, nach der Aufbaupruefung und am Ende jedes
+# Fallblocks.
+db()  { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        printf '%s\n' "$aus"; }
+dbz() { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        # BERICHTIGT AM 14.08.2026, gemessen: "printf '%s'" laesst den
+        # Zeilenumbruch weg. Die Fassung davor leitete psql direkt durch
+        # ("psql ... | head -1") und gab ihn mit aus. Jeder Fall, der mit
+        # "| wc -l" zaehlt, bekam dadurch 0 statt 1 -- AN-07 und AN-08
+        # meldeten "keine Zeile in auth_session" und sperrten, obwohl die
+        # Zeile existierte. Eine leere Ausgabe bleibt leer, wie vorher.
+        [ -n "$aus" ] || return 0
+        printf '%s\n' "$aus" | head -1; }
+
+# Wird direkt in der Elternschale aufgerufen (NIE in einer Kommando-
+# substitution) -- nur dort beendet abbruch()s exit den ganzen Lauf.
+pruefe_sql_marke() {
+  if [ -s "$ARBEIT/sql.marke" ]; then
+    abbruch "$(cat "$ARBEIT/sql.marke")"
+  fi
+}
 
 # ---------------------------------------------------------------------
 # Werkzeug
@@ -133,7 +184,14 @@ command -v curl  >/dev/null 2>&1 || abbruch 'curl fehlt.'
 command -v psql  >/dev/null 2>&1 || abbruch 'psql fehlt.'
 command -v python3 >/dev/null 2>&1 || abbruch 'python3 fehlt (Kekspruefung AN-05, JSON AN-02).'
 
-db 'SELECT 1' >/dev/null 2>&1 || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+# S3 (14.08.2026, aus anmeldecode_lauf.sh uebernommen): kein "2>&1" mehr auf
+# diesen Aufruf -- das wuerde die eigene Diagnosemeldung von db() (jetzt auf
+# stderr) mit demselben ">/dev/null" verschlucken, das nur den psql-Aufruf
+# selbst stummschalten soll. Eine nicht erreichbare Datenbank endete
+# dadurch STUMM; jetzt steht ein Satz da (Diagnose von db() plus der
+# nachgestellte abbruch()-Text).
+db 'SELECT 1' >/dev/null || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+pruefe_sql_marke
 
 # Der Pfeffer wird gebraucht: AN-26 stellt einen weiteren Code aus, und
 # ohne ihn stimmte kein Pruefwert. Ein Positivfall, der am Pfeffer
@@ -146,11 +204,27 @@ if [ "$(hole /gesundheit vorpruefung)" != "200" ]; then
 fi
 
 lage="$(dbz "SELECT count(*) FROM pg_views WHERE viewname='pruef_anmeldung_lage'")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $lage leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Sicht fehlt" statt mit dem echten
+# SQL-Fehler gemeldet.
+pruefe_sql_marke
 [ "$lage" = "1" ] || abbruch 'Sicht pruef_anmeldung_lage fehlt -- anmeldung_daten.sql zuerst einspielen.'
 
 # AUFBAUPRUEFUNG (F07): dieselben Bedingungen wie in anmeldung_daten.sql,
 # hier aber unmittelbar vor dem Lauf -- die Daten koennten zwischenzeitlich
 # durch einen frueheren Lauf verbraucht worden sein.
+#
+# NACHGEPRUEFT (14.08.2026, im Zuge des Fundes in versand_lauf.sh, ZEILE
+# 137 dort): anders als in versand_lauf.sh/einloesung_lauf.sh/
+# mitgliedschaft_lauf.sh trug die ERSTE Teilabfrage hier bereits "AS m".
+# Nachgerechnet gegen eine laufende Datenbank: PostgreSQL uebernimmt die
+# Spaltennamen einer UNION-Abfrage vom ERSTEN Zweig -- diese Abfrage
+# schlug darum NICHT fehl, string_agg(m, ' ') traf auf eine echte Spalte.
+# Trotzdem jetzt an JEDER Teilabfrage ein Alias, aus zwei Gruenden: (1)
+# Einheitlichkeit mit den drei tatsaechlich betroffenen Dateien, (2)
+# Robustheit gegen eine kuenftige Umstellung der Reihenfolge, die genau
+# denselben F07-Blindflug wieder herstellen wuerde, sobald der erste Zweig
+# nicht mehr der aliastragende waere.
 aufbau="$(dbz "
 SELECT string_agg(m, ' ') FROM (
   SELECT email || ':status=' || status AS m FROM pruef_anmeldung_lage
@@ -162,7 +236,7 @@ SELECT string_agg(m, ' ') FROM (
       OR (email IN ('wartetfalsch@pruef.example','wartetrichtig@pruef.example') AND status <> 'WARTET_2FA')
       OR (email = 'gesperrt@pruef.example' AND status <> 'GESPERRT')
   UNION ALL
-  SELECT email || ':offene_codes=' || offene_codes FROM pruef_anmeldung_lage
+  SELECT email || ':offene_codes=' || offene_codes AS m FROM pruef_anmeldung_lage
    WHERE (email IN ('positiv@pruef.example','untaetig@pruef.example','achtstunden@pruef.example',
                     'abmeldung@pruef.example','sperrmitten@pruef.example','zweiportale@pruef.example',
                     'ohneportal@pruef.example','falschercode@pruef.example','gesperrt@pruef.example',
@@ -171,16 +245,19 @@ SELECT string_agg(m, ' ') FROM (
           AND offene_codes <> 1)
       OR (email IN ('abgelaufen@pruef.example','verbraucht@pruef.example') AND offene_codes <> 0)
   UNION ALL
-  SELECT email || ':freigeschaltete_portale=' || freigeschaltete_portale FROM pruef_anmeldung_lage
+  SELECT email || ':freigeschaltete_portale=' || freigeschaltete_portale AS m FROM pruef_anmeldung_lage
    WHERE (email = 'ohneportal@pruef.example' AND mitgliedschaften <> 0)
       OR (email = 'zweiportale@pruef.example' AND freigeschaltete_portale <> 2)
       OR (email NOT IN ('ohneportal@pruef.example') AND freigeschaltete_portale < 1)
   UNION ALL
-  SELECT 'unbekannt@pruef.example:existiert' FROM actor WHERE email='unbekannt@pruef.example'
+  SELECT 'unbekannt@pruef.example:existiert' AS m FROM actor WHERE email='unbekannt@pruef.example'
   UNION ALL
-  SELECT email || ':last_login_at_trotz_WARTET_2FA' FROM pruef_anmeldung_lage
+  SELECT email || ':last_login_at_trotz_WARTET_2FA' AS m FROM pruef_anmeldung_lage
    WHERE status='WARTET_2FA' AND last_login_at IS NOT NULL
 ) t")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $aufbau leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Aufbau in Ordnung" durchgehen.
+pruefe_sql_marke
 [ -z "$aufbau" ] || abbruch "Datenlage taugt nicht (F07): $aufbau -- anmeldung_daten.sql neu einspielen."
 
 versuche_leeren
@@ -200,6 +277,7 @@ grep -Eqi 'name=["'"'"']?code["'"'"' >/]' "$(rumpf an01)"  || m="$m kein Feld na
 grep -Eqi '<button|type=["'"'"']?submit' "$(rumpf an01)"   || m="$m kein Absendeknopf;"
 [ -z "$m" ] && ok AN-01 'GET /anmeldung liefert 200 und die Maske EN-01 mit email, code und Absendeknopf' \
             || nok AN-01 "GET /anmeldung entspricht EN-01 nicht:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-02 · Vertrag · Gesundheit ohne Sitzung
@@ -213,6 +291,7 @@ sys.exit(0 if d.get("status")=="ok" else 1)' "$(rumpf an02)" 2>/dev/null \
   || m="$m Rumpf ist nicht {\"status\":\"ok\"};"
 [ -z "$m" ] && ok AN-02 'GET /gesundheit ist ohne Sitzung erreichbar und meldet {"status":"ok"}' \
             || nok AN-02 "GET /gesundheit:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-03 · K03-D01 · Ohne Sitzung kein Vorgang
@@ -224,6 +303,7 @@ m=""
 case "$ziel" in *"/anmeldung"*) : ;; *) m="$m Location '$ziel' zeigt nicht auf /anmeldung;";; esac
 [ -z "$m" ] && ok AN-03 'GET / ohne Sitzung fuehrt mit 303 auf /anmeldung (K03-D01)' \
             || nok AN-03 "GET / ohne Sitzung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-04 · POSITIVFALL · Ein Regime, das alles abweist, bestuende jeden
@@ -243,6 +323,7 @@ if [ -n "$keks" ]; then
 fi
 [ -z "$m" ] && ok AN-04 'Aktives Konto, gueltiger sechsstelliger Code: 303 auf /, Cookie fr_sitzung, GET / = 200' \
             || nok AN-04 "Positivfall:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-05 · Vertrag · Eigenschaften des Sitzungskeks
@@ -282,6 +363,7 @@ print(" ".join(sicht))' "$keks" 2>/dev/null)"
 fi
 [ -z "$m" ] && ok AN-05 'Cookie fr_sitzung: HttpOnly, SameSite=Lax, Secure passend zu FREIRAUM_TLS, keine Rohdaten des Kontos' \
             || nok AN-05 "Cookie fr_sitzung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-06 · K03-M09 / K03 Abschn. 5.3 · Die Anmeldung schreibt
@@ -297,6 +379,7 @@ if [ -n "$nachher" ] && [ "$nachher" = "$vorher" ]; then
 fi
 [ -z "$m" ] && ok AN-06 'Erfolgreiche Anmeldung setzt last_login_at fort und haelt AKTIV (K03-M09)' \
             || nok AN-06 "last_login_at nach der Anmeldung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-07 · K03-M17 · 30 Minuten Untaetigkeit, serverseitig geprueft
@@ -328,6 +411,7 @@ else
     fi
   fi
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-08 · K03-M17 · Acht Stunden absolut -- BEIDE Grenzen prueft der
@@ -361,6 +445,7 @@ else
     fi
   fi
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-09 · Vertrag · Abmelden beendet die Sitzung
@@ -380,6 +465,7 @@ else
   [ -z "$m" ] && ok AN-09 'POST /abmelden fuehrt auf /anmeldung und beendet die Sitzung' \
               || nok AN-09 "Abmeldung:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-10 · K03-D01 · Eine gueltige Sitzung allein genuegt nicht.
@@ -408,6 +494,7 @@ else
                 || nok AN-10 "Sperre in laufender Sitzung:$m"
   fi
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-11 · K03-M06 + K03-M15 · Der Code wird bei JEDER Anmeldung
@@ -429,6 +516,7 @@ else
   [ -z "$m" ] && ok AN-11 'Der verbrauchte Code oeffnet keine zweite Sitzung -- der Code wird jedes Mal abgefragt (K03-M06, K03-M15)' \
               || nok AN-11 "Zweitanmeldung mit verbrauchtem Code:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-12 · K03-M06 · Ohne Code keine Anmeldung, auch mit richtiger Adresse
@@ -442,6 +530,7 @@ m=""
 hat_meldung an12  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok AN-12 'Aktives Konto, leerer Code: abgewiesen mit der einen Meldung, ohne Cookie (K03-M06)' \
             || nok AN-12 "Leerer Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-13 · K03-M11 + K03 Abschn. 6 · Ohne Mitgliedschaft in einem
@@ -456,6 +545,7 @@ m=""
 hat_meldung an13  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok AN-13 'Aktives Konto ohne Mitgliedschaft: abgewiesen, kein Portal (K03-M11)' \
             || nok AN-13 "Konto ohne Mitgliedschaft:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-14 · K03-D02 · Ein Anmeldevorgang oeffnet nicht zwei Portale.
@@ -484,6 +574,7 @@ else
 fi
 [ -z "$m" ] && ok AN-14 'Mitglied in zwei freigeschalteten Portalen: die Anmeldung oeffnet hoechstens eines (K03-D02)' \
             || nok AN-14 "Zwei Portale:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-15 · Negativ · Falscher Code
@@ -502,6 +593,7 @@ st2=$(hole / an15b "")
 [ "$st2" = "303" ] || m="$m GET / nach dem Fehlversuch liefert $st2 statt 303;"
 [ -z "$m" ] && ok AN-15 'Falscher Code: 200 mit der einen Meldung, kein Cookie (K03-G01)' \
             || nok AN-15 "Falscher Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-16 · Negativ · Unbekanntes Konto
@@ -518,6 +610,7 @@ m=""
 hat_meldung an16  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok AN-16 'Unbekanntes Konto: dieselbe Antwort wie bei falschem Code (K03-M16)' \
             || nok AN-16 "Unbekanntes Konto:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-17 · Negativ · Gesperrtes Konto MIT richtigem Code
@@ -536,6 +629,7 @@ zust="$(dbz "SELECT status FROM actor WHERE email='gesperrt@pruef.example'")"
 [ "$zust" = "GESPERRT" ] || m="$m der Kontozustand wurde auf $zust veraendert;"
 [ -z "$m" ] && ok AN-17 'GESPERRT mit richtigem Code: abgewiesen, kein Teil-Zugang, Zustand unveraendert (K03-D01)' \
             || nok AN-17 "Gesperrtes Konto:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-18 · Negativ · Abgelaufener Code (K03-M15, zehn Minuten)
@@ -550,6 +644,7 @@ m=""
 hat_meldung an18  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok AN-18 'Code aelter als zehn Minuten: abgewiesen mit derselben Meldung (K03-M15)' \
             || nok AN-18 "Abgelaufener Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-19 · Negativ · Verbrauchter Code (K03-M15, genau einmal gueltig)
@@ -565,6 +660,7 @@ m=""
 hat_meldung an19  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok AN-19 'Bereits eingeloester Code: abgewiesen, obwohl die Frist noch laeuft (K03-M15)' \
             || nok AN-19 "Verbrauchter Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-20 · Negativ + Gegenprobe · Ein neuer Code entwertet aeltere
@@ -587,6 +683,7 @@ keks2="$(sitzungswert an20b)"
 [ -n "$keks2" ]    || m="$m Gegenprobe: der neue Code setzt kein Cookie;"
 [ -z "$m" ] && ok AN-20 'Der entwertete aeltere Code wird abgewiesen, der neuere traegt (K03-M15)' \
             || nok AN-20 "Entwerteter Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-21 · K03-M16 · Nach fuenf falschen Codes ist der Code ungueltig,
@@ -612,6 +709,7 @@ spur="$(dbz "SELECT coalesce(max(failed_count),-1) FROM login_code c JOIN actor 
               WHERE a.email='drossel@pruef.example'")"
 [ -z "$m" ] && ok AN-21 "Fuenf falsche Codes machen den Code ungueltig, der richtige traegt danach nicht mehr (K03-M16; failed_count=$spur)" \
             || nok AN-21 "Drosselung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-22 · K03-M16 · UNUNTERSCHEIDBARKEIT.
@@ -659,6 +757,7 @@ elif [ -z "$m" ]; then
 else
   nok AN-22 "Ununterscheidbarkeit:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-23 · K03-M16 · Dieselbe Laufzeit, so gut es geht.
@@ -688,6 +787,7 @@ if [ "$gross" = "0" ]; then
 else
   nok AN-23 "Laufzeit verraet die Existenz des Kontos: Median unbekannt ${mu}s, falscher Code ${mf}s, Abstand ${abstand}s > 0.250s"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-24 · K03-G05 + K03-M09 · Ein Fehlversuch an einem Konto in
@@ -706,6 +806,7 @@ hat_meldung an24  || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$anmeldung" ]        || m="$m last_login_at ist gesetzt ($anmeldung), obwohl das Konto WARTET_2FA traegt;"
 [ -z "$m" ] && ok AN-24 'WARTET_2FA und falscher Code: abgewiesen, Zustand bleibt, last_login_at bleibt leer (K03-G05, K03-M09)' \
             || nok AN-24 "WARTET_2FA mit falschem Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-25 · K03-M09 · Der Uebergang WARTET_2FA -> AKTIV entsteht
@@ -739,6 +840,7 @@ else
 fi
 [ -z "$m" ] && ok AN-25 "WARTET_2FA mit richtigem Code -- Zustand und last_login_at bleiben gekoppelt (K03-M09). $ausgang" \
             || nok AN-25 "WARTET_2FA mit richtigem Code:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-26 · K03-M13 · Jede Pruefung erfolgt serverseitig. Ein selbst
@@ -793,6 +895,7 @@ else
   [ -z "$m" ] && ok AN-26 'Verfaelschte und selbst gebaute Cookies tragen nicht, das echte schon (K03-M13)' \
               || nok AN-26 "Serverseitige Pruefung:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-27/28/29 · K03-G01 + BEF-L2-1 · Fehlt eine Pflichtvariable, bricht
@@ -855,6 +958,7 @@ pruefe_start() { # $1 Kennung  $2 Variablenname
 pruefe_start AN-27 FREIRAUM_DSN
 pruefe_start AN-28 FREIRAUM_CODE_PFEFFER
 pruefe_start AN-29 FREIRAUM_SITZUNG_SCHLUESSEL
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # AN-30 · GEGENPROBE zu AN-27/28/29: mit allen drei Variablen startet
@@ -876,6 +980,7 @@ else
   [ -z "$m" ] && ok AN-30 'Mit FREIRAUM_DSN, FREIRAUM_CODE_PFEFFER und FREIRAUM_SITZUNG_SCHLUESSEL startet der Server und antwortet' \
               || nok AN-30 "Gegenprobe zum Startabbruch:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 printf '\n'

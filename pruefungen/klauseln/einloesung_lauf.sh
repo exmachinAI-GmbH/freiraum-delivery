@@ -67,8 +67,59 @@ sperr() { gesamt=$((gesamt+1)); gescheitert=$((gescheitert+1)); gesperrt=$((gesp
 
 abbruch() { printf 'ABBRUCH: %s\n' "$1"; printf 'SUMME: 0 von 0 bestanden, 0 gescheitert\n'; exit 2; }
 
-db()  { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1"; }
-dbz() { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" | head -1; }
+# S1/S3 (14.08.2026, Muster aus pruefungen/klauseln/anmeldecode_lauf.sh
+# uebernommen -- dort steht der volle Befund im Dateikopf): db()/dbz()
+# fingen bisher nur stdout ab. Schlug die SQL fehl (z.B. eine
+# string_agg-Abfrage ohne Spaltenalias -- genau das war hier der Fall,
+# siehe die AUFBAUPRUEFUNG unten), blieb stdout leer -- ein
+# "[ -z ... ]"-Test las das als "alles in Ordnung". Die Aufbaupruefung
+# lief damit blind und meldete zugleich Erfolg.
+#
+# Ein direkter abbruch()-Aufruf AUS db()/dbz() heraus wirkt nicht: beide
+# laufen ueberwiegend in einer Kommandosubstitution ("x=\"\$(dbz ...)\"")
+# oder einer Pipe -- ein exit dort beendet nur die Unterschale, nicht den
+# Lauf. Neue Bauart: bei einem SQL-Fehler geben beide Funktionen NICHTS
+# auf stdout aus, schreiben den psql-Fehlertext nach stderr (sichtbar,
+# unabhaengig von Unterschale/Pipe) und legen die Markierungsdatei
+# $ARBEIT/sql.marke an. Die Elternschale prueft diese Markierung mit
+# pruefe_sql_marke() an den Stellen, an denen ein falscher Wert Schaden
+# anrichten wuerde -- dort wirkt exit, weil pruefe_sql_marke NICHT in
+# einer Unterschale laeuft. Aufruf mindestens: nach der
+# Erreichbarkeitspruefung, nach der Aufbaupruefung und am Ende jedes
+# Fallblocks.
+db()  { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        printf '%s\n' "$aus"; }
+dbz() { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        # BERICHTIGT AM 14.08.2026, gemessen: "printf '%s'" laesst den
+        # Zeilenumbruch weg. Die Fassung davor leitete psql direkt durch
+        # ("psql ... | head -1") und gab ihn mit aus. Jeder Fall, der mit
+        # "| wc -l" zaehlt, bekam dadurch 0 statt 1 -- AN-07 und AN-08
+        # meldeten "keine Zeile in auth_session" und sperrten, obwohl die
+        # Zeile existierte. Eine leere Ausgabe bleibt leer, wie vorher.
+        [ -n "$aus" ] || return 0
+        printf '%s\n' "$aus" | head -1; }
+
+# Wird direkt in der Elternschale aufgerufen (NIE in einer Kommando-
+# substitution) -- nur dort beendet abbruch()s exit den ganzen Lauf.
+pruefe_sql_marke() {
+  if [ -s "$ARBEIT/sql.marke" ]; then
+    abbruch "$(cat "$ARBEIT/sql.marke")"
+  fi
+}
 
 # ---------------------------------------------------------------------
 # Werkzeug
@@ -128,7 +179,14 @@ command -v curl    >/dev/null 2>&1 || abbruch 'curl fehlt.'
 command -v psql    >/dev/null 2>&1 || abbruch 'psql fehlt.'
 command -v python3 >/dev/null 2>&1 || abbruch 'python3 fehlt (Zeitmessung EL-17, Freier Port EL-18).'
 
-db 'SELECT 1' >/dev/null 2>&1 || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+# S3 (14.08.2026, aus anmeldecode_lauf.sh uebernommen): kein "2>&1" mehr auf
+# diesen Aufruf -- das wuerde die eigene Diagnosemeldung von db() (jetzt auf
+# stderr) mit demselben ">/dev/null" verschlucken, das nur den psql-Aufruf
+# selbst stummschalten soll. Eine nicht erreichbare Datenbank endete
+# dadurch STUMM; jetzt steht ein Satz da (Diagnose von db() plus der
+# nachgestellte abbruch()-Text).
+db 'SELECT 1' >/dev/null || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+pruefe_sql_marke
 
 [ -n "${FREIRAUM_CODE_PFEFFER:-}" ] || abbruch 'FREIRAUM_CODE_PFEFFER ist nicht gesetzt -- derselbe Wert wie am Server ist noetig.'
 case "$FREIRAUM_CODE_PFEFFER" in *"'"*) abbruch "FREIRAUM_CODE_PFEFFER enthaelt ein Hochkomma; das Pruefskript kann es nicht sicher in SQL setzen.";; esac
@@ -138,40 +196,57 @@ if [ "$(hole /gesundheit vorpruefung)" != "200" ]; then
 fi
 
 lage="$(dbz "SELECT count(*) FROM pg_views WHERE viewname='pruef_einladung_lage'")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $lage leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Sicht fehlt" statt mit dem echten
+# SQL-Fehler gemeldet.
+pruefe_sql_marke
 [ "$lage" = "1" ] || abbruch 'Sicht pruef_einladung_lage fehlt -- einloesung_daten.sql zuerst einspielen.'
 
 # AUFBAUPRUEFUNG (F07): dieselben Bedingungen wie in einloesung_daten.sql,
 # hier aber unmittelbar vor dem Lauf -- die Daten koennten zwischenzeitlich
 # durch einen frueheren Lauf verbraucht worden sein.
+#
+# S1 (14.08.2026, BEFUND, derselbe Fehlertyp wie in versand_lauf.sh Zeile
+# ~137): KEINE der fuenf Teilabfragen trug einen Spaltenalias. Die
+# Ergebnisspalte hiess damit "?column?", string_agg(m, ' ') griff auf eine
+# Spalte, die es so nicht gab, psql brach mit "column \"m\" does not
+# exist" ab, und die UNGEHAERTETE dbz() (siehe Haertung oben) hat diesen
+# Fehler bis zu diesem Fund verschluckt: leeres stdout, "[ -z "$aufbau" ]"
+# las das als "alles in Ordnung". Die Aufbaupruefung lief damit blind und
+# meldete zugleich Erfolg. Jetzt: Alias "AS m" an jeder Teilabfrage.
 aufbau="$(dbz "
 SELECT string_agg(m, ' ') FROM (
-  SELECT email || ':invitation_status=' || invitation_status FROM pruef_einladung_lage
+  SELECT email || ':invitation_status=' || invitation_status AS m FROM pruef_einladung_lage
    WHERE (email IN ('el_positiv@pruef.example','el_abgelaufen@pruef.example',
                     'el_gesperrt@pruef.example','el_gleichzeitig@pruef.example')
           AND invitation_status <> 'VERSANDT')
       OR (email = 'el_verbraucht@pruef.example' AND invitation_status <> 'EINGELOEST')
       OR (email = 'el_widerrufen@pruef.example' AND invitation_status <> 'WIDERRUFEN')
   UNION ALL
-  SELECT email || ':noch_offen_frist=' || noch_offen_frist FROM pruef_einladung_lage
+  SELECT email || ':noch_offen_frist=' || noch_offen_frist AS m FROM pruef_einladung_lage
    WHERE (email IN ('el_positiv@pruef.example','el_gesperrt@pruef.example','el_gleichzeitig@pruef.example',
                     'el_verbraucht@pruef.example','el_widerrufen@pruef.example')
           AND NOT noch_offen_frist)
       OR (email = 'el_abgelaufen@pruef.example' AND noch_offen_frist)
   UNION ALL
-  SELECT email || ':redeemed_at' FROM pruef_einladung_lage
+  SELECT email || ':redeemed_at' AS m FROM pruef_einladung_lage
    WHERE (email <> 'el_verbraucht@pruef.example' AND redeemed_at IS NOT NULL)
       OR (email = 'el_verbraucht@pruef.example' AND redeemed_at IS NULL)
   UNION ALL
-  SELECT email || ':actor_status=' || actor_status FROM pruef_einladung_lage
+  SELECT email || ':actor_status=' || actor_status AS m FROM pruef_einladung_lage
    WHERE (email = 'el_gesperrt@pruef.example' AND actor_status <> 'GESPERRT')
       OR (email = 'el_verbraucht@pruef.example' AND actor_status <> 'AKTIV')
       OR (email IN ('el_positiv@pruef.example','el_abgelaufen@pruef.example',
                     'el_widerrufen@pruef.example','el_gleichzeitig@pruef.example')
           AND actor_status <> 'WARTET_2FA')
   UNION ALL
-  SELECT email || ':freigeschaltete_portale=' || freigeschaltete_portale FROM pruef_einladung_lage
+  SELECT email || ':freigeschaltete_portale=' || freigeschaltete_portale AS m FROM pruef_einladung_lage
    WHERE freigeschaltete_portale <> 1
 ) t")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $aufbau leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Aufbau in Ordnung" durchgehen (der
+# urspruengliche S1-Befund, nur an dieser Stelle).
+pruefe_sql_marke
 [ -z "$aufbau" ] || abbruch "Datenlage taugt nicht (F07): $aufbau -- einloesung_daten.sql neu einspielen."
 
 printf 'FREIRAUM · Scheibe · Einladung einloesen — Klauselpruefung gegen %s\n' "$BASIS"
@@ -189,6 +264,7 @@ hat_verdecktes_tokenfeld el01 || m="$m kein verdecktes Feld name=\"token\";"
 grep -Eqi '<button|type=["'"'"']?submit' "$(rumpf el01)" || m="$m kein Absendeknopf;"
 [ -z "$m" ] && ok EL-01 'GET /einladung?token=... liefert 200 und die Bestaetigungsseite mit verdecktem Feld token und Absendeknopf' \
             || nok EL-01 "GET /einladung mit gueltigem Token entspricht dem Vertrag nicht:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-02 · Vertrag · Fehlt der Parameter: 200 mit der EINEN Meldung.
@@ -200,6 +276,7 @@ m=""
 hat_meldung el02 || m="$m die Meldung fehlt oder weicht ab;"
 [ -z "$m" ] && ok EL-02 'GET /einladung ohne Parameter: 200 mit der einen Meldung' \
             || nok EL-02 "Fehlender Parameter:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-03 · Vertrag (berichtigt, Blatt 60, 11.08.2026) + K03-G01 ·
@@ -223,6 +300,7 @@ normiere "$ARBEIT/el03.rumpf" > "$ARBEIT/norm_el03_get" 2>/dev/null
 cmp -s "$ARBEIT/norm_el01_get" "$ARBEIT/norm_el03_get" || m="$m die Bestaetigungsseite unterscheidet sich (nach Normierung) von der eines gueltigen Tokens -- GET verraet, ob der Token existiert;"
 [ -z "$m" ] && ok EL-03 'GET /einladung mit unbekanntem Token: 200, dieselbe Bestaetigungsseite wie bei einem gueltigen Token, GET sieht nicht nach (K03-G01, Berichtigung Blatt 60)' \
             || nok EL-03 "Unbekannter Token:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-04 · Vertrag · GET AENDERT NICHTS. Ein Mailscanner, der den Link
@@ -241,6 +319,7 @@ m=""
 [ "$redeemed_nach" = "$redeemed_vor" ] || m="$m redeemed_at wurde durch ein GET gesetzt;"
 [ -z "$m" ] && ok EL-04 'Zweimaliges GET auf einen gueltigen Token aendert weder invitation.status noch redeemed_at (Mailscanner-Sicherheit)' \
             || nok EL-04 "GET-Sicherheit:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-05 · POSITIVKONTROLLE · POST mit gueltigem, offenem Token fuehrt
@@ -255,6 +334,7 @@ m=""
 case "$ziel" in *"/anmeldung"*) : ;; *) m="$m Location '$ziel' zeigt nicht auf /anmeldung;";; esac
 [ -z "$m" ] && ok EL-05 'Gueltiger, offener Token: POST /einladung fuehrt mit 303 auf /anmeldung' \
             || nok EL-05 "Positivfall:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-06 · K20-M14 · EINGELOEST nur mit redeemed_at, redeemed_at nur mit
@@ -269,6 +349,7 @@ m=""
 [ -n "$inv_redeemed" ]           || m="$m redeemed_at ist nach der Einloesung leer;"
 [ -z "$m" ] && ok EL-06 'Nach der Einloesung: status=EINGELOEST und redeemed_at gesetzt, gemeinsam (K20-M14)' \
             || nok EL-06 "Kopplung EINGELOEST/redeemed_at:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-07 · K20-M15 · Der Uebergang WARTET_2FA -> AKTIV entsteht aus der
@@ -282,6 +363,7 @@ m=""
 [ "$actor_status" = "AKTIV" ] || m="$m actor.status ist $actor_status statt AKTIV;"
 [ -z "$m" ] && ok EL-07 'Nach erfolgreicher Einloesung: das Konto steht auf AKTIV (K20-M15, WARTET_2FA -> AKTIV)' \
             || nok EL-07 "Kontoaktivierung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-08 · K20-M18 · Jede Aenderung an der Einladung steht mit Zeitpunkt
@@ -311,6 +393,7 @@ else
     nok EL-08 'keine Nachweiszeile in event nach der Einloesung gefunden, deren object_ref exakt INVITATION:<invitation_id> oder ACTOR:<actor_id> lautet (K20-M18, Berichtigung Blatt 60)'
   fi
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-09 · K20-D10 (sofortige Wiederverwendung) · Derselbe Token, gerade
@@ -327,6 +410,7 @@ hat_meldung el09 || m="$m die Meldung fehlt oder weicht ab;"
 [ "$actor_status_nach" = "AKTIV" ]          || m="$m actor.status ist nach dem zweiten Versuch $actor_status_nach statt AKTIV;"
 [ -z "$m" ] && ok EL-09 'Derselbe Token unmittelbar erneut eingereicht: abgewiesen, keine zweite Wirkung (K20-D10)' \
             || nok EL-09 "Sofortige Wiederverwendung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-10 · K20-D10 · Abgelaufene Einladung wirkt nicht erneut.
@@ -341,6 +425,7 @@ hat_meldung el10 || m="$m die Meldung fehlt oder weicht ab;"
 [ "$zust" = "VERSANDT" ] || m="$m invitation.status wurde auf $zust veraendert;"
 [ -z "$m" ] && ok EL-10 'Abgelaufene Einladung: abgewiesen mit derselben Meldung, kein Zustandswechsel (K20-D10)' \
             || nok EL-10 "Abgelaufene Einladung:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-11 · K20-D10 · Bereits eingeloeste Einladung wirkt nicht erneut.
@@ -356,6 +441,7 @@ hat_meldung el11 || m="$m die Meldung fehlt oder weicht ab;"
 [ "$redeemed_nach11" = "$redeemed_vor11" ] || m="$m redeemed_at wurde durch den erneuten Versuch veraendert;"
 [ -z "$m" ] && ok EL-11 'Bereits eingeloeste Einladung: abgewiesen, redeemed_at bleibt der urspruengliche Zeitpunkt (K20-D10)' \
             || nok EL-11 "Bereits eingeloest:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-12 · K20-D10 · Widerrufene Einladung wirkt nicht erneut.
@@ -369,6 +455,7 @@ hat_meldung el12 || m="$m die Meldung fehlt oder weicht ab;"
 [ "$zust12" = "WIDERRUFEN" ] || m="$m invitation.status wurde auf $zust12 veraendert;"
 [ -z "$m" ] && ok EL-12 'Widerrufene Einladung: abgewiesen mit derselben Meldung, Zustand bleibt WIDERRUFEN (K20-D10)' \
             || nok EL-12 "Widerrufen:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-13 · Vertrag Punkt 1 · Ein GESPERRTES Konto wird durch eine
@@ -389,6 +476,7 @@ hat_meldung el13 || m="$m die Meldung fehlt oder weicht ab;"
 [ "$invzust13" = "VERSANDT" ] || m="$m invitation.status wurde auf $invzust13 veraendert;"
 [ -z "$m" ] && ok EL-13 'GESPERRTES Konto mit gueltigem Token: die Einloesung schlaegt fehl, das Konto bleibt GESPERRT (Vertrag Punkt 1)' \
             || nok EL-13 "GESPERRTES Konto:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-14 · Vertrag (berichtigt, Blatt 60, 11.08.2026) + K03-G01 · GET auf
@@ -411,6 +499,7 @@ normiere "$ARBEIT/el14.rumpf" > "$ARBEIT/norm_el14_get" 2>/dev/null
 cmp -s "$ARBEIT/norm_el01_get" "$ARBEIT/norm_el14_get" || m="$m die Bestaetigungsseite unterscheidet sich (nach Normierung) von der eines gueltigen Tokens -- GET verraet, ob der Token existiert;"
 [ -z "$m" ] && ok EL-14 'GET mit einem nicht mehr gueltigen (bereits eingeloesten) Token: dieselbe Bestaetigungsseite wie bei einem gueltigen Token, GET sieht nicht nach (K03-G01, Berichtigung Blatt 60)' \
             || nok EL-14 "GET auf ungueltigen Token:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-15 · K20-M08 · Der Klartext-Token steht nie in der Fehlerausgabe.
@@ -433,6 +522,7 @@ hat_meldung el15 || m="$m die Meldung fehlt oder weicht ab;"
 grep -qF "$TOK_UNBEKANNT" "$(rumpf el15)" && m="$m die Fehlerausgabe enthaelt den eingereichten Klartext-Token;"
 [ -z "$m" ] && ok EL-15 'Die Fehlerausgabe auf einen unbekannten Token enthaelt den eingereichten Klartext-Token nicht (K20-M08)' \
             || nok EL-15 "Klartext in der Fehlerausgabe:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-16 · K03-G01 · UNUNTERSCHEIDBARKEIT im Wortlaut -- der POST-Seite.
@@ -476,6 +566,7 @@ elif [ -z "$m" ]; then
 else
   nok EL-16 "Ununterscheidbarkeit:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-17 · K03-G01 · Dieselbe Laufzeit, so gut es geht. Ein unbekannter
@@ -504,6 +595,7 @@ if [ "$gross" = "0" ]; then
 else
   nok EL-17 "Laufzeit unterscheidet die Faelle: Median unbekannt ${mu}s, gesperrt ${mg}s, Abstand ${abstand}s > 0.250s"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # EL-18 · Vertrag Punkt 2 · Konkurrenz. Zwei gleichzeitige Einloesungen
@@ -532,6 +624,7 @@ fi
 [ "$inv_status18" = "EINGELOEST" ] || m="$m invitation.status ist $inv_status18 statt EINGELOEST;"
 [ -z "$m" ] && ok EL-18 'Zwei gleichzeitige Einloesungen desselben Tokens: genau eine gewinnt, genau ein redeemed_at (Vertrag Punkt 2)' \
             || nok EL-18 "Konkurrenz:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 printf '\n'

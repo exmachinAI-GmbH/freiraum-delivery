@@ -96,8 +96,59 @@ trap cleanup EXIT
 
 abbruch() { printf 'ABBRUCH: %s\n' "$1"; printf 'SUMME: 0 von 0 bestanden, 0 gescheitert\n'; exit 2; }
 
-db()  { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1"; }
-dbz() { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" | head -1; }
+# S1/S3 (14.08.2026, Muster aus pruefungen/klauseln/anmeldecode_lauf.sh
+# uebernommen -- dort steht der volle Befund im Dateikopf): db()/dbz()
+# fingen bisher nur stdout ab. Schlug die SQL fehl (z.B. eine
+# string_agg-Abfrage ohne Spaltenalias -- genau das war hier der Fall,
+# siehe die AUFBAUPRUEFUNG unten), blieb stdout leer -- ein
+# "[ -z ... ]"-Test las das als "alles in Ordnung". Die Aufbaupruefung
+# lief damit blind und meldete zugleich Erfolg.
+#
+# Ein direkter abbruch()-Aufruf AUS db()/dbz() heraus wirkt nicht: beide
+# laufen ueberwiegend in einer Kommandosubstitution ("x=\"\$(dbz ...)\"")
+# oder einer Pipe -- ein exit dort beendet nur die Unterschale, nicht den
+# Lauf. Neue Bauart: bei einem SQL-Fehler geben beide Funktionen NICHTS
+# auf stdout aus, schreiben den psql-Fehlertext nach stderr (sichtbar,
+# unabhaengig von Unterschale/Pipe) und legen die Markierungsdatei
+# $ARBEIT/sql.marke an. Die Elternschale prueft diese Markierung mit
+# pruefe_sql_marke() an den Stellen, an denen ein falscher Wert Schaden
+# anrichten wuerde -- dort wirkt exit, weil pruefe_sql_marke NICHT in
+# einer Unterschale laeuft. Aufruf mindestens: nach der
+# Erreichbarkeitspruefung, nach der Aufbaupruefung und am Ende jedes
+# Fallblocks.
+db()  { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        printf '%s\n' "$aus"; }
+dbz() { local aus
+        if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>"$ARBEIT/psql.fehler")"; then
+          local fehlertext
+          fehlertext="SQL gescheitert: $(tr '\n' ' ' <"$ARBEIT/psql.fehler")"
+          printf '%s\n' "$fehlertext" >&2
+          printf '%s\n' "$fehlertext" > "$ARBEIT/sql.marke"
+          return 1
+        fi
+        # BERICHTIGT AM 14.08.2026, gemessen: "printf '%s'" laesst den
+        # Zeilenumbruch weg. Die Fassung davor leitete psql direkt durch
+        # ("psql ... | head -1") und gab ihn mit aus. Jeder Fall, der mit
+        # "| wc -l" zaehlt, bekam dadurch 0 statt 1 -- AN-07 und AN-08
+        # meldeten "keine Zeile in auth_session" und sperrten, obwohl die
+        # Zeile existierte. Eine leere Ausgabe bleibt leer, wie vorher.
+        [ -n "$aus" ] || return 0
+        printf '%s\n' "$aus" | head -1; }
+
+# Wird direkt in der Elternschale aufgerufen (NIE in einer Kommando-
+# substitution) -- nur dort beendet abbruch()s exit den ganzen Lauf.
+pruefe_sql_marke() {
+  if [ -s "$ARBEIT/sql.marke" ]; then
+    abbruch "$(cat "$ARBEIT/sql.marke")"
+  fi
+}
 
 # ---------------------------------------------------------------------
 # Werkzeug
@@ -215,7 +266,14 @@ command -v curl    >/dev/null 2>&1 || abbruch 'curl fehlt.'
 command -v psql    >/dev/null 2>&1 || abbruch 'psql fehlt.'
 command -v python3 >/dev/null 2>&1 || abbruch 'python3 fehlt (Mailfang-Extraktion MG-09, freier Port).'
 
-db 'SELECT 1' >/dev/null 2>&1 || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+# S3 (14.08.2026, aus anmeldecode_lauf.sh uebernommen): kein "2>&1" mehr auf
+# diesen Aufruf -- das wuerde die eigene Diagnosemeldung von db() (jetzt auf
+# stderr) mit demselben ">/dev/null" verschlucken, das nur den psql-Aufruf
+# selbst stummschalten soll. Eine nicht erreichbare Datenbank endete
+# dadurch STUMM; jetzt steht ein Satz da (Diagnose von db() plus der
+# nachgestellte abbruch()-Text).
+db 'SELECT 1' >/dev/null || abbruch "Datenbank $PGDATABASE auf $PGHOST:$PGPORT nicht erreichbar."
+pruefe_sql_marke
 
 [ -n "${FREIRAUM_CODE_PFEFFER:-}" ] || abbruch 'FREIRAUM_CODE_PFEFFER ist nicht gesetzt -- derselbe Wert wie am Server ist noetig, sonst stimmt kein Pruefwert (F07).'
 case "$FREIRAUM_CODE_PFEFFER" in *"'"*) abbruch "FREIRAUM_CODE_PFEFFER enthaelt ein Hochkomma; das Pruefskript kann es nicht sicher in SQL setzen.";; esac
@@ -225,47 +283,64 @@ if [ "$(hole /gesundheit vorpruefung)" != "200" ]; then
 fi
 
 lage="$(dbz "SELECT count(*) FROM pg_views WHERE viewname='pruef_mitgliedschaft_lage'")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $lage leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Sicht fehlt" statt mit dem echten
+# SQL-Fehler gemeldet.
+pruefe_sql_marke
 [ "$lage" = "1" ] || abbruch 'Sicht pruef_mitgliedschaft_lage fehlt -- mitgliedschaft_daten.sql zuerst einspielen.'
 
 # AUFBAUPRUEFUNG (F07): dieselben Bedingungen wie in mitgliedschaft_daten.sql,
 # hier aber unmittelbar vor dem Lauf.
+#
+# S1 (14.08.2026, BEFUND, derselbe Fehlertyp wie in versand_lauf.sh Zeile
+# ~137): KEINE der elf Teilabfragen trug einen Spaltenalias. Die
+# Ergebnisspalte hiess damit "?column?", string_agg(m, ' ') griff auf eine
+# Spalte, die es so nicht gab, psql brach mit "column \"m\" does not
+# exist" ab, und die UNGEHAERTETE dbz() (siehe Haertung oben) hat diesen
+# Fehler bis zu diesem Fund verschluckt: leeres stdout, "[ -z "$aufbau" ]"
+# las das als "alles in Ordnung". Die Aufbaupruefung lief damit blind und
+# meldete zugleich Erfolg. Jetzt: Alias "AS m" an jeder Teilabfrage.
 aufbau="$(dbz "
 SELECT string_agg(m, ' ') FROM (
-  SELECT 'bootstrapadmin:' || status || '/' || mitgliedschaft_exma FROM pruef_mitgliedschaft_lage
+  SELECT 'bootstrapadmin:' || status || '/' || mitgliedschaft_exma AS m FROM pruef_mitgliedschaft_lage
    WHERE email='bootstrapadmin@pruef.example' AND (status<>'AKTIV' OR mitgliedschaft_exma<1)
   UNION ALL
-  SELECT 'einladend:' || status || '/' || mitgliedschaft_exma || '/' || offene_codes FROM pruef_mitgliedschaft_lage
+  SELECT 'einladend:' || status || '/' || mitgliedschaft_exma || '/' || offene_codes AS m FROM pruef_mitgliedschaft_lage
    WHERE email='einladend@pruef.example' AND (status<>'AKTIV' OR mitgliedschaft_exma<1 OR offene_codes<>1)
   UNION ALL
-  SELECT 'mg_wiederholt:' || status || '/' || einladungen_offen || '/' || coalesce(attempt_max::text,'-') || '/' || mitgliedschaft_exma
+  SELECT 'mg_wiederholt:' || status || '/' || einladungen_offen || '/' || coalesce(attempt_max::text,'-') || '/' || mitgliedschaft_exma AS m
     FROM pruef_mitgliedschaft_lage
    WHERE email='mg_wiederholt@pruef.example'
      AND (status<>'WARTET_2FA' OR einladungen_offen<>1 OR coalesce(attempt_max,-1)<>1 OR mitgliedschaft_exma<>1)
   UNION ALL
-  SELECT 'mg_aktiv:' || status || '/' || einladungen_eingeloest || '/' || mitgliedschaft_exma FROM pruef_mitgliedschaft_lage
+  SELECT 'mg_aktiv:' || status || '/' || einladungen_eingeloest || '/' || mitgliedschaft_exma AS m FROM pruef_mitgliedschaft_lage
    WHERE email='mg_aktiv@pruef.example' AND (status<>'AKTIV' OR einladungen_eingeloest<>1 OR mitgliedschaft_exma<>1)
   UNION ALL
-  SELECT 'mg_bereitsmitglied:' || status || '/' || einladungen_offen || '/' || mitgliedschaft_exma FROM pruef_mitgliedschaft_lage
+  SELECT 'mg_bereitsmitglied:' || status || '/' || einladungen_offen || '/' || mitgliedschaft_exma AS m FROM pruef_mitgliedschaft_lage
    WHERE email='mg_bereitsmitglied@pruef.example' AND (status<>'WARTET_2FA' OR einladungen_offen<>1 OR mitgliedschaft_exma<>1)
   UNION ALL
-  SELECT 'mg_abgelaufen:' || status || '/' || mitgliedschaft_exma FROM pruef_mitgliedschaft_lage
+  SELECT 'mg_abgelaufen:' || status || '/' || mitgliedschaft_exma AS m FROM pruef_mitgliedschaft_lage
    WHERE email='mg_abgelaufen@pruef.example' AND (status<>'WARTET_2FA' OR mitgliedschaft_exma<>1)
   UNION ALL
-  SELECT 'mg_zweitportal:' || status || '/' || mitgliedschaft_exma || '/' || mitgliedschaft_enduser || '/' || offene_codes
+  SELECT 'mg_zweitportal:' || status || '/' || mitgliedschaft_exma || '/' || mitgliedschaft_enduser || '/' || offene_codes AS m
     FROM pruef_mitgliedschaft_lage
    WHERE email='mg_zweitportal@pruef.example'
      AND (status<>'AKTIV' OR mitgliedschaft_exma<>1 OR mitgliedschaft_enduser<>1 OR offene_codes<>1)
   UNION ALL
-  SELECT 'dynamisches_fallziel_existiert_schon' FROM actor
+  SELECT 'dynamisches_fallziel_existiert_schon' AS m FROM actor
    WHERE email IN ('mg_neu@pruef.example','mg_geplant@pruef.example','mg_faden@pruef.example')
   UNION ALL
-  SELECT 'portal_exma:' || release_status FROM portal WHERE code='EXMA' AND release_status<>'ENABLED'
+  SELECT 'portal_exma:' || release_status AS m FROM portal WHERE code='EXMA' AND release_status<>'ENABLED'
   UNION ALL
-  SELECT 'portal_enduser:' || release_status FROM portal WHERE code='ENDUSER' AND release_status<>'ENABLED'
+  SELECT 'portal_enduser:' || release_status AS m FROM portal WHERE code='ENDUSER' AND release_status<>'ENABLED'
   UNION ALL
-  SELECT 'tenant_domaene_oder_frist_falsch' FROM tenant
+  SELECT 'tenant_domaene_oder_frist_falsch' AS m FROM tenant
    WHERE id='$TENANT_ID' AND (invite_domain IS DISTINCT FROM 'pruef.example' OR invite_ttl_hours<>24)
 ) t")"
+# S3 (14.08.2026): schlaegt dbz() hier fehl, ist $aufbau leer -- ohne diese
+# Pruefung wuerde das faelschlich als "Aufbau in Ordnung" durchgehen (der
+# urspruengliche S1-Befund, nur an dieser Stelle).
+pruefe_sql_marke
 [ -z "$aufbau" ] || abbruch "Datenlage taugt nicht (F07): $aufbau -- mitgliedschaft_daten.sql neu einspielen."
 
 # ---------------------------------------------------------------------
@@ -281,6 +356,7 @@ fi
 # Die EXMA-Rolle und ihre id -- fuer die Feldpruefungen der Mitgliedschaft
 # (membership.role_id = "die eine Rolle dieses Portals").
 EXMA_ROLLE="$(dbz "SELECT id FROM role WHERE portal_code='EXMA'")"
+pruefe_sql_marke  # S3 (14.08.2026): ein SQL-Fehler hier darf nicht als "keine Rolle" durchgehen.
 [ -n "$EXMA_ROLLE" ] || abbruch 'Portal EXMA traegt keine Rolle -- ohne sie ist role_id nicht pruefbar (siehe Aufbaupruefung).'
 
 printf 'FREIRAUM · Scheibe · Mitgliedschaft aus der Einladung — Klauselpruefung gegen %s\n' "$BASIS"
@@ -330,6 +406,7 @@ else
 fi
 [ -z "$m" ] && ok MG-01 'Versand legt genau eine Mitgliedschaft an: actor_id/portal_code/role_id/tenant_scope wie im Vertrag benannt (Vertrag Kernsatz, K20-M05)' \
             || nok MG-01 "Positivfall Mitgliedschaft beim Versand:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-02 · K20-M18 · Nachweiszeile mit Zeitpunkt und HANDELNDER Instanz
@@ -365,6 +442,7 @@ else
   [ -z "$m" ] && ok MG-02 "Nachweiszeile zur Mitgliedschaftsanlage traegt Zeitpunkt, object_ref in der Form ART:<...> und die Sitzung (einladend@) als handelnde Instanz (K20-M18, Blatt 60 B)" \
               || nok MG-02 "Nachweis:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-03 · K20-D02 · Portal EXMA auf PLANNED: keine Einladung, KEINE
@@ -407,6 +485,7 @@ case "$ziel" in
 esac
 [ -z "$m" ] && ok MG-03 "Portal EXMA auf PLANNED: keine Einladung und keine Mitgliedschaft entstehen, die Antwort fuehrt nicht auf die Erfolgsseite (K20-D02; Location: '$ziel', Berichtigung Blatt 63 C)" \
             || nok MG-03 "PLANNED-Portal:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # Sitzung NEU herstellen -- MG-03 hat das Portal EXMA kurzzeitig auf
@@ -431,6 +510,7 @@ KEKS="$(sitzungswert anmeldung_neu)"
 if [ "$st" != "303" ] || [ -z "$KEKS" ]; then
   KEKS=""
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-04 · K03-M11 · "genau ein Portal, bestimmt ueber membership. Genau
@@ -461,6 +541,7 @@ else
 fi
 [ -z "$m" ] && ok MG-04 'Mitgliedschaft in zwei freigeschalteten Portalen (eine davon ueber die Einladung entstanden): die Anmeldung oeffnet hoechstens eines (K03-M11)' \
             || nok MG-04 "Zwei Portale:$m"
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-05 · SHARP POINT 1 · K20-M13 + K20-D05 + Vertrag: der erneute
@@ -516,6 +597,7 @@ else
   [ -z "$m" ] && ok MG-05 "Erneuter Versand: alte Einladung WIDERRUFEN, attempt $alter_attempt->$neuer_attempt, wieder genau eine offene Einladung UND genau eine Mitgliedschaft mit korrektem Primaerschluessel (K20-M12, K20-M13, K20-D05, Sharp Point 1 Blatt 62)" \
               || nok MG-05 "Erneuter Versand:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-06 · SHARP POINT 2 (der gefaehrlichste Fall dieser Aufgabe) ·
@@ -566,6 +648,7 @@ else
   [ -z "$m" ] && ok MG-06 "Eine bereits eingeloeste Einladung verliert ihre Mitgliedschaft NIE -- weder Zeile noch Zustand aendern sich durch einen erneuten Einladungsversuch (beobachteter Status: $st; Sharp Point 2, Blatt 62)" \
               || nok MG-06 "Gefaehrlichster Fall:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-07 · Vertrag · "Die Einloesung legt KEINE Mitgliedschaft an. Sie
@@ -605,6 +688,7 @@ else
   [ -z "$m" ] && ok MG-07 'Die Einloesung legt keine zweite Mitgliedschaft an -- die Zahl bleibt bei genau eins, dieselbe Zeile wie vor der Einloesung (Vertrag)' \
               || nok MG-07 "Einloesung ohne Mitgliedschaftsduplikat:$m"
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-08 · Vertrag ("beim Ablauf verschwindet sie wieder") · Ablauf,
@@ -643,6 +727,7 @@ else
       ;;
   esac
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 # MG-09 · FALL 3 · Der ganze Faden am Stueck: Versand -> Link aus der
@@ -740,6 +825,7 @@ else
     fi
   fi
 fi
+pruefe_sql_marke  # S3 (14.08.2026): am Ende jedes Fallblocks, siehe Haertung von db()/dbz() oben.
 
 # =====================================================================
 printf '\n'
