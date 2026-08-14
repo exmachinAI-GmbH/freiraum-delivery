@@ -1,0 +1,44 @@
+# FREIRAUM Coding-Harness · ruff-Konfiguration
+#
+# Angelegt am 14.08.2026, mit genau einem Zweck: eine benannte Ausnahme fuer
+# EINE Datei. Es steht hier kein `select` und kein `ignore` fuer das Repo --
+# der Regelsatz bleibt der von ruff 0.16.1 vorgegebene. Nachgemessen am
+# 14.08.2026: 413 aktive Regeln ohne diese Datei, 413 mit ihr.
+#
+# Wer hier ein `select`, ein `ignore` oder ein `exclude` fuer das Repo
+# eintraegt, senkt einen Pruefwert (K23-D05). Das ist der Grund, warum
+# .github/ und pruefungen/ in CODEOWNERS beide Kennungen verlangen -- diese
+# Datei wirkt auf Tor 1a und gehoert in dieselbe Aufmerksamkeit.
+
+[lint.per-file-ignores]
+
+# werkzeuge/k19_screens_lint.py ist eine KOPIE aus der Konzept-Fabrik
+# (dort scharf seit 05.08.2026). Sie wird hier NICHT gepflegt: eine Aenderung
+# entsteht in der Fabrik und kommt als Nachfuehrung. Genau dafuer muss sie
+# Zeile fuer Zeile gegen das Original vergleichbar bleiben.
+#
+# Umformatiert man sie auf den hiesigen Geschmack -- 15 Prozentformate zu
+# f-Strings, re.I zu re.IGNORECASE --, ist jede kuenftige Nachfuehrung ein
+# Diff aus lauter Formatierung, in dem die eine fachliche Aenderung untergeht.
+# Der Preis waere hoeher als der Gewinn: keine dieser vier Regeln findet einen
+# Fehler, sie finden einen Stil.
+#
+# Was NICHT ausgenommen ist: die Datei wird von `compileall` uebersetzt, in
+# Tor 1a ausgefuehrt und muss gruen laufen. Ausgenommen ist ihre Schreibweise,
+# nicht ihre Wirkung.
+#
+# BEFRISTET. Der Endzustand ist nicht diese Ausnahme, sondern derselbe
+# Regelsatz auf beiden Seiten. Beantragt als CHG-K00-11 (Anlass BEF-E4,
+# Traeger A. Han, vor Pilotstart). Abschlussnachweis: `ruff check werkzeuge
+# mail app` ist gruen OHNE diese Datei, und k19_screens_lint.py meldet
+# unveraendert 0 FEHLER / 12 HINWEISE. Dann faellt der Block hier weg --
+# und mit ihm die Datei, wenn nichts anderes darin steht.
+#
+# Eine Ausnahme, die niemand befristet, wird dauerhaft. Sie hat dann
+# dieselbe Wirkung wie ein exclude, nur unauffaelliger.
+"werkzeuge/k19_screens_lint.py" = [
+    "UP031",    # Prozentformat statt Formatangaben -- 15 Stellen, Stil
+    "UP009",    # UTF-8-Kopfzeile ueberfluessig -- steht so im Original
+    "FURB167",  # re.I statt re.IGNORECASE -- Kurzform, gleiche Wirkung
+    "SIM115",   # open() ohne with -- Zeilenleser, Datei wird einmal gelesen
+]
