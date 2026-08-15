@@ -119,14 +119,20 @@ Freigabe. **Das Fenster soll Stunden dauern, nicht Tage.**
 
 ## Teil E · Die Nachweiskette nach dem Fassungswechsel
 
-Mit der Fassung v1.2 wird die bisherige Prüfsumme `3341362f…e43d` überall veraltet, wo sie
-geführt wird. **Nachzuziehen sind:**
+Mit der Fassung v1.2 wird die bisherige Prüfsumme `3341362f…e43d` an drei Stellen veraltet.
+**Nur eine davon wird nachgezogen:**
 
 | | Wo | Was |
 |---|---|---|
-| 1 | `CLAUDE.md`, Abschnitt 4, Glied 2 | Prüfsumme des Bauauftrags |
-| 2 | `nachweise/manifeste/tor1c_260813_manifest.json` | Glied 2 der Nachweiskette |
-| 3 | `nachweise/manifeste/tor1c_260814_manifest.json` | Glied 2 der Nachweiskette |
+| 1 | `CLAUDE.md`, Abschnitt 4, Glied 2 (Zeile 151) | **nachziehen** — Fassung `v1.2` und der neue Wert |
+| 2 | `nachweise/manifeste/tor1c_260813_manifest.json` | **bleibt unverändert** |
+| 3 | `nachweise/manifeste/tor1c_260814_manifest.json` | **bleibt unverändert** |
+
+> **Berichtigt am 15.08.2026.** Die erste Fassung dieses Blattes führte beide Manifeste unter
+> „nachzuziehen". **Das war falsch.** `K23-M18` verlangt ein **unveränderliches** Manifest:
+> Ein Manifest protokolliert einen Lauf, der gegen die Fassung v1.1 gelaufen ist. Wer es
+> umschreibt, macht aus einem Nachweis eine Behauptung. **Die neue Prüfsumme trägt das
+> nächste Manifest, nicht das alte.**
 
 **Zusätzlich zu berichtigen, unabhängig vom Fassungswechsel:** `CLAUDE.md` führt die
 Gegenzeichnung des Auftragnehmers als ausstehend. Nachgeprüft ist sie erteilt — A. Han hat
