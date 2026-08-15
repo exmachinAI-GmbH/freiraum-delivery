@@ -99,7 +99,7 @@ GRUPPEN = ("sicherheitskritisch", "mandantenkritisch", "freigabekritisch",
 def laden(pfad, was):
     p = Path(pfad)
     if not p.is_file():
-        print("GESPERRT: %s nicht gefunden (%s)" % (pfad, was), file=sys.stderr)
+        print(f"GESPERRT: {pfad} nicht gefunden ({was})", file=sys.stderr)
         raise SystemExit(2)
     return json.loads(p.read_text(encoding="utf-8"))
 
@@ -196,11 +196,11 @@ def main():
 
     ziel = Path(a.ziel)
     ziel.mkdir(parents=True, exist_ok=True)
-    (ziel / ("S%s_wortmarken.json" % a.scheibe)).write_text(
+    (ziel / f"S{a.scheibe}_wortmarken.json").write_text(
         json.dumps(kopf, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # --- Markdown-Sicht -------------------------------------------------------
-    z = ["# Stichwortverzeichnis zum Faden der Scheibe %s" % a.scheibe, "",
+    z = [f"# Stichwortverzeichnis zum Faden der Scheibe {a.scheibe}", "",
          "**Vorschlag ist das hier nicht.** Ein Worttreffer belegt, dass ein Wort an",
          "zwei Stellen steht -- nicht, dass die Regel zu dieser Scheibe gehoert.",
          "Deshalb steht in diesem Verzeichnis nirgends eine Scheibennummer.", "",
@@ -209,13 +209,12 @@ def main():
          "| Station | Zeile im Faden | Treffer | Konzepte | unterscheidet |",
          "|---|---|---:|---:|---|"]
     for e in ergebnis:
-        u = ("**nein** -- steckt ganz in *%s*" % e["geht_auf_in"]) if e["geht_auf_in"] else (
+        u = (f"**nein** -- steckt ganz in *{e['geht_auf_in']}*") if e["geht_auf_in"] else (
             "keine Treffer" if e["treffer"] == 0 else "ja")
         stern = " \\*" if e["gleichbedeutend"] else ""
-        z.append("| **%s**%s | %s (%s) | %d | %d | %s |"
-                 % (e["station"], stern, e["zeile_im_faden"], e["anker"],
-                    e["treffer"], len(e["konzepte"]), u))
-    z += ["", "**Insgesamt beruehrt: %d von %d Regeln.**" % (len(alle), len(zeilen)), ""]
+        z.append(f"| **{e['station']}**{stern} | {e['zeile_im_faden']} ({e['anker']}) "
+                 f"| {e['treffer']} | {len(e['konzepte'])} | {u} |")
+    z += ["", f"**Insgesamt beruehrt: {len(alle)} von {len(zeilen)} Regeln.**", ""]
 
     mit_syn = [e for e in ergebnis if e["gleichbedeutend"]]
     if mit_syn:
@@ -228,9 +227,8 @@ def main():
               "|---|---|---:|---|"]
         for e in mit_syn:
             for s in e["gleichbedeutend"]:
-                z.append("| **%s** | `%s` | %d | **%s** -- *%s* |"
-                         % (e["station"], s["muster"], s["treffer"],
-                            s["beleg"], s["wortlaut_des_belegs"]))
+                z.append(f"| **{e['station']}** | `{s['muster']}` | {s['treffer']} "
+                         f"| **{s['beleg']}** -- *{s['wortlaut_des_belegs']}* |")
         z.append("")
 
     z += ["## Was hier NICHT steht", "",
@@ -244,21 +242,21 @@ def main():
           "entscheidet M. Veil -- nicht dieses Werkzeug.", ""]
     for e in ergebnis:
         if e["geht_auf_in"]:
-            z.append("- **%s** (%d Treffer) steckt vollstaendig in *%s*"
-                     % (e["station"], e["treffer"], e["geht_auf_in"]))
+            z.append(f"- **{e['station']}** ({e['treffer']} Treffer) steckt "
+                     f"vollstaendig in *{e['geht_auf_in']}*")
     leer = [e["station"] for e in ergebnis if e["treffer"] == 0]
     if leer:
         z += ["", "Ohne jeden Treffer -- die Maschine traegt hier nichts bei:",
               "", "- " + " · ".join(leer), ""]
-    (ziel / ("S%s_wortmarken.md" % a.scheibe)).write_text("\n".join(z) + "\n", encoding="utf-8")
+    (ziel / f"S{a.scheibe}_wortmarken.md").write_text("\n".join(z) + "\n", encoding="utf-8")
 
-    print("Stichwortverzeichnis Scheibe %s: %d Stationen, %d von %d Regeln beruehrt"
-          % (a.scheibe, len(ergebnis), len(alle), len(zeilen)))
+    print(f"Stichwortverzeichnis Scheibe {a.scheibe}: {len(ergebnis)} Stationen, "
+          f"{len(alle)} von {len(zeilen)} Regeln beruehrt")
     for e in ergebnis:
         if e["geht_auf_in"]:
-            print("  HINWEIS %s unterscheidet nicht -- ganz in %s" % (e["station"], e["geht_auf_in"]))
+            print(f"  HINWEIS {e['station']} unterscheidet nicht -- ganz in {e['geht_auf_in']}")
         if e["treffer"] == 0:
-            print("  HINWEIS %s ohne Treffer -- die Maschine traegt hier nichts bei" % e["station"])
+            print(f"  HINWEIS {e['station']} ohne Treffer -- die Maschine traegt hier nichts bei")
     return 0
 
 
