@@ -599,10 +599,24 @@ auch mit vollzogenem BA-1 nicht. Genau eine Möglichkeit ankreuzen.
 
 ### Zeichnung
 
+**Wer entscheidet, und wer zeichnet — das ist nicht dasselbe.** Die Sachentscheidung über
+Umfang und Termin gehört nach Abschnitt 10a dem **Auftraggeber allein**: *„beides ist seine
+Entscheidung, nicht die des Auftragnehmers."* Die Urkunde, die sie in den Vertrag schreibt,
+zeichnen nach Abschnitt 12.3 **beide Parteien**: *„Dieselben Parteien zeichnen jedes
+Korrekturblatt."*
+
+Die Unterschrift des Auftragnehmers ist damit **kein zweites Veto über den Inhalt** — aber
+ohne sie wird die Korrektur nicht wirksam. Der Ablaufplan 12.9 sagt für diesen Fall:
+*„Vorschlag bleibt liegen · AM AUFTRAG IST NICHTS GEÄNDERT."*
+
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | |
+| **M. Veil** | Auftraggeber — **trifft die Entscheidung** (Abschnitt 10a) | | |
+| **A. Han** | für den Auftragnehmer (Nr. 158) — **zeichnet die Urkunde mit** (Abschnitt 12.3) | | |
+
+> **Zu Kreuz K3, Weg 3-III.** Eine Festlegung auf Rang 0 ist ein **Founder-Beschluss** und
+> wird nicht auf diesem Blatt gezeichnet, sondern auf einem eigenen — nach dem Muster von F28
+> und F04, von beiden Foundern.
 
 ---
 

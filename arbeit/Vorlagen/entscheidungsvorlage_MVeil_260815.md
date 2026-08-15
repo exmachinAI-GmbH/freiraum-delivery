@@ -30,6 +30,50 @@
 
 ---
 
+## Wer entscheidet, und wer zeichnet — das ist nicht dasselbe
+
+Der Bauauftrag trennt beides sauber, und die Trennung entscheidet, wen Sie wofür brauchen.
+
+**Die Sachentscheidung über Umfang und Termin gehört Ihnen allein.** Abschnitt 10a:
+
+> „Der Auftraggeber entscheidet dann über Umfang oder Termin; beides ist seine Entscheidung,
+> nicht die des Auftragnehmers."
+
+**Die Urkunde, die das in den Vertrag schreibt, zeichnen beide.** Abschnitt 12.3:
+
+> „Vertragsparteien sind M. Veil (Auftraggeber) und der Auftragnehmer; für den Auftragnehmer
+> zeichnet A. Han (Nr. 158). Dieselben Parteien zeichnen jedes Korrekturblatt."
+
+Das ist kein Widerspruch: **Sie entscheiden, *was* der Umfang ist. Die Änderung eines
+zweiseitigen Vertrags wird von beiden Seiten unterschrieben.** A. Hans Unterschrift ist kein
+zweites Veto über den Inhalt — aber ohne sie wird die Korrektur nicht wirksam. Der Ablaufplan
+12.9 sagt für den ungezeichneten Fall: *„Vorschlag bleibt liegen · AM AUFTRAG IST NICHTS
+GEÄNDERT."*
+
+| Vorgang | Entscheidet | Zeichnet | Fundstelle |
+|---|---|---|---|
+| **Umfang und Termin von Tor II** | **M. Veil allein** | — | Abschnitt 10a |
+| **Korrekturblatt BA-1** (E2) | M. Veil | **M. Veil und A. Han** | Abschnitt 12.3 |
+| **Nachträge zur Anlage** — Sprache, Fortschritt, `SPR-10` (E4, E5) | M. Veil | **M. Veil und A. Han** | Abschnitt 11.4: *„neu zeichnen lassen (Auftraggeber, Auftragnehmer)"* |
+| **Festlegung auf Rang 0** — Weg 3-III aus E2, Kreuz 4 | Founder gemeinsam | **beide Founder** | Rang 0 sind „Festlegungen F01–F40 und **gezeichnete Founder-Beschlüsse**" |
+| **Freigabe der Anträge #21–#23** (E1) | **A. Han** | A. Han | Zweigschutz mit CODEOWNERS; dieser Rechner ist als `exmachinai` angemeldet und kann nicht selbst freigeben |
+| **Abnahme Starttor 05 und 15** (E6) | **M. Veil allein** | M. Veil | Tor II, Bedingung 6: *„Nachweis: A. Han. Abnahme: M. Veil"* |
+| **Zeichnungsblatt Scheibe 1** (E3) | **M. Veil** | M. Veil | Übergabe vom 15.08.2026 |
+| **V4 und V5** (E8) | **M. Veil allein** | M. Veil | Blatt 57, Abschnitt 1c |
+| **VP-08b** (E7) | **M. Veil** — Umsetzung ggf. Konzept-Fabrik | — | Befund aus dem Prüflauf |
+| **Umbenennung absagen** (E9) | **M. Veil allein** | — | keine Zeichnung nötig: es bleibt alles, wie es ist |
+| **Präsentation freigeben** (E10) | **M. Veil** | — | — |
+
+> **Was das praktisch heißt.** Von den zwölf Entscheidungen können Sie **sieben allein**
+> treffen. Drei brauchen zusätzlich A. Hans Unterschrift — BA-1, die Anlagen-Nachträge und
+> die Festlegung auf Rang 0. Eine liegt ganz bei ihm: die Freigabe der drei Anträge.
+>
+> **Empfehlung: A. Han in einem Zug ansprechen** — die drei Freigaben (E1), danach seine
+> Mitzeichnung von BA-1, den Anlagen-Nachträgen und der Festlegung. Das ist ein Termin, nicht
+> vier. Alles Übrige können Sie unabhängig davon entscheiden.
+
+---
+
 ## Die Frage, die vor allen zwölf steht
 
 **Bleibt Weg A die gewollte Entscheidung, nachdem feststeht, dass er Tor II am 31.08.2026
