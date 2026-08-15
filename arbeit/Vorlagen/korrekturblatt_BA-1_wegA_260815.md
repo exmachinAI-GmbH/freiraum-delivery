@@ -120,10 +120,33 @@ sagt, was verlangt wird. Er stellt nicht fest, was erreicht ist.** Der erreichte
 | **M3** | **eingetreten** nach der Nachrechnung aus Abschnitt 6a; alle fünf Teilaussagen bestanden. Liegt in Antrag #23, noch nicht im gültigen Stand | Übergabe 15.08., Abschnitt 2 |
 | **M4** | nicht begonnen | Übergabe 15.08., Abschnitt 2 |
 
-> **Folge für die Zeichnung.** Auch nach vollzogenem BA-1 ist Tor II am 31.08.2026 nur
-> erreichbar, wenn **AC-16 gefahren wird** — die echte Zustellung, die nur ein Mensch
-> auslösen kann. Das ist der bekannte Blocker im neu festgelegten Umfang. Er wird durch
-> dieses Blatt nicht beseitigt und darf nicht übersehen werden.
+### Die Frage, die vor allen Kreuzen steht
+
+**Bleibt Weg A die gewollte Entscheidung, nachdem feststeht, dass er Tor II am 31.08.2026
+nicht von selbst erreichbar macht?**
+
+Blatt 57 hat Weg A gegen Weg C („Termin verschieben") gezeichnet — erkennbar unter der
+Annahme, dass der eingeengte Umfang in der verbleibenden Zeit erreichbar ist. **Diese Annahme
+trägt nach heutiger Messung nicht.** Fünf Gründe, jeder einzeln belegt:
+
+| | Was dem Endtermin im Weg steht |
+|---|---|
+| 1 | **M2 ist nicht eingetreten.** Es hängt am Prüffall AC-16 — einer echten Zustellung mit abgelesenem Mailkopf, die nur ein Mensch mit fremdem Postfachzugang fahren kann |
+| 2 | **M1 ist von diesem Repository aus nicht bestätigbar** — die Nachrechnung verweist auf ein Skript außerhalb |
+| 3 | **Die K23-Gates 11, 13, 14 und 15 sperren die menschliche Freigabe weiter**, gleich wie der Bauauftrag geändert wird (siehe Korrektur K3) |
+| 4 | **Die Fremdprüfung (Messstufe 3)** — gezeichneter Bestandteil des Teilschnitts nach Blatt 57 — ist bis heute kein einziges Mal gelaufen, und für den Teilschnitt gibt es bisher keinen Auslöser |
+| 5 | **Der Klauselschnitt, an dem Korrektur K4 hängt, ist nicht gezeichnet** — er liegt als Zeichnungsblatt in Antrag #21 und wartet auf Freigabe |
+
+> **Handlungsempfehlung des Orchestrators: Weg A beibehalten und dieses Blatt zeichnen — aber
+> mit offenen Augen.** Der Vollzug ist in jedem Fall richtig: Ein Auftrag, der einen
+> Maßstab trägt, den beide Parteien bereits verworfen haben, nützt niemandem. Er allein
+> rettet den Termin aber nicht. Wer den 31.08. halten will, muss zusätzlich **heute** die
+> Punkte 1, 3, 4 und 5 anstoßen — AC-16 fahren lassen, Kreuz K3 entscheiden, die Fremdprüfung
+> anfordern, den Klauselschnitt zeichnen. Wer das nicht will oder kann, sollte **zusätzlich**
+> über einen neuen Endtermin entscheiden; dafür ist ein eigenes Korrekturblatt nötig, und die
+> Entscheidung gehört nach Abschnitt 10a dem Auftraggeber.
+>
+> **Der Harness entscheidet das nicht.** Alles Übrige an diesem Blatt ist Handwerk.
 
 ---
 
@@ -138,13 +161,30 @@ festlegt; sie trägt heute den Maßstab, den Blatt 57 ersetzt hat.
 
 > | 1 | **Die zwölf Meilensteine M1–M12 sind eingetreten**, je mit der Nachrechnung aus Abschnitt 6a |
 
-### Feld 4 · Neuer Wortlaut
+### Feld 4 · Neuer Wortlaut — **zwei Fassungen, je nach Kreuz K1-b**
 
-> | 1 | **Tor II verlangt zum Endtermin den benannten Teilschnitt bis zur Anmeldung** — Mandant anlegen · Einladungsschranke · Einladung über den echten Mailweg · Anmeldecode · Anmeldung, vollständig belegt, mit allen vier Messstufen (Blatt 57 vom 10.08.2026, gezeichnet von beiden Vertragsparteien; berichtigt mit Korrekturblatt BA-1). Er ist ausdrücklich **keine** Scheibe 1, sondern ein benannter Teil davon. **Auf diesem Weg liegen die Meilensteine M1 und M2. Tor II verlangt, dass sie eingetreten sind** — je mit der Nachrechnung aus Abschnitt 6a, die im Wortlaut unverändert bleibt. |
-> | 1a | **Die Meilensteine M5 bis M12 sind zurückgestellt.** Sie sind zum 31.08.2026 nicht Gegenstand von Tor II. Sie bleiben geschuldet; ihre Nachrechnung in Abschnitt 6a bleibt im Wortlaut bestehen und wird nicht gesenkt. Ein Termin für sie wird mit einem eigenen Korrekturblatt gesetzt. |
-> | 1b | **Über die Meilensteine M3 und M4 entscheidet das Kreuz K1-b zu diesem Korrekturblatt.** Beide liegen hinter der Anmeldung und werden vom Wortlaut des Blattes 57 nicht erfasst. |
-> | 1c | **Die Feststellung zum Endtermin bleibt unberührt.** Zum 31.08.2026 wird für jeden Meilenstein M1 bis M12 festgestellt, ob er eingetreten ist. Für die zurückgestellten ist diese Feststellung **Bericht, nicht Abnahmebedingung**. |
-> | 1d | **Kein Meilenstein trägt eine Scheibennummer.** Die Zuordnung von Meilensteinen zu Bauabschnitten führt allein die Anlage *Baustrategie*; sie ist Steuerung, nie Abnahmebedingung (Abschnitt 11.2). |
+**Es wird genau eine Fassung eingetragen.** Welche, entscheidet Kreuz K1-b in Feld 7. Der
+Ausführende formuliert nichts selbst.
+
+#### Fassung A — wenn M3 und M4 zurückgestellt werden
+
+> | 1 | **Tor II verlangt zum Endtermin den benannten Teilschnitt bis zur Anmeldung** — Mandant anlegen · Einladungsschranke · Einladung über den echten Mailweg · Anmeldecode · Anmeldung, vollständig belegt, mit allen vier Messstufen (Blatt 57 vom 10.08.2026, gezeichnet von beiden Vertragsparteien; berichtigt mit Korrekturblatt BA-1 vom ⟨Zeichnungsdatum⟩). Er ist ausdrücklich **keine** Scheibe 1, sondern ein benannter Teil davon. **Auf diesem Weg liegen die Meilensteine M1 und M2. Sie müssen zum Endtermin eingetreten sein** — je mit der Nachrechnung aus Abschnitt 6a, die im Wortlaut unverändert bleibt. |
+> | 1a | **Zurückgestellt sind die Meilensteine M3 bis M12.** Sie sind zum 31.08.2026 nicht Gegenstand von Tor II. Sie bleiben geschuldet; ihre Nachrechnung in Abschnitt 6a bleibt im Wortlaut bestehen und wird nicht gesenkt. Ein Termin für sie wird mit einem eigenen Korrekturblatt gesetzt. |
+
+#### Fassung B — wenn M3 aufgenommen und M4 zurückgestellt wird
+
+> | 1 | **Tor II verlangt zum Endtermin den benannten Teilschnitt bis zur Anmeldung, erweitert um die Vorprüfung mit Halt und drei Auswegen** — Mandant anlegen · Einladungsschranke · Einladung über den echten Mailweg · Anmeldecode · Anmeldung · Vorprüfung mit Halt, vollständig belegt, mit allen vier Messstufen (Blatt 57 vom 10.08.2026, gezeichnet von beiden Vertragsparteien; erweitert und berichtigt mit Korrekturblatt BA-1 vom ⟨Zeichnungsdatum⟩). Er ist ausdrücklich **keine** Scheibe 1, sondern ein benannter Teil davon. **Auf diesem Weg liegen die Meilensteine M1, M2 und M3. Sie müssen zum Endtermin eingetreten sein** — je mit der Nachrechnung aus Abschnitt 6a, die im Wortlaut unverändert bleibt. |
+> | 1a | **Zurückgestellt sind die Meilensteine M4 bis M12.** Sie sind zum 31.08.2026 nicht Gegenstand von Tor II. Sie bleiben geschuldet; ihre Nachrechnung in Abschnitt 6a bleibt im Wortlaut bestehen und wird nicht gesenkt. Ein Termin für sie wird mit einem eigenen Korrekturblatt gesetzt. |
+
+#### Fassung C — wenn M3 und M4 aufgenommen werden
+
+> | 1 | wie Fassung B, zusätzlich erweitert um **den einen Weg zur Anwendung**; auf diesem Weg liegen die Meilensteine **M1, M2, M3 und M4**. |
+> | 1a | **Zurückgestellt sind die Meilensteine M5 bis M12.** Weiter wie oben. |
+
+#### In allen drei Fassungen gleich
+
+> | 1b | **Die Feststellung zum Endtermin bleibt unberührt.** Zum 31.08.2026 wird für jeden Meilenstein M1 bis M12 festgestellt, ob er eingetreten ist. Für die zurückgestellten ist diese Feststellung **Bericht, nicht Abnahmebedingung**. |
+> | 1c | **Kein Meilenstein trägt eine Scheibennummer.** Die Zuordnung von Meilensteinen zu Bauabschnitten führt allein die Anlage *Baustrategie*; sie ist Steuerung, nie Abnahmebedingung (Abschnitt 11.2). |
 
 **Vollzugsvermerk am Ort** (12.4 Nr. 3), an das Ende der Bedingung 1 anzufügen:
 *„Geändert mit Korrekturblatt BA-1, Korrektur K1, vom ⟨Datum⟩."*
@@ -206,24 +246,41 @@ nicht möglich. Modul- und Lastprüfung gehören zu zurückgestellten Meilenstei
 
 ### Feld 4 · Neuer Wortlaut
 
-> | 3 | **Ein benannter Teildurchstich über den Teilschnitt nach Bedingung 1 ist bestanden** — von der Einladung bis zur erfolgreichen Anmeldung, ohne Sprung, mit mindestens einer Abzweigung je Fehlerpfad, den die auf diesem Weg durchlaufenen Konzepte zeichnen, und mit unveränderlichem Manifest nach K23-M18. **Der Teildurchstich ist kein Durchstich nach K23-M06 und lässt den Meilenstein M10 nicht eintreten.** **Zurückgestellt mit Bedingung 1a:** der Durchstich nach K23-M06 sowie die Modulprüfungen nach K23-M08 und die Lastprüfung — ihre Messvorschriften bleiben im Wortlaut unverändert. |
+> | 3 | **Ein Teildurchstich über den Teilschnitt nach Bedingung 1 ist bestanden** — von der Einladung bis zur erfolgreichen Anmeldung, ohne Sprung, **mit mindestens einer Abzweigung je Fehlerpfad**, den die auf diesem Teilschnitt durchlaufenen Konzepte zeichnen, und mit unveränderlichem Manifest nach K23-M18. **Der Teildurchstich ist kein Durchstich nach K23-M06. Er lässt den Meilenstein M10 nicht eintreten. Sein Manifest trägt die Kennung `TEILDURCHSTICH` und darf als Beleg für M10 nicht herangezogen werden.** Der Satz *„Ein Lauf, der nur den Erfolgsweg nimmt, gilt als nicht durchgeführt"* gilt unverändert (K23-M07). **Zurückgestellt mit Bedingung 1a:** der Durchstich nach K23-M06 sowie die Modulprüfungen nach K23-M08 und die Lastprüfung — ihre Messvorschriften bleiben im Wortlaut unverändert, einschließlich „drei Mandanten gleichzeitig, 95 % unter 3 Sekunden, 50 Modellaufrufe je Gespräch" und des Satzes „die Mandantentrennung ist der schärfere Maßstab". |
 
 **Vollzugsvermerk am Ort:** *„Geändert mit Korrekturblatt BA-1, Korrektur K3, vom ⟨Datum⟩."*
 
-### Was diese Korrektur allein **nicht** leistet — Kreuz K3
+### Was dieses Blatt allein **nicht** leistet — die vier sperrenden Gates
 
 **Ein Korrekturblatt zum Bauauftrag kann keine Klausel des Konzepts K23 aufheben.** K23 ist
-ein gezeichnetes Fachkonzept. Drei Stellen dort sperren unabhängig vom Auftragstext weiter:
+ein gezeichnetes Fachkonzept und führt in Abschnitt 6 fünfzehn sperrende Gates — Regeln, bei
+denen ein Bau die menschliche Freigabe nicht erreicht. **Vier davon schlagen hier an, und
+zwar gleichgültig, wie der Bauauftrag geändert wird:**
 
-| | Was sperrt |
-|---|---|
-| **K23-M20** | verlangt vor **jeder** Vorlage zur menschlichen Freigabe einen bestandenen Durchstich gegen den aktuellen Auftragsstand |
-| **Gate 15** (K23 Abschnitt 6) | sperrt bei „fehlendem, veraltetem oder nur auf dem Erfolgsweg gelaufenem Durchstich (K23-M07, K23-M20)" |
-| **K23-D01** | ein Bau mit anschlagendem Gate erreicht die menschliche Freigabe nicht |
+| Gate | Schlägt an bei | Betrifft |
+|---|---|---|
+| **11** | fehlender Eigentümer- oder Akzeptanzzuordnung | **alle 1 231 Registerzeilen** — sieben der zehn Felder aus K23-M02 sind leer |
+| **13** | fehlgeschlagener Modulprüfung nach K23-M08 | die mit K3 zurückgestellten Modulprüfungen |
+| **14** | fehlgeschlagener Lastprüfung nach K23-M10 | die mit K3 zurückgestellte Lastprüfung — nach der Zwischenregel schon dann, wenn **keine** Lastprüfung durchgeführt wurde |
+| **15** | fehlendem, veraltetem oder nur auf dem Erfolgsweg gelaufenem Durchstich | den zurückgestellten Durchstich nach K23-M06 |
 
-**Daraus folgt: Ohne eine Änderung auf der K23-Seite erreicht der Teilschnitt die
-Unterschrift nicht** — auch mit vollzogenem BA-1 nicht. Die Entscheidung darüber gehört in
-Feld 7, Kreuz K3, und wird hier nicht still getroffen.
+Dazu **K23-D01**: *„Ein Bau DARF NICHT zur menschlichen Freigabe gelangen, solange ein
+sperrendes Gate aus Abschnitt 6 anschlägt."*
+
+*Gemessen:* `python3 -c "…register.json… ['zaehlung']['leere_felder']"` → `eigentuemer: 1231,
+kritikalitaet: 1231, akzeptanzkriterium: 1231, test: 1231, teststand: 1231, ergebnis: 1231,
+evidenz: 1231`
+
+> **Daraus folgt der wichtigste Satz dieses Blattes: Eine Einengung von Tor II hebt kein Gate
+> auf.** Auch mit vollzogenem BA-1 erreicht der Teilschnitt die menschliche Freigabe nicht,
+> solange die vier Gates anschlagen. Die Entscheidung darüber gehört in Feld 7, Kreuz K3, und
+> wird hier nicht still getroffen.
+
+### Feld 4 · Zusatz 3a — **nur einzutragen, wenn Kreuz K3 auf Weg 3-I fällt**
+
+Feld 5, Stelle 14. Wird ein anderer Weg gewählt, wird die Stelle mit *entfällt* abgehakt.
+
+> | 3a | **Für diese eine Abnahme genügt der Teildurchstich nach Bedingung 3.** Damit wird von K23-M06 abgewichen; für die zurückgestellten Modulprüfungen zusätzlich von K23-M08, für die zurückgestellte Lastprüfung von K23-M10, für die eingeengte Nachweispflicht von K23-M02. Jede der vier Abweichungen wird als benanntes Restrisiko mit Träger und Wiedervorlage in der Restrisikoliste geführt (K23-M04). **Die sperrenden Gates 11, 13, 14 und 15 aus K23 Abschnitt 6 bleiben davon unberührt.** *(Eingefügt am ⟨Zeichnungsdatum⟩ mit Korrekturblatt BA-1, Korrektur K3.)* |
 
 ---
 
@@ -419,8 +476,15 @@ Korrektur K7, vom ⟨Datum⟩."*
 > **„entfällt"** abgehakt. Beides ist ein Vollzug im Sinne von 12.4 Nr. 2. **Eine Stelle
 > ohne Eintrag ist Teilvollzug und damit Nichtvollzug** (12.4 Nr. 4).
 
+> **Vor jedem Eintrag zwei Handgriffe.** Erstens: die Zielzeile am **Ankerzitat**
+> nachschlagen, nicht an der Nummer — stimmt der Anker nicht, wird **nicht eingetragen,
+> sondern gefragt**. Zweitens: jedes **⟨Zeichnungsdatum⟩** im einzutragenden Wortlaut durch
+> das Datum aus Feld 7 ersetzen. **Ein Platzhalter im eingefrorenen Auftrag ist ein
+> Nichtvollzug nach 12.4 Nr. 4.**
+
 | Nr. | Abschnitt | Ankerzitat (Anfang der zu ändernden Stelle) | Zeile am 15.08. | Korrektur | gilt nur bei | Vollzug: Datum · Zeichen · oder *entfällt* |
 |---|---|---|---|---|---|---|
+| 14 | 9, Tor II — **neue** Zeile 3a unmittelbar nach Bedingung 3 | einzufügen nach „Durchstich, Modulprüfungen und Lastprüfung" | nach 725 | K3 | **nur bei Kreuz K3 = Weg 3-I** | ☐ |
 | 13 | 10a, Absatz *Ein Meilenstein…* | „Ein Meilenstein, der zum Endtermin nicht eingetreten ist" | 783–785 | K7-E | K1 | ☐ |
 | 12 | 10a, erster Absatz | „31. August 2026.** Bis dahin sind die zwölf Meilensteine" | 764–765 | K7-D | K1 | ☐ |
 | 11 | 10, Berichtspflicht Nr. 2 | „Lastprüfung: 3 gleichzeitige Mandanten" | 756 | K7-C | K3 | ☐ |
@@ -462,42 +526,76 @@ Jede Zeile in Feld 5 hält nach 12.4 Nr. 5 die Freigabestrecke an, bis sie abgeh
 
 ### Kreuz K1 · Der Vollzug der Zeichnung vom 10.08.2026
 
-- [ ] **Getragen.** Tor II verlangt zum 31.08.2026 den Teilschnitt bis zur Anmeldung; M5 bis
-      M12 sind zurückgestellt, bleiben geschuldet und behalten ihre Nachrechnung im Wortlaut.
-      **Damit gilt auch Korrektur K7** (die Terminzeilen und Vermerke).
+- [ ] **Getragen.** ✅ **Empfehlung des Orchestrators.** Tor II verlangt zum 31.08.2026 den
+      Teilschnitt bis zur Anmeldung; die übrigen Meilensteine sind zurückgestellt, bleiben
+      geschuldet und behalten ihre Nachrechnung im Wortlaut. **Damit gilt auch Korrektur K7**
+      (die Terminzeilen und Vermerke). *Warum: Das ist kein neuer Entschluss, sondern die
+      Ausführung eines fünf Tage alten. Ihn nicht auszuführen nützt niemandem.*
 - [ ] **Nicht getragen.** Der Auftrag bleibt unverändert. **Bekannte Folge:** Tor II verlangt
       weiterhin alle zwölf Meilensteine zum 31.08.2026; nach eigener Messung ist das nicht
       erreichbar. Die Zeichnung vom 10.08.2026 bleibt unvollzogen.
 
-### Kreuz K1-b · M3 und M4 — beide Zeilen einzeln entscheiden
+### Kreuz K1-b · M3 und M4 — genau eine Möglichkeit ankreuzen
 
-- [ ] **M3 gehört zum Umfang von Tor II.** *(Empfehlung des Orchestrators: ja — M3 ist gebaut
-      und vollständig gemessen; es kostet keine zusätzliche Bauzeit und macht die Lieferung
-      größer. Folge: Starttor 13 gehört dazu.)*
-- [ ] **M4 gehört zum Umfang von Tor II.** *(Empfehlung des Orchestrators: nein — M4 ist nicht
-      begonnen und verlangt den Zweckbestimmungs-Schritt EN-04a sowie `create_app_after_fit`.
-      Folge bei Ja: Starttor 14 gehört dazu.)*
+- [ ] **Beide zurückgestellt.** → **Korrektur K1 in Fassung A**, Korrektur K6 mit den
+      Starttoren 05, 11, 15.
+- [ ] **Nur M3 aufgenommen.** ✅ **Empfehlung des Orchestrators.** → **Korrektur K1 in
+      Fassung B**, Korrektur K6 mit den Starttoren 05, 11, 13, 15.
+      *Warum: M3 ist gebaut und vollständig gemessen (Prüffälle VP-13, VP-14, VP-17, VP-18,
+      VP-19, alle bestanden, Antrag #23). Es kostet keine zusätzliche Bauzeit und macht die
+      Lieferung sichtbar größer. M4 dagegen ist nicht begonnen — es aufzunehmen hieße, in
+      sechzehn Tagen einen Meilenstein zu versprechen, der noch keinen Gegenstand hat.*
+- [ ] **M3 und M4 aufgenommen.** → **Korrektur K1 in Fassung C**, Korrektur K6 bleibt
+      unverändert (Stellen 3 und 10 werden mit *entfällt* abgehakt).
+      **Bekannte Folge:** Tor II verlangt dann `create_app_after_fit` und den Bildschirm
+      EN-04a; beides ist am 15.08.2026 nicht begonnen.
 
 ### Kreuz K2 bis K6 · Die übrigen Bedingungen
 
 - [ ] **K2, K3, K4, K5 und K6 getragen** — die Bedingungen 2 bis 6 werden auf den Teilschnitt
-      eingeengt.
+      eingeengt. ✅ **Empfehlung des Orchestrators.** *Warum: Tor II hat sechs Bedingungen.
+      Wird nur die erste eingeengt, bleibt Tor II trotzdem unerreichbar — Bedingung 4 verlangt
+      ein vollständiges Klauselregister, das heute bei 0 von 1 231 steht. Das ist die
+      unangenehmste Empfehlung dieses Blattes: sie macht Tor II sichtbar dünn. Aber sie macht
+      es wahr.*
 - [ ] **Einzeln entschieden:** K2 ☐ · K3 ☐ · K4 ☐ · K5 ☐ · K6 ☐
 - [ ] **Alle abgelehnt** — die Bedingungen 2 bis 6 bleiben unverändert. **Bekannte Folge:**
       Tor II ist am 31.08.2026 nicht erreichbar, auch mit getragenem K1 nicht: Bedingung 4
       verlangt dann ein vollständiges Klauselregister (heute 0 von 1 231), Bedingung 3 einen
       Durchstich bis zum Übergabe-Paket.
 
-### Kreuz K3 · Die K23-Seite des Teildurchstichs
+### Kreuz K3 · Wie die vier sperrenden Gates behandelt werden
 
-**Ohne eine dieser beiden Entscheidungen erreicht der Teilschnitt die Unterschrift nicht.**
+**Ohne eine dieser vier Entscheidungen erreicht der Teilschnitt die Unterschrift nicht** —
+auch mit vollzogenem BA-1 nicht. Genau eine Möglichkeit ankreuzen.
 
-- [ ] **Ein Nachtrag zu K23 wird beauftragt**, der den *benannten Teildurchstich* als eigene
-      Prüfungsart neben dem vollen Durchstich führt und Gate 15 entsprechend fasst.
-      Zuständig: Konzept-Fabrik. Frist: ⟨Datum⟩. *(Empfehlung des Orchestrators.)*
-- [ ] **Kein Nachtrag.** **Bekannte Folge:** Gate 15 und K23-D01 sperren weiter; der
-      Teilschnitt kann zum 31.08.2026 gebaut und gemessen, aber **nicht menschlich
-      abgenommen** werden.
+- [ ] **Weg 3-I · Benannte Ausnahme im Auftrag.** Die Abweichung von K23-M06, K23-M08,
+      K23-M10 und K23-M02 wird im Auftrag festgehalten (Zusatz 3a, Feld 5 Stelle 14) und je
+      als benanntes Restrisiko mit Träger geführt. **Dauer: ein Tag. Bekannte Folge: Die
+      Gates 11, 13, 14 und 15 schlagen weiter an.** Dieser Weg macht die Abweichung sichtbar
+      und benannt; er beseitigt die Sperre der Freigabe **nicht**.
+- [ ] **Weg 3-II · Nachtrag zu K23 in der Konzept-Fabrik.** Erst danach greifen die Ausnahmen
+      klauselgestützt und die Gates schlagen nicht mehr an. **Dauer: nicht gemessen** — dieses
+      Projekt hat noch keinen Fabrik-Durchlauf im Coding-Harness gemessen; die letzten
+      Konzeptzeichnungen datieren vom 01.08.2026. **Bekannte Folge:** Ab der Zeichnung dieses
+      Blattes ist nach 12.4 Nr. 5 keine Vorlage zur Freigabe zulässig, bis der letzte Haken
+      sitzt — und mehrere Stellen können erst gehakt werden, wenn der K23-Nachtrag durchlaufen
+      und gezeichnet ist. **Bei sechzehn verbleibenden Tagen ist das die teuerste Zeile
+      dieses Blattes.**
+- [ ] **Weg 3-III · Festlegung auf Rang 0.** ✅ **Empfehlung des Orchestrators.** Ein
+      Founder-Beschluss nach dem Muster von **F28** (nimmt das Konzept K22 aus) und **F04**
+      (nimmt drei Portale aus) nimmt den vollen Durchstich, die Modulprüfungen und die
+      Lastprüfung für **diese eine** Abnahme aus dem Umfang. Festlegungen stehen auf Rang 0
+      und gewinnen gegen alles Weitere. **Dieser Weg ändert weder K23 noch erzeugt er einen
+      Widerspruch** — er verlangt aber einen eigenen gezeichneten Beschluss. *Warum empfohlen:
+      er ist der einzige Weg, der die Gates wirklich auflöst und in sechzehn Tagen darstellbar
+      ist.* **Gate 11 bleibt gesondert zu behandeln** — es hängt an den 1 231 leeren
+      Registerzeilen, nicht am Durchstich; dafür ist Korrektur K4 der Weg.
+- [ ] **Weg 3-IV · Dieses Blatt jetzt ohne die Korrekturen K3 und K4 zeichnen**, den
+      K23-Weg getrennt führen und beides auf einem zweiten Korrekturblatt nachziehen. **Dauer:
+      sofort.** **Bekannte Folge:** Der Vollzug von Weg A ist schneller durch, die
+      Freigabestrecke bleibt kürzer gesperrt — die Gate-Frage ist damit aber nur verschoben,
+      nicht beantwortet.
 
 ### Zeichnung
 

@@ -30,6 +30,37 @@
 
 ---
 
+## Die Frage, die vor allen zwölf steht
+
+**Bleibt Weg A die gewollte Entscheidung, nachdem feststeht, dass er Tor II am 31.08.2026
+nicht von selbst erreichbar macht?**
+
+Am 10.08. wurde Weg A gegen Weg C („Termin verschieben") gezeichnet — erkennbar unter der
+Annahme, dass der eingeengte Umfang in der verbleibenden Zeit erreichbar ist. **Diese Annahme
+trägt nach heutiger Messung nicht.** Fünf Gründe, jeder einzeln belegt:
+
+| | Was dem Endtermin auch nach der Einengung im Weg steht | Zu tun |
+|---|---|---|
+| 1 | **M2 ist nicht eingetreten** — es hängt am Prüffall AC-16, einer echten Zustellung mit abgelesenem Mailkopf | **E1**, Folgepunkt: A. Han fährt ihn |
+| 2 | **M1 ist von der Ablage aus nicht bestätigbar** — die Nachrechnung zeigt auf ein Skript außerhalb | Nachweis anfordern oder als Restrisiko tragen |
+| 3 | **Vier K23-Gates sperren die Freigabe weiter**, gleich wie der Auftrag geändert wird | **E2, Kreuz 4** — Weg 3-III |
+| 4 | **Die Fremdprüfung ist nie gelaufen**, obwohl Blatt 57 sie für den Teilschnitt verlangt | sofort anfordern, ohne Zeichnung möglich |
+| 5 | **Der Klauselschnitt ist nicht gezeichnet**, an dem die Nachweispflicht hängen soll | **E1** und **E3** |
+
+> **Empfehlung: Weg A beibehalten und BA-1 zeichnen — aber mit offenen Augen.** Der Vollzug
+> ist in jedem Fall richtig: Ein Auftrag, der einen Maßstab trägt, den beide Parteien bereits
+> verworfen haben, nützt niemandem. Er allein rettet den Termin aber nicht.
+>
+> **Wer den 31.08. halten will, muss zusätzlich heute die Punkte 1, 3, 4 und 5 anstoßen.**
+> Alle vier sind Entscheidungen, keine Bauarbeit — sie kosten zusammen einen halben Tag.
+>
+> **Wer das nicht will oder kann, sollte zusätzlich über einen neuen Endtermin entscheiden.**
+> Dafür ist ein eigenes Korrekturblatt nötig; die Entscheidung gehört nach Abschnitt 10a dem
+> Auftraggeber. **Beides zugleich ist zulässig** — Umfang einengen *und* Termin verschieben —
+> und ist die ehrlichste Variante, wenn Punkt 1 bis 5 nicht sicher zu schließen sind.
+
+---
+
 # Teil 1 · Was heute geschehen muss, bevor irgendetwas gezeichnet wird
 
 ## E1 · Die drei Anträge #21, #22 und #23 freigeben lassen
@@ -103,28 +134,43 @@ allein verlangt ein vollständiges Klauselregister, und das steht bei **0 von 1 
 > macht Tor II sichtbar dünn — aber sie macht es **wahr**. Die Alternative ist nicht ein
 > größeres Tor II, sondern ein verfehltes.
 
-### Kreuz 4 · Auf welchem Weg wird der Teildurchstich zulässig?
+### Kreuz 4 · Wie werden die vier sperrenden Gates behandelt?
 
-Hier liegt der Befund, den beide Prüfungen unabhängig gefunden haben: **Der Teilschnitt kann
-nach heutiger Regellage die Unterschrift gar nicht erreichen.** Das Konzept K23 verlangt vor
-jeder menschlichen Freigabe einen Durchstich, und der muss *„von der Einladung bis zum
-abgerufenen Übergabe-Paket"* laufen (K23-M06). Der Teilschnitt endet bei der Anmeldung.
+Hier liegt der Befund, den beide Prüfungen unabhängig gefunden haben und der die
+Tragweite aller anderen Entscheidungen bestimmt.
 
-Ein Korrekturblatt zum Bauauftrag kann eine gezeichnete Klausel aus K23 nicht aufheben. Es
-gibt zwei saubere Wege:
+Das Konzept K23 führt fünfzehn **Gates** — Regeln, bei denen ein Bau die menschliche
+Freigabe nicht erreicht. **Vier davon schlagen hier an, und zwar unabhängig davon, wie der
+Bauauftrag geändert wird:**
 
-| | Weg | Preis |
+| Gate | Schlägt an bei | Warum hier |
 |---|---|---|
-| **3-I** | Sie tragen ausdrücklich, dass für **diese eine** Abnahme ein Teildurchstich genügt; die Abweichung von K23-M06 wird als benanntes Restrisiko mit Träger geführt | schnell — aber der Auftrag widerspricht dann sichtbar einer gezeichneten Klausel |
-| **3-II** | K23 bekommt in der Konzept-Fabrik eine Klausel, die den *benannten Teildurchstich* als eigene Art führt | sauber — aber ein Fabrik-Durchlauf und eine eigene Zeichnung |
+| **11** | fehlender Eigentümer- oder Akzeptanzzuordnung | sieben der zehn Registerfelder sind für **alle 1 231** Klauseln leer |
+| **13** | fehlgeschlagener Modulprüfung | die Modulprüfungen werden zurückgestellt |
+| **14** | fehlgeschlagener Lastprüfung | schlägt schon an, wenn **keine** Lastprüfung durchgeführt wurde |
+| **15** | fehlendem Durchstich | der Teilschnitt endet bei der Anmeldung, K23-M06 verlangt den Weg bis zum Übergabe-Paket |
 
-> **Empfehlung: 3-I jetzt, 3-II danach.** In sechzehn Tagen ist ein Fabrik-Durchlauf nicht
-> sicher unterzubringen, und ein *benanntes* Restrisiko ist etwas anderes als ein
-> übersehener Widerspruch. Nehmen Sie 3-II als Folgepunkt mit Frist auf, damit die
-> Abweichung nicht dauerhaft im Auftrag stehen bleibt.
+**Der entscheidende Satz: Eine Einengung von Tor II hebt kein Gate auf.** Ein Korrekturblatt
+zum Bauauftrag kann eine gezeichnete K23-Klausel nicht ändern. Es gibt vier Wege:
+
+| | Weg | Dauer | Löst die Gates? |
+|---|---|---|---|
+| **3-I** | Benannte Ausnahme im Auftrag, Abweichung als Restrisiko geführt | ein Tag | **nein** — macht sie nur sichtbar |
+| **3-II** | Nachtrag zu K23 in der Konzept-Fabrik | nicht gemessen | ja — aber sperrt die Freigabestrecke, bis er durch ist |
+| **3-III** | **Festlegung auf Rang 0** — ein Founder-Beschluss nach dem Muster von F28 und F04 nimmt Durchstich, Modul- und Lastprüfung für **diese eine** Abnahme aus dem Umfang | ein Beschluss | **ja** — ohne K23 zu ändern und ohne Widerspruch |
+| **3-IV** | BA-1 jetzt ohne die Korrekturen zu Prüfungen und Nachweisen zeichnen, den Rest getrennt nachziehen | sofort | verschiebt die Frage |
+
+> **Empfehlung: Weg 3-III.** Er ist der einzige, der die Gates wirklich auflöst und in
+> sechzehn Tagen darstellbar ist. Festlegungen stehen auf Rang 0 und gewinnen gegen alles
+> Weitere; das Verfahren ist im Projekt zweimal erprobt — **F28** nimmt das Konzept K22 aus,
+> **F04** nimmt drei Portale aus. Er ändert weder K23 noch erzeugt er einen Widerspruch.
+>
+> **Gate 11 bleibt gesondert zu behandeln** — es hängt an den leeren Registerzeilen, nicht am
+> Durchstich. Dafür ist die Korrektur zu Bedingung 4 der Weg, zusammen mit dem gezeichneten
+> Klauselschnitt aus Antrag #21.
 
 **In jedem Fall gilt:** Der Teildurchstich ist **kein** Durchstich nach K23-M06 und lässt
-**M10 nicht eintreten**.
+**M10 nicht eintreten**. Sein Manifest trägt dafür eine eigene Kennung.
 
 ---
 
