@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vorpruefung 1 von 2 · FREIRAUM</title>
+  {#
+    bildschirm: EN-03
+
+    EN-03 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet
+    (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt genau zwei Aktionen, und
+    genau zwei stehen hier:
+
+        check_starten   ->  EN-03a, die fuenf Fragen  (K04-M02)
+        ueberspringen   ->  EN-04, der Eignungs-Check (K04-M02, K04-D01)
+
+    UEBERSPRUNGEN WIRD NUR DIE ERSTE VORPRUEFUNG. K04-D01 ist eindeutig:
+    "Ueberspringbar ist allein der Direkt-Prototyp-Check." Der Eignungs-Check
+    folgt zwingend -- der zweite Weg fuehrt nicht an ihm vorbei, sondern in
+    ihn hinein. Deshalb heisst die Schaltflaeche "Ueberspringen" und nicht
+    "Vorpruefung ueberspringen".
+
+    "CHECK STARTEN" FUEHRT IN DIESER SCHEIBE AUF EINE MELDUNG. K04-M22
+    verlangt genau fuenf Fragen zu je drei Antwortmoeglichkeiten; ihr
+    WORTLAUT ist nirgends gezeichnet (H09/Punkt 13, festgehalten in der
+    Sammelmigration M30). Erfundene Fragen faellten eine Entscheidung, die
+    niemand getroffen hat. Der Bildschirmvertrag sieht dafuer ausdruecklich
+    diesen Zustand vor: "Fragenfluss nicht ladbar -- Meldung, Verbleib auf
+    EN-03; [Ueberspringen] bleibt offen, es entsteht kein Vorschlag."
+    Die Schaltflaeche bleibt deshalb stehen und bleibt bedienbar.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 34rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
+    .wege { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
+             cursor: pointer; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-03 · Vorpruefung 1 von 2</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). role="alert" traegt die
+      Meldung an die Vorlesehilfe, ohne den Fokus zu ziehen.
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Angemeldet als {{ anzeigename }}</p>
+    <p>Bevor es losgeht, zwei kurze Vorpruefungen. Die erste hilft Ihnen bei
+      der Frage, ob ein schnelles Arbeitsdokument reicht oder eine richtige
+      Anwendung noetig ist. Sie koennen sie ueberspringen.</p>
+
+    <div class="wege">
+      {#
+        Zwei Formulare und keine Wahlfelder: jeder Weg ist ein eigener
+        Serverbefehl. Was der Server entscheidet, entscheidet nicht der
+        Browser (K03-M13, sinngemaess).
+      #}
+      <form method="post" action="/vorpruefung/starten">
+        <button type="submit">Check starten</button>
+      </form>
+      <form method="post" action="/vorpruefung/ueberspringen">
+        <button type="submit">Ueberspringen</button>
+      </form>
+    </div>
+
+    <p class="hinweis">Der zweite Schritt, der Eignungs-Check, laesst sich
+      nicht ueberspringen. Er entscheidet, ob FREIRAUM Ihr Vorhaben tragen
+      kann.</p>
+
+    <p class="hinweis"><a href="/uebersicht">Zurueck zur Uebersicht</a></p>
+  </div>
+</main>
+</body>
+</html>

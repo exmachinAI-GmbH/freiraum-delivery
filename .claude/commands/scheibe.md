@@ -76,9 +76,55 @@ Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder 
    Herkunftsgraph und Restrisikoliste fortschreiben. Jedes kritische Restrisiko braucht eine
    **gezeichnete** Annahmeentscheidung — die Liste allein genügt nicht (Blatt 11:137).
 
-10. **Fremdmodell anfordern** (Tor 3, einmal je Scheibenabnahme, C-4): frische Instanz,
-    getrennter Kontext, Prüfung gegen **Roh-Evidenz**, nicht gegen Erklärungen des Baus.
-    Der Harness schreibt dieses Review **nie selbst**.
+10. **HALT — den Menschen fragen, ob das Fremdmodell jetzt anzufordern ist.**
+    Tor 3, einmal je Scheibenabnahme (C-4): frische Instanz, getrennter Kontext, Prüfung
+    gegen **Roh-Evidenz**, nicht gegen Erklärungen des Baus. Der Harness schreibt dieses
+    Review **nie selbst**.
+
+    **Dieser Schritt ist ein Halt, keine Notiz.** Führe aus:
+
+    ```
+    python3 werkzeuge/fremdreview.py --stand --scheibe $ARGUMENTS
+    ```
+
+    Lege das Ergebnis vor und stelle die Frage ausdrücklich — in dieser Form, damit sie
+    nicht überlesen wird:
+
+    > **Tor 3 · Scheibe $ARGUMENTS.** Der Stand ist: `<Ausgabe von --stand>`.
+    > Soll das Fremdreview jetzt angefordert werden — ja oder nein?
+    > · **Ja** → die Anforderung geht als Vorlage hinaus; der Mensch führt sie aus,
+    >   legt das Blatt unter `nachweise/fremdreview/` ab und zeichnet seinen Kopf.
+    > · **Nein** → der Grund wird als benannter offener Punkt in die Vorlage
+    >   geschrieben. Tor 3 bleibt **gesperrt** — nicht übersprungen.
+
+    **Warte die Antwort ab.** Ohne sie wird Schritt 11 nicht ausgeführt.
+
+    Der Grund für diesen Halt ist gemessen, nicht vermutet: Bis zum 15.08.2026 ist Tor 3
+    **kein einziges Mal** mit einem gültigen Nachweisblatt gelaufen — nicht weil jemand es
+    abgelehnt hätte, sondern weil **nie ein Moment kam, in dem die Frage gestellt wurde**.
+    Eine passive Sperre erzeugt keinen Anlass; sie erzeugt einen Zustand, den man übersieht.
+
+    **Das ändert nichts an der Abnahme.** Der Halt ist Steuerung: er verschärft kein Tor
+    und erzeugt keine zusätzliche Abnahmebedingung (Blatt 11:182–188). Er stellt eine
+    Frage, deren Antwort ohnehin gebraucht wird — nur zum richtigen Zeitpunkt.
+
+    **Wann gefragt wird — die Regel für den ganzen Harness.** Auslöser ist die
+    **Scheibenabnahme**, so wie C-4 es zeichnet: *„einmal je Scheibenabnahme, nicht je
+    Änderung."* Nicht die Meilensteinabnahme — sonst würde bei Scheibe 2, die M3 **und**
+    M4 schließt, dreimal dasselbe gefragt, und eine Frage, die zu oft kommt, wird
+    weggeklickt. C-4 begründet genau das: *„Ein Gate, das bei jedem Commit anschlägt, wird
+    umgangen oder billig erfüllt — beides schlechter als kein Gate."*
+
+    **Eine Ausnahme, und sie ist gemessen:** M10 (Durchstich), M11 (Last) und M12 (Abnahme)
+    gehören **keiner Scheibe** an — die Baustrategie führt sie als *„Prüf- und Abnahmespur
+    — quer, keine Scheibe"* (BS:125). Bei reiner Scheibenbindung fielen sie heraus. Für
+    diese drei ist der Auslöser deshalb die **Meilensteinabnahme**, mit derselben Frage und
+    demselben Halt.
+
+    Umgekehrt gilt: **Scheibe 1 schließt keinen Meilenstein** (*„keinen — sie ist
+    Integrationsprobe"*, BS:116). Bei reiner Meilensteinbindung würde ausgerechnet die
+    erste Scheibe nie fragen. Deshalb tragen beide Auslöser, jeder für seinen Bereich —
+    und keiner doppelt.
 
 11. **Vorlage schnüren.** `arbeit/Vorlagen/scheibe_$ARGUMENTS_vorlage.md`: erreichte
     Klauseln mit Nachweis · Gate-Tabelle · Manifestprüfsumme · offene Punkte ·
