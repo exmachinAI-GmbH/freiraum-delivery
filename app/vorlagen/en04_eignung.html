@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eignungs-Check · FREIRAUM</title>
+  {#
+    bildschirm: EN-04
+
+    umsetzt: K04-M06 (kein Freitext, nur Zeilen aus fit_option), K04-M09
+             (der Halt wird mit der aufhaltenden Antwort im Wortlaut
+             begruendet, und AUSSCHLIESSLICH mit ihr -- siehe "DER HALT-BLOCK
+             UNTERSCHEIDET" weiter unten), K19-M03 (genau eine Zugangsmarke),
+             K19-M13 (Statusansage ohne Fokuswechsel; beide Marken `halt` und
+             `hinweis` tragen role="alert" und ziehen den Fokus nicht)
+
+    zur Haelfte umgesetzt: K04-M08 -- weil dieser Bildschirm die drei Auswege
+             ZEIGT und den vierten nicht anbietet, ihn aber nicht VERHINDERN
+             kann. Durchgesetzt wird der Halt in app/vorpruefung.py, in den
+             Wegen POST /eignung/antwort und POST /eignung/weiter. Bis zum
+             15.08.2026 stand die Durchsetzung allein hier -- das war der
+             Befund der Gegenprobe: "Was der Server entscheidet, entscheidet
+             nicht der Browser."
+
+    zur Haelfte umgesetzt: K04-M05 -- weil die Reihenfolge aus der Spalte
+             `position` kommt und hier nur ausgegeben wird
+
+    zur Haelfte umgesetzt: K19-M06 -- weil im Zustand "eine Antwort fehlt"
+             der Hinweis steht und die fehlende Frage im WORTLAUT nennt, die
+             Schaltflaeche [Weiter] aber NICHT ausgeblendet wird. Die Klausel
+             verlangt beides ("MUSS die Schaltflaeche ausgeblendet werden und
+             an ihrer Stelle ein Hinweis stehen"). Warum die Haelfte hier
+             bewusst offen bleibt, steht unten unter "WO DER HINWEIS STEHT".
+
+    zur Haelfte umgesetzt: K19 EN-04/antwort_waehlen, zustand_leer -- weil
+             dieser Bildschirm den Hinweis zeigt, wenn der Server ihn
+             mitgibt, und das tut er auf dem Weg POST /eignung/weiter. Ein
+             blosses Aufrufen von GET /eignung bei noch unbeantworteten
+             Fragen zeigt ihn nicht; die Wegetabelle des Plans sieht ihn
+             dort nicht vor. Die Luecke ist benannt, nicht geschlossen
+
+    EN-04 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet
+    (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt fuenf Aktionen:
+    antwort_waehlen, antwort_aendern, weiter, termin, zur_uebersicht. Alle
+    fuenf stehen hier.
+
+    DREI FRAGEN, IN FESTER REIHENFOLGE. Die Reihenfolge kommt aus der Spalte
+    `fit_question.position` und wird hier NICHT noch einmal sortiert
+    (K04-M05). Zwei Sortierungen sind zwei Wahrheiten.
+
+    KEIN FREITEXT. Jede Antwortmoeglichkeit ist eine Zeile aus `fit_option`
+    mit `label_de`, `value_token` und `is_eligible` (K04-M06). Der Bildschirm
+    bietet nichts an, was nicht im Bestand steht.
+
+    `is_eligible` STEHT NICHT AUF DEM BILDSCHIRM. Der Nutzer sieht nicht, welche
+    Antwort ihn aufhalten wird -- sonst waehlte er nicht die zutreffende
+    Antwort, sondern die durchlassende, und der Check maesse nichts. Erst NACH
+    dem Halt wird genannt, welche Antwort aufhaelt (K04-M09).
+
+    DAS HALT-FELD STEHT AN STELLE DES WEITERWEGS. Bei NICHT_GEEIGNET gibt es
+    keine Schaltflaeche [Weiter] mehr; die Fragen stehen dann unveraenderlich
+    da, und es erscheinen GENAU DREI Auswege (K04-M08):
+
+        1. Antwort aendern        ->  POST /eignung/aendern
+        2. Termin vereinbaren     ->  POST /eignung/termin
+        3. Zur Uebersicht         ->  Verweis auf EN-02
+
+    Nicht zwei, nicht vier. Ein vierter Weg -- etwa "trotzdem fortfahren" --
+    waere die Aufhebung des Halts.
+
+    WARUM DIE ANTWORTFORMULARE IM HALT VERSCHWINDEN (K04-M08). Die drei
+    Fragen und die gewaehlten Antworten bleiben SICHTBAR -- der Nutzer soll
+    lesen koennen, was er geantwortet hat --, aber sie sind nicht mehr
+    ABSENDBAR. Der Grund ist nicht Gestaltung, sondern Zaehlung: bliebe
+    daneben ein absendbares Antwortformular stehen, saehe der Nutzer einen
+    VIERTEN Weg aus dem Halt heraus. Dass der Server ihn abweist (siehe den
+    Absatz darunter), aendert daran nichts -- K04-M08 verlangt, dass NACH
+    EINEM HALT genau drei Auswege ERSCHEINEN. Ein angebotener und dann
+    abgewiesener Weg ist ein erschienener Weg. Am Ausblenden wird deshalb
+    nichts geaendert; es ist keine Nachlaessigkeit, sondern die Klausel.
+
+    DER HALT-BLOCK TRAEGT DIE MARKE `id="halt"` (Plan, Nachtrag vom
+    15.08.2026). Ohne einen benannten Ort laesst sich der Begruendungsbereich
+    nur raten -- der Prueffall zur Halt-Begruendung konnte deshalb weder gruen
+    noch rot melden und blieb auf GESPERRT. Ein Fall, der nur sperren kann,
+    misst nichts. Die Marke ist keine Gestaltung, sie ist die Abgrenzung.
+
+    DER HALT-BLOCK UNTERSCHEIDET (K04-M09). In ihm steht der Wortlaut der
+    Antwort, die AUFHAELT -- und ausdruecklich nicht der Wortlaut einer
+    Antwort, die nicht aufhaelt. Halten mehrere Antworten auf, stehen alle
+    darin. K04-M09 sagt, der Nutzer erfaehrt, WELCHE Antwort ihn aufhaelt;
+    "welche" verlangt eine Unterscheidung. Stuenden alle drei Antworten im
+    Block, unterschiede die Begruendung nichts -- sie waere dann eine
+    Wiederholung des Bildschirms und keine Begruendung. Die Liste der
+    Antwortmoeglichkeiten steht deshalb weiter OBEN bei den Fragen und nie
+    innerhalb der Marke `halt`.
+
+    DASS HIER KEIN FORMULAR STEHT, IST KEINE SPERRE. Wer ein Formular von
+    Hand nachbaut, erreicht POST /eignung/antwort und POST /eignung/weiter
+    trotzdem. Diese beiden Wege fragen deshalb im Server den Ergebniszustand
+    ab und weisen im Halt mit einer benannten Meldung ab, ohne etwas zu
+    aendern (K13-M05). Dieser Bildschirm zeigt den Halt -- er haelt ihn nicht.
+
+    WO DER HINWEIS STEHT, WENN EINE ANTWORT FEHLT -- und warum [Weiter]
+    trotzdem sichtbar bleibt.
+
+    Der Bildschirmvertrag fuehrt fuer EN-04/antwort_waehlen den Zustand
+    zustand_leer woertlich so: "keine Antwort gewaehlt -- [Weiter]
+    ausgeblendet, Hinweis nennt die fehlende Frage (K19-M06)". K19-M06 sagt
+    dazu: "MUSS die Schaltflaeche ausgeblendet werden und AN IHRER STELLE ein
+    Hinweis stehen, der die Bedingung benennt."
+
+    Zwei Dinge folgen daraus, und sie werden hier verschieden behandelt:
+
+      1. DER ORT ist entschieden, und zwar nach dem Wortlaut "an ihrer
+         Stelle": der Hinweis steht dort, wo [Weiter] steht -- unmittelbar
+         ueber der Schaltflaeche, am Fuss der drei Fragen. NICHT oben im
+         Kasten. Oben ist die Stelle fuer die Statusansage zu einem Vorgang,
+         der abgeschlossen ist (Terminquittung, ungueltige Auswahl); der
+         Hinweis auf eine fehlende Antwort ist aber kein Rueckblick, sondern
+         die Bedingung des naechsten Schritts. Der Nutzer sucht ihn dort, wo
+         er gerade geklickt hat. Ein Hinweis am oberen Rand einer Seite, die
+         drei Fragen lang ist, steht ausserhalb des Blickfelds -- er waere
+         geschrieben und nicht gelesen.
+
+      2. DAS AUSBLENDEN von [Weiter] geschieht NICHT, und das ist eine
+         benannte Abweichung, keine Auslassung. Anders als auf EN-01, wo eine
+         ausgeblendete Schaltflaeche nur eine leere Eingabe zurueckhaelt, ist
+         [Weiter] hier der Weg, den der Nutzer nach dem Beantworten wieder
+         braucht. Waere er ausgeblendet, muesste er nach der letzten Antwort
+         wieder erscheinen -- ohne Neuladen kann dieser Bildschirm das nicht,
+         er traegt kein Skript. Der Nutzer stuende dann vor einem Bildschirm,
+         auf dem er alles beantwortet hat und kein Weiterweg zu sehen ist.
+         Deshalb bleibt die Schaltflaeche stehen, und der Server weist den
+         Versuch fail-closed ab (K04-G04): er schreibt nichts und nennt die
+         offene Frage. Die Haelfte von K19-M06, die damit offen bleibt, steht
+         oben im Kopf als "zur Haelfte umgesetzt" -- eine unvermerkte Luecke
+         waere der Mangel, eine vermerkte ist ein offener Punkt.
+
+    DER HINWEIS TRAEGT DIE MARKE `id="hinweis"` und NENNT DIE FEHLENDE FRAGE
+    IM WORTLAUT -- ihren Fragetext, nicht ihren Code ("art", "nutzung",
+    "daten" sagen dem Nutzer nichts). Fehlen mehrere, stehen alle darin. Der
+    Fragetext einer bereits BEANTWORTETEN Frage steht nie darin: sonst suchte
+    der Nutzer eine Luecke, die es nicht gibt. Bis zum 15.08.2026 lautete die
+    Meldung nur "Bitte beantworten Sie alle drei Fragen" -- das nannte nichts
+    und stand ausserdem oben im Kasten.
+
+    NACH GEEIGNET STEHT HIER EIN HINWEIS UND KEINE SCHALTFLAECHE. Der
+    Zweckbestimmungs-Schritt (EN-04a, K04-M19) gehoert zum naechsten
+    Meilenstein. Eine Schaltflaeche, die ins Leere fuehrt, verspricht mehr,
+    als der Bau haelt.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 42rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    h2 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
+    fieldset { border: 1px solid currentColor; border-radius: .25rem;
+               margin: 0 0 1.25rem; padding: .75rem 1rem 1rem; }
+    legend { font-weight: 600; padding: 0 .35rem; }
+    .wahl { display: block; margin: .35rem 0; }
+    .gewaehlt { font-weight: 600; }
+    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
+    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
+             cursor: pointer; margin-top: .5rem; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+    .halt { border: 3px solid currentColor; border-radius: .25rem;
+            padding: .9rem 1rem; margin: 1.25rem 0 0; }
+    .halt h2 { margin-top: 0; }
+    /* Der Hinweis steht an der Stelle von [Weiter], nicht oben im Kasten --
+       Begruendung im Kopf dieser Datei, Abschnitt "WO DER HINWEIS STEHT". */
+    #hinweis { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 .75rem; }
+    #hinweis p { margin: 0; font-weight: 600; }
+    #hinweis ul { margin: .4rem 0 0; }
+    .auswege { display: flex; flex-wrap: wrap; gap: .75rem;
+               align-items: center; margin-top: .75rem; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-04 · Eignungs-Check</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). Traegt entweder die Quittung
+      des Termin-Wegs, den Hinweis auf eine fehlende Antwort (K04-G04) oder
+      die Meldung zu einer ungueltigen Auswahl.
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Angemeldet als {{ anzeigename }}</p>
+    <p>Drei Fragen zu Ihrem Vorhaben. Bitte antworten Sie so, wie es
+      tatsaechlich gedacht ist -- nicht so, wie es am besten klingt.</p>
+
+    {% for frage in fragen %}
+      <fieldset>
+        <legend>Frage {{ frage.position }} von 3</legend>
+        <p>{{ frage.prompt }}</p>
+
+        {% if halt %}
+          {#
+            Nach dem Halt stehen die Antworten fest. Geaendert wird ueber den
+            ersten der drei Auswege, nicht hier -- sonst gaebe es einen
+            vierten Weg aus dem Halt heraus.
+          #}
+          <ul>
+            {% for option in frage.optionen %}
+              <li class="{% if option.id == frage.gewaehlt %}gewaehlt{% endif %}">
+                {{ option.label }}{% if option.id == frage.gewaehlt %}
+                  — Ihre Antwort{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <form method="post" action="/eignung/antwort">
+            {# Der Server glaubt weder Frage noch Antwortmoeglichkeit: er
+               prueft, ob die Antwortmoeglichkeit zu dieser Frage gehoert. #}
+            <input type="hidden" name="frage" value="{{ frage.code }}">
+            {% for option in frage.optionen %}
+              <label class="wahl">
+                <input type="radio" name="option" value="{{ option.id }}"
+                       {% if option.id == frage.gewaehlt %}checked{% endif %}>
+                {{ option.label }}
+              </label>
+            {% endfor %}
+            <button type="submit">Antwort speichern</button>
+          </form>
+
+          {% if frage.gewaehlt %}
+            <form method="post" action="/eignung/aendern">
+              <input type="hidden" name="frage" value="{{ frage.code }}">
+              <button type="submit">Antwort zuruecknehmen</button>
+            </form>
+          {% endif %}
+        {% endif %}
+      </fieldset>
+    {% endfor %}
+
+    {% if halt %}
+      {#
+        DER HALT. Begruendet, mit der Antwort im Wortlaut, die aufhaelt
+        (K04-M09) -- und mit genau drei Auswegen (K04-M08).
+      #}
+      <div class="halt" id="halt" role="alert">
+        <h2>Hier geht es nicht weiter</h2>
+        <p>FREIRAUM kann dieses Vorhaben nicht begleiten. Der Grund steht in
+          Ihrer Antwort:</p>
+        <ul>
+          {% for grund in aufhaltend %}
+            <li>{{ grund.frage }} — Ihre Antwort: „{{ grund.antwort }}“</li>
+          {% endfor %}
+        </ul>
+        <p>Das ist keine Bewertung Ihres Vorhabens. Es heisst nur, dass es
+          nicht zu dem passt, was FREIRAUM baut.</p>
+        <p>Sie haben drei Moeglichkeiten:</p>
+        <div class="auswege">
+          <form method="post" action="/eignung/aendern">
+            {#
+              Ausweg 1. Nimmt die aufhaltende Antwort zurueck -- die Zeile
+              bleibt erhalten, sie traegt nur einen Zeitstempel der Ruecknahme
+              (K04-D03, K04-M15). Sind mehrere Antworten aufhaltend, wird die
+              zuerst genannte zurueckgenommen; danach steht der Bildschirm
+              wieder offen und die naechste laesst sich ebenso aendern.
+            #}
+            <input type="hidden" name="frage"
+                   value="{{ aufhaltend[0].code if aufhaltend else '' }}">
+            <button type="submit">Antwort aendern</button>
+          </form>
+          <form method="post" action="/eignung/termin">
+            {# Ausweg 2. Vermerkt den Wunsch nach einem Gespraech. Das
+               Ergebnis des Checks aendert sich dadurch nicht. #}
+            <button type="submit">Termin vereinbaren</button>
+          </form>
+          {# Ausweg 3. Zurueck zur Uebersicht; der Check bleibt bestehen. #}
+          <a href="/uebersicht">Zur Uebersicht</a>
+        </div>
+      </div>
+    {% else %}
+      {% if hinweis_geeignet %}
+        <p class="meldung">{{ hinweis_geeignet }}</p>
+      {% endif %}
+
+      {% if hinweis %}
+        {#
+          DER HINWEIS AUF DIE FEHLENDE FRAGE (K19-M06, EN-04/antwort_waehlen,
+          zustand_leer). Er steht HIER -- unmittelbar ueber [Weiter], also an
+          der Stelle der Schaltflaeche, deren Bedingung er benennt -- und
+          nicht oben im Kasten. Begruendung im Kopf dieser Datei, Abschnitt
+          "WO DER HINWEIS STEHT".
+
+          Gezeigt wird ausschliesslich der Fragetext der Fragen, die NOCH
+          OFFEN sind. Der Fragetext einer beantworteten Frage steht nicht
+          darin -- der Server gibt ihn gar nicht erst mit
+          (`fehlende_fragen` in app/vorpruefung.py).
+
+          role="alert" und kein Fokuswechsel (K19-M13): die Ansage erreicht
+          die Vorlesehilfe, ohne dem Nutzer den Cursor wegzunehmen.
+        #}
+        <div id="hinweis" role="alert">
+          <p>{{ hinweis.satz }}</p>
+          <ul>
+            {% for frage in hinweis.fragen %}
+              <li>Frage {{ frage.position }} von 3: {{ frage.prompt }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {#
+        [Weiter] bleibt auch im Zustand "eine Antwort fehlt" sichtbar -- die
+        benannte Abweichung von K19-M06, oben im Kopf begruendet und als
+        "zur Haelfte umgesetzt" vermerkt. Abgewiesen wird der Versuch auf dem
+        Server, fail-closed und ohne etwas zu schreiben (K04-G04).
+      #}
+      <form method="post" action="/eignung/weiter">
+        <button type="submit">Weiter</button>
+      </form>
+      <p class="hinweis"><a href="/uebersicht">Zur Uebersicht</a> — Ihre
+        Antworten bleiben erhalten.</p>
+    {% endif %}
+  </div>
+</main>
+</body>
+</html>
