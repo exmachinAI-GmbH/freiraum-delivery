@@ -6,6 +6,26 @@ Der Unterschied ist der ganze Sinn dieses Verzeichnisses.
 
 ## Warum Tor 3 nicht wie Tor 1 gebaut werden darf
 
+> **Nachtrag vom 15.08.2026 — wann gefragt wird.** Bis heute war das Verbot verankert und
+> die Sperre auch, ein **aktives Nachfragen** aber nicht. Der Harness verweigerte, ohne zu
+> fragen: `pruefungen/tor3.sh` meldete *gesperrt* in einem Prüfbericht, und ob jemand das
+> las, hing davon ab, dass ein Mensch zum richtigen Zeitpunkt hinsah. Das Ergebnis ist
+> gemessen: Tor 3 ist bis zum 15.08.2026 **kein einziges Mal** mit einem gültigen Blatt
+> gelaufen — nicht aus Ablehnung, sondern weil nie ein Moment kam, in dem die Frage
+> gestellt wurde.
+>
+> Seither gilt: **`/scheibe` hält vor der Vorlage an und stellt die Frage ausdrücklich**,
+> und **jede Tages-Übergabe führt die Zeile `fremdreview.py --stand`**.
+>
+> **Auslöser ist die Scheibenabnahme** — so zeichnet es C-4: *„einmal je Scheibenabnahme,
+> nicht je Änderung."* **Ausnahme: M10, M11 und M12**, die keiner Scheibe angehören
+> (BS:125, *„Prüf- und Abnahmespur — quer, keine Scheibe"*); für sie löst die
+> Meilensteinabnahme aus. **Nicht bei jedem Meilenstein** — Scheibe 2 schließt M3 und M4,
+> und dreimal dieselbe Frage macht sie billig.
+>
+> Beides ist **Steuerung, nicht Abnahme**: kein Tor wird verschärft, keine
+> Abnahmebedingung kommt hinzu (Blatt 11:182–188).
+
 `CLAUDE.md` führt vier Tore. Für Tor 3 steht in der Spalte *Wo* seit dem 07.08.2026 der
 Eintrag **„außerhalb dieses Harness"**, und `.claude/commands/scheibe.md` sagt es in
 Schritt 10 ohne Umschweife:
