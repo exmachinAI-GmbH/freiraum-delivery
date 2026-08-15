@@ -189,7 +189,6 @@
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
 HIER="$(cd "$(dirname "$0")" && pwd)"
-REPO="${FREIRAUM_PRUEF_REPO:-$(cd "$HIER/../.." && pwd)}"
 
 : "${PGHOST:=localhost}"
 : "${PGPORT:=55433}"
@@ -202,7 +201,10 @@ MANDANT_A='00000000-0000-4000-8000-00000000ef02'   # der Mandant der Sitzung
 MANDANT_B='00000000-0000-4000-8000-00000000ef03'   # der fremde Mandant
 MANDANT_L='00000000-0000-4000-8000-00000000ef04'   # nur ein Check haengt daran
 CHECK_FREMD='00000000-0000-4000-8000-00000000ec01'
-CHECK_SPERRE='00000000-0000-4000-8000-00000000ec02'
+# ec02 haengt an MANDANT_L und ist der GRUND, warum dessen Loeschung scheitert
+# (VP-28, K04-M10). Der Fall braucht die Kennung nicht selbst -- er loescht den
+# Mandanten und misst, dass die Sperre greift. Deshalb steht sie hier als
+# Kommentar und nicht als Variable, die niemand liest.
 CHECK_NEGATIV='00000000-0000-4000-8000-00000000ec03'
 CHECK_GELOESCHT='00000000-0000-4000-8000-00000000ec04'
 
