@@ -13,12 +13,12 @@ und er ist **Bedingung 4 der technischen Lieferabnahme (Tor II)**.
 | | Anzahl |
 |---|---|
 | Anforderungen insgesamt | 1231 |
-| **vom gebauten Code genannt** | **87** |
-| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 0 |
-| davon nur nebenbei erwähnt | 87 |
-| vom Code genannt **und** von einem Prüffall gemessen | 41 |
-| **vom Code genannt und von niemandem gemessen** | **46** |
-| **davon als kritisch vorgeschlagen** | **20** |
+| **vom gebauten Code genannt** | **96** |
+| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 15 |
+| davon nur nebenbei erwähnt | 81 |
+| vom Code genannt **und** von einem Prüffall gemessen | 48 |
+| **vom Code genannt und von niemandem gemessen** | **48** |
+| **davon als kritisch vorgeschlagen** | **22** |
 | Bildschirme im Vertrag | 33 |
 | davon gebaut | 1 |
 
@@ -36,18 +36,13 @@ zählt sie nicht — denn `app/haupt.py` nennt eine Anforderung gerade, um zu sa
 dass hier **nicht** danach gehandelt wird. Eine reine Textsuche hätte das als
 Umsetzung gezählt und den Graphen zum Lügen gebracht.
 
-> **Achtung — diese Trennung ist heute wirkungslos.** Keine einzige Datei im
-> Bau trägt eine Zeile `umsetzt:`. Alle Zahlen unterhalb von *vom gebauten Code
-> genannt* beruhen deshalb auf bloßen Erwähnungen. `app/__init__.py`:15 nennt
-> eine Anforderung sogar unter der Überschrift *Was hier NICHT liegt*.
-
 ## Die sieben Fragen nach isolierten Ergebnissen
 
 | | Frage | Anzahl |
 |---|---|---|
 | 1 | Welche gebaute Datei sagt nicht, wofür sie da ist? | **2** |
 | 2 | Was wird gemessen, das niemand gebaut hat? | **6** |
-| 3 | Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt? | **46** |
+| 3 | Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt? | **48** |
 | 4 | Welcher Prüffall ist noch nie in einem Protokoll gelaufen? | **0** |
 | 5 | Welches Protokoll führt eine Kennung ohne Prüffall? | **0** |
 | 6 | Welcher Bildschirm des Vertrags ist nicht gebaut? | **32** |
@@ -62,18 +57,18 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 
 **2 · Was wird gemessen, das niemand gebaut hat?** — 6 Einträge
 
-- `K03-M05`
-- `K03-M06`
 - `K15-M01`
+- `K20-D01`
 - `K23-D05`
+- `K23-M12`
 - `K23-M18`
 - `K23-M22`
 
-**3 · Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?** — 46 Einträge
+**3 · Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?** — 48 Einträge
 
-- `K01-M22`
 - `K01-M28`
 - `K01-M38`
+- `K02-D05`
 - `K02-G02`
 - `K02-M01`
 - `K02-M02`
@@ -88,14 +83,15 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `K03-M08`
 - `K03-M18`
 - `K03-M21`
-- `K03-M26`
 - `K04-G12`
 - `K08-M17`
 - `K08-M25`
 - `K13-D07`
+- `K13-M05`
 - `K13-M17`
 - `K13-M21`
 - `K13-M22`
+- `K14-G04`
 - `K14-M13`
 - `K15-G10`
 - `K18-M27`
@@ -107,11 +103,10 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `K20-D03`
 - `K20-G03`
 - `K20-G08`
+- `K20-G09`
 - `K20-M04`
 - `K20-M06`
-- `K20-M09`
-- `K20-M11`
-- … und 6 weitere (vollständig in `herkunft.json`)
+- … und 8 weitere (vollständig in `herkunft.json`)
 
 **4 · Welcher Prüffall ist noch nie in einem Protokoll gelaufen?** — 0 Einträge
 
