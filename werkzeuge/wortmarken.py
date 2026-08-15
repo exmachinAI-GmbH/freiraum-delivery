@@ -47,6 +47,24 @@ import re
 import sys
 from pathlib import Path
 
+# --- Gleichbedeutende Woerter -------------------------------------------------
+# Der gezeichnete Faden und die Konzepte benutzen fuer dieselbe Sache verschiedene
+# Woerter. "Anmeldecode" steht in keinem der 1231 Wortlaute -- die Konzepte sagen
+# "E-Mail-Code" oder "zweiter Faktor". Ein Werkzeug darf so etwas NICHT raten.
+# Aufgenommen wird ein gleichbedeutendes Wort nur, wenn eine Regel die Gleichsetzung
+# selbst ausspricht; die Regel steht als Beleg daneben. Wer den Beleg nicht
+# nachvollzieht, streicht die Zeile.
+GLEICHBEDEUTEND = {
+    "Anmeldecode": [
+        (r"E-Mail-Code", "K03-M15",
+         "Ein E-Mail-Code ist zehn Minuten und genau einmal gueltig."),
+        (r"zweite[rn]?\s+Faktor", "K03-M05",
+         "Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein."),
+        (r"\bMFA\b|\b2FA\b|mfa_method|WARTET_2FA", "K03-M05",
+         "... mfa_method = EMAIL_CODE."),
+    ],
+}
+
 # --- Die Stationen des Fadens, abgeschrieben aus BS:52-70 ---------------------
 # (Begriff-Kennung, Suchmuster, Zeilenanker, Zeile im Wortlaut)
 STATIONEN = [
@@ -134,16 +152,28 @@ def main():
     ergebnis, alle = [], set()
     for kennung, muster, anker, wortlaut in STATIONEN:
         tr = treffer(zeilen, muster)
-        kl = {t["klausel"] for t in tr}
-        alle |= kl
+        gesehen = {t["klausel"] for t in tr}
+        belegte_woerter = []
+        for zusatz, beleg, satz in GLEICHBEDEUTEND.get(kennung, []):
+            neu = [t for t in treffer(zeilen, zusatz) if t["klausel"] not in gesehen]
+            if neu:
+                belegte_woerter.append({"muster": zusatz, "beleg": beleg,
+                                        "wortlaut_des_belegs": satz, "treffer": len(neu)})
+                for t in neu:
+                    t["ueber"] = zusatz
+                    t["gleichsetzung_belegt_durch"] = beleg
+                tr += neu
+                gesehen |= {t["klausel"] for t in neu}
+        alle |= gesehen
         ergebnis.append({
             "station": kennung,
             "anker": anker,
             "zeile_im_faden": wortlaut,
             "muster": muster,
+            "gleichbedeutend": belegte_woerter,
             "treffer": len(tr),
             "konzepte": sorted({t["konzept"] for t in tr}),
-            "geht_auf_in": unterscheidet_nicht(kl, gruppen),
+            "geht_auf_in": unterscheidet_nicht(gesehen, gruppen),
             "leseanlaesse": tr,
         })
 
@@ -181,11 +211,29 @@ def main():
     for e in ergebnis:
         u = ("**nein** -- steckt ganz in *%s*" % e["geht_auf_in"]) if e["geht_auf_in"] else (
             "keine Treffer" if e["treffer"] == 0 else "ja")
-        z.append("| **%s** | %s (%s) | %d | %d | %s |"
-                 % (e["station"], e["zeile_im_faden"], e["anker"],
+        stern = " \\*" if e["gleichbedeutend"] else ""
+        z.append("| **%s**%s | %s (%s) | %d | %d | %s |"
+                 % (e["station"], stern, e["zeile_im_faden"], e["anker"],
                     e["treffer"], len(e["konzepte"]), u))
-    z += ["", "**Insgesamt beruehrt: %d von %d Regeln.**" % (len(alle), len(zeilen)), "",
-          "## Was hier NICHT steht", "",
+    z += ["", "**Insgesamt beruehrt: %d von %d Regeln.**" % (len(alle), len(zeilen)), ""]
+
+    mit_syn = [e for e in ergebnis if e["gleichbedeutend"]]
+    if mit_syn:
+        z += ["## \\* Gleichbedeutende Woerter -- je mit Beleg", "",
+              "Der gezeichnete Faden und die Konzepte benutzen fuer dieselbe Sache",
+              "verschiedene Woerter. Aufgenommen ist ein solches Wort nur, wenn eine Regel",
+              "die Gleichsetzung selbst ausspricht. Der Beleg steht daneben --",
+              "wer ihn nicht nachvollzieht, streicht die Zeile.", "",
+              "| Station | zusaetzlich gesucht | zusaetzliche Treffer | Gleichsetzung belegt durch |",
+              "|---|---|---:|---|"]
+        for e in mit_syn:
+            for s in e["gleichbedeutend"]:
+                z.append("| **%s** | `%s` | %d | **%s** -- *%s* |"
+                         % (e["station"], s["muster"], s["treffer"],
+                            s["beleg"], s["wortlaut_des_belegs"]))
+        z.append("")
+
+    z += ["## Was hier NICHT steht", "",
           "- keine Scheibenzuordnung -- die trifft ein Mensch",
           "- keine Kritikalitaet und kein Akzeptanzkriterium",
           "- keine Quote und kein Zielwert (F34)", "",

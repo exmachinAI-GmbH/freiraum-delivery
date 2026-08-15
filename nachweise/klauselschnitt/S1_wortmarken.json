@@ -4,13 +4,14 @@
   "scheibe": "1",
   "register_erzeugt": "2026-08-07T10:15:12+00:00",
   "klauseln_gesamt": 1231,
-  "beruehrt_insgesamt": 454,
+  "beruehrt_insgesamt": 470,
   "stationen": [
     {
       "station": "Mandant",
       "anker": "BS:53",
       "zeile_im_faden": "EXMA-Minimum: Mandant anlegen",
       "muster": "Mandant",
+      "gleichbedeutend": [],
       "treffer": 106,
       "konzepte": [
         "K01",
@@ -678,6 +679,7 @@
       "anker": "BS:53",
       "zeile_im_faden": "EXMA-Minimum: ... Einladungsschranke",
       "muster": "Einladungsschranke",
+      "gleichbedeutend": [],
       "treffer": 4,
       "konzepte": [
         "K02",
@@ -716,6 +718,7 @@
       "anker": "BS:53",
       "zeile_im_faden": "EXMA-Minimum: ... Einladung senden",
       "muster": "Einladung",
+      "gleichbedeutend": [],
       "treffer": 34,
       "konzepte": [
         "K01",
@@ -940,16 +943,196 @@
       "anker": "BS:55",
       "zeile_im_faden": "Einladung kommt an ... Anmeldecode",
       "muster": "Anmeldecode",
-      "treffer": 0,
-      "konzepte": [],
+      "gleichbedeutend": [
+        {
+          "muster": "E-Mail-Code",
+          "beleg": "K03-M15",
+          "wortlaut_des_belegs": "Ein E-Mail-Code ist zehn Minuten und genau einmal gueltig.",
+          "treffer": 2
+        },
+        {
+          "muster": "zweite[rn]?\\s+Faktor",
+          "beleg": "K03-M05",
+          "wortlaut_des_belegs": "Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein.",
+          "treffer": 8
+        },
+        {
+          "muster": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "beleg": "K03-M05",
+          "wortlaut_des_belegs": "... mfa_method = EMAIL_CODE.",
+          "treffer": 9
+        }
+      ],
+      "treffer": 19,
+      "konzepte": [
+        "K01",
+        "K03",
+        "K14",
+        "K19",
+        "K20"
+      ],
       "geht_auf_in": null,
-      "leseanlaesse": []
+      "leseanlaesse": [
+        {
+          "klausel": "K03-G12",
+          "konzept": "K03",
+          "begriff": "E-Mail-Code",
+          "stelle": 4,
+          "ueber": "E-Mail-Code",
+          "gleichsetzung_belegt_durch": "K03-M15"
+        },
+        {
+          "klausel": "K03-M15",
+          "konzept": "K03",
+          "begriff": "E-Mail-Code",
+          "stelle": 4,
+          "ueber": "E-Mail-Code",
+          "gleichsetzung_belegt_durch": "K03-M15"
+        },
+        {
+          "klausel": "K01-M14",
+          "konzept": "K01",
+          "begriff": "zweite Faktor",
+          "stelle": 4,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-D04",
+          "konzept": "K03",
+          "begriff": "zweiter Faktor",
+          "stelle": 12,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-D05",
+          "konzept": "K03",
+          "begriff": "zweite Faktor",
+          "stelle": 4,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-D10",
+          "konzept": "K03",
+          "begriff": "zweite Faktor",
+          "stelle": 4,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-G06",
+          "konzept": "K03",
+          "begriff": "zweiter Faktor",
+          "stelle": 67,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-M05",
+          "konzept": "K03",
+          "begriff": "zweite Faktor",
+          "stelle": 4,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K14-M18",
+          "konzept": "K14",
+          "begriff": "zweiter Faktor",
+          "stelle": 134,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K19-D05",
+          "konzept": "K19",
+          "begriff": "zweiten Faktor",
+          "stelle": 51,
+          "ueber": "zweite[rn]?\\s+Faktor",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K01-D07",
+          "konzept": "K01",
+          "begriff": "WARTET_2FA",
+          "stelle": 87,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-D01",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 81,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-G02",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 9,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-G05",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 71,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-G11",
+          "konzept": "K03",
+          "begriff": "mfa_method",
+          "stelle": 36,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-M08",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 21,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-M09",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 13,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K03-M10",
+          "konzept": "K03",
+          "begriff": "WARTET_2FA",
+          "stelle": 76,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        },
+        {
+          "klausel": "K20-M15",
+          "konzept": "K20",
+          "begriff": "WARTET_2FA",
+          "stelle": 38,
+          "ueber": "\\bMFA\\b|\\b2FA\\b|mfa_method|WARTET_2FA",
+          "gleichsetzung_belegt_durch": "K03-M05"
+        }
+      ]
     },
     {
       "station": "Anmeldung",
       "anker": "BS:55",
       "zeile_im_faden": "... Anmeldecode > Anmeldung",
       "muster": "Anmeldung",
+      "gleichbedeutend": [],
       "treffer": 6,
       "konzepte": [
         "K03",
@@ -1000,6 +1183,7 @@
       "anker": "BS:56",
       "zeile_im_faden": "der Portal-Hinweis nach L9: NACHWEISBARE Kenntnisnahme",
       "muster": "Kenntnisnahme",
+      "gleichbedeutend": [],
       "treffer": 3,
       "konzepte": [
         "K04",
@@ -1032,6 +1216,7 @@
       "anker": "BS:57",
       "zeile_im_faden": "Vorpruefung: ein geeigneter Fall -> GEEIGNET",
       "muster": "Vorpr[uü]fung",
+      "gleichbedeutend": [],
       "treffer": 8,
       "konzepte": [
         "K01",
@@ -1098,6 +1283,7 @@
       "anker": "BS:57",
       "zeile_im_faden": "... ein geeigneter Fall -> GEEIGNET",
       "muster": "geeignet",
+      "gleichbedeutend": [],
       "treffer": 8,
       "konzepte": [
         "K01",
@@ -1161,6 +1347,7 @@
       "anker": "BS:59",
       "zeile_im_faden": "ZWECKBESTIMMUNG bestaetigt (Riegel)",
       "muster": "Zweckbestimmung",
+      "gleichbedeutend": [],
       "treffer": 2,
       "konzepte": [
         "K04",
@@ -1187,6 +1374,7 @@
       "anker": "BS:61",
       "zeile_im_faden": "create_app_after_fit -- der EINE Weg",
       "muster": "Anwendung",
+      "gleichbedeutend": [],
       "treffer": 99,
       "konzepte": [
         "K01",
@@ -1814,6 +2002,7 @@
       "anker": "BS:63",
       "zeile_im_faden": "ein Gespraechspfad (Stufen 01-02)",
       "muster": "Gespr[aä]ch",
+      "gleichbedeutend": [],
       "treffer": 42,
       "konzepte": [
         "K01",
@@ -2089,6 +2278,7 @@
       "anker": "BS:63",
       "zeile_im_faden": "... > Anforderungen/Vertrag (Stufe 03)",
       "muster": "Anforderung",
+      "gleichbedeutend": [],
       "treffer": 15,
       "konzepte": [
         "K01",
@@ -2199,6 +2389,7 @@
       "anker": "BS:63",
       "zeile_im_faden": "... Anforderungen/Vertrag (Stufe 03)",
       "muster": "Vertrag",
+      "gleichbedeutend": [],
       "treffer": 34,
       "konzepte": [
         "K01",
@@ -2427,6 +2618,7 @@
       "anker": "BS:65",
       "zeile_im_faden": "Prototyp aus EINER freigegebenen Vorlage",
       "muster": "Prototyp",
+      "gleichbedeutend": [],
       "treffer": 42,
       "konzepte": [
         "K01",
@@ -2702,6 +2894,7 @@
       "anker": "BS:65",
       "zeile_im_faden": "... aus EINER freigegebenen Vorlage (Stufe 04)",
       "muster": "Vorlage",
+      "gleichbedeutend": [],
       "treffer": 40,
       "konzepte": [
         "K01",
@@ -2962,6 +3155,7 @@
       "anker": "BS:67",
       "zeile_im_faden": "Angebot, Stufe 05",
       "muster": "Angebot",
+      "gleichbedeutend": [],
       "treffer": 40,
       "konzepte": [
         "K01",
@@ -3227,6 +3421,7 @@
       "anker": "BS:67",
       "zeile_im_faden": "UNTERSCHRIFT + BEIDE HAEKCHEN > SIEGEL",
       "muster": "Unterschrift",
+      "gleichbedeutend": [],
       "treffer": 5,
       "konzepte": [
         "K09"
@@ -3270,6 +3465,7 @@
       "anker": "BS:67",
       "zeile_im_faden": "UNTERSCHRIFT + BEIDE HAEKCHEN",
       "muster": "H[aä]kchen",
+      "gleichbedeutend": [],
       "treffer": 13,
       "konzepte": [
         "K06",
@@ -3363,6 +3559,7 @@
       "anker": "BS:67",
       "zeile_im_faden": "... > SIEGEL (Riegel)",
       "muster": "Siegel",
+      "gleichbedeutend": [],
       "treffer": 23,
       "konzepte": [
         "K01",
@@ -3520,6 +3717,7 @@
       "anker": "BS:69",
       "zeile_im_faden": "das Uebergabe-Paket",
       "muster": "[UÜ]bergabe",
+      "gleichbedeutend": [],
       "treffer": 31,
       "konzepte": [
         "K01",
@@ -3729,6 +3927,7 @@
       "anker": "BS:69",
       "zeile_im_faden": "... mit Manifest- und Archivpruefsumme",
       "muster": "Manifest",
+      "gleichbedeutend": [],
       "treffer": 12,
       "konzepte": [
         "K07",
@@ -3817,6 +4016,7 @@
       "anker": "BS:69",
       "zeile_im_faden": "... Manifest- und Archivpruefsumme",
       "muster": "Pr[uü]fsumme",
+      "gleichbedeutend": [],
       "treffer": 7,
       "konzepte": [
         "K02",

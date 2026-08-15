@@ -12,7 +12,7 @@ gezeichnet am 05.08.2026. Die Stationen sind abgeschrieben, nicht ausgedacht.
 | **Mandant** | EXMA-Minimum: Mandant anlegen (BS:53) | 106 | 19 | ja |
 | **Einladungsschranke** | EXMA-Minimum: ... Einladungsschranke (BS:53) | 4 | 2 | ja |
 | **Einladung** | EXMA-Minimum: ... Einladung senden (BS:53) | 34 | 8 | ja |
-| **Anmeldecode** | Einladung kommt an ... Anmeldecode (BS:55) | 0 | 0 | keine Treffer |
+| **Anmeldecode** \* | Einladung kommt an ... Anmeldecode (BS:55) | 19 | 5 | ja |
 | **Anmeldung** | ... Anmeldecode > Anmeldung (BS:55) | 6 | 2 | **nein** -- steckt ganz in *sicherheitskritisch* |
 | **Kenntnisnahme** | der Portal-Hinweis nach L9: NACHWEISBARE Kenntnisnahme (BS:56) | 3 | 2 | **nein** -- steckt ganz in *freigabekritisch* |
 | **Vorpruefung** | Vorpruefung: ein geeigneter Fall -> GEEIGNET (BS:57) | 8 | 6 | ja |
@@ -32,7 +32,20 @@ gezeichnet am 05.08.2026. Die Stationen sind abgeschrieben, nicht ausgedacht.
 | **Manifest** | ... mit Manifest- und Archivpruefsumme (BS:69) | 12 | 4 | ja |
 | **Pruefsumme** | ... Manifest- und Archivpruefsumme (BS:69) | 7 | 6 | ja |
 
-**Insgesamt beruehrt: 454 von 1231 Regeln.**
+**Insgesamt beruehrt: 470 von 1231 Regeln.**
+
+## \* Gleichbedeutende Woerter -- je mit Beleg
+
+Der gezeichnete Faden und die Konzepte benutzen fuer dieselbe Sache
+verschiedene Woerter. Aufgenommen ist ein solches Wort nur, wenn eine Regel
+die Gleichsetzung selbst ausspricht. Der Beleg steht daneben --
+wer ihn nicht nachvollzieht, streicht die Zeile.
+
+| Station | zusaetzlich gesucht | zusaetzliche Treffer | Gleichsetzung belegt durch |
+|---|---|---:|---|
+| **Anmeldecode** | `E-Mail-Code` | 2 | **K03-M15** -- *Ein E-Mail-Code ist zehn Minuten und genau einmal gueltig.* |
+| **Anmeldecode** | `zweite[rn]?\s+Faktor` | 8 | **K03-M05** -- *Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein.* |
+| **Anmeldecode** | `\bMFA\b|\b2FA\b|mfa_method|WARTET_2FA` | 9 | **K03-M05** -- *... mfa_method = EMAIL_CODE.* |
 
 ## Was hier NICHT steht
 
@@ -50,8 +63,3 @@ entscheidet M. Veil -- nicht dieses Werkzeug.
 - **Anmeldung** (6 Treffer) steckt vollstaendig in *sicherheitskritisch*
 - **Kenntnisnahme** (3 Treffer) steckt vollstaendig in *freigabekritisch*
 - **Unterschrift** (5 Treffer) steckt vollstaendig in *freigabekritisch*
-
-Ohne jeden Treffer -- die Maschine traegt hier nichts bei:
-
-- Anmeldecode
-
