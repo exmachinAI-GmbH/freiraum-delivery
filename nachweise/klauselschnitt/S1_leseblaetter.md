@@ -2715,4 +2715,3 @@ Drei Hinweise zum Wortsinn, damit beim Lesen nichts durcheinandergeraet:
 **K11-G13** · GILT — Dieselbe Feststellung aus Sicht des Betriebs-Portals: was der Betreiber dort am Bildschirm sieht, ist nur eine Lesefläche; der eigentliche verkettete Nachweis liegt woanders.
 
 > Es GILT: Die Prüfsummenkette liegt im internen Nachweisspeicher, nicht in der Protokollsicht. Die Sicht ist eine Lesefläche.
-
