@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uebersicht · FREIRAUM</title>
+  {#
+    bildschirm: EN-02
+
+    EN-02 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet
+    (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt fuer EN-02 sieben
+    Aktionen; gebaut ist in dieser Scheibe GENAU EINE:
+
+        neue_anwendung_erstellen   ->  EN-03
+
+    Nicht gebaut und deshalb auch nicht angedeutet: Erklaervideo ansehen,
+    Termin vereinbaren, etwas Eigenes eintippen, Nachricht senden,
+    Fortfuehren, Ansehen. Sie gehoeren zu K01 und zu spaeteren Scheiben. Eine
+    Schaltflaeche zu zeigen, die nirgends hinfuehrt, waere schlimmer als
+    keine -- sie verspricht einen Weg, den es nicht gibt.
+
+    DIESE SEITE IST AUSWEG 3 nach einem Halt (K04-M08, "zur Uebersicht
+    zurueckkehren"). Sie zeigt den bestehenden Eignungs-Check mit seinem
+    Ergebnis; getilgt wird dabei nichts (K04-D03). Der Aufruf liest nur.
+
+    ANGEZEIGT WIRD ALLEIN `fit_check.outcome`. Kein zweites Kennzeichen, kein
+    gespiegelter Zustand, keine abgeleitete Spalte (K04-D05).
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 34rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    h2 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
+    .hinweis { font-size: .875rem; margin: .5rem 0 0; }
+    .stand { border: 1px solid currentColor; border-radius: .25rem;
+             padding: .6rem .75rem; margin: 0; }
+    button { margin-top: .75rem; padding: .6rem 1.2rem; font: inherit;
+             border-radius: .25rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-02 · Uebersicht</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+    <p>Angemeldet als {{ anzeigename }} · Portal {{ portal }}</p>
+
+    <h2>Ihre Vorhaben</h2>
+    {#
+      Zustand "leer" nach K19-M06: steht noch kein Eignungs-Check, sagt die
+      Seite das im Klartext, statt eine leere Flaeche zu zeigen.
+    #}
+    {% if check_besteht %}
+      <p class="stand">Ein Eignungs-Check besteht.
+        Ergebnis:
+        {% if ergebnis == 'GEEIGNET' %}geeignet
+        {% elif ergebnis == 'NICHT_GEEIGNET' %}nicht geeignet
+        {% else %}noch offen{% endif %}.
+      </p>
+      {#
+        Der Rueckweg zum Check ist ein einfacher Verweis auf denselben
+        Bildschirm, den der Vertrag ohnehin fuehrt (GET /eignung) -- keine
+        zusaetzliche Aktion und kein zusaetzlicher Serverbefehl. Ohne ihn
+        waere Ausweg 3 eine Einbahnstrasse: der Check bliebe bestehen, waere
+        aber von hier aus nicht mehr erreichbar.
+      #}
+      <p class="hinweis">Der Check bleibt erhalten, mit allem, was Sie
+        beantwortet haben. <a href="/eignung">Eignungs-Check ansehen</a></p>
+    {% else %}
+      <p class="stand">Es besteht noch kein Eignungs-Check.</p>
+    {% endif %}
+
+    <form method="post" action="/uebersicht/neu">
+      <button type="submit">Neue Anwendung erstellen</button>
+    </form>
+
+    <p class="hinweis">Dieser Bildschirm aendert nichts. Ein Vorgang entsteht
+      erst im naechsten Schritt.</p>
+
+    <form method="post" action="/abmelden">
+      <button type="submit">Ausloggen</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>

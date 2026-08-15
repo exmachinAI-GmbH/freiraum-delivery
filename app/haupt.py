@@ -32,6 +32,10 @@ Der Vertrag der Scheibe:
     POST /abmelden    303 auf "/anmeldung", Sitzung beendet
     GET  /gesundheit  200 {"status":"ok"}, ohne Sitzung erreichbar
 
+Seit dem 15.08.2026 kommen die Wege der Vorpruefung hinzu -- /uebersicht,
+/vorpruefung und /eignung. Sie stehen mit ihrem eigenen Vertrag im Kopf von
+app/vorpruefung.py und sind hier nur eingebunden.
+
 Der Import von app.datenbank steht bewusst am Anfang: fehlt einer der drei
 Pflichtwerte der Umgebung, bricht er hier ab -- beim START, nicht beim ersten
 Anmeldeversuch (Befund BEF-L2-1 vom 10.08.2026).
@@ -57,12 +61,20 @@ from app.sitzung import (
     sitzung_beenden,
     sitzung_pruefen,
 )
+from app.vorpruefung import router as vorpruefung_router
 
 # Gegen __file__, nicht gegen das Arbeitsverzeichnis: der Server soll aus
 # jedem Verzeichnis startbar sein, ohne seine Vorlagen zu verlieren.
 VORLAGEN = Jinja2Templates(directory=str(Path(__file__).parent / "vorlagen"))
 
 app = FastAPI(title="FREIRAUM · Anmeldung", docs_url=None, redoc_url=None)
+
+# Scheibe 2: die Vorpruefung (EN-02, EN-03, EN-04). Bewusst als eigene Datei
+# und hier nur eingebunden -- diese Datei traegt die Anmeldung und den Zugang,
+# app/vorpruefung.py traegt den Weg dahinter. Die Fehlerbehandlung fuer eine
+# nicht erreichbare Datenbank gilt fuer beide: sie haengt am `app`-Objekt,
+# nicht an einer einzelnen Route (siehe `datenbank_weg` weiter unten).
+app.include_router(vorpruefung_router)
 
 
 class TokenAusDemProtokoll(logging.Filter):
