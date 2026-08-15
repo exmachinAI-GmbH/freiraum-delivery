@@ -135,9 +135,26 @@ einer Querschnittsgruppe auf, sie benennen also etwas, das in jeder Scheibe gilt
 | Unterschrift | 5 | freigabekritisch |
 | Kenntnisnahme | 3 | freigabekritisch |
 
-**Und eine Station trifft überhaupt nichts: `Anmeldecode`** — ausgerechnet die, an der
-gerade gebaut wird. Für sie trägt die Maschine nichts bei. Was zu ihr gehört, muss von
-Hand benannt werden oder bleibt offen.
+**Eine Station traf zunächst überhaupt nichts: `Anmeldecode`** — ausgerechnet die, an
+der gerade gebaut wird. Der Grund war kein Mangel im Bestand, sondern ein
+Wortunterschied: die Konzepte nennen dieselbe Sache **„E-Mail-Code"** oder
+**„zweiter Faktor"**, nie „Anmeldecode".
+
+Die Gleichsetzung ist nicht geraten, sie steht wörtlich in zwei Regeln:
+
+> **K03-M05** — *„Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein:
+> `mfa_method` = EMAIL_CODE."*
+>
+> **K03-M15** — *„Ein E-Mail-Code ist zehn Minuten und genau einmal gültig."*
+
+Damit trägt die Station **19 Regeln** statt null, verteilt auf fünf Konzepte —
+darunter K14 und K19, die über den Vertrag für Scheibe 1 gar nicht erreichbar wären.
+Falls Sie eine der drei Gleichsetzungen nicht mittragen, streichen Sie sie; die
+Übersicht in `S1_wortmarken.md` führt jede einzeln mit ihrem Beleg auf.
+
+**Ob dieselbe Sprachlücke bei anderen Stationen besteht, ist nicht geprüft.** Das ist
+Lesearbeit am Wortlaut, keine Messung — und sie gehört zu dem, was Sie beim
+Durchgehen von Block 3 bemerken werden.
 
 ---
 
