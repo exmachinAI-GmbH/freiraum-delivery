@@ -188,7 +188,6 @@
 # =====================================================================
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
-HIER="$(cd "$(dirname "$0")" && pwd)"
 
 : "${PGHOST:=localhost}"
 : "${PGPORT:=55433}"
