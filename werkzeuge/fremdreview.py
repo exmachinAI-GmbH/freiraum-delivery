@@ -218,14 +218,66 @@ def blatt_pruefen(datei):
     return zustand, kopf, befunde
 
 
+def stand(ort, scheibe=None):
+    """Eine Zeile fuer die Uebergabe: wurde je ein Fremdblick angefordert?
+
+    Die Sperre in tor3.sh ist passiv -- sie meldet einen Zustand in einem
+    Pruefbericht, den man uebersehen kann. Genau das ist geschehen: Tor 3
+    ist bis zum 15.08.2026 kein einziges Mal mit einem gueltigen Blatt
+    gelaufen, nicht weil jemand es abgelehnt haette, sondern weil nie ein
+    Moment kam, in dem die Frage gestellt wurde.
+
+    Diese Zeile gehoert deshalb in jede Tages-Uebergabe. Sie entscheidet
+    nichts und sperrt nichts -- sie sorgt dafuer, dass die offene Frage
+    jeden Tag vor Augen steht statt in einem Bericht zu stehen.
+    """
+    if not ort.is_dir():
+        return "Tor 3: nie angefordert — das Verzeichnis nachweise/fremdreview/ fehlt."
+    blaetter = sorted(p for p in ort.glob("*.md")
+                      if p.name not in {"README.md", "VORLAGE.md"})
+    if scheibe:
+        blaetter = [b for b in blaetter
+                    if kopf_lesen(b.read_text(encoding="utf-8")).get("scheibe") == scheibe]
+    if not blaetter:
+        vorlagen = sorted((WURZEL / "arbeit" / "Vorlagen").glob("tor3_anforderung*.md"))
+        woher = (" Vorlage: " + ", ".join(str(v.relative_to(WURZEL)) for v in vorlagen)
+                 if vorlagen else
+                 " Es liegt keine Anforderungsvorlage bereit -- auch das ist ein Befund.")
+        return ("Tor 3: **fuer keine Scheibe angefordert.** Das Review fordert ein Mensch an; "
+                "der Harness schreibt es nie selbst." + woher)
+    zeilen = []
+    for b in blaetter:
+        zustand, kopf, _ = blatt_pruefen(b)
+        zeilen.append(
+            "Tor 3 · Scheibe {s}: angefordert am {d} von {w} · Modell {m} {f} · "
+            "Urteil *{u}* · Nachweis {z}".format(
+                s=kopf.get("scheibe", "?"), d=kopf.get("datum", "?"),
+                w=kopf.get("angefordert_von", "?"),
+                m=kopf.get("pruefendes_modell", "?"),
+                f=kopf.get("pruefende_fassung", "?"),
+                u=kopf.get("urteil", "?"),
+                z={"bestanden": "vollstaendig", "gesperrt": "GESPERRT",
+                   "fehlgeschlagen": "FEHLGESCHLAGEN"}[zustand]))
+    return "\n".join(zeilen)
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="Tor 3 · Nachweis des fremden Blicks pruefen (nie erzeugen)")
     ap.add_argument("--scheibe", help="nur Blaetter dieser Scheibe pruefen")
     ap.add_argument("--verzeichnis", default=str(VERZEICHNIS))
+    ap.add_argument("--stand", action="store_true",
+                    help="eine Zeile fuer die Tages-Uebergabe; sperrt nie, Rueckgabewert 0")
     a = ap.parse_args()
 
     ort = pathlib.Path(a.verzeichnis)
+
+    # --stand ist eine Auskunft, kein Tor. Es meldet immer 0 -- auch wenn
+    # nie ein Review angefordert wurde. Wer sperrt, ist Tor 3 selbst.
+    if a.stand:
+        print(stand(ort, a.scheibe))
+        return 0
+
     if not ort.is_dir():
         print(f"::error::{ort} fehlt -- Tor 3 GESPERRT (K23-M22)")
         return 2
