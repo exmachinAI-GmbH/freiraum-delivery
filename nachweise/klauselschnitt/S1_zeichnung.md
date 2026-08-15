@@ -10,8 +10,8 @@
 | Grundlage des Fadens | Anlage Baustrategie, Zeilen 52–70, gezeichnet 05.08.2026 |
 | Angelegt am | 15.08.2026 |
 | Regeln im Bestand | 1 231 |
-| Vom Stichwortverzeichnis berührt | 454 |
-| Zur Zeichnung vorgelegt | Block 1: 13 · Block 2: 2 · Block 3: siehe unten |
+| Vom Stichwortverzeichnis berührt | 470 |
+| Zur Zeichnung vorgelegt | Block 1a: 7 ganz gedeckt · Block 1b: 6 nur teilweise · Block 2: 2 · Block 3: 22 Stationen |
 
 ---
 
@@ -64,14 +64,22 @@ Kenntnis, nicht zur erneuten Zeichnung.
 
 ## Block 1 · Der Vertrag schweigt, aber der gebaute Code beansprucht sie
 
-**Ein Sammelkreuz deckt diesen Block.** Zulässig, weil jede Zeile einzeln aufgeführt
-ist, jede ihre Fundstelle trägt und je Zeile geprüft wurde, ob eine gezeichnete
-Festlegung sie ausnimmt.
-
 Woher sie kommen: Diese dreizehn Regeln werden von einer Datei beansprucht, die in
 ihrem Kopf **zugleich** „FREIRAUM · Scheibe 1" sagt **und** die Regel in einer Zeile
 `umsetzt:` nennt. Das ist keine Ableitung, sondern eine Abschrift — der Bau hat es
 selbst notiert, während er baute.
+
+> **Der Anspruch wurde nachgeprüft, und er trägt nur zur Hälfte.**
+> Jede der dreizehn Regeln wurde Zeile für Zeile gegen den Code der beanspruchenden
+> Datei gehalten. Von den sechzehn Anspruchspaaren sind **sieben ganz gedeckt, acht
+> nur teilweise, eines gar nicht**. Der Block ist deshalb geteilt: nur der gedeckte
+> Teil trägt ein Sammelkreuz. Die vollständige Prüfung steht in
+> `S1_bauspur_nachpruefung.md`.
+
+### Block 1a · ganz gedeckt — ein Sammelkreuz deckt diesen Teil
+
+Zulässig, weil jede Zeile einzeln aufgeführt ist, jede ihre Fundstelle trägt und je
+Zeile geprüft wurde, ob eine gezeichnete Festlegung sie ausnimmt.
 
 *Hinweis zur Vertragskette: Die Zeile der Scheibe 1 in der Anlage Baustrategie sagt
 wörtlich „schließt Meilenstein: keinen — sie ist Integrationsprobe". Über den Vertrag
@@ -81,18 +89,28 @@ stammt aus dem gebauten Bestand oder aus Ihrer eigenen Lesung.*
 | Regel | Art | Was sie verlangt | Fundstelle im Bau | Geltung | Tiefe | ✓ | abweichend |
 |---|---|---|---|---|---|---|---|
 | **K03-D01** | DARF NICHT | Kein Vorgang wird ohne gültige Sitzung und aktives Konto wirksam. Halb-Zugang gibt es nicht | `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
-| **K03-G01** | GILT | Was nicht geprüft werden kann, wird gesperrt — und die Sperre wird begründet angezeigt | `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
-| **K03-M05** | MUSS | Der zweite Faktor ist ein sechsstelliger Code per E-Mail. Ein anderes Verfahren kennt das Datenmodell nicht | `app/haupt.py:1` · `app/einladung.py:1` · `mail/versand.py:2` | `neu_ab` | `duenn` | [ ] | |
 | **K03-M13** | MUSS | Jede Prüfung der Anmeldung läuft auf dem Server. Eine Prüfung nur in der Oberfläche gilt als nicht erfolgt | `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
-| **K03-M26** | MUSS | Der Mailversand nutzt eine verwaltete Identität; Codes und volle Adressen stehen nie im Protokoll; Fehler sperren und alarmieren | `app/einladung.py:1` · `mail/versand.py:2` | `neu_ab` | `duenn` | [ ] | |
-| **K13-M05** | MUSS | Jeder Aufruf aus der Oberfläche läuft über den Serverpfad, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft | `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
 | **K20-D10** | DARF NICHT | Eine abgelaufene, eingelöste oder widerrufene Einladung wirkt nicht erneut. Ein verfallener Link führt zu einem neuen Vorgang | `app/einladung.py:1` | `neu_ab` | `duenn` | [ ] | |
-| **K20-M08** | MUSS | Gespeichert wird nur der Streuwert des Links. Wer die Datenbank liest, kann keine fremde Einladung einlösen | `app/einladung.py:1` · `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
 | **K20-M14** | MUSS | Einlösung setzt Zustand und Zeitpunkt gemeinsam — nie das eine ohne das andere | `app/einladung.py:1` | `neu_ab` | `duenn` | [ ] | |
 | **K20-M15** | MUSS | Nach der Einlösung wechselt das Konto von *wartet auf zweiten Faktor* auf *aktiv* | `app/einladung.py:1` | `neu_ab` | `duenn` | [ ] | |
 | **K20-M18** | MUSS | Jede Änderung an Zugang, Rolle, Mitgliedschaft oder Einladung steht mit Zeitpunkt, Handelndem und Wert davor und danach im Nachweis | `app/einladung.py:1` | `neu_ab` | `duenn` | [ ] | |
-| **K20-M25** | MUSS | Wiederversand sagt ausdrücklich, dass der vorherige Link ungültig ist; der Nachweis trägt die Aufbewahrungsklasse Betriebsprotokoll | `app/haupt.py:1` | `neu_ab` | `duenn` | [ ] | |
 | **K23-D09** | DARF NICHT | Keine Geheimnisse, Zugangswerte oder unmaskierten Personenangaben in Manifest, Protokoll, Bildschirmabzug oder Fehlerausgabe. Ein Fund sperrt den Lauf | `app/haupt.py:2` | **`quer`?** | — | [ ] | |
+
+### Block 1b · nur teilweise gedeckt — **kein** Sammelkreuz
+
+Hier gilt eine Zeile ausschließlich mit ihrem eigenen Haken. Die Spalte *was fehlt*
+sagt, wofür Sie mit dem Haken einstehen würden. **Keine dieser Lücken ist heute im
+Dateikopf vermerkt** — wer nur die Kopfzeile liest, hält die Regel für gebaut.
+
+| Regel | Art | Was sie verlangt | **Was fehlt** | Geltung | Tiefe | ✓ | abweichend |
+|---|---|---|---|---|---|---|---|
+| **K03-G01** | GILT | Was nicht geprüft werden kann, wird gesperrt — und die Sperre wird begründet angezeigt | Sperrt zuverlässig — aber die Sperre wird nur in **einem** Fall begründet angezeigt (Datenbank nicht erreichbar). In zwei weiteren Fällen wird der Grund bewusst verschwiegen. `app/einladung.py:51` behauptet zudem, `haupt.py` führe die Regel *ganz* — das trifft nicht zu | `neu_ab`? | `duenn` | [ ] | |
+| **K03-M05** | MUSS | Der zweite Faktor ist ein sechsstelliger Code per E-Mail. Ein anderes Verfahren kennt das Datenmodell nicht | **Der schwerste Fall.** `app/haupt.py` beansprucht die Regel, aber kein Programmschritt dieser Datei erzeugt, prüft oder versendet einen Code. `app/einladung.py` löst den Versand aus, legt aber weder Sechsstelligkeit noch Mailweg noch `mfa_method = EMAIL_CODE` fest | `neu_ab`? | `duenn` | [ ] | |
+| **K03-M26** | MUSS | Der Mailversand nutzt eine verwaltete Identität; Codes und volle Adressen stehen nie im Protokoll; Fehler sperren und alarmieren | Zwei von vier Anforderungen gebaut (keine Adressen und Codes im Protokoll, fail-closed). **Nicht** gebaut: verwaltete Identität, erlaubte Ausgangsverbindung und die geforderte Alarmierung des Betriebs mit Runbook-Verweis | `neu_ab`? | `duenn` | [ ] | |
+| **K13-M05** | MUSS | Jeder Aufruf aus der Oberfläche läuft über den Serverpfad, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft | Drei von fünf Prüfungen gebaut. Die **Rolle** wird nirgends gelesen, sondern per Auslegung mit der Mitgliedschaft gleichgesetzt; ein **Objektbezug** wird gar nicht geprüft | `neu_ab`? | `duenn` | [ ] | |
+| **K20-M08** | MUSS | Gespeichert wird nur der Streuwert des Links. Wer die Datenbank liest, kann keine fremde Einladung einlösen | Beide beanspruchenden Dateien decken je eine Seite ab. Der Kern — dass allein der Prüfwert gespeichert wird — steht in `app/einladung_senden.py:663`, **einer Datei ohne jede `umsetzt:`-Kopfzeile.** Die beste Umsetzung beansprucht niemand | `neu_ab`? | `duenn` | [ ] | |
+| **K20-M25** | MUSS | Wiederversand sagt ausdrücklich, dass der vorherige Link ungültig ist; der Nachweis trägt die Aufbewahrungsklasse Betriebsprotokoll | Nur die Anzeige ist gebaut. Die geforderte Aufbewahrungsklasse *Betriebsprotokoll* wird ausdrücklich **nicht** gesetzt | `neu_ab`? | `duenn` | [ ] | |
+
 
 > **Eine Zeile in Block 1 ist zweifelhaft, und zwar von uns aus, nicht von Ihnen.**
 > **K23-D09** wird von `app/haupt.py` beansprucht — aber sie gilt für jeden Lauf in
@@ -118,22 +136,57 @@ Anspruch ist da, die Zuordnung nicht.
 
 ## Block 3 · Leseanlässe — hier gilt kein Sammelkreuz
 
-*Wird aus den Leseblättern ergänzt.*
-
 **In diesem Block gilt eine Zeile ausschließlich mit ihrem eigenen Haken als
 gezeichnet.** Ohne Haken bleibt sie offen. Das ist kein Versäumnis, sondern das
 richtige Ergebnis: ein Wort, das in einer Regel und in der Beschreibung des Fadens
 vorkommt, belegt, dass ein Wort an zwei Stellen steht — nicht, dass die Regel zu
 dieser Scheibe gehört.
 
-**Vier Stationen sind gemessen untauglich** — ihre Trefferliste geht vollständig in
-einer Querschnittsgruppe auf, sie benennen also etwas, das in jeder Scheibe gilt:
 
-| Station | Treffer | steckt ganz in |
-|---|---|---|
-| Anmeldung | 6 | sicherheitskritisch |
-| Unterschrift | 5 | freigabekritisch |
-| Kenntnisnahme | 3 | freigabekritisch |
+### Die Stationen — so gehen Sie sie durch
+
+Die Regeln jeder Station stehen im Wortlaut, nach Sache gebündelt, in
+**`S1_leseblaetter.md`** — 140 Bündel über 22 Stationen. Sie lesen dort Station für
+Station und tragen hier ein, was Sie aufnehmen.
+
+| Station | Zeile im gezeichneten Faden | Regeln | Bündel | Hinweis |
+|---|---|---:|---:|---|
+| **Mandant** | EXMA-Minimum: Mandant anlegen (BS:53) | 106 | 16 |  |
+| **Einladungsschranke** | EXMA-Minimum: ... Einladungsschranke (BS:53) | 4 | 3 |  |
+| **Einladung** | EXMA-Minimum: ... Einladung senden (BS:53) | 34 | 10 |  |
+| **Anmeldecode** | Einladung kommt an ... Anmeldecode (BS:55) | 19 | 0 | Treffer nur über belegte Wortgleichsetzung — siehe `S1_wortmarken.md` |
+| **Anmeldung** | ... Anmeldecode > Anmeldung (BS:55) | 6 | 0 | **unterscheidet nichts** — steckt ganz in *sicherheitskritisch* |
+| **Kenntnisnahme** | der Portal-Hinweis nach L9: NACHWEISBARE Kenntnisnahme (BS:56) | 3 | 0 | **unterscheidet nichts** — steckt ganz in *freigabekritisch* |
+| **Vorpruefung** | Vorpruefung: ein geeigneter Fall -> GEEIGNET (BS:57) | 8 | 4 |  |
+| **geeignet** | ... ein geeigneter Fall -> GEEIGNET (BS:57) | 8 | 5 |  |
+| **Zweckbestimmung** | ZWECKBESTIMMUNG bestaetigt (Riegel) (BS:59) | 2 | 2 |  |
+| **Anwendung** | create_app_after_fit -- der EINE Weg (BS:61) | 99 | 16 |  |
+| **Gespraech** | ein Gespraechspfad (Stufen 01-02) (BS:63) | 42 | 13 |  |
+| **Anforderungen** | ... > Anforderungen/Vertrag (Stufe 03) (BS:63) | 15 | 6 |  |
+| **Vertrag** | ... Anforderungen/Vertrag (Stufe 03) (BS:63) | 34 | 7 |  |
+| **Prototyp** | Prototyp aus EINER freigegebenen Vorlage (BS:65) | 42 | 10 |  |
+| **Vorlage** | ... aus EINER freigegebenen Vorlage (Stufe 04) (BS:65) | 40 | 9 |  |
+| **Angebot** | Angebot, Stufe 05 (BS:67) | 40 | 8 |  |
+| **Unterschrift** | UNTERSCHRIFT + BEIDE HAEKCHEN > SIEGEL (BS:67) | 5 | 0 | **unterscheidet nichts** — steckt ganz in *freigabekritisch* |
+| **Haekchen** | UNTERSCHRIFT + BEIDE HAEKCHEN (BS:67) | 13 | 6 |  |
+| **Siegel** | ... > SIEGEL (Riegel) (BS:67) | 23 | 7 |  |
+| **Uebergabe** | das Uebergabe-Paket (BS:69) | 31 | 8 |  |
+| **Manifest** | ... mit Manifest- und Archivpruefsumme (BS:69) | 12 | 5 |  |
+| **Pruefsumme** | ... Manifest- und Archivpruefsumme (BS:69) | 7 | 5 |  |
+
+**Ihre Eintragung je aufgenommener Regel**, eine Zeile je Regel:
+
+| Regel | Station | Geltung | Tiefe | ✓ | Begründung in einem Halbsatz |
+|---|---|---|---|---|---|
+| | | | | [ ] | |
+
+*Alles, was Sie hier nicht eintragen, bleibt offen — und das ist ein zulässiges
+Ergebnis, kein Versäumnis.*
+
+**Drei Stationen sind gemessen untauglich** — ihre Trefferliste geht vollständig in
+einer Querschnittsgruppe auf, sie benennen also etwas, das in jeder Scheibe gilt:
+*Anmeldung* (6, sicherheitskritisch) · *Unterschrift* (5, freigabekritisch) ·
+*Kenntnisnahme* (3, freigabekritisch). In der Tabelle oben sind sie gekennzeichnet.
 
 **Eine Station traf zunächst überhaupt nichts: `Anmeldecode`** — ausgerechnet die, an
 der gerade gebaut wird. Der Grund war kein Mangel im Bestand, sondern ein
