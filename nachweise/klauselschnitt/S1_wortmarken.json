@@ -1,0 +1,3876 @@
+{
+  "vorbemerkung": "Stichwortverzeichnis, keine Zuordnung. Ein Worttreffer belegt, dass ein Wort an zwei Stellen steht -- nicht, dass die Klausel zu dieser Scheibe gehoert. Dieses Verzeichnis nennt deshalb nirgends eine Scheibe. 'geht_auf_in' heisst: die Trefferliste dieses Begriffs steckt vollstaendig in einer Querschnittsgruppe, der Begriff unterscheidet also nichts -- das Streichen entscheidet ein Mensch.",
+  "grundlage": "Anlage Baustrategie, Fadendiagramm Z. 52-70, gez. 05.08.2026",
+  "scheibe": "1",
+  "register_erzeugt": "2026-08-07T10:15:12+00:00",
+  "klauseln_gesamt": 1231,
+  "beruehrt_insgesamt": 454,
+  "stationen": [
+    {
+      "station": "Mandant",
+      "anker": "BS:53",
+      "zeile_im_faden": "EXMA-Minimum: Mandant anlegen",
+      "muster": "Mandant",
+      "treffer": 106,
+      "konzepte": [
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K08",
+        "K10",
+        "K11",
+        "K12",
+        "K13",
+        "K14",
+        "K16",
+        "K17",
+        "K19",
+        "K20",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D08",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 89
+        },
+        {
+          "klausel": "K01-M02",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 31
+        },
+        {
+          "klausel": "K01-M15",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 44
+        },
+        {
+          "klausel": "K01-M23",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 168
+        },
+        {
+          "klausel": "K01-M26",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 26
+        },
+        {
+          "klausel": "K01-M27",
+          "konzept": "K01",
+          "begriff": "Mandantenzugehörigkeit",
+          "stelle": 187
+        },
+        {
+          "klausel": "K01-M30",
+          "konzept": "K01",
+          "begriff": "Mandant",
+          "stelle": 168
+        },
+        {
+          "klausel": "K01-M35",
+          "konzept": "K01",
+          "begriff": "Mandanten",
+          "stelle": 61
+        },
+        {
+          "klausel": "K02-D03",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-D05",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 26
+        },
+        {
+          "klausel": "K02-D07",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-D08",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 73
+        },
+        {
+          "klausel": "K02-D09",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-D10",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 70
+        },
+        {
+          "klausel": "K02-D11",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 54
+        },
+        {
+          "klausel": "K02-D12",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-G05",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 71
+        },
+        {
+          "klausel": "K02-G06",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 58
+        },
+        {
+          "klausel": "K02-G10",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 54
+        },
+        {
+          "klausel": "K02-G11",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 85
+        },
+        {
+          "klausel": "K02-G12",
+          "konzept": "K02",
+          "begriff": "mandantengebundener",
+          "stelle": 105
+        },
+        {
+          "klausel": "K02-G14",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 72
+        },
+        {
+          "klausel": "K02-G15",
+          "konzept": "K02",
+          "begriff": "mandanten",
+          "stelle": 86
+        },
+        {
+          "klausel": "K02-G16",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 13
+        },
+        {
+          "klausel": "K02-G17",
+          "konzept": "K02",
+          "begriff": "mandanten",
+          "stelle": 38
+        },
+        {
+          "klausel": "K02-M02",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 6
+        },
+        {
+          "klausel": "K02-M03",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 6
+        },
+        {
+          "klausel": "K02-M04",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-M06",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 56
+        },
+        {
+          "klausel": "K02-M07",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 6
+        },
+        {
+          "klausel": "K02-M08",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 6
+        },
+        {
+          "klausel": "K02-M09",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 6
+        },
+        {
+          "klausel": "K02-M20",
+          "konzept": "K02",
+          "begriff": "Mandantengrenze",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-M21",
+          "konzept": "K02",
+          "begriff": "mandantengebundenen",
+          "stelle": 10
+        },
+        {
+          "klausel": "K02-M23",
+          "konzept": "K02",
+          "begriff": "Mandantenmenge",
+          "stelle": 97
+        },
+        {
+          "klausel": "K02-M26",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 78
+        },
+        {
+          "klausel": "K02-M29",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-M30",
+          "konzept": "K02",
+          "begriff": "Mandanten",
+          "stelle": 69
+        },
+        {
+          "klausel": "K02-M31",
+          "konzept": "K02",
+          "begriff": "Mandant",
+          "stelle": 4
+        },
+        {
+          "klausel": "K03-D10",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 179
+        },
+        {
+          "klausel": "K03-G03",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 70
+        },
+        {
+          "klausel": "K03-M02",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 33
+        },
+        {
+          "klausel": "K03-M07",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 73
+        },
+        {
+          "klausel": "K03-M19",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 89
+        },
+        {
+          "klausel": "K03-M21",
+          "konzept": "K03",
+          "begriff": "Mandant",
+          "stelle": 87
+        },
+        {
+          "klausel": "K03-M22",
+          "konzept": "K03",
+          "begriff": "Mandanten",
+          "stelle": 64
+        },
+        {
+          "klausel": "K03-M23",
+          "konzept": "K03",
+          "begriff": "mandanten",
+          "stelle": 44
+        },
+        {
+          "klausel": "K03-M24",
+          "konzept": "K03",
+          "begriff": "mandanten",
+          "stelle": 212
+        },
+        {
+          "klausel": "K03-M25",
+          "konzept": "K03",
+          "begriff": "mandant",
+          "stelle": 60
+        },
+        {
+          "klausel": "K03-M27",
+          "konzept": "K03",
+          "begriff": "mandant",
+          "stelle": 159
+        },
+        {
+          "klausel": "K04-D08",
+          "konzept": "K04",
+          "begriff": "Mandanten",
+          "stelle": 33
+        },
+        {
+          "klausel": "K04-M10",
+          "konzept": "K04",
+          "begriff": "Mandanten",
+          "stelle": 32
+        },
+        {
+          "klausel": "K04-M18",
+          "konzept": "K04",
+          "begriff": "Mandant",
+          "stelle": 52
+        },
+        {
+          "klausel": "K05-M24",
+          "konzept": "K05",
+          "begriff": "Mandant",
+          "stelle": 105
+        },
+        {
+          "klausel": "K05-M27",
+          "konzept": "K05",
+          "begriff": "Mandanten",
+          "stelle": 30
+        },
+        {
+          "klausel": "K06-M26",
+          "konzept": "K06",
+          "begriff": "Mandant",
+          "stelle": 93
+        },
+        {
+          "klausel": "K07-D08",
+          "konzept": "K07",
+          "begriff": "Mandanten",
+          "stelle": 26
+        },
+        {
+          "klausel": "K07-M12",
+          "konzept": "K07",
+          "begriff": "Mandanten",
+          "stelle": 33
+        },
+        {
+          "klausel": "K07-M19",
+          "konzept": "K07",
+          "begriff": "Mandant",
+          "stelle": 103
+        },
+        {
+          "klausel": "K07-M22",
+          "konzept": "K07",
+          "begriff": "Mandant",
+          "stelle": 72
+        },
+        {
+          "klausel": "K07-M23",
+          "konzept": "K07",
+          "begriff": "mandantengebundenen",
+          "stelle": 116
+        },
+        {
+          "klausel": "K07-M28",
+          "konzept": "K07",
+          "begriff": "Mandantentrennung",
+          "stelle": 60
+        },
+        {
+          "klausel": "K08-M22",
+          "konzept": "K08",
+          "begriff": "Mandant",
+          "stelle": 45
+        },
+        {
+          "klausel": "K08-M31",
+          "konzept": "K08",
+          "begriff": "Mandanten",
+          "stelle": 243
+        },
+        {
+          "klausel": "K10-G10",
+          "konzept": "K10",
+          "begriff": "Mandanten",
+          "stelle": 122
+        },
+        {
+          "klausel": "K10-M22",
+          "konzept": "K10",
+          "begriff": "Mandant",
+          "stelle": 56
+        },
+        {
+          "klausel": "K10-M35",
+          "konzept": "K10",
+          "begriff": "Mandanten",
+          "stelle": 57
+        },
+        {
+          "klausel": "K11-D05",
+          "konzept": "K11",
+          "begriff": "Mandanten",
+          "stelle": 50
+        },
+        {
+          "klausel": "K11-D09",
+          "konzept": "K11",
+          "begriff": "Mandanten",
+          "stelle": 50
+        },
+        {
+          "klausel": "K11-G05",
+          "konzept": "K11",
+          "begriff": "Mandantenbezug",
+          "stelle": 117
+        },
+        {
+          "klausel": "K11-M01",
+          "konzept": "K11",
+          "begriff": "Mandanten",
+          "stelle": 76
+        },
+        {
+          "klausel": "K11-M02",
+          "konzept": "K11",
+          "begriff": "Mandant",
+          "stelle": 3
+        },
+        {
+          "klausel": "K11-M27",
+          "konzept": "K11",
+          "begriff": "Mandanten",
+          "stelle": 145
+        },
+        {
+          "klausel": "K12-M02",
+          "konzept": "K12",
+          "begriff": "Mandanten",
+          "stelle": 48
+        },
+        {
+          "klausel": "K12-M10",
+          "konzept": "K12",
+          "begriff": "mandantengebundener",
+          "stelle": 71
+        },
+        {
+          "klausel": "K12-M12",
+          "konzept": "K12",
+          "begriff": "Mandanten",
+          "stelle": 37
+        },
+        {
+          "klausel": "K13-D09",
+          "konzept": "K13",
+          "begriff": "Mandantenschutzschicht",
+          "stelle": 105
+        },
+        {
+          "klausel": "K13-G04",
+          "konzept": "K13",
+          "begriff": "Mandant",
+          "stelle": 150
+        },
+        {
+          "klausel": "K13-M05",
+          "konzept": "K13",
+          "begriff": "Mandant",
+          "stelle": 126
+        },
+        {
+          "klausel": "K13-M07",
+          "konzept": "K13",
+          "begriff": "Mandanten",
+          "stelle": 181
+        },
+        {
+          "klausel": "K13-M08",
+          "konzept": "K13",
+          "begriff": "Mandantengrenze",
+          "stelle": 4
+        },
+        {
+          "klausel": "K13-M16",
+          "konzept": "K13",
+          "begriff": "mandantenbezogenen",
+          "stelle": 56
+        },
+        {
+          "klausel": "K14-D07",
+          "konzept": "K14",
+          "begriff": "Mandanten",
+          "stelle": 86
+        },
+        {
+          "klausel": "K14-D10",
+          "konzept": "K14",
+          "begriff": "Mandantengrenze",
+          "stelle": 65
+        },
+        {
+          "klausel": "K14-G05",
+          "konzept": "K14",
+          "begriff": "Mandantenspalte",
+          "stelle": 32
+        },
+        {
+          "klausel": "K14-M04",
+          "konzept": "K14",
+          "begriff": "Mandanten",
+          "stelle": 306
+        },
+        {
+          "klausel": "K14-M05",
+          "konzept": "K14",
+          "begriff": "Mandant",
+          "stelle": 184
+        },
+        {
+          "klausel": "K14-M08",
+          "konzept": "K14",
+          "begriff": "Mandanten",
+          "stelle": 136
+        },
+        {
+          "klausel": "K14-M12",
+          "konzept": "K14",
+          "begriff": "Mandanten",
+          "stelle": 44
+        },
+        {
+          "klausel": "K14-M20",
+          "konzept": "K14",
+          "begriff": "mandant",
+          "stelle": 34
+        },
+        {
+          "klausel": "K16-G11",
+          "konzept": "K16",
+          "begriff": "mandantengebunden",
+          "stelle": 40
+        },
+        {
+          "klausel": "K17-D13",
+          "konzept": "K17",
+          "begriff": "Mandanten",
+          "stelle": 28
+        },
+        {
+          "klausel": "K17-G12",
+          "konzept": "K17",
+          "begriff": "Mandantenbezug",
+          "stelle": 34
+        },
+        {
+          "klausel": "K19-G08",
+          "konzept": "K19",
+          "begriff": "Mandantenvorgabe",
+          "stelle": 51
+        },
+        {
+          "klausel": "K20-G08",
+          "konzept": "K20",
+          "begriff": "Mandanten",
+          "stelle": 38
+        },
+        {
+          "klausel": "K20-G10",
+          "konzept": "K20",
+          "begriff": "Mandant",
+          "stelle": 91
+        },
+        {
+          "klausel": "K20-G11",
+          "konzept": "K20",
+          "begriff": "Mandant",
+          "stelle": 63
+        },
+        {
+          "klausel": "K20-M10",
+          "konzept": "K20",
+          "begriff": "Mandanten",
+          "stelle": 44
+        },
+        {
+          "klausel": "K20-M11",
+          "konzept": "K20",
+          "begriff": "Mandanten",
+          "stelle": 97
+        },
+        {
+          "klausel": "K23-M04",
+          "konzept": "K23",
+          "begriff": "mandanten",
+          "stelle": 214
+        },
+        {
+          "klausel": "K23-M10",
+          "konzept": "K23",
+          "begriff": "Mandanten",
+          "stelle": 44
+        },
+        {
+          "klausel": "K23-M11",
+          "konzept": "K23",
+          "begriff": "Mandantentrennung",
+          "stelle": 25
+        },
+        {
+          "klausel": "K23-M12",
+          "konzept": "K23",
+          "begriff": "Mandant",
+          "stelle": 72
+        },
+        {
+          "klausel": "K23-M23",
+          "konzept": "K23",
+          "begriff": "Mandantenfairness",
+          "stelle": 218
+        },
+        {
+          "klausel": "K25-G14",
+          "konzept": "K25",
+          "begriff": "Mandantentrennung",
+          "stelle": 69
+        },
+        {
+          "klausel": "K25-M22",
+          "konzept": "K25",
+          "begriff": "Mandantenbezug",
+          "stelle": 106
+        }
+      ]
+    },
+    {
+      "station": "Einladungsschranke",
+      "anker": "BS:53",
+      "zeile_im_faden": "EXMA-Minimum: ... Einladungsschranke",
+      "muster": "Einladungsschranke",
+      "treffer": 4,
+      "konzepte": [
+        "K02",
+        "K03"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K02-G06",
+          "konzept": "K02",
+          "begriff": "Einladungsschranke",
+          "stelle": 29
+        },
+        {
+          "klausel": "K02-M11",
+          "konzept": "K02",
+          "begriff": "Einladungsschranke",
+          "stelle": 9
+        },
+        {
+          "klausel": "K03-M19",
+          "konzept": "K03",
+          "begriff": "Einladungsschranke",
+          "stelle": 66
+        },
+        {
+          "klausel": "K03-M22",
+          "konzept": "K03",
+          "begriff": "Einladungsschranke",
+          "stelle": 4
+        }
+      ]
+    },
+    {
+      "station": "Einladung",
+      "anker": "BS:53",
+      "zeile_im_faden": "EXMA-Minimum: ... Einladung senden",
+      "muster": "Einladung",
+      "treffer": 34,
+      "konzepte": [
+        "K01",
+        "K02",
+        "K03",
+        "K05",
+        "K11",
+        "K15",
+        "K20",
+        "K23"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-M22",
+          "konzept": "K01",
+          "begriff": "Einladung",
+          "stelle": 159
+        },
+        {
+          "klausel": "K02-G06",
+          "konzept": "K02",
+          "begriff": "Einladungsfrist",
+          "stelle": 9
+        },
+        {
+          "klausel": "K02-M10",
+          "konzept": "K02",
+          "begriff": "Einladungsfrist",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-M11",
+          "konzept": "K02",
+          "begriff": "Einladungsschranke",
+          "stelle": 9
+        },
+        {
+          "klausel": "K03-G02",
+          "konzept": "K03",
+          "begriff": "Einladung",
+          "stelle": 84
+        },
+        {
+          "klausel": "K03-M03",
+          "konzept": "K03",
+          "begriff": "Einladung",
+          "stelle": 112
+        },
+        {
+          "klausel": "K03-M07",
+          "konzept": "K03",
+          "begriff": "Einladungssatz",
+          "stelle": 105
+        },
+        {
+          "klausel": "K03-M19",
+          "konzept": "K03",
+          "begriff": "Einladungsschranke",
+          "stelle": 66
+        },
+        {
+          "klausel": "K03-M22",
+          "konzept": "K03",
+          "begriff": "Einladungsschranke",
+          "stelle": 4
+        },
+        {
+          "klausel": "K03-M23",
+          "konzept": "K03",
+          "begriff": "Einladung",
+          "stelle": 15
+        },
+        {
+          "klausel": "K03-M25",
+          "konzept": "K03",
+          "begriff": "Einladungsbefehl",
+          "stelle": 33
+        },
+        {
+          "klausel": "K03-M27",
+          "konzept": "K03",
+          "begriff": "Einladung",
+          "stelle": 178
+        },
+        {
+          "klausel": "K05-M17",
+          "konzept": "K05",
+          "begriff": "Einladung",
+          "stelle": 45
+        },
+        {
+          "klausel": "K11-G06",
+          "konzept": "K11",
+          "begriff": "Einladung",
+          "stelle": 110
+        },
+        {
+          "klausel": "K11-M06",
+          "konzept": "K11",
+          "begriff": "Einladungslinks",
+          "stelle": 85
+        },
+        {
+          "klausel": "K11-M07",
+          "konzept": "K11",
+          "begriff": "Einladungsweg",
+          "stelle": 4
+        },
+        {
+          "klausel": "K11-M23",
+          "konzept": "K11",
+          "begriff": "Einladungsmarken",
+          "stelle": 0
+        },
+        {
+          "klausel": "K15-G09",
+          "konzept": "K15",
+          "begriff": "Einladung",
+          "stelle": 14
+        },
+        {
+          "klausel": "K20-D02",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 113
+        },
+        {
+          "klausel": "K20-D04",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K20-D05",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 19
+        },
+        {
+          "klausel": "K20-D10",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 46
+        },
+        {
+          "klausel": "K20-G04",
+          "konzept": "K20",
+          "begriff": "Einladungswächters",
+          "stelle": 192
+        },
+        {
+          "klausel": "K20-G08",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 62
+        },
+        {
+          "klausel": "K20-G09",
+          "konzept": "K20",
+          "begriff": "Einladungsverfahren",
+          "stelle": 13
+        },
+        {
+          "klausel": "K20-G10",
+          "konzept": "K20",
+          "begriff": "Einladungen",
+          "stelle": 64
+        },
+        {
+          "klausel": "K20-M07",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 48
+        },
+        {
+          "klausel": "K20-M08",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 102
+        },
+        {
+          "klausel": "K20-M12",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 39
+        },
+        {
+          "klausel": "K20-M13",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 40
+        },
+        {
+          "klausel": "K20-M18",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 52
+        },
+        {
+          "klausel": "K20-M19",
+          "konzept": "K20",
+          "begriff": "Einladungen",
+          "stelle": 190
+        },
+        {
+          "klausel": "K20-M22",
+          "konzept": "K20",
+          "begriff": "Einladung",
+          "stelle": 116
+        },
+        {
+          "klausel": "K23-M06",
+          "konzept": "K23",
+          "begriff": "Einladung",
+          "stelle": 44
+        }
+      ]
+    },
+    {
+      "station": "Anmeldecode",
+      "anker": "BS:55",
+      "zeile_im_faden": "Einladung kommt an ... Anmeldecode",
+      "muster": "Anmeldecode",
+      "treffer": 0,
+      "konzepte": [],
+      "geht_auf_in": null,
+      "leseanlaesse": []
+    },
+    {
+      "station": "Anmeldung",
+      "anker": "BS:55",
+      "zeile_im_faden": "... Anmeldecode > Anmeldung",
+      "muster": "Anmeldung",
+      "treffer": 6,
+      "konzepte": [
+        "K03",
+        "K20"
+      ],
+      "geht_auf_in": "sicherheitskritisch",
+      "leseanlaesse": [
+        {
+          "klausel": "K03-M06",
+          "konzept": "K03",
+          "begriff": "Anmeldung",
+          "stelle": 28
+        },
+        {
+          "klausel": "K03-M12",
+          "konzept": "K03",
+          "begriff": "Anmeldung",
+          "stelle": 39
+        },
+        {
+          "klausel": "K03-M13",
+          "konzept": "K03",
+          "begriff": "Anmeldung",
+          "stelle": 17
+        },
+        {
+          "klausel": "K03-M18",
+          "konzept": "K03",
+          "begriff": "Anmeldung",
+          "stelle": 167
+        },
+        {
+          "klausel": "K03-M21",
+          "konzept": "K03",
+          "begriff": "Anmeldung",
+          "stelle": 68
+        },
+        {
+          "klausel": "K20-G09",
+          "konzept": "K20",
+          "begriff": "Anmeldung",
+          "stelle": 87
+        }
+      ]
+    },
+    {
+      "station": "Kenntnisnahme",
+      "anker": "BS:56",
+      "zeile_im_faden": "der Portal-Hinweis nach L9: NACHWEISBARE Kenntnisnahme",
+      "muster": "Kenntnisnahme",
+      "treffer": 3,
+      "konzepte": [
+        "K04",
+        "K10"
+      ],
+      "geht_auf_in": "freigabekritisch",
+      "leseanlaesse": [
+        {
+          "klausel": "K04-G12",
+          "konzept": "K04",
+          "begriff": "Kenntnisnahme",
+          "stelle": 37
+        },
+        {
+          "klausel": "K04-M21",
+          "konzept": "K04",
+          "begriff": "Kenntnisnahme",
+          "stelle": 4
+        },
+        {
+          "klausel": "K10-M34",
+          "konzept": "K10",
+          "begriff": "Kenntnisnahme",
+          "stelle": 219
+        }
+      ]
+    },
+    {
+      "station": "Vorpruefung",
+      "anker": "BS:57",
+      "zeile_im_faden": "Vorpruefung: ein geeigneter Fall -> GEEIGNET",
+      "muster": "Vorpr[uü]fung",
+      "treffer": 8,
+      "konzepte": [
+        "K01",
+        "K04",
+        "K07",
+        "K08",
+        "K15",
+        "K17"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-M12",
+          "konzept": "K01",
+          "begriff": "Vorprüfungen",
+          "stelle": 80
+        },
+        {
+          "klausel": "K04-M01",
+          "konzept": "K04",
+          "begriff": "Vorprüfungen",
+          "stelle": 50
+        },
+        {
+          "klausel": "K07-G04",
+          "konzept": "K07",
+          "begriff": "Vorprüfung",
+          "stelle": 45
+        },
+        {
+          "klausel": "K07-M25",
+          "konzept": "K07",
+          "begriff": "Vorprüfung",
+          "stelle": 75
+        },
+        {
+          "klausel": "K08-M30",
+          "konzept": "K08",
+          "begriff": "Vorprüfung",
+          "stelle": 95
+        },
+        {
+          "klausel": "K15-M10",
+          "konzept": "K15",
+          "begriff": "Vorprüfung",
+          "stelle": 173
+        },
+        {
+          "klausel": "K15-M22",
+          "konzept": "K15",
+          "begriff": "Vorprüfung",
+          "stelle": 30
+        },
+        {
+          "klausel": "K17-M42",
+          "konzept": "K17",
+          "begriff": "Vorprüfung",
+          "stelle": 112
+        }
+      ]
+    },
+    {
+      "station": "geeignet",
+      "anker": "BS:57",
+      "zeile_im_faden": "... ein geeigneter Fall -> GEEIGNET",
+      "muster": "geeignet",
+      "treffer": 8,
+      "konzepte": [
+        "K01",
+        "K04",
+        "K23"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-G05",
+          "konzept": "K01",
+          "begriff": "geeigneten",
+          "stelle": 155
+        },
+        {
+          "klausel": "K01-M27",
+          "konzept": "K01",
+          "begriff": "GEEIGNET",
+          "stelle": 161
+        },
+        {
+          "klausel": "K04-D04",
+          "konzept": "K04",
+          "begriff": "GEEIGNET",
+          "stelle": 20
+        },
+        {
+          "klausel": "K04-G01",
+          "konzept": "K04",
+          "begriff": "geeigneten",
+          "stelle": 175
+        },
+        {
+          "klausel": "K04-M11",
+          "konzept": "K04",
+          "begriff": "GEEIGNET",
+          "stelle": 75
+        },
+        {
+          "klausel": "K04-M13",
+          "konzept": "K04",
+          "begriff": "GEEIGNET",
+          "stelle": 0
+        },
+        {
+          "klausel": "K04-M19",
+          "konzept": "K04",
+          "begriff": "GEEIGNET",
+          "stelle": 16
+        },
+        {
+          "klausel": "K23-G02",
+          "konzept": "K23",
+          "begriff": "geeignet",
+          "stelle": 91
+        }
+      ]
+    },
+    {
+      "station": "Zweckbestimmung",
+      "anker": "BS:59",
+      "zeile_im_faden": "ZWECKBESTIMMUNG bestaetigt (Riegel)",
+      "muster": "Zweckbestimmung",
+      "treffer": 2,
+      "konzepte": [
+        "K04",
+        "K10"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K04-M19",
+          "konzept": "K04",
+          "begriff": "Zweckbestimmungs",
+          "stelle": 35
+        },
+        {
+          "klausel": "K10-M34",
+          "konzept": "K10",
+          "begriff": "Zweckbestimmung",
+          "stelle": 122
+        }
+      ]
+    },
+    {
+      "station": "Anwendung",
+      "anker": "BS:61",
+      "zeile_im_faden": "create_app_after_fit -- der EINE Weg",
+      "muster": "Anwendung",
+      "treffer": 99,
+      "konzepte": [
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K08",
+        "K09",
+        "K10",
+        "K11",
+        "K13",
+        "K14",
+        "K15",
+        "K16",
+        "K17",
+        "K18",
+        "K19",
+        "K20",
+        "K21",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D10",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 73
+        },
+        {
+          "klausel": "K01-D13",
+          "konzept": "K01",
+          "begriff": "Anwendungen",
+          "stelle": 11
+        },
+        {
+          "klausel": "K01-D17",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 70
+        },
+        {
+          "klausel": "K01-G05",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 135
+        },
+        {
+          "klausel": "K01-G10",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 84
+        },
+        {
+          "klausel": "K01-G13",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 115
+        },
+        {
+          "klausel": "K01-G16",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 13
+        },
+        {
+          "klausel": "K01-G18",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 78
+        },
+        {
+          "klausel": "K01-M01",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K01-M02",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 144
+        },
+        {
+          "klausel": "K01-M04",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 39
+        },
+        {
+          "klausel": "K01-M05",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K01-M10",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 17
+        },
+        {
+          "klausel": "K01-M13",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 31
+        },
+        {
+          "klausel": "K01-M20",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K01-M24",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 61
+        },
+        {
+          "klausel": "K01-M26",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K01-M27",
+          "konzept": "K01",
+          "begriff": "Anwendungszeile",
+          "stelle": 16
+        },
+        {
+          "klausel": "K01-M28",
+          "konzept": "K01",
+          "begriff": "Anwendung",
+          "stelle": 94
+        },
+        {
+          "klausel": "K01-M38",
+          "konzept": "K01",
+          "begriff": "Anwendungszeile",
+          "stelle": 93
+        },
+        {
+          "klausel": "K02-G10",
+          "konzept": "K02",
+          "begriff": "Anwendung",
+          "stelle": 34
+        },
+        {
+          "klausel": "K02-G11",
+          "konzept": "K02",
+          "begriff": "Anwendung",
+          "stelle": 66
+        },
+        {
+          "klausel": "K02-M31",
+          "konzept": "K02",
+          "begriff": "Anwendung",
+          "stelle": 60
+        },
+        {
+          "klausel": "K03-G07",
+          "konzept": "K03",
+          "begriff": "Anwendung",
+          "stelle": 96
+        },
+        {
+          "klausel": "K04-D04",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 79
+        },
+        {
+          "klausel": "K04-D07",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 44
+        },
+        {
+          "klausel": "K04-D10",
+          "konzept": "K04",
+          "begriff": "Anwendungen",
+          "stelle": 94
+        },
+        {
+          "klausel": "K04-D11",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 173
+        },
+        {
+          "klausel": "K04-G01",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 155
+        },
+        {
+          "klausel": "K04-G05",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 73
+        },
+        {
+          "klausel": "K04-G06",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 46
+        },
+        {
+          "klausel": "K04-G13",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 52
+        },
+        {
+          "klausel": "K04-M01",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 19
+        },
+        {
+          "klausel": "K04-M17",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 11
+        },
+        {
+          "klausel": "K04-M19",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 117
+        },
+        {
+          "klausel": "K04-M20",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 100
+        },
+        {
+          "klausel": "K04-M22",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 145
+        },
+        {
+          "klausel": "K04-M23",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 134
+        },
+        {
+          "klausel": "K04-M24",
+          "konzept": "K04",
+          "begriff": "Anwendung",
+          "stelle": 75
+        },
+        {
+          "klausel": "K05-G02",
+          "konzept": "K05",
+          "begriff": "Anwendung",
+          "stelle": 39
+        },
+        {
+          "klausel": "K05-M03",
+          "konzept": "K05",
+          "begriff": "Anwendung",
+          "stelle": 110
+        },
+        {
+          "klausel": "K05-M04",
+          "konzept": "K05",
+          "begriff": "Anwendung",
+          "stelle": 156
+        },
+        {
+          "klausel": "K05-M26",
+          "konzept": "K05",
+          "begriff": "Anwendung",
+          "stelle": 165
+        },
+        {
+          "klausel": "K05-M27",
+          "konzept": "K05",
+          "begriff": "Anwendungs",
+          "stelle": 249
+        },
+        {
+          "klausel": "K06-D07",
+          "konzept": "K06",
+          "begriff": "Anwendung",
+          "stelle": 93
+        },
+        {
+          "klausel": "K06-M09",
+          "konzept": "K06",
+          "begriff": "Anwendung",
+          "stelle": 3
+        },
+        {
+          "klausel": "K06-M29",
+          "konzept": "K06",
+          "begriff": "Anwendung",
+          "stelle": 84
+        },
+        {
+          "klausel": "K07-D04",
+          "konzept": "K07",
+          "begriff": "Anwendung",
+          "stelle": 44
+        },
+        {
+          "klausel": "K07-D05",
+          "konzept": "K07",
+          "begriff": "Anwendung",
+          "stelle": 111
+        },
+        {
+          "klausel": "K07-D06",
+          "konzept": "K07",
+          "begriff": "Anwendungen",
+          "stelle": 68
+        },
+        {
+          "klausel": "K07-G03",
+          "konzept": "K07",
+          "begriff": "Anwendung",
+          "stelle": 75
+        },
+        {
+          "klausel": "K07-G04",
+          "konzept": "K07",
+          "begriff": "Anwendung",
+          "stelle": 122
+        },
+        {
+          "klausel": "K07-G05",
+          "konzept": "K07",
+          "begriff": "Anwendungen",
+          "stelle": 150
+        },
+        {
+          "klausel": "K07-G07",
+          "konzept": "K07",
+          "begriff": "Anwendung",
+          "stelle": 120
+        },
+        {
+          "klausel": "K07-M14",
+          "konzept": "K07",
+          "begriff": "Anwendungen",
+          "stelle": 84
+        },
+        {
+          "klausel": "K08-M22",
+          "konzept": "K08",
+          "begriff": "Anwendung",
+          "stelle": 57
+        },
+        {
+          "klausel": "K09-D03",
+          "konzept": "K09",
+          "begriff": "Anwendung",
+          "stelle": 73
+        },
+        {
+          "klausel": "K09-M12",
+          "konzept": "K09",
+          "begriff": "Anwendung",
+          "stelle": 24
+        },
+        {
+          "klausel": "K10-D09",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 26
+        },
+        {
+          "klausel": "K10-G02",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 50
+        },
+        {
+          "klausel": "K10-G03",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 22
+        },
+        {
+          "klausel": "K10-M01",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 74
+        },
+        {
+          "klausel": "K10-M04",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 9
+        },
+        {
+          "klausel": "K10-M18",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 88
+        },
+        {
+          "klausel": "K10-M19",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 64
+        },
+        {
+          "klausel": "K10-M22",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 45
+        },
+        {
+          "klausel": "K10-M34",
+          "konzept": "K10",
+          "begriff": "Anwendung",
+          "stelle": 142
+        },
+        {
+          "klausel": "K11-D01",
+          "konzept": "K11",
+          "begriff": "Anwendungen",
+          "stelle": 73
+        },
+        {
+          "klausel": "K11-G05",
+          "konzept": "K11",
+          "begriff": "Anwendung",
+          "stelle": 52
+        },
+        {
+          "klausel": "K11-G08",
+          "konzept": "K11",
+          "begriff": "Anwendungen",
+          "stelle": 66
+        },
+        {
+          "klausel": "K11-G10",
+          "konzept": "K11",
+          "begriff": "Anwendung",
+          "stelle": 24
+        },
+        {
+          "klausel": "K11-G14",
+          "konzept": "K11",
+          "begriff": "Anwendung",
+          "stelle": 99
+        },
+        {
+          "klausel": "K11-M08",
+          "konzept": "K11",
+          "begriff": "Anwendung",
+          "stelle": 5
+        },
+        {
+          "klausel": "K11-M09",
+          "konzept": "K11",
+          "begriff": "Anwendung",
+          "stelle": 30
+        },
+        {
+          "klausel": "K13-M09",
+          "konzept": "K13",
+          "begriff": "Anwendung",
+          "stelle": 18
+        },
+        {
+          "klausel": "K14-G03",
+          "konzept": "K14",
+          "begriff": "Anwendung",
+          "stelle": 48
+        },
+        {
+          "klausel": "K14-G08",
+          "konzept": "K14",
+          "begriff": "Anwendung",
+          "stelle": 119
+        },
+        {
+          "klausel": "K14-G14",
+          "konzept": "K14",
+          "begriff": "Anwendung",
+          "stelle": 74
+        },
+        {
+          "klausel": "K15-D01",
+          "konzept": "K15",
+          "begriff": "Anwendung",
+          "stelle": 89
+        },
+        {
+          "klausel": "K15-G05",
+          "konzept": "K15",
+          "begriff": "Anwendung",
+          "stelle": 94
+        },
+        {
+          "klausel": "K15-G08",
+          "konzept": "K15",
+          "begriff": "Anwendungen",
+          "stelle": 90
+        },
+        {
+          "klausel": "K15-M10",
+          "konzept": "K15",
+          "begriff": "Anwendung",
+          "stelle": 49
+        },
+        {
+          "klausel": "K15-M12",
+          "konzept": "K15",
+          "begriff": "Anwendung",
+          "stelle": 207
+        },
+        {
+          "klausel": "K15-M22",
+          "konzept": "K15",
+          "begriff": "Anwendungsbezug",
+          "stelle": 72
+        },
+        {
+          "klausel": "K16-D07",
+          "konzept": "K16",
+          "begriff": "Anwendung",
+          "stelle": 54
+        },
+        {
+          "klausel": "K16-M19",
+          "konzept": "K16",
+          "begriff": "Anwendung",
+          "stelle": 129
+        },
+        {
+          "klausel": "K16-M20",
+          "konzept": "K16",
+          "begriff": "Anwendung",
+          "stelle": 85
+        },
+        {
+          "klausel": "K17-D11",
+          "konzept": "K17",
+          "begriff": "Anwendung",
+          "stelle": 42
+        },
+        {
+          "klausel": "K17-M11",
+          "konzept": "K17",
+          "begriff": "Anwendung",
+          "stelle": 168
+        },
+        {
+          "klausel": "K18-M15",
+          "konzept": "K18",
+          "begriff": "Anwendung",
+          "stelle": 105
+        },
+        {
+          "klausel": "K19-G07",
+          "konzept": "K19",
+          "begriff": "Anwendung",
+          "stelle": 188
+        },
+        {
+          "klausel": "K20-D09",
+          "konzept": "K20",
+          "begriff": "Anwendung",
+          "stelle": 96
+        },
+        {
+          "klausel": "K20-G06",
+          "konzept": "K20",
+          "begriff": "Anwendung",
+          "stelle": 96
+        },
+        {
+          "klausel": "K21-M03",
+          "konzept": "K21",
+          "begriff": "Anwendung",
+          "stelle": 87
+        },
+        {
+          "klausel": "K25-D23",
+          "konzept": "K25",
+          "begriff": "Anwendung",
+          "stelle": 55
+        },
+        {
+          "klausel": "K25-G06",
+          "konzept": "K25",
+          "begriff": "Anwendung",
+          "stelle": 69
+        },
+        {
+          "klausel": "K25-M03",
+          "konzept": "K25",
+          "begriff": "Anwendung",
+          "stelle": 51
+        },
+        {
+          "klausel": "K25-M22",
+          "konzept": "K25",
+          "begriff": "Anwendungs",
+          "stelle": 90
+        },
+        {
+          "klausel": "K25-M23",
+          "konzept": "K25",
+          "begriff": "Anwendung",
+          "stelle": 167
+        }
+      ]
+    },
+    {
+      "station": "Gespraech",
+      "anker": "BS:63",
+      "zeile_im_faden": "ein Gespraechspfad (Stufen 01-02)",
+      "muster": "Gespr[aä]ch",
+      "treffer": 42,
+      "konzepte": [
+        "K01",
+        "K02",
+        "K04",
+        "K05",
+        "K07",
+        "K09",
+        "K11",
+        "K16",
+        "K17",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D10",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 46
+        },
+        {
+          "klausel": "K01-G02",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 122
+        },
+        {
+          "klausel": "K01-M06",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 20
+        },
+        {
+          "klausel": "K01-M07",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 21
+        },
+        {
+          "klausel": "K01-M08",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 9
+        },
+        {
+          "klausel": "K01-M09",
+          "konzept": "K01",
+          "begriff": "Gespräch",
+          "stelle": 27
+        },
+        {
+          "klausel": "K02-M30",
+          "konzept": "K02",
+          "begriff": "Gesprächs",
+          "stelle": 48
+        },
+        {
+          "klausel": "K04-D04",
+          "konzept": "K04",
+          "begriff": "Gespräch",
+          "stelle": 44
+        },
+        {
+          "klausel": "K04-M08",
+          "konzept": "K04",
+          "begriff": "Gespräch",
+          "stelle": 70
+        },
+        {
+          "klausel": "K05-D02",
+          "konzept": "K05",
+          "begriff": "Gesprächsinhalt",
+          "stelle": 255
+        },
+        {
+          "klausel": "K05-D11",
+          "konzept": "K05",
+          "begriff": "Gesprächs",
+          "stelle": 69
+        },
+        {
+          "klausel": "K05-G11",
+          "konzept": "K05",
+          "begriff": "Gesprächs",
+          "stelle": 54
+        },
+        {
+          "klausel": "K05-G12",
+          "konzept": "K05",
+          "begriff": "Gesprächsinhalt",
+          "stelle": 82
+        },
+        {
+          "klausel": "K05-M10",
+          "konzept": "K05",
+          "begriff": "Gespräch",
+          "stelle": 225
+        },
+        {
+          "klausel": "K05-M14",
+          "konzept": "K05",
+          "begriff": "Gespräch",
+          "stelle": 9
+        },
+        {
+          "klausel": "K05-M15",
+          "konzept": "K05",
+          "begriff": "Gespräch",
+          "stelle": 27
+        },
+        {
+          "klausel": "K05-M16",
+          "konzept": "K05",
+          "begriff": "Gesprächs",
+          "stelle": 60
+        },
+        {
+          "klausel": "K05-M19",
+          "konzept": "K05",
+          "begriff": "Gesprächsstand",
+          "stelle": 160
+        },
+        {
+          "klausel": "K05-M20",
+          "konzept": "K05",
+          "begriff": "Gespräch",
+          "stelle": 116
+        },
+        {
+          "klausel": "K05-M25",
+          "konzept": "K05",
+          "begriff": "Gesprächsstand",
+          "stelle": 14
+        },
+        {
+          "klausel": "K07-D03",
+          "konzept": "K07",
+          "begriff": "Gespräch",
+          "stelle": 108
+        },
+        {
+          "klausel": "K07-D09",
+          "konzept": "K07",
+          "begriff": "Gespräch",
+          "stelle": 40
+        },
+        {
+          "klausel": "K07-G04",
+          "konzept": "K07",
+          "begriff": "Gespräch",
+          "stelle": 83
+        },
+        {
+          "klausel": "K07-M07",
+          "konzept": "K07",
+          "begriff": "Gespräch",
+          "stelle": 22
+        },
+        {
+          "klausel": "K09-D08",
+          "konzept": "K09",
+          "begriff": "Gespräch",
+          "stelle": 27
+        },
+        {
+          "klausel": "K11-G12",
+          "konzept": "K11",
+          "begriff": "Gesprächsverlauf",
+          "stelle": 122
+        },
+        {
+          "klausel": "K11-M12",
+          "konzept": "K11",
+          "begriff": "gesprache",
+          "stelle": 73
+        },
+        {
+          "klausel": "K16-G03",
+          "konzept": "K16",
+          "begriff": "Gespräch",
+          "stelle": 116
+        },
+        {
+          "klausel": "K16-M09",
+          "konzept": "K16",
+          "begriff": "Gespräch",
+          "stelle": 9
+        },
+        {
+          "klausel": "K16-M10",
+          "konzept": "K16",
+          "begriff": "gesprache",
+          "stelle": 105
+        },
+        {
+          "klausel": "K16-M18",
+          "konzept": "K16",
+          "begriff": "Gespräch",
+          "stelle": 40
+        },
+        {
+          "klausel": "K16-M24",
+          "konzept": "K16",
+          "begriff": "Gespräch",
+          "stelle": 110
+        },
+        {
+          "klausel": "K17-D10",
+          "konzept": "K17",
+          "begriff": "Gesprächskontext",
+          "stelle": 43
+        },
+        {
+          "klausel": "K17-M10",
+          "konzept": "K17",
+          "begriff": "Gesprächskontext",
+          "stelle": 94
+        },
+        {
+          "klausel": "K23-M08",
+          "konzept": "K23",
+          "begriff": "Gespräch",
+          "stelle": 10
+        },
+        {
+          "klausel": "K25-G03",
+          "konzept": "K25",
+          "begriff": "Gesprächsspalte",
+          "stelle": 50
+        },
+        {
+          "klausel": "K25-M01",
+          "konzept": "K25",
+          "begriff": "Gespräch",
+          "stelle": 66
+        },
+        {
+          "klausel": "K25-M02",
+          "konzept": "K25",
+          "begriff": "Gesprächsspalte",
+          "stelle": 4
+        },
+        {
+          "klausel": "K25-M08",
+          "konzept": "K25",
+          "begriff": "Gespräch",
+          "stelle": 88
+        },
+        {
+          "klausel": "K25-M14",
+          "konzept": "K25",
+          "begriff": "Gesprächsvorlage",
+          "stelle": 59
+        },
+        {
+          "klausel": "K25-M15",
+          "konzept": "K25",
+          "begriff": "Gesprächsvorlage",
+          "stelle": 5
+        },
+        {
+          "klausel": "K25-M24",
+          "konzept": "K25",
+          "begriff": "Gesprächsspalte",
+          "stelle": 39
+        }
+      ]
+    },
+    {
+      "station": "Anforderungen",
+      "anker": "BS:63",
+      "zeile_im_faden": "... > Anforderungen/Vertrag (Stufe 03)",
+      "muster": "Anforderung",
+      "treffer": 15,
+      "konzepte": [
+        "K01",
+        "K04",
+        "K05",
+        "K06",
+        "K09",
+        "K16",
+        "K17",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D10",
+          "konzept": "K01",
+          "begriff": "Anforderung",
+          "stelle": 150
+        },
+        {
+          "klausel": "K04-G13",
+          "konzept": "K04",
+          "begriff": "Anforderungskonzept",
+          "stelle": 115
+        },
+        {
+          "klausel": "K05-D07",
+          "konzept": "K05",
+          "begriff": "Anforderung",
+          "stelle": 77
+        },
+        {
+          "klausel": "K06-D01",
+          "konzept": "K06",
+          "begriff": "Anforderungskonzept",
+          "stelle": 4
+        },
+        {
+          "klausel": "K06-G08",
+          "konzept": "K06",
+          "begriff": "Anforderungen",
+          "stelle": 175
+        },
+        {
+          "klausel": "K06-M01",
+          "konzept": "K06",
+          "begriff": "Anforderungskonzepte",
+          "stelle": 26
+        },
+        {
+          "klausel": "K06-M23",
+          "konzept": "K06",
+          "begriff": "Anforderungsdimensionen",
+          "stelle": 132
+        },
+        {
+          "klausel": "K09-G07",
+          "konzept": "K09",
+          "begriff": "Anforderung",
+          "stelle": 56
+        },
+        {
+          "klausel": "K16-D07",
+          "konzept": "K16",
+          "begriff": "Anforderung",
+          "stelle": 119
+        },
+        {
+          "klausel": "K16-M23",
+          "konzept": "K16",
+          "begriff": "Anforderungen",
+          "stelle": 26
+        },
+        {
+          "klausel": "K17-D11",
+          "konzept": "K17",
+          "begriff": "Anforderung",
+          "stelle": 114
+        },
+        {
+          "klausel": "K25-G02",
+          "konzept": "K25",
+          "begriff": "Anforderungen",
+          "stelle": 168
+        },
+        {
+          "klausel": "K25-G08",
+          "konzept": "K25",
+          "begriff": "Anforderung",
+          "stelle": 64
+        },
+        {
+          "klausel": "K25-M19",
+          "konzept": "K25",
+          "begriff": "Anforderungen",
+          "stelle": 175
+        },
+        {
+          "klausel": "K25-M22",
+          "konzept": "K25",
+          "begriff": "Anforderungen",
+          "stelle": 146
+        }
+      ]
+    },
+    {
+      "station": "Vertrag",
+      "anker": "BS:63",
+      "zeile_im_faden": "... Anforderungen/Vertrag (Stufe 03)",
+      "muster": "Vertrag",
+      "treffer": 34,
+      "konzepte": [
+        "K01",
+        "K02",
+        "K06",
+        "K07",
+        "K08",
+        "K10",
+        "K13",
+        "K17",
+        "K18",
+        "K21",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-G03",
+          "konzept": "K01",
+          "begriff": "vertrag",
+          "stelle": 190
+        },
+        {
+          "klausel": "K01-M34",
+          "konzept": "K01",
+          "begriff": "Vertrag",
+          "stelle": 107
+        },
+        {
+          "klausel": "K02-D13",
+          "konzept": "K02",
+          "begriff": "Vertrag",
+          "stelle": 4
+        },
+        {
+          "klausel": "K02-M29",
+          "konzept": "K02",
+          "begriff": "vertrags",
+          "stelle": 82
+        },
+        {
+          "klausel": "K02-M30",
+          "konzept": "K02",
+          "begriff": "Vertrag",
+          "stelle": 18
+        },
+        {
+          "klausel": "K06-D12",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 56
+        },
+        {
+          "klausel": "K06-G09",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 25
+        },
+        {
+          "klausel": "K06-G14",
+          "konzept": "K06",
+          "begriff": "Vertrag",
+          "stelle": 55
+        },
+        {
+          "klausel": "K06-M18",
+          "konzept": "K06",
+          "begriff": "vertrags",
+          "stelle": 177
+        },
+        {
+          "klausel": "K06-M19",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 83
+        },
+        {
+          "klausel": "K06-M23",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 13
+        },
+        {
+          "klausel": "K06-M24",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 136
+        },
+        {
+          "klausel": "K06-M34",
+          "konzept": "K06",
+          "begriff": "vertrag",
+          "stelle": 11
+        },
+        {
+          "klausel": "K07-G01",
+          "konzept": "K07",
+          "begriff": "vertrag",
+          "stelle": 61
+        },
+        {
+          "klausel": "K08-M29",
+          "konzept": "K08",
+          "begriff": "Vertragsstatus",
+          "stelle": 223
+        },
+        {
+          "klausel": "K10-D08",
+          "konzept": "K10",
+          "begriff": "Vertrag",
+          "stelle": 80
+        },
+        {
+          "klausel": "K10-D10",
+          "konzept": "K10",
+          "begriff": "vertrag",
+          "stelle": 132
+        },
+        {
+          "klausel": "K10-G08",
+          "konzept": "K10",
+          "begriff": "vertrag",
+          "stelle": 80
+        },
+        {
+          "klausel": "K10-M07",
+          "konzept": "K10",
+          "begriff": "vertrags",
+          "stelle": 46
+        },
+        {
+          "klausel": "K10-M17",
+          "konzept": "K10",
+          "begriff": "vertrag",
+          "stelle": 162
+        },
+        {
+          "klausel": "K10-M19",
+          "konzept": "K10",
+          "begriff": "vertragsrevision",
+          "stelle": 112
+        },
+        {
+          "klausel": "K10-M28",
+          "konzept": "K10",
+          "begriff": "vertragsrevision",
+          "stelle": 93
+        },
+        {
+          "klausel": "K10-M36",
+          "konzept": "K10",
+          "begriff": "vertrag",
+          "stelle": 11
+        },
+        {
+          "klausel": "K13-G11",
+          "konzept": "K13",
+          "begriff": "vertrag",
+          "stelle": 61
+        },
+        {
+          "klausel": "K17-G14",
+          "konzept": "K17",
+          "begriff": "vertrags",
+          "stelle": 79
+        },
+        {
+          "klausel": "K17-M11",
+          "konzept": "K17",
+          "begriff": "vertrag",
+          "stelle": 98
+        },
+        {
+          "klausel": "K17-M12",
+          "konzept": "K17",
+          "begriff": "vertrag",
+          "stelle": 52
+        },
+        {
+          "klausel": "K17-M14",
+          "konzept": "K17",
+          "begriff": "vertrags",
+          "stelle": 137
+        },
+        {
+          "klausel": "K17-M30",
+          "konzept": "K17",
+          "begriff": "Vertrag",
+          "stelle": 141
+        },
+        {
+          "klausel": "K18-M21",
+          "konzept": "K18",
+          "begriff": "vertrag",
+          "stelle": 57
+        },
+        {
+          "klausel": "K21-M17",
+          "konzept": "K21",
+          "begriff": "vertrag",
+          "stelle": 52
+        },
+        {
+          "klausel": "K23-G05",
+          "konzept": "K23",
+          "begriff": "Vertragsinhalt",
+          "stelle": 75
+        },
+        {
+          "klausel": "K25-G13",
+          "konzept": "K25",
+          "begriff": "Vertrag",
+          "stelle": 76
+        },
+        {
+          "klausel": "K25-G15",
+          "konzept": "K25",
+          "begriff": "Vertrag",
+          "stelle": 155
+        }
+      ]
+    },
+    {
+      "station": "Prototyp",
+      "anker": "BS:65",
+      "zeile_im_faden": "Prototyp aus EINER freigegebenen Vorlage",
+      "muster": "Prototyp",
+      "treffer": 42,
+      "konzepte": [
+        "K01",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K10",
+        "K12",
+        "K15",
+        "K19",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-G10",
+          "konzept": "K01",
+          "begriff": "Prototyp",
+          "stelle": 149
+        },
+        {
+          "klausel": "K01-G15",
+          "konzept": "K01",
+          "begriff": "Prototyp",
+          "stelle": 105
+        },
+        {
+          "klausel": "K01-M04",
+          "konzept": "K01",
+          "begriff": "prototype",
+          "stelle": 191
+        },
+        {
+          "klausel": "K01-M05",
+          "konzept": "K01",
+          "begriff": "PROTOTYP",
+          "stelle": 259
+        },
+        {
+          "klausel": "K04-D01",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 87
+        },
+        {
+          "klausel": "K04-D07",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K04-D11",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 83
+        },
+        {
+          "klausel": "K04-G05",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 20
+        },
+        {
+          "klausel": "K04-M01",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 110
+        },
+        {
+          "klausel": "K04-M02",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K04-M03",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K04-M22",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K04-M24",
+          "konzept": "K04",
+          "begriff": "Prototyp",
+          "stelle": 142
+        },
+        {
+          "klausel": "K05-G05",
+          "konzept": "K05",
+          "begriff": "Prototyp",
+          "stelle": 88
+        },
+        {
+          "klausel": "K06-G07",
+          "konzept": "K06",
+          "begriff": "Prototyp",
+          "stelle": 129
+        },
+        {
+          "klausel": "K06-M14",
+          "konzept": "K06",
+          "begriff": "Prototyp",
+          "stelle": 124
+        },
+        {
+          "klausel": "K06-M18",
+          "konzept": "K06",
+          "begriff": "PROTOTYP",
+          "stelle": 62
+        },
+        {
+          "klausel": "K06-M19",
+          "konzept": "K06",
+          "begriff": "Prototyp",
+          "stelle": 131
+        },
+        {
+          "klausel": "K07-D04",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K07-D06",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K07-G03",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 142
+        },
+        {
+          "klausel": "K07-G04",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 20
+        },
+        {
+          "klausel": "K07-G05",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 20
+        },
+        {
+          "klausel": "K07-G06",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 29
+        },
+        {
+          "klausel": "K07-M09",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 154
+        },
+        {
+          "klausel": "K07-M11",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 11
+        },
+        {
+          "klausel": "K07-M12",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 13
+        },
+        {
+          "klausel": "K07-M13",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 13
+        },
+        {
+          "klausel": "K07-M14",
+          "konzept": "K07",
+          "begriff": "Prototypen",
+          "stelle": 23
+        },
+        {
+          "klausel": "K07-M15",
+          "konzept": "K07",
+          "begriff": "Prototyps",
+          "stelle": 27
+        },
+        {
+          "klausel": "K07-M16",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 10
+        },
+        {
+          "klausel": "K07-M18",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 13
+        },
+        {
+          "klausel": "K07-M29",
+          "konzept": "K07",
+          "begriff": "Prototyp",
+          "stelle": 97
+        },
+        {
+          "klausel": "K10-D08",
+          "konzept": "K10",
+          "begriff": "Prototyp",
+          "stelle": 31
+        },
+        {
+          "klausel": "K12-D06",
+          "konzept": "K12",
+          "begriff": "prototype",
+          "stelle": 38
+        },
+        {
+          "klausel": "K12-G06",
+          "konzept": "K12",
+          "begriff": "Prototyp",
+          "stelle": 58
+        },
+        {
+          "klausel": "K15-G07",
+          "konzept": "K15",
+          "begriff": "Prototyp",
+          "stelle": 58
+        },
+        {
+          "klausel": "K19-M04",
+          "konzept": "K19",
+          "begriff": "PROTOTYP",
+          "stelle": 89
+        },
+        {
+          "klausel": "K23-M08",
+          "konzept": "K23",
+          "begriff": "Prototyp",
+          "stelle": 39
+        },
+        {
+          "klausel": "K23-M10",
+          "konzept": "K23",
+          "begriff": "prototypisieren",
+          "stelle": 67
+        },
+        {
+          "klausel": "K25-M06",
+          "konzept": "K25",
+          "begriff": "Prototyp",
+          "stelle": 4
+        },
+        {
+          "klausel": "K25-M21",
+          "konzept": "K25",
+          "begriff": "Prototyp",
+          "stelle": 163
+        }
+      ]
+    },
+    {
+      "station": "Vorlage",
+      "anker": "BS:65",
+      "zeile_im_faden": "... aus EINER freigegebenen Vorlage (Stufe 04)",
+      "muster": "Vorlage",
+      "treffer": 40,
+      "konzepte": [
+        "K01",
+        "K06",
+        "K09",
+        "K17",
+        "K18",
+        "K21",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D01",
+          "konzept": "K01",
+          "begriff": "Vorlage",
+          "stelle": 182
+        },
+        {
+          "klausel": "K06-G10",
+          "konzept": "K06",
+          "begriff": "Vorlage",
+          "stelle": 78
+        },
+        {
+          "klausel": "K06-M19",
+          "konzept": "K06",
+          "begriff": "vorlage",
+          "stelle": 116
+        },
+        {
+          "klausel": "K06-M32",
+          "konzept": "K06",
+          "begriff": "Vorlage",
+          "stelle": 137
+        },
+        {
+          "klausel": "K09-M20",
+          "konzept": "K09",
+          "begriff": "Vorlage",
+          "stelle": 234
+        },
+        {
+          "klausel": "K17-D12",
+          "konzept": "K17",
+          "begriff": "vorlage",
+          "stelle": 11
+        },
+        {
+          "klausel": "K17-M20",
+          "konzept": "K17",
+          "begriff": "Vorlagen",
+          "stelle": 52
+        },
+        {
+          "klausel": "K18-D03",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 54
+        },
+        {
+          "klausel": "K18-D06",
+          "konzept": "K18",
+          "begriff": "Vorlage",
+          "stelle": 5
+        },
+        {
+          "klausel": "K18-D07",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 36
+        },
+        {
+          "klausel": "K18-D08",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 11
+        },
+        {
+          "klausel": "K18-D12",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 23
+        },
+        {
+          "klausel": "K18-G08",
+          "konzept": "K18",
+          "begriff": "Vorlagenliste",
+          "stelle": 13
+        },
+        {
+          "klausel": "K18-M01",
+          "konzept": "K18",
+          "begriff": "vorlagen",
+          "stelle": 83
+        },
+        {
+          "klausel": "K18-M09",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 11
+        },
+        {
+          "klausel": "K18-M18",
+          "konzept": "K18",
+          "begriff": "Vorlagen",
+          "stelle": 33
+        },
+        {
+          "klausel": "K18-M19",
+          "konzept": "K18",
+          "begriff": "Vorlagen",
+          "stelle": 45
+        },
+        {
+          "klausel": "K18-M20",
+          "konzept": "K18",
+          "begriff": "Vorlagen",
+          "stelle": 0
+        },
+        {
+          "klausel": "K18-M24",
+          "konzept": "K18",
+          "begriff": "vorlage",
+          "stelle": 23
+        },
+        {
+          "klausel": "K18-M34",
+          "konzept": "K18",
+          "begriff": "Vorlagen",
+          "stelle": 41
+        },
+        {
+          "klausel": "K21-D05",
+          "konzept": "K21",
+          "begriff": "Vorlage",
+          "stelle": 73
+        },
+        {
+          "klausel": "K21-G06",
+          "konzept": "K21",
+          "begriff": "Vorlage",
+          "stelle": 59
+        },
+        {
+          "klausel": "K21-G09",
+          "konzept": "K21",
+          "begriff": "vorlagen",
+          "stelle": 57
+        },
+        {
+          "klausel": "K23-M16",
+          "konzept": "K23",
+          "begriff": "Vorlage",
+          "stelle": 106
+        },
+        {
+          "klausel": "K23-M18",
+          "konzept": "K23",
+          "begriff": "Vorlagenstände",
+          "stelle": 182
+        },
+        {
+          "klausel": "K23-M20",
+          "konzept": "K23",
+          "begriff": "Vorlage",
+          "stelle": 10
+        },
+        {
+          "klausel": "K25-D10",
+          "konzept": "K25",
+          "begriff": "Vorlage",
+          "stelle": 23
+        },
+        {
+          "klausel": "K25-D11",
+          "konzept": "K25",
+          "begriff": "vorlage",
+          "stelle": 21
+        },
+        {
+          "klausel": "K25-D16",
+          "konzept": "K25",
+          "begriff": "Vorlagensatz",
+          "stelle": 4
+        },
+        {
+          "klausel": "K25-D23",
+          "konzept": "K25",
+          "begriff": "Vorlage",
+          "stelle": 66
+        },
+        {
+          "klausel": "K25-G12",
+          "konzept": "K25",
+          "begriff": "Vorlagensatz",
+          "stelle": 66
+        },
+        {
+          "klausel": "K25-M05",
+          "konzept": "K25",
+          "begriff": "Vorlagenständen",
+          "stelle": 165
+        },
+        {
+          "klausel": "K25-M14",
+          "konzept": "K25",
+          "begriff": "Vorlagen",
+          "stelle": 4
+        },
+        {
+          "klausel": "K25-M15",
+          "konzept": "K25",
+          "begriff": "vorlage",
+          "stelle": 14
+        },
+        {
+          "klausel": "K25-M16",
+          "konzept": "K25",
+          "begriff": "vorlagen",
+          "stelle": 46
+        },
+        {
+          "klausel": "K25-M18",
+          "konzept": "K25",
+          "begriff": "Vorlagenständen",
+          "stelle": 130
+        },
+        {
+          "klausel": "K25-M21",
+          "konzept": "K25",
+          "begriff": "Vorlagen",
+          "stelle": 100
+        },
+        {
+          "klausel": "K25-M22",
+          "konzept": "K25",
+          "begriff": "Vorlage",
+          "stelle": 256
+        },
+        {
+          "klausel": "K25-M23",
+          "konzept": "K25",
+          "begriff": "Vorlage",
+          "stelle": 0
+        },
+        {
+          "klausel": "K25-M31",
+          "konzept": "K25",
+          "begriff": "Vorlage",
+          "stelle": 5
+        }
+      ]
+    },
+    {
+      "station": "Angebot",
+      "anker": "BS:67",
+      "zeile_im_faden": "Angebot, Stufe 05",
+      "muster": "Angebot",
+      "treffer": 40,
+      "konzepte": [
+        "K01",
+        "K03",
+        "K04",
+        "K05",
+        "K07",
+        "K09",
+        "K10",
+        "K11",
+        "K13",
+        "K14",
+        "K15",
+        "K16",
+        "K19"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D04",
+          "konzept": "K01",
+          "begriff": "Angebot",
+          "stelle": 51
+        },
+        {
+          "klausel": "K01-D05",
+          "konzept": "K01",
+          "begriff": "Angebotspreis",
+          "stelle": 67
+        },
+        {
+          "klausel": "K01-D06",
+          "konzept": "K01",
+          "begriff": "Angebotsanfrage",
+          "stelle": 111
+        },
+        {
+          "klausel": "K01-G02",
+          "konzept": "K01",
+          "begriff": "Angebot",
+          "stelle": 233
+        },
+        {
+          "klausel": "K01-G10",
+          "konzept": "K01",
+          "begriff": "Angebotsanfrage",
+          "stelle": 116
+        },
+        {
+          "klausel": "K01-M05",
+          "konzept": "K01",
+          "begriff": "ANGEBOT",
+          "stelle": 269
+        },
+        {
+          "klausel": "K03-D04",
+          "konzept": "K03",
+          "begriff": "angeboten",
+          "stelle": 62
+        },
+        {
+          "klausel": "K04-D04",
+          "konzept": "K04",
+          "begriff": "Angebotsanfrage",
+          "stelle": 116
+        },
+        {
+          "klausel": "K04-G05",
+          "konzept": "K04",
+          "begriff": "Angebotsanfrage",
+          "stelle": 105
+        },
+        {
+          "klausel": "K04-G13",
+          "konzept": "K04",
+          "begriff": "Angebot",
+          "stelle": 148
+        },
+        {
+          "klausel": "K05-D08",
+          "konzept": "K05",
+          "begriff": "Angebotsangaben",
+          "stelle": 102
+        },
+        {
+          "klausel": "K05-G05",
+          "konzept": "K05",
+          "begriff": "Angebot",
+          "stelle": 101
+        },
+        {
+          "klausel": "K07-D04",
+          "konzept": "K07",
+          "begriff": "Angebotsanfrage",
+          "stelle": 100
+        },
+        {
+          "klausel": "K07-D07",
+          "konzept": "K07",
+          "begriff": "Angebotspreis",
+          "stelle": 25
+        },
+        {
+          "klausel": "K07-M06",
+          "konzept": "K07",
+          "begriff": "Angebotsanfrage",
+          "stelle": 72
+        },
+        {
+          "klausel": "K09-D01",
+          "konzept": "K09",
+          "begriff": "Angebotsanfrage",
+          "stelle": 235
+        },
+        {
+          "klausel": "K09-D02",
+          "konzept": "K09",
+          "begriff": "Angebotspreis",
+          "stelle": 59
+        },
+        {
+          "klausel": "K09-D09",
+          "konzept": "K09",
+          "begriff": "Angebot",
+          "stelle": 64
+        },
+        {
+          "klausel": "K09-G04",
+          "konzept": "K09",
+          "begriff": "Angebot",
+          "stelle": 87
+        },
+        {
+          "klausel": "K09-M06",
+          "konzept": "K09",
+          "begriff": "Angebot",
+          "stelle": 18
+        },
+        {
+          "klausel": "K09-M09",
+          "konzept": "K09",
+          "begriff": "ANGEBOT",
+          "stelle": 64
+        },
+        {
+          "klausel": "K10-G07",
+          "konzept": "K10",
+          "begriff": "Angebotsanfrage",
+          "stelle": 114
+        },
+        {
+          "klausel": "K10-M33",
+          "konzept": "K10",
+          "begriff": "angebot",
+          "stelle": 26
+        },
+        {
+          "klausel": "K11-D06",
+          "konzept": "K11",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K11-M14",
+          "konzept": "K11",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K11-M15",
+          "konzept": "K11",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K11-M16",
+          "konzept": "K11",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K13-D06",
+          "konzept": "K13",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K13-M14",
+          "konzept": "K13",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K14-D06",
+          "konzept": "K14",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K14-G11",
+          "konzept": "K14",
+          "begriff": "Angebotspreis",
+          "stelle": 29
+        },
+        {
+          "klausel": "K14-M17",
+          "konzept": "K14",
+          "begriff": "Angebotspreis",
+          "stelle": 4
+        },
+        {
+          "klausel": "K15-D02",
+          "konzept": "K15",
+          "begriff": "angeboten",
+          "stelle": 76
+        },
+        {
+          "klausel": "K15-G10",
+          "konzept": "K15",
+          "begriff": "Angebotsanfrage",
+          "stelle": 24
+        },
+        {
+          "klausel": "K16-D04",
+          "konzept": "K16",
+          "begriff": "angeboten",
+          "stelle": 74
+        },
+        {
+          "klausel": "K16-D12",
+          "konzept": "K16",
+          "begriff": "Angebotspreis",
+          "stelle": 68
+        },
+        {
+          "klausel": "K16-M15",
+          "konzept": "K16",
+          "begriff": "Angebot",
+          "stelle": 1
+        },
+        {
+          "klausel": "K19-D01",
+          "konzept": "K19",
+          "begriff": "Angebotspreis",
+          "stelle": 74
+        },
+        {
+          "klausel": "K19-G04",
+          "konzept": "K19",
+          "begriff": "Angebot",
+          "stelle": 354
+        },
+        {
+          "klausel": "K19-M04",
+          "konzept": "K19",
+          "begriff": "ANGEBOT",
+          "stelle": 100
+        }
+      ]
+    },
+    {
+      "station": "Unterschrift",
+      "anker": "BS:67",
+      "zeile_im_faden": "UNTERSCHRIFT + BEIDE HAEKCHEN > SIEGEL",
+      "muster": "Unterschrift",
+      "treffer": 5,
+      "konzepte": [
+        "K09"
+      ],
+      "geht_auf_in": "freigabekritisch",
+      "leseanlaesse": [
+        {
+          "klausel": "K09-D06",
+          "konzept": "K09",
+          "begriff": "Unterschrift",
+          "stelle": 0
+        },
+        {
+          "klausel": "K09-G08",
+          "konzept": "K09",
+          "begriff": "Unterschrift",
+          "stelle": 17
+        },
+        {
+          "klausel": "K09-M02",
+          "konzept": "K09",
+          "begriff": "Unterschrift",
+          "stelle": 65
+        },
+        {
+          "klausel": "K09-M03",
+          "konzept": "K09",
+          "begriff": "Unterschrift",
+          "stelle": 4
+        },
+        {
+          "klausel": "K09-M16",
+          "konzept": "K09",
+          "begriff": "Unterschrift",
+          "stelle": 50
+        }
+      ]
+    },
+    {
+      "station": "Haekchen",
+      "anker": "BS:67",
+      "zeile_im_faden": "UNTERSCHRIFT + BEIDE HAEKCHEN",
+      "muster": "H[aä]kchen",
+      "treffer": 13,
+      "konzepte": [
+        "K06",
+        "K09",
+        "K19"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K06-D08",
+          "konzept": "K06",
+          "begriff": "Häkchen",
+          "stelle": 54
+        },
+        {
+          "klausel": "K06-D09",
+          "konzept": "K06",
+          "begriff": "Häkchen",
+          "stelle": 4
+        },
+        {
+          "klausel": "K06-D14",
+          "konzept": "K06",
+          "begriff": "Häkchen",
+          "stelle": 118
+        },
+        {
+          "klausel": "K06-M16",
+          "konzept": "K06",
+          "begriff": "Häkchen",
+          "stelle": 4
+        },
+        {
+          "klausel": "K06-M17",
+          "konzept": "K06",
+          "begriff": "Häkchens",
+          "stelle": 15
+        },
+        {
+          "klausel": "K06-M28",
+          "konzept": "K06",
+          "begriff": "Häkchen",
+          "stelle": 4
+        },
+        {
+          "klausel": "K09-D06",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 17
+        },
+        {
+          "klausel": "K09-G08",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 48
+        },
+        {
+          "klausel": "K09-M02",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 87
+        },
+        {
+          "klausel": "K09-M04",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 10
+        },
+        {
+          "klausel": "K09-M05",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 11
+        },
+        {
+          "klausel": "K09-M16",
+          "konzept": "K09",
+          "begriff": "Häkchen",
+          "stelle": 70
+        },
+        {
+          "klausel": "K19-M09",
+          "konzept": "K19",
+          "begriff": "Häkchen",
+          "stelle": 17
+        }
+      ]
+    },
+    {
+      "station": "Siegel",
+      "anker": "BS:67",
+      "zeile_im_faden": "... > SIEGEL (Riegel)",
+      "muster": "Siegel",
+      "treffer": 23,
+      "konzepte": [
+        "K01",
+        "K03",
+        "K09",
+        "K10",
+        "K19",
+        "K20",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-M01",
+          "konzept": "K01",
+          "begriff": "Siegel",
+          "stelle": 136
+        },
+        {
+          "klausel": "K03-D08",
+          "konzept": "K03",
+          "begriff": "siegeltes",
+          "stelle": 7
+        },
+        {
+          "klausel": "K09-D07",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 50
+        },
+        {
+          "klausel": "K09-D09",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 10
+        },
+        {
+          "klausel": "K09-M09",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 145
+        },
+        {
+          "klausel": "K09-M10",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 42
+        },
+        {
+          "klausel": "K09-M11",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 18
+        },
+        {
+          "klausel": "K09-M12",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 8
+        },
+        {
+          "klausel": "K09-M18",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 96
+        },
+        {
+          "klausel": "K09-M19",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 24
+        },
+        {
+          "klausel": "K09-M21",
+          "konzept": "K09",
+          "begriff": "Siegel",
+          "stelle": 71
+        },
+        {
+          "klausel": "K10-G04",
+          "konzept": "K10",
+          "begriff": "siegel",
+          "stelle": 67
+        },
+        {
+          "klausel": "K19-M09",
+          "konzept": "K19",
+          "begriff": "Siegel",
+          "stelle": 120
+        },
+        {
+          "klausel": "K20-D06",
+          "konzept": "K20",
+          "begriff": "siegeltes",
+          "stelle": 7
+        },
+        {
+          "klausel": "K20-D08",
+          "konzept": "K20",
+          "begriff": "siegelte",
+          "stelle": 7
+        },
+        {
+          "klausel": "K20-G04",
+          "konzept": "K20",
+          "begriff": "siegelte",
+          "stelle": 76
+        },
+        {
+          "klausel": "K20-G05",
+          "konzept": "K20",
+          "begriff": "siegelter",
+          "stelle": 157
+        },
+        {
+          "klausel": "K20-M06",
+          "konzept": "K20",
+          "begriff": "siegelt",
+          "stelle": 23
+        },
+        {
+          "klausel": "K20-M20",
+          "konzept": "K20",
+          "begriff": "siegelten",
+          "stelle": 89
+        },
+        {
+          "klausel": "K25-D18",
+          "konzept": "K25",
+          "begriff": "Siegel",
+          "stelle": 9
+        },
+        {
+          "klausel": "K25-G05",
+          "konzept": "K25",
+          "begriff": "Siegel",
+          "stelle": 76
+        },
+        {
+          "klausel": "K25-G06",
+          "konzept": "K25",
+          "begriff": "Siegel",
+          "stelle": 55
+        },
+        {
+          "klausel": "K25-G07",
+          "konzept": "K25",
+          "begriff": "Siegel",
+          "stelle": 59
+        }
+      ]
+    },
+    {
+      "station": "Uebergabe",
+      "anker": "BS:69",
+      "zeile_im_faden": "das Uebergabe-Paket",
+      "muster": "[UÜ]bergabe",
+      "treffer": 31,
+      "konzepte": [
+        "K01",
+        "K04",
+        "K05",
+        "K06",
+        "K08",
+        "K09",
+        "K10",
+        "K14",
+        "K17",
+        "K19",
+        "K23"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K01-D15",
+          "konzept": "K01",
+          "begriff": "Übergabe",
+          "stelle": 97
+        },
+        {
+          "klausel": "K01-M17",
+          "konzept": "K01",
+          "begriff": "Übergabe",
+          "stelle": 10
+        },
+        {
+          "klausel": "K01-M24",
+          "konzept": "K01",
+          "begriff": "Übergabe",
+          "stelle": 4
+        },
+        {
+          "klausel": "K04-M21",
+          "konzept": "K04",
+          "begriff": "Übergabe",
+          "stelle": 64
+        },
+        {
+          "klausel": "K05-M23",
+          "konzept": "K05",
+          "begriff": "Übergabe",
+          "stelle": 10
+        },
+        {
+          "klausel": "K05-M32",
+          "konzept": "K05",
+          "begriff": "Übergabe",
+          "stelle": 177
+        },
+        {
+          "klausel": "K06-M25",
+          "konzept": "K06",
+          "begriff": "Übergabe",
+          "stelle": 4
+        },
+        {
+          "klausel": "K08-M18",
+          "konzept": "K08",
+          "begriff": "Übergabe",
+          "stelle": 132
+        },
+        {
+          "klausel": "K08-M32",
+          "konzept": "K08",
+          "begriff": "Übergabe",
+          "stelle": 218
+        },
+        {
+          "klausel": "K09-D04",
+          "konzept": "K09",
+          "begriff": "Übergabe",
+          "stelle": 92
+        },
+        {
+          "klausel": "K09-G03",
+          "konzept": "K09",
+          "begriff": "Übergabe",
+          "stelle": 82
+        },
+        {
+          "klausel": "K10-D08",
+          "konzept": "K10",
+          "begriff": "Übergabegestaltung",
+          "stelle": 4
+        },
+        {
+          "klausel": "K10-G08",
+          "konzept": "K10",
+          "begriff": "Übergabegestaltung",
+          "stelle": 13
+        },
+        {
+          "klausel": "K10-M11",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 48
+        },
+        {
+          "klausel": "K10-M12",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 4
+        },
+        {
+          "klausel": "K10-M18",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 5
+        },
+        {
+          "klausel": "K10-M19",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 5
+        },
+        {
+          "klausel": "K10-M24",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 232
+        },
+        {
+          "klausel": "K10-M27",
+          "konzept": "K10",
+          "begriff": "übergabefähig",
+          "stelle": 396
+        },
+        {
+          "klausel": "K10-M33",
+          "konzept": "K10",
+          "begriff": "übergabe",
+          "stelle": 40
+        },
+        {
+          "klausel": "K10-M35",
+          "konzept": "K10",
+          "begriff": "Übergabe",
+          "stelle": 5
+        },
+        {
+          "klausel": "K14-D13",
+          "konzept": "K14",
+          "begriff": "Übergabezugang",
+          "stelle": 4
+        },
+        {
+          "klausel": "K14-D14",
+          "konzept": "K14",
+          "begriff": "Übergabezugang",
+          "stelle": 4
+        },
+        {
+          "klausel": "K14-G14",
+          "konzept": "K14",
+          "begriff": "Übergabezugang",
+          "stelle": 13
+        },
+        {
+          "klausel": "K14-M09",
+          "konzept": "K14",
+          "begriff": "Übergabe",
+          "stelle": 103
+        },
+        {
+          "klausel": "K14-M10",
+          "konzept": "K14",
+          "begriff": "Übergabe",
+          "stelle": 10
+        },
+        {
+          "klausel": "K14-M20",
+          "konzept": "K14",
+          "begriff": "Übergabezugang",
+          "stelle": 4
+        },
+        {
+          "klausel": "K14-M21",
+          "konzept": "K14",
+          "begriff": "Übergabezugang",
+          "stelle": 6
+        },
+        {
+          "klausel": "K17-M21",
+          "konzept": "K17",
+          "begriff": "Übergabe",
+          "stelle": 159
+        },
+        {
+          "klausel": "K19-M09",
+          "konzept": "K19",
+          "begriff": "Übergabe",
+          "stelle": 51
+        },
+        {
+          "klausel": "K23-M06",
+          "konzept": "K23",
+          "begriff": "Übergabe",
+          "stelle": 74
+        }
+      ]
+    },
+    {
+      "station": "Manifest",
+      "anker": "BS:69",
+      "zeile_im_faden": "... mit Manifest- und Archivpruefsumme",
+      "muster": "Manifest",
+      "treffer": 12,
+      "konzepte": [
+        "K07",
+        "K10",
+        "K17",
+        "K23"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K07-M21",
+          "konzept": "K07",
+          "begriff": "manifest",
+          "stelle": 146
+        },
+        {
+          "klausel": "K10-M20",
+          "konzept": "K10",
+          "begriff": "Manifest",
+          "stelle": 4
+        },
+        {
+          "klausel": "K10-M27",
+          "konzept": "K10",
+          "begriff": "Manifest",
+          "stelle": 115
+        },
+        {
+          "klausel": "K17-M27",
+          "konzept": "K17",
+          "begriff": "Manifest",
+          "stelle": 29
+        },
+        {
+          "klausel": "K17-M28",
+          "konzept": "K17",
+          "begriff": "Manifests",
+          "stelle": 44
+        },
+        {
+          "klausel": "K17-M29",
+          "konzept": "K17",
+          "begriff": "Manifest",
+          "stelle": 43
+        },
+        {
+          "klausel": "K17-M30",
+          "konzept": "K17",
+          "begriff": "Manifest",
+          "stelle": 35
+        },
+        {
+          "klausel": "K17-M33",
+          "konzept": "K17",
+          "begriff": "Manifest",
+          "stelle": 184
+        },
+        {
+          "klausel": "K23-D08",
+          "konzept": "K23",
+          "begriff": "Manifest",
+          "stelle": 247
+        },
+        {
+          "klausel": "K23-D09",
+          "konzept": "K23",
+          "begriff": "Manifest",
+          "stelle": 84
+        },
+        {
+          "klausel": "K23-M18",
+          "konzept": "K23",
+          "begriff": "Manifest",
+          "stelle": 46
+        },
+        {
+          "klausel": "K23-M20",
+          "konzept": "K23",
+          "begriff": "Manifest",
+          "stelle": 182
+        }
+      ]
+    },
+    {
+      "station": "Pruefsumme",
+      "anker": "BS:69",
+      "zeile_im_faden": "... Manifest- und Archivpruefsumme",
+      "muster": "Pr[uü]fsumme",
+      "treffer": 7,
+      "konzepte": [
+        "K02",
+        "K06",
+        "K10",
+        "K11",
+        "K23",
+        "K25"
+      ],
+      "geht_auf_in": null,
+      "leseanlaesse": [
+        {
+          "klausel": "K02-G09",
+          "konzept": "K02",
+          "begriff": "Prüfsummen",
+          "stelle": 13
+        },
+        {
+          "klausel": "K06-M27",
+          "konzept": "K06",
+          "begriff": "Prüfsumme",
+          "stelle": 148
+        },
+        {
+          "klausel": "K10-M27",
+          "konzept": "K10",
+          "begriff": "prüfsumme",
+          "stelle": 135
+        },
+        {
+          "klausel": "K11-G13",
+          "konzept": "K11",
+          "begriff": "Prüfsummenkette",
+          "stelle": 13
+        },
+        {
+          "klausel": "K23-M18",
+          "konzept": "K23",
+          "begriff": "Prüfsummen",
+          "stelle": 264
+        },
+        {
+          "klausel": "K23-M20",
+          "konzept": "K23",
+          "begriff": "Prüfsumme",
+          "stelle": 213
+        },
+        {
+          "klausel": "K25-M05",
+          "konzept": "K25",
+          "begriff": "Prüfsumme",
+          "stelle": 201
+        }
+      ]
+    }
+  ]
+}
