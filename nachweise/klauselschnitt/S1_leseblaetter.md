@@ -14,6 +14,8 @@ Die Regeln sind nach Sache gebündelt, nicht alphabetisch — sonst wären sie u
 | [Mandant](#mandant) | EXMA-Minimum: Mandant anlegen (BS:53) | 106 | 16 |
 | [Einladungsschranke](#einladungsschranke) | EXMA-Minimum: ... Einladungsschranke (BS:53) | 4 | 3 |
 | [Einladung](#einladung) | EXMA-Minimum: ... Einladung senden (BS:53) | 34 | 10 |
+| [Anmeldecode](#anmeldecode) | Einladung kommt an ... Anmeldecode (BS:55) | 19 | 7 |
+| [Anmeldung](#anmeldung) | ... Anmeldecode > Anmeldung (BS:55) | 6 | 4 |
 | [Vorpruefung](#vorpruefung) | Vorpruefung: ein geeigneter Fall -> GEEIGNET (BS:57) | 8 | 4 |
 | [geeignet](#geeignet) | ... ein geeigneter Fall -> GEEIGNET (BS:57) | 8 | 5 |
 | [Zweckbestimmung](#zweckbestimmung) | ZWECKBESTIMMUNG bestaetigt (Riegel) (BS:59) | 2 | 2 |
@@ -687,6 +689,144 @@ Die Regeln sind nach Sache gebündelt, nicht alphabetisch — sonst wären sie u
 **K23-M06** · MUSS — Der durchgehende Abnahmetest beginnt bei der Einladung und endet beim abgerufenen Uebergabe-Paket, ohne dass irgendein Schritt uebersprungen oder nachtraeglich von Hand ergaenzt werden darf.
 
 > Der Durchstich MUSS die Kundenreise von der Einladung bis zum abgerufenen Übergabe-Paket durchlaufen, ohne Sprung und ohne nachgereichten Zwischenstand.
+
+---
+
+## Anmeldecode
+
+*Einladung kommt an ... Anmeldecode* — BS:55 · **19 Regeln**
+
+**Anmerkung:** So liest sich eine Kennung: der vordere Teil ist das Regelbuch, aus dem die Regel stammt - K01 das "Rahmenkonzept", K03 die "Anmeldung", K14 die "Sicherheits-Grundlinie", K19 die "Build-Referenz" (was am Bildschirm zu sehen ist), K20 "Zugaenge und Nutzer EXMA". Der Buchstabe dahinter sagt die Art: M = MUSS, G = GILT (eine Feststellung), D = DARF NICHT; die Zahl ist die laufende Nummer im Regelbuch. || WICHTIG ZUERST - warum diese Station anders zustande kam als die uebrigen: **Das Wort "Anmeldecode" kommt in keiner einzigen der 1 231 Regeln vor.** Gemessen: null Treffer. Alle 19 Regeln dieser Station sind ueber drei belegte Wortgleichsetzungen gefunden - "E-Mail-Code" (2 Regeln), "zweiter Faktor" (8 Regeln) und die Feld- und Zustandsnamen "MFA / 2FA / mfa_method / WARTET_2FA" (9 Regeln). Die Gleichsetzung ist nicht geraten: K03-M15 sagt woertlich *"Ein E-Mail-Code ist zehn Minuten und genau einmal gueltig"*, K03-M05 sagt woertlich *"Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein: mfa_method = EMAIL_CODE"*. Beide Belegregeln stehen unten selbst im Wortlaut. Wer eine der drei Gleichsetzungen nicht mittraegt, streicht die darueber gefundenen Regeln; `S1_wortmarken.md` fuehrt jede einzeln mit ihrem Beleg auf. || Woerter, die staendig wiederkehren: "zweiter Faktor" ist die zweite Stufe der Anmeldung nach der E-Mail-Adresse - hier immer ein sechsstelliger Zahlencode, der per E-Mail kommt. `mfa_method` ist das Feld am Konto, das dieses Verfahren festhaelt; EMAIL_CODE ist der einzige im Betrieb zulaessige Wert, OFF der abschaltende. WARTET_2FA ist der Kontozustand zwischen der versandten Einladung und dem ersten bestaetigten Code - weder aktiv noch gesperrt. `actor` ist die Tabelle, in der ein Konto steht. "Serverseitig" heisst: auf dem Server geprueft, nicht nur in der Bildschirmoberflaeche. || Hinweis zu Nebentreffern: K14-M18 handelt von der Zurechnung jeder Handlung zu einem angemeldeten Konto und nennt den zweiten Faktor nur in einer Klammer. K03-G05 (Feld `last_login_at`) und K03-G11 (der Wert OFF bleibt im Datenmodell stehen) sind ueber den Zustands- beziehungsweise Feldnamen getroffen, nicht ueber den Code selbst. || Hinweis zu Doppelungen: K01-D07 und K03-D01 sagen fast woertlich dasselbe, ebenso K01-M14 und K03-M05 (K01 laesst nur die Sechsstelligkeit weg) sowie K03-D04 und K19-D05. Wer eine davon liest, hat die andere mitgelesen. || Hinweis zu offenen Punkten, die die Regeln selbst benennen: K03-G06 verweist auf O-K03-5 (ein dritter Nachweis neben Adresse und Code fehlt). K03-G12 verlangt, dass die befristete Inkaufnahme des Sicherheitsrisikos vor der menschlichen Freigabe ausdruecklich gezeichnet wird; ob das geschehen ist, sagt die Regel nicht und ist hier nicht geprueft.
+
+### der Anmeldecode ist ein sechsstelliger Code per E-Mail -- ein anderes Verfahren gibt es nicht
+
+**K03-M05** · MUSS — Die zweite Stufe der Anmeldung ist ein Code aus sechs Ziffern, der per E-Mail kommt; im Feld `mfa_method` steht dafuer der Wert EMAIL_CODE, und ein anderes Verfahren kennt das Datenmodell ueberhaupt nicht.
+
+> Der zweite Faktor MUSS ein sechsstelliger Code per E-Mail sein: `mfa_method` = EMAIL_CODE. Ein anderes Verfahren führt das Datenmodell nicht.
+
+**K01-M14** · MUSS — Dieselbe Festlegung im Rahmenkonzept, nur ohne die Sechsstelligkeit: der zweite Faktor ist ein Code per E-Mail, das Feld kennt genau zwei Werte - EMAIL_CODE und den Ausschaltwert OFF -, und wie das im Einzelnen ausgestaltet wird, sagt K03.
+
+> Der zweite Faktor MUSS ein Code per E-Mail sein; `mfa_method` kennt EMAIL_CODE und den Ausschaltwert OFF. Ein anderes Verfahren ist im Rahmen nicht vorgesehen (Ausgestaltung K03).
+
+**K03-D04** · DARF NICHT — Ein anderes Verfahren darf gar nicht erst zur Auswahl angeboten werden - auch nicht denen, die das System verwalten.
+
+> Ein anderer zweiter Faktor als der Code per E-Mail DARF NICHT angeboten werden, auch nicht Verwaltenden.
+
+**K19-D05** · DARF NICHT — Auch auf keinem Bildschirm darf ein anderes Verfahren auftauchen; die Bildschirm-Referenz haelt dieselben zwei Feldwerte fest.
+
+> Kein Bildschirm DARF ein anderes Verfahren für den zweiten Faktor zeigen als den Code per E-Mail. `mfa_method` kennt EMAIL_CODE und OFF.
+
+### wie lange ein Code gilt und was von ihm gespeichert wird
+
+**K03-M15** · MUSS — Ein Code laeuft nach zehn Minuten ab und wirkt genau ein einziges Mal; wird ein neuer angefordert, sind alle aelteren desselben Kontos sofort wertlos - und in der Datenbank liegt nicht der Code selbst, sondern nur sein unumkehrbarer Zahlenabdruck.
+
+> Ein E-Mail-Code ist zehn Minuten und genau einmal gültig. Ein neuer Code entwertet alle älteren Codes desselben Kontos. Gespeichert wird nur sein kryptografischer Prüfwert.
+
+### wie der Code heisst -- und was er ausdruecklich nicht leistet
+
+**K03-G12** · GILT — In Oberflaeche, Dokumentation und Nachweis heisst die Sache durchgehend "E-Mail-Code". Dieselbe Regel sagt zugleich selbst, dass dieses Verfahren keine unabhaengige zweite Stufe ist, die Sicherheitsstufe aal2 nicht erreicht und gegen Phishing nicht schuetzt; dass man dieses Risiko befristet in Kauf nimmt, wer dafuer einsteht und was ein staerkeres Verfahren ausloest, ist vor der menschlichen Freigabe ausdruecklich zu zeichnen. Diese Regel ist zugleich einer der beiden Belege fuer die Wortgleichsetzung, ueber die diese Station ueberhaupt Treffer hat.
+
+> Der E-Mail-Code wird in Oberfläche, Dokumentation und Nachweis als **E-Mail-Code** bezeichnet. K03 erhebt keinen Anspruch auf unabhängige MFA, aal2 oder Phishing-Resistenz. Die befristete Risikoannahme, ihr Owner und der Auslöser für ein stärkeres Verfahren sind vor der menschlichen Freigabe ausdrücklich zu zeichnen.
+
+### der Code laesst sich weder abschalten noch umstellen
+
+**K03-D10** · DARF NICHT — Die zweite Stufe darf nicht abgeschaltet werden; der Ausschaltwert des Feldes ist im ersten Bau kein zulaessiger Betriebszustand - weder am einzelnen Konto noch als Regel einer ganzen Firma. Versucht es jemand, weist der Server das ab und schreibt den Versuch ins Protokoll.
+
+> Der zweite Faktor DARF NICHT abgeschaltet werden. Der abschaltende Wert von `mfa_method` ist in Release 1 kein zulässiger Betriebszustand — weder am Konto noch als Richtlinie des Mandanten (Eigentümer K02). Der Server weist das Setzen ab und protokolliert den Versuch.
+
+**K03-D05** · DARF NICHT — Im Kundenportal darf das Verfahren nicht umgestellt werden koennen; der Bereich "Sicherheit" zeigt es an, stellt es aber nicht zur Wahl.
+
+> Der zweite Faktor DARF im Endnutzer-Portal NICHT umstellbar sein. Der Bereich Sicherheit zeigt ihn, ohne ihn zur Auswahl zu stellen.
+
+**K03-G11** · GILT — Der Ausschaltwert bleibt trotzdem im Datenmodell stehen, weil die zugrunde liegende Fassung unangetastet bleibt; als Soll erscheint er nirgends. Die Regel sagt den Merksatz selbst: modelliert ist nicht dasselbe wie zulaessig - dasselbe Muster wie bei den Rechtsraum-Werten, die es gibt, aber nicht geben darf.
+
+> Es GILT: Der abschaltende Wert von `mfa_method` bleibt im Enum, weil die Ground Truth unangetastet bleibt. Als Soll erscheint er nirgends — dasselbe Muster, das der Kanon für den nicht genutzten Rechtsraum-Wert vorsieht. Modelliert ist nicht dasselbe wie zulässig.
+
+### es gibt kein Kennwort -- der Code ist die zweite und letzte Huerde
+
+**K03-G06** · GILT — Am Konto steht kein Kennwort. Angemeldet wird man mit der E-Mail-Adresse und dem Code; einen dritten Nachweis gibt es heute nicht, und die Regel vermerkt das als offenen Punkt O-K03-5.
+
+> Es GILT: `actor` trägt kein Kennwort. Anmeldename ist die Adresse, zweiter Faktor der Code; ein dritter Nachweis fehlt (O-K03-5).
+
+### der Kontozustand WARTET_2FA -- das Konto zwischen Einladung und erstem bestaetigten Code
+
+**K03-M08** · MUSS — Ein Konto traegt genau einen von drei Zustaenden: aktiv, wartet auf den zweiten Faktor oder gesperrt. Voreingestellt ist "wartet"; einen vierten Zustand gibt es nicht (Festlegung F10).
+
+> `status` MUSS AKTIV, WARTET_2FA oder GESPERRT tragen, Vorgabe WARTET_2FA. Ein vierter Zustand entsteht nicht (F10).
+
+**K03-G02** · GILT — "Wartet auf den zweiten Faktor" ist weder aktiv noch gesperrt, sondern der Zustand dazwischen: die Einladung ist raus, der erste Code aber noch nicht bestaetigt.
+
+> Es GILT: WARTET_2FA ist weder aktiv noch gesperrt — der Zustand zwischen versandter Einladung und erster bestätigter zweiter Stufe.
+
+**K03-M09** · MUSS — Von "wartet" nach "aktiv" kommt ein Konto ausschliesslich ueber eine bestaetigte zweite Stufe - auf keinem anderen Weg; im selben Arbeitsschritt wird der Zeitpunkt der letzten Anmeldung gesetzt.
+
+> Der Übergang WARTET_2FA nach AKTIV MUSS ausschließlich aus einer bestätigten zweiten Stufe entstehen; im selben Vorgang wird `last_login_at` gesetzt (T12).
+
+**K20-M15** · MUSS — Dieselbe Umstellung von der anderen Seite gesehen: nach dem Einloesen der Einladung wechselt das Konto von "wartet" auf "aktiv". Wem der Kontozustand gehoert, sagt die Regel dazu - K03.
+
+> Nach der Einlösung MUSS das Konto von WARTET_2FA auf AKTIV wechseln. Der Kontozustand gehört K03; belegt durch T12.
+
+**K03-M10** · MUSS — Wird eine Sperre wieder aufgehoben, kommt genau der Zustand zurueck, der vor der Sperre galt: wer als "wartet" gesperrt wurde, ist danach wieder "wartet" - und nicht etwa aktiv.
+
+> Beim Entsperren MUSS der Zustand vor der Sperre hergestellt werden: wer als WARTET_2FA gesperrt wurde, ist danach wieder WARTET_2FA (T16).
+
+**K03-G05** · GILT — Der Zeitpunkt der letzten Anmeldung ist nur eine Anzeige und taugt nicht als Nachweis; solange ein Konto noch auf den zweiten Faktor wartet, bleibt das Feld leer.
+
+> Es GILT: `last_login_at` ist Anzeige, kein Nachweis. Solange ein Konto WARTET_2FA trägt, bleibt das Feld leer.
+
+### ohne bestaetigten zweiten Faktor wirkt kein Vorgang -- einen Teil-Zugang gibt es nicht
+
+**K03-D01** · DARF NICHT — Ohne gueltige Sitzung und ohne aktives Konto wird kein Vorgang wirksam. "Wartet auf den zweiten Faktor" und "gesperrt" fuehren zur Ablehnung - nie zu einem halben Zugang, in dem schon ein bisschen ginge.
+
+> Kein Vorgang DARF ohne gültige Sitzung und ohne `status = AKTIV` wirksam werden. WARTET_2FA und GESPERRT führen zur Ablehnung, nie zum Teil-Zugang.
+
+**K01-D07** · DARF NICHT — Dieselbe Aussage im Rahmenkonzept, dort mit dem Feldnamen `actor_status` und mit dem Hinweis, dass die Kontozustaende selbst zu K03 gehoeren.
+
+> Kein Vorgang DARF ohne gültige Sitzung und ohne `actor_status = AKTIV` wirksam werden. WARTET_2FA und GESPERRT führen zur Ablehnung, nie zu einem Teil-Zugang (Kontozustände: K03).
+
+**K14-M18** · MUSS — Jede Handlung, die Daten erzeugt, aendert oder freigibt, muss einem angemeldeten Konto mit gueltiger Sitzung zugeordnet sein. Der zweite Faktor kommt hier nur in einer Klammer vor - die Regel handelt von der Zurechnung, nicht vom Code.
+
+> Jede Handlung, die Daten erzeugt, ändert oder freigibt, MUSS einem angemeldeten Konto mit gültiger Sitzung zugeordnet sein (Konto und zweiter Faktor: K03).
+
+---
+
+## Anmeldung
+
+*... Anmeldecode > Anmeldung* — BS:55 · **6 Regeln**
+
+**Anmerkung:** Die Kennungen dieser Station kommen aus zwei Regelbuechern: K03 ist die "Anmeldung", K20 sind "Zugaenge und Nutzer EXMA". M = MUSS, G = GILT (eine Feststellung, die etwas klarstellt, ohne selbst etwas zu fordern). || Hinweis zur Aussagekraft dieser Station - er steht so auch im Stichwortverzeichnis: **alle sechs Regeln stecken vollstaendig in der Querschnittsgruppe *sicherheitskritisch*.** Der Begriff "Anmeldung" trennt damit nichts: er benennt eine Eigenschaft, die in jeder Scheibe gilt, nicht eine, die diese eine Scheibe kennzeichnet. Ob die Station trotzdem als Leseanlass fuer Scheibe 1 gefuehrt wird, entscheidet ein Mensch - das Werkzeug streicht nichts. || Hinweis zu Wortgleichsetzungen: hier war keine noetig. Alle sechs Regeln nennen das Wort "Anmeldung" selbst. Ein deutsches Ersatzwort benutzen die Konzepte nicht - "Login" und "einloggen" kommen in keiner der 1 231 Regeln als Wort vor; die zwei Fundstellen mit der Zeichenfolge "login" sind der Feldname `last_login_at` in K03-G05 und K03-M09, und beide Regeln stehen bereits an der Station Anmeldecode. || **Eine gemessene Luecke, die nicht behoben ist:** gesucht wird nach dem Wortstamm "Anmeldung". Sechs weitere Regeln reden von derselben Sache, aber mit einem anderen Wort derselben Familie - "Anmeldestufe" (K02-M09), "Anmeldevorgang" (K03-D02), "Anmeldemaske" (K03-G04), "Anmeldeweg" (K03-G10) und "Anmeldename" (K03-M03, K03-G06). Sie stehen deshalb **nicht** in dieser Station. Das ist keine Wortgleichsetzung zweier verschiedener Woerter, sondern ein zu eng gewaehltes Suchmuster; es zu erweitern hiesse, `werkzeuge/wortmarken.py` zu aendern - das ist hier nicht geschehen und als offener Punkt vermerkt. K03-G06 ist ohnehin schon an der Station Anmeldecode aufgefuehrt. || Woerter: eine "heikle Aenderung" ist eine Aenderung an Zugang oder Rechten, bei der ein missbrauchter offener Bildschirm besonders teuer waere - deshalb wird davor noch einmal die Anmeldung verlangt. "Serverseitig" heisst: auf dem Server geprueft; eine Pruefung, die nur in der Bildschirmoberflaeche stattfindet, gilt als nicht erfolgt. "Negativtest" heisst: ein Test, der beweist, dass ein Angriff scheitert - er ist erst bestanden, wenn er an genau seiner eigenen Bedingung scheitert.
+
+### der Code wird bei jeder Anmeldung verlangt -- auch von den Verwaltenden
+
+**K03-M06** · MUSS — Der Code wird nicht nur beim ersten Mal abgefragt, sondern bei jeder einzelnen Anmeldung.
+
+> Der Code MUSS bei **jeder** Anmeldung abgefragt werden, nicht nur bei der ersten.
+
+**K20-G09** · GILT — Fuer die Verwaltenden von EXMA gilt genau dasselbe Verfahren wie fuer Kunden: Einmal-Link, Frist und Code bei jeder Anmeldung. Einen bequemeren Weg fuer die eigenen Leute gibt es ausdruecklich nicht. Ueber den Datenweg des Kundenportals sagt die Regel nichts und vermerkt das als offene Frage O-K20-5.
+
+> Es GILT: Das Einladungsverfahren der Verwaltenden — Einmal-Link, Frist, Code bei jeder Anmeldung — ist dasselbe wie beim Endnutzer. Einen bequemeren Weg gibt es ausdrücklich nicht (EXMA-Handbuch 5.4). Über den Datenweg des ENDUSER-Portals sagt das nichts (O-K20-5).
+
+### vor einer heiklen Aenderung wird noch einmal angemeldet
+
+**K03-M12** · MUSS — Eine heikle Aenderung wird erst wirksam, wenn sich die handelnde Person noch einmal angemeldet hat; wie das am Bildschirm aussieht, regelt K16.
+
+> Eine heikle Änderung MUSS eine erneute Anmeldung verlangen, bevor sie wirksam wird. Die Anzeige dazu führt K16.
+
+**K03-M18** · MUSS — Die Regel zaehlt auf, was als heikel gilt: E-Mail-Adresse, Anmeldeverfahren, Rolle, Mitgliedschaft, Portalzuordnung, Entsperrung und Freigabeberechtigung. Und sie sagt, wie frisch die Anmeldung dafuer sein muss: hoechstens zehn Minuten alt.
+
+> E-Mail-Adresse, Authentifizierungsverfahren, Rolle, Mitgliedschaft, Portalzuordnung, Entsperrung und Freigabeberechtigung gelten als heikle Änderungen. Dafür muss die Anmeldung höchstens zehn Minuten zurückliegen.
+
+### geprueft wird auf dem Server, nicht in der Oberflaeche
+
+**K03-M13** · MUSS — Jede Pruefung der Anmeldung laeuft auf dem Server. Eine Pruefung, die nur in der Bildschirmoberflaeche stattfindet, gilt als nicht erfolgt - nicht als "fast erfolgt". (Diese Regel steht zugleich in Block 1a des Zeichnungsblattes: der gebaute Code beansprucht sie.)
+
+> Jede Prüfung der Anmeldung MUSS serverseitig erfolgen (K13 Abschn. 3); eine Prüfung allein in der Oberfläche gilt als nicht erfolgt.
+
+### was an Angriffen scheitern muss, bevor produktiv gegangen wird
+
+**K03-M21** · MUSS — Sieben benannte Angriffe muessen vor dem Produktivbetrieb als Negativtests bestanden sein: das Wiedereinspielen eines abgefangenen Codes, das Durchprobieren vieler Codes, das Ausforschen, ob es ein Konto ueberhaupt gibt, das Unterschieben einer Sitzungskennung, zwei gleichzeitige Anmeldungen, der Zugriff aus einer fremden Firma und der Ausfall des Anmeldedienstes.
+
+> Replay, Brute Force, Konto-Ermittlung, Sitzungsfixierung, parallele Anmeldung, fremder Mandant und Provider-Ausfall MÜSSEN vor Produktion als Negativtests bestanden sein.
 
 ---
 

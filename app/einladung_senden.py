@@ -444,8 +444,45 @@ def mitgliedschaft_entfernen(conn, einladender, einladung):
        eine Annahme ueber fremden Code.
 
     2. Kein anderer TRAEGER mehr. Die Mitgliedschaft besteht, solange das
-       Konto zu diesem Portal eine offene (VERSANDT) oder eine eingeloeste
-       Einladung hat. Ist noch eine da, bleibt die Zeile stehen.
+       Konto zu diesem Portal eine eingeloeste Einladung hat -- oder eine
+       versandte, DEREN FRIST NOCH LAEUFT. Ist noch eine da, bleibt die Zeile
+       stehen.
+
+    DIE TRAEGERBEDINGUNG WIRD SEIT DEM 15.08.2026 GEGEN DIE UHR GERECHNET
+    (Auftrag 9.4, Schritt 1). Bis dahin stand dort schlicht
+    `t.status IN ('VERSANDT','EINGELOEST')`. Das war ein Traegerbegriff ohne
+    Zeit, und er widerspricht der einzigen Ablaufregel, die dieses Haus hat:
+
+      K20-M22  "Ablauf wird ausschliesslich aus `expires_at` abgeleitet; kein
+               Lauf schreibt ABGELAUFEN."
+      K20-D05  Der Platz wird NICHT ueber ABGELAUFEN frei.
+
+    Beides zusammen heisst: eine verfallene Einladung steht weiter auf
+    VERSANDT. Ihr Status sagt ueber den Ablauf nichts -- er kann es gar nicht,
+    weil ihn niemand nachfuehren darf. Wer allein den Status liest, haelt jede
+    verfallene Einladung fuer einen Traeger, und zwar fuer immer.
+
+    Der Wortlaut ist nicht erfunden. Das Zielschema fuehrt fuer denselben
+    Begriff bereits dieselbe Rechnung: die Sicht `invitation_offen` waehlt
+    "status = 'VERSANDT' AND expires_at > now()" und begruendet es an Ort und
+    Stelle -- "Der Abgleich mit der Uhr steht in der Sicht und nicht als
+    gespeicherter Status, damit kein Hintergrundlauf noetig ist, um die
+    Wahrheit herzustellen" (freiraum_datamodel.sql:858-865, Rang 1). Dieselbe
+    Bedingung fuehrt app/einladung.py beim Einloesen (dort Z. 240-241). Hier
+    stand als einzige Stelle im Bestand eine dritte, zeitlose Lesart. Sie ist
+    entfallen.
+
+    EINGELOEST BLEIBT OHNE UHR, und das ist Absicht. Eine eingeloeste
+    Einladung ist verbraucht, nicht offen; ihre Frist ist gegenstandslos. Wer
+    sie mitrechnete, naehme dem arbeitenden Nutzer den Zugang, sobald die
+    Frist seiner alten Einladung verstreicht. Genau das darf nicht passieren
+    (siehe unten).
+
+    ES WIRD DABEI NIRGENDS ABGELAUFEN GESCHRIEBEN. Diese Anweisung liest
+    `expires_at`, sie aendert keinen Status -- weder den der uebergebenen
+    Einladung noch den irgendeiner anderen. K20-M22 und K20-D05 bleiben
+    unberuehrt, und das Datenmodell ebenso: die Spalte `expires_at` steht seit
+    jeher dort, es braucht keine Migration.
 
     Bedingung 2 ist der Grund, warum die REIHENFOLGE beim erneuten Versand
     (K20-M13) keine Falle ist. Sie wirkt in beide Richtungen:
@@ -455,6 +492,13 @@ def mitgliedschaft_entfernen(conn, einladender, einladung):
                     (das Entfernen findet die neue offene Einladung und
                      laesst die Zeile stehen; das Anlegen faellt auf den
                      Schluesselkonflikt und tut nichts, siehe unten)
+
+    Die Uhr aendert daran nichts: die soeben angelegte Einladung traegt eine
+    Frist in der Zukunft. `_anlegen` rechnet sie als
+    `now() + invite_ttl_hours`, und `invite_ttl_hours` liegt zwischen 1 und
+    168 Stunden. Sie ist also im selben Augenblick, in dem sie entsteht, ein
+    Traeger. Nachgemessen, nicht angenommen -- Fall B der Messung zu diesem
+    Auftrag.
 
     Und sie ist genau die Regel, die ein spaeterer Aufraeumlauf braucht: wer
     eingeloest hat und danach eine zweite, verfallende Einladung bekommt,
@@ -481,7 +525,9 @@ def mitgliedschaft_entfernen(conn, einladender, einladung):
         "    AND NOT EXISTS (SELECT 1 FROM invitation t"
         "                     WHERE t.actor_id = i.actor_id"
         "                       AND t.portal_code = i.portal_code"
-        "                       AND t.status IN ('VERSANDT','EINGELOEST'))"
+        "                       AND (t.status = 'EINGELOEST'"
+        "                            OR (t.status = 'VERSANDT'"
+        "                                AND t.expires_at > now())))"
         " RETURNING m.actor_id, m.portal_code, m.role_id)"
         " SELECT w.actor_id, w.portal_code::text, r.name"
         "   FROM weg w JOIN role r ON r.id = w.role_id",
@@ -593,6 +639,17 @@ def _vorherige_widerrufen(conn, einladender, konto):
     beim naechsten Versand hier widerrufen. Der Ablauf OHNE folgenden Versand
     raeumt heute niemand auf -- als offener Punkt gemeldet, nicht still
     entschieden.
+
+    DARAN AENDERT AUCH DER 15.08.2026 NICHTS. An diesem Tag ist die
+    Traegerbedingung in `mitgliedschaft_entfernen` gegen die Uhr gerechnet
+    worden (Auftrag 9.4, Schritt 1). Damit gibt eine verfallene Einladung die
+    Zugangszeile frei, SOBALD JEMAND DIESE FUNKTION AUFRUFT. Wer sie aufruft,
+    ist unveraendert allein der Widerruf -- hier und in `_zuruecknehmen`. Ein
+    Lauf, der von sich aus nach verfallenen Einladungen sieht, ist NICHT
+    gebaut: Blatt 63 vom 11.08.2026 hat ihn ausdruecklich nicht gewaehlt,
+    sondern als Folgepunkt gefuehrt. Der offene Punkt bleibt also offen; er
+    ist jetzt nur kleiner, weil die Bedingung, die ein solcher Lauf braeuchte,
+    schon steht und schon gemessen ist.
     """
     widerrufen = conn.execute(
         "UPDATE invitation i SET status = 'WIDERRUFEN'"

@@ -302,6 +302,112 @@ INSERT INTO login_code (actor_id, code_hash, issued_at, expires_at)
 SELECT id, pruef_codewert('700004', :'pfeffer'), now(), now() + interval '10 minutes'
   FROM actor WHERE email = 'mg_zweitportal@pruef.example';
 
+-- =====================================================================
+-- 11a · NACHGETRAGEN AM 16.08.2026 · vier Ausgangslagen fuer die neu
+--       gefasste Ablauf-Familie (MG-08 neu, MG-10 bis MG-14).
+--
+--       WARUM SIE NOETIG WURDEN: MG-08 hat bis zum 15.08.2026 gegen
+--       einen Zustandswechsel nach ABGELAUFEN gemessen. Genau den
+--       verbietet die gezeichnete Klausel K20-M22 im Wortlaut:
+--       "Ablauf wird ausschliesslich aus expires_at abgeleitet; kein
+--       Lauf schreibt ABGELAUFEN." Der Fall mass also gegen etwas
+--       Verbotenes und konnte nur GESPERRT melden. Die neue Fassung
+--       misst die ZIELBEDINGUNG -- eine Einladung, deren Frist
+--       verstrichen ist, traegt keine Zugangszeile mehr -- und braucht
+--       dafuer einen Gegenhalt und drei Nachbarn.
+--
+--       DIE VIER KONTEN UND IHRE KLARTEXT-TOKEN (nur hier als
+--       Kommentar; die Tabelle traegt ausschliesslich den Streuwert,
+--       K20-M08):
+--         mg_nichtabgelaufen@  tok-mg-nichtabgelaufen-5a1d8c3f7e2b6094
+--                              Frist LAEUFT NOCH -- Gegenhalt zu MG-08
+--         mg_portalablauf@     tok-mg-portalablauf-4e8b1f6a2d9c7350
+--                              EXMA abgelaufen, ENDUSER unberuehrt
+--         mg_frist@            (ohne Einladung -- Negativfall MG-12)
+--         mg_platz@            tok-mg-platz-8c3a7f1e5b2d9046
+--                              abgelaufen, Platz noch belegt (MG-13)
+-- =====================================================================
+
+-- --- (1) mg_nichtabgelaufen@ · MG-10 -------------------------------
+--     Der Gegenhalt, der MG-08 ehrlich haelt. Ein Server, der die
+--     Zugangszeile von mg_abgelaufen@ dadurch "entfernt", dass er
+--     einfach ALLE Zugangszeilen loescht, besteht MG-08 -- und faellt
+--     hier. Frist bewusst weit in der Zukunft (20 Stunden), Status
+--     VERSANDT, genau EINE Zugangszeile.
+INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+VALUES ('00000000-0000-4000-a000-000000000008',
+        '00000000-0000-4000-a000-0000000000f1',
+        'mg_nichtabgelaufen@pruef.example', 'Pruef MG Nicht Abgelaufen', 'EMAIL_CODE', 'WARTET_2FA', current_date);
+
+INSERT INTO invitation (actor_id, portal_code, mail, token_hash, sent_at, expires_at, status)
+SELECT '00000000-0000-4000-a000-000000000008', 'EXMA', 'mg_nichtabgelaufen@pruef.example',
+       pruef_codewert('tok-mg-nichtabgelaufen-5a1d8c3f7e2b6094', :'pfeffer'),
+       now() - interval '4 hours', now() + interval '20 hours', 'VERSANDT';
+
+INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+SELECT '00000000-0000-4000-a000-000000000008', 'EXMA', r.id, '00000000-0000-4000-a000-0000000000f1'
+  FROM role r WHERE r.portal_code = 'EXMA';
+
+-- --- (2) mg_portalablauf@ · MG-11 ----------------------------------
+--     K20-M19 im Wortlaut: "Portalzugang entfernen loescht ausschliess-
+--     lich die membership des gewaehlten Portals. actor bleibt bestehen;
+--     Mitgliedschaften anderer Portale bleiben unveraendert." Das Konto
+--     traegt ZWEI Zugangszeilen; abgelaufen ist nur die EXMA-Einladung.
+--     Die ENDUSER-Zeile ist -- wie bei mg_zweitportal@ (Abschn. 11) --
+--     DIREKT gesetzt: /einladung/senden vergibt nur EXMA, sie steht
+--     stellvertretend fuer eine Vergabe ausserhalb dieser Tuer.
+INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+VALUES ('00000000-0000-4000-a000-000000000009',
+        '00000000-0000-4000-a000-0000000000f1',
+        'mg_portalablauf@pruef.example', 'Pruef MG Portalablauf', 'EMAIL_CODE', 'WARTET_2FA', current_date);
+
+INSERT INTO invitation (actor_id, portal_code, mail, token_hash, sent_at, expires_at, status)
+SELECT '00000000-0000-4000-a000-000000000009', 'EXMA', 'mg_portalablauf@pruef.example',
+       pruef_codewert('tok-mg-portalablauf-4e8b1f6a2d9c7350', :'pfeffer'),
+       now() - interval '30 hours', now() - interval '30 hours' + interval '24 hours', 'VERSANDT';
+
+INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+SELECT '00000000-0000-4000-a000-000000000009', 'EXMA', r.id, '00000000-0000-4000-a000-0000000000f1'
+  FROM role r WHERE r.portal_code = 'EXMA';
+
+INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+SELECT '00000000-0000-4000-a000-000000000009', 'ENDUSER', r.id, '00000000-0000-4000-a000-0000000000f2'
+  FROM role r WHERE r.portal_code = 'ENDUSER';
+
+-- --- (3) mg_frist@ · MG-12 (Negativfall) ----------------------------
+--     Bewusst OHNE Einladung und OHNE Zugangszeile. MG-12 legt selbst
+--     eine Einladung an, deren Frist die am Mandanten konfigurierte
+--     Gueltigkeit ueberschreitet, und misst, dass sie an GENAU DIESER
+--     Bedingung abgewiesen wird -- mit der Meldung im Wortlaut. Traegt
+--     das Konto schon eine offene Einladung, scheiterte der Versuch am
+--     Einladungsplatz (invitation_offen_uq) statt an der Frist: ein
+--     Negativfall an fremder Bedingung, also kein Nachweis.
+INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+VALUES ('00000000-0000-4000-a000-00000000000a',
+        '00000000-0000-4000-a000-0000000000f1',
+        'mg_frist@pruef.example', 'Pruef MG Frist', 'EMAIL_CODE', 'WARTET_2FA', current_date);
+
+-- --- (4) mg_platz@ · MG-13 -----------------------------------------
+--     K20-D05 im Wortlaut: "Der Platz DARF NICHT ueber einen Wechsel
+--     nach ABGELAUFEN oder EINGELOEST frei gemacht werden -- allein
+--     WIDERRUFEN nach K20-M13 schafft ihn." Die Einladung ist
+--     abgelaufen (Uhr), steht aber weiter auf VERSANDT -- so, wie es
+--     K20-M22 verlangt. Der Platz ist damit belegt. Eigenes Konto,
+--     damit MG-13 nicht auf die Handlung von MG-08 aufsetzt.
+INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
+VALUES ('00000000-0000-4000-a000-00000000000b',
+        '00000000-0000-4000-a000-0000000000f1',
+        'mg_platz@pruef.example', 'Pruef MG Platz', 'EMAIL_CODE', 'WARTET_2FA', current_date);
+
+INSERT INTO invitation (actor_id, portal_code, mail, token_hash, sent_at, expires_at, status)
+SELECT '00000000-0000-4000-a000-00000000000b', 'EXMA', 'mg_platz@pruef.example',
+       pruef_codewert('tok-mg-platz-8c3a7f1e5b2d9046', :'pfeffer'),
+       now() - interval '40 hours', now() - interval '40 hours' + interval '24 hours', 'VERSANDT';
+
+INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
+SELECT '00000000-0000-4000-a000-00000000000b', 'EXMA', r.id, '00000000-0000-4000-a000-0000000000f1'
+  FROM role r WHERE r.portal_code = 'EXMA';
+
 -- ---------------------------------------------------------------------
 -- 12 · Sicht auf die Lage -- mitgliedschaft_lauf.sh prueft damit den
 --      AUFBAU unmittelbar vor dem ersten Fall erneut (die Daten koennten
@@ -327,6 +433,16 @@ SELECT a.email,
          WHERE i.actor_id = a.id AND i.status = 'VERSANDT') AS einladungen_offen,
        (SELECT count(*) FROM invitation i
          WHERE i.actor_id = a.id AND i.status = 'EINGELOEST') AS einladungen_eingeloest,
+       -- NACHGETRAGEN AM 16.08.2026 fuer die Ablauf-Familie: die Frist,
+       -- NICHT der Zustand. K20-M22 verbietet einen geschriebenen
+       -- Zustand ABGELAUFEN; ob eine Einladung abgelaufen ist, steht
+       -- allein im Vergleich von expires_at mit der Uhr (K20-G03).
+       (SELECT count(*) FROM invitation i
+         WHERE i.actor_id = a.id AND i.expires_at <= now()
+           AND i.status = 'VERSANDT')                 AS einladungen_frist_verstrichen,
+       (SELECT count(*) FROM invitation i
+         WHERE i.actor_id = a.id AND i.expires_at > now()
+           AND i.status = 'VERSANDT')                 AS einladungen_frist_laeuft,
        (SELECT max(i.attempt) FROM invitation i
          WHERE i.actor_id = a.id)                    AS attempt_max,
        (SELECT count(*) FROM login_code c
@@ -446,6 +562,59 @@ BEGIN
     fehler := fehler || 'ein dynamisches Fallziel existiert bereits vor dem ersten HTTP-Fall; ';
   END IF;
 
+  -- (l1) NACHGETRAGEN 16.08.2026 · MG-08 neu: mg_abgelaufen@ traegt eine
+  --      Einladung, deren FRIST verstrichen ist, und genau EINE
+  --      Zugangszeile. Geprueft wird die Frist, nicht der Zustand --
+  --      K20-M22: "Ablauf wird ausschliesslich aus expires_at
+  --      abgeleitet; kein Lauf schreibt ABGELAUFEN."
+  IF NOT EXISTS (SELECT 1 FROM pruef_mitgliedschaft_lage
+                  WHERE email = 'mg_abgelaufen@pruef.example'
+                    AND einladungen_frist_verstrichen = 1
+                    AND einladungen_frist_laeuft = 0
+                    AND mitgliedschaft_exma = 1) THEN
+    fehler := fehler || 'mg_abgelaufen@ traegt nicht genau eine fristverstrichene Einladung mit genau einer Zugangszeile (MG-08 neu); ';
+  END IF;
+
+  -- (l2) MG-10 · der Gegenhalt: Frist LAEUFT NOCH, genau eine Zugangszeile.
+  --      Ohne diesen Unterschied messen MG-08 und MG-10 dasselbe -- und
+  --      ein Server, der alle Zugangszeilen loescht, kaeme durch beide.
+  IF NOT EXISTS (SELECT 1 FROM pruef_mitgliedschaft_lage
+                  WHERE email = 'mg_nichtabgelaufen@pruef.example'
+                    AND status = 'WARTET_2FA'
+                    AND einladungen_frist_laeuft = 1
+                    AND einladungen_frist_verstrichen = 0
+                    AND mitgliedschaft_exma = 1) THEN
+    fehler := fehler || 'mg_nichtabgelaufen@ traegt nicht die Gegenprobe-Vorbedingung fuer MG-10; ';
+  END IF;
+
+  -- (l3) MG-11 · zwei Zugangszeilen, abgelaufen ist nur die EXMA-Einladung.
+  IF NOT EXISTS (SELECT 1 FROM pruef_mitgliedschaft_lage
+                  WHERE email = 'mg_portalablauf@pruef.example'
+                    AND einladungen_frist_verstrichen = 1
+                    AND mitgliedschaft_exma = 1 AND mitgliedschaft_enduser = 1
+                    AND mitgliedschaften_gesamt = 2) THEN
+    fehler := fehler || 'mg_portalablauf@ traegt nicht zwei Zugangszeilen mit abgelaufener EXMA-Einladung (MG-11); ';
+  END IF;
+
+  -- (l4) MG-12 · der Negativfall braucht ein LEERES Konto: keine
+  --      Einladung, keine Zugangszeile. Sonst scheiterte sein Versuch am
+  --      Einladungsplatz statt an der Frist -- an fremder Bedingung also.
+  IF NOT EXISTS (SELECT 1 FROM pruef_mitgliedschaft_lage
+                  WHERE email = 'mg_frist@pruef.example'
+                    AND einladungen_gesamt = 0 AND mitgliedschaften_gesamt = 0) THEN
+    fehler := fehler || 'mg_frist@ ist nicht leer (Einladung oder Zugangszeile vorhanden) -- MG-12 scheiterte an fremder Bedingung; ';
+  END IF;
+
+  -- (l5) MG-13 · der Einladungsplatz: genau eine Einladung, Zustand
+  --      VERSANDT, Frist verstrichen. Der Platz ist damit belegt,
+  --      OBWOHL die Frist um ist (K20-D05 gegen K20-G03).
+  IF NOT EXISTS (SELECT 1 FROM pruef_mitgliedschaft_lage
+                  WHERE email = 'mg_platz@pruef.example'
+                    AND einladungen_gesamt = 1
+                    AND einladungen_frist_verstrichen = 1) THEN
+    fehler := fehler || 'mg_platz@ traegt nicht genau eine fristverstrichene, noch auf VERSANDT stehende Einladung (MG-13); ';
+  END IF;
+
   -- (l) Keine Altversuche, die eine Drosselung vortaeuschen koennten.
   IF EXISTS (SELECT 1 FROM login_attempt WHERE email LIKE '%@pruef.example') THEN
     fehler := fehler || 'es stehen noch Anmeldeversuche aus einem frueheren Lauf; ';
@@ -462,6 +631,7 @@ END $$;
 SELECT email, status, mitgliedschaften_gesamt AS mitglied, mitgliedschaft_exma AS exma,
        mitgliedschaft_enduser AS enduser, einladungen_gesamt AS einladungen,
        einladungen_offen AS offen, einladungen_eingeloest AS eingeloest,
+       einladungen_frist_verstrichen AS frist_um, einladungen_frist_laeuft AS frist_laeuft,
        attempt_max, offene_codes
   FROM pruef_mitgliedschaft_lage
  ORDER BY email;
