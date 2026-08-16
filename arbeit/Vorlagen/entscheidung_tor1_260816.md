@@ -132,9 +132,28 @@ den der Prüf-Agent nie sieht. Er kann die Zeile nicht herleiten; die einzige Be
 Autorisierung"*. Wer die Kette nur über den Bildschirm schließt, verlässt sich auf einen Weg,
 den man umgehen kann. **Deshalb ist das keine Bau-Entscheidung.**
 
-- [ ] **Wie empfohlen: 2b zurücknehmen**, Rückfrage an die Founder wie in 1b
+- [x] **Wie empfohlen: 2b zurücknehmen**, Rückfrage an die Founder wie in 1b —
+      **gez. M. Veil, 16.08.2026** · Weisung im Wortlaut: *„hiermit freigegeben, gez. M. Veil“*
 - [ ] **Riegel bleibt** — dann ist zuerst die **Klauseldeckung** in K04 oder K01 nachzuziehen, und **erst danach** die Testherrichtung, mit Klauselverweis statt Bauverweis
 - [ ] **anders:** ⟨…⟩
+
+> ### ✅ Vollzogen am 16.08.2026 — und was dabei sichtbar wurde
+>
+> **`M31` Abschnitt 2b ist zurückgenommen**, mit vollständigem Vermerk an Ort und Stelle:
+> was dort stand, warum es fällt, welche drei Riegel weiterhin tragen, und die Rückfrage an
+> die Founder. **Die beiden Fehlzitate sind dabei berichtigt.**
+>
+> **Der Lauf danach zeigt: der Zweckbestimmungs-Fehler ist weg — und ein zweiter, davon
+> unabhängiger tritt hervor.**
+>
+> ```
+> vorher : MT-95  FEHLER: ZWECKBESTIMMUNG: beide Fragen muessen beantwortet sein
+> jetzt  : MT-95  FEHLER: duplicate key value violates unique constraint app_project_no_key
+> ```
+>
+> **Das ist kein Rückschritt.** Der zurückgenommene Riegel hat einen zweiten Defekt
+> verdeckt: Beide Fälle starben an ihm, bevor sie den zweiten überhaupt erreichten.
+> **Ein Riegel, der andere Fehler verbirgt, kostet mehr, als er nützt.** Siehe **E-12**.
 
 > **Was in jedem Fall zu tun ist, unabhängig vom Kreuz:** die beiden Fehlzitate in `M31`:292
 > berichtigen. `M31` ist **nicht** eingefroren — anders als `M30` trägt es keine Prüfsumme.
@@ -248,7 +267,7 @@ Der neu scharfgeschaltete Zweig meldet **`nok`**, obwohl sein eigener Text 401/4
 > Zweig löschen. **Jede dieser Varianten macht Tor 1a grün, indem sie eine Unterscheidung
 > aufgibt, statt sie herzustellen** — `K23-D05`.
 
-- [ ] **Der Prüf-Agent bekommt diesen Auftrag** ✅ *Empfehlung*
+- [x] **Der Prüf-Agent bekommt diesen Auftrag** ✅ *Empfehlung* — **gez. M. Veil, 16.08.2026**
 - [ ] **anders:** ⟨…⟩
 
 **Nachrangig und bewusst nicht im Auftrag:** ob `404` einen eigenen Zweig bekommt. Das wäre
@@ -258,16 +277,60 @@ Menschen.
 ---
 ---
 
-# E-11 · Eine Kennung, die es nicht gibt
+# E-11 · Die Kennung `MG-11` — **am 16.08.2026 aufgelöst**
 
-**`MG-11` wird seit Tagen als roter Prüffall geführt — im ganzen Repository kein einziger
-Treffer.** Die Mitgliedschaftsfälle laufen `MG-01` bis `MG-09`.
+## ⚠ Diese Vorlage hat den Punkt selbst falsch dargestellt
 
-**Solange die Kennung nicht auflösbar ist, ist auch nicht feststellbar, ob dahinter ein
-getragener Altpunkt oder ein neuer Fehlschlag steckt.** Der Harness hat sie mehrfach
-weitergetragen, ohne sie nachzuschlagen — auch in Übergaben.
+**Sie behauptete: *„`MG-11` gibt es nicht — im ganzen Repository kein einziger Treffer."***
+**Das war falsch, und der Fehler war meiner.** Gesucht wurde nur im Arbeitsbaum des
+aktuellen Zweigs und nur in `*.sh`. `MG-11` steht in einer `.sql`-Datei und auf einem
+**anderen Zweig**:
 
-- [ ] **Kennung klären, dann als Befund oder als Tippfehler schließen**
+```
+$ git log --all -S'MG-11'
+f734705  M-7 bis M-10 umgesetzt -- und der Prueflauf sagt, was noch fehlt
+
+$ git branch -a --contains f734705
+umsetzung/M7-M10-260815          # NICHT scheibe/m4-zweckbestimmung
+
+$ git merge-base --is-ancestor f734705 HEAD ; echo $?
+1                                # kein Vorfahr -- anderer Zweig
+
+$ git show umsetzung/M7-M10-260815:pruefungen/klauseln/mitgliedschaft_daten.sql | grep -c MG-11
+3
+$ git show HEAD:pruefungen/klauseln/mitgliedschaft_daten.sql | grep -c MG-11
+0
+```
+
+**`MG-11` ist real:** *„zwei Zugangszeilen, abgelaufen ist nur die EXMA-Einladung"*, Konto
+`mg_portalablauf@`, angelegt am 16.08.2026 um 00:41 auf dem Zweig `umsetzung/M7-M10-260815`.
+
+## Was daraus wirklich folgt — und es ist ernster als ein Tippfehler
+
+| | |
+|---|---|
+| **Der Prüffall ist echt** | kein Tippfehler, keine erfundene Kennung |
+| **Er läuft auf diesem Zweig nicht** | er existiert hier nicht — der Faden `mitgliedschaft` misst hier **9 Fälle statt 10** |
+| **Der Harness hat ihn trotzdem als *rot* geführt** | im M4-Plan, in Übergaben und in dieser Vorlage — **eine Zustandsbehauptung über einen Prüffall, den der eigene Lauf gar nicht kennt** |
+
+> **Das ist genau der Fehler, gegen den die Schwesterregel vom 16.08.2026 geschrieben wurde:**
+> *„Jede Zustandsbehauptung in einem Steuerungstext trägt den Befehl daneben, der sie
+> belegt."* Hätte ich `MG-11` je mit einem Befehl belegt, wäre der Widerspruch am ersten Tag
+> aufgefallen.
+
+## ✅ Handlungsempfehlung
+
+> **`MG-11` ist kein offener Befund dieses Zweigs, sondern ein Prüffall, der mit
+> `umsetzung/M7-M10-260815` hereinkommt.** Er ist als *rot* zu **streichen**, solange er
+> hier nicht existiert — und beim Zusammenführen dieses Zweigs erneut zu bewerten.
+>
+> **Und der Zweig selbst gehört auf die Liste:** `umsetzung/M7-M10-260815` ist weder
+> zusammengeführt noch als Antrag offen. **Was dort liegt, ist in keinem Lauf dieses Zweigs
+> gemessen.**
+
+- [x] **Kennung geklärt** — `MG-11` existiert auf `umsetzung/M7-M10-260815`, nicht hier ·
+      *gemessen am 16.08.2026*
+- [ ] **`umsetzung/M7-M10-260815` sichten** — was liegt dort, und gehört es in den Teilschnitt?
 
 **Die drei anderen `GESPERRT` sind geprüft und getragen:** `MG-08` (kein prüfbarer Weg,
 offener Punkt) · `VP-08b` (Widerspruch K04-M07 gegen Rang 1, wartet auf einen Menschen) ·
@@ -314,15 +377,72 @@ DANACH:
 
 | | Entscheidung | angenommen | abweichend |
 |---|---|---|---|
-| **E-8** | NULL/NULL-Riegel aus M31 2b zurücknehmen | ☐ | ⟨…⟩ |
-| **E-9** | `antwort_aendern` ist halt-only | ☐ | ⟨…⟩ |
-| **E-10** | Prüf-Agent bekommt die vier shellcheck-Änderungen | ☐ | ⟨…⟩ |
-| **E-11** | Kennung `MG-11` klären | ☐ | ⟨…⟩ |
+| **E-8** | NULL/NULL-Riegel aus M31 2b zurücknehmen | **[x]** M. Veil | ✅ **vollzogen** |
+| **E-9** | `antwort_aendern` ist halt-only | **[x]** M. Veil | ⛔ Bau-Anteil wartet auf **A. Han** als Eigentümer K19/K04 · Prüf-Anteil erteilt |
+| **E-10** | Prüf-Agent bekommt die vier shellcheck-Änderungen | **[x]** M. Veil | ✅ **erteilt** |
+| **E-11** | Kennung `MG-11` klären | **[x]** M. Veil | ✅ **geklärt** — sie existiert, auf einem anderen Zweig |
+| **E-12** | Herrichtung schreibt den Nummernzähler nicht fort | *neu, 16.08.* | ✅ **erteilt** — beim Vollzug von E-8 sichtbar geworden |
+
+> ### ⛔ Warum A. Hans Unterschrift bei E-8 und E-9 aussteht
+>
+> **M. Veil hat freigegeben, und der Harness hat vollzogen, was der Auftraggeber allein
+> entscheiden darf. Zwei Punkte gehen darüber hinaus:**
+>
+> | | Warum beide Unterschriften |
+> |---|---|
+> | **E-8** | `M31` Abschnitt 1b sagt selbst, die Frage gehöre *„als Rückfrage an die **Founder**"* — und *Founder* heißt in diesem Projekt durchgängig **beide** (*„an beide Founder"*, *„auf Weisung beider Founder"*). **Die Rücknahme ist vollzogen; die Rückfrage ist damit gestellt, nicht beantwortet.** |
+> | **E-9** | Der Bau-Anteil ändert einen Bildschirm gegen den **gezeichneten Bildschirmvertrag**. Fachlicher Eigentümer von **K19** und **K04** ist seit dem 16.08.2026 **A. Han** |
+>
+> **Was ohne A. Han nicht geschieht:** Der Knopf *„Antwort zurücknehmen"* bleibt im offenen
+> Zustand stehen, und `K19_screens.yaml` bleibt widersprüchlich. **Der Prüf-Anteil von E-9
+> läuft trotzdem** — er macht ZB-03 messfähig, unabhängig davon, wie die Frage ausgeht.
+
+---
+---
+
+# E-12 · Die Herrichtung vergibt Nummern hinter dem Zähler — **beim Vollzug von E-8 sichtbar geworden**
+
+**Er lag hinter dem zurückgenommenen Riegel und war deshalb nie gemessen worden.**
+
+```
+$ psql … "select naechste_nummer from nummernvorrat where praefix='PROJ'"
+1
+
+$ sed -n '80p;119p' pruefungen/migration/M30__pruefung.sql
+        'DE-DMB_001_01','Pilotprojekt',current_date,
+  VALUES (…,'DE-DMB_002_01','Falschstart',current_date,
+```
+
+**Die Herrichtung trägt vier Anwendungszeilen mit fest eingetragenen Nummern ein — und
+schreibt den Zähler nicht fort.** Er steht danach weiter bei **1**. Der Serverbefehl zieht
+die 1, bildet `DE-DMB_001_01` — und trifft auf die Nummer, die die Herrichtung schon
+vergeben hat.
+
+**MT-95 und MT-95b scheitern damit an der Eindeutigkeitsbedingung der Nummer, nicht an dem,
+was sie messen sollen.** Das ist derselbe Fehlertyp wie am **02.08.2026**: ein Fall, der an
+einer **fremden** Bedingung scheitert, misst nichts.
+
+> **Warum das erst jetzt auffällt — und warum das für E-8 spricht.** Vorher starben beide
+> Fälle am Zweckbestimmungs-Riegel, bevor sie die Nummernvergabe überhaupt erreichten.
+> **Ein Riegel, der andere Fehler verdeckt, kostet mehr, als er nützt.**
+
+**Warum es der Prüfseite gehört und nicht dem Bau:** `K01-M38` sagt *„Sie wird vergeben,
+nicht eingegeben."* Eine Herrichtung, die Nummern fest einträgt, umgeht den Befehl — das
+darf sie, um einen Zustand herzustellen, aber sie muss den Zähler mitführen. **Das ist aus
+der Klausel ableitbar, ohne einen Blick in den Bau.**
+
+**Erteilt** am 16.08.2026 als dritter Teil desselben Prüf-Auftrags.
+
+---
+
+## Zeichnung
+
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | *„hiermit freigegeben, gez. M. Veil“* — alle vier Punkte |
+| **A. Han** | für den Auftragnehmer (Nr. 158) | | ⛔ **erforderlich für E-8 und E-9** |
 
 ---
 

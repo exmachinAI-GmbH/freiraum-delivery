@@ -279,24 +279,68 @@ BEGIN
   END IF;
 
   -- -----------------------------------------------------------------
-  -- 2b · Die Zweckbestimmung als Vorbedingung (K04-M19, M21, D10)
+  -- 2b · Die Zweckbestimmung als Vorbedingung (K04-D10, K04-M21)
   -- -----------------------------------------------------------------
-  -- Der Bildschirmvertrag fuehrt sie fuer `anwendung_anlegen`
-  -- ausdruecklich als Eingabe: "abgeschlossener fit_check mit
-  -- outcome = GEEIGNET, vorliegender Zweckbestimmung und -- bei Treffer
-  -- in Frage 1 -- vorliegender Kenntnisnahme".
+  -- BERICHTIGT AM 16.08.2026, auf Weisung E-8 (gez. M. Veil). Hier stand
+  -- ein dritter Riegel, der beide Fragen als BEANTWORTET verlangte:
   --
-  -- SIE STEHT HIER UND NICHT NUR IM SERVERPFAD. K19-M14: "Ein UI-Zustand
-  -- ersetzt keine serverseitige Autorisierung" -- und ein Serverpfad ist
-  -- immer noch eine Stelle, die man umgehen kann, solange der Befehl
-  -- selbst sie nicht kennt. K01-M27 sagt, was der Befehl prueft; K04-M21
-  -- sagt, dass die Kenntnisnahme Bedingung ist. Also prueft der Befehl
-  -- sie.
-
-  IF f.zweck_bewertung_menschen IS NULL OR f.zweck_verbotene_praktik IS NULL THEN
-    RAISE EXCEPTION 'ZWECKBESTIMMUNG: beide Fragen muessen beantwortet sein (K04-M19)'
-      USING ERRCODE = 'check_violation';
-  END IF;
+  --   IF f.zweck_bewertung_menschen IS NULL
+  --      OR f.zweck_verbotene_praktik IS NULL THEN
+  --     RAISE EXCEPTION 'ZWECKBESTIMMUNG: beide Fragen muessen
+  --                      beantwortet sein (K04-M19)';
+  --
+  -- ER WIRD ZURUECKGENOMMEN -- aus demselben Grund und nach derselben
+  -- Regel wie der Riegel in Abschnitt 1b, 150 Zeilen weiter oben:
+  --
+  --   "Die Pruefung folgt nicht dem Bau. Eine Bedingung, die eine
+  --    Rang-1-Pruefung unmoeglich macht, ist eine Aenderung an
+  --    M30-Verhalten und gehoert als Rueckfrage an die Founder,
+  --    nicht in M31."
+  --
+  -- Gemessen am 16.08.2026: er macht MT-95 und MT-95b unmoeglich. Beide
+  -- richten einen fit_check mit outcome = GEEIGNET her und lassen die
+  -- zwei Zweck-Spalten NULL -- sie stammen aus der Zeit vor diesen
+  -- Spalten. MT-95 misst die Nummernvergabe, MT-95b den Rechteweg unter
+  -- fr_portal; beide messen danach GAR NICHTS mehr.
+  --
+  -- WARUM DIE BEGRUENDUNG NICHT TRUG. Der fruehere Kommentar sagte:
+  -- "K01-M27 sagt, was der Befehl prueft; K04-M21 sagt, dass die
+  -- Kenntnisnahme Bedingung ist." Beide Zitate halten nicht:
+  --   K04-M21 woertlich: "Die Kenntnisnahme MUSS als Nachweis erhalten
+  --     bleiben und in das Uebergabe-Paket (K10 Abschn. 3) eingehen."
+  --     -- kein Wort ueber eine Anlagebedingung.
+  --   K04-M19 woertlich: "Nach outcome = GEEIGNET MUSS ein
+  --     Zweckbestimmungs-SCHRITT folgen." -- ein Schritt im Ablauf,
+  --     keine Bedingung im Serverbefehl.
+  --   K01-M27 zaehlt FUENF Pruefungen auf; die Maschinenquelle
+  --     schema/K19_screens.yaml:247/251 liest sie abschliessend
+  --     ("eine der fuenf Pruefungen scheitert") und kennt als sechste
+  --     Bedingung allein die Kenntnisnahme bei Treffer in Frage 1.
+  --
+  -- Und der zurueckgenommene Zweig war der einzige, den KEIN Negativfall
+  -- misst: M31_N1 setzt beide Antworten auf false, N2 und N3 setzen sie.
+  -- Ein unbelegter UND unbeobachteter Riegel hat zwei gruene
+  -- Rang-1-Faelle rot gefaerbt.
+  --
+  -- WAS ER SICHERN SOLLTE, wird an drei Stellen weiterhin getragen:
+  --   * Treffer in Frage 2   -> der Riegel unten (K04-D10), gemessen
+  --                             durch M31_N3
+  --   * Treffer in Frage 1 ohne Kenntnisnahme
+  --                          -> der Riegel unten (K04-M21), gemessen
+  --                             durch M31_N2
+  --   * der Weg ueber den Bildschirm
+  --                          -> app/zweckbestimmung.py ruft die Anlage
+  --                             nur bei zwei Antworten auf
+  --
+  -- OFFEN UND ALS RUECKFRAGE AN DIE FOUNDER GESTELLT, nicht verschwiegen:
+  -- Bei NULL ist ein Treffer in Frage 2 nicht AUSGESCHLOSSEN, und
+  -- K19-M14 sagt zu Recht "Ein UI-Zustand ersetzt keine serverseitige
+  -- Autorisierung". Wer die Kette nur ueber den Bildschirm schliesst,
+  -- verlaesst sich auf einen Weg, den man umgehen kann. Soll der Riegel
+  -- wiederkommen, gehoert ZUERST die Klauseldeckung in K04 oder K01
+  -- nachgezogen -- und erst danach die Herrichtung von MT-95/95b, mit
+  -- Klauselverweis statt Bauverweis.
+  -- Vollstaendig in arbeit/Vorlagen/entscheidung_tor1_260816.md, E-8.
 
   -- Vorrang der zweiten Frage (K04-D10). Sie wird ZUERST geprueft, damit
   -- ein Vorhaben, das beide Fragen trifft, an dieser scheitert und nicht
