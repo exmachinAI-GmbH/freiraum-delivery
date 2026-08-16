@@ -731,16 +731,67 @@ die im Auftrag stehen — keine Planung.
 
 *Kreuz setzen bei „zurückgestellt", dann Termin eintragen.*
 
+**Entschieden am 16.08.2026 — gez. M. Veil.** Weisung im Wortlaut: *„L3, L4, L5, L6 — L9
+gehört dazu. Vier zurückgestellt, wie die Schlussrunde es sagt. L9 bleibt im Umfang des
+31.08.: Wer sich anmeldet, nutzt das Portal — der KI-Hinweis ist dann fällig. Das ist die
+vorsichtigere Lesart."*
+
 | | Bauaufgabe | im Teilschnitt? *(gemessen)* | **zurückgestellt** | **Termin** |
 |---|---|---|---|---|
-| **L3** | Träger der Vorlagenauswahl (K25) | nein — *„Sperrt M7"* | [ ] | |
-| **L4** | Agentenmanifest | nein — *„Er sperrt den Piloten nicht"* | [ ] | |
-| **L5** | Lastprofil | nein — trägt M11 | [ ] | |
-| **L6** | Vollständige Betriebsziele | nein | [ ] | |
-| **L9** | Portal-Hinweis Artikel 4 KI-VO | **offen** — nicht messbar | [ ] | |
-| L1 | Zeilenschutz-Regime | **ja** | [ ] | |
-| L2 | Identitätsvertrag | **ja** | [ ] | |
+| **L3** | Träger der Vorlagenauswahl (K25) | nein — *„Sperrt M7"* | **[x]** | *nach 2.1-d* |
+| **L4** | Agentenmanifest | nein — *„Er sperrt den Piloten nicht"* | **[x]** | *nach 2.1-d* |
+| **L5** | Lastprofil | nein — trägt M11 | **[x]** | *nach 2.1-d* |
+| **L6** | Vollständige Betriebsziele | nein | **[x]** | *nach 2.1-d* |
+| **L9** | Portal-Hinweis Artikel 4 KI-VO | **offen** — nicht messbar | **[ ]** — **im Umfang des 31.08.** | — |
+| L1 | Zeilenschutz-Regime | **ja** | [ ] | — |
+| L2 | Identitätsvertrag | **ja** | [ ] | — |
 | L7 | AVV-Riegel | schon in Tor III | entfällt | — |
+
+**Damit sind es vier: L3, L4, L5, L6.** Die Zahl der Schlussrunde stimmt, und der fünfte
+Kandidat ist entschieden statt offen gelassen.
+
+> ### Was die Entscheidung zu L9 dem 31.08. hinzufügt — offen gesagt
+>
+> **L9 bleibt im Umfang, und das ist die teurere der beiden Lesarten.** Der Harness hat sie
+> nicht empfohlen, weil er sie nicht messen konnte; entschieden ist sie mit der Begründung
+> *„wer sich anmeldet, nutzt das Portal"*. Das trägt.
+>
+> **Was daraus folgt, und was ausdrücklich nicht:**
+>
+> | | |
+> |---|---|
+> | **Im Umfang** | **nur der Portal-Hinweis.** §9 Tor II Bedingung 2 sagt wörtlich *„und **von L9** der Portal-Hinweis"* — nicht L9 als Ganzes |
+> | **Nicht im Umfang** | Vertragsbaustein und Einweisung aus L9. §7a trennt bei L9 **drei Eigentümer ausdrücklich**; die beiden anderen liegen bei Vertrieb und Geschäftsführung und stehen außerhalb der Tore |
+> | **Was zu tun ist** | Der Hinweis nach Artikel 4 KI-VO muss **vor der ersten Anmeldung** im Endnutzer-Portal sichtbar sein. **Gemessen am 16.08.2026: er ist nicht gebaut** — siehe Befund unten |
+> | **Wer** | Auftragnehmer (nur der Hinweis) |
+>
+> **Das ist ein neuer, benannter Bauposten für den Teilschnitt** — klein, aber er war vorher
+> nicht in der Liste. Er wird als Befund geführt, damit er nicht erst am 31.08. auffällt.
+>
+> #### Befund **L9-A4** · Der Portal-Hinweis nach Artikel 4 KI-VO ist nicht gebaut
+>
+> ```
+> $ grep -rniE 'KI-VO|KI-Verordnung|Artikel 4|KI-System|AI Act' app/
+> app/zweckbestimmung.py:400   "… unter Anhang III der KI-Verordnung fallen …"
+> app/zweckbestimmung.py:406   "… der KI-Verordnung."
+> app/zweckbestimmung.py:420   "… nach Art. 5 der KI-Verordnung verboten …"
+> app/vorlagen/en04a_zweckbestimmung.html:173  "… Pflichten aus der KI-Verordnung …"
+> ```
+>
+> **Vier Treffer, alle in EN-04a, alle zu Artikel 5 und Anhang III.** Das ist die
+> Zweckbestimmung — sie fragt den Kunden nach seinem Vorhaben. **Artikel 4 ist etwas
+> anderes:** die Pflicht, den Nutzern eines KI-Systems ausreichende Kompetenz zu vermitteln.
+> **Im Anmeldebildschirm `en01_anmeldung.html` steht dazu nichts** — null Treffer.
+>
+> | Feld | Wert |
+> |---|---|
+> | **Kennung** | **L9-A4** |
+> | **Befund** | Der Portal-Hinweis nach Artikel 4 KI-VO fehlt im Endnutzer-Portal |
+> | **Grundlage** | §9 Tor II Bedingung 2: *„und **von L9** der Portal-Hinweis"* · §7a L9: *„vor der ersten Nutzung im Endnutzer-Portal"* |
+> | **Warum jetzt** | Mit der Entscheidung vom 16.08.2026 ist die Anmeldung *„Nutzung"*. Damit ist der Hinweis zum 31.08.2026 fällig |
+> | **Wer** | Auftragnehmer *(nur der Hinweis — Vertragsbaustein und Einweisung liegen bei Vertrieb und Geschäftsführung)* |
+> | **Wo** | mindestens `app/vorlagen/en01_anmeldung.html`; ob weitere Bildschirme betroffen sind, hängt am **Wortlaut**, den der Auftragnehmer liefert |
+> | **Was fehlt** | **der Wortlaut.** Der Harness baut keinen rechtlichen Hinweistext — das wäre Umfang erfinden |
 
 ---
 

@@ -214,15 +214,41 @@ nur auf diesem Blatt.
 
 ### Die Namen — **offen, hier wird gezeichnet**
 
-- [ ] **Der Vorschlag oben gilt.** Fachlicher Eigentümer ist der Auftragnehmer (Nr. 158),
+- [x] **Der Vorschlag oben gilt.** Fachlicher Eigentümer ist der Auftragnehmer (Nr. 158),
       vertreten durch **A. Han**, außer bei K15 und K17 — dort **M. Veil**.
+      — **gez. A. Han, 16.08.2026** · Weisung im Wortlaut: *„Der Vorschlag gilt. A. Han für
+      18 Konzepte (154 Regeln), M. Veil für K15 (Datenschutz) und K17 (Agentenmanifest) —
+      beide Ausnahmen stehen so im Vertrag bzw. folgen aus der heutigen
+      Löschketten-Entscheidung."*
 - [ ] **Abweichend:** ⟨Konzept → Name, je Zeile⟩
 - [ ] **Eine andere Person zeichnet für den Auftragnehmer:** ⟨Name⟩
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | **16.08.2026** | **nur die Einengung** — die Namensspalte ist damit nicht gezeichnet |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | **erforderlich** — 154 der 157 Klauseln lägen bei ihm |
+| **M. Veil** | Auftraggeber | **16.08.2026** | die **Einengung** auf den Teilschnitt |
+| **A. Han** | für den Auftragnehmer (Nr. 158) | **16.08.2026** | die **Namen** — er übernimmt 18 Konzepte mit 154 Klauseln, davon 110 sperrende |
+
+> ### Damit ist die Spalte *Fachlicher Eigentümer* keine Vorschlagsspalte mehr
+>
+> **Der Klammerzusatz *(Vorschlag)* in der Kopfzeile der Tabelle ist mit dieser Zeichnung
+> gegenstandslos.** Er bleibt stehen, damit sichtbar bleibt, woher die Namen kamen — aber
+> was dort steht, ist ab dem 16.08.2026 eine **Zuordnung nach `K23-M02`**, keine Ableitung
+> mehr.
+>
+> **Was jetzt geschuldet ist, und von wem:**
+>
+> | Wer | Was | Umfang |
+> |---|---|---|
+> | **A. Han** | je Klausel seiner 18 Konzepte ein **Abnahmekriterium** — den Satz, an dem man misst, ob die Regel erfüllt ist | **154**, davon **110** sperrend |
+> | **M. Veil** | dasselbe für **K15** (1 Klausel) und **K17** (2 Klauseln) | **3**, alle drei sperrend |
+>
+> **Der kürzeste Weg für A. Han:** **K02** (33), **K03** (31), **K20** (21) — drei Konzepte,
+> **85 der 154** Klauseln und **52 der 110** sperrenden. Danach ist mehr als die Hälfte
+> geschafft.
+>
+> **Was den Eintrag ins Register auslöst:** `python3 werkzeuge/klauselregister.py`, sobald
+> die Namen in `pflege.json` stehen. **Erst nach diesem Lauf trägt Bedingung 4 des
+> Liefertors** — die Zeichnung allein reicht dafür nicht.
 
 ---
 
