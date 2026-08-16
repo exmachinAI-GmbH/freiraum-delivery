@@ -1686,6 +1686,42 @@ pruefe_sql_marke
 #         Gemessen an der Datenbank selbst: fit_check traegt genau die
 #         Spalten aus Zielschema und M30, kein anderes Gebilde traegt den
 #         Typ fit_outcome, und keine Spalte spiegelt die Eignung im Namen.
+#
+# ---------------------------------------------------------------------
+# ERWEITERT AM 16.08.2026 -- AUF GEZEICHNETE ENTSCHEIDUNG, NICHT AUF DEN
+# BAU
+# ---------------------------------------------------------------------
+# Dieser Fall war seit dem 16.08.2026 rot: an der Pruefzelle fit_check
+# standen mehr Spalten, als die Liste hier fuehrte. Er ist BEWUSST NICHT
+# nachgezogen worden, solange die Frage offen war -- ein Prueffall, der
+# einer Aenderung des Baus hinterherlaeuft, misst den Bau statt die
+# Regel. Der Befund ist stattdessen als Entscheidungsvorlage vorgelegt
+# worden.
+#
+# JETZT IST ES ZULAESSIG. Gezeichnet am 16.08.2026: Zweckbestimmung und
+# Kenntnisnahme werden als ZUSTAND UND als EREIGNIS gefuehrt (Weg C).
+# Der offene Punkt O-K04-8 ist damit GESCHLOSSEN, der Behelf K04-G12
+# abgeloest. Die oberste Quelle traegt seither Zustandsmerkmale fuer die
+# Zweckbestimmung -- nicht, weil der Bau sie gebaut hat, sondern weil die
+# Zeichnung sie zulaesst.
+#
+# WAS DIE ERWEITERUNG AUFNIMMT -- UND WAS SIE WEITER VERBIETET. Die
+# Erlaubnis ist nicht "was auch immer an fit_check steht", sondern genau
+# das von der Zeichnung Gedeckte:
+#   * Die neun Merkmale der Quelle MUESSEN vollstaendig da sein. Fehlt
+#     eines, ist der Fall rot wie vorher.
+#   * Zusaetzliche Merkmale sind NUR zulaessig, wenn ihr Name sie als
+#     Traeger der Zweckbestimmung oder der Kenntnisnahme ausweist. Ein
+#     beliebiges neues Feld an fit_check faellt weiterhin durch.
+#   * Es sind HOECHSTENS ZWEI. K04-M19 zeichnet ZWEI Fragen ("er fragt
+#     zweierlei getrennt"); ein drittes Zustandsmerkmal waere Umfang, den
+#     keine Klausel traegt.
+#   * Kein zusaetzliches Merkmal darf die EIGNUNG spiegeln. K04-D05 gilt
+#     unveraendert -- die Zeichnung hat den Traeger der Zweckbestimmung
+#     entschieden, nicht das Verbot des zweiten Eignungsstrangs
+#     aufgehoben. Diese Bedingung galt bisher nur fuer andere Tabellen;
+#     sie gilt jetzt AUCH fuer fit_check selbst. Das ist strenger als
+#     vorher, nicht lockerer (K23-D05).
 # =====================================================================
 spalten="$(dbz "SELECT string_agg(column_name, ',' ORDER BY column_name)
                   FROM information_schema.columns
@@ -1701,12 +1737,49 @@ spiegel="$(dbz "SELECT coalesce(string_agg(table_name||'.'||column_name, ' '),''
                    AND table_name NOT LIKE 'pruef\_%'
                    AND table_name <> 'fit_check'
                    AND column_name ~* '(geeignet|eignung|fit_ok|fit_status|fit_result|fit_ergebnis)'")"
+
+# Die neun Merkmale der Quelle (Zielschema + M30). Unveraendert.
 erwartet='actor_id,app_id,completed_at,id,outcome,retention_class,started_at,tenant_id,zweckbestimmung_ack_at'
+# Alles, was DARUEBER hinaus an fit_check steht.
+zusatz="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY column_name),'')
+                 FROM information_schema.columns
+                WHERE table_schema='public' AND table_name='fit_check'
+                  AND column_name NOT IN ('actor_id','app_id','completed_at','id','outcome',
+                                          'retention_class','started_at','tenant_id',
+                                          'zweckbestimmung_ack_at')")"
+fehlend="$(dbz "SELECT coalesce(string_agg(s, ',' ORDER BY s),'')
+                  FROM unnest(string_to_array('$erwartet',',')) AS s
+                 WHERE NOT EXISTS (SELECT 1 FROM information_schema.columns
+                                    WHERE table_schema='public' AND table_name='fit_check'
+                                      AND column_name = s)")"
+# Zusatzmerkmale, die die Zeichnung NICHT deckt: weder Zweckbestimmung
+# noch Kenntnisnahme im Namen.
+ungedeckt="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY column_name),'')
+                    FROM information_schema.columns
+                   WHERE table_schema='public' AND table_name='fit_check'
+                     AND column_name NOT IN ('actor_id','app_id','completed_at','id','outcome',
+                                             'retention_class','started_at','tenant_id',
+                                             'zweckbestimmung_ack_at')
+                     AND column_name !~* '(zweck|kenntnis|ack|anhang|annex|artikel|article|verbot|prohib|purpose)'")"
+# Zusatzmerkmale, die die EIGNUNG spiegeln -- K04-D05, jetzt auch an
+# fit_check selbst.
+zusatz_spiegel="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY column_name),'')
+                         FROM information_schema.columns
+                        WHERE table_schema='public' AND table_name='fit_check'
+                          AND column_name NOT IN ('outcome')
+                          AND column_name ~* '(geeignet|eignung|fit_ok|fit_status|fit_result|fit_ergebnis)'")"
+zusatz_n=0
+[ -z "$zusatz" ] || zusatz_n="$(printf '%s' "$zusatz" | awk -F, '{print NF}')"
+pruefe_sql_marke
+
 m=""
-[ "$spalten" = "$erwartet" ] || m="$m fit_check traegt '$spalten' statt '$erwartet';"
+[ -z "$fehlend" ]   || m="$m fit_check fuehrt die Merkmale der Quelle nicht vollstaendig -- es fehlen: $fehlend (gefunden: '$spalten');"
+[ -z "$ungedeckt" ] || m="$m fit_check traegt Merkmale, die weder in der Quelle stehen noch von der Zeichnung vom 16.08.2026 gedeckt sind: $ungedeckt;"
+[ "${zusatz_n:-0}" -le 2 ] || m="$m fit_check traegt $zusatz_n zusaetzliche Zustandsmerkmale ($zusatz); K04-M19 zeichnet ZWEI Fragen, ein drittes traegt keine Klausel;"
+[ -z "$zusatz_spiegel" ] || m="$m ein zusaetzliches Merkmal an fit_check spiegelt die Eignung: $zusatz_spiegel (K04-D05);"
 [ -z "$fremdstrang" ] || m="$m ein zweites Ergebnisfeld vom Typ fit_outcome besteht: $fremdstrang;"
 [ -z "$spiegel" ]     || m="$m ein gespiegeltes Eignungskennzeichen besteht: $spiegel;"
-[ -z "$m" ] && ok VP-24 'Neben fit_check.outcome besteht kein zweiter Eignungsstrang — keine zusaetzliche Spalte, kein gespiegeltes Kennzeichen (K04-D05)' \
+[ -z "$m" ] && ok VP-24 "Neben fit_check.outcome besteht kein zweiter Eignungsstrang: die Quelle ist vollstaendig, die $zusatz_n zusaetzlichen Merkmale (${zusatz:-keine}) sind Traeger der Zweckbestimmung nach der Zeichnung vom 16.08.2026, kein gespiegeltes Kennzeichen (K04-D05, K04-M19)" \
             || nok VP-24 "Zweiter Eignungsstrang:$m"
 pruefe_sql_marke
 

@@ -1440,16 +1440,35 @@ pruefe_sql_marke
 #         VERSCHIEDEN, und beide tragen die Kundenkennung des Mandanten.
 #         Zwei gleiche Nummern waeren keine Vergabe; eine Nummer aus
 #         einem fremden Mandanten waere keine.
+#
+#         ERWEITERT AM 16.08.2026 um die zweite Haelfte derselben
+#         Klausel: "sie wird VERGEBEN, NICHT EINGEGEBEN". Bis heute mass
+#         dieser Fall nur, WAS herauskommt. Ein Serverbefehl, der eine
+#         Projektnummer ENTGEGENNIMMT, ist aber schon als Gestalt ein
+#         Verstoss -- er bietet die Nummer zur Eingabe an, und wer ihn
+#         benutzt, kommt an der Klausel vorbei. Das war der offene Weg,
+#         auf dem sieben Prueffaelle bis zum 16.08.2026 gruen standen.
+#         Deshalb wird hier nicht der Bau befragt, sondern die Gestalt:
+#         traegt IRGENDEINE Fassung von create_app_after_fit einen
+#         Parameter fuer die Projektnummer, ist ZB-14 rot -- gleichgueltig,
+#         wie schoen die zwei Nummern aussehen.
+#         Kein Pruefwert wird dadurch gesenkt: die drei bisherigen
+#         Bedingungen bleiben Wort fuer Wort stehen, eine vierte kommt hinzu.
 # ---------------------------------------------------------------------
 if [ -z "${APP_NR_1:-}" ] || [ -z "${APP_NR_2:-}" ] || [ "${APP_NR_2:-}" = "(keine)" ]; then
   sperr ZB-14 'Nicht messbar: es kamen nicht zwei Anlagen zustande, deren Nummern sich vergleichen liessen'
 else
   kkz="$(dbz "SELECT customer_code FROM tenant WHERE id='$MANDANT_A'")"
+  nr_param="$(dbz "SELECT coalesce(string_agg(n,','),'')
+                     FROM pg_proc p, unnest(coalesce(p.proargnames,ARRAY[]::text[])) AS n
+                    WHERE p.proname='create_app_after_fit'
+                      AND n ~* '(project|projekt|nummer|(^|_)no\$|(^|_)nr(\$|_))'")"
   m=""
   [ "$APP_NR_1" != "$APP_NR_2" ] || m="$m beide Anlagen tragen dieselbe Nummer '$APP_NR_1' -- vergeben wird da nichts;"
   case "$APP_NR_1" in "$kkz"_*) : ;; *) m="$m die erste Nummer '$APP_NR_1' traegt nicht die Kundenkennung '$kkz' des Mandanten;";; esac
   case "$APP_NR_2" in "$kkz"_*) : ;; *) m="$m die zweite Nummer '$APP_NR_2' traegt nicht die Kundenkennung '$kkz' des Mandanten;";; esac
-  [ -z "$m" ] && ok ZB-14 "Die Projektnummer vergibt der Befehl: zwei Anlagen, zwei verschiedene Nummern ('$APP_NR_1', '$APP_NR_2'), beide mit der Kundenkennung '$kkz' (K01-M38)" \
+  [ -z "${nr_param:-}" ] || m="$m der Serverbefehl NIMMT eine Projektnummer ENTGEGEN (Parameter: $nr_param) -- damit wird sie eingegeben und nicht vergeben, und der Riegel ist umgehbar (K01-M38, K01-D19);"
+  [ -z "$m" ] && ok ZB-14 "Die Projektnummer vergibt der Befehl: zwei Anlagen, zwei verschiedene Nummern ('$APP_NR_1', '$APP_NR_2'), beide mit der Kundenkennung '$kkz' — und kein Wert des Befehls nimmt eine Nummer entgegen (K01-M38, K01-D19)" \
               || nok ZB-14 "Vergabe der Projektnummer:$m"
 fi
 pruefe_sql_marke
@@ -1726,19 +1745,107 @@ pruefe_sql_marke
 # Belegs (Bauauftrag :649).
 # =====================================================================
 
-# Die Gestalt des Serverbefehls wird ERFRAGT, nicht angenommen. Wer sie
-# raet, misst "Funktion existiert nicht" -- eine fremde Bedingung.
-BEFEHL_ARGS="$(dbz "SELECT pg_get_function_identity_arguments(p.oid)
-                      FROM pg_proc p WHERE p.proname='create_app_after_fit'
-                     ORDER BY p.pronargs DESC LIMIT 1")"
-BEFEHL_N="$(dbz "SELECT max(pronargs) FROM pg_proc WHERE proname='create_app_after_fit'")"
+# =====================================================================
+# NACHGEZOGEN AM 16.08.2026 · ZB-20, ZB-21, ZB-22 UND ZB-23
+# WORAUF SICH DIE AENDERUNG STUETZT -- UND WORAUF AUSDRUECKLICH NICHT
+# =====================================================================
+# Bis heute riefen diese vier Faelle create_app_after_fit in einer
+# Gestalt auf, die eine PROJEKTNUMMER UEBERGIBT ('DE-ZBA_901_01' und
+# fort). Diese Gestalt misst einen Weg, den zwei GEZEICHNETE KLAUSELN
+# verbieten:
+#
+#   K01-M38 · MUSS
+#     "Die Projektnummer MUSS der serverseitige Befehl bilden, in
+#      derselben Transaktion, in der die Anwendungszeile entsteht.
+#      SIE WIRD VERGEBEN, NICHT EINGEGEBEN."
+#
+#   K01-D19 · DARF NICHT
+#     "Kein Bildschirm, kein Formular und kein Endpunkt DARF die
+#      Projektnummer zur Eingabe, Auswahl oder Aenderung anbieten.
+#      EIN DENNOCH MITGESENDETER WERT WIRD VERWORFEN."
+#
+# BEIDE KLAUSELN GALTEN VORHER. Ein Prueffall, der eine Projektnummer
+# uebergibt, war damit schon vorher falsch -- er ist nur nie
+# aufgefallen, weil eine zweite Fassung des Befehls offenstand, die den
+# Wert entgegennahm, und ihn trug. Wer in einem Jahr fragt, warum diese
+# vier Faelle geaendert wurden: WEIL DIE KLAUSEL ES SO VERLANGT, nicht
+# weil der Bau es so tut. Traegt der Befehl morgen wieder einen
+# Parameter fuer die Projektnummer, wird hier nichts zurueckgedreht --
+# dann meldet ZB-14 einen Verstoss gegen K01-M38.
+#
+# KEIN PRUEFWERT WIRD GESENKT (K23-D05):
+#   * Die Bedingung "es blieb keine Zeile stehen" haengt jetzt am NAMEN
+#     der Anwendung statt an der Projektnummer. Die Namen dieser vier
+#     Faelle sind untereinander und gegen den uebrigen Bestand
+#     verschieden; gemessen wird dasselbe.
+#   * Die Reihenfolge der vier Werte wird NEU an den Parameternamen
+#     geprueft (siehe BEFEHL_LAGE). Drei der vier Werte sind uuid --
+#     ohne diese Pruefung waere eine Vertauschung STILL, und die
+#     Negativfaelle scheiterten an einer fremden Bedingung, statt an
+#     ihrer eigenen. Das ist strenger als vorher, nicht lockerer.
+#   * ZB-20 laesst den DIREKTEN INSERT in app bewusst weiter mit
+#     Projektnummer laufen. Er ist der VERBOTENE Weg und muss am
+#     Rechteschnitt scheitern; Postgres prueft Rechte vor Bedingungen,
+#     die Nummer aendert daran nichts. Ohne sie scheiterte er an
+#     project_no NOT NULL -- also an einer fremden Bedingung.
+#
+# DIE GESTALT WIRD ERFRAGT, NICHT ANGENOMMEN. BEFEHL_LAGE trennt drei
+# Faelle:
+#   leer                -> messbar
+#   'VERSTOSS ...'      -> der Befehl nimmt eine Projektnummer entgegen.
+#                          Gemeldet wird das dort, wo es hingehoert:
+#                          in ZB-14 (K01-M38). Die vier Faelle hier
+#                          sperren, denn den klauselgemaessen Aufruf
+#                          gibt es dann nicht.
+#   'NICHT MESSBAR ...' -> die Gestalt gibt den Aufruf nicht her
+# =====================================================================
+BEFEHL_ARGS="$(dbz "SELECT coalesce(string_agg(array_to_string(coalesce(p.proargnames,ARRAY[]::text[]),','),' | '),'')
+                      FROM pg_proc p WHERE p.proname='create_app_after_fit'")"
+BEFEHL_TYPEN="$(dbz "SELECT coalesce(string_agg(t.liste,' | '),'')
+                       FROM pg_proc p
+                       CROSS JOIN LATERAL (
+                         SELECT coalesce(string_agg(format_type(u.typ,NULL),',' ORDER BY u.pos),'') AS liste
+                           FROM unnest(p.proargtypes) WITH ORDINALITY AS u(typ,pos)) t
+                      WHERE p.proname='create_app_after_fit'")"
+BEFEHL_N="$(dbz "SELECT coalesce(max(pronargs),0) FROM pg_proc WHERE proname='create_app_after_fit'")"
+BEFEHL_ANZ="$(dbz "SELECT count(*) FROM pg_proc WHERE proname='create_app_after_fit'")"
+# Traegt IRGENDEINE Fassung einen Parameter, der die Projektnummer
+# entgegennimmt? Das ist der Verstoss gegen K01-M38, nicht ein Mangel
+# der Messung.
+BEFEHL_NR_PARAM="$(dbz "SELECT coalesce(string_agg(n,','),'')
+                          FROM pg_proc p, unnest(coalesce(p.proargnames,ARRAY[]::text[])) AS n
+                         WHERE p.proname='create_app_after_fit'
+                           AND n ~* '(project|projekt|nummer|(^|_)no\$|(^|_)nr(\$|_))'")"
 pruefe_sql_marke
-printf '\nServerbefehl: create_app_after_fit(%s)\n' "${BEFEHL_ARGS:-NICHT VORHANDEN}"
+
+BEFEHL_LAGE=""
+if [ "${BEFEHL_ANZ:-0}" = "0" ]; then
+  BEFEHL_LAGE='NICHT MESSBAR: create_app_after_fit besteht nicht'
+elif [ -n "${BEFEHL_NR_PARAM:-}" ]; then
+  BEFEHL_LAGE="VERSTOSS gegen K01-M38 (\"sie wird vergeben, nicht eingegeben\"): der Befehl nimmt eine Projektnummer entgegen -- Parameter: $BEFEHL_NR_PARAM. Einen klauselgemaessen Aufruf gibt es damit nicht"
+elif [ "${BEFEHL_ANZ:-0}" != "1" ]; then
+  BEFEHL_LAGE="NICHT MESSBAR: es bestehen $BEFEHL_ANZ Fassungen von create_app_after_fit ($BEFEHL_ARGS); welche gemeint ist, liesse sich nur raten"
+elif [ "${BEFEHL_N:-0}" != "4" ]; then
+  BEFEHL_LAGE="NICHT MESSBAR: create_app_after_fit besteht nicht in der Gestalt mit vier Werten (gefunden: $BEFEHL_N -- $BEFEHL_ARGS)"
+elif [ "${BEFEHL_TYPEN:-}" != "uuid,text,uuid,uuid" ]; then
+  BEFEHL_LAGE="NICHT MESSBAR: die Werte tragen die Typen '$BEFEHL_TYPEN' statt uuid,text,uuid,uuid; die Zuordnung liesse sich nur raten"
+elif ! printf '%s' "$BEFEHL_ARGS" \
+     | grep -Eqi '^[^,|]*(tenant|mandant)[^,|]*,[^,|]*(name|bezeichn)[^,|]*,[^,|]*(fit|check|eignung)[^,|]*,[^,|]*(actor|konto|account)[^,|]*$'; then
+  # Drei der vier Werte sind uuid. Ohne diese Pruefung waere eine
+  # Vertauschung STILL, und jeder Negativfall scheiterte danach an einer
+  # FREMDEN Bedingung (Massstab F07).
+  BEFEHL_LAGE="NICHT MESSBAR: die vier Werte heissen '$BEFEHL_ARGS'; welcher Wert wohin gehoert, liesse sich nur raten (erwartet der Reihe nach: Mandant, Name, Eignungs-Check, Konto)"
+fi
+
+printf '\nServerbefehl: create_app_after_fit(%s) — Typen (%s)\n' \
+       "${BEFEHL_ARGS:-NICHT VORHANDEN}" "${BEFEHL_TYPEN:-—}"
+printf 'Gestalt: %s\n' "${BEFEHL_LAGE:-klauselgemaess (vier Werte, keine Projektnummer) — messbar}"
 
 # Der Aufruf in der Gestalt, die auch pruefungen/migration/M30__pruefung.sql
-# fuehrt: (Mandant, Projektnummer, Name, Eignungs-Check, Konto).
-befehl_aufruf() {    # $1 mandant  $2 nummer  $3 name  $4 check  $5 konto
-  printf "SELECT create_app_after_fit('%s','%s','%s','%s','%s')" "$1" "$2" "$3" "$4" "$5"
+# fuehrt: (Mandant, Name, Eignungs-Check, Konto). OHNE Projektnummer --
+# sie wird vergeben, nicht eingegeben (K01-M38).
+befehl_aufruf() {    # $1 mandant  $2 name  $3 check  $4 konto
+  printf "SELECT create_app_after_fit('%s','%s','%s','%s')" "$1" "$2" "$3" "$4"
 }
 
 # ---------------------------------------------------------------------
@@ -1755,18 +1862,24 @@ befehl_aufruf() {    # $1 mandant  $2 nummer  $3 name  $4 check  $5 konto
 #         war der Befund an MT-96 und MT-97: "Ein Regime, das alles
 #         verbietet, bestuende jeden Negativtest."
 # ---------------------------------------------------------------------
+#         NACHGEZOGEN AM 16.08.2026 auf K01-M38 und K01-D19 -- die
+#         Begruendung steht im Block ueber befehl_aufruf(). Der direkte
+#         INSERT behaelt seine Projektnummer mit Absicht: er ist der
+#         VERBOTENE Weg und muss am Rechteschnitt scheitern, nicht an
+#         project_no NOT NULL.
+# ---------------------------------------------------------------------
 rolle_da="$(dbz "SELECT count(*) FROM pg_roles WHERE rolname='fr_portal'")"
 pruefe_sql_marke
 if [ "${rolle_da:-0}" != "1" ]; then
   sperr ZB-20 'Nicht messbar: die Rolle fr_portal besteht nicht -- ohne sie ist nicht entscheidbar, was dem Portalpfad erlaubt ist'
-elif [ "${BEFEHL_N:-0}" != "5" ]; then
-  sperr ZB-20 "Nicht messbar: create_app_after_fit besteht nicht in der Gestalt mit fuenf Werten (gefunden: ${BEFEHL_ARGS:-keine}); der Aufruf liesse sich nur raten"
+elif [ -n "$BEFEHL_LAGE" ]; then
+  sperr ZB-20 "Nicht messbar: $BEFEHL_LAGE"
 else
   direkt="$(dbf "SET LOCAL ROLE fr_portal;
                  INSERT INTO app(tenant_id,project_no,name,created_at,fit_check_id)
-                 VALUES ('$MANDANT_A','DE-ZBA_900_01','Direkt vorbei',current_date,'$CHECK_GEEIGNET')")"
+                 VALUES ('$MANDANT_A','DE-ZBA_900_01','ZB20 Direkt vorbei',current_date,'$CHECK_GEEIGNET')")"
   offen="$(dbf "SET LOCAL ROLE fr_portal;
-                $(befehl_aufruf "$MANDANT_A" 'DE-ZBA_901_01' 'Ueber den Befehl' "$CHECK_GEEIGNET" "$KONTO_DB")")"
+                $(befehl_aufruf "$MANDANT_A" 'ZB20 Ueber den Befehl' "$CHECK_GEEIGNET" "$KONTO_DB")")"
   m=""
   case "$direkt" in
     KEIN_FEHLER) m="$m der Portalpfad darf app direkt beschreiben -- der Befehl ist umgehbar (K01-M27);";;
@@ -1791,11 +1904,15 @@ pruefe_sql_marke
 #         Nummer, bestehender Check. Falsch ist allein sein Ergebnis
 #         (OFFEN). Die Meldung wird im Wortlaut ausgewiesen.
 # ---------------------------------------------------------------------
-if [ "${BEFEHL_N:-0}" != "5" ]; then
-  sperr ZB-21 "Nicht messbar: create_app_after_fit besteht nicht in der Gestalt mit fuenf Werten (${BEFEHL_ARGS:-keine})"
+#         NACHGEZOGEN AM 16.08.2026 auf K01-M38 und K01-D19 (Begruendung
+#         im Block ueber befehl_aufruf()). Der Nachweis "es blieb keine
+#         Zeile stehen" haengt jetzt am NAMEN statt an der Projektnummer
+#         -- die vergibt der Befehl, der Aufrufer kennt sie nicht mehr.
+if [ -n "$BEFEHL_LAGE" ]; then
+  sperr ZB-21 "Nicht messbar: $BEFEHL_LAGE"
 else
-  meldung="$(dbf "$(befehl_aufruf "$MANDANT_A" 'DE-ZBA_902_01' 'Ohne Eignung' "$CHECK_OFFEN" "$KONTO_DB")")"
-  bestand="$(dbz "SELECT count(*) FROM app WHERE project_no='DE-ZBA_902_01'")"
+  meldung="$(dbf "$(befehl_aufruf "$MANDANT_A" 'ZB21 Ohne Eignung' "$CHECK_OFFEN" "$KONTO_DB")")"
+  bestand="$(dbz "SELECT count(*) FROM app WHERE name='ZB21 Ohne Eignung'")"
   m=""
   case "$meldung" in
     KEIN_FEHLER) m="$m die Anlage auf einem Check mit outcome = OFFEN wurde angenommen (K01-M27, F1);";;
@@ -1819,12 +1936,16 @@ pruefe_sql_marke
 #         Beides muss abgewiesen werden, und beides an der
 #         Mandantenbedingung.
 # ---------------------------------------------------------------------
-if [ "${BEFEHL_N:-0}" != "5" ]; then
-  sperr ZB-22 "Nicht messbar: create_app_after_fit besteht nicht in der Gestalt mit fuenf Werten (${BEFEHL_ARGS:-keine})"
+#         NACHGEZOGEN AM 16.08.2026 auf K01-M38 und K01-D19 (Begruendung
+#         im Block ueber befehl_aufruf()). Beide Richtungen bleiben
+#         erhalten; der Nachweis "es blieben keine Zeilen stehen" haengt
+#         jetzt am NAMEN statt an der Projektnummer.
+if [ -n "$BEFEHL_LAGE" ]; then
+  sperr ZB-22 "Nicht messbar: $BEFEHL_LAGE"
 else
-  m1="$(dbf "$(befehl_aufruf "$MANDANT_A" 'DE-ZBA_903_01' 'Fremdes Konto' "$CHECK_GEEIGNET" "$KONTO_FREMD")")"
-  m2="$(dbf "$(befehl_aufruf "$MANDANT_A" 'DE-ZBA_904_01' 'Fremder Check' "$CHECK_FREMD" "$KONTO_DB")")"
-  bestand="$(dbz "SELECT count(*) FROM app WHERE project_no IN ('DE-ZBA_903_01','DE-ZBA_904_01')")"
+  m1="$(dbf "$(befehl_aufruf "$MANDANT_A" 'ZB22 Fremdes Konto' "$CHECK_GEEIGNET" "$KONTO_FREMD")")"
+  m2="$(dbf "$(befehl_aufruf "$MANDANT_A" 'ZB22 Fremder Check' "$CHECK_FREMD" "$KONTO_DB")")"
+  bestand="$(dbz "SELECT count(*) FROM app WHERE name IN ('ZB22 Fremdes Konto','ZB22 Fremder Check')")"
   m=""
   case "$m1" in
     KEIN_FEHLER) m="$m ein Konto des fremden Mandanten durfte anlegen (F3, K04-D08);";;
@@ -1852,15 +1973,18 @@ pruefe_sql_marke
 #         gaebe nichts, wogegen ein Fall scheitern koennte. Ein Fall,
 #         der nicht scheitern kann, misst nichts.
 # ---------------------------------------------------------------------
-if [ "${BEFEHL_N:-0}" != "5" ]; then
-  sperr ZB-23 "Nicht messbar: create_app_after_fit besteht nicht in der Gestalt mit fuenf Werten (${BEFEHL_ARGS:-keine})"
+#         NACHGEZOGEN AM 16.08.2026 auf K01-M38 und K01-D19 (Begruendung
+#         im Block ueber befehl_aufruf()). Der Nachweis "es blieben keine
+#         Zeilen stehen" haengt jetzt am NAMEN statt an der Projektnummer.
+if [ -n "$BEFEHL_LAGE" ]; then
+  sperr ZB-23 "Nicht messbar: $BEFEHL_LAGE"
 else
-  m1="$(dbf "$(befehl_aufruf "$MANDANT_A" 'DE-ZBA_905_01' 'Gesperrtes Konto' "$CHECK_GESPERRT" "$KONTO_GESPERRT")")"
+  m1="$(dbf "$(befehl_aufruf "$MANDANT_A" 'ZB23 Gesperrtes Konto' "$CHECK_GESPERRT" "$KONTO_GESPERRT")")"
   m2="(nicht gefahren)"
   if [ "${MANDANT_AUSLAND:-}" = "JA" ]; then
-    m2="$(dbf "$(befehl_aufruf "$MANDANT_X" 'DE-ZBX_906_01' 'Ausserhalb DE' "$CHECK_AUSLAND" "$KONTO_DB")")"
+    m2="$(dbf "$(befehl_aufruf "$MANDANT_X" 'ZB23 Ausserhalb DE' "$CHECK_AUSLAND" "$KONTO_DB")")"
   fi
-  bestand="$(dbz "SELECT count(*) FROM app WHERE project_no IN ('DE-ZBA_905_01','DE-ZBX_906_01')")"
+  bestand="$(dbz "SELECT count(*) FROM app WHERE name IN ('ZB23 Gesperrtes Konto','ZB23 Ausserhalb DE')")"
   m=""
   case "$m1" in
     KEIN_FEHLER) m="$m ein GESPERRTES Konto durfte anlegen (K01-M27);";;
@@ -1916,6 +2040,209 @@ pruefe_sql_marke
 #         scheitern kann, ist kein Fall (K23-M22).
 # ---------------------------------------------------------------------
 sperr ZB-25 'currency = EUR aus K01-M27 ist mit den vorhandenen Mitteln nicht messbar: app.currency traegt EUR als Vorgabe, und es besteht kein Mandant, an dem eine andere Waehrung entstuende. Ein Fall dazu koennte nicht scheitern und wuerde nichts messen.'
+
+# =====================================================================
+# ZB-26 · DER ABGLEICH · DAUERMESSUNG
+#
+# WORAUF ER SICH STUETZT: die AUFLAGE der gezeichneten Entscheidung vom
+# 16.08.2026 zum Traeger der Zweckbestimmung (Weg C, O-K04-8 geschlossen),
+# im Wortlaut:
+#
+#   "Zwei Orte fuer dieselbe Sache halten nur, wenn jemand misst, dass
+#    sie uebereinstimmen. EIN DAUERHAFTER PRUEFFALL vergleicht den Stand
+#    am Datensatz mit dem, was die Vorgaenge sagen. Ohne diese Auflage
+#    wird aus C das Schlechteste beider Wege."
+#
+# Die Entscheidung fuehrt Zweckbestimmung und Kenntnisnahme kuenftig als
+# ZUSTAND (Spalten an fit_check) UND als EREIGNIS (event nach K02
+# Abschn. 3, wie K04-G12 es fuer die Kenntnisnahme vorzeichnet). Diese
+# Datei legt beides nie an -- beides ist Pruefgegenstand.
+#
+# WAS ER MISST -- eine UNTERSCHEIDUNG, kein Vorkommen:
+#   Regel 1  Traegt eine Pruefung einen gesetzten Stand, MUSS mindestens
+#            ein Vorgang zu ihr bestehen.  (Zustand ohne Vorgang)
+#   Regel 2  Besteht ein Vorgang zu einer Pruefung, MUSS an ihr ein Stand
+#            gesetzt sein.                 (Vorgang ohne Zustand)
+# Weichen die beiden Orte ab, ist das ein FEHLSCHLAG -- kein gesperrter
+# Fall. Es ist messbar, also wird es gemessen.
+#
+# ER MISST DEN GANZEN BESTAND, nicht nur die Konten dieses Laufs. Genau
+# das ist der Sinn einer Dauermessung: sie findet auch, was auf einem
+# unbekannten Weg entstanden ist.
+#
+# ---------------------------------------------------------------------
+# DASS ER SCHEITERN KANN, IST NICHT BEHAUPTET, SONDERN BELEGT
+# ---------------------------------------------------------------------
+# Ein Abgleich, der auf einem stimmigen Bestand laeuft, ist von einem
+# Abgleich, der gar nichts prueft, nicht zu unterscheiden. Deshalb faehrt
+# der Fall ZWEI SELBSTPROBEN, jede in einer Transaktion, die IMMER
+# zurueckgerollt wird:
+#
+#   Probe A  Ein Stand wird an einer Pruefung gesetzt, zu der es keinen
+#            Vorgang gibt. DIESELBE Abfrage muss diese Pruefung dann als
+#            "Zustand ohne Vorgang" melden.
+#   Probe B  Ein Vorgang wird zu einer Pruefung geschrieben, an der kein
+#            Stand gesetzt ist. DIESELBE Abfrage muss sie dann als
+#            "Vorgang ohne Zustand" melden.
+#
+# Meldet eine Probe die vorgetaeuschte Abweichung NICHT, ist die Messung
+# blind -- dann ist der Fall GESPERRT, nicht bestanden (K23-M22). Beide
+# Proben laufen gegen die IDENTISCHE Abfrage (abgleich_sql), nicht gegen
+# eine nachgebaute; sonst belegten sie die Abfrage nicht, die misst.
+#
+# ---------------------------------------------------------------------
+# WAS ER NICHT MESSEN KANN -- ausgewiesen, nicht weggelassen
+# ---------------------------------------------------------------------
+#   * Er misst DASS beide Orte etwas sagen, nicht dass sie DASSELBE
+#     sagen. Welcher Vorgang zu welchem Merkmal gehoert, zeichnet die
+#     Entscheidung nicht; eine Zuordnung waere geraten.
+#   * Traegt ein Merkmal einen NICHT NULLBAREN Wahrheitswert, ist "nicht
+#     beantwortet" von "mit nein beantwortet" nicht unterscheidbar. Dann
+#     laeuft Regel 2 NICHT, und der Fall sagt es -- statt eine Abweichung
+#     zu melden, die keine ist.
+# =====================================================================
+
+# Die Traeger des ZUSTANDS werden ERFRAGT, nicht angenommen: welche
+# Spalten der Bau gewaehlt hat, zeichnet die Entscheidung nicht.
+ZUST_ZEILEN="$(db "SELECT column_name||':'||data_type||':'||is_nullable
+                     FROM information_schema.columns
+                    WHERE table_schema='public' AND table_name='fit_check'
+                      AND column_name ~* '(zweck|kenntnis|ack|anhang|annex|artikel|article|verbot|prohib|purpose)'
+                    ORDER BY ordinal_position")"
+pruefe_sql_marke
+
+ZUST_PRAED=""; ZUST_LISTE=""; ZUST_STUMPF=""
+PROBE_SETZ=(); PROBE_SPAT=()      # Kandidaten der Selbstprobe: Zeitstempel zuerst
+while IFS=: read -r sp typ nullbar; do
+  [ -n "$sp" ] || continue
+  ZUST_LISTE="${ZUST_LISTE:+$ZUST_LISTE, }$sp ($typ)"
+  if [ "$typ" = "boolean" ] && [ "$nullbar" = "NO" ]; then
+    ZUST_PRAED="${ZUST_PRAED:+$ZUST_PRAED OR }c.$sp IS TRUE"
+    ZUST_STUMPF="${ZUST_STUMPF:+$ZUST_STUMPF, }$sp"
+  else
+    ZUST_PRAED="${ZUST_PRAED:+$ZUST_PRAED OR }c.$sp IS NOT NULL"
+  fi
+  # Fuer die Selbstprobe: JEDES Merkmal, das sich setzen laesst -- die
+  # Probe geht sie der Reihe nach durch. Der Bau hat zu den Spalten eine
+  # BEDINGUNG gesetzt; welche, weiss dieser Lauf nicht. Scheitert die
+  # Probe an ihr, ist das eine FREMDE Bedingung, und der naechste
+  # Kandidat kommt an die Reihe.
+  case "$typ" in
+    "timestamp with time zone"|"timestamp without time zone")
+             PROBE_SETZ+=("$sp = now()");;
+    date)    PROBE_SPAT+=("$sp = current_date");;
+    boolean) PROBE_SPAT+=("$sp = true");;
+    text|"character varying")
+             PROBE_SPAT+=("$sp = 'PROBE'");;
+    uuid)    PROBE_SPAT+=("$sp = gen_random_uuid()");;
+  esac
+done <<EOF
+$ZUST_ZEILEN
+EOF
+PROBE_SETZ+=(${PROBE_SPAT[@]+"${PROBE_SPAT[@]}"})
+
+# Der Vorgang wird an denselben Merkmalen erkannt wie in nachweise() --
+# eine zweite, engere Liste waere ein zweiter Massstab.
+EV_PRAED="EXISTS (SELECT 1 FROM event e
+                   WHERE (e.action ILIKE '%KENNTNIS%' OR e.action ILIKE '%ACK%'
+                          OR e.action ILIKE '%ZWECK%'    OR e.action ILIKE '%ANHANG%'
+                          OR e.action ILIKE '%ARTIKEL%'  OR e.action ILIKE '%VERBOT%'
+                          OR e.action ILIKE '%PURPOSE%')
+                     AND (coalesce(e.object_ref,'') LIKE '%'||c.id::text||'%'
+                          OR coalesce(e.value,'')   LIKE '%'||c.id::text||'%'))"
+
+# EINE Abfrage, die der Fall UND beide Selbstproben benutzen.
+abgleich_sql() {     # $1 = 1, wenn Regel 2 mitlaeuft
+  printf "SELECT coalesce(string_agg(t.z,'; ' ORDER BY t.z),'') FROM ("
+  printf "SELECT c.id::text||' Zustand-ohne-Vorgang' AS z FROM fit_check c"
+  printf " WHERE (%s) AND NOT %s" "$ZUST_PRAED" "$EV_PRAED"
+  if [ "${1:-0}" = "1" ]; then
+    printf " UNION ALL SELECT c.id::text||' Vorgang-ohne-Zustand' FROM fit_check c"
+    printf " WHERE %s AND NOT (%s)" "$EV_PRAED" "$ZUST_PRAED"
+  fi
+  printf ") t"
+}
+
+# Die Selbstprobe laeuft in einer Transaktion, die IMMER zurueckgerollt
+# wird -- wie dbf(), aber sie gibt die Ausgabe der Abfrage zurueck.
+probe() {            # $1 = SQL-Block vor der Abfrage  $2 = 1, wenn Regel 2 mitlaeuft
+  local aus
+  if ! aus="$(psql -X -tAq -v ON_ERROR_STOP=1 \
+                   -c "BEGIN; $1; $(abgleich_sql "${2:-0}"); ROLLBACK;" \
+                   2>"$ARBEIT/probe.fehler")"; then
+    printf 'PROBE GESCHEITERT: %s' "$(tr '\n' ' ' <"$ARBEIT/probe.fehler")"
+    return 0
+  fi
+  printf '%s' "$aus" | head -1
+}
+
+REGEL2=1
+[ -z "$ZUST_STUMPF" ] || REGEL2=0
+
+if [ -z "$ZUST_PRAED" ]; then
+  sperr ZB-26 'Nicht messbar: fit_check traegt kein Merkmal, an dem der ZUSTAND der Zweckbestimmung oder der Kenntnisnahme abzulesen waere. Die gezeichnete Entscheidung vom 16.08.2026 (Weg C) fuehrt beides als Zustand UND als Ereignis; ohne den einen Ort gibt es nichts abzugleichen. Ein Fall, der nichts gemessen hat, ist nicht bestanden (K23-M22).'
+elif [ "${#PROBE_SETZ[@]}" -eq 0 ]; then
+  sperr ZB-26 "Nicht messbar: keines der Merkmale ($ZUST_LISTE) laesst sich fuer die Selbstprobe setzen. Ohne Selbstprobe ist nicht belegt, dass dieser Fall ueberhaupt scheitern kann -- und ein Fall, der nicht scheitern kann, misst nichts (K23-M22)."
+else
+  # (0) Die Pruefung, an der die Selbstprobe faehrt, muss VORHER an
+  #     BEIDEN Orten stumm sein. Sonst belegte die Probe nichts.
+  vorbelastet="$(dbz "SELECT (CASE WHEN ($ZUST_PRAED) THEN 'Zustand ' ELSE '' END)
+                          || (CASE WHEN $EV_PRAED  THEN 'Vorgang' ELSE '' END)
+                        FROM fit_check c WHERE c.id='$CHECK_OFFEN'")"
+  pruefe_sql_marke
+  if [ -n "${vorbelastet// /}" ]; then
+    sperr ZB-26 "Nicht messbar: der Check $CHECK_OFFEN, an dem die Selbstprobe faehrt, traegt schon '$vorbelastet'. Eine vorgetaeuschte Abweichung waere von der vorhandenen nicht zu unterscheiden."
+  else
+    # (1) Der Abgleich selbst -- ueber den GANZEN Bestand.
+    lebend="$(dbz "$(abgleich_sql "$REGEL2")")"
+    pruefe_sql_marke
+
+    # (2) Selbstprobe A: Zustand ohne Vorgang. Der Reihe nach durch alle
+    #     setzbaren Merkmale, bis eines die vorgetaeuschte Abweichung
+    #     sichtbar macht. Ein Kandidat, der an der Bedingung des Baus
+    #     scheitert, ist eine FREMDE Bedingung und belegt nichts.
+    probe_a=""; PROBE_MIT=""
+    for setz in "${PROBE_SETZ[@]}"; do
+      probe_a="$(probe "UPDATE fit_check SET $setz WHERE id='$CHECK_OFFEN'" "$REGEL2")"
+      PROBE_MIT="$setz"
+      case "$probe_a" in *"$CHECK_OFFEN Zustand-ohne-Vorgang"*) break;; esac
+    done
+
+    # (3) Selbstprobe B: Vorgang ohne Zustand. Nur fahrbar, wenn Regel 2
+    #     laeuft -- sonst gaebe es die Richtung nicht, die sie belegt.
+    probe_b="(nicht gefahren)"
+    if [ "$REGEL2" = "1" ]; then
+      probe_b="$(probe "INSERT INTO event(action,object_ref,source)
+                        VALUES ('ZWECKBESTIMMUNG_PROBE','FIT_CHECK:$CHECK_OFFEN','PORTAL_ACTION')" 1)"
+    fi
+
+    blind=""
+    case "$probe_a" in
+      *"$CHECK_OFFEN Zustand-ohne-Vorgang"*) : ;;
+      *) blind="$blind Selbstprobe A (zuletzt versucht mit '$PROBE_MIT'): ein gesetzter Stand OHNE Vorgang wurde nicht gefunden (Antwort der Abfrage: '${probe_a:-leer}'). Die Messung ist in dieser Richtung blind;";;
+    esac
+    if [ "$REGEL2" = "1" ]; then
+      case "$probe_b" in
+        *"$CHECK_OFFEN Vorgang-ohne-Zustand"*) : ;;
+        *) blind="$blind Selbstprobe B: ein Vorgang OHNE Stand wurde nicht gefunden (Antwort der Abfrage: '${probe_b:-leer}'). Die Messung ist in dieser Richtung blind;";;
+      esac
+    fi
+
+    hinweis=""
+    [ "$REGEL2" = "1" ] || hinweis=" REGEL 2 LAEUFT NICHT: $ZUST_STUMPF ist ein nicht nullbarer Wahrheitswert -- 'nicht beantwortet' und 'mit nein beantwortet' sind daran nicht unterscheidbar. 'Vorgang ohne Zustand' bleibt damit UNGEMESSEN."
+
+    if [ -n "$blind" ]; then
+      sperr ZB-26 "Der Abgleich hat nichts gemessen:$blind Ein Fall, der nicht scheitern kann, ist kein Fall (K23-M22)."
+    elif [ -n "$lebend" ]; then
+      nok ZB-26 "Zustand und Vorgaenge laufen auseinander (Auflage der Zeichnung vom 16.08.2026): $lebend — geprueft an $ZUST_LISTE.$hinweis"
+    elif [ "$REGEL2" != "1" ]; then
+      sperr ZB-26 "Nur teilweise messbar: 'Zustand ohne Vorgang' ist ueber den ganzen Bestand geprueft und stimmt (Selbstprobe A belegt, dass eine Abweichung gefunden worden waere).$hinweis"
+    else
+      ok ZB-26 "DAUERMESSUNG: ueber den ganzen Bestand sagen Zustand und Vorgaenge dasselbe — kein Stand ohne Vorgang, kein Vorgang ohne Stand. Geprueft an $ZUST_LISTE; beide Selbstproben haben die vorgetaeuschte Abweichung gefunden (A mit '$PROBE_MIT'), der Fall kann also scheitern (Auflage der Zeichnung vom 16.08.2026, K04-M21, K04-G12)"
+    fi
+  fi
+fi
+pruefe_sql_marke
 
 # =====================================================================
 printf '\n'
