@@ -526,11 +526,12 @@ Jede Zeile in Feld 5 hält nach 12.4 Nr. 5 die Freigabestrecke an, bis sie abgeh
 
 ### Kreuz K1 · Der Vollzug der Zeichnung vom 10.08.2026
 
-- [ ] **Getragen.** ✅ **Empfehlung des Orchestrators.** Tor II verlangt zum 31.08.2026 den
+- [x] **Getragen.** ✅ **Empfehlung des Orchestrators.** Tor II verlangt zum 31.08.2026 den
       Teilschnitt bis zur Anmeldung; die übrigen Meilensteine sind zurückgestellt, bleiben
       geschuldet und behalten ihre Nachrechnung im Wortlaut. **Damit gilt auch Korrektur K7**
       (die Terminzeilen und Vermerke). *Warum: Das ist kein neuer Entschluss, sondern die
       Ausführung eines fünf Tage alten. Ihn nicht auszuführen nützt niemandem.*
+      — **gez. M. Veil, 16.08.2026**
 - [ ] **Nicht getragen.** Der Auftrag bleibt unverändert. **Bekannte Folge:** Tor II verlangt
       weiterhin alle zwölf Meilensteine zum 31.08.2026; nach eigener Messung ist das nicht
       erreichbar. Die Zeichnung vom 10.08.2026 bleibt unvollzogen.
@@ -539,25 +540,62 @@ Jede Zeile in Feld 5 hält nach 12.4 Nr. 5 die Freigabestrecke an, bis sie abgeh
 
 - [ ] **Beide zurückgestellt.** → **Korrektur K1 in Fassung A**, Korrektur K6 mit den
       Starttoren 05, 11, 15.
-- [ ] **Nur M3 aufgenommen.** ✅ **Empfehlung des Orchestrators.** → **Korrektur K1 in
+- [x] **Nur M3 aufgenommen.** ✅ **Empfehlung des Orchestrators.** → **Korrektur K1 in
       Fassung B**, Korrektur K6 mit den Starttoren 05, 11, 13, 15.
       *Warum: M3 ist gebaut und vollständig gemessen (Prüffälle VP-13, VP-14, VP-17, VP-18,
       VP-19, alle bestanden, Antrag #23). Es kostet keine zusätzliche Bauzeit und macht die
       Lieferung sichtbar größer. M4 dagegen ist nicht begonnen — es aufzunehmen hieße, in
       sechzehn Tagen einen Meilenstein zu versprechen, der noch keinen Gegenstand hat.*
+      — **gez. M. Veil, 16.08.2026** · ⚠ **die Begründung ist überholt, die Wahl nicht —
+      siehe Vermerk unmittelbar unten**
 - [ ] **M3 und M4 aufgenommen.** → **Korrektur K1 in Fassung C**, Korrektur K6 bleibt
       unverändert (Stellen 3 und 10 werden mit *entfällt* abgehakt).
       **Bekannte Folge:** Tor II verlangt dann `create_app_after_fit` und den Bildschirm
       EN-04a; beides ist am 15.08.2026 nicht begonnen.
 
+> ### ⚠ Vermerk zu K1-b — die Begründung ist am 16.08.2026 berichtigt worden
+>
+> **Die Wahl bleibt „nur M3". Ihr Grund ist ein anderer geworden, und das gehört
+> aufgeschrieben — ein Kreuz, das aus einem überholten Grund steht, ist ein Kreuz auf Sand.**
+>
+> Der Satz oben lautet: *„M4 dagegen ist **nicht begonnen** … ein Meilenstein, der noch
+> keinen Gegenstand hat."* **Das stimmte am 15.08.2026 und stimmt heute nicht mehr.**
+> Gemessen am 16.08.2026:
+>
+> | | Stand 15.08. | **Stand 16.08.** |
+> |---|---|---|
+> | `create_app_after_fit` mit serverseitiger Nummernvergabe | nicht begonnen | **gebaut** (Sammeländerung M31) |
+> | Bildschirm **EN-04a** | nicht begonnen | **gebaut**, alle sechs Aktionen des Vertrags |
+> | Migrationsprüffälle | 0 von 111 mit Ergebnis | **111 von 111** |
+> | Meilenstein **M4** | ohne Gegenstand | **gebaut**, auf `scheibe/m4-zweckbestimmung` (Antrag #26) |
+>
+> **Warum die Wahl trotzdem „nur M3" bleibt:** Die Nachrechnung von M4 verlangt wörtlich
+> *„MT-95 bis MT-98 **gegen den Zielbestand**"*. Der Bauauftrag unterscheidet den Zielbestand
+> ausdrücklich von der Prüfdatenbank (:129, :185). **Dieser Lauf hat nicht stattgefunden** —
+> er ist eine menschlich ausgelöste Handlung gegen die Zielumgebung, und ein grüner Lauf
+> gegen die Prüfdatenbank belegt M4 **nicht**.
+>
+> **In einem Satz:** Am 15.08. hieß der Grund *„M4 hat keinen Gegenstand"*. Heute heißt er
+> **„M4 hat einen Gegenstand, aber keinen Nachweis gegen den Zielbestand"**. Wer M4 später
+> doch aufnehmen will, muss **zuerst** diesen Lauf fahren — nicht danach.
+
 ### Kreuz K2 bis K6 · Die übrigen Bedingungen
 
-- [ ] **K2, K3, K4, K5 und K6 getragen** — die Bedingungen 2 bis 6 werden auf den Teilschnitt
-      eingeengt. ✅ **Empfehlung des Orchestrators.** *Warum: Tor II hat sechs Bedingungen.
+- [x] **K2, K3, K4, K5 und K6 getragen** — die Bedingungen 2 bis 6 werden auf den Teilschnitt
+      eingeengt. ✅ **Empfehlung des Orchestrators.** — **gez. M. Veil, 16.08.2026**
+      *Warum: Tor II hat sechs Bedingungen.
       Wird nur die erste eingeengt, bleibt Tor II trotzdem unerreichbar — Bedingung 4 verlangt
       ein vollständiges Klauselregister, das heute bei 0 von 1 231 steht. Das ist die
       unangenehmste Empfehlung dieses Blattes: sie macht Tor II sichtbar dünn. Aber sie macht
       es wahr.*
+
+> **Ein Anschluss, der seit dem 16.08.2026 konkreter ist.** Die Begründung oben nennt
+> Bedingung 4 mit *„heute 0 von 1231"*. Mit der Entscheidung **D-1 vom 16.08.2026** ist der
+> Umfang auf **157 Klauseln über 20 Konzepte** eingeengt — die Bedingung ist damit zum
+> ersten Mal überhaupt erfüllbar. **Erfüllt ist sie erst, wenn die fachlichen Eigentümer
+> gezeichnet und ihre Abnahmekriterien geliefert sind**
+> (`nachweise/klauselregister/eigentuemer_zuweisung_260816.md`).
+
 - [ ] **Einzeln entschieden:** K2 ☐ · K3 ☐ · K4 ☐ · K5 ☐ · K6 ☐
 - [ ] **Alle abgelehnt** — die Bedingungen 2 bis 6 bleiben unverändert. **Bekannte Folge:**
       Tor II ist am 31.08.2026 nicht erreichbar, auch mit getragenem K1 nicht: Bedingung 4
@@ -582,7 +620,9 @@ auch mit vollzogenem BA-1 nicht. Genau eine Möglichkeit ankreuzen.
       sitzt — und mehrere Stellen können erst gehakt werden, wenn der K23-Nachtrag durchlaufen
       und gezeichnet ist. **Bei sechzehn verbleibenden Tagen ist das die teuerste Zeile
       dieses Blattes.**
-- [ ] **Weg 3-III · Festlegung auf Rang 0.** ✅ **Empfehlung des Orchestrators.** Ein
+- [x] **Weg 3-III · Festlegung auf Rang 0.** ✅ **Empfehlung des Orchestrators.**
+      — **gez. M. Veil, 16.08.2026** · *Der Founder-Beschluss selbst wird auf einem eigenen
+      Blatt gezeichnet, nicht hier — siehe den Vermerk unter der Zeichnung.* Ein
       Founder-Beschluss nach dem Muster von **F28** (nimmt das Konzept K22 aus) und **F04**
       (nimmt drei Portale aus) nimmt den vollen Durchstich, die Modulprüfungen und die
       Lastprüfung für **diese eine** Abnahme aus dem Umfang. Festlegungen stehen auf Rang 0
@@ -611,12 +651,39 @@ ohne sie wird die Korrektur nicht wirksam. Der Ablaufplan 12.9 sagt für diesen 
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber — **trifft die Entscheidung** (Abschnitt 10a) | | |
-| **A. Han** | für den Auftragnehmer (Nr. 158) — **zeichnet die Urkunde mit** (Abschnitt 12.3) | | |
+| **M. Veil** | Auftraggeber — **trifft die Entscheidung** (Abschnitt 10a) | **16.08.2026** | Alle vier Kreuze den Empfehlungen folgend. Weisung im Wortlaut: *„BA-1 jetzt zeichnen. Vier Kreuze, alle mit Empfehlung: Weg A vollziehen · nur M3 aufnehmen · auch die Bedingungen 2–6 einengen · die vier Sperren über einen Founder-Beschluss lösen."* |
+| **A. Han** | für den Auftragnehmer (Nr. 158) — **zeichnet die Urkunde mit** (Abschnitt 12.3) | | ⛔ **erforderlich** — ohne sie wird die Korrektur nicht wirksam (12.9: *„Vorschlag bleibt liegen · AM AUFTRAG IST NICHTS GEÄNDERT"*) |
 
 > **Zu Kreuz K3, Weg 3-III.** Eine Festlegung auf Rang 0 ist ein **Founder-Beschluss** und
 > wird nicht auf diesem Blatt gezeichnet, sondern auf einem eigenen — nach dem Muster von F28
 > und F04, von beiden Foundern.
+
+---
+
+### ⚠ Was mit dieser Zeichnung ausgelöst wird — die Folge, die man einmal übersehen kann
+
+**Ab der Wirksamkeit dieses Blattes gilt der Auftrag als *in Änderung*, und dann ist nach
+12.4 Nr. 5 keine Vorlage zur Freigabe mehr zulässig, bis der letzte der dreizehn Haken
+sitzt.**
+
+Der Abschnitt *Reihenfolge* weiter unten sagt das für die Anträge **#21, #22, #23** —
+**die sind seit dem 15.08.2026 zusammengeführt.** Gemessen am 16.08.2026 sind es heute
+**andere**:
+
+| Antrag | Was darin liegt | Stand | Wird durch die Zeichnung gesperrt? |
+|---|---|---|---|
+| **#24** | **dieses Blatt selbst** | offen | nein — es ist der Gegenstand, nicht ein Betroffener |
+| **#25** | Was nach den zwölf Zeichnungen noch zu entscheiden war | offen, **freigegeben** | **ja** |
+| **#26** | **Meilenstein M4** — Zweckbestimmung und der eine Weg zur Anwendung | offen | **ja** |
+
+**Handlungsempfehlung, die daraus folgt:** **#25 und #26 vor der Gegenzeichnung durch
+A. Han zusammenführen.** Beide sind fertig und geprüft; sie hinter der eigenen Korrektur
+einzuschließen bringt niemandem etwas.
+
+> **Ehrlich dazugesagt:** Diese Lesart von 12.4 Nr. 5 ist eine **Auslegung**, keine
+> Feststellung — dasselbe steht schon im Abschnitt *Reihenfolge*. Wer sie enger liest, kommt
+> zum selben Handeln: die Anträge zuerst. Wer sie weiter liest, verliert nichts, wenn er es
+> trotzdem so macht.
 
 ---
 
