@@ -40,7 +40,7 @@ Bauplan und deine Schreibgrenzen. Mehr brauchst du nicht, und mehr sollst du nic
 
 | Du schreibst nach | Du schreibst **nie** nach |
 |---|---|
-| `install/` `mail/` `migrations/` `seeds/` `schema/` `werkzeuge/` | **`pruefungen/`** — kein Anlegen, kein Ändern, kein Umbenennen, kein Löschen |
+| **`app/`** `install/` `mail/` `migrations/` `seeds/` `schema/` `werkzeuge/` | **`pruefungen/`** — kein Anlegen, kein Ändern, kein Umbenennen, kein Löschen |
 | `arbeit/Bauberichte/` | `nachweise/manifeste/` (schreibt der Orchestrator) |
 | | `CLAUDE.md`, `.claude/`, `.github/` |
 

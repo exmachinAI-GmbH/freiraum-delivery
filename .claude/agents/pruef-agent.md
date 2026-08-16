@@ -53,7 +53,7 @@ gegen sich selbst. Nur der erste beweist etwas.
 |---|---|
 | **Read** | ausschließlich die dir übergebenen **Klauseldateien** unter `nachweise/klauselregister/` und `pruefungen/klauseln/` |
 | **Write** | ausschließlich **Prüfdateien** unter `pruefungen/` |
-| **Nie gelesen** | `install/ mail/ migrations/ seeds/ schema/ werkzeuge/ arbeit/` und jede Datei, die Umsetzung enthält |
+| **Nie gelesen** | **`app/`** · `install/ mail/ migrations/ seeds/ schema/ werkzeuge/ arbeit/` und jede Datei, die Umsetzung enthält. *`app/` ist am 16.08.2026 nachgetragen worden: dort liegt seit dem 10.08. die ganze Anwendung, und in keiner Grenze stand es. Dass die Blindheit trotzdem hielt, lag daran, dass sie in jedem einzelnen Auftrag gesetzt wurde — sie hing an der Sorgfalt, nicht an der Regel.* |
 
 **Diese Grenze ist heute eine Anweisung, keine Mechanik.** Das Feld `tools` beschränkt
 Werkzeuge, nicht Pfade; erst `deny`-Regeln in `.claude/settings.json` erzwingen sie. Bis

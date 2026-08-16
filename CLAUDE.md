@@ -110,7 +110,7 @@ Entscheidung legt er je Scheibe ein Paket vor und nennt es *Vorlage*, nicht *Fre
 | Sieht | Klauseln, Code, Schema, Läufe | **nur** Klauseln und Akzeptanzkriterien |
 | Sieht nie | die Prüfdateien | **den Umsetzungscode** |
 | Werkzeuge | Read, Write, Edit, Bash, Grep, Glob | Read, Write |
-| Schreibt nach | `install/ mail/ migrations/ seeds/ schema/ werkzeuge/` | ausschließlich `pruefungen/` |
+| Schreibt nach | `app/ install/ mail/ migrations/ seeds/ schema/ werkzeuge/` sowie die erzeugten Nachweise unter `nachweise/` und die Bauunterlagen unter `arbeit/` | ausschließlich `pruefungen/` |
 | Modell | Sitzungsmodell | **anderes Modell** als der Bau (F27, `kanon.yaml`:346–359) |
 
 **Beide laufen gleichzeitig und ohne einander zu kennen** (C-4, Blatt 26:30). Wer den Code
