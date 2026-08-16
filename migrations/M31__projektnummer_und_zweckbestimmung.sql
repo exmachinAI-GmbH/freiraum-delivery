@@ -138,25 +138,44 @@ DO $$ BEGIN
   END IF;
 END $$;
 
--- 1b · Die Kenntnisnahme setzt eine vollstaendige Erklaerung voraus. ---
--- K19 EN-04a/kenntnis_nehmen: "nur nach Treffer in Frage 1". Die
--- Bedingung hier ist bewusst SCHWAECHER als dieser Satz: sie verlangt
--- die vollstaendige Erklaerung, nicht den Treffer selbst.
+-- 1b · KEINE Bedingung "Kenntnisnahme nur bei vollstaendiger -----------
+--      Erklaerung" -- und die einmal gesetzte wird wieder entfernt.
 --
--- Der Grund ist der offene Punkt O-M4-3. Die Kenntnisnahme bleibt
--- stehen, wenn eine Antwort spaeter zurueckgenommen wird -- ein Nachweis,
--- den man zurueckziehen kann, ist keiner. Eine Bedingung
--- "ack NUR WENN zweck_bewertung_menschen IS TRUE" wuerde genau das
--- verhindern: sie machte die Ruecknahme unmoeglich, statt den Nachweis
--- zu erhalten. Dass die Kenntnisnahme nur NACH einem Treffer ENTSTEHT,
--- setzt der Serverpfad durch (app/zweckbestimmung.py); dass sie danach
--- BESTEHEN BLEIBT, setzt diese Bedingung nicht in Frage.
+-- Eine frueherer Stand dieser Datei setzte hier
+--   ack_braucht_erklaerung CHECK (zweckbestimmung_ack_at IS NULL
+--                                 OR zweckbestimmung_erklaert_am IS NOT NULL)
+-- Sie wird zurueckgenommen. Gemessen am 16.08.2026: sie macht den
+-- bestehenden Migrationsprueffall MT-29 unmoeglich, der Lauf bricht dort
+-- ab, und MT-30 bis MT-99 werden in keinem echten Lauf mehr gemessen.
+-- Zusaetzlich schlaegt sie VOR `ack_klasse_ki_nachweis` und
+-- `ack_nach_eignung` zu: MT-27 und MT-28 scheitern dann an der FALSCHEN
+-- Bedingung und messen nicht mehr, wofuer sie geschrieben wurden --
+-- derselbe Fehlertyp wie am 02.08.2026.
+--
+-- Die Pruefung folgt nicht dem Bau. Eine Bedingung, die eine
+-- Rang-1-Pruefung unmoeglich macht, ist eine Aenderung an M30-Verhalten
+-- und gehoert als Rueckfrage an die Founder, nicht in M31.
+--
+-- WAS SIE SICHERN SOLLTE, wird an zwei Stellen weiterhin getragen:
+--   * `zweck_erklaerung_vollstaendig` (1a) haelt fest, dass ein
+--     Erklaerungszeitpunkt nur bei zwei beantworteten Fragen dastehen
+--     darf. Das ist der Nachweis selbst.
+--   * Der Serverbefehl unten liest vor der Anlage BEIDE Antworten und
+--     die Kenntnisnahme frisch und weist ab, wenn eines fehlt. Der Weg
+--     zu einer Anwendung ist damit geschlossen, ohne dass eine
+--     Tabellenbedingung einen Rang-1-Prueffall aussperrt.
+--   * Dass die Kenntnisnahme nur NACH einem Treffer in Frage 1
+--     ENTSTEHT, setzt app/zweckbestimmung.py durch.
+--
+-- WIEDERHOLBARKEIT: die Bedingung ist bereits einmal eingespielt worden.
+-- Ein blosses Weglassen wirkte nur auf frischen Datenbanken. Deshalb
+-- wird sie hier ausdruecklich entfernt, wenn sie vorgefunden wird --
+-- bedingt, damit ein zweiter Lauf nichts mehr aendert.
 DO $$ BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint
-                  WHERE conname = 'ack_braucht_erklaerung') THEN
-    ALTER TABLE fit_check ADD CONSTRAINT ack_braucht_erklaerung
-      CHECK (zweckbestimmung_ack_at IS NULL
-             OR zweckbestimmung_erklaert_am IS NOT NULL);
+  IF EXISTS (SELECT 1 FROM pg_constraint
+              WHERE conname = 'ack_braucht_erklaerung'
+                AND conrelid = 'public.fit_check'::regclass) THEN
+    ALTER TABLE fit_check DROP CONSTRAINT ack_braucht_erklaerung;
   END IF;
 END $$;
 
@@ -188,9 +207,9 @@ END $$;
 -- NEUE SIGNATUR, OHNE p_project_no. Das ist der ganze Punkt von K01-M38:
 -- "Sie wird vergeben, nicht eingegeben." Ein Parameter, den der Aufrufer
 -- setzen kann, ist eine Eingabe -- gleich, wie diszipliniert der Aufrufer
--- ist. Die alte Fassung mit fuenf Parametern bleibt bestehen (M30 wird
--- nicht umgeschrieben), verliert hier aber ihr Ausfuehrungsrecht; siehe
--- Abschnitt 3.
+-- ist. Die alte Fassung mit fuenf Parametern wird deshalb entfernt; der
+-- Text von M30 bleibt dabei unangetastet, es wird nur ihr Ergebnis in
+-- der Datenbank zurueckgenommen. Siehe Abschnitt 3.
 --
 -- Die Funktion ist bewusst dieselbe wie in M30 UND anders: derselbe Name,
 -- weil K01-M27 ihn nennt; andere Stelligkeit, weil die Nummer nicht mehr
@@ -416,7 +435,7 @@ COMMENT ON FUNCTION create_app_after_fit(uuid,text,uuid,uuid) IS
   'Projektnummer selbst. Sie wird vergeben, nicht eingegeben.';
 
 -- =====================================================================
--- 3 · Die alte Fassung verliert ihr Ausfuehrungsrecht (K01-D19)
+-- 3 · Die alte Fassung wird entfernt (K01-M38, K01-D19)
 -- =====================================================================
 --
 -- Die Fassung aus M30 nimmt `p_project_no` entgegen. Solange sie
@@ -425,34 +444,42 @@ COMMENT ON FUNCTION create_app_after_fit(uuid,text,uuid,uuid) IS
 -- kein Formular und kein Endpunkt DARF die Projektnummer zur Eingabe,
 -- Auswahl oder Aenderung anbieten."
 --
--- SIE WIRD NICHT GELOESCHT, und das ist eine Abwaegung, keine
--- Bequemlichkeit. Ein DROP wuerde jeden Prueffall brechen, der gegen die
--- alte Stelligkeit geschrieben wurde -- und die Pruefung schreibt blind,
--- sie kann von der neuen Signatur nichts wissen. Ein bestehender
--- Negativfall, der ploetzlich an "Funktion existiert nicht" scheitert,
--- misst nicht mehr seine Bedingung. Also bleibt sie stehen und verliert
--- nur das Recht, aufgerufen zu werden.
+-- EIN FRUEHERER STAND HAT SIE NUR ENTRECHTET, NICHT ENTFERNT. Die
+-- Abwaegung war, blind geschriebene Prueffaelle nicht an "Funktion
+-- existiert nicht" scheitern zu lassen. Gemessen am 16.08.2026 traegt
+-- sie nicht, aus zwei Gruenden:
 --
--- WAS DAMIT NICHT ERLEDIGT IST, offen benannt: PostgreSQL erteilt
--- EXECUTE beim Anlegen an PUBLIC; beides wird hier entzogen. Der
--- Eigentuemer der Funktion (und jede Rolle mit SUPERUSER) kann sie
--- weiter aufrufen. Im Pilotbetrieb verbindet sich der Bau heute als
--- `postgres` -- dort traegt die Regel nur, weil app/zweckbestimmung.py
--- die Nummer nirgends fuehrt. Der Rollenschnitt fuer den Anwendungs-
--- benutzer ist ein offener Punkt und steht im Bericht zu M4.
+--   1. Der Entzug schliesst die Umgehung nicht. PostgreSQL laesst den
+--      EIGENTUEMER der Funktion unabhaengig von GRANT/REVOKE aufrufen --
+--      und die Anwendung verbindet sich heute als eben dieser
+--      Eigentuemer (`postgres`). Der Weg, auf dem eine Projektnummer
+--      eingegeben statt vergeben wird, stand also weiterhin offen. Nicht
+--      theoretisch: er ist derselbe Zugang, den app/zweckbestimmung.py
+--      benutzt.
+--   2. Die Schonung hat ihr Ziel verfehlt. Ein Prueffall, der die alte
+--      Stelligkeit aufruft, bekam nicht die ehrliche Auskunft "Funktion
+--      existiert nicht", sondern "permission denied for function
+--      create_app_after_fit" -- eine Meldung, die in die falsche
+--      Richtung zeigt: sie liest sich als Rechteproblem, wo eine
+--      Signaturaenderung vorliegt. Fehlt die Funktion dagegen ganz,
+--      greift die Vorsichtsklausel eines blind geschriebenen Falls und
+--      meldet, was zutrifft: NICHT GEMESSEN.
+--
+-- Also wird sie entfernt. BEDINGT, nicht unbedingt -- damit ein zweiter
+-- Lauf nichts mehr aendert und die Datei auf einer Datenbank ohne die
+-- alte Fassung genauso durchlaeuft.
+--
 -- to_regprocedure statt pg_get_function_identity_arguments: die zweite
 -- Auskunft nennt die PARAMETERNAMEN mit ("p_tenant uuid, ..."), nicht nur
 -- die Typen. Ein Vergleich gegen die Typliste geht dann still ins Leere --
 -- gemessen am 16.08.2026: der Entzug lief nicht, und die Rechte standen
 -- unveraendert. to_regprocedure loest genau die eine Stelligkeit auf und
--- liefert NULL, wenn es sie nicht gibt.
+-- liefert NULL, wenn es sie nicht gibt. Die neue Vierwert-Fassung traegt
+-- eine andere Stelligkeit und wird davon nicht beruehrt.
 DO $$ BEGIN
   IF to_regprocedure('public.create_app_after_fit(uuid,text,text,uuid,uuid)')
      IS NOT NULL THEN
-    REVOKE ALL ON FUNCTION create_app_after_fit(uuid,text,text,uuid,uuid) FROM PUBLIC;
-    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'fr_portal') THEN
-      REVOKE ALL ON FUNCTION create_app_after_fit(uuid,text,text,uuid,uuid) FROM fr_portal;
-    END IF;
+    DROP FUNCTION create_app_after_fit(uuid,text,text,uuid,uuid);
   END IF;
 END $$;
 

@@ -203,15 +203,24 @@
           {% else %}
             <form method="post" action="/zweckbestimmung/antwort">
               {# Der Server glaubt weder die Frage noch die Antwort: beide
-                 werden gegen die zugelassenen Werte geprueft. #}
+                 werden gegen die zugelassenen Werte geprueft.
+
+                 JE FRAGE EIN EIGENER FELDNAME -- `frage.feld` ist
+                 `antwort_bewertung` bzw. `antwort_praktik` und kommt aus
+                 FELDNAME_ANTWORT in app/zweckbestimmung.py, damit Vorlage
+                 und Serverpfad denselben Namen aus derselben Quelle
+                 nehmen. Zwei getrennte Fragen mit demselben Feldnamen
+                 waeren von aussen nicht auseinanderzuhalten. Das
+                 verborgene Feld `frage` bleibt trotzdem massgeblich; der
+                 Feldname ist die zweite Quelle, nicht die erste. #}
               <input type="hidden" name="frage" value="{{ frage.code }}">
               <label class="wahl">
-                <input type="radio" name="antwort" value="ja"
+                <input type="radio" name="{{ frage.feld }}" value="ja"
                        {% if frage.antwort is true %}checked{% endif %}>
                 Ja
               </label>
               <label class="wahl">
-                <input type="radio" name="antwort" value="nein"
+                <input type="radio" name="{{ frage.feld }}" value="nein"
                        {% if frage.antwort is false %}checked{% endif %}>
                 Nein
               </label>

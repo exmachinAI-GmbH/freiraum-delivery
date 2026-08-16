@@ -32,10 +32,11 @@ Der Vertrag dieser Datei -- er ist zugleich das, was die Pruefung misst:
                                    Schaltflaeche zur Anlage erscheint erst,
                                    wenn beide beantwortet sind
     POST /zweckbestimmung/antwort  Felder `frage` (bewertung|praktik) und
-                                   `antwort` (ja|nein). Erfolg -> 303 auf
-                                   "/zweckbestimmung". IM HALT gesperrt:
-                                   200 mit benannter Meldung, nichts
-                                   geaendert
+                                   `antwort_bewertung` bzw. `antwort_praktik`
+                                   (ja|nein) -- je Frage ein eigener Name.
+                                   Erfolg -> 303 auf "/zweckbestimmung".
+                                   IM HALT gesperrt: 200 mit benannter
+                                   Meldung, nichts geaendert
     POST /zweckbestimmung/kenntnis Ohne Feld. Nur bei Treffer in Frage 1
                                    und verneinter Frage 2. Erfolg -> 303.
                                    Schreibt Spalte UND Ereignis in EINER
@@ -167,6 +168,26 @@ FRAGE_PRAKTIK = "praktik"
 SPALTE = {
     FRAGE_BEWERTUNG: "zweck_bewertung_menschen",
     FRAGE_PRAKTIK: "zweck_verbotene_praktik",
+}
+
+# JE FRAGE EIN EIGENER FELDNAME -- `antwort_bewertung`, `antwort_praktik`.
+#
+# Keine Klausel verlangt getrennte Namen. Zwei getrennte Fragen mit
+# demselben Feldnamen sind aber von aussen nicht auseinanderzuhalten: wer
+# den Bildschirm nur ueber seine Felder liest, sieht ein einziges Feld
+# `antwort` und kann nicht sagen, welche der beiden Fragen er gerade
+# beantwortet. Getrennte Namen kosten nichts und machen den Bildschirm
+# messbar; sie sind hier am 16.08.2026 nachgezogen worden.
+#
+# Das VERBORGENE Feld `frage` bleibt und bleibt massgeblich. Der Server
+# glaubt die Frage nicht: er prueft `frage` gegen SPALTE und holt sich erst
+# dann den zugehoerigen Antwortnamen. Der Feldname ist die zweite Quelle,
+# nicht die erste -- ein Formular, das `antwort_praktik` mit
+# `frage=bewertung` schickt, beantwortet keine Frage, sondern faellt in die
+# Abweisung.
+FELDNAME_ANTWORT = {
+    FRAGE_BEWERTUNG: "antwort_" + FRAGE_BEWERTUNG,
+    FRAGE_PRAKTIK: "antwort_" + FRAGE_PRAKTIK,
 }
 
 # --- Der Wortlaut der beiden Fragen ---------------------------------------
@@ -473,8 +494,13 @@ def fragen_mit_antwort(check):
     "Nein" -- der Bildschirm darf keine der beiden Antwortmoeglichkeiten
     vorbelegen. Eine Vorbelegung waere eine Antwort, die niemand gegeben
     hat.
+
+    `feld` ist der Formularname der Antwort -- je Frage ein eigener. Er
+    kommt aus FELDNAME_ANTWORT und nicht aus der Vorlage, damit Bildschirm
+    und Serverpfad denselben Namen aus derselben Quelle nehmen.
     """
     return [{"code": f["code"], "nummer": f["nummer"], "text": f["text"],
+             "feld": FELDNAME_ANTWORT[f["code"]],
              "antwort": check[f["code"]]}
             for f in FRAGEN]
 
@@ -694,12 +720,21 @@ def zweckbestimmung(request: Request, termin: str = "", angelegt: str = ""):
 @router.post("/zweckbestimmung/antwort", response_class=HTMLResponse)
 def zweckfrage_beantworten(request: Request,
                            frage: str = Form(default=""),
-                           antwort: str = Form(default="")):
+                           antwort_bewertung: str = Form(default=""),
+                           antwort_praktik: str = Form(default="")):
     """W2 · eine der beiden Fragen beantworten (K04-M19).
 
-    Zwei getrennte Fragen heisst: zwei getrennte Formulare und zwei
-    getrennte Schreibvorgaenge. Es gibt keinen Weg, auf dem beide zugleich
-    entstehen -- und keinen, auf dem eine Antwort die andere setzt.
+    Zwei getrennte Fragen heisst: zwei getrennte Formulare, zwei getrennte
+    Feldnamen und zwei getrennte Schreibvorgaenge. Es gibt keinen Weg, auf
+    dem beide zugleich entstehen -- und keinen, auf dem eine Antwort die
+    andere setzt.
+
+    DER FELDNAME IST NICHT DIE QUELLE DER FRAGE. Massgeblich bleibt das
+    verborgene Feld `frage`, gegen SPALTE geprueft. Erst danach wird der
+    dazugehoerige Antwortname aus FELDNAME_ANTWORT geholt. Wer
+    `antwort_praktik` mit `frage=bewertung` schickt, hat das Feld zur
+    genannten Frage nicht gefuellt und wird abgewiesen -- fail-closed,
+    ohne dass irgendetwas geschrieben wird.
 
     IM HALT IST DIESER WEG ZU. Nach einem Treffer in Frage 2 zeigt EN-04a
     keine Antwortformulare mehr -- aber der Bildschirm ist keine Sperre.
@@ -735,8 +770,14 @@ def zweckfrage_beantworten(request: Request,
             return _en04a(request, stand, check,
                           meldung=MELDUNG_HALT_ANTWORT)
 
+        gesendet = {FRAGE_BEWERTUNG: antwort_bewertung,
+                    FRAGE_PRAKTIK: antwort_praktik}
         code = frage.strip()
-        wahl = antwort.strip().lower()
+        # `.get` und nicht `[...]`: ein unbekannter Code liefert hier den
+        # leeren Wert und faellt in dieselbe Abweisung wie eine ungueltige
+        # Auswahl. Die Pruefung gegen SPALTE bleibt daneben stehen -- sie
+        # ist die eigentliche Schranke, nicht ein Nebeneffekt des Zugriffs.
+        wahl = gesendet.get(code, "").strip().lower()
         if code not in SPALTE or wahl not in ("ja", "nein"):
             # Fail-closed: es wird nichts gespeichert, und der Satz sagt
             # das. Der Bildschirm liefert beides mit; geglaubt wird keines.
@@ -855,11 +896,15 @@ def kenntnis_nehmen(request: Request):
                           klasse="KI_NACHWEIS")
         except (_CheckNichtGetroffen, psycopg.errors.IntegrityError) as fehler:
             # Fail-closed (F4). Beide Faelle enden gleich: nichts steht,
-            # kein Weiterweg, keine Anwendung. Die Bedingungen aus M30 und
-            # M31 -- ack_nach_eignung, ack_klasse_ki_nachweis,
-            # ack_braucht_erklaerung -- landen als IntegrityError hier; sie
-            # werden NICHT einzeln uebersetzt, weil die Nutzerin an jeder
-            # von ihnen dasselbe tun kann: nichts.
+            # kein Weiterweg, keine Anwendung. Die Bedingungen aus M30 --
+            # ack_nach_eignung, ack_klasse_ki_nachweis -- landen als
+            # IntegrityError hier; sie werden NICHT einzeln uebersetzt,
+            # weil die Nutzerin an jeder von ihnen dasselbe tun kann:
+            # nichts. Dass die Kenntnisnahme eine vollstaendige
+            # Erklaerung voraussetzt, steht seit dem 16.08.2026 nicht mehr
+            # als Tabellenbedingung in M31, sondern traegt hier: `auswerten`
+            # liefert UNVOLLSTAENDIG, solange eine Frage offen ist, und der
+            # Weg oben bricht dann ab, bevor irgendetwas geschrieben wird.
             PROTOKOLL.error(
                 "Kenntnisnahme nicht geschrieben, nichts geaendert und "
                 "nichts angelegt (K04-M21, fail-closed): %s", fehler)

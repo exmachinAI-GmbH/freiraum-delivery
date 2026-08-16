@@ -96,9 +96,12 @@ WAS HIER AUSDRUECKLICH NICHT GEBAUT IST
     erfinden waere Umfang, den niemand gezeichnet hat. Deshalb fuehrt
     "Check starten" auf die benannte Meldung und bleibt auf EN-03 -- genau der
     Fehlerzustand, den der Bildschirmvertrag dafuer vorsieht.
-  * EN-04a, die Zweckbestimmung nach K04-M19 bis M21. Sie gehoert zum naechsten
-    Schritt. Nach GEEIGNET steht auf EN-04 deshalb ein HINWEIS, dass dieser
-    Schritt folgt -- und keine Schaltflaeche, die ins Leere fuehrt.
+  * EN-04a, die Zweckbestimmung nach K04-M19 bis M21. Sie ist seit M4 gebaut
+    (app/zweckbestimmung.py). Nach GEEIGNET steht auf EN-04 deshalb seit dem
+    16.08.2026 ein VERWEIS dorthin, wie ihn K19 fuer den Erfolgsfall zeichnet
+    -- ein Link und kein Formular, damit EN-04 keinen vierten Weg bekommt.
+    Diese Datei baut EN-04a nicht und weiss von ihrem Inhalt nichts; sie kennt
+    nur die Adresse.
   * Die uebrigen sechs Aktionen von EN-02 (Erklaervideo, Termin, Nachricht,
     Fortfuehren, Ansehen). Sie gehoeren zu K01 und zu spaeteren Scheiben.
 
@@ -291,13 +294,31 @@ MELDUNG_ACK_BESTEHT = (
     "Deshalb laesst sich das Ergebnis hier nicht mehr zuruecksetzen; es wurde "
     "nichts geaendert. Bitte wenden Sie sich an Ihre Ansprechperson.")
 
-# Nach GEEIGNET. KEINE Schaltflaeche, sondern ein Hinweis: der
-# Zweckbestimmungs-Schritt (EN-04a, K04-M19) ist in dieser Scheibe nicht
-# gebaut. Eine Schaltflaeche, die ins Leere fuehrt, waere schlimmer als keine.
+# Nach GEEIGNET. Der Bildschirmvertrag zeichnet fuer EN-04
+# `zustand_erfolg: "GEEIGNET -> EN-04a (Zweckbestimmung)"`
+# (schema/K19_screens.yaml:200). Seit M4 ist EN-04a gebaut; der Satz "Dieser
+# Schritt ist noch nicht freigeschaltet." aus M3 ist damit ueberholt und
+# wird hier durch den Verweis ersetzt, den der Vertrag verlangt.
+#
+# EIN VERWEIS, KEIN FORMULAR -- und das ist der ganze Unterschied. EN-04
+# fuehrt drei Wege aus dem Halt und die Wege des Erfolgs; ein viertes
+# Formular waere ein vierter Weg (K04-M08, K19-M14). Ein Link schreibt
+# nichts, aendert nichts und nimmt nichts entgegen: er zeigt nur, wohin es
+# weitergeht. Deshalb bleibt EN-04 im Uebrigen unangetastet.
+#
+# Er erscheint unter derselben Bedingung wie der Hinweis heute: nur bei
+# `ergebnis == "GEEIGNET"`. Vor der Zeit gezeigt waere er eine Zusage, die
+# der Check nicht deckt.
 HINWEIS_GEEIGNET = (
     "Ihr Vorhaben ist geeignet. Als naechstes folgt die Zweckbestimmung -- die "
-    "beiden Fragen dazu, ob die Anwendung Menschen bewertet oder auswaehlt. "
-    "Dieser Schritt ist noch nicht freigeschaltet.")
+    "beiden Fragen dazu, ob die Anwendung Menschen bewertet oder auswaehlt.")
+
+# Ziel und Beschriftung getrennt vom Satz, damit die Vorlage einen Link
+# bauen kann, ohne dass Auszeichnung in einer Textkonstante steht. Eine
+# Konstante mit HTML darin muesste in der Vorlage ungeprueft durchgereicht
+# werden -- das ist der Weg, auf dem Einschleusung entsteht.
+VERWEIS_GEEIGNET_ZIEL = "/zweckbestimmung"
+VERWEIS_GEEIGNET_TEXT = "Weiter zur Zweckbestimmung"
 
 
 def _zurueck_auf_en01(merkmal):
@@ -726,6 +747,11 @@ def _en04(request, stand, check, fragen, meldung=None, hinweis=None):
         "halt": ergebnis == "NICHT_GEEIGNET",
         "aufhaltend": aufhaltende_antworten(fragen),
         "hinweis_geeignet": HINWEIS_GEEIGNET if ergebnis == "GEEIGNET" else None,
+        # Derselbe Schalter, damit Satz und Verweis nicht auseinanderlaufen
+        # koennen: entweder beide oder keiner (K19, EN-04/zustand_erfolg).
+        "verweis_geeignet": (
+            {"ziel": VERWEIS_GEEIGNET_ZIEL, "text": VERWEIS_GEEIGNET_TEXT}
+            if ergebnis == "GEEIGNET" else None),
         "meldung": meldung,
         "hinweis": hinweis,
     })

@@ -145,10 +145,11 @@
     Meldung nur "Bitte beantworten Sie alle drei Fragen" -- das nannte nichts
     und stand ausserdem oben im Kasten.
 
-    NACH GEEIGNET STEHT HIER EIN HINWEIS UND KEINE SCHALTFLAECHE. Der
-    Zweckbestimmungs-Schritt (EN-04a, K04-M19) gehoert zum naechsten
-    Meilenstein. Eine Schaltflaeche, die ins Leere fuehrt, verspricht mehr,
-    als der Bau haelt.
+    NACH GEEIGNET STEHT HIER EIN HINWEIS UND EIN VERWEIS -- KEINE
+    SCHALTFLAECHE. EN-04a (K04-M19) ist seit M4 gebaut, und K19 zeichnet
+    fuer EN-04 den Erfolgsfall "GEEIGNET -> EN-04a". Der Verweis ist ein
+    Link: er schreibt nichts und ist damit kein vierter Weg neben den drei
+    Auswegen (K04-M08).
   #}
   <style>
     :root { color-scheme: light dark; }
@@ -289,6 +290,23 @@
     {% else %}
       {% if hinweis_geeignet %}
         <p class="meldung">{{ hinweis_geeignet }}</p>
+      {% endif %}
+
+      {% if verweis_geeignet %}
+        {#
+          DER VERWEIS AUF EN-04a (K19, EN-04/zustand_erfolg:
+          "GEEIGNET -> EN-04a (Zweckbestimmung)").
+
+          EIN LINK UND KEIN FORMULAR. EN-04 fuehrt drei Auswege aus dem
+          Halt und die Wege des Erfolgs; ein weiteres Formular waere ein
+          vierter Weg (K04-M08, K19-M14). Der Verweis schreibt nichts und
+          nimmt nichts entgegen -- er zeigt nur, wohin es weitergeht.
+
+          Ziel und Beschriftung kommen aus app/vorpruefung.py und werden
+          wie jeder andere Wert ausgezeichnet ausgegeben; in der Vorlage
+          steht kein durchgereichtes Markup.
+        #}
+        <p><a href="{{ verweis_geeignet.ziel }}">{{ verweis_geeignet.text }}</a></p>
       {% endif %}
 
       {% if hinweis %}

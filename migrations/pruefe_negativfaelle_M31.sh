@@ -56,8 +56,8 @@ lauf "$HIER/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql" \
      "die Kenntnisnahme zu Anhang III fehlt"
 lauf "$HIER/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql" \
      "verbotene Praktik nach Art. 5"
-lauf "$HIER/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql" \
-     "ack_braucht_erklaerung"
+lauf "$HIER/negativfaelle/M31_N4_erklaerung_ohne_zweite_antwort.sql" \
+     "zweck_erklaerung_vollstaendig"
 
 echo
 echo "Gegenprobe — es ist nichts liegengeblieben:"
