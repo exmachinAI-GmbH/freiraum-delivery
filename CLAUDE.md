@@ -2,7 +2,7 @@
 
 | Feld | Wert |
 |---|---|
-| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag — **gezeichnet von M. Veil am 07.08.2026**; für den Auftragnehmer zeichnet A. Han (Nr. 158), seine Unterschrift steht aus |
+| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag — **von beiden Vertragsseiten gezeichnet:** M. Veil am 07.08.2026, A. Han für den Auftragnehmer (Nr. 158) am 16.08.2026. **Damit ist diese Datei keine Vorschlagsfassung mehr, sondern die ausführbare Seite einer vollständig gezeichneten Anlage** |
 | Ablageort | `03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/` — **bewusst außerhalb dieses Repos**: `--pruefsumme` misst diese Datei *gegen* die Anlage; lägen beide hier, änderte ein Commit beide Seiten. Überschreibbar mit `FREIRAUM_ANLAGE` |
 | **Prüfsumme der Anlage** | `ded747a7a98bcc7fa11442b92e0d09a244c0b4ee2051f10fb251bdb68300274d` — gezeichnet 07.08.2026, Nachweis in `Anlage_Bauverfahren_zeichnung.md` |
 | Nachgerechnet mit | `./install.sh --pruefsumme` · Regel: `shasum -a 256 <Anlage>` |
@@ -14,8 +14,13 @@
 Bei Abweichung gilt die **Anlage**. Stimmt die Prüfsumme oben nicht, redet diese Datei über
 eine andere Fassung als die unterschriebene: dann wird **nicht gebaut, sondern gefragt**.
 
-**Solange die Anlage nicht gezeichnet ist, ist diese Datei ein Vorschlag.** Sie steuert die
-Arbeit, sie ersetzt keine Zeichnung.
+**Die Anlage ist seit dem 16.08.2026 von beiden Vertragsseiten gezeichnet.** Diese Datei ist
+damit die ausführbare Seite einer gezeichneten Anlage — kein Vorschlag mehr. Der frühere Satz
+*„Solange die Anlage nicht gezeichnet ist, ist diese Datei ein Vorschlag"* ist mit der
+Gegenzeichnung A. Hans gegenstandslos geworden.
+
+**Was unverändert gilt:** Sie steuert die Arbeit, sie ersetzt keine Zeichnung. Bei Abweichung
+gilt die Anlage. Und stimmt die Prüfsumme oben nicht, wird nicht gebaut, sondern gefragt.
 
 ---
 
