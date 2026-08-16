@@ -66,12 +66,12 @@ Nachträgliches Schönschreiben ist deshalb kein Versäumnis, sondern verboten.
 
 ---
 
-## 3 · Die neun Regeln
+## 3 · Die zehn Regeln
 
 **Zwei Textarten, ein Unterschied.** `SPR-1` und `SPR-4` geben die Form von
 **Änderungstexten** vor — Commit, Issue, Pull Request, Kartentitel, Fehlermeldung. Für
 **Nachschlagetexte** (`README.md`, Dateien unter `doku/`) gelten sie nicht: die beschreiben
-einen Zustand, keine Änderung. Dort gelten `SPR-2`, `SPR-3` und `SPR-5` bis `SPR-9`
+einen Zustand, keine Änderung. Dort gelten `SPR-2`, `SPR-3` und `SPR-5` bis `SPR-10`
 unverändert.
 
 ### SPR-1 · Der erste Satz sagt, was sich in der Sache ändert
@@ -159,6 +159,32 @@ Eine Meldung nennt: was nicht ging, woran es lag, und den nächsten Schritt. „
 Zeile 42" erfüllt das nicht. Stumm abbrechen ist der schlimmste Fall — genau daran ist
 dieser Harness schon einmal aufgelaufen (Befund BEF-D3: der Prüflauf schwieg, wenn das
 Datenbankwerkzeug `psql` fehlte).
+
+### SPR-10 · „Tor" steht nie allein mit einer Zahl
+
+Für die vier Messstufen dieses Harness schreiben neue Texte **Messstufe 1 bis 4**. Wo das
+Wort „Tor" bleibt, trägt es bei der ersten Nennung sein Beiwort:
+
+> Abnahmetor Tor I · II · III · Starttor 05 bis 18 · Echtdaten-Tor E1 bis E10 ·
+> Fabrik-Tor 1 bis 4 · Gate 1 bis 15 aus K23.
+
+**Nicht erfasst sind Bezeichner, die eine Maschine vergleicht** — Prüfungsnamen im
+Zweigschutz, Dateinamen, Zweignamen, Felder in Manifesten. Ein Beiwort dort bricht die
+Sperre, die es schützen soll.
+
+**Bestandsschutz:** Was vorher geschrieben wurde, bleibt unverändert und wird nicht
+nachbenannt.
+
+**Warum „Messstufe" und kein neues Wort:** Es steht bereits gezeichnet in Blatt 57 vom
+10.08.2026, unterschrieben von beiden Vertragsparteien — *„vollständig belegt, mit allen vier
+Messstufen"*. Und es kollidiert nirgends: null Fundstellen im Bauauftrag, null in der Anlage
+Baustrategie, null in den 24 Konzepten.
+
+*Der Anlass: Das Wort „Tor" trägt im Projekt sieben verschiedene Bedeutungen. Eine
+Umbenennung wurde am 16.08.2026 ausdrücklich abgelehnt — sie hätte 53 Stellen im Auftrag,
+21 in einer Anlage, 51 in der anderen, 33 in den Konzepten und 268 im Repository berührt und
+dabei zwei von sieben Bedeutungen aufgelöst. Diese Regel kostet nichts und wirkt auf alles
+Neue.*
 
 ---
 
@@ -336,5 +362,5 @@ Der zweite Text ist länger. Er spart die Rückfrage, die der erste auslöst.
 ---
 
 *Angelegt am 14.08.2026 auf Weisung des Auftraggebers. Kennung der Regeln: `SPR-1` bis
-`SPR-9`. Die Kennungsräume `V-`, `C-` und `F-` sind anderweitig belegt und wurden bewusst
+`SPR-10` (SPR-10 aufgenommen am 16.08.2026). Die Kennungsräume `V-`, `C-` und `F-` sind anderweitig belegt und wurden bewusst
 nicht benutzt.*
