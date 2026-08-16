@@ -1,5 +1,11 @@
 # umsetzt: K04-M19, K04-M20, K04-M21, K04-D09, K04-D10, K04-M08, K04-D06,
-#          K04-D08, K04-G12, K04-M18, K01-D19, K13-M05, K19-M14
+#          K04-D08, K04-M18, K01-D19, K13-M05, K19-M14
+#          sowie die Zeichnung beider Vertragsparteien vom 16.08.2026:
+#          Zweckbestimmung und Kenntnisnahme werden als ZUSTAND (Anzeige)
+#          UND als EREIGNIS (Nachweis) gefuehrt. Damit ist O-K04-8
+#          geschlossen und der Behelf K04-G12 abgeloest -- er verlangte
+#          das Ereignis nur, "solange kein Traeger besteht"; jetzt tragen
+#          beide, jedes fuer seinen eigenen Zweck
 # zur Haelfte umgesetzt: K01-M27 -- weil diese Datei die Anwendungszeile
 #          ausschliesslich ueber `create_app_after_fit` anlegt und selbst
 #          kein INSERT auf `app` fuehrt; die fuenf Pruefungen selbst laufen
@@ -39,6 +45,9 @@ Der Vertrag dieser Datei -- er ist zugleich das, was die Pruefung misst:
                                    vor. Antwortfeld und Marke muessen
                                    dieselbe Frage nennen.
                                    Erfolg -> 303 auf "/zweckbestimmung".
+                                   Schreibt Spalte UND Ereignis in EINER
+                                   Transaktion; scheitert eines, ist
+                                   nichts geschrieben.
                                    IM HALT gesperrt: 200 mit benannter
                                    Meldung, nichts geaendert
     POST /zweckbestimmung/kenntnis Ohne Feld. Nur bei Treffer in Frage 1
@@ -56,7 +65,10 @@ Der Vertrag dieser Datei -- er ist zugleich das, was die Pruefung misst:
                                    `ruecknahme_bewertung` oder
                                    `ruecknahme_praktik`, mit dem Code
                                    ihrer Frage als Wert. Nimmt die Antwort
-                                   auf diese Frage zurueck.
+                                   auf diese Frage zurueck und schreibt
+                                   dabei Spalte UND Ereignis in EINER
+                                   Transaktion -- der frueher gegebene
+                                   Stand bleibt in den Ereignissen lesbar.
                                    Erfolg -> 303 auf "/zweckbestimmung"
     POST /zweckbestimmung/termin   Legt eine Zeile in `event` an und leitet
                                    auf "/zweckbestimmung?termin=1".
@@ -658,43 +670,63 @@ def angelegte_anwendung(conn, stand, kennung):
     return {"projektnummer": zeile[0], "name": zeile[1]}
 
 
-def _ereignis(conn, stand, check_id, aktion, wert, klasse=None):
+# Die Aufbewahrungsklasse der Zweckbestimmung. Sie steht als benannte
+# Konstante und nicht als Zeichenkette an vier Stellen, weil genau das die
+# Entscheidung vom 16.08.2026 traegt: Zustand UND Ereignis sind DERSELBE
+# Nachweis, und ein Nachweis hat genau eine Frist.
+KLASSE_NACHWEIS = "KI_NACHWEIS"
+
+
+def _ereignis(conn, stand, check_id, aktion, wert, art, klasse=None):
     """Eine Zeile in `event` -- unveraenderlich, mit Bezug auf den Check.
 
-    K04-G12 verlangt, die Kenntnisnahme als Ereignis zu fuehren, solange
-    kein eigener Traeger dafuer besteht; die Erklaerung selbst braucht die
-    Zeile aus einem zweiten Grund: eine Spalte kennt nur ihren letzten
-    Wert. Wer wann was geantwortet und was zurueckgenommen hat, steht
-    ausschliesslich hier -- und `event` traegt die Regeln
-    event_no_update/event_no_delete, ist also nicht nachtraeglich
-    veraenderbar.
+    Die Erklaerung braucht die Zeile aus dem Grund, den die Spalte nicht
+    aufwiegt: eine Spalte kennt nur ihren letzten Wert. Wer wann was
+    geantwortet und was zurueckgenommen hat, steht ausschliesslich hier --
+    und `event` traegt seit M30 den Ausloeser `event_append_only`, der
+    UPDATE und DELETE mit einem Fehler ABWEIST statt sie still zu
+    verwerfen. Eine Ereigniszeile wird nie veraendert und nie geloescht.
 
     `actor_label` steht mit im INSERT, weil die Bedingung
     `event_actor_paarweise` Verknuepfung und Namensschnappschuss gemeinsam
     verlangt (K02-G13): wer das Konto entfernt, soll nicht den Namen
     mitnehmen.
 
-    `klasse` bleibt in der Regel leer -- dann gilt die Spaltenvorgabe
-    BETRIEBSPROTOKOLL. Fuer die Kenntnisnahme wird sie ausdruecklich auf
-    KI_NACHWEIS gesetzt: sie ist derselbe Nachweis wie die Spalte an
-    `fit_check`, und zwei Aufbewahrungsfristen fuer einen Nachweis waeren
-    eine zu viel (K04-M21, K15).
+    ZWEI GETRENNTE ANGABEN, UND SIE HINGEN BIS ZUM 16.08.2026 ZUSAMMEN.
+    `art` ist die Art der Aenderung (`event.change_type`), `klasse` die
+    Aufbewahrungsfrist (`event.retention_class`). Die frueheren zwei
+    Zweige koppelten beides: wer eine Klasse setzte, bekam ungefragt auch
+    `Neuanlage` statt `Aenderung`. Das ist getrennt, weil es zwei
+    verschiedene Fragen sind -- WAS geschah und WIE LANGE es aufbewahrt
+    wird. Gekoppelt liesse sich die eine nicht beantworten, ohne die
+    andere still mitzubeantworten.
+
+    `klasse` leer heisst: es gilt die Spaltenvorgabe. Sie steht seit M30
+    Stufe 8 auf EREIGNIS (`M30`:1493) -- nicht mehr auf BETRIEBSPROTOKOLL,
+    wie die Grundfassung sie setzt. Das ist die richtige Klasse fuer einen
+    reinen Betriebsvorgang wie den Terminwunsch.
+
+    Fuer die Zweckbestimmung wird sie ausdruecklich auf KI_NACHWEIS
+    gesetzt -- fuer die Kenntnisnahme wie fuer jede Antwort und jede
+    Ruecknahme. Sie sind derselbe Nachweis wie die Spalten an `fit_check`,
+    und zwei Aufbewahrungsfristen fuer einen Nachweis waeren eine zu viel
+    (K04-M21, K15).
     """
     if klasse is None:
         conn.execute(
             "INSERT INTO event (actor_id, actor_label, tenant_id, action,"
             "                   object_ref, change_type, value, source)"
-            " VALUES (%s, %s, %s, %s, %s, 'Aenderung', %s, 'PORTAL_ACTION')",
+            " VALUES (%s, %s, %s, %s, %s, %s, %s, 'PORTAL_ACTION')",
             (stand["actor_id"], stand["anzeigename"], stand["mandant"],
-             aktion, "FIT_CHECK:" + str(check_id), wert))
+             aktion, "FIT_CHECK:" + str(check_id), art, wert))
         return
     conn.execute(
         "INSERT INTO event (actor_id, actor_label, tenant_id, action,"
         "                   object_ref, change_type, value, source,"
         "                   retention_class)"
-        " VALUES (%s, %s, %s, %s, %s, 'Neuanlage', %s, 'PORTAL_ACTION', %s)",
+        " VALUES (%s, %s, %s, %s, %s, %s, %s, 'PORTAL_ACTION', %s)",
         (stand["actor_id"], stand["anzeigename"], stand["mandant"],
-         aktion, "FIT_CHECK:" + str(check_id), wert, klasse))
+         aktion, "FIT_CHECK:" + str(check_id), art, wert, klasse))
 
 
 # ---------------------------------------------------------------------------
@@ -864,6 +896,20 @@ def zweckfrage_beantworten(request: Request,
     ueberschreiben": erst wird die aufhaltende Antwort zurueckgenommen,
     danach steht der Bildschirm wieder offen.
 
+    JEDE ANTWORT SCHREIBT ZUSTAND UND EREIGNIS, IN EINER TRANSAKTION --
+    Zeichnung vom 16.08.2026, dasselbe Muster wie die Kenntnisnahme (W5).
+    Die Spalte ist die ANZEIGE: sie kennt nur ihren letzten Wert und wird
+    von der naechsten Antwort ueberschrieben. Die Ereigniszeile ist der
+    NACHWEIS: was die Kundin DAMALS geantwortet hat, bleibt lesbar. Sie
+    traegt dieselbe Aufbewahrungsklasse wie die der Kenntnisnahme
+    (KI_NACHWEIS) -- ein Nachweis hat genau eine Frist.
+
+    In EINER Transaktion, weil beides sonst auseinanderlaufen kann: eine
+    Spalte ohne Ereignis waere ein Zustand ohne Nachweis, ein Ereignis
+    ohne Spalte ein Nachweis ueber etwas, das nicht geschehen ist. Die
+    Ausnahme `_CheckNichtGetroffen` fliegt INNERHALB der Transaktion und
+    rollt deshalb beides zurueck.
+
     DER ZEITPUNKT DER VOLLSTAENDIGKEIT WIRD MITGESCHRIEBEN, in derselben
     Anweisung. Die Bedingung `zweck_erklaerung_vollstaendig` (M31) verlangt,
     dass er nur steht, wenn beide Antworten vorliegen; zwei getrennte
@@ -933,7 +979,8 @@ def zweckfrage_beantworten(request: Request,
                 _ereignis(conn, stand, check["id"],
                           "ZWECKBESTIMMUNG_BEANTWORTET",
                           f"Frage {1 if code == FRAGE_BEWERTUNG else 2}: "
-                          f"{'Ja' if wert else 'Nein'}")
+                          f"{'Ja' if wert else 'Nein'}",
+                          "Aenderung", klasse=KLASSE_NACHWEIS)
         except _CheckNichtGetroffen as fehler:
             PROTOKOLL.error(
                 "Antwort nicht gespeichert: das UPDATE auf fit_check traf "
@@ -950,7 +997,7 @@ def zweckfrage_beantworten(request: Request,
 
 @router.post("/zweckbestimmung/kenntnis", response_class=HTMLResponse)
 def kenntnis_nehmen(request: Request):
-    """W5 · die Kenntnisnahme, dauerhaft (K04-M20, K04-M21, K04-G12).
+    """W5 · die Kenntnisnahme, dauerhaft (K04-M20, K04-M21).
 
     SIE ENTSTEHT NUR NACH EINEM TREFFER IN FRAGE 1. Der Bildschirmvertrag
     sagt es fuer diese Aktion woertlich, und der Stand wird hier gelesen,
@@ -958,16 +1005,17 @@ def kenntnis_nehmen(request: Request):
     Zug ausgeschlossen, dass jemand im Halt bestaetigt -- dort heilt keine
     Bestaetigung (K04-D10).
 
-    SIE WIRD ZWEIMAL GESCHRIEBEN, UND DAS IST ABSICHT. Die Spalte
-    `fit_check.zweckbestimmung_ack_at` ist der Traeger, den die Founder am
-    4.8.2026 mit Entscheidung F1 gewaehlt haben (M30, Abschnitt 3g); die
-    Ereigniszeile ist das, was K04-G12 verlangt, "solange kein Traeger
-    besteht" -- und O-K04-8 ist in K04 v1.7 weiterhin als offen gefuehrt.
-    Zwei Quellen, die sich nicht decken: die eine sagt, der Traeger sei
-    entschieden, die andere fuehrt die Frage als offen. Beides zu schreiben
-    ist die einzige Antwort, die keine der beiden Quellen bricht -- und die
-    Ereigniszeile ist ohnehin das, was die Spalte nicht kann: sie ist
-    unveraenderlich (event_no_update, event_no_delete).
+    SIE WIRD ZWEIMAL GESCHRIEBEN, UND SEIT DEM 16.08.2026 IST DAS
+    GEZEICHNET. Die Spalte `fit_check.zweckbestimmung_ack_at` ist der
+    Traeger fuer die ANZEIGE, den die Founder am 4.8.2026 mit Entscheidung
+    F1 gewaehlt haben (M30, Abschnitt 3g); die Ereigniszeile ist der
+    NACHWEIS. Bis zum 16.08.2026 stand diese Doppelung auf einem
+    Widerspruch zweier Quellen und wurde vorsorglich gebaut; seither steht
+    sie auf der Entscheidung beider Vertragsparteien, die O-K04-8
+    geschlossen hat. Ihre Begruendung in einem Satz: ein Nachweis, den man
+    ueberschreiben kann, ist keiner. Genau das kann die Spalte -- sie
+    kennt nur ihren letzten Wert --, und genau das kann die Ereigniszeile
+    nicht: `event_append_only` weist UPDATE und DELETE mit einem Fehler ab.
 
     BEIDES IN EINER TRANSAKTION, und daran haengt F4 des Plans: "Der
     Nachweis der Kenntnisnahme laesst sich nicht schreiben -> kein
@@ -1014,7 +1062,7 @@ def kenntnis_nehmen(request: Request):
                           "Anhang III und die Anbieterpflichten aus Art. 9, "
                           "11, 14, 17 und 43 zur Kenntnis genommen "
                           "(K04-M21, Art. 25 Abs. 4)",
-                          klasse="KI_NACHWEIS")
+                          "Neuanlage", klasse=KLASSE_NACHWEIS)
         except (_CheckNichtGetroffen, psycopg.errors.IntegrityError) as fehler:
             # Fail-closed (F4). Beide Faelle enden gleich: nichts steht,
             # kein Weiterweg, keine Anwendung. Die Bedingungen aus M30 --
@@ -1159,6 +1207,20 @@ def antwort_aendern(request: Request,
     der Halt haette dann zwei Auswege statt drei, und auch das verletzte
     K04-M08.
 
+    AUCH DIE RUECKNAHME SCHREIBT EIN EREIGNIS -- und das ist der Kern der
+    Zeichnung vom 16.08.2026. Die Spalte geht hier auf NULL zurueck; waere
+    sie der einzige Traeger, waere die frueher gegebene Antwort damit
+    verschwunden. Die Ereigniszeile nennt sie im Wortlaut
+    ("Frage 2: Ja zurueckgenommen") und steht neben der Zeile, die sie
+    seinerzeit eingetragen hat. Beide bleiben, beide in derselben
+    Aufbewahrungsklasse wie die Kenntnisnahme. Ein Ereignis wird nie
+    veraendert und nie geloescht (`event_append_only`).
+
+    ZUSTAND UND EREIGNIS IN EINER TRANSAKTION, wie auf jedem anderen Weg
+    dieser Datei. Ohne sie koennte die Spalte geleert sein, ohne dass
+    irgendwo stuende, was sie zuvor trug -- genau der Verlust, den die
+    Entscheidung ausschliesst.
+
     DIE KENNTNISNAHME BLEIBT STEHEN (offener Punkt O-M4-3 des Plans). Sie
     wird hier nicht mit zurueckgenommen. Ein Nachweis, den man
     zurueckziehen kann, ist keiner -- und K04-M21 verlangt, dass er
@@ -1210,7 +1272,8 @@ def antwort_aendern(request: Request,
                 _ereignis(conn, stand, check["id"],
                           "ZWECKBESTIMMUNG_ZURUECKGENOMMEN",
                           f"Frage {1 if code == FRAGE_BEWERTUNG else 2}: "
-                          f"{bisher} zurueckgenommen")
+                          f"{bisher} zurueckgenommen",
+                          "Aenderung", klasse=KLASSE_NACHWEIS)
         except _CheckNichtGetroffen as fehler:
             PROTOKOLL.error(
                 "Ruecknahme abgebrochen: das UPDATE auf fit_check traf %s "
@@ -1249,7 +1312,11 @@ def termin(request: Request):
         check, fehlweg = _vorbedingung(conn, stand)
         if fehlweg is not None:
             return fehlweg
+        # OHNE `klasse`, und das ist Absicht: ein Terminwunsch ist ein
+        # Betriebsvorgang, kein Nachweis der Zweckbestimmung. Er aendert
+        # die Erklaerung nicht -- also traegt er auch nicht ihre Frist.
         _ereignis(conn, stand, check["id"], "TERMIN_ANGEFRAGT",
-                  "Zweckbestimmung, Stand " + auswerten(check))
+                  "Zweckbestimmung, Stand " + auswerten(check),
+                  "Aenderung")
 
     return _umleitung("/zweckbestimmung?termin=1")
