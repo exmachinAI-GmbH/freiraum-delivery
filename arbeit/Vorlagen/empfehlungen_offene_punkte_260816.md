@@ -412,20 +412,53 @@ Entscheidung, und `RR-02` vom 16.08.2026 bestätigt sie ein zweites Mal.
 
 *Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
-| Empfehlung | angenommen | abweichend |
-|---|---|---|
-| **E-1** Fremdprüfung morgen abschicken | ☐ | ⟨…⟩ |
-| **E-2** BA-1/BA-2 gegenzeichnen, #25 und #26 vorher mergen | ☐ | ⟨…⟩ |
-| **E-3** ST-14 mit dem Vollzug von BA-1 schließen | ☐ | ⟨…⟩ |
-| **E-4** Portal-Hinweis bauen, Abnahme A. Han | ☐ | ⟨…⟩ |
-| **E-5** `invitation` klassifizieren, dann 90 Tage | ☐ | ⟨…⟩ |
-| **E-6** 142 Kriteriumsvorschläge erzeugen | ☐ | ⟨…⟩ |
-| **E-7** Belegzeile berichtigen · `K02-M17` nachziehen | ☐ | ⟨…⟩ |
+**Weisung im Wortlaut vom 16.08.2026:** *„Hiermit alle Aufgaben gem. Empfehlungen
+freigegeben. Gez. A. Han, M. Veil, 16.8.26, ebenso E-4 und E-6."*
+
+| Empfehlung | angenommen | Wer führt aus | Stand am 16.08.2026 |
+|---|---|---|---|
+| **E-1** Fremdprüfung morgen abschicken | **[x]** | **A. Han** | ⏳ offen — **Handlung eines Menschen**, der Harness darf sie nicht |
+| **E-2** BA-1/BA-2 gegenzeichnen, #25 und #26 vorher mergen | **[x]** | **A. Han** · Merge: M. Veil | ⏳ offen — **Unterschrift** |
+| **E-3** ST-14 mit dem Vollzug von BA-1 schließen | **[x]** | folgt aus E-2 | ✅ **eingetragen**, wirksam mit dem Vollzug |
+| **E-4** Portal-Hinweis bauen, Abnahme A. Han | **[x]** | **Harness** | ✅ **gebaut** — siehe Vollzugsvermerk |
+| **E-5** `invitation` klassifizieren, dann 90 Tage | **[x]** | Harness · Frist *vor Produktion* | ✅ **entschieden**, Umsetzung terminiert — siehe Vermerk |
+| **E-6** 142 Kriteriumsvorschläge erzeugen | **[x]** | **Harness** | ✅ **erzeugt** — siehe Vollzugsvermerk |
+| **E-7** Belegzeile berichtigen · `K02-M17` nachziehen | **[x]** | Schritt 1 Harness · Schritt 2 Konzept-Fabrik | ✅ **Schritt 1 ausgeführt**, Schritt 2 offen |
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | alle sieben Empfehlungen angenommen, E-4 und E-6 ausdrücklich |
+| **A. Han** | für den Auftragnehmer (Nr. 158) | **16.08.2026** | dieselbe Weisung, gemeinsam gezeichnet |
+
+---
+
+## Vollzugsvermerk — was der Harness daraufhin am 16.08.2026 getan hat
+
+*Wird beim Ausführen fortgeschrieben. Jede Zeile trägt, was gemessen wurde.*
+
+| | Was | Ergebnis |
+|---|---|---|
+| **E-7 · 1** | Belegzeile in `M30__pilot_sammelmigration.sql` und `M30__pruefung.sql` berichtigt | *(siehe unten)* |
+| **E-4** | Portal-Hinweis nach Artikel 4 gebaut, Kenntnisnahme nach `K04-G12` als Ereignis | *(siehe unten)* |
+| **E-6** | Kriteriumsvorschläge erzeugt, je Klausel gekennzeichnet | *(siehe unten)* |
+
+### Zu E-5 — warum hier heute nichts gebaut wird, obwohl freigegeben
+
+**Die Entscheidung ist gezeichnet. Die Umsetzung ist terminiert, nicht ausgeführt** — und
+das folgt der Empfehlung, nicht einer Ausnahme davon:
+
+- **`K15-G11`** sperrt die automatisierte Entfernung, **solange fünf Punkte offen sind.**
+  Heute fällt einer (`O-K15-6`). **Vier bleiben:** O-K15-2, O-K15-4, O-K15-5, O-K15-9.
+  Ein Aufräumlauf, der jetzt gebaut würde, dürfte nicht laufen.
+- **Schritt 1 der Empfehlung** — `invitation` eine Aufbewahrungsklasse geben — ist eine
+  **Schemaänderung**. Sie berührt nach **Rang 1** den Maßstab (eingefrorenes Datenmodell
+  **plus** Sammelmigration) und braucht damit dieselbe Zeichnung wie in **M-10.3**
+  beschlossen. **Das ist ein eigenes Blatt, kein Nebenbei.**
+- **Die Frist von `O-K15-3` lautet *vor Produktion*, nicht vor dem 31.08.**
+
+> **Geführt als terminierter Punkt**, nicht als offene Frage: Die Sachentscheidung steht
+> (Klasse zuerst, dann 90 Tage ab `expires_at`/`redeemed_at`, als Betriebsregel). Was fehlt,
+> ist eine Sammeländerung **M32** — fällig, wenn die vier übrigen K15-Punkte gefallen sind.
 
 ---
 
