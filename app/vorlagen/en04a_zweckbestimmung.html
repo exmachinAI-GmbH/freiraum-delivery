@@ -205,15 +205,30 @@
               {# Der Server glaubt weder die Frage noch die Antwort: beide
                  werden gegen die zugelassenen Werte geprueft.
 
-                 JE FRAGE EIN EIGENER FELDNAME -- `frage.feld` ist
-                 `antwort_bewertung` bzw. `antwort_praktik` und kommt aus
-                 FELDNAME_ANTWORT in app/zweckbestimmung.py, damit Vorlage
-                 und Serverpfad denselben Namen aus derselben Quelle
-                 nehmen. Zwei getrennte Fragen mit demselben Feldnamen
-                 waeren von aussen nicht auseinanderzuhalten. Das
-                 verborgene Feld `frage` bleibt trotzdem massgeblich; der
-                 Feldname ist die zweite Quelle, nicht die erste. #}
-              <input type="hidden" name="frage" value="{{ frage.code }}">
+                 JE FRAGE EIGENE FELDNAMEN, UND KEINER KOMMT ZWEIMAL VOR.
+                 `frage.feld` ist `antwort_bewertung` bzw.
+                 `antwort_praktik`, `frage.marke` ist `frage_bewertung`
+                 bzw. `frage_praktik`. Beide kommen aus FELDNAME_ANTWORT
+                 und FELDNAME_FRAGE in app/zweckbestimmung.py, damit
+                 Vorlage und Serverpfad dieselben Namen aus derselben
+                 Quelle nehmen.
+
+                 BIS ZUM 16.08.2026 HIESSEN BEIDE MARKEN `frage`. Auf einer
+                 Seite mit beiden Formularen stand dieser Name damit
+                 zweimal, mit verschiedenen Werten. Wer die Seite als
+                 Ganzes einliest und alle verborgenen Felder mitschickt,
+                 sendet ihn zweimal -- und bei doppeltem Schluessel gewinnt
+                 der letzte Wert. Der Server nahm dann immer die zweite
+                 Frage und schrieb beim Beantworten der ERSTEN nichts:
+                 keine Meldung, keine Weiterleitung, die Antwort still
+                 verloren. Zwei Felder desselben Namens sind eine Falle,
+                 gleich wer sie stellt.
+
+                 Die Marke bleibt trotzdem stehen: der Server soll die
+                 Frage nicht ableiten, sondern pruefen koennen. Antwortfeld
+                 und Marke muessen dieselbe Frage nennen; sonst wird nichts
+                 geschrieben. #}
+              <input type="hidden" name="{{ frage.marke }}" value="{{ frage.code }}">
               <label class="wahl">
                 <input type="radio" name="{{ frage.feld }}" value="ja"
                        {% if frage.antwort is true %}checked{% endif %}>
@@ -231,7 +246,14 @@
 
             {% if frage.antwort is not none %}
               <form method="post" action="/zweckbestimmung/aendern">
-                <input type="hidden" name="frage" value="{{ frage.code }}">
+                {# EIGENER NAME, auch gegenueber dem Antwortformular
+                   derselben Frage: `frage.ruecknahme` ist
+                   `ruecknahme_bewertung` bzw. `ruecknahme_praktik`. Sind
+                   beide Fragen beantwortet, stehen hier vier Formulare --
+                   und nach dieser Aenderung kommt kein Feldname der Seite
+                   zweimal vor. Frueher hiessen alle vier Felder `frage`,
+                   und die Ruecknahme traf immer das letzte davon. #}
+                <input type="hidden" name="{{ frage.ruecknahme }}" value="{{ frage.code }}">
                 <button type="submit">Antwort zuruecknehmen</button>
               </form>
             {% endif %}
@@ -260,7 +282,7 @@
                 Kenntnisnahme, falls eine vorliegt, bleibt stehen
                 (offener Punkt O-M4-3).
               #}
-              <input type="hidden" name="frage" value="praktik">
+              <input type="hidden" name="{{ marke_halt }}" value="{{ code_halt }}">
               <button type="submit">Antwort aendern</button>
             </form>
             <form method="post" action="/zweckbestimmung/termin">

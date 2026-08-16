@@ -31,9 +31,13 @@ Der Vertrag dieser Datei -- er ist zugleich das, was die Pruefung misst:
                                    Sonst 200 mit beiden Fragen; die
                                    Schaltflaeche zur Anlage erscheint erst,
                                    wenn beide beantwortet sind
-    POST /zweckbestimmung/antwort  Felder `frage` (bewertung|praktik) und
-                                   `antwort_bewertung` bzw. `antwort_praktik`
-                                   (ja|nein) -- je Frage ein eigener Name.
+    POST /zweckbestimmung/antwort  Felder `frage_bewertung` bzw.
+                                   `frage_praktik` (Wert = eigener Name)
+                                   und `antwort_bewertung` bzw.
+                                   `antwort_praktik` (ja|nein) -- je Frage
+                                   ein eigener Name, keiner kommt zweimal
+                                   vor. Antwortfeld und Marke muessen
+                                   dieselbe Frage nennen.
                                    Erfolg -> 303 auf "/zweckbestimmung".
                                    IM HALT gesperrt: 200 mit benannter
                                    Meldung, nichts geaendert
@@ -48,9 +52,12 @@ Der Vertrag dieser Datei -- er ist zugleich das, was die Pruefung misst:
                                    "/zweckbestimmung?angelegt=<Check>".
                                    Sonst 200 mit benannter Meldung und
                                    OHNE Anwendungszeile
-    POST /zweckbestimmung/aendern  Feld `frage`. Nimmt die Antwort auf
-                                   diese Frage zurueck. Erfolg -> 303 auf
-                                   "/zweckbestimmung"
+    POST /zweckbestimmung/aendern  GENAU EINE Marke,
+                                   `ruecknahme_bewertung` oder
+                                   `ruecknahme_praktik`, mit dem Code
+                                   ihrer Frage als Wert. Nimmt die Antwort
+                                   auf diese Frage zurueck.
+                                   Erfolg -> 303 auf "/zweckbestimmung"
     POST /zweckbestimmung/termin   Legt eine Zeile in `event` an und leitet
                                    auf "/zweckbestimmung?termin=1".
                                    AENDERT DIE ERKLAERUNG NICHT
@@ -179,15 +186,52 @@ SPALTE = {
 # beantwortet. Getrennte Namen kosten nichts und machen den Bildschirm
 # messbar; sie sind hier am 16.08.2026 nachgezogen worden.
 #
-# Das VERBORGENE Feld `frage` bleibt und bleibt massgeblich. Der Server
-# glaubt die Frage nicht: er prueft `frage` gegen SPALTE und holt sich erst
-# dann den zugehoerigen Antwortnamen. Der Feldname ist die zweite Quelle,
-# nicht die erste -- ein Formular, das `antwort_praktik` mit
-# `frage=bewertung` schickt, beantwortet keine Frage, sondern faellt in die
-# Abweisung.
+# Der Name des Antwortfeldes NENNT die Frage, und er nennt sie eindeutig:
+# `antwort_bewertung` ist die erste Frage, `antwort_praktik` die zweite.
+# Beide gehoeren zu einem geschlossenen, hier aufgezaehlten Bestand -- der
+# Server nimmt keinen Namen entgegen, den er nicht selbst gebildet hat.
 FELDNAME_ANTWORT = {
     FRAGE_BEWERTUNG: "antwort_" + FRAGE_BEWERTUNG,
     FRAGE_PRAKTIK: "antwort_" + FRAGE_PRAKTIK,
+}
+
+# JE FRAGE AUCH EINE EIGENE MARKE -- `frage_bewertung`, `frage_praktik`.
+#
+# BEFUND, gemessen am 16.08.2026: Der Bildschirm trug bis dahin ZWEI
+# verborgene Felder mit demselben Namen `frage` und verschiedenen Werten --
+# eines je Frage. Wer die Seite als Ganzes einliest und alle verborgenen
+# Felder mitschickt, sendet denselben Namen zweimal, und bei doppeltem
+# Schluessel gewinnt der letzte Wert. Der Server las dann immer die zweite
+# Frage, suchte deren Antwortfeld, fand beim Beantworten der ERSTEN Frage
+# nichts -- und schrieb nichts. Kein Fehler, keine Meldung, keine
+# Weiterleitung: die Antwort ging STILL verloren.
+#
+# Zwei Felder desselben Namens auf einer Seite sind eine Falle, gleich wer
+# sie stellt. Sie ist hier beseitigt, indem die Marke den Namen ihrer Frage
+# traegt. Damit gibt es auf dem Bildschirm keinen Feldnamen mehr, der
+# zweimal mit verschiedenen Werten vorkommt.
+FELDNAME_FRAGE = {
+    FRAGE_BEWERTUNG: "frage_" + FRAGE_BEWERTUNG,
+    FRAGE_PRAKTIK: "frage_" + FRAGE_PRAKTIK,
+}
+
+# DIE RUECKNAHME TRAEGT EIGENE NAMEN -- `ruecknahme_bewertung`,
+# `ruecknahme_praktik`.
+#
+# Sind beide Fragen beantwortet, stehen auf dem Bildschirm VIER Formulare:
+# je Frage eines zum Antworten und eines zum Zuruecknehmen. Truegen
+# Antwort- und Ruecknahmeformular derselben Frage dieselbe Marke, stuende
+# dieser Name zweimal auf der Seite. Er truege zwar beide Male denselben
+# Wert -- aber "es faellt nicht auf, weil die Werte gleich sind" ist keine
+# Eigenschaft, auf die sich bauen laesst. Nach dieser Aenderung kommt auf
+# EN-04a kein Feldname zweimal vor.
+#
+# Die Namen sind ausserdem DISJUNKT zu denen des Antwortwegs. Ein Feld,
+# das an den falschen der beiden Wege geraet, wird dort nicht gelesen und
+# kann dort nichts ausloesen.
+FELDNAME_RUECKNAHME = {
+    FRAGE_BEWERTUNG: "ruecknahme_" + FRAGE_BEWERTUNG,
+    FRAGE_PRAKTIK: "ruecknahme_" + FRAGE_PRAKTIK,
 }
 
 # --- Der Wortlaut der beiden Fragen ---------------------------------------
@@ -495,14 +539,75 @@ def fragen_mit_antwort(check):
     vorbelegen. Eine Vorbelegung waere eine Antwort, die niemand gegeben
     hat.
 
-    `feld` ist der Formularname der Antwort -- je Frage ein eigener. Er
-    kommt aus FELDNAME_ANTWORT und nicht aus der Vorlage, damit Bildschirm
-    und Serverpfad denselben Namen aus derselben Quelle nehmen.
+    `feld` ist der Formularname der Antwort, `marke` der Name des
+    verborgenen Feldes im Antwortformular, `ruecknahme` der im
+    Ruecknahmeformular -- je Frage eigene. Alle drei kommen aus
+    FELDNAME_ANTWORT, FELDNAME_FRAGE und FELDNAME_RUECKNAHME und nicht aus
+    der Vorlage, damit Bildschirm und Serverpfad dieselben Namen aus
+    derselben Quelle nehmen. Kein Name kommt auf dem Bildschirm zweimal
+    vor.
     """
     return [{"code": f["code"], "nummer": f["nummer"], "text": f["text"],
              "feld": FELDNAME_ANTWORT[f["code"]],
+             "marke": FELDNAME_FRAGE[f["code"]],
+             "ruecknahme": FELDNAME_RUECKNAHME[f["code"]],
              "antwort": check[f["code"]]}
             for f in FRAGEN]
+
+
+def genannte_frage(marken, antworten=None):
+    """Welche Frage nennt diese Absendung? -- oder None.
+
+    GERATEN WIRD NICHTS. Eine Frage gilt nur dann als genannt, wenn die
+    Absendung sie AUSDRUECKLICH nennt und sich dabei nicht widerspricht.
+    Der Rueckgabewert None heisst immer dasselbe: es wird nichts
+    geschrieben.
+
+    `marken` ist die Zuordnung Frage -> Wert des verborgenen Feldes,
+    `antworten` die Zuordnung Frage -> gesendete Antwort. Fehlt
+    `antworten`, traegt die Marke die Frage allein (Weg W8, die
+    Ruecknahme -- dort gibt es kein Antwortfeld).
+
+    DIE MARKE MUSS ZU IHREM EIGENEN FELD PASSEN. `frage_bewertung` darf
+    nur den Wert "bewertung" tragen. Eine Marke, die eine FREMDE Frage
+    nennt, ist ein Widerspruch in sich; die ganze Absendung faellt dann
+    aus, und zwar unabhaengig davon, welche Frage der Rest nennt.
+
+    MIT ANTWORTFELD nennt der Name des Antwortfeldes die Frage, und die
+    Marke dieser Frage muss danebenstehen und sie bestaetigen. Beide
+    Seiten muessen dieselbe Frage nennen; nur eine von beiden reicht
+    nicht. Die Marken der ANDEREN Frage stoeren nicht -- sie stehen auf
+    demselben Bildschirm und gehoeren dem anderen Formular. Sie sind
+    geprueft, aber sie entscheiden nichts.
+
+    OHNE ANTWORTFELD traegt die Marke die Frage allein. Dann darf GENAU
+    EINE gesetzt sein: zwei gesetzte Marken nennen zwei Fragen, und welche
+    davon gemeint ist, wird hier nicht erraten.
+
+    Die Reihenfolge der gesendeten Felder spielt an keiner Stelle eine
+    Rolle. Genau daran ist der alte Weg gescheitert.
+    """
+    for code, marke in marken.items():
+        wert = (marke or "").strip()
+        if wert and wert != code:
+            return None
+
+    gesetzt = [code for code, marke in marken.items()
+               if (marke or "").strip()]
+
+    if antworten is None:
+        if len(gesetzt) != 1:
+            return None
+        return gesetzt[0]
+
+    beantwortet = [code for code, wahl in antworten.items()
+                   if (wahl or "").strip()]
+    if len(beantwortet) != 1:
+        return None
+    code = beantwortet[0]
+    if code not in gesetzt:
+        return None
+    return code
 
 
 def fehlende_fragen(check):
@@ -635,6 +740,11 @@ def _en04a(request, stand, check, meldung=None):
         "aufforderung_bestaetigen": AUFFORDERUNG_BESTAETIGEN,
         "halt_grund": HALT_GRUND,
         "halt_verweis": HALT_VERWEIS_ART5,
+        # Ausweg 1 nimmt die Antwort auf die ZWEITE Frage zurueck. Name und
+        # Wert der Marke kommen aus derselben Quelle wie im Serverpfad --
+        # in der Vorlage steht keiner von beiden als fester Text.
+        "marke_halt": FELDNAME_RUECKNAHME[FRAGE_PRAKTIK],
+        "code_halt": FRAGE_PRAKTIK,
         "meldung": meldung,
         "angelegt": None,
     })
@@ -719,7 +829,8 @@ def zweckbestimmung(request: Request, termin: str = "", angelegt: str = ""):
 
 @router.post("/zweckbestimmung/antwort", response_class=HTMLResponse)
 def zweckfrage_beantworten(request: Request,
-                           frage: str = Form(default=""),
+                           frage_bewertung: str = Form(default=""),
+                           frage_praktik: str = Form(default=""),
                            antwort_bewertung: str = Form(default=""),
                            antwort_praktik: str = Form(default="")):
     """W2 · eine der beiden Fragen beantworten (K04-M19).
@@ -729,12 +840,21 @@ def zweckfrage_beantworten(request: Request,
     dem beide zugleich entstehen -- und keinen, auf dem eine Antwort die
     andere setzt.
 
-    DER FELDNAME IST NICHT DIE QUELLE DER FRAGE. Massgeblich bleibt das
-    verborgene Feld `frage`, gegen SPALTE geprueft. Erst danach wird der
-    dazugehoerige Antwortname aus FELDNAME_ANTWORT geholt. Wer
-    `antwort_praktik` mit `frage=bewertung` schickt, hat das Feld zur
-    genannten Frage nicht gefuellt und wird abgewiesen -- fail-closed,
-    ohne dass irgendetwas geschrieben wird.
+    DIE FRAGE MUSS VON BEIDEN SEITEN GENANNT WERDEN. Der Name des
+    Antwortfeldes nennt sie -- `antwort_bewertung` ist die erste Frage --
+    und die Marke dieser Frage muss danebenstehen: `frage_bewertung` mit
+    dem Wert "bewertung". Stimmen beide nicht ueberein, wird nichts
+    geschrieben. Der Server leitet die Frage also nicht ab, er prueft eine
+    Nennung gegen eine zweite; die Regeln stehen in `genannte_frage`.
+
+    KEIN FELDNAME KOMMT AUF DIESEM BILDSCHIRM ZWEIMAL VOR. Bis zum
+    16.08.2026 trugen beide Formulare ein verborgenes Feld `frage`, und
+    eine Absendung, die alle verborgenen Felder der Seite mitschickte,
+    nannte denselben Namen zweimal. Der letzte Wert gewann, die Antwort zur
+    ERSTEN Frage lief ins Leere und ging STILL verloren -- 200, keine
+    Weiterleitung, nichts geschrieben, keine Meldung. Seither traegt jede
+    Marke den Namen ihrer eigenen Frage, und die Marke der anderen Frage
+    darf mitkommen, ohne etwas zu entscheiden.
 
     IM HALT IST DIESER WEG ZU. Nach einem Treffer in Frage 2 zeigt EN-04a
     keine Antwortformulare mehr -- aber der Bildschirm ist keine Sperre.
@@ -772,12 +892,13 @@ def zweckfrage_beantworten(request: Request,
 
         gesendet = {FRAGE_BEWERTUNG: antwort_bewertung,
                     FRAGE_PRAKTIK: antwort_praktik}
-        code = frage.strip()
-        # `.get` und nicht `[...]`: ein unbekannter Code liefert hier den
-        # leeren Wert und faellt in dieselbe Abweisung wie eine ungueltige
-        # Auswahl. Die Pruefung gegen SPALTE bleibt daneben stehen -- sie
-        # ist die eigentliche Schranke, nicht ein Nebeneffekt des Zugriffs.
-        wahl = gesendet.get(code, "").strip().lower()
+        marken = {FRAGE_BEWERTUNG: frage_bewertung,
+                  FRAGE_PRAKTIK: frage_praktik}
+        code = genannte_frage(marken, gesendet)
+        # Die Pruefung gegen SPALTE bleibt daneben stehen. `genannte_frage`
+        # gibt nur einen der beiden bekannten Codes oder None zurueck; dass
+        # es dabei bleibt, wird hier nicht geglaubt, sondern nachgesehen.
+        wahl = "" if code is None else gesendet[code].strip().lower()
         if code not in SPALTE or wahl not in ("ja", "nein"):
             # Fail-closed: es wird nichts gespeichert, und der Satz sagt
             # das. Der Bildschirm liefert beides mit; geglaubt wird keines.
@@ -1013,7 +1134,9 @@ def anwendung_anlegen(request: Request):
 
 
 @router.post("/zweckbestimmung/aendern", response_class=HTMLResponse)
-def antwort_aendern(request: Request, frage: str = Form(default="")):
+def antwort_aendern(request: Request,
+                    ruecknahme_bewertung: str = Form(default=""),
+                    ruecknahme_praktik: str = Form(default="")):
     """W8 · AUSWEG 1 nach dem Halt: die Antwort zuruecknehmen (K04-M08).
 
     Der Weg nimmt die Antwort auf die genannte Frage zurueck und setzt
@@ -1021,6 +1144,14 @@ def antwort_aendern(request: Request, frage: str = Form(default="")):
     der Bildschirm wieder offen -- W1. Dass die Erklaerung danach
     unvollstaendig ist, ist kein Mangel, sondern der Zweck: eine
     unvollstaendige Erklaerung laesst nichts durch (K04-G04).
+
+    HIER TRAEGT DIE MARKE DIE FRAGE ALLEIN -- es gibt kein Antwortfeld,
+    das sie ein zweites Mal nennen koennte. Deshalb muss GENAU EINE Marke
+    gesetzt sein und ihren eigenen Namen tragen. Zwei gesetzte Marken
+    nennen zwei Fragen; welche gemeint ist, wird nicht erraten, sondern
+    abgewiesen -- mit einer Meldung, damit nichts still geschieht. Ein
+    Formular dieses Bildschirms sendet nie zwei: jedes traegt genau seine
+    eigene.
 
     DIESER WEG BLEIBT IM HALT AUSDRUECKLICH OFFEN. Die beiden anderen
     schreibenden Wege sind dort zu; dieser nicht, denn er ist der erste der
@@ -1052,7 +1183,8 @@ def antwort_aendern(request: Request, frage: str = Form(default="")):
         if fehlweg is not None:
             return fehlweg
 
-        code = frage.strip()
+        code = genannte_frage({FRAGE_BEWERTUNG: ruecknahme_bewertung,
+                               FRAGE_PRAKTIK: ruecknahme_praktik})
         if code not in SPALTE:
             return _en04a(request, stand, check,
                           meldung=MELDUNG_AUSWAHL_UNGUELTIG)

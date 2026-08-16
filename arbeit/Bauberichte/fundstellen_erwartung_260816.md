@@ -339,8 +339,20 @@ wird das Häkchen gelesen, als hätte jemand die Steuerungstexte geprüft.
 
 **Vier Funde muss das Werkzeug finden: A4, B3, B7, C4.**
 
-Zusammen sind das **siebzehn einzelne Fundstellen**: eine in `aufbau.sh` (A4), fünf im
-README-Bezug (B3), vier auf `config/kanon.yaml` (B7), acht auf `scheibe.md`:73 (C4).
+Zusammen sind das **einundzwanzig einzelne Fundstellen**, gemessen im Arbeitsbaum: eine in
+`aufbau.sh` (A4), fünf README-Verweise in `CLAUDE.md` (B3), vier auf `config/kanon.yaml`
+(B7), **elf** auf `scheibe.md`:73 (C4).
+
+```
+$ grep -c 'README.md`:3' CLAUDE.md                                   →  5
+$ grep -rho 'scheibe\.md`\?:73' nachweise/ werkzeuge/ pruefungen/ .github/ | wc -l
+  11        (README.md 3 · VORLAGE.md 1 · fremdreview.py 5 · tor3.sh 1 · tor3.yml 1)
+$ grep -rn 'kanon.yaml' .claude/ CLAUDE.md | wc -l                   →  4
+```
+
+Der Bericht spricht bei C4 von acht Verankerungen. Gemessen sind es **elf** — `fremdreview.py`
+trägt den Verweis fünfmal, nicht sechsmal, und `README.md` dreimal. Auch hier gilt: die Zahl
+im Bericht ist nicht nachgezählt.
 
 **Fünf weitere sind Grenzfälle** — findbar nur unter einer benannten Bedingung:
 
@@ -387,8 +399,10 @@ Satz.
 
 Frage 12 ist die einzige, bei der ein Nein das ganze Werkzeug wertlos macht. Der
 Herkunftsgraph auf `main` ist der Beleg im eigenen Haus: er wird bei jedem Lauf nachgerechnet
-und verglichen, meldet aber nur `::warning::` (`tore.yml`:147) — und ist deshalb
-nachweislich veraltet.
+und verglichen, meldet aber nur `::warning::` — und ist deshalb nachweislich veraltet.
+Gemessen: `grep -n '::warning::' .github/workflows/tore.yml` → **Zeile 148**, nicht 147 wie
+im Prüfbericht. Auch diese Fundstelle ist um eine Zeile verrutscht — im Prüfbericht, der
+das Verrotten von Fundstellen zum Gegenstand hat.
 
 ---
 
