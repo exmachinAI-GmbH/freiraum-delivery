@@ -7,12 +7,12 @@
 
 | | |
 |---|---|
-| Stand `main` | **`7642f0b`** — **unverändert.** Heute ist nichts zusammengeführt worden |
-| Arbeitszweig | `scheibe/m4-zweckbestimmung`, Kopf **`1dd19ef`** · 13 Änderungsstände heute · **67 Dateien, +24 174 / −1 600** gegen `main` |
-| Offene Anträge | **#24 · #25 freigegeben** (nicht zusammengeführt) · **#26 wartet auf A. Han** |
+| Stand `main` | **`7642f0b`** — **unverändert. Auch am Sitzungsende ist nichts zusammengeführt worden** |
+| Arbeitszweig | `scheibe/m4-zweckbestimmung`, Kopf **`afb6759`** (Stand 22:28 Uhr; war `1dd19ef` bei Erstfassung dieser Übergabe) · **25 Änderungsstände** gegen `main` · **80 Dateien, +28 786 / −1 930** |
+| Offene Anträge | **#24** REVIEW_REQUIRED · **#25** APPROVED (keins der drei zusammengeführt) · **#26** (M4) REVIEW_REQUIRED, **Tor-1-Prüfung darauf FAILURE** — `gh pr list`/`gh pr view 26` |
 | Tage bis zum Endtermin | **15** (31.08.2026) |
-| Prüflauf | `bestanden: 11 · fehlgeschlagen: 3 · gesperrt: 2` |
-| Fremdprüfung | **nie gelaufen** — aber das Etikett existiert seit heute, und die Anforderung ist ausgefertigt |
+| Prüflauf (Sitzungsende, realer CI-Lauf `31970634298`) | Tor 1a **bestanden** · Tor 1b **bestanden** · Tor 1c **fehlgeschlagen** — Sammelzeile `bestanden: 12 · fehlgeschlagen: 1 · gesperrt: 3`, siehe Abschnitt 12 |
+| Fremdprüfung | **nie gelaufen** (Tor 3 dieses Laufs: `skipped`) — Etikett existiert, Anforderung liegt fertig, Frist **Montag 17.08.2026** |
 
 ---
 
@@ -262,6 +262,136 @@ Die Summenzeile blieb dabei unverändert grün.
 
 ---
 
-*Geschrieben am 16.08.2026 vom Orchestrator des Coding-Harness. Alle Zahlen selbst gemessen,
-je mit dem Befehl daneben. Die Weisungen des Auftraggebers und des Auftragnehmers stehen in
-den Nachweisblättern im Wortlaut — der Harness hat kein Kästchen gesetzt.*
+*Abschnitte 1–9 geschrieben am 16.08.2026, 15:32 Uhr, gegen Kopf `1dd19ef`. Alle Zahlen dort
+selbst gemessen, je mit dem Befehl daneben. Die Weisungen des Auftraggebers und des
+Auftragnehmers stehen in den Nachweisblättern im Wortlaut — der Harness hat kein Kästchen
+gesetzt.*
+
+---
+
+# Nachtrag · 15:32 bis 22:28 Uhr — zwölf weitere Änderungsstände
+
+> Diese Übergabe wurde ursprünglich um 15:32 Uhr geschrieben (Kopf `1dd19ef`). Bis Sitzungsende
+> sind zwölf weitere Änderungsstände hinzugekommen, Kopf jetzt **`afb6759`**. Was folgt, ist
+> **Nachtrag, kein Ersatz** — die Abschnitte 1–9 oben bleiben stehen und unverändert gültig für
+> das, was sie beschreiben.
+
+## 10 · Was zwischen 15:32 und 22:28 Uhr entschieden und gebaut wurde
+
+| Zeit | Commit | Was |
+|---|---|---|
+| 16:05 | `241f73c` | Kreuze eingetragen, Formvermerk zur F40-Berufung berichtigt (vollzieht Abschnitt 2.1 oben) |
+| 18:47 | `b215dd7` | Zeichnungsmappe: neun offene Punkte gebündelt — drei ohne Empfehlung, der Harness hat nicht geraten |
+| 19:12 | `b116ea3` | A–D umgesetzt: Löschkette (RR-02 mit Vermerk, hebt die Sperre nicht auf) · E-6-Gegenmessung: **0 gestaltete Farb-/Zustandswerte über acht Vorlagen** · Terminfelder · Eigentümerblatt Fassung 2 (157, nicht 167 Klauseln — zehn davon zählten fälschlich mit) |
+| 19:37 | `6f282e8` | BA-1 von M. Veil gezeichnet · Klauselregister-Feld „fachlicher Eigentümer": **0 → 157 von 157** des Teilschnitts (154 A. Han, 3 M. Veil) — Bedingung 4 des Liefertors erstmals **erfüllbar**, nicht erfüllt (15 von 157 Abnahmekriterien lagen vor) |
+| 19:46 | `c082b15` | Zwei von drei „A. Han"-Zuordnungen aus der Vormappe waren falsch — berichtigt, mit Vermerk, nicht still ersetzt |
+| 19:55 | `ee6fa72` | Empfehlungen zu allen offenen Punkten (E-1 bis E-7); zwei Fehldarstellungen in RR-02 gefunden: die Frage war schon am 04.08. entschieden, und der Bau führt Weg A strukturell bereits aus |
+| 20:01 | `11b640f` | E-7: Belegzeilen-Korrektur per **Vermerk daneben**, nicht per Dateiänderung — `migrations/M30__pilot_sammelmigration.sql` ist Rang 1, ein Kommentar-Fix hätte die gezeichnete Prüfsumme ungültig gemacht |
+| 20:11 | `8dfdda1` | E-4 gebaut: `app/ki_hinweis.py`, der Portal-Hinweis nach Artikel 4 KI-VO, drei Konstanten für die drei Abnahmekriterien aus §7a L9. Kriterium 3 (nachweisbare Kenntnisnahme) **gegen `freiraum_ci` gemessen**, nicht behauptet |
+| 21:39 | `73e87e7` | E-6: 142 Kriteriumsvorschläge erzeugt — **62 von 142 (44 %) von der eigens beauftragten Gegenprobe beanstandet** und ersetzt (26 erfunden, 25 zu Unrecht als unableitbar aufgegeben) |
+| 21:41 | `ffe7ed8` | Tor-1-Diagnose, drei Befunde mit Gegenprobe: **zwei von drei Erstdiagnosen fielen der eigenen Gegenprobe zum Opfer** — beide hatten ein erfundenes Klauselzitat als Stütze |
+| 22:09 | `dfb8bdc` | E-8 vollzogen (NULL/NULL-Riegel in M31 zurückgenommen, nach dessen eigenem 150 Zeilen entfernten Präzedenzfall) — deckt sofort **E-12** auf: MT-95/95b scheiterten seither an einer fremden Bedingung (Projektnummern-Kollision), nicht an dem, was sie messen sollten |
+| 22:28 | `afb6759` | Prüf-Auftrag geliefert (E-9-Prüfanteil, E-10, E-12 — Abschnitt 12 unten); E-13 (Anmelde-Riegel) gebaut **und in derselben Sitzung wieder zurückgenommen**, weil er vier fremde Fäden brach; E-14 (VP-24) benannt, nicht behoben |
+
+## 11 · Der teuerste Einzelfund: E-13 — ein Riegel, der vier Fäden brach
+
+Zwischen 20:11 und 22:28 Uhr stand kurzzeitig ein Kästchen `ki_bestaetigt` scharf, das die
+Anmeldung sperrte, ohne dass eine Klausel das verlangt (§7a L9 sagt „vor der **ersten**
+Nutzung", nicht „vor jeder"). Der blinde Lauf hat gemessen, was das kostet — an Fäden, die mit
+dem Portal-Hinweis inhaltlich nichts zu tun haben:
+
+| Faden | ohne Riegel | mit dem Riegel |
+|---|---|---|
+| `anmeldung` | 30 von 30 | **8 von 30** |
+| `vorpruefung` | 30 von 32 | **8 von 32** |
+| `anmeldecode` | 16 von 17 | **13 von 17** |
+
+Kein einziger Prüffall kannte das neue Feld. **Zurückgenommen, noch in derselben Sitzung,
+bevor der Stand zur Prüfung ging.** Folge: **L9 gilt als gebaut, aber nicht erfüllt** —
+Kriterium 3 (nachweisbare Kenntnisnahme) hat vorerst keinen Riegel mehr dahinter, das steht im
+Nachweis so, statt das Kriterium fälschlich als bestanden zu führen.
+
+## 12 · Der Prüf-Auftrag — was geliefert wurde, real gegengemessen
+
+Drei Teilaufträge (E-9-Prüfanteil, E-10, E-12) an einen blind geschalteten Agenten auf anderem
+Modell (F27), eine Datei zuerst (`pruefungen/klauseln/zweckbestimmung_lauf.sh`), danach
+`pruefungen/migration/M30__pruefung.sql`:
+
+1. **Fünf shellcheck-Warnungen behoben.** SC2034 zweimal (Wegwerffeld `t`→`_` in der
+   Feld-Zerlegung; ungenutzte Variable `ST_HALB_UI` gestrichen) · SC2221/SC2222 zweimal (Zweig
+   `401|403)` stand hinter `2*|4*)` und war damit unerreichbar — davor gezogen). Dabei
+   **verschärft, nicht gelockert**: der 401/403-Zweig meldet jetzt `sperr` statt `nok` — nach
+   K23-M22 ist eine abgewiesene Sitzung eine fremde Bedingung, kein Urteil über die eigentliche
+   Klausel.
+2. **Die Singleton-Annahme in ZB-03 ersetzt.** Vorher: „genau ein neu erscheinendes Ziel, sonst
+   gesperrt" — eine Annahme ohne Beleg in K19-M06 (regelt das Ausblenden, nicht die Anzahl) oder
+   K04-M08 (halt-bezogen). Jetzt: eine Wirkungsmessung — genau eine neue Anwendungszeile, ein
+   Eignungs-Check-Verweis darauf, eine Verlaufszeile mit Anlass DISCOVERY. **Selbst gemeldete
+   Grenze der eigenen Änderung:** die Messung greift nur, wenn die Erzeugung direkt am
+   mehrdeutigen Kandidaten hängt.
+3. **`nummernvorrat.PROJ` in der Herrichtung fortgeschrieben.** Die Testdaten trugen
+   `DE-DMB_001_01` fest ein, ohne den Zähler zu bewegen; der Serverbefehl zog dieselbe Nummer
+   und scheiterte an der Eindeutigkeitsbedingung statt an dem, was er messen sollte — **derselbe
+   Fehlertyp wie am 02.08.2026**.
+
+**Gemessen, nicht behauptet — der reale GitHub-Actions-Lauf gegen `afb6759`**
+(`gh run view 31970634298`, nicht lokal nachgestellt):
+
+| Tor | Ergebnis |
+|---|---|
+| 1a · Lint | **bestanden** — 0 shellcheck-Warnungen (war 5) |
+| 1b · Migration gegen frische DB | **bestanden** |
+| 1c · Prüflauf | **fehlgeschlagen** — Sammelzeile `bestanden: 12 · fehlgeschlagen: 1 · gesperrt: 3`; je Faden: `anmeldung` 30/30 · `einloesung` 18/18 (+ 1 offener Punkt gesperrt: MG-08) · `versand` 9/9 · `anmeldecode` 16/17 · `mitgliedschaft` 8/9 · `vorpruefung` 30/32 (VP-08b gesperrt, **VP-24 echt gescheitert**, Abschnitt 13) · `zweckbestimmung` 8/27 (**19 gesperrt, keiner davon echt gescheitert**) |
+
+**Der Faden `zweckbestimmung` meldet nach dem Prüf-Auftrag GESPERRT statt GESCHEITERT — das ist
+der eigentliche Ertrag.** ZB-03 findet real zwei Kandidaten
+(`/zweckbestimmung/aendern`, `/zweckbestimmung/anlegen`); die neue Wirkungsmessung lief
+tatsächlich gegen beide, keiner erfüllt ihre drei Kriterien. Nach K23-M22 ist das der ehrliche
+Zustand: 19 nicht messbare Fälle statt 19 stillschweigend als „geschlossen" behandelte.
+
+**Tor 1 insgesamt bleibt rot.** 1a und 1b sind grün, 1c nicht — wegen VP-24 (echter
+Fehlschlag) und der `zweckbestimmung`-Kaskade. Tor 3 lief für diesen Stand nicht (`skipped`);
+die Fremdprüfung ist weiterhin nie gefahren worden.
+
+## 13 · VP-24 — der einzige echte Fehlschlag am Sitzungsende
+
+`fit_check` trägt drei zusätzliche Zustandsmerkmale (`zweck_bewertung_menschen`,
+`zweck_verbotene_praktik`, `zweckbestimmung_erklaert_am`); K04-M19 zeichnet **zwei** Fragen. Für
+das dritte Merkmal (`zweckbestimmung_erklaert_am`) trägt keine Klausel eine Grundlage — M31
+begründet die Spalte mit einer Analogie zu `fit_done_needs_ts`, und **eine Analogie ist keine
+Klausel** (dritter Fund dieser Art an einem Tag, nach `BEF-K02M17` und den 26 erfundenen
+Kriteriumsvorschlägen aus Abschnitt 10 / E-6). Empfehlung: Spalte behalten, Klausel in K04
+nachziehen — sie leistet etwas Reales, ist nur (noch) ungedeckt.
+
+## 14 · Was jetzt bei wem liegt — Stand 22:28 Uhr, ergänzt Abschnitt 5
+
+| | Was | Wer | Frist |
+|---|---|---|---|
+| offen | **#24, #25, #26 zusammenführen** — alle drei laut `gh pr list` weiterhin offen; #25 APPROVED, #24 und #26 REVIEW_REQUIRED; `main` unverändert bei `7642f0b` | A. Han | vor A. Hans Gegenzeichnung von BA-1 (12.4 Nr. 5 sperrt Vorlagen, sobald der Auftrag „in Änderung" gilt) |
+| offen | **BA-1 gegenzeichnen** — von M. Veil gezeichnet (Antrag #24), A. Hans Gegenzeichnung steht aus | A. Han | — |
+| offen | **Fremdprüfung abschicken** — Anforderung fertig, Tor 3 dieser Sitzung `skipped` | A. Han | **Montag, 17.08.2026** |
+| offen | **E-8-Rückfrage** — der zurückgenommene NULL/NULL-Riegel braucht eine Entscheidung, keine automatische Wiederherstellung | M. Veil + A. Han (beide Founder) | — |
+| offen | **E-9 Bau-Anteil** — Bildschirmvertrag widersprüchlich (`antwort_aendern`: 3 Felder gegen 1); Eigentümer K19/K04 ist seit heute A. Han | A. Han | — |
+| offen | **ZB-03-Mehrdeutigkeit klären** — zwei Wege (`aendern`, `anlegen`) erscheinen am Bildschirm gleichzeitig; ob das gewollt ist, entscheiden die zeichnenden Personen, nicht der Harness | A. Han | — |
+| offen | **VP-24** — Klausel für `zweckbestimmung_erklaert_am` nachziehen oder die Spalte anders begründen | Eigentümer K04 (A. Han) | — |
+| offen | **142 von 157 Abnahmekriterien des Teilschnitts fehlen weiterhin** — 15 lagen vor, 140 sind jetzt Vorschlag (nicht gezeichnet), 17 ausdrücklich nicht ableitbar | fachliche Eigentümer (A. Han 154 Klauseln, M. Veil 3) | — |
+
+## 15 · Was in diesem Nachtrag nicht gemessen werden konnte
+
+- **Die genaue Grundmenge der Sammelzeile `bestanden: 12 · fehlgeschlagen: 1 · gesperrt: 3`.**
+  Wortgleich aus dem CI-Log übernommen (`gh run view 31970634298 --log`), zählt aber sichtbar
+  nicht dieselbe Menge wie die Summe der einzelnen Fäden (die liegt weit höher). Ohne Einsicht in
+  `pruefungen/lauf.sh` selbst bleibt offen, welche Ebene sie zusammenfasst.
+- **Ob AC-16 (die echte Zustellung) inzwischen außerhalb der CI gefahren wurde.** Der CI-Lauf
+  zeigt sie GESPERRT, mangels `FREIRAUM_SMTP_*`-Zugangsdaten in der CI-Umgebung — das sagt
+  nichts über einen lokalen Einzellauf.
+- **Ob #26 vor oder nach BA-1s Gegenzeichnung zusammengeführt werden soll**, wie es die
+  Empfehlung aus `6f282e8` vorschlägt. Aus dem Repository-Stand allein nicht ablesbar.
+
+---
+
+*Nachtrag geschrieben am 16.08.2026 gegen Kopf `afb6759` (22:28 Uhr). Zahlen zu Tor 1a–1c aus
+dem realen GitHub-Actions-Lauf `31970634298` (`gh run view 31970634298`), PR-Status aus
+`gh pr list`/`gh pr view` — beides gegengeprüft, nicht aus den Commit-Nachrichten übernommen,
+die als Ausgangsthese behandelt wurden. Was diese Übergabe nicht selbst gemessen hat, steht in
+Abschnitt 15.*
