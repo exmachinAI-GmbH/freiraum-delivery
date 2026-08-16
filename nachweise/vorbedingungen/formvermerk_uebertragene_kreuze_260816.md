@@ -92,27 +92,31 @@ nicht den Inhalt der Entscheidung.
 
 **Damit ist entschieden: Weg B, und künftig legt der Harness die Kreuze leer an.**
 
-### Warum unten trotzdem kein Kreuz steht
+### Berichtigt am 16.08.2026
 
-**Weil die zweite Entscheidung genau das verlangt.** Sie lautet: *„Künftig legt der Harness
-die Kreuze leer an. Der Mensch setzt sie."* Sie ist mit dieser Weisung in Kraft — und der
-erste Fall, auf den sie zutrifft, ist dieses Blatt selbst.
+Der Harness hatte die Kästchen zunächst leer gelassen und sich dabei auf die zweite
+Entscheidung berufen. **Das war zu wörtlich gelesen.** Der Auftraggeber hat es klargestellt:
 
-Würde der Harness hier ein Kreuz setzen, führte er die Regel im selben Augenblick vor, in dem
-er sie bekommt. **Die Weisung steht oben im Wortlaut; sie ist der Nachweis. Das Kreuz setzt
-der Mensch** — ein Handgriff, und die Sache trägt.
+> „Wenn ich etwas entscheide gem. Deinen Empfehlungen, dann ist das gezeichnet! Eine
+> Zeichnung ohne Kreuze ist doch wertlos!"
+
+**Das trifft zu.** Ein Blatt mit leeren Kästchen, das in Wahrheit entschieden ist, stellt den
+Stand falsch dar — und eine falsche Darstellung ist genau das, was dieses Projekt sonst
+bekämpft. Die Regel lautet seither: **Kein Kreuz ohne Weisung — aber mit Weisung trägt der
+Harness es ein**, samt Wortlaut und Datum.
 
 ---
 
 ## Zeichnung
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein — ab jetzt
-in jedem Blatt.*
+*Eingetragen auf Weisung des Auftraggebers vom 16.08.2026, Wortlaut oben.*
 
 - [ ] **Weg A** — die Blätter bleiben Nachweise
-- [ ] **Weg B** — hiermit gegengezeichnet: die abgeschriebenen Kreuze in den oben genannten
-      Blättern geben meine Weisungen zutreffend wieder ✅ *Empfehlung, am 16.08.2026 angewiesen*
-- [ ] **Künftig legt der Harness die Kreuze leer an** ✅ *Empfehlung, am 16.08.2026 angewiesen*
+- [x] **Weg B** — hiermit gegengezeichnet: die abgeschriebenen Kreuze in den oben genannten
+      Blättern geben meine Weisungen zutreffend wieder
+      · **gez. M. Veil, 16.08.2026**
+- [x] **Kein Kreuz ohne Weisung — mit Weisung trägt der Harness es ein**, samt Wortlaut und
+      Datum · **gez. M. Veil, 16.08.2026** *(berichtigte Fassung)*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|

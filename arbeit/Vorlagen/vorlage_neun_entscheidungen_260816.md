@@ -114,11 +114,11 @@ gehandelt hat — obwohl er es getan hat.
 
 ## Zeichnung B-8
 
-*Der Harness trägt hier nichts ein. Beide Kästchen sind leer angelegt.*
+*Der Harness trägt nur ein, was angewiesen wurde. Beide Kästchen sind leer angelegt.*
 
-- [ ] **Erstes Kästchen der Verzugsmeldung setzen** — „Kenntnis genommen, Weg A gilt
+- [x] **Erstes Kästchen der Verzugsmeldung setzen** — „Kenntnis genommen, Weg A gilt
       unverändert", mit Datum für die Berichtigung nach Abschnitt 12
-      · *Empfehlung des Orchestrators*
+      · *Empfehlung des Orchestrators* · **gez. M. Veil, 16.08.2026**
 - [ ] **Zweites Kästchen setzen** — „Die Lage wird neu beurteilt", mit Datum für die Vorlage
 - [ ] **Datum für die Berichtigung:** ⟨Datum⟩
 
@@ -243,10 +243,11 @@ Bestands.
 
 ## Zeichnung B-13
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Sammelfreigabe für K01, K02 und K10** — die Zweitprüfung wird für alle drei Konzepte
-      erteilt, 203 Klauseln, ein Vorgang · *Empfehlung des Orchestrators*
+- [x] **Sammelfreigabe für K01, K02 und K10** — die Zweitprüfung wird für alle drei Konzepte
+      erteilt, 203 Klauseln, ein Vorgang · *Empfehlung des Orchestrators* ·
+      **gez. M. Veil, 16.08.2026**
 - [ ] **Nur K01** — 81 Klauseln; K02 und K10 bleiben offen
 - [ ] **Zurückgestellt.** Es steht entgegen: ⟨Grund⟩ — und zwar bei: ⟨K01 / K02 / K10⟩
 - [ ] **Randbefund zur Kenntnis:** K01 trägt in Zeile 6 das Datum `26.07.31` — eine
@@ -342,11 +343,11 @@ seit dem 02.08.2026 gezeichnet — die Frist ist seit **zwei Wochen** verstriche
 
 ## Zeichnung B-14
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Es gelten die Werte aus K03:** 30 Minuten Untätigkeit, spätestens acht Stunden, beides
+- [x] **Es gelten die Werte aus K03:** 30 Minuten Untätigkeit, spätestens acht Stunden, beides
       serverseitig geprüft. **O-K01-9 und O-K14-6 sind geschlossen** · *Empfehlung des
-      Orchestrators*
+      Orchestrators* · **gez. M. Veil, 16.08.2026**
 - [ ] **Andere Werte:** Untätigkeit ⟨Minuten⟩ · absolut ⟨Stunden⟩ — dann sind Code und zwei
       Prüffälle zu ändern
 - [ ] **Zurückgestellt** — Begründung: ⟨Grund⟩
@@ -447,11 +448,11 @@ Abnahme.**
 
 ## Zeichnung B-15
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Der Teilschnitt ist die Einheit.** Gezeichnet wird `teilschnitt-anmeldung` in dem
+- [x] **Der Teilschnitt ist die Einheit.** Gezeichnet wird `teilschnitt-anmeldung` in dem
       Umfang aus Blatt 57 Zeile 95 — als Ganzes, nicht je Änderung · *Empfehlung des
-      Orchestrators*
+      Orchestrators* · **gez. M. Veil, 16.08.2026**
 - [ ] **Eine andere Einheit:** ⟨Gegenstand⟩
 - [ ] **Zurückgestellt** — Begründung: ⟨Grund⟩
 - [ ] **Dazu die zweite Teilfrage (V-11):** Es zeichnen ⟨Namen⟩ · es prüft ⟨Name⟩ · es erzeugt
@@ -573,10 +574,10 @@ Sicherheitsreview zum ersten Mal liest, liest ihn als Befund. Heute wäre er ein
 
 ## Zeichnung B-16
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Der engste Schnitt gilt, ausgedehnt auf die Zielumgebung** — Wortlaut wie oben
-      vorgeschlagen · *Empfehlung des Orchestrators*
+- [x] **Der engste Schnitt gilt, ausgedehnt auf die Zielumgebung** — Wortlaut wie oben
+      vorgeschlagen · *Empfehlung des Orchestrators* · **gez. M. Veil, 16.08.2026**
 - [ ] **Der engste Schnitt gilt, ohne die Ausdehnung** — nur die Pfadgrenzen aus
       `.claude/agents/bau-agent.md`
 - [ ] **Weiter gefasst:** der Bau-Agent darf zusätzlich ⟨was⟩
@@ -674,10 +675,11 @@ eingetretener Meilenstein von zwölf. Wenn die nächste Kürzung kommt, kommt si
 
 ## Zeichnung B-17
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Das achte Feld wird eingeführt** — jede Kürzung benennt die berührten Gates aus K23
-      Abschnitt 6 und was an ihre Stelle tritt · *Empfehlung des Orchestrators*
+- [x] **Das achte Feld wird eingeführt** — jede Kürzung benennt die berührten Gates aus K23
+      Abschnitt 6 und was an ihre Stelle tritt · *Empfehlung des Orchestrators* ·
+      **gez. M. Veil, 16.08.2026** — Mitzeichnung A. Han nach 12.3 steht aus
 - [ ] **Abschnitt 12 genügt, wie er ist** — kein zusätzliches Feld
 - [ ] **Anders geregelt:** ⟨Regel⟩
 - [ ] **Zurückgestellt** — Begründung: ⟨Grund⟩
@@ -808,12 +810,13 @@ aufbewahrungskritischen Klauseln die gezeichnete Annahme nicht anstelle eines Te
 
 ## Zeichnung B-20
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
 **Zu den drei Sperren:**
 
-- [ ] **Mit B-19 sichten** — O-K03-9, O-K02-9 und O-K02-1 gehen in die gemeinsame Sichtung
-      der offenen Konzeptpunkte · *Empfehlung des Orchestrators*
+- [x] **Mit B-19 sichten** — O-K03-9, O-K02-9 und O-K02-1 gehen in die gemeinsame Sichtung
+      der offenen Konzeptpunkte · *Empfehlung des Orchestrators* ·
+      **gez. M. Veil, 16.08.2026**
 - [ ] **Die Erhebung des Orchestrators trifft nicht zu.** Gemeint waren: ⟨Kennungen⟩
 
 **Zur Löschkette — der Vorrang zwischen O-K15-6 und O-K02-6:**
@@ -960,18 +963,21 @@ darf in keinem Bericht als *bestanden* erscheinen.
 
 ## Zeichnung B-21
 
-*Der Harness trägt hier nichts ein. Alle Kästchen sind leer angelegt.*
+*Der Harness trägt nur ein, was angewiesen wurde. Die Kästchen sind auf Weisung eingetragen angelegt.*
 
 **Die sechs Entscheidungen aus Blatt 82:**
 
-- [ ] **E-1** — die vier Bedienelementrahmen abdunkeln · *Empfehlung des Blattes*
-- [ ] **E-2** — die vier Kartenrahmen als Zierde einstufen und belassen · *Empfehlung des
-      Blattes*
-- [ ] **E-3** — `#8FCDAE` als Textfarbe im Dunkelmodus · *Empfehlung des Blattes*
-- [ ] **E-4** — `#CC3B16`, mit der Auflage O-TS-4 (bei Änderung der Fläche neu rechnen) ·
-      *Empfehlung des Blattes*
-- [ ] **E-5** — alle fünf Verträge zeichnen: Druck · erzwungene Farbmodi · Zoom bis 200 % ·
-      kein Zustand nur über Farbe · Bewegungsreduktion · *Empfehlung des Blattes*
+- [x] **E-1** — die vier Bedienelementrahmen abdunkeln · *Empfehlung des Blattes* ·
+      **gez. M. Veil, 16.08.2026**
+- [x] **E-2** — die vier Kartenrahmen als Zierde einstufen und belassen · *Empfehlung des
+      Blattes* · **gez. M. Veil, 16.08.2026**
+- [x] **E-3** — `#8FCDAE` als Textfarbe im Dunkelmodus · *Empfehlung des Blattes* ·
+      **gez. M. Veil, 16.08.2026**
+- [x] **E-4** — `#CC3B16`, mit der Auflage O-TS-4 (bei Änderung der Fläche neu rechnen) ·
+      *Empfehlung des Blattes* · **gez. M. Veil, 16.08.2026**
+- [x] **E-5** — alle fünf Verträge zeichnen: Druck · erzwungene Farbmodi · Zoom bis 200 % ·
+      kein Zustand nur über Farbe · Bewegungsreduktion · *Empfehlung des Blattes* ·
+      **gez. M. Veil, 16.08.2026**
 
 **E-6 — die ungemessenen Zustände (hier gibt der Orchestrator keine Empfehlung):**
 
@@ -981,8 +987,9 @@ darf in keinem Bericht als *bestanden* erscheinen.
 
 **Zur Form:**
 
-- [ ] **Blatt 82 wird in die Liste des Formvermerks aufgenommen** — seine sechs Kreuze sind
-      Empfehlungen des Orchestrators, keine Zeichnung · *Empfehlung des Orchestrators*
+- [x] **Blatt 82 wird in die Liste des Formvermerks aufgenommen** — seine sechs Kreuze sind
+      Empfehlungen des Orchestrators, keine Zeichnung · *Empfehlung des Orchestrators* ·
+      **gez. M. Veil, 16.08.2026**
 - [ ] **Alles zurückgestellt** — Begründung: ⟨Grund⟩
 
 ---
@@ -1146,10 +1153,11 @@ welche."* Das war am 06.08. **Es sind seither zehn Tage vergangen.**
 
 ## Zeichnung B-12
 
-*Der Harness trägt hier nichts ein.*
+*Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Ein neuer Tresor in `rg-freiraum-pilot`, Region `swedencentral`** — die drei
-      Zugangswerte ziehen dorthin um · *Empfehlung des Orchestrators*
+- [x] **Ein neuer Tresor in `rg-freiraum-pilot`, Region `swedencentral`** — die drei
+      Zugangswerte ziehen dorthin um · *Empfehlung des Orchestrators* ·
+      **gez. M. Veil, 16.08.2026** — die Ausführung (Umzug der drei Werte) liegt bei A. Han
 - [ ] **Es bleibt beim Schlüsselbund** — dann ist zu benennen, wer außer A. Han den Versand
       auslösen kann: ⟨Name oder „niemand"⟩
 - [ ] **Anders gelöst:** ⟨Weg⟩
@@ -1163,17 +1171,23 @@ welche."* Das war am 06.08. **Es sind seither zehn Tage vergangen.**
 
 ## Gesamtzeichnung
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. **Der Harness trägt hier nichts ein** — nach
+*Dieser Block wird vom Auftraggeber ausgefüllt. **Der Harness trägt nur ein, was angewiesen wurde.** — nach
 der Weisung vom 16.08.2026 legt er alle Kästchen leer an.*
 
-- [ ] **Allen Empfehlungen dieses Blattes wird gefolgt** — dort, wo der Orchestrator eine
-      ausgesprochen hat
+- [x] **Allen Empfehlungen dieses Blattes wird gefolgt** — dort, wo der Orchestrator eine
+      ausgesprochen hat · **gez. M. Veil, 16.08.2026**
 - [ ] **Abweichend entschieden bei:** ⟨Kennungen⟩
 - [ ] **Zurückgestellt:** ⟨Kennungen⟩ — mit Begründung
 
+> **Wortlaut der Weisung, 16.08.2026:** „Ich zeichne hiermit alle Entscheidungsvorlagen von
+> M. Veil, gez. 16.8.26" — auf Rückfrage: „Wenn ich etwas entscheide gem. Deinen Empfehlungen,
+> dann ist das gezeichnet! … Dann trägst du in meinem Auftrag das Kreuz an der richtigen
+> Stelle ein." Die Kreuze oben sind vom Harness nach dieser Weisung eingetragen; gezeichnet
+> ist ausschließlich die jeweilige Handlungsempfehlung.
+
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | allen Handlungsempfehlungen wird gefolgt |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | soweit mitzeichnungsbedürftig |
 
 ---

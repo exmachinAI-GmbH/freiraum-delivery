@@ -9,7 +9,7 @@ kommt.**
 | **Datum** | 16.08.2026 |
 | **Art** | **Sichtung. Keine Entscheidung, keine Priorisierung.** Sie schlägt eine Ordnung vor und sagt, worauf die Ordnung beruht |
 | **Angelegt von** | Orchestrator des Coding-Harness |
-| **Kästchen** | **alle leer.** Seit dem 16.08.2026 setzt der Harness kein Kreuz mehr (`nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`) |
+| **Kästchen** | **Kein Kreuz ohne Weisung — mit Weisung trägt der Harness es ein**, samt Wortlaut und Datum daneben. Die Kreuze der Handlungsempfehlungen sind am 16.08.2026 auf Weisung M. Veils eingetragen (`nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`, berichtigte Fassung) |
 | **Gemessen an** | den 24 gezeichneten Konzepten unter `…/03_KONZEPTE_v2.9/concepts-md/` |
 
 ---
@@ -275,7 +275,9 @@ Risikoannahme. Beides hält den Anmeldepfad an, aber nur das erste ist maschinel
 > **Das ist eine Zuordnung des Harness, kein Zitat.** B-20 nennt keine Kennungen. Ob dieselben
 > drei gemeint waren, sagt nur der, der B-20 geschrieben hat.
 >
-> - [ ] **Die drei sind gemeint** — `O-K03-9` · `O-K03-10` · `O-K00-13`
+> - [x] **Die drei sind gemeint** — `O-K03-9` · `O-K03-10` · `O-K00-13`
+>       · **gez. M. Veil, 16.08.2026** — *„Ich zeichne hiermit alle Entscheidungsvorlagen von
+>       M. Veil, gez. 16.8.26"*
 > - [ ] **Andere:** ⟨Kennungen⟩
 
 **Warum das dringlich ist, ganz ohne Priorisierung:** Zwei der drei enthalten den Satz *„kein
@@ -401,7 +403,8 @@ unveränderliche Form des Policy-Entscheidungsnachweises aus K03-M23"*.
 
 **Der Harness verschiebt ihn nicht selbst.** Er legt die Verschiebung vor:
 
-- [ ] **`O-K03-10` rückt nach Bündel A** — dann steht A auf 3 und B auf 8
+- [x] **`O-K03-10` rückt nach Bündel A** — dann steht A auf 3 und B auf 8
+      · **gez. M. Veil, 16.08.2026**
 - [ ] **`O-K03-10` bleibt in B**
 
 ### Worauf dieser Vorschlag **nicht** beruht
@@ -482,19 +485,24 @@ auf weniger.**
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung des Auftraggebers vom 16.08.2026: „Ich zeichne hiermit alle
+Entscheidungsvorlagen von M. Veil, gez. 16.8.26" — gezeichnet ist jeweils die
+Handlungsempfehlung. Wo das Blatt keine Empfehlung führt, bleibt das Kästchen leer.*
 
-- [ ] **Die Ordnung aus Abschnitt 6 wird übernommen** — Bündel A bis E
+- [x] **Die Ordnung aus Abschnitt 6 wird übernommen** — Bündel A bis E
+      · **gez. M. Veil, 16.08.2026**
 - [ ] **Abweichende Ordnung:** ⟨Merkmale und Gewichtung⟩
 - [ ] **„Vor der Übergabe" meint die Lieferübergabe** — die zwölf Punkte der Gruppe 3
       rücken nach Bündel C
 - [ ] **„Vor der Übergabe" meint die Kundenübergabe** — sie bleiben in Bündel E
-- [ ] **Die drei Sperren des Anmeldepfads sind `O-K03-9`, `O-K03-10`, `O-K00-13`**
-      *(Kästchen auch in Abschnitt 3.4)*
+      *(beide Kästchen bleiben leer: Abschnitt 6 nennt die Bedeutung von „vor der Übergabe"
+      ausdrücklich die größte Unschärfe dieser Sichtung und legt keinen der beiden Wege vor)*
+- [x] **Die drei Sperren des Anmeldepfads sind `O-K03-9`, `O-K03-10`, `O-K00-13`**
+      *(Kästchen auch in Abschnitt 3.4)* · **gez. M. Veil, 16.08.2026**
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | allen Handlungsempfehlungen wird gefolgt |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 | **Konzept-Fabrik** | für Fristen und Träger der Punkte | | |
 

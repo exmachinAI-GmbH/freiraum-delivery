@@ -152,17 +152,24 @@ Korrekturblatt, das die Punkte B-6 und B-7 ohnehin brauchen.**
 
 ## Zeichnung
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein — er legt
-das Blatt an und lässt die Kreuze leer (`formvermerk_uebertragene_kreuze_260816.md`).*
+*Eingetragen auf Weisung des Auftraggebers vom 16.08.2026: „Ich zeichne hiermit alle
+Entscheidungsvorlagen von M. Veil, gez. 16.8.26" — gezeichnet ist die Handlungsempfehlung.
+**Abschnitt 5 dieses Blattes wählt selbst keinen Weg;** die Empfehlung auf Weg A stammt aus
+der Handlungsempfehlung des Orchestrators vom 16.08.2026: Weg A deckt den einzigen Stand,
+der noch existiert, und dieser Stand ist durch Korrekturblatt 37 gedeckt.*
 
-- [ ] **Weg A** — heutigen Stand als Fassung nachzeichnen, danach Prüfsumme neu bilden
+- [x] **Weg A** — heutigen Stand als Fassung nachzeichnen, danach Prüfsumme neu bilden
+      · **gez. M. Veil, 16.08.2026** — *„Ich zeichne hiermit alle Entscheidungsvorlagen von
+      M. Veil, gez. 16.8.26"*
 - [ ] **Weg B** — die Prüfsumme `70bea79ac999d2921da622dd8814bbd59fbf6be453177112d6632a2329d57a35` zeichnen, als Stand vom **07.08.2026**
 - [ ] **Weg C** — den 05.08.-Stand wiederbeschaffen und beide Prüfsummen zeichnen
 - [ ] **Der Bauauftrag, Abschnitt 11.1, wird mit dem nächsten Korrekturblatt nachgezogen**
+      *(bleibt leer — für dieses Blatt lag die Weisung „genau ein Kreuz" vor. Abschnitt 5
+      sagt, dieser Punkt gehöre dazu, **egal welcher Weg gewählt wird**; er ist nachzuzeichnen)*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | allen Handlungsempfehlungen wird gefolgt |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | Mitzeichnung, wie bei der Anlage selbst |
 
 ---

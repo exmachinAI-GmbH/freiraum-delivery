@@ -137,20 +137,20 @@ Begründung die **Klausel**, nicht den Bauvorschlag. Sonst ist die Trennung, die
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 - [ ] **Weg A** — Prüffälle nachziehen
 - [ ] **Weg B** — alte Fassung zurückholen. **Bekannte Folge:** die Umgehung ist wieder offen
-- [ ] **Weg C** — nachziehen und den Vorgang zeichnen ✅ *Empfehlung*
+- [x] **Weg C** — nachziehen und den Vorgang zeichnen · **gez. M. Veil, 16.08.2026**
 - [ ] **anders:** ⟨…⟩
 
 **Bei Weg A oder C zusätzlich:**
 
-- [ ] Die Änderung schreibt der **Prüf-Agent**, mit der Klausel als Begründung — nicht der Bau
+- [x] Die Änderung schreibt der **Prüf-Agent**, mit der Klausel als Begründung — nicht der Bau · **gez. M. Veil, 16.08.2026**
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | Weg C, Prüf-Agent schreibt |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 
 ---

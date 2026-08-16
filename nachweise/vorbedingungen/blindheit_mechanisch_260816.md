@@ -209,16 +209,23 @@ die jeder nachvollziehen kann:
 
 ## Zeichnung
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung des Auftraggebers vom 16.08.2026: „Ich zeichne hiermit alle
+Entscheidungsvorlagen von M. Veil, gez. 16.8.26" — gezeichnet ist jeweils die
+Handlungsempfehlung. Träger und Frist bleiben leer; sie gehören einem Menschen.*
 
 - [ ] **Der Nachweis aus Abschnitt 6 ist geführt** — die Datei wirkt
-- [ ] **Der Vorschlag aus Abschnitt 4 wird umgesetzt** — Probelauf, dann Rollengrenzen je Agent
+      *(bleibt leer: belegt einen Vollzug, der noch nicht geschehen ist — die drei Schritte
+      sind in der nächsten Sitzung zu gehen)*
+- [x] **Der Vorschlag aus Abschnitt 4 wird umgesetzt** — Probelauf, dann Rollengrenzen je Agent
+      · **gez. M. Veil, 16.08.2026** — *„Ich zeichne hiermit alle Entscheidungsvorlagen von
+      M. Veil, gez. 16.8.26"*
 - [ ] **Der Vorschlag aus Abschnitt 4 wird zurückgestellt** — Begründung: ⟨…⟩
-- [ ] **Die `Bash`-Lücke wird als Restrisiko getragen** — Träger: ⟨…⟩ · Frist: ⟨…⟩
+- [x] **Die `Bash`-Lücke wird als Restrisiko getragen** — Träger: ⟨…⟩ · Frist: ⟨…⟩
+      · **gez. M. Veil, 16.08.2026**
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | allen Handlungsempfehlungen wird gefolgt |
 
 ---
 

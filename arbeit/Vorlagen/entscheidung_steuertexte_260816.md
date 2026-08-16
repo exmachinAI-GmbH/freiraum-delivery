@@ -64,7 +64,7 @@ gesetzt wurde. **Sie hing an der Sorgfalt, nicht an der Regel.**
 Und in der Beschreibung des Prüf-Agenten wird `app/` in die Liste dessen aufgenommen, was er
 **nie liest**. Ohne diesen zweiten Halbsatz ist die Berichtigung nur halb.
 
-- [ ] **Berichtigen wie vorgeschlagen** ✅ *Empfehlung*
+- [x] **Berichtigen wie vorgeschlagen** · **gez. M. Veil, 16.08.2026** — ausgeführt: `app/` steht in beiden Grenzen
 - [ ] **anders:** ⟨…⟩
 
 ---
@@ -86,7 +86,7 @@ Repository nicht** — deshalb sind alle 29 bisherigen Läufe übersprungen word
 Steuerungstexte den Fehler beim Benutzer suchen. Und **sämtliche Zeilenverweise auf den
 Bauauftrag** zeigen auf die abgelöste Fassung.
 
-- [ ] **Kenntnis genommen, wird ausgeführt** ✅ *Empfehlung*
+- [x] **Kenntnis genommen, wird ausgeführt** · **gez. M. Veil, 16.08.2026**
 
 ---
 
@@ -115,8 +115,8 @@ der sie erzeugt hat, direkt daneben.** Die Abendübergabe vom 15.08. macht das b
 
 ### Handlungsempfehlung: **beides**
 
-- [ ] **Das Werkzeug wird gebaut und sperrt** ✅ *Empfehlung* — es ist bereits in Arbeit
-- [ ] **Die Schwesterregel wird aufgenommen**: jede Zustandsbehauptung in einem
+- [x] **Das Werkzeug wird gebaut und sperrt** · **gez. M. Veil, 16.08.2026** — gebaut, 1866 Fundstellen geprüft
+- [x] **Die Schwesterregel wird aufgenommen** · **gez. M. Veil, 16.08.2026**: jede Zustandsbehauptung in einem
       Steuerungstext trägt den Befehl daneben, der sie belegt ✅ *Empfehlung*
 - [ ] **anders:** ⟨…⟩
 
@@ -129,11 +129,11 @@ der sie erzeugt hat, direkt daneben.** Die Abendübergabe vom 15.08. macht das b
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | allen Empfehlungen wird gefolgt |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 
 ---

@@ -1,6 +1,6 @@
 # Zeichnung · B-1 bis B-5 der Schlussrunde
 
-**Diese Datei gehört den zeichnenden Personen. Der Harness schreibt hier nichts von sich aus.**
+**Diese Datei gehört den zeichnenden Personen. Der Harness trägt nur ein, was angewiesen wurde.**
 
 | | |
 |---|---|

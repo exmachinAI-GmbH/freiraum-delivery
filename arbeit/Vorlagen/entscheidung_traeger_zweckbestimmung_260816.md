@@ -130,31 +130,32 @@ Dauermessungen am Bestand, die auch finden, was auf unbekanntem Weg entstanden i
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 **Bis zur Zeichnung bleibt der Prüffall VP-24 rot.** Er wird als Befund geführt, nicht
 nachgezogen.
 
 - [ ] **Weg A** — zwei Felder an der Prüftabelle
 - [ ] **Weg B** — Ereignisse, wie der Behelf es vorsieht
-- [ ] **Weg C** — beides, mit der Auflage einer dauerhaften Messung ✅ *Empfehlung*
+- [x] **Weg C** — beides, mit der Auflage einer dauerhaften Messung · **gez. M. Veil, 16.08.2026**
 - [ ] **anders:** ⟨…⟩
 
 **Gilt die Entscheidung für beides — die zwei Antworten und die Kenntnisnahme?**
 
-- [ ] ja, für beides
+- [x] ja, für beides · **gez. M. Veil, 16.08.2026**
 - [ ] nein, getrennt: Antworten ⟨…⟩ · Kenntnisnahme ⟨…⟩
 
 **Damit ist zugleich zu entscheiden:**
 
-- [ ] **O-K04-8 gilt als geschlossen.** Der Behelf K04-G12 wird abgelöst
-- [ ] **Die Schwesterfrage (Träger der Antworten) bekommt eine eigene Kennung** und wird in
+- [x] **O-K04-8 gilt als geschlossen.** Der Behelf K04-G12 wird abgelöst · **gez. M. Veil, 16.08.2026**
+- [x] **Die Schwesterfrage (Träger der Antworten) bekommt eine eigene Kennung** · **gez. M. Veil, 16.08.2026**
+      und wird in
       K04 nachgezogen — sie ist bis heute in keinem Konzept als offener Punkt geführt
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | |
+| **M. Veil** | Auftraggeber | **16.08.2026** | Weg C, für beides |
+| **A. Han** | für den Auftragnehmer (Nr. 158) | **16.08.2026** | mitgezeichnet — schließt O-K04-8 |
 
 ---
 

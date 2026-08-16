@@ -68,7 +68,7 @@ seit dem 16.08.2026 auf **30 von 30 bestanden**.
 > der Harness setzt in einem fremden Zeichnungsblock kein Kreuz (F40). Wer sie ausfüllt,
 > zeichnet dasselbe wie im Abnahmeblatt — es ist keine zweite Entscheidung.
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung des Auftraggebers; der Harness trägt nur ein, was angewiesen wurde.*
 
 **Handlungsempfehlung des Orchestrators:** Beide Starttore in einem Zug abnehmen — und
 **Starttor 05 und 15 gleich mit**. Dort fehlt dieselbe Unterschrift seit einer Woche, und

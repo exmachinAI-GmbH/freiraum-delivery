@@ -207,7 +207,7 @@ benannt:**
 
 ## 8 · Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 **Die Benennung selbst ist gezeichnet** — B-2, am 16.08.2026. Was hier offen ist, sind die
 drei Ausführungsschritte aus Abschnitt 6 und der Nachzug aus Abschnitt 7.

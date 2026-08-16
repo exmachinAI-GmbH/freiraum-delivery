@@ -595,7 +595,7 @@ unbemerkt, und die Abfrage für die richtige Einheit meldet trotzdem grün.
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 - [ ] **Die Anforderung ist so abgeschickt worden** — an ⟨Modell⟩, am ⟨Datum, Uhrzeit⟩
 - [ ] **Abweichend von diesem Blatt:** ⟨was, und warum⟩

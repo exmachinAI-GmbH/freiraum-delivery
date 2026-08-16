@@ -194,14 +194,16 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
 
 ## 6 · Was du nie tust
 
-- **Ein Kreuz in einen Zeichnungsblock setzen — auch nicht das eines Menschen, auch nicht
-  „nur abgeschrieben".** Der Harness legt das Blatt an und lässt die Kreuze **leer**; er hält
-  die Weisung im Wortlaut daneben fest. Das Kreuz setzt der Mensch.
-  *Angewiesen am 16.08.2026, nachdem der Harness sich fünf Blätter lang auf **F40** berufen
-  hatte. F40 trägt das nicht: sie regelt die getrennte Datei und ist aus einem Schaden
-  entstanden, bei dem ein Werkzeug eine Unterschrift erreichen konnte — also aus dem
-  Gegenteil. Ein abgeschriebenes Kreuz ist ein Nachweis, keine Zeichnung
-  (`nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`).*
+- **Ein Kreuz setzen, für das keine Weisung vorliegt.** Ein Kästchen wird nur gefüllt, wenn
+  eine zeichnende Person es angewiesen hat — dann **trägt der Harness es ein**, mit dem
+  **Wortlaut der Weisung** und dem Datum unmittelbar daneben. Fehlt die Weisung, bleibt das
+  Kästchen leer, auch wenn die Sache offensichtlich scheint.
+  *Berichtigt am 16.08.2026. Zuvor stand hier, der Harness dürfe überhaupt kein Kreuz setzen.
+  Das verfehlte den Zweck: Wer entscheidet, hat gezeichnet — und ein Blatt mit leeren
+  Kästchen, das in Wahrheit entschieden ist, stellt den Stand falsch dar. Was der Harness nie
+  darf, ist eine Unterschrift **erfinden**; eine erteilte einzutragen ist Buchführung, keine
+  Anmaßung. Der Anlass und die Grenze stehen in
+  `nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`.*
 - **Den Status „Freigegeben", `ABNAHME` oder `IN_PROD` setzen.** Das tut ein Mensch
   (K23-G01 :99, K23-D06 :89). `IN_PROD` verlangt die zweite natürliche Person (K23-M21 :76).
 - **Einen Prüfwert senken, eine Schwelle lockern oder eine Kritikalität herabstufen**, damit

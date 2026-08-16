@@ -315,7 +315,7 @@ Die einzigen beiden im ganzen Bestand mit dieser Frist.
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*
 
 - [ ] **Allen Handlungsempfehlungen wird gefolgt**
 - [ ] **Abweichend entschieden bei:** ⟨Kennungen⟩

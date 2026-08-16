@@ -41,7 +41,7 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 | | Frage | Anzahl |
 |---|---|---|
 | 1 | Welche gebaute Datei sagt nicht, wofür sie da ist? | **2** |
-| 2 | Was wird gemessen, das niemand gebaut hat? | **9** |
+| 2 | Was wird gemessen, das niemand gebaut hat? | **10** |
 | 3 | Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt? | **51** |
 | 4 | Welcher Prüffall ist noch nie in einem Protokoll gelaufen? | **8** |
 | 5 | Welches Protokoll führt eine Kennung ohne Prüffall? | **0** |
@@ -55,8 +55,9 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `install/nach_umzug.sh`
 - `mail/__init__.py`
 
-**2 · Was wird gemessen, das niemand gebaut hat?** — 9 Einträge
+**2 · Was wird gemessen, das niemand gebaut hat?** — 10 Einträge
 
+- `K01-M35`
 - `K04-D11`
 - `K04-G08`
 - `K04-M07`
@@ -116,7 +117,7 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql`
 - `migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql`
 - `migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql`
-- `migrations/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql`
+- `migrations/negativfaelle/M31_N4_erklaerung_ohne_zweite_antwort.sql`
 - `pruefungen/klauseln/vorpruefung_daten.sql`
 - `pruefungen/klauseln/vorpruefung_lauf.sh`
 - `pruefungen/klauseln/zweckbestimmung_daten.sql`

@@ -116,7 +116,7 @@ Tabellenzeile in einer Regeltabelle wären sie die mit Abstand längsten Zellen 
 Gegenmöglichkeit ist ein **eigener Abschnitt 3a und 8a** je Nachtrag. Das ist Geschmack, nicht
 Sache — aber es ist eine Entscheidung, und sie gehört dem Menschen.
 
-- [ ] **Vorschlag** — `HV-M21` in Abschnitt 3, `HV-M22` in Abschnitt 8
+- [x] **Vorschlag** — `HV-M21` in Abschnitt 3, `HV-M22` in Abschnitt 8 — **gez. M. Veil, 16.08.2026**
 - [ ] **Eigene Abschnitte** — je Nachtrag ein eigener Abschnitt
 - [ ] **Anders:** ⟨Stelle⟩
 
@@ -166,8 +166,9 @@ belegt. `CLAUDE.md` Abschnitt 0 trennt sie in zwei Zeilen ausdrücklich:
 
 Eine Regel, die bei jeder Nennung ein Beiwort verlangt, schützt genau diese Trennung.
 
-- [ ] **`SPR-10` geht mit** — Wortlaut wird beim Zeichnen beigelegt und in
+- [x] **`SPR-10` geht mit** — Wortlaut wird beim Zeichnen beigelegt und in
       `CONTRIBUTING.md` sowie in die Kurzfassung des Nachtrags übernommen
+      — **gez. M. Veil, 16.08.2026**
 - [ ] **`SPR-10` geht nicht mit** — sie bleibt Arbeitsregel und kommt mit dem nächsten
       Nachtrag; der Sprach-Nachtrag geht unverändert in die Anlage
 - [ ] **Anders:** ⟨Entscheidung⟩
@@ -197,7 +198,7 @@ gehört das Blatt dem Menschen, sobald ein Kreuz darin steht. **Der Tag, an dem 
 Nachträge ohnehin neu gezeichnet wird, ist der richtige Tag dafür** — dann wird das Blatt
 einmal angefasst statt zweimal.
 
-- [ ] **Beim Zeichnen mit nachziehen** — Zeile 37 auf den Stand vom 16.08.2026 berichtigen
+- [x] **Beim Zeichnen mit nachziehen** — Zeile 37 auf den Stand vom 16.08.2026 berichtigen — **gez. M. Veil, 16.08.2026**
 - [ ] **Getrennt behandeln:** ⟨Begründung⟩
 
 ---
@@ -248,7 +249,7 @@ kein Umfang. **Kein zusätzliches Abnahmetor entsteht.**
 
 ## 7 · Was dieses Blatt nicht tut
 
-- **Es zeichnet nicht.** Alle Kästchen sind leer.
+- **Es zeichnet nicht.** Die Kästchen sind auf Weisung eingetragen.
 - **Es formuliert `SPR-10` nicht.** Der Wortlaut ist von hier aus nicht lesbar; ihn zu
   erfinden wäre erfundener Umfang.
 - **Es fasst die Anlage nicht an.** Die Anlage liegt außerhalb dieses Repos, und das mit
@@ -260,9 +261,9 @@ kein Umfang. **Kein zusätzliches Abnahmetor entsteht.**
 
 ## Zeichnung
 
-*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt hier nichts ein.*
+*Dieser Block wird von Menschen ausgefüllt. Der Harness trägt nur ein, was angewiesen wurde.*
 
-- [ ] **Der Vollzug wird nach Abschnitt 5 ausgeführt**
+- [x] **Der Vollzug wird nach Abschnitt 5 ausgeführt** — **gez. M. Veil, 16.08.2026**
 - [ ] **Abweichend:** ⟨Schritt und Änderung⟩
 - [ ] **Zurückgestellt** — mit Begründung: ⟨…⟩
 
@@ -271,7 +272,7 @@ Dazu die drei Entscheidungen aus Abschnitt 4 — ihre Kästchen stehen dort:
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | 16.08.2026 | allen Handlungsempfehlungen wird gefolgt — Weisung im Wortlaut: *„Ich zeichne hiermit alle Entscheidungsvorlagen von M. Veil, gez. 16.8.26"* · *„Wenn ich etwas entscheide gem. Deinen Empfehlungen, dann ist das gezeichnet!"* |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 
 ---

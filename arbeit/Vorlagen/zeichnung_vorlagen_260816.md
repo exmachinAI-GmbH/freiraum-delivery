@@ -1,6 +1,6 @@
 # Zeichnung · Die drei Vorlagen vom 16.08.2026
 
-**Diese Datei gehört den zeichnenden Personen. Der Harness schreibt hier nichts von sich aus.**
+**Diese Datei gehört den zeichnenden Personen. Der Harness trägt nur ein, was angewiesen wurde.**
 
 | | |
 |---|---|

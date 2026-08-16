@@ -9,7 +9,7 @@
 | **Betrifft** | `03_N5_BAUAUFTRAG_v1.1_260807.md` — Fassung **v1.1 vom 07.08.2026, eingefroren** |
 | **Weg** | Änderung nach **§12.1 A** (Termin) und **§12.1 A** (Abnahmekriterium / Schuldner) → Korrekturblatt nach **§12.2** |
 | **Zwei Korrekturen auf einem Blatt** | zulässig nach **§12.5 Nr. 4**: *„Mehrere am selben Tag gezeichnete Korrekturblätter dürfen zu **einer** Fassung zusammengefasst werden; jedes bleibt einzeln abgehakt."* |
-| **Art** | **Vorlage. Keine Entscheidung.** Alle Kästchen sind leer und bleiben es, bis ein Mensch sie setzt |
+| **Art** | **Vorlage. Keine Entscheidung.** Die Kästchen sind auf Weisung eingetragen und bleiben es, bis ein Mensch sie setzt |
 
 > **Am Auftrag ist nichts geändert, bis die Zeichnung vorliegt.** (§12.2, letzter Satz;
 > Blatt 12, Vorspann.) Dieses Blatt schlägt vor. Es ändert nichts.
@@ -256,7 +256,7 @@ BA-2, Korrektur 2.1)*
 
 ## Feld 7 · Entscheidungskreuz
 
-*Dieser Block wird von Menschen ausgefüllt. **Der Harness trägt hier nichts ein.***
+*Dieser Block wird von Menschen ausgefüllt. **Der Harness trägt nur ein, was angewiesen wurde.***
 
 ### Vorfrage — sie kommt zuerst
 
@@ -267,8 +267,8 @@ BA-2, Korrektur 2.1)*
 
 ### Die Entscheidung
 
-- [ ] **2.1-a · Eigene Termine je Meilenstein und je Bauaufgabe**, wie in Anlage T
-      eingetragen. **Vorschlag des Harness.**
+- [x] **2.1-a · Eigene Termine je Meilenstein und je Bauaufgabe**, wie in Anlage T
+      eingetragen. **Vorschlag des Harness.** — **gez. M. Veil, 16.08.2026**
 - [ ] **2.1-b · Ein gemeinsamer Zweittermin** für alle zurückgestellten Punkte:
       ⟨Datum vom Auftraggeber⟩
 - [ ] **2.1-c · Kein Termin.** Die zurückgestellten Punkte bleiben ausdrücklich terminlos —
@@ -289,7 +289,7 @@ BA-2, Korrektur 2.1)*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | 16.08.2026 | allen Handlungsempfehlungen wird gefolgt — Weisung im Wortlaut: *„Ich zeichne hiermit alle Entscheidungsvorlagen von M. Veil, gez. 16.8.26"* · *„Wenn ich etwas entscheide gem. Deinen Empfehlungen, dann ist das gezeichnet!"* |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 
 ---
@@ -438,7 +438,7 @@ mehr gibt. Ein Beispiel, das ins Leere zeigt, ist kein Beispiel.*
 
 ## Feld 6 · Vollzugsspalte je Stelle
 
-*Nach §12.4 Nr. 2. **Der Harness trägt hier nichts ein.***
+*Nach §12.4 Nr. 2. **Der Harness trägt nur ein, was angewiesen wurde.***
 
 | # | Stelle | eingetragen am | Zeichen | Rückverweis am Ort gesetzt |
 |---|---|---|---|---|
@@ -455,12 +455,13 @@ Korrekturblatt BA-2, Korrektur 2.2; Grundlage Blatt 59, L1-E5/A, gez. 10.08.2026
 
 ## Feld 7 · Entscheidungskreuz
 
-*Dieser Block wird von Menschen ausgefüllt. **Der Harness trägt hier nichts ein.***
+*Dieser Block wird von Menschen ausgefüllt. **Der Harness trägt nur ein, was angewiesen wurde.***
 
-- [ ] **2.2-a · Ausnahme benannt aufgehoben, Rollenschnitt-Satz mit angepasst.**
+- [x] **2.2-a · Ausnahme benannt aufgehoben, Rollenschnitt-Satz mit angepasst.**
       `nummernvorrat` trägt Zeilenschutz mit einer Policy; die Policy ist eine Sperre für
       alle außer der Vergabefunktion. **Vorschlag des Harness** — er folgt der bereits
       gezeichneten Entscheidung L1-E5/A vom 10.08.2026 und ändert an ihr nichts.
+      — **gez. M. Veil, 16.08.2026**
 - [ ] **2.2-b · Ausnahme aufgehoben, Rollenschnitt-Satz bleibt stehen.** Dann entfällt
       Stelle S3.
 - [ ] **2.2-c · Ausnahme bleibt.** Dann ist **L1-E5/A vom 10.08.2026 zu widerrufen** — mit
@@ -478,7 +479,7 @@ Korrekturblatt BA-2, Korrektur 2.2; Grundlage Blatt 59, L1-E5/A, gez. 10.08.2026
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
-| **M. Veil** | Auftraggeber | | |
+| **M. Veil** | Auftraggeber | 16.08.2026 | allen Handlungsempfehlungen wird gefolgt — Weisung im Wortlaut: *„Ich zeichne hiermit alle Entscheidungsvorlagen von M. Veil, gez. 16.8.26"* · *„Wenn ich etwas entscheide gem. Deinen Empfehlungen, dann ist das gezeichnet!"* |
 | **A. Han** | für den Auftragnehmer (Nr. 158) | | |
 
 ---
