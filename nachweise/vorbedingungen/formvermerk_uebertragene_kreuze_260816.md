@@ -86,15 +86,33 @@ nicht den Inhalt der Entscheidung.
 
 ---
 
+## Die Weisung des Auftraggebers vom 16.08.2026
+
+> „Gem. Empfehlungen gezeichnet. M. Veil"
+
+**Damit ist entschieden: Weg B, und künftig legt der Harness die Kreuze leer an.**
+
+### Warum unten trotzdem kein Kreuz steht
+
+**Weil die zweite Entscheidung genau das verlangt.** Sie lautet: *„Künftig legt der Harness
+die Kreuze leer an. Der Mensch setzt sie."* Sie ist mit dieser Weisung in Kraft — und der
+erste Fall, auf den sie zutrifft, ist dieses Blatt selbst.
+
+Würde der Harness hier ein Kreuz setzen, führte er die Regel im selben Augenblick vor, in dem
+er sie bekommt. **Die Weisung steht oben im Wortlaut; sie ist der Nachweis. Das Kreuz setzt
+der Mensch** — ein Handgriff, und die Sache trägt.
+
+---
+
 ## Zeichnung
 
-*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein — diesmal
-wirklich nicht.*
+*Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein — ab jetzt
+in jedem Blatt.*
 
 - [ ] **Weg A** — die Blätter bleiben Nachweise
 - [ ] **Weg B** — hiermit gegengezeichnet: die abgeschriebenen Kreuze in den oben genannten
-      Blättern geben meine Weisungen zutreffend wieder ✅ *Empfehlung*
-- [ ] **Künftig legt der Harness die Kreuze leer an** ✅ *Empfehlung*
+      Blättern geben meine Weisungen zutreffend wieder ✅ *Empfehlung, am 16.08.2026 angewiesen*
+- [ ] **Künftig legt der Harness die Kreuze leer an** ✅ *Empfehlung, am 16.08.2026 angewiesen*
 
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
