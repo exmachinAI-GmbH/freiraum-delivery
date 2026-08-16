@@ -789,9 +789,12 @@ Kandidat ist entschieden statt offen gelassen.
 > | **Befund** | Der Portal-Hinweis nach Artikel 4 KI-VO fehlt im Endnutzer-Portal |
 > | **Grundlage** | §9 Tor II Bedingung 2: *„und **von L9** der Portal-Hinweis"* · §7a L9: *„vor der ersten Nutzung im Endnutzer-Portal"* |
 > | **Warum jetzt** | Mit der Entscheidung vom 16.08.2026 ist die Anmeldung *„Nutzung"*. Damit ist der Hinweis zum 31.08.2026 fällig |
-> | **Wer** | Auftragnehmer *(nur der Hinweis — Vertragsbaustein und Einweisung liegen bei Vertrieb und Geschäftsführung)* |
-> | **Wo** | mindestens `app/vorlagen/en01_anmeldung.html`; ob weitere Bildschirme betroffen sind, hängt am **Wortlaut**, den der Auftragnehmer liefert |
-> | **Was fehlt** | **der Wortlaut.** Der Harness baut keinen rechtlichen Hinweistext — das wäre Umfang erfinden |
+> | **Schuldner** | **Auftragnehmer** *(nur der Hinweis — Vertragsbaustein liegt beim Vertrieb, Einweisung bei der Geschäftsführung, beide außerhalb der Tore)* |
+> | **Wer baut** | **der Harness**, wie jeden anderen Bauposten. *Berichtigt am 16.08.2026: Eine frühere Fassung sagte, es fehle der Wortlaut und der Harness dürfe ihn nicht erfinden. §7a nennt für L9 **drei Abnahmekriterien im Wortlaut** — der Umfang ist damit vorgegeben, nicht zu erfinden* |
+> | **Die drei Kriterien** | 1 · vor der ersten Nutzung, **nicht in einer Fußzeile** · 2 · nennt: dass KI eingesetzt wird, dass der Kunde als Betreiber eigene Pflichten nach Artikel 4 hat, wo er Näheres findet · 3 · **Kenntnisnahme nachweisbar**, *„dieselbe Bauart wie bei der Zweckbestimmung (K04-M21)"* |
+> | **Warum das reicht** | Kriterium 3 verweist auf **K04-M21** — die Kenntnisnahme, die der Harness am 16.08.2026 für M4 gebaut hat. **Die Bauart liegt vor** |
+> | **Wo** | mindestens `app/vorlagen/en01_anmeldung.html` — Kriterium 1 verlangt *vor* der ersten Nutzung |
+> | **Was bei einem Menschen bleibt** | die **Abnahme** (A. Han, als Schuldner nach §7a) und die Frage, ob der Wortlaut zusätzlich **rechtlich geprüft** wird. §7a verlangt das für L9 **nicht** ausdrücklich — anders als bei **L8**, wo *„A. Han mit rechtlicher Beratung"* steht |
 
 ---
 

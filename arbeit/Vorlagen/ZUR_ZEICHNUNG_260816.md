@@ -20,10 +20,10 @@ Was bleibt, liegt bei A. Han — und eines davon hält alles andere auf.**
 |---|---|---|---|
 | **C-1** | **BA-1 und BA-2 gegenzeichnen** | **A. Han** | ⛔ **ja — die ganze Kette bis zur Fassung v1.2** |
 | **C-4** | Die Fremdprüfung abschicken | A. Han | ja — Messstufe 3 ist nie mit gültigem Blatt gelaufen |
-| **L9-A4** | Wortlaut des Artikel-4-Hinweises liefern | A. Han | ja — neuer Bauposten im Umfang des 31.08. |
+| **L9-A4** | Portal-Hinweis nach Artikel 4 **bauen** | **Harness** · Abnahme A. Han | ja — neuer Bauposten im Umfang des 31.08. |
 | **C-2** | Starttor 14 | A. Han · M. Veil | **löst sich mit dem Vollzug von BA-1 auf** |
 | **142 Kriterien** | je Klausel ein Abnahmekriterium | A. Han (154) · M. Veil (3) | ja — Bedingung 4 des Liefertors |
-| **O-K15-3** | Aufräumlauf für Einladungen, 90 Tage? | M. Veil | nein — Frist *vor Produktion* |
+| **O-K15-3** | Aufräumlauf für Einladungen, 90 Tage? | **beide Founder** | nein — Frist *vor Produktion* |
 
 ---
 
@@ -214,10 +214,43 @@ Zweckbestimmung. **Artikel 4 ist etwas anderes:** die Pflicht, Nutzern eines KI-
 ausreichende Kompetenz zu vermitteln.
 
 **Im Umfang ist nur der Hinweis**, nicht L9 als Ganzes (§9 Tor II Bedingung 2: *„und **von
-L9** der Portal-Hinweis"*). **Was fehlt, ist der Wortlaut** — den liefert der Auftragnehmer.
-Der Harness baut keinen rechtlichen Hinweistext; das wäre Umfang erfinden.
+L9** der Portal-Hinweis"*).
 
-- [ ] **Wortlaut geliefert** — A. Han · dann baut der Harness ihn ein
+### ⚠ Berichtigung vom 16.08.2026 — der Harness hatte sich zu Unrecht für unzuständig erklärt
+
+**Eine frühere Fassung dieses Befundes sagte: *„Was fehlt, ist der Wortlaut — den liefert der
+Auftragnehmer. Der Harness baut keinen rechtlichen Hinweistext; das wäre Umfang erfinden."***
+
+**Das trägt nicht.** §7a nennt für L9 **drei Abnahmekriterien im Wortlaut** — und damit ist
+der Umfang nicht zu erfinden, sondern vorgegeben:
+
+| | Kriterium aus §7a, L9 |
+|---|---|
+| **1** | Der Hinweis erscheint **vor der ersten Nutzung**, nicht in einer Fußzeile |
+| **2** | Er nennt: **dass KI eingesetzt wird** · **dass der Kunde als Betreiber eigene Pflichten nach Artikel 4 hat** · **wo er Näheres findet** |
+| **3** | Die Kenntnisnahme ist **nachweisbar** — *„dieselbe Bauart wie bei der Zweckbestimmung (K04-M21)"* |
+
+**Kriterium 3 ist der Punkt, an dem die Berichtigung offensichtlich wird.** Es verweist auf
+`K04-M21` — die Kenntnisnahme, die der Harness **am 16.08.2026 für M4 gebaut hat**. Die
+Bauart liegt vor; es ist dieselbe.
+
+**Was daraus folgt:**
+
+| | Wer |
+|---|---|
+| **Den Hinweis bauen** — Bildschirm, Träger, nachweisbare Kenntnisnahme nach K04-M21 | **Harness** (Bau-Agent), wie jeden anderen Bauposten |
+| **Prüffälle gegen die drei Kriterien** | **Prüf-Agent**, blind |
+| **Den Text fachlich verantworten und abnehmen** | **A. Han** für den Auftragnehmer — er ist Schuldner nach §7a |
+| **Rechtliche Prüfung des Wortlauts** | **offen** — §7a verlangt sie für L9 nicht ausdrücklich (anders als bei **L8**, wo *„A. Han mit rechtlicher Beratung"* steht). **Ob sie trotzdem gewollt ist, entscheidet ein Mensch** |
+
+> **Was der Harness weiterhin nicht tut:** Er entscheidet nicht, ob der Text rechtlich
+> genügt. Er baut gegen drei benannte Kriterien und legt das Ergebnis zur Abnahme vor. Der
+> Unterschied zur früheren Fassung ist: **Er wartet damit nicht auf eine Zulieferung, die
+> der Auftrag gar nicht verlangt.**
+
+- [ ] **Der Harness baut den Hinweis gegen die drei Kriterien** — Abnahme A. Han
+- [ ] **Der Wortlaut wird vorher rechtlich geprüft** — A. Han
+- [ ] **Anders:** ⟨…⟩
 
 ---
 ---
