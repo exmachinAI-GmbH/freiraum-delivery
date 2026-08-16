@@ -1269,6 +1269,62 @@ EXCEPTION WHEN others THEN
     false,'FEHLER: '||SQLERRM);
 END $$;
 
+-- ---------------------------------------------------------------------
+-- MT-95b · DIE OFFENE TUER (nachgetragen 16.08.2026)
+--
+-- WARUM ES IHN GIBT. MT-95 ruft den Befehl OHNE Rollenwechsel auf, also
+-- als Eigentuemer der Datenbank. MT-96 und MT-97 messen, was dem
+-- Portalpfad VERWEHRT ist. Damit misst diese Stelle bisher nur die
+-- geschlossene Tuer: Fielen die Rechte-Anweisungen der Migration ersatzlos
+-- weg, blieben MT-96 und MT-97 GRUEN -- ihnen genuegt, dass etwas
+-- scheitert. Die Bauaufgabe L1 sagt dazu: "Ein Regime, das alles
+-- verbietet, bestuende jeden Negativtest -- und die Anwendung liefe
+-- nicht."
+--
+-- WAS ER MISST. Unter DERSELBEN Rolle, der MT-96 den direkten Weg
+-- verwehrt, MUSS der vorgesehene Weg GELINGEN: fr_portal ruft
+-- create_app_after_fit auf, und die Zeile entsteht wirklich. Erst beide
+-- Faelle zusammen sind eine Unterscheidung -- verwehrt ist der eine Weg,
+-- offen der andere.
+--
+-- WORAN ER SCHEITERT, WENN ER SCHEITERT: an seiner eigenen Bedingung.
+-- Mandant, Konto und Eignungs-Check sind dieselben wie in MT-95, das
+-- ohne Rollenwechsel gelingt; die Projektnummer ist frei. Unterschieden
+-- ist allein die Rolle. Fehlt dem Portalpfad das Ausfuehrungsrecht --
+-- oder laeuft der Befehl mit den Rechten des Aufrufers statt mit denen
+-- seines Eigentuemers --, faellt er hier auf.
+--
+-- Die Gestalt des Befehls wird nicht angenommen, sondern ERFRAGT: gaebe
+-- es ihn in der Gestalt mit fuenf Werten nicht, scheiterte der Fall an
+-- "Funktion nicht vorhanden" -- also an einer FREMDEN Bedingung. Dann
+-- meldet er das ausdruecklich, statt es als fehlendes Recht auszugeben.
+-- ---------------------------------------------------------------------
+DO $$
+DECLARE neu uuid; da boolean; steht int;
+BEGIN
+  SELECT EXISTS (SELECT 1 FROM pg_proc
+                  WHERE proname='create_app_after_fit' AND pronargs=5) INTO da;
+  IF NOT da THEN
+    INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+      false,'NICHT GEMESSEN: create_app_after_fit besteht nicht in der Gestalt mit fuenf Werten, gegen die MT-95 laeuft -- der Rechteweg ist damit nicht pruefbar');
+  ELSE
+    SET LOCAL ROLE fr_portal;
+    neu := create_app_after_fit('00000000-0000-0000-0000-000000000002',
+                                'DE-DMB_005_01','Ueber den Portalpfad',
+                                '00000000-0000-0000-0000-0000000000e1',
+                                '00000000-0000-0000-0000-0000000000a3');
+    RESET ROLE;
+    SELECT count(*) INTO steht FROM app WHERE project_no='DE-DMB_005_01';
+    INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+      neu IS NOT NULL AND steht = 1,
+      'unter fr_portal angelegt: '||coalesce(neu::text,'—')||', Zeilen mit DE-DMB_005_01: '||steht);
+  END IF;
+EXCEPTION WHEN others THEN
+  RESET ROLE;
+  INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+    false,'FEHLER unter fr_portal: '||SQLERRM);
+END $$;
+
 -- Gegentest: der Portalpfad kommt an der Tabelle nicht mehr vorbei.
 DO $$ BEGIN
   SET LOCAL ROLE fr_portal;

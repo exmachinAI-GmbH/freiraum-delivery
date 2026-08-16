@@ -13,14 +13,14 @@ und er ist **Bedingung 4 der technischen Lieferabnahme (Tor II)**.
 | | Anzahl |
 |---|---|
 | Anforderungen insgesamt | 1231 |
-| **vom gebauten Code genannt** | **96** |
-| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 15 |
-| davon nur nebenbei erwähnt | 81 |
-| vom Code genannt **und** von einem Prüffall gemessen | 48 |
-| **vom Code genannt und von niemandem gemessen** | **48** |
-| **davon als kritisch vorgeschlagen** | **22** |
+| **vom gebauten Code genannt** | **135** |
+| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 30 |
+| davon nur nebenbei erwähnt | 105 |
+| vom Code genannt **und** von einem Prüffall gemessen | 84 |
+| **vom Code genannt und von niemandem gemessen** | **51** |
+| **davon als kritisch vorgeschlagen** | **23** |
 | Bildschirme im Vertrag | 33 |
-| davon gebaut | 1 |
+| davon gebaut | 5 |
 
 Die Zeile *davon als kritisch vorgeschlagen* ist die, auf die es ankommt:
 **im Code genannt, als kritisch vorgeschlagen, von keinem Prüffall gemessen.**
@@ -41,11 +41,11 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 | | Frage | Anzahl |
 |---|---|---|
 | 1 | Welche gebaute Datei sagt nicht, wofür sie da ist? | **2** |
-| 2 | Was wird gemessen, das niemand gebaut hat? | **6** |
-| 3 | Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt? | **48** |
-| 4 | Welcher Prüffall ist noch nie in einem Protokoll gelaufen? | **0** |
+| 2 | Was wird gemessen, das niemand gebaut hat? | **9** |
+| 3 | Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt? | **51** |
+| 4 | Welcher Prüffall ist noch nie in einem Protokoll gelaufen? | **8** |
 | 5 | Welches Protokoll führt eine Kennung ohne Prüffall? | **0** |
-| 6 | Welcher Bildschirm des Vertrags ist nicht gebaut? | **32** |
+| 6 | Welcher Bildschirm des Vertrags ist nicht gebaut? | **28** |
 | 7 | Welche genannte Kennung gehört zu keiner bekannten Anforderung? | **0** |
 
 ### Im Einzelnen
@@ -55,8 +55,11 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `install/nach_umzug.sh`
 - `mail/__init__.py`
 
-**2 · Was wird gemessen, das niemand gebaut hat?** — 6 Einträge
+**2 · Was wird gemessen, das niemand gebaut hat?** — 9 Einträge
 
+- `K04-D11`
+- `K04-G08`
+- `K04-M07`
 - `K15-M01`
 - `K20-D01`
 - `K23-D05`
@@ -64,10 +67,11 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `K23-M18`
 - `K23-M22`
 
-**3 · Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?** — 48 Einträge
+**3 · Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?** — 51 Einträge
 
+- `K01-G05`
+- `K01-G06`
 - `K01-M28`
-- `K01-M38`
 - `K02-D05`
 - `K02-G02`
 - `K02-M01`
@@ -83,9 +87,11 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `K03-M08`
 - `K03-M18`
 - `K03-M21`
-- `K04-G12`
+- `K04-G09`
+- `K04-M22`
 - `K08-M17`
 - `K08-M25`
+- `K10-M34`
 - `K13-D07`
 - `K13-M05`
 - `K13-M17`
@@ -103,26 +109,26 @@ Umsetzung gezählt und den Graphen zum Lügen gebracht.
 - `K20-D03`
 - `K20-G03`
 - `K20-G08`
-- `K20-G09`
-- `K20-M04`
-- `K20-M06`
-- … und 8 weitere (vollständig in `herkunft.json`)
+- … und 11 weitere (vollständig in `herkunft.json`)
 
-**4 · Welcher Prüffall ist noch nie in einem Protokoll gelaufen?** — 0 Einträge
+**4 · Welcher Prüffall ist noch nie in einem Protokoll gelaufen?** — 8 Einträge
 
-*keine*
+- `migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql`
+- `migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql`
+- `migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql`
+- `migrations/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql`
+- `pruefungen/klauseln/vorpruefung_daten.sql`
+- `pruefungen/klauseln/vorpruefung_lauf.sh`
+- `pruefungen/klauseln/zweckbestimmung_daten.sql`
+- `pruefungen/klauseln/zweckbestimmung_lauf.sh`
 
 **5 · Welches Protokoll führt eine Kennung ohne Prüffall?** — 0 Einträge
 
 *keine*
 
-**6 · Welcher Bildschirm des Vertrags ist nicht gebaut?** — 32 Einträge
+**6 · Welcher Bildschirm des Vertrags ist nicht gebaut?** — 28 Einträge
 
-- `EN-02`
-- `EN-03`
 - `EN-03a`
-- `EN-04`
-- `EN-04a`
 - `EN-05`
 - `EN-06`
 - `EN-07`

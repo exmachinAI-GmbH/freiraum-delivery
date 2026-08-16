@@ -36,6 +36,11 @@ Seit dem 15.08.2026 kommen die Wege der Vorpruefung hinzu -- /uebersicht,
 /vorpruefung und /eignung. Sie stehen mit ihrem eigenen Vertrag im Kopf von
 app/vorpruefung.py und sind hier nur eingebunden.
 
+Seit dem 16.08.2026 kommen die Wege der Zweckbestimmung hinzu --
+/zweckbestimmung und die fuenf Wege darunter. Sie stehen mit ihrem eigenen
+Vertrag im Kopf von app/zweckbestimmung.py und sind hier ebenfalls nur
+eingebunden.
+
 Der Import von app.datenbank steht bewusst am Anfang: fehlt einer der drei
 Pflichtwerte der Umgebung, bricht er hier ab -- beim START, nicht beim ersten
 Anmeldeversuch (Befund BEF-L2-1 vom 10.08.2026).
@@ -62,6 +67,7 @@ from app.sitzung import (
     sitzung_pruefen,
 )
 from app.vorpruefung import router as vorpruefung_router
+from app.zweckbestimmung import router as zweckbestimmung_router
 
 # Gegen __file__, nicht gegen das Arbeitsverzeichnis: der Server soll aus
 # jedem Verzeichnis startbar sein, ohne seine Vorlagen zu verlieren.
@@ -75,6 +81,12 @@ app = FastAPI(title="FREIRAUM · Anmeldung", docs_url=None, redoc_url=None)
 # nicht erreichbare Datenbank gilt fuer beide: sie haengt am `app`-Objekt,
 # nicht an einer einzelnen Route (siehe `datenbank_weg` weiter unten).
 app.include_router(vorpruefung_router)
+
+# Scheibe 2, M4: die Zweckbestimmung (EN-04a). Ebenfalls eine eigene Datei
+# und hier nur eingebunden. Sie steht NACH der Vorpruefung, weil sie den Weg
+# fortsetzt, den jene bis GEEIGNET fuehrt -- die Reihenfolge der beiden
+# Zeilen entscheidet fachlich nichts, die Pfade ueberschneiden sich nicht.
+app.include_router(zweckbestimmung_router)
 
 
 class TokenAusDemProtokoll(logging.Filter):

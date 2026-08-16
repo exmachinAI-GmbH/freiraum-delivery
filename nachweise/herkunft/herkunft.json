@@ -11005,63 +11005,56 @@
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:162"
+      "beleg": "app/haupt.py:186"
     },
     {
       "von": "K03-M09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:220"
+      "beleg": "app/haupt.py:244"
     },
     {
       "von": "K03-M16",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:122"
+      "beleg": "app/haupt.py:146"
     },
     {
       "von": "K03-M17",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:346"
+      "beleg": "app/haupt.py:370"
     },
     {
       "von": "K03-M26",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:137"
+      "beleg": "app/haupt.py:161"
     },
     {
       "von": "K14-G04",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:269"
+      "beleg": "app/haupt.py:293"
     },
     {
       "von": "K20-D02",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:276"
+      "beleg": "app/haupt.py:300"
     },
     {
       "von": "K20-D03",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:320"
-    },
-    {
-      "von": "K20-D10",
-      "nach": "app/haupt.py",
-      "art": "klausel_umsetzung",
-      "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:191"
+      "beleg": "app/haupt.py:344"
     },
     {
       "von": "K20-D10",
@@ -11071,39 +11064,46 @@
       "beleg": "app/haupt.py:215"
     },
     {
-      "von": "K20-G01",
+      "von": "K20-D10",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:293"
+      "beleg": "app/haupt.py:239"
     },
     {
       "von": "K20-G01",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:372"
+      "beleg": "app/haupt.py:317"
+    },
+    {
+      "von": "K20-G01",
+      "nach": "app/haupt.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/haupt.py:396"
     },
     {
       "von": "K20-G04",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:372"
+      "beleg": "app/haupt.py:396"
     },
     {
       "von": "K20-M02",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:268"
+      "beleg": "app/haupt.py:292"
     },
     {
       "von": "K20-M13",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:350"
+      "beleg": "app/haupt.py:374"
     },
     {
       "von": "K23-D09",
@@ -11117,21 +11117,21 @@
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:71"
+      "beleg": "app/haupt.py:95"
     },
     {
       "von": "K23-D09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:104"
+      "beleg": "app/haupt.py:128"
     },
     {
       "von": "K23-D09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:177"
+      "beleg": "app/haupt.py:201"
     },
     {
       "von": "K03-D01",
@@ -11428,11 +11428,1502 @@
       "beleg": "app/vorlagen/en01_anmeldung.html:72"
     },
     {
+      "von": "K04-D03",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:24"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:27"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:11"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:22"
+    },
+    {
+      "von": "K19-M01",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:11"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:37"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en02_uebersicht.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en02_uebersicht.html:56"
+    },
+    {
+      "von": "K03-M13",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:73"
+    },
+    {
+      "von": "K04-D01",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:15"
+    },
+    {
+      "von": "K04-D01",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:17"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:11"
+    },
+    {
+      "von": "K04-M02",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:14"
+    },
+    {
+      "von": "K04-M02",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:15"
+    },
+    {
+      "von": "K04-M22",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:23"
+    },
+    {
+      "von": "K19-M01",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:11"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:40"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en03_vorpruefung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en03_vorpruefung.html:57"
+    },
+    {
+      "von": "K04-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorlagen/en04_eignung.html:10"
+    },
+    {
+      "von": "K04-M09",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorlagen/en04_eignung.html:10"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:272"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:135"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:195"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:324"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:43"
+    },
+    {
+      "von": "K04-M05",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:25"
+    },
+    {
+      "von": "K04-M05",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:49"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:17"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:62"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:71"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:77"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:253"
+    },
+    {
+      "von": "K04-M15",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:272"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:149"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:102"
+    },
+    {
+      "von": "K19-M01",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:43"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:13"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:161"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:28"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:109"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:136"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:296"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:322"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:14"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:194"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en04_eignung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04_eignung.html:307"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:10"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:20"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:92"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:149"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:327"
+    },
+    {
+      "von": "K01-M38",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:327"
+    },
+    {
+      "von": "K04-D09",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:14"
+    },
+    {
+      "von": "K04-D09",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:277"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:15"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:60"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:176"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:235"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:37"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:23"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:194"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:235"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:12"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:70"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:76"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:235"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:271"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:31"
+    },
+    {
+      "von": "K19-M01",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:37"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:17"
+    },
+    {
+      "von": "K19-M03",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:105"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:69"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:88"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:303"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:17"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en04a_zweckbestimmung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en04a_zweckbestimmung.html:162"
+    },
+    {
       "von": "K03-M11",
       "nach": "app/vorlagen/start.html",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
       "beleg": "app/vorlagen/start.html:12"
+    },
+    {
+      "von": "K04-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K04-M09",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K04-M11",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K04-M12",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K04-M13",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/vorpruefung.py:1"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:582"
+    },
+    {
+      "von": "K02-G13",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1123"
+    },
+    {
+      "von": "K03-D01",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:304"
+    },
+    {
+      "von": "K03-M26",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:325"
+    },
+    {
+      "von": "K04-D01",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:648"
+    },
+    {
+      "von": "K04-D02",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:178"
+    },
+    {
+      "von": "K04-D02",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:385"
+    },
+    {
+      "von": "K04-D02",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:683"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:434"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:560"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:819"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:903"
+    },
+    {
+      "von": "K04-D04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:26"
+    },
+    {
+      "von": "K04-D04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1009"
+    },
+    {
+      "von": "K04-D04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1106"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:183"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:705"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:105"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:416"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:927"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1064"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:147"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:190"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:207"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:232"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:392"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:511"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:675"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:750"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:783"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:915"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:962"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1000"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1086"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1089"
+    },
+    {
+      "von": "K04-G06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-G06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:412"
+    },
+    {
+      "von": "K04-G06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:663"
+    },
+    {
+      "von": "K04-G07",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:656"
+    },
+    {
+      "von": "K04-G09",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:662"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:41"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:16"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:178"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:385"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:683"
+    },
+    {
+      "von": "K04-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:19"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:3"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:105"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:652"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:927"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1064"
+    },
+    {
+      "von": "K04-M14",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-M14",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:436"
+    },
+    {
+      "von": "K04-M14",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:879"
+    },
+    {
+      "von": "K04-M15",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:22"
+    },
+    {
+      "von": "K04-M15",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:808"
+    },
+    {
+      "von": "K04-M15",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:819"
+    },
+    {
+      "von": "K04-M16",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:2"
+    },
+    {
+      "von": "K04-M16",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:660"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:99"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:283"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:295"
+    },
+    {
+      "von": "K04-M22",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:92"
+    },
+    {
+      "von": "K04-M22",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:621"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:10"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:120"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:498"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:502"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:831"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:853"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1020"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1036"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:29"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:213"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:467"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:715"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/vorpruefung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorpruefung.py:1052"
+    },
+    {
+      "von": "K04-D06",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-D09",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/zweckbestimmung.py:1"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:45"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:93"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:349"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:881"
+    },
+    {
+      "von": "K01-G05",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:109"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:3"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:113"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:910"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:930"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:947"
+    },
+    {
+      "von": "K01-M38",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:7"
+    },
+    {
+      "von": "K02-G13",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:543"
+    },
+    {
+      "von": "K03-D01",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:360"
+    },
+    {
+      "von": "K03-M26",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:380"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:101"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:416"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:509"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:978"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:19"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:533"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:791"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:802"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:10"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:626"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:891"
+    },
+    {
+      "von": "K10-M34",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:13"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K13-M05",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:85"
+    },
+    {
+      "von": "K19-M01",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:19"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:234"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:483"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:589"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:2"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:84"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:282"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:707"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:734"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:835"
+    },
+    {
+      "von": "K23-D09",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:297"
+    },
+    {
+      "von": "K23-D09",
+      "nach": "app/zweckbestimmung.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/zweckbestimmung.py:942"
     },
     {
       "von": "K02-G02",
@@ -12100,6 +13591,363 @@
       "beleg": "migrations/M30__pilot_sammelmigration.sql:588"
     },
     {
+      "von": "K01-M27",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:4"
+    },
+    {
+      "von": "K01-M38",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:4"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:5"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:412"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:419"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:424"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:480"
+    },
+    {
+      "von": "K01-G06",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:368"
+    },
+    {
+      "von": "K01-G06",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:373"
+    },
+    {
+      "von": "K01-M28",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:373"
+    },
+    {
+      "von": "K02-G13",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:401"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:18"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:384"
+    },
+    {
+      "von": "K04-D09",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:115"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:9"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:119"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:282"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:288"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:485"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:10"
+    },
+    {
+      "von": "K04-M12",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:130"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:6"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:185"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:378"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:391"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:412"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:14"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:178"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:249"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:7"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:61"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:68"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:78"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:113"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:117"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:263"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:278"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:484"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:115"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:8"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:273"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:293"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:412"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:486"
+    },
+    {
+      "von": "K14-D07",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:258"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "migrations/M31__projektnummer_und_zweckbestimmung.sql",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "migrations/M31__projektnummer_und_zweckbestimmung.sql:270"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "migrations/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "migrations/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql"
+    },
+    {
       "von": "K15-M01",
       "nach": "migrations/negativfaelle/N1_frist_ge_mindestfrist.sql",
       "art": "klausel_test",
@@ -12730,6 +14578,503 @@
       "beleg": "pruefungen/klauseln/versand_lauf.sh"
     },
     {
+      "von": "K03-M15",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-D02",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-G07",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M05",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M06",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M07",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K04-M14",
+      "nach": "pruefungen/klauseln/vorpruefung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_daten.sql"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K03-M15",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D01",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D02",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D04",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D05",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-D11",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-G04",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-G06",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-G07",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-G08",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-G10",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M02",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M05",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M06",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M07",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M09",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M10",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M11",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M12",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M13",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M14",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M15",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M16",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K23-D05",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K23-M22",
+      "nach": "pruefungen/klauseln/vorpruefung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/vorpruefung_lauf.sh"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K01-M38",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K03-M15",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "pruefungen/klauseln/zweckbestimmung_daten.sql",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_daten.sql"
+    },
+    {
+      "von": "K01-D19",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K01-M27",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K01-M38",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K03-M15",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-D03",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-D06",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-D08",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-D09",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-D10",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M04",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M08",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M17",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M18",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M19",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M20",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K19-M06",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K19-M14",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
+      "von": "K23-M22",
+      "nach": "pruefungen/klauseln/zweckbestimmung_lauf.sh",
+      "art": "klausel_test",
+      "staerke": "genannt",
+      "beleg": "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+    },
+    {
       "von": "K23-D09",
       "nach": "pruefungen/lauf.sh",
       "art": "klausel_test",
@@ -13140,14 +15485,22 @@
     "abbilder": {
       "EN-01": [
         "app/vorlagen/en01_anmeldung.html"
+      ],
+      "EN-02": [
+        "app/vorlagen/en02_uebersicht.html"
+      ],
+      "EN-03": [
+        "app/vorlagen/en03_vorpruefung.html"
+      ],
+      "EN-04": [
+        "app/vorlagen/en04_eignung.html"
+      ],
+      "EN-04a": [
+        "app/vorlagen/en04a_zweckbestimmung.html"
       ]
     },
     "ohne_abbild": [
-      "EN-02",
-      "EN-03",
       "EN-03a",
-      "EN-04",
-      "EN-04a",
       "EN-05",
       "EN-06",
       "EN-07",
@@ -13179,10 +15532,25 @@
     "nur_erwaehnt": {
       "EN-01": [
         "app/vorlagen/einladung.html",
-        "app/vorlagen/einladung_senden.html"
+        "app/vorlagen/einladung_senden.html",
+        "app/vorlagen/en04_eignung.html"
+      ],
+      "EN-03": [
+        "app/vorlagen/en02_uebersicht.html"
+      ],
+      "EN-03a": [
+        "app/vorlagen/en03_vorpruefung.html"
+      ],
+      "EN-04": [
+        "app/vorlagen/en03_vorpruefung.html",
+        "app/vorlagen/en04a_zweckbestimmung.html"
       ],
       "EN-02": [
+        "app/vorlagen/en04_eignung.html",
         "app/vorlagen/start.html"
+      ],
+      "EN-04a": [
+        "app/vorlagen/en04_eignung.html"
       ]
     }
   },
@@ -13203,8 +15571,11 @@
     },
     "2_klausel_mit_test_ohne_umsetzung": {
       "frage": "Was wird gemessen, das niemand gebaut hat?",
-      "anzahl": 6,
+      "anzahl": 9,
       "eintraege": [
+        "K04-D11",
+        "K04-G08",
+        "K04-M07",
         "K15-M01",
         "K20-D01",
         "K23-D05",
@@ -13215,10 +15586,11 @@
     },
     "3_umsetzung_ohne_belegten_test": {
       "frage": "Welche vom Code genannte Anforderung ist von keinem bestandenen Lauf belegt?",
-      "anzahl": 48,
+      "anzahl": 51,
       "eintraege": [
+        "K01-G05",
+        "K01-G06",
         "K01-M28",
-        "K01-M38",
         "K02-D05",
         "K02-G02",
         "K02-M01",
@@ -13234,9 +15606,11 @@
         "K03-M08",
         "K03-M18",
         "K03-M21",
-        "K04-G12",
+        "K04-G09",
+        "K04-M22",
         "K08-M17",
         "K08-M25",
+        "K10-M34",
         "K13-D07",
         "K13-M05",
         "K13-M17",
@@ -13267,15 +15641,60 @@
         "K25-M31"
       ],
       "prueffall_vorhanden_lauf_nicht_belegt": [
+        "K01-D19",
+        "K01-M38",
         "K03-M26",
+        "K04-D01",
+        "K04-D02",
+        "K04-D03",
+        "K04-D04",
+        "K04-D05",
+        "K04-D06",
+        "K04-D08",
+        "K04-D09",
+        "K04-D10",
+        "K04-G04",
+        "K04-G06",
+        "K04-G07",
+        "K04-G10",
+        "K04-G12",
+        "K04-M02",
+        "K04-M04",
+        "K04-M05",
+        "K04-M06",
+        "K04-M08",
+        "K04-M09",
+        "K04-M10",
+        "K04-M11",
+        "K04-M12",
+        "K04-M13",
+        "K04-M14",
+        "K04-M15",
+        "K04-M16",
+        "K04-M17",
+        "K04-M18",
+        "K04-M19",
+        "K04-M20",
+        "K04-M21",
+        "K19-M06",
+        "K19-M14",
         "K20-M05",
         "K23-D09"
       ]
     },
     "4_test_ohne_nachweis": {
       "frage": "Welcher Prüffall ist noch nie in einem Protokoll gelaufen?",
-      "anzahl": 0,
-      "eintraege": []
+      "anzahl": 8,
+      "eintraege": [
+        "migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql",
+        "migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql",
+        "migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql",
+        "migrations/negativfaelle/M31_N4_kenntnisnahme_ohne_erklaerung.sql",
+        "pruefungen/klauseln/vorpruefung_daten.sql",
+        "pruefungen/klauseln/vorpruefung_lauf.sh",
+        "pruefungen/klauseln/zweckbestimmung_daten.sql",
+        "pruefungen/klauseln/zweckbestimmung_lauf.sh"
+      ]
     },
     "5_nachweis_ohne_test": {
       "frage": "Welches Protokoll führt eine Kennung ohne Prüffall?",
@@ -13284,14 +15703,10 @@
     },
     "6_bildschirm_ohne_abbild": {
       "frage": "Welcher Bildschirm des Vertrags ist nicht gebaut?",
-      "anzahl": 32,
+      "anzahl": 28,
       "von": 33,
       "eintraege": [
-        "EN-02",
-        "EN-03",
         "EN-03a",
-        "EN-04",
-        "EN-04a",
         "EN-05",
         "EN-06",
         "EN-07",
@@ -13323,27 +15738,42 @@
       "nur_erwaehnt": {
         "EN-01": [
           "app/vorlagen/einladung.html",
-          "app/vorlagen/einladung_senden.html"
+          "app/vorlagen/einladung_senden.html",
+          "app/vorlagen/en04_eignung.html"
+        ],
+        "EN-03": [
+          "app/vorlagen/en02_uebersicht.html"
+        ],
+        "EN-03a": [
+          "app/vorlagen/en03_vorpruefung.html"
+        ],
+        "EN-04": [
+          "app/vorlagen/en03_vorpruefung.html",
+          "app/vorlagen/en04a_zweckbestimmung.html"
         ],
         "EN-02": [
+          "app/vorlagen/en04_eignung.html",
           "app/vorlagen/start.html"
+        ],
+        "EN-04a": [
+          "app/vorlagen/en04_eignung.html"
         ]
       }
     },
     "_zahlen": {
       "klauseln_gesamt": 1231,
-      "vom_code_genannt": 96,
-      "davon_erklaert": 15,
-      "davon_nur_erwaehnt": 81,
-      "vom_code_genannt_mit_test": 48,
-      "vom_code_genannt_ohne_test": 48,
-      "vom_code_genannt_ohne_belegten_test": 51,
-      "vom_code_genannt_kritisch_ohne_test": 22,
+      "vom_code_genannt": 135,
+      "davon_erklaert": 30,
+      "davon_nur_erwaehnt": 105,
+      "vom_code_genannt_mit_test": 84,
+      "vom_code_genannt_ohne_test": 51,
+      "vom_code_genannt_ohne_belegten_test": 90,
+      "vom_code_genannt_kritisch_ohne_test": 23,
       "kritisch_laut_triage": 405,
       "tote_verweise": 0,
       "bildschirme_im_vertrag": 33,
-      "bildschirme_mit_abbild": 1,
-      "bildschirme_nur_erwaehnt": 2,
+      "bildschirme_mit_abbild": 5,
+      "bildschirme_nur_erwaehnt": 6,
       "bildschirme_gemessen": true
     }
   }
