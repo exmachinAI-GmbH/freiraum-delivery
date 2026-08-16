@@ -59,6 +59,15 @@ seit dem 16.08.2026 auf **30 von 30 bestanden**.
 
 ## Abnahme
 
+> **Nachgetragen am 16.08.2026:** Die Abnahme M. Veils ist inzwischen gezeichnet (B-1,
+> `arbeit/Vorlagen/zeichnung_B1-B5_260816.md`) und für alle vier Starttore an einer Stelle
+> übertragen: **`nachweise/vorbedingungen/starttore_abnahme_260816.md`**. Dort stehen auch
+> die Messung zum Vorbehalt bei Starttor 13 und der Befund **ST-14**.
+>
+> **Die Kästchen unten bleiben leer, und das mit Absicht.** Sie gehören dem Auftraggeber;
+> der Harness setzt in einem fremden Zeichnungsblock kein Kreuz (F40). Wer sie ausfüllt,
+> zeichnet dasselbe wie im Abnahmeblatt — es ist keine zweite Entscheidung.
+
 *Dieser Block wird vom Auftraggeber ausgefüllt. Der Harness trägt hier nichts ein.*
 
 **Handlungsempfehlung des Orchestrators:** Beide Starttore in einem Zug abnehmen — und

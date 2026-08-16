@@ -1,0 +1,3580 @@
+{
+  "vorbemerkung": "VORSCHLAG, keine Entscheidung. Traeger, Annahmeentscheidung und Frist sind absichtlich leer. Sie zeichnet ein Mensch.",
+  "grundlage": "K23-M04 · K23-D07 · F34 · Zeichnung B-5 vom 16.08.2026",
+  "erzeugt": "2026-08-16",
+  "ausschnitt": {
+    "definition": "Teilschnitt bis zur Anmeldung, Blatt 57 Zeile 122, gezeichnet 10.08.2026 von A. Han und M. Veil",
+    "stationen": [
+      "Mandant",
+      "Einladungsschranke",
+      "Einladung",
+      "Anmeldecode",
+      "Anmeldung"
+    ],
+    "klauseln_stationen": 152,
+    "klauseln_bauspur_zusaetzlich": 5,
+    "klauseln_teilschnitt_ohne_prueffallgenannte": 157
+  },
+  "zaehlung": {
+    "eintraege": 113,
+    "davon_sperrend": 113,
+    "ohne_traeger": 113,
+    "ohne_annahmeentscheidung": 113
+  },
+  "zeilen": [
+    {
+      "kennung": "RR-T-001",
+      "klausel": "K01-D08",
+      "konzept": "K01",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Kein Bildschirm, keine Liste, keine Ausleitung und keine Modellanfrage DARF Daten zweier Mandanten zusammenführen. Auch verdichtete Kennzahlen über …",
+      "wortlaut_voll": "Kein Bildschirm, keine Liste, keine Ausleitung und keine Modellanfrage DARF Daten zweier Mandanten zusammenführen. Auch verdichtete Kennzahlen über die Mandantengrenze hinweg sind untersagt (K02).",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:97",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 89
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-002",
+      "klausel": "K01-M02",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Zeile in `app` MUSS einen Mandanten tragen (`tenant_id`, Pflicht, Verweis auf `tenant` — Eigentümer K02). Ein Mandant mit mindestens einer …",
+      "wortlaut_voll": "Jede Zeile in `app` MUSS einen Mandanten tragen (`tenant_id`, Pflicht, Verweis auf `tenant` — Eigentümer K02). Ein Mandant mit mindestens einer Anwendung ist nicht löschbar; die Datenbank verweigert das Löschen, sie räumt nicht mit auf.",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:52",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "aufbewahrungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 31
+        },
+        {
+          "gruppe": "aufbewahrungskritisch",
+          "begriff": "löschbar",
+          "stelle": 164
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“); aufbewahrungs (Wort „löschbar“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-003",
+      "klausel": "K01-M14",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der zweite Faktor MUSS ein Code per E-Mail sein; `mfa_method` kennt EMAIL_CODE und den Ausschaltwert OFF. Ein anderes Verfahren ist im Rahmen nicht …",
+      "wortlaut_voll": "Der zweite Faktor MUSS ein Code per E-Mail sein; `mfa_method` kennt EMAIL_CODE und den Ausschaltwert OFF. Ein anderes Verfahren ist im Rahmen nicht vorgesehen (Ausgestaltung K03).",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:64",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweite Faktor",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweite Faktor“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-004",
+      "klausel": "K01-M15",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Lese- und Schreibzugriff MUSS auf den Mandanten der angemeldeten Sitzung eingeschränkt sein. Ein Objekt eines fremden Mandanten gilt als nicht …",
+      "wortlaut_voll": "Jeder Lese- und Schreibzugriff MUSS auf den Mandanten der angemeldeten Sitzung eingeschränkt sein. Ein Objekt eines fremden Mandanten gilt als nicht vorhanden (Mandantenschnitt K02).",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:65",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 44
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-005",
+      "klausel": "K01-M23",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Kunde MUSS genau einen Rechtsraum aus `legal_space` tragen, und die Verarbeitung MUSS in der EU stattfinden, Vorgabe `swedencentral` (F05). …",
+      "wortlaut_voll": "Jeder Kunde MUSS genau einen Rechtsraum aus `legal_space` tragen, und die Verarbeitung MUSS in der EU stattfinden, Vorgabe `swedencentral` (F05). Beide Werte liegen am Mandanten und werden von K02 ausgeführt.",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:73",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 168
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-006",
+      "klausel": "K01-M26",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Eine Anwendung MUSS einem Mandanten mit `legal_space = DE` gehören. Nur er legt in Release 1 eine Anwendung an (F35); das Muster von `project_no` mit …",
+      "wortlaut_voll": "Eine Anwendung MUSS einem Mandanten mit `legal_space = DE` gehören. Nur er legt in Release 1 eine Anwendung an (F35); das Muster von `project_no` mit dem Präfix `DE-` ist damit die Regel, nicht ein Fehler des Datenmodells.",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:76",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 26
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-007",
+      "klausel": "K01-M30",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Vor jeder Exposition über eine Supabase Data API MÜSSEN RLS-Policies für SELECT, INSERT, UPDATE und DELETE aktiv sein. Sie prüfen aktives Konto, …",
+      "wortlaut_voll": "Vor jeder Exposition über eine Supabase Data API MÜSSEN RLS-Policies für SELECT, INSERT, UPDATE und DELETE aktiv sein. Sie prüfen aktives Konto, Mitgliedschaft, Rolle, Mandant und Objekt. Ohne nachgewiesene Policies bleibt das Schema server-only und ist nicht direkt erreichbar.",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:80",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 168
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-008",
+      "klausel": "K01-M35",
+      "konzept": "K01",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die drei Großbuchstaben MÜSSEN der Kunden-Code des tragenden Mandanten sein (Eigentümer K02). Die Projektnummer bildet keinen eigenen Buchstabencode.",
+      "wortlaut_voll": "Die drei Großbuchstaben MÜSSEN der Kunden-Code des tragenden Mandanten sein (Eigentümer K02). Die Projektnummer bildet keinen eigenen Buchstabencode.",
+      "herkunft": "260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:492",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 61
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-009",
+      "klausel": "K02-D03",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Mandant DARF NICHT physisch entfernt werden. Das Entfernen ist ein Zeitstempel, nicht das Tilgen der Zeile.",
+      "wortlaut_voll": "Ein Mandant DARF NICHT physisch entfernt werden. Das Entfernen ist ein Zeitstempel, nicht das Tilgen der Zeile.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:75",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-010",
+      "klausel": "K02-D05",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Bestand eines fremden Mandanten DARF NICHT sichtbar, zählbar oder verdichtet erreichbar sein. Er gilt als nicht vorhanden.",
+      "wortlaut_voll": "Ein Bestand eines fremden Mandanten DARF NICHT sichtbar, zählbar oder verdichtet erreichbar sein. Er gilt als nicht vorhanden.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:77",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 26
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-011",
+      "klausel": "K02-D07",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Mandant DARF NICHT ohne Rechtsraum bestehen. Ein leeres Feld ist kein zulässiger Übergangszustand.",
+      "wortlaut_voll": "Ein Mandant DARF NICHT ohne Rechtsraum bestehen. Ein leeres Feld ist kein zulässiger Übergangszustand.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:79",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-012",
+      "klausel": "K02-D08",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Die Protokollsicht DARF NICHT technische Schlüssel oder Bestände fremder Mandanten zeigen.",
+      "wortlaut_voll": "Die Protokollsicht DARF NICHT technische Schlüssel oder Bestände fremder Mandanten zeigen.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:80",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Schlüssel",
+          "stelle": 41
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 73
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Schlüssel“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-013",
+      "klausel": "K02-D09",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Mandant DARF NICHT entfernt werden, solange ein Konto auf ihn verweist. Die Löschsperre am Verweis hält ihn fest.",
+      "wortlaut_voll": "Ein Mandant DARF NICHT entfernt werden, solange ein Konto auf ihn verweist. Die Löschsperre am Verweis hält ihn fest.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:81",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-014",
+      "klausel": "K02-D10",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Der Kunden-Code DARF NICHT eingegeben, gewählt oder aus dem Namen des Mandanten abgeleitet werden.",
+      "wortlaut_voll": "Der Kunden-Code DARF NICHT eingegeben, gewählt oder aus dem Namen des Mandanten abgeleitet werden.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:297",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 70
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-015",
+      "klausel": "K02-D11",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Code des Namensraums `DE-Z..` DARF NICHT an einen Mandanten vergeben werden, der echte Kundendaten führt.",
+      "wortlaut_voll": "Ein Code des Namensraums `DE-Z..` DARF NICHT an einen Mandanten vergeben werden, der echte Kundendaten führt.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:298",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 54
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-016",
+      "klausel": "K02-D12",
+      "konzept": "K02",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Mandant der Art Betreiber oder Kunde DARF NICHT ein solches Kennzeichen tragen.",
+      "wortlaut_voll": "Ein Mandant der Art Betreiber oder Kunde DARF NICHT ein solches Kennzeichen tragen.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:317",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-017",
+      "klausel": "K02-G05",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Die Verarbeitungsregion ist eine Eigenschaft der Plattform je Mandant, nicht eine Einstellung des einzelnen Nutzers.",
+      "wortlaut_voll": "Es GILT: Die Verarbeitungsregion ist eine Eigenschaft der Plattform je Mandant, nicht eine Einstellung des einzelnen Nutzers.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:91",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 71
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-018",
+      "klausel": "K02-G06",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Einladungsfrist und Einladungsschranke stehen am Mandanten, weil sie Eigenschaften der einladenden Organisation sind. Das Verfahren dahinter …",
+      "wortlaut_voll": "Es GILT: Einladungsfrist und Einladungsschranke stehen am Mandanten, weil sie Eigenschaften der einladenden Organisation sind. Das Verfahren dahinter gehört K20.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:92",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 58
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Einladungsschranke",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-019",
+      "klausel": "K02-G10",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Die Währung steht an der Anwendung, nicht am Mandanten (Eigentümer K01). K02 führt sie nicht.",
+      "wortlaut_voll": "Es GILT: Die Währung steht an der Anwendung, nicht am Mandanten (Eigentümer K01). K02 führt sie nicht.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:96",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 54
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-020",
+      "klausel": "K02-G11",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Ein Protokolleintrag überlebt seinen Bezug. Entfällt die Anwendung oder der Mandant, bleibt der Eintrag bestehen und verliert nur den …",
+      "wortlaut_voll": "Es GILT: Ein Protokolleintrag überlebt seinen Bezug. Entfällt die Anwendung oder der Mandant, bleibt der Eintrag bestehen und verliert nur den Verweis.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:97",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 85
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-021",
+      "klausel": "K02-G12",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Bis O-K02-6 und die Datenbestandsregeln aus K13 belegt sind, bleibt das Schema server-only. Ein mandantengebundener Vorgang ohne auflösbaren …",
+      "wortlaut_voll": "Es GILT: Bis O-K02-6 und die Datenbestandsregeln aus K13 belegt sind, bleibt das Schema server-only. Ein mandantengebundener Vorgang ohne auflösbaren Mandantenbezug ist kein zulässiger Übergangszustand.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:98",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenbezug",
+          "stelle": 150
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenbezug“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-022",
+      "klausel": "K02-G14",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Der Kunden-Code trägt keine Bedeutung. Lesbar ist der Name des Mandanten; der Code ist ein Bezug, kein Kürzel.",
+      "wortlaut_voll": "Es GILT: Der Kunden-Code trägt keine Bedeutung. Lesbar ist der Name des Mandanten; der Code ist ein Bezug, kein Kürzel.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:299",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 72
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-023",
+      "klausel": "K02-G16",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Ein Mandant, dessen Code mit `Z` beginnt, ist ein Testmandant. Das Merkmal steht im Code selbst; ein zusätzliches Feld entsteht dafür nicht.",
+      "wortlaut_voll": "Es GILT: Ein Mandant, dessen Code mit `Z` beginnt, ist ein Testmandant. Das Merkmal steht im Code selbst; ein zusätzliches Feld entsteht dafür nicht.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:301",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 13
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-024",
+      "klausel": "K02-G17",
+      "konzept": "K02",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: K02-M30 greift nicht für Testmandanten des reservierten Namensraums. Die Ausnahme setzt voraus, dass dort keine echten Personendaten stehen; …",
+      "wortlaut_voll": "Es GILT: K02-M30 greift nicht für Testmandanten des reservierten Namensraums. Die Ausnahme setzt voraus, dass dort keine echten Personendaten stehen; diese Regel führt K14 und sie ist Abnahmekriterium seiner Freigabe.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:310",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabe",
+          "stelle": 208
+        }
+      ],
+      "belege_kurz": "freigabe (Wort „Freigabe“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-025",
+      "klausel": "K02-M02",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Mandant MUSS eine Art tragen: Betreiber, Kunde oder Partner. Ein vierter Wert ist nicht vorgesehen.",
+      "wortlaut_voll": "Jeder Mandant MUSS eine Art tragen: Betreiber, Kunde oder Partner. Ein vierter Wert ist nicht vorgesehen.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:45",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 6
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-026",
+      "klausel": "K02-M03",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Mandant MUSS einen Namen tragen. Das Feld ist Pflicht und wird in der Oberfläche als Firmenname geführt.",
+      "wortlaut_voll": "Jeder Mandant MUSS einen Namen tragen. Das Feld ist Pflicht und wird in der Oberfläche als Firmenname geführt.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:46",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 6
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-027",
+      "klausel": "K02-M04",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Mandant der Art Kunde MUSS einen Kunden-Code tragen. Durchgesetzt von der Bedingung `customer_needs_code`.",
+      "wortlaut_voll": "Ein Mandant der Art Kunde MUSS einen Kunden-Code tragen. Durchgesetzt von der Bedingung `customer_needs_code`.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:47",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-028",
+      "klausel": "K02-M06",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Kunden-Code MUSS plattformweit eindeutig sein. Zwei Mandanten teilen ihn nie.",
+      "wortlaut_voll": "Der Kunden-Code MUSS plattformweit eindeutig sein. Zwei Mandanten teilen ihn nie.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:49",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 56
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-029",
+      "klausel": "K02-M07",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Mandant MUSS einen Rechtsraum tragen. Für Release 1 ist allein DE zulässig (F35); die übrigen Werte bleiben modelliert.",
+      "wortlaut_voll": "Jeder Mandant MUSS einen Rechtsraum tragen. Für Release 1 ist allein DE zulässig (F35); die übrigen Werte bleiben modelliert.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:50",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 6
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-030",
+      "klausel": "K02-M08",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Mandant MUSS eine Verarbeitungsregion tragen. Vorgabe ist `swedencentral`; Release 1 verarbeitet ausschließlich dort (K13 Abschn. 3).",
+      "wortlaut_voll": "Jeder Mandant MUSS eine Verarbeitungsregion tragen. Vorgabe ist `swedencentral`; Release 1 verarbeitet ausschließlich dort (K13 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:51",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 6
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-031",
+      "klausel": "K02-M09",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Mandant MUSS eine organisationsweite Richtlinie zur zweiten Anmeldestufe tragen. Vorgabe ist der Code per E-Mail; das Verfahren führt K03.",
+      "wortlaut_voll": "Jeder Mandant MUSS eine organisationsweite Richtlinie zur zweiten Anmeldestufe tragen. Vorgabe ist der Code per E-Mail; das Verfahren führt K03.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:52",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 6
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-032",
+      "klausel": "K02-M20",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Mandantengrenze MUSS zweifach durchgesetzt werden — im Serverpfad und im Datenbestand, nach K13 Abschn. 3.",
+      "wortlaut_voll": "Die Mandantengrenze MUSS zweifach durchgesetzt werden — im Serverpfad und im Datenbestand, nach K13 Abschn. 3.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:63",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantengrenze",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantengrenze“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-033",
+      "klausel": "K02-M21",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Bei einem mandantengebundenen Schreibvorgang MUSS `event.tenant_id` gesetzt sein und mit Mandant der Sitzung, des Fachobjekts und der Projektnummer …",
+      "wortlaut_voll": "Bei einem mandantengebundenen Schreibvorgang MUSS `event.tenant_id` gesetzt sein und mit Mandant der Sitzung, des Fachobjekts und der Projektnummer übereinstimmen. Fehlt oder widerspricht ein Bezug, wird die gemeinsame Transaktion zurückgerollt. **Eine benannte Ausnahme gilt für den Betreiber:** Trägt die Mitgliedschaft der Sitzung den Geltungsbereich Betreiber (K20 Abschn. 3), tritt an die Stelle der Gleichheit die Prüfung, dass Fachobjekt und Protokolleintrag denselben Kundenmandanten führen. Der Vorgang wird zusätzlich als Betreiberzugriff protokolliert.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:64",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 89
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-034",
+      "klausel": "K02-M23",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Protokollausfuhr MUSS serverseitig erneut autorisiert werden, ausschließlich die gefilterte Mandantenmenge mit fester Spaltenliste liefern und …",
+      "wortlaut_voll": "Jede Protokollausfuhr MUSS serverseitig erneut autorisiert werden, ausschließlich die gefilterte Mandantenmenge mit fester Spaltenliste liefern und Tabellenformeln als Daten neutralisieren.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:66",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenmenge",
+          "stelle": 97
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenmenge“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-035",
+      "klausel": "K02-M26",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Vergabe MUSS serverseitig und in derselben Transaktion wie die Anlage des Mandanten erfolgen. Schlägt sie fehl, entsteht kein Mandant.",
+      "wortlaut_voll": "Die Vergabe MUSS serverseitig und in derselben Transaktion wie die Anlage des Mandanten erfolgen. Schlägt sie fehl, entsteht kein Mandant.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:294",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 78
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-036",
+      "klausel": "K02-M29",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Mandant der Art Kunde MUSS den Nachweis des hinterlegten Auftragsverarbeitungsvertrags führen: Zeitpunkt der Hinterlegung und Aktenzeichen der …",
+      "wortlaut_voll": "Ein Mandant der Art Kunde MUSS den Nachweis des hinterlegten Auftragsverarbeitungsvertrags führen: Zeitpunkt der Hinterlegung und Aktenzeichen der Ablage außerhalb der Plattform. **Das Datenmodell führt dafür heute kein Feld** — der Träger ist als Auftrag O-K02-11 benannt. Bis er vorliegt, ist die Klausel nicht vollziehbar und der Produktivbetrieb bleibt gesperrt.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:307",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-037",
+      "klausel": "K02-M30",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ohne hinterlegten Vertrag MUSS der Beginn eines Gesprächs für diesen Mandanten serverseitig abgelehnt werden. Die Prüfung liegt im Serverpfad, nicht …",
+      "wortlaut_voll": "Ohne hinterlegten Vertrag MUSS der Beginn eines Gesprächs für diesen Mandanten serverseitig abgelehnt werden. Die Prüfung liegt im Serverpfad, nicht in der Oberfläche, und wirkt sperrend wie `customer_needs_code`. Prüfpunkt und Meldung führen K05 und K13; ohne sie ist keines der beiden freigabefähig.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:308",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 69
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-038",
+      "klausel": "K02-M31",
+      "konzept": "K02",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Mandant der Art Partner MUSS erkennen lassen, ob er die Anwendung **baut**, sie beim Kunden **umsetzt**, oder beides. **Das Datenmodell führt …",
+      "wortlaut_voll": "Ein Mandant der Art Partner MUSS erkennen lassen, ob er die Anwendung **baut**, sie beim Kunden **umsetzt**, oder beides. **Das Datenmodell führt dafür heute kein Feld**; der Träger ist als Auftrag O-K02-12 benannt. Ein vierter Wert in `tenant_kind` entsteht dafür **nicht** — K02-M02 schließt ihn aus.",
+      "herkunft": "260801_FREIRAUM_K02_Fundament_v1.3.md:316",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-039",
+      "klausel": "K03-D04",
+      "konzept": "K03",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein anderer zweiter Faktor als der Code per E-Mail DARF NICHT angeboten werden, auch nicht Verwaltenden.",
+      "wortlaut_voll": "Ein anderer zweiter Faktor als der Code per E-Mail DARF NICHT angeboten werden, auch nicht Verwaltenden.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:60",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweiter Faktor",
+          "stelle": 12
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweiter Faktor“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-040",
+      "klausel": "K03-D05",
+      "konzept": "K03",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Der zweite Faktor DARF im Endnutzer-Portal NICHT umstellbar sein. Der Bereich Sicherheit zeigt ihn, ohne ihn zur Auswahl zu stellen.",
+      "wortlaut_voll": "Der zweite Faktor DARF im Endnutzer-Portal NICHT umstellbar sein. Der Bereich Sicherheit zeigt ihn, ohne ihn zur Auswahl zu stellen.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:61",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Sicherheit",
+          "stelle": 78
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Sicherheit“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-041",
+      "klausel": "K03-D10",
+      "konzept": "K03",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Der zweite Faktor DARF NICHT abgeschaltet werden. Der abschaltende Wert von `mfa_method` ist in Release 1 kein zulässiger Betriebszustand — weder am …",
+      "wortlaut_voll": "Der zweite Faktor DARF NICHT abgeschaltet werden. Der abschaltende Wert von `mfa_method` ist in Release 1 kein zulässiger Betriebszustand — weder am Konto noch als Richtlinie des Mandanten (Eigentümer K02). Der Server weist das Setzen ab und protokolliert den Versuch.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:66",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweite Faktor",
+          "stelle": 4
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 179
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweite Faktor“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-042",
+      "klausel": "K03-G03",
+      "konzept": "K03",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Die organisationsweite Richtlinie zur zweiten Stufe liegt am Mandanten (Eigentümer K02, dort Abschn. 3). K03 führt das Verfahren, nicht das …",
+      "wortlaut_voll": "Es GILT: Die organisationsweite Richtlinie zur zweiten Stufe liegt am Mandanten (Eigentümer K02, dort Abschn. 3). K03 führt das Verfahren, nicht das Feld.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:74",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 70
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-043",
+      "klausel": "K03-G06",
+      "konzept": "K03",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: `actor` trägt kein Kennwort. Anmeldename ist die Adresse, zweiter Faktor der Code; ein dritter Nachweis fehlt (O-K03-5).",
+      "wortlaut_voll": "Es GILT: `actor` trägt kein Kennwort. Anmeldename ist die Adresse, zweiter Faktor der Code; ein dritter Nachweis fehlt (O-K03-5).",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:77",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweiter Faktor",
+          "stelle": 67
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweiter Faktor“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-044",
+      "klausel": "K03-G12",
+      "konzept": "K03",
+      "art": "GILT",
+      "wortlaut_kurz": "Der E-Mail-Code wird in Oberfläche, Dokumentation und Nachweis als **E-Mail-Code** bezeichnet. K03 erhebt keinen Anspruch auf unabhängige MFA, aal2 …",
+      "wortlaut_voll": "Der E-Mail-Code wird in Oberfläche, Dokumentation und Nachweis als **E-Mail-Code** bezeichnet. K03 erhebt keinen Anspruch auf unabhängige MFA, aal2 oder Phishing-Resistenz. Die befristete Risikoannahme, ihr Owner und der Auslöser für ein stärkeres Verfahren sind vor der menschlichen Freigabe ausdrücklich zu zeichnen.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:303",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "MFA",
+          "stelle": 138
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabe",
+          "stelle": 284
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „MFA“); freigabe (Wort „Freigabe“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-045",
+      "klausel": "K03-M02",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Zeile in `actor` MUSS einen Mandanten tragen (`tenant_id`, Verweis auf `tenant` — Eigentümer K02).",
+      "wortlaut_voll": "Jede Zeile in `actor` MUSS einen Mandanten tragen (`tenant_id`, Verweis auf `tenant` — Eigentümer K02).",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:39",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 33
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-046",
+      "klausel": "K03-M07",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Einmal-Link MUSS nach 24 Stunden verfallen (F11). Die Frist steht am Mandanten (Eigentümer K02), der Einladungssatz gehört K20.",
+      "wortlaut_voll": "Der Einmal-Link MUSS nach 24 Stunden verfallen (F11). Die Frist steht am Mandanten (Eigentümer K02), der Einladungssatz gehört K20.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:44",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Einmal-Link",
+          "stelle": 4
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 73
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Einmal-Link“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-047",
+      "klausel": "K03-M12",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Eine heikle Änderung MUSS eine erneute Anmeldung verlangen, bevor sie wirksam wird. Die Anzeige dazu führt K16.",
+      "wortlaut_voll": "Eine heikle Änderung MUSS eine erneute Anmeldung verlangen, bevor sie wirksam wird. Die Anzeige dazu führt K16.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:49",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Anmeldung",
+          "stelle": 39
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Anmeldung“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-048",
+      "klausel": "K03-M18",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "E-Mail-Adresse, Authentifizierungsverfahren, Rolle, Mitgliedschaft, Portalzuordnung, Entsperrung und Freigabeberechtigung gelten als heikle …",
+      "wortlaut_voll": "E-Mail-Adresse, Authentifizierungsverfahren, Rolle, Mitgliedschaft, Portalzuordnung, Entsperrung und Freigabeberechtigung gelten als heikle Änderungen. Dafür muss die Anmeldung höchstens zehn Minuten zurückliegen.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:278",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Authentifizierungsverfahren",
+          "stelle": 16
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabeberechtigung",
+          "stelle": 101
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Authentifizierungsverfahren“); freigabe (Wort „Freigabeberechtigung“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-049",
+      "klausel": "K03-M19",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "*(berichtigt nach Beschluss S28 vom 02.08.2026)* Geprüft wird die Einladungsschranke des Mandanten, zu dem das **eingeladene Konto** gehört — nicht …",
+      "wortlaut_voll": "*(berichtigt nach Beschluss S28 vom 02.08.2026)* Geprüft wird die Einladungsschranke des Mandanten, zu dem das **eingeladene Konto** gehört — nicht die des einladenden. Bei einer Einladung über die Mandantengrenze hinweg gilt damit die Schranke des Ziels. Ein erneuter Einmal-Link entwertet frühere Links.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:279",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Einmal-Link",
+          "stelle": 269
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 89
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Einmal-Link“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Einladungsschranke",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-050",
+      "klausel": "K03-M21",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Replay, Brute Force, Konto-Ermittlung, Sitzungsfixierung, parallele Anmeldung, fremder Mandant und Provider-Ausfall MÜSSEN vor Produktion als …",
+      "wortlaut_voll": "Replay, Brute Force, Konto-Ermittlung, Sitzungsfixierung, parallele Anmeldung, fremder Mandant und Provider-Ausfall MÜSSEN vor Produktion als Negativtests bestanden sein.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:281",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch",
+        "wiederherstellungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Anmeldung",
+          "stelle": 68
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 87
+        },
+        {
+          "gruppe": "wiederherstellungskritisch",
+          "begriff": "Ausfall",
+          "stelle": 108
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Anmeldung“); mandanten (Wort „Mandant“); wiederherstellungs (Wort „Ausfall“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-051",
+      "klausel": "K03-M22",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Einladungsschranke setzt allein der Betreiber, indem er den Mandanten anlegt. Bei jeder Anlage MUSS über sie entschieden werden: entweder die …",
+      "wortlaut_voll": "Die Einladungsschranke setzt allein der Betreiber, indem er den Mandanten anlegt. Bei jeder Anlage MUSS über sie entschieden werden: entweder die Domäne des Kunden oder ausdrücklich keine Schranke; die Wahl ist zu vermerken. **Ist keine gesetzt, findet keine Prüfung statt — jede Adresse ist dann zulässig.** Ein stillschweigendes Leerlassen ist keine Entscheidung: ohne Schranke schickt ein Tippfehler in der Adresse einen gültigen Zugang an eine fremde Person, und ein Kennwort als zweite Hürde gibt es nicht.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:292",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 64
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Einladungsschranke",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-052",
+      "klausel": "K03-M25",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein serverseitiger, idempotenter Einladungsbefehl prüft Zielmandant, Entscheidungsnachweis und Domäne und legt Einladung und Ereignis atomar an. …",
+      "wortlaut_voll": "Ein serverseitiger, idempotenter Einladungsbefehl prüft Zielmandant, Entscheidungsnachweis und Domäne und legt Einladung und Ereignis atomar an. Portal, Builder und Service-Schlüssel dürfen diese Prüfung nicht umgehen; Fehlermeldungen geben nicht preis, ob ein Konto existiert.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:300",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "wiederherstellungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Schlüssel",
+          "stelle": 173
+        },
+        {
+          "gruppe": "wiederherstellungskritisch",
+          "begriff": "idempotenter",
+          "stelle": 20
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Schlüssel“); wiederherstellungs (Wort „idempotenter“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-053",
+      "klausel": "K03-M26",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Versand nutzt verwaltete Identität oder Secret-Referenz, eine erlaubte Ausgangsverbindung und datensparsame Telemetrie. Codes und vollständige …",
+      "wortlaut_voll": "Der Versand nutzt verwaltete Identität oder Secret-Referenz, eine erlaubte Ausgangsverbindung und datensparsame Telemetrie. Codes und vollständige E-Mail-Adressen stehen nie in Logs. Providerfehler, fehlender Nachweis oder unklare Konfiguration wirken fail-closed und alarmieren den Betrieb mit Runbook-Verweis.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:301",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "fail-closed",
+          "stelle": 252
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „fail-closed“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Bauspur"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-054",
+      "klausel": "K03-M27",
+      "konzept": "K03",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Abnahme prüft mindestens: bewusst unbeschränkt, fehlender Nachweis, exakte Domäne, Groß-/Kleinschreibung, idna, Suffixverwechslung, Subdomäne, …",
+      "wortlaut_voll": "Die Abnahme prüft mindestens: bewusst unbeschränkt, fehlender Nachweis, exakte Domäne, Groß-/Kleinschreibung, idna, Suffixverwechslung, Subdomäne, fremder Zielmandant, parallele Einladung, Replay und Providerausfall. Jeder Negativfall erzeugt weder Einladung noch Sitzung.",
+      "herkunft": "260802_FREIRAUM_K03_Anmeldung_v1.3.md:302",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Abnahme",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "freigabe (Wort „Abnahme“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-055",
+      "klausel": "K04-D08",
+      "konzept": "K04",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Eignungs-Check eines fremden Mandanten DARF NICHT sichtbar oder änderbar sein; er gilt als nicht vorhanden (Mandantenschnitt K02).",
+      "wortlaut_voll": "Ein Eignungs-Check eines fremden Mandanten DARF NICHT sichtbar oder änderbar sein; er gilt als nicht vorhanden (Mandantenschnitt K02).",
+      "herkunft": "260801_FREIRAUM_K04_Eignungs-und-Schnell-Check_v1.7.md:75",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 33
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-056",
+      "klausel": "K04-M10",
+      "konzept": "K04",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Eignungs-Check MUSS einen Mandanten tragen: `fit_check.tenant_id` ist Pflicht, Verweis auf `tenant` (Eigentümer K02) mit Löschsperre.",
+      "wortlaut_voll": "Jeder Eignungs-Check MUSS einen Mandanten tragen: `fit_check.tenant_id` ist Pflicht, Verweis auf `tenant` (Eigentümer K02) mit Löschsperre.",
+      "herkunft": "260801_FREIRAUM_K04_Eignungs-und-Schnell-Check_v1.7.md:47",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 32
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-057",
+      "klausel": "K04-M18",
+      "konzept": "K04",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Server MUSS Ergebnis, drei aktive Antworten und Mandant unmittelbar vor der Anlage erneut lesen. Ein veralteter Bildschirmstand berechtigt nicht …",
+      "wortlaut_voll": "Der Server MUSS Ergebnis, drei aktive Antworten und Mandant unmittelbar vor der Anlage erneut lesen. Ein veralteter Bildschirmstand berechtigt nicht zur Anlage.",
+      "herkunft": "260801_FREIRAUM_K04_Eignungs-und-Schnell-Check_v1.7.md:55",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 52
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-058",
+      "klausel": "K05-M24",
+      "konzept": "K05",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Aufruf aus den Stufen 01 und 02 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. …",
+      "wortlaut_voll": "Jeder Aufruf aus den Stufen 01 und 02 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K05_Gefuehrtes-Gespraech-Stufen-01-02_v1.3.md:71",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 105
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-059",
+      "klausel": "K05-M27",
+      "konzept": "K05",
+      "art": "MUSS",
+      "wortlaut_kurz": "RLS und Serverpfad leiten den Mandanten ausschließlich über `document.app_id → app.tenant_id` ab. Dateiobjekte verwenden nicht erratbare Schlüssel …",
+      "wortlaut_voll": "RLS und Serverpfad leiten den Mandanten ausschließlich über `document.app_id → app.tenant_id` ab. Dateiobjekte verwenden nicht erratbare Schlüssel und sind nur über kurzlebige, serverseitig autorisierte Zugriffe erreichbar. Zwei-Mandanten- und Zwei-Anwendungs-Negativtests sind Produktionsgate.",
+      "herkunft": "260801_FREIRAUM_K05_Gefuehrtes-Gespraech-Stufen-01-02_v1.3.md:330",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Schlüssel",
+          "stelle": 137
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 30
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Schlüssel“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-060",
+      "klausel": "K06-M26",
+      "konzept": "K06",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Aufruf der Stufe 03 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3).",
+      "wortlaut_voll": "Jeder Aufruf der Stufe 03 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K06_Anforderungskonzepte-Projektvertrag-Fachreview_v1.3.md:71",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 93
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-061",
+      "klausel": "K07-D08",
+      "konzept": "K07",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Bestand eines fremden Mandanten DARF NICHT sichtbar oder ladbar sein; er gilt als nicht vorhanden.",
+      "wortlaut_voll": "Ein Bestand eines fremden Mandanten DARF NICHT sichtbar oder ladbar sein; er gilt als nicht vorhanden.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:71",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 26
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-062",
+      "klausel": "K07-M12",
+      "konzept": "K07",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Direkt-Prototyp MUSS einen Mandanten tragen; der Verweis hält den Mandanten mit einer Löschsperre fest.",
+      "wortlaut_voll": "Jeder Direkt-Prototyp MUSS einen Mandanten tragen; der Verweis hält den Mandanten mit einer Löschsperre fest.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:52",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 33
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-063",
+      "klausel": "K07-M19",
+      "konzept": "K07",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Änderung läuft als revisionsgebundener, idempotenter Server-Command. Er prüft angemeldetes Konto, Mandant, erwartete Revision und den erlaubten …",
+      "wortlaut_voll": "Jede Änderung läuft als revisionsgebundener, idempotenter Server-Command. Er prüft angemeldetes Konto, Mandant, erwartete Revision und den erlaubten UI-Scope. Vorschau, Revision und Protokolleintrag werden gemeinsam wirksam; scheitert ein Teil, bleibt alles unverändert.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:222",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "wiederherstellungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 103
+        },
+        {
+          "gruppe": "wiederherstellungskritisch",
+          "begriff": "idempotenter",
+          "stelle": 45
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“); wiederherstellungs (Wort „idempotenter“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-064",
+      "klausel": "K07-M22",
+      "konzept": "K07",
+      "art": "MUSS",
+      "wortlaut_kurz": "Laden, Teilen und Entfernen prüfen bei jedem Aufruf serverseitig Konto, Mandant und Objektstatus. Ablage und Metadaten sind privat und RLS-geschützt; …",
+      "wortlaut_voll": "Laden, Teilen und Entfernen prüfen bei jedem Aufruf serverseitig Konto, Mandant und Objektstatus. Ablage und Metadaten sind privat und RLS-geschützt; fremde oder erratene Kennungen antworten wie nicht vorhanden.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:225",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 72
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-065",
+      "klausel": "K07-M23",
+      "konzept": "K07",
+      "art": "MUSS",
+      "wortlaut_kurz": "Teilen verwendet keinen direkt ausgegebenen Storage-Link, sondern einen serververmittelten, zufälligen, objekt- und mandantengebundenen …",
+      "wortlaut_voll": "Teilen verwendet keinen direkt ausgegebenen Storage-Link, sondern einen serververmittelten, zufälligen, objekt- und mandantengebundenen Freigabezugang. Er läuft nach 14 Tagen ab, ist jederzeit widerrufbar, rate-limitiert und bei jedem Abruf erneut geprüft. Angezeigt werden Empfängerzweck, Ablauf und Widerruf.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:226",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "mandantengebundenen",
+          "stelle": 116
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabezugang",
+          "stelle": 136
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „mandantengebundenen“); freigabe (Wort „Freigabezugang“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-066",
+      "klausel": "K07-M28",
+      "konzept": "K07",
+      "art": "MUSS",
+      "wortlaut_kurz": "Vor Produktion bestehen revisionsgebundene Negativtests für Mandantentrennung, Linkablauf/-widerruf, Parallelität, Prompt Injection, UI-Scope, …",
+      "wortlaut_voll": "Vor Produktion bestehen revisionsgebundene Negativtests für Mandantentrennung, Linkablauf/-widerruf, Parallelität, Prompt Injection, UI-Scope, Retention-Drift, Barrierefreiheit, Egress, Restore und Audit-Rollback. Betrieb führt Metriken, Alarme und Runbooks für Vorschaufehler, Linkmissbrauch und Aufräumstörungen.",
+      "herkunft": "260731_FREIRAUM_K07_Prototyp-und-Verfeinern_v1.2.md:231",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "aufbewahrungskritisch",
+        "wiederherstellungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantentrennung",
+          "stelle": 60
+        },
+        {
+          "gruppe": "aufbewahrungskritisch",
+          "begriff": "Retention",
+          "stelle": 143
+        },
+        {
+          "gruppe": "wiederherstellungskritisch",
+          "begriff": "Restore",
+          "stelle": 186
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantentrennung“); aufbewahrungs (Wort „Retention“); wiederherstellungs (Wort „Restore“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-067",
+      "klausel": "K08-M22",
+      "konzept": "K08",
+      "art": "MUSS",
+      "wortlaut_kurz": "RLS und Serverpfad prüfen bei Projektquellen Mandant und Anwendung. Globale Quellen sind nur nach Plattformfreigabe lesbar. Ein Service- oder …",
+      "wortlaut_voll": "RLS und Serverpfad prüfen bei Projektquellen Mandant und Anwendung. Globale Quellen sind nur nach Plattformfreigabe lesbar. Ein Service- oder Builder-Schlüssel darf diese Grenze nicht umgehen.",
+      "herkunft": "260802_FREIRAUM_K08_Wissen-und-Quellen_v1.1.md:304",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Schlüssel",
+          "stelle": 150
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 45
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Schlüssel“); mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-068",
+      "klausel": "K08-M31",
+      "konzept": "K08",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Nachweis bindet mindestens Quellen-ID, Quellversion, Quellen-Hash, Fundstelle, Ausgabe-Hash, Rechte-/Policy-Version, Prüfermodell, …",
+      "wortlaut_voll": "Der Nachweis bindet mindestens Quellen-ID, Quellversion, Quellen-Hash, Fundstelle, Ausgabe-Hash, Rechte-/Policy-Version, Prüfermodell, Prompt-/Rubrikversion, Ergebnis und Begründung. Quelltext wird im Nachweis minimiert; Service-Rollen dürfen Mandanten-, Projekt- und RLS-Grenzen nicht umgehen.",
+      "herkunft": "260802_FREIRAUM_K08_Wissen-und-Quellen_v1.1.md:326",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 243
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-069",
+      "klausel": "K10-G10",
+      "konzept": "K10",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: *Umsetzungspartner* ist der Oberbegriff für beide Firmen. Unterschieden werden sie durch ihre Aufgabe am Partner-Mandanten (Eigentümer K02), …",
+      "wortlaut_voll": "Es GILT: *Umsetzungspartner* ist der Oberbegriff für beide Firmen. Unterschieden werden sie durch ihre Aufgabe am Partner-Mandanten (Eigentümer K02), nie durch die Art des Mandanten.",
+      "herkunft": "260801_FREIRAUM_K10_Uebergabe-Paket_v1.4.md:288",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 122
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-070",
+      "klausel": "K10-M22",
+      "konzept": "K10",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Abruf MUSS privat und serverseitig für Anwendung, Mandant, Person und freigegebene Paketrevision autorisiert werden. Öffentliche oder dauerhaft …",
+      "wortlaut_voll": "Jeder Abruf MUSS privat und serverseitig für Anwendung, Mandant, Person und freigegebene Paketrevision autorisiert werden. Öffentliche oder dauerhaft gültige Objektlinks sind unzulässig. Der Abruf erzeugt ein K02-Ereignis mit Paketkennung und Hash, aber ohne Geheimniswerte.",
+      "herkunft": "260801_FREIRAUM_K10_Uebergabe-Paket_v1.4.md:242",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Geheimniswerte",
+          "stelle": 259
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 56
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Geheimniswerte“); mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-071",
+      "klausel": "K10-M35",
+      "konzept": "K10",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Übergabe MUSS genau einen Empfänger benennen: einen Mandanten der Art Partner mit erkennbarer Aufgabe. Ohne benannten Empfänger entsteht keine …",
+      "wortlaut_voll": "Jede Übergabe MUSS genau einen Empfänger benennen: einen Mandanten der Art Partner mit erkennbarer Aufgabe. Ohne benannten Empfänger entsteht keine Übergabe.",
+      "herkunft": "260801_FREIRAUM_K10_Uebergabe-Paket_v1.4.md:283",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 57
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-072",
+      "klausel": "K11-D05",
+      "konzept": "K11",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Eine vierte Zeile in `contact` DARF für denselben Mandanten nicht entstehen, und zwei Zeilen DÜRFEN nicht dieselbe Platznummer tragen.",
+      "wortlaut_voll": "Eine vierte Zeile in `contact` DARF für denselben Mandanten nicht entstehen, und zwei Zeilen DÜRFEN nicht dieselbe Platznummer tragen.",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:75",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 50
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-073",
+      "klausel": "K11-D09",
+      "konzept": "K11",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Die Protokollsicht DARF keine Zeile eines fremden Mandanten zeigen und keine Ausfuhr über die Mandantengrenze erzeugen (Schnitt K02, Durchsetzung K13 …",
+      "wortlaut_voll": "Die Protokollsicht DARF keine Zeile eines fremden Mandanten zeigen und keine Ausfuhr über die Mandantengrenze erzeugen (Schnitt K02, Durchsetzung K13 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:79",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 50
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-074",
+      "klausel": "K11-G05",
+      "konzept": "K11",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: `app_state_aktuell` ist eine Lesesicht auf Anwendung, Zustand und Beginn — kein Schreibschutz, ohne eigenen Mandantenbezug; die Grenze zieht …",
+      "wortlaut_voll": "Es GILT: `app_state_aktuell` ist eine Lesesicht auf Anwendung, Zustand und Beginn — kein Schreibschutz, ohne eigenen Mandantenbezug; die Grenze zieht der Serverpfad (K13 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:89",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenbezug",
+          "stelle": 117
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenbezug“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-075",
+      "klausel": "K11-M01",
+      "konzept": "K11",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Ansprechpartner MUSS genau eine Zeile in `contact` sein und genau einen Mandanten tragen (`tenant_id`, Verweis auf `tenant` — Eigentümer K02, …",
+      "wortlaut_voll": "Ein Ansprechpartner MUSS genau eine Zeile in `contact` sein und genau einen Mandanten tragen (`tenant_id`, Verweis auf `tenant` — Eigentümer K02, Löschregel `cascade`).",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:47",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 76
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-076",
+      "klausel": "K11-M02",
+      "konzept": "K11",
+      "art": "MUSS",
+      "wortlaut_kurz": "Je Mandant MÜSSEN höchstens drei Ansprechpartner bestehen. Die Grenze trägt doppelt: Wertebereich 1 bis 3 an `contact.position` und Eindeutigkeit von …",
+      "wortlaut_voll": "Je Mandant MÜSSEN höchstens drei Ansprechpartner bestehen. Die Grenze trägt doppelt: Wertebereich 1 bis 3 an `contact.position` und Eindeutigkeit von Mandant und Platznummer.",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:48",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 3
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-077",
+      "klausel": "K11-M07",
+      "konzept": "K11",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Einladungsweg MUSS erst erscheinen, wenn Firmenname, Vorname, Nachname, Telefon und eine gültige Adresse zusammen vorliegen. Als gültig zählt …",
+      "wortlaut_voll": "Der Einladungsweg MUSS erst erscheinen, wenn Firmenname, Vorname, Nachname, Telefon und eine gültige Adresse zusammen vorliegen. Als gültig zählt eine Adresse, deren Marke aus K11-M04 gesetzt ist; solange sie „nicht geprüft\" trägt, bleibt der Weg verborgen — fail-closed, nicht ausgegraut.",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:53",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "fail-closed",
+          "stelle": 259
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „fail-closed“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-078",
+      "klausel": "K11-M27",
+      "konzept": "K11",
+      "art": "MUSS",
+      "wortlaut_kurz": "`app_state_aktuell` bleibt für direkte Clientrollen gesperrt oder wird als Security-Invoker-Sicht mit RLS der Basistabellen bereitgestellt. …",
+      "wortlaut_voll": "`app_state_aktuell` bleibt für direkte Clientrollen gesperrt oder wird als Security-Invoker-Sicht mit RLS der Basistabellen bereitgestellt. Zwei-Mandanten-Tests decken Lesen, Suche und Export ab.",
+      "herkunft": "260801_FREIRAUM_K11_Betriebs-Portal_v1.3.md:341",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 145
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-079",
+      "klausel": "K12-M02",
+      "konzept": "K12",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Region MUSS aus der geprüften Werteliste am Mandanten stammen (Eigentümer K02) und gegen die Datenlokalität geprüft werden (Eigentümer K13).",
+      "wortlaut_voll": "Die Region MUSS aus der geprüften Werteliste am Mandanten stammen (Eigentümer K02) und gegen die Datenlokalität geprüft werden (Eigentümer K13).",
+      "herkunft": "260801_FREIRAUM_K12_Prototyp-Hosting_v1.4.md:47",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 48
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-080",
+      "klausel": "K12-M10",
+      "konzept": "K12",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Freigabezugang ist ein serververmittelter, zufälliger, objekt- und mandantengebundener Zugriff. Ablauf und Widerruf werden bei jedem Abruf …",
+      "wortlaut_voll": "Ein Freigabezugang ist ein serververmittelter, zufälliger, objekt- und mandantengebundener Zugriff. Ablauf und Widerruf werden bei jedem Abruf geprüft; ein nackter Storage-Link gilt nicht als widerrufbar.",
+      "herkunft": "260801_FREIRAUM_K12_Prototyp-Hosting_v1.4.md:164",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "mandantengebundener",
+          "stelle": 71
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabezugang",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „mandantengebundener“); freigabe (Wort „Freigabezugang“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-081",
+      "klausel": "K12-M12",
+      "konzept": "K12",
+      "art": "MUSS",
+      "wortlaut_kurz": "Release 1 liefert Vorschauen nur für Mandanten mit `processing_region = swedencentral`. Andere modellierte Regionen erhalten eine begründete Sperre …",
+      "wortlaut_voll": "Release 1 liefert Vorschauen nur für Mandanten mit `processing_region = swedencentral`. Andere modellierte Regionen erhalten eine begründete Sperre und keine Ausweichregion.",
+      "herkunft": "260801_FREIRAUM_K12_Prototyp-Hosting_v1.4.md:166",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 37
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-082",
+      "klausel": "K13-D09",
+      "konzept": "K13",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein produktiver Datenpfad DARF NICHT allein durch Autorisierung im Servercode geschützt sein. Die zweite Mandantenschutzschicht aus RLS ist ein …",
+      "wortlaut_voll": "Ein produktiver Datenpfad DARF NICHT allein durch Autorisierung im Servercode geschützt sein. Die zweite Mandantenschutzschicht aus RLS ist ein Produktionsgate.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:80",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenschutzschicht",
+          "stelle": 105
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenschutzschicht“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-083",
+      "klausel": "K13-G04",
+      "konzept": "K13",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: `portal.data_locality` trägt die Zusage der Datenlokalität mit der Vorgabe `EU-Azure/swedencentral`. Sie ist eine Angabe je Portal, nicht je …",
+      "wortlaut_voll": "Es GILT: `portal.data_locality` trägt die Zusage der Datenlokalität mit der Vorgabe `EU-Azure/swedencentral`. Sie ist eine Angabe je Portal, nicht je Mandant.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:93",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 150
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-084",
+      "klausel": "K13-M05",
+      "konzept": "K13",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Aufruf aus einer Oberfläche MUSS über den Serverpfad laufen. Der Serverpfad prüft aktives Konto, Mitgliedschaft, Rolle, Mandant und …",
+      "wortlaut_voll": "Jeder Aufruf aus einer Oberfläche MUSS über den Serverpfad laufen. Der Serverpfad prüft aktives Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug, bevor er liest oder schreibt.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:46",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 126
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-085",
+      "klausel": "K13-M07",
+      "konzept": "K13",
+      "art": "MUSS",
+      "wortlaut_kurz": "Vor jeder Exposition über eine unmittelbar erreichbare Datenschnittstelle MÜSSEN RLS-Policies für SELECT, INSERT, UPDATE und DELETE aktiv sein. Der …",
+      "wortlaut_voll": "Vor jeder Exposition über eine unmittelbar erreichbare Datenschnittstelle MÜSSEN RLS-Policies für SELECT, INSERT, UPDATE und DELETE aktiv sein. Der Nachweis erfolgt über einen Zwei-Mandanten-Negativtest je Vorgangsart.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:48",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 181
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-086",
+      "klausel": "K13-M08",
+      "konzept": "K13",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Mandantengrenze MUSS zweifach durchgesetzt werden: im Serverpfad durch Autorisierung und im Datenbestand durch Policies. Fällt eine Ebene aus, …",
+      "wortlaut_voll": "Die Mandantengrenze MUSS zweifach durchgesetzt werden: im Serverpfad durch Autorisierung und im Datenbestand durch Policies. Fällt eine Ebene aus, hält die andere.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:49",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantengrenze",
+          "stelle": 4
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantengrenze“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-087",
+      "klausel": "K13-M16",
+      "konzept": "K13",
+      "art": "MUSS",
+      "wortlaut_kurz": "Vor jedem Produktivbetrieb MÜSSEN RLS-Policies für alle mandantenbezogenen Tabellen und Sichten aktiv sein. UI-, API- und DB-Negativtests prüfen zwei …",
+      "wortlaut_voll": "Vor jedem Produktivbetrieb MÜSSEN RLS-Policies für alle mandantenbezogenen Tabellen und Sichten aktiv sein. UI-, API- und DB-Negativtests prüfen zwei Mandanten, Rollen, Objektbezug und privilegierte Bypass-Rollen.",
+      "herkunft": "260801_FREIRAUM_K13_Architektur-Muster_v1.5.md:57",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "privilegierte",
+          "stelle": 185
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 150
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „privilegierte“); mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-088",
+      "klausel": "K14-D10",
+      "konzept": "K14",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Es DARF keinen Ausnahmezugang geben, der die Rollentrennung, die Mandantengrenze oder die Maskierung umgeht. Auch ein Betriebsvorfall hebt keine …",
+      "wortlaut_voll": "Es DARF keinen Ausnahmezugang geben, der die Rollentrennung, die Mandantengrenze oder die Maskierung umgeht. Auch ein Betriebsvorfall hebt keine dieser drei Sperren auf.",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:79",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Rollentrennung",
+          "stelle": 45
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantengrenze",
+          "stelle": 65
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Rollentrennung“); mandanten (Wort „Mandantengrenze“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-089",
+      "klausel": "K14-G05",
+      "konzept": "K14",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: `approval` trägt keine Mandantenspalte und keinen Fremdschlüssel auf das freigegebene Objekt. Der Mandantenbezug entsteht über das Objekt …",
+      "wortlaut_voll": "Es GILT: `approval` trägt keine Mandantenspalte und keinen Fremdschlüssel auf das freigegebene Objekt. Der Mandantenbezug entsteht über das Objekt und über die beiden Konten und wird ausschließlich serverseitig durchgesetzt (offener Punkt O-K14-2).",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:91",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenspalte",
+          "stelle": 32
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenspalte“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-090",
+      "klausel": "K14-M04",
+      "konzept": "K14",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Server MUSS vor dem Schreiben der Freigabezeile fünf Bedingungen prüfen: Die Aktion steht in der Matrix, der Freigeber ist die angemeldete …",
+      "wortlaut_voll": "Der Server MUSS vor dem Schreiben der Freigabezeile fünf Bedingungen prüfen: Die Aktion steht in der Matrix, der Freigeber ist die angemeldete Sitzung, beide Konten tragen `actor_status = AKTIV`, beide haben eine Mitgliedschaft im betroffenen Portal (`membership`, Eigentümer K20), und das Objekt liegt im Mandanten der Sitzung.",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:49",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "freigabekritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 306
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabezeile",
+          "stelle": 38
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“); freigabe (Wort „Freigabezeile“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-091",
+      "klausel": "K14-M05",
+      "konzept": "K14",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die serverseitige Prüfung aus K14-M04 MUSS unabhängig von der Bedingung in der Datenbank bestehen. Der CHECK vergleicht zwei Werte einer Zeile; er …",
+      "wortlaut_voll": "Die serverseitige Prüfung aus K14-M04 MUSS unabhängig von der Bedingung in der Datenbank bestehen. Der CHECK vergleicht zwei Werte einer Zeile; er kennt weder Sitzung noch Aktion noch Mandant und ersetzt die Aktionsprüfung nicht.",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:50",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 184
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-092",
+      "klausel": "K14-M12",
+      "konzept": "K14",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Lese- und Schreibzugriff MUSS auf den Mandanten der angemeldeten Sitzung eingeschränkt sein — doppelt: serverseitige Autorisierung und Regeln …",
+      "wortlaut_voll": "Jeder Lese- und Schreibzugriff MUSS auf den Mandanten der angemeldeten Sitzung eingeschränkt sein — doppelt: serverseitige Autorisierung und Regeln im Datenbestand. Bis beide nachgewiesen sind, bleibt das Schema server-only (K01 Abschn. 3).",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:57",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 44
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-093",
+      "klausel": "K14-M18",
+      "konzept": "K14",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Handlung, die Daten erzeugt, ändert oder freigibt, MUSS einem angemeldeten Konto mit gültiger Sitzung zugeordnet sein (Konto und zweiter Faktor: …",
+      "wortlaut_voll": "Jede Handlung, die Daten erzeugt, ändert oder freigibt, MUSS einem angemeldeten Konto mit gültiger Sitzung zugeordnet sein (Konto und zweiter Faktor: K03).",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:63",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweiter Faktor",
+          "stelle": 134
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweiter Faktor“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-094",
+      "klausel": "K14-M20",
+      "konzept": "K14",
+      "art": "MUSS",
+      "wortlaut_kurz": "Ein Übergabezugang MUSS je Partnermandant einzeln erteilt werden. Sind zwei Partner beteiligt, entstehen zwei Zugänge mit zwei getrennten …",
+      "wortlaut_voll": "Ein Übergabezugang MUSS je Partnermandant einzeln erteilt werden. Sind zwei Partner beteiligt, entstehen zwei Zugänge mit zwei getrennten Geheimnisreferenzen. Ein gemeinsamer Zugang entsteht nicht.",
+      "herkunft": "260801_FREIRAUM_K14_Sicherheits-Grundlinie_v1.3.md:326",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Geheimnisreferenzen",
+          "stelle": 138
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Geheimnisreferenzen“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-095",
+      "klausel": "K15-G09",
+      "konzept": "K15",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Eine Einladung ist ein Sicherheitsmittel, kein Nachweis, und trägt deshalb keine eigene Klasse. Der Beleg, dass eingeladen wurde, liegt im …",
+      "wortlaut_voll": "Es GILT: Eine Einladung ist ein Sicherheitsmittel, kein Nachweis, und trägt deshalb keine eigene Klasse. Der Beleg, dass eingeladen wurde, liegt im Protokoll (Eigentümer K02). Der Aufräumlauf steht als offener Punkt.",
+      "herkunft": "260801_FREIRAUM_K15_Datenschutz-und-Loeschkonzept_v1.6.md:92",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Sicherheitsmittel",
+          "stelle": 32
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Sicherheitsmittel“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-096",
+      "klausel": "K16-G11",
+      "konzept": "K16",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Die Anzeige eines Zustands ist mandantengebunden wie jede andere Anzeige. Ein fremder Bestand gilt als nicht vorhanden (K02).",
+      "wortlaut_voll": "Es GILT: Die Anzeige eines Zustands ist mandantengebunden wie jede andere Anzeige. Ein fremder Bestand gilt als nicht vorhanden (K02).",
+      "herkunft": "260801_FREIRAUM_K16_Bedien-Standard_v1.3.md:121",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "mandantengebunden",
+          "stelle": 40
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „mandantengebunden“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-097",
+      "klausel": "K17-D13",
+      "konzept": "K17",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Ein Agent DARF Daten zweier Mandanten NICHT zusammenführen — auch nicht verdichtet und auch nicht als Beispiel in einer Eingabe (K02 Abschn. 3).",
+      "wortlaut_voll": "Ein Agent DARF Daten zweier Mandanten NICHT zusammenführen — auch nicht verdichtet und auch nicht als Beispiel in einer Eingabe (K02 Abschn. 3).",
+      "herkunft": "260802_FREIRAUM_K17_Agenten-Betriebs-und-Interaktionskonzept_v1.5.md:95",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 28
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-098",
+      "klausel": "K17-G12",
+      "konzept": "K17",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Der Katalog trägt keinen Mandantenbezug; er ist plattformweit. Die Trennung der Kundendaten liegt im Serverpfad und im Datenbestand (K13 …",
+      "wortlaut_voll": "Es GILT: Der Katalog trägt keinen Mandantenbezug; er ist plattformweit. Die Trennung der Kundendaten liegt im Serverpfad und im Datenbestand (K13 Abschn. 3).",
+      "herkunft": "260802_FREIRAUM_K17_Agenten-Betriebs-und-Interaktionskonzept_v1.5.md:112",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenbezug",
+          "stelle": 34
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenbezug“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-099",
+      "klausel": "K19-D05",
+      "konzept": "K19",
+      "art": "DARF NICHT",
+      "wortlaut_kurz": "Kein Bildschirm DARF ein anderes Verfahren für den zweiten Faktor zeigen als den Code per E-Mail. `mfa_method` kennt EMAIL_CODE und OFF.",
+      "wortlaut_voll": "Kein Bildschirm DARF ein anderes Verfahren für den zweiten Faktor zeigen als den Code per E-Mail. `mfa_method` kennt EMAIL_CODE und OFF.",
+      "herkunft": "260801_FREIRAUM_K19_Build-Referenz_v1.3.md:64",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "zweiten Faktor",
+          "stelle": 51
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „zweiten Faktor“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldecode"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-100",
+      "klausel": "K19-G08",
+      "konzept": "K19",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: die Angabe 24 Stunden ist die Anzeige der Mandantenvorgabe im Werteband 1 bis 168 Stunden (F11, Eigentümer K02). Weicht die Vorgabe ab, …",
+      "wortlaut_voll": "Es GILT: die Angabe 24 Stunden ist die Anzeige der Mandantenvorgabe im Werteband 1 bis 168 Stunden (F11, Eigentümer K02). Weicht die Vorgabe ab, folgt der Anzeigetext ihr.",
+      "herkunft": "260801_FREIRAUM_K19_Build-Referenz_v1.3.md:81",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenvorgabe",
+          "stelle": 51
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenvorgabe“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-101",
+      "klausel": "K20-G08",
+      "konzept": "K20",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Schranke und Frist stehen am Mandanten, nicht in der Einladung (Eigentümer K02). Ändert sich die Frist, wirkt sie auf künftige Einladungen, …",
+      "wortlaut_voll": "Es GILT: Schranke und Frist stehen am Mandanten, nicht in der Einladung (Eigentümer K02). Ändert sich die Frist, wirkt sie auf künftige Einladungen, nicht rückwirkend.",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:91",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 38
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-102",
+      "klausel": "K20-G09",
+      "konzept": "K20",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Das Einladungsverfahren der Verwaltenden — Einmal-Link, Frist, Code bei jeder Anmeldung — ist dasselbe wie beim Endnutzer. Einen bequemeren …",
+      "wortlaut_voll": "Es GILT: Das Einladungsverfahren der Verwaltenden — Einmal-Link, Frist, Code bei jeder Anmeldung — ist dasselbe wie beim Endnutzer. Einen bequemeren Weg gibt es ausdrücklich nicht (EXMA-Handbuch 5.4). Über den Datenweg des ENDUSER-Portals sagt das nichts (O-K20-5).",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:92",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Anmeldung",
+          "stelle": 87
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Anmeldung“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Anmeldung",
+        "Einladung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-103",
+      "klausel": "K20-G10",
+      "konzept": "K20",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Beim Entfernen eines Kontos gehen Mitgliedschaften und Einladungen mit; Rolle und Mandant bleiben und verweigern das Mitlöschen.",
+      "wortlaut_voll": "Es GILT: Beim Entfernen eines Kontos gehen Mitgliedschaften und Einladungen mit; Rolle und Mandant bleiben und verweigern das Mitlöschen.",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:93",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 91
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung",
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-104",
+      "klausel": "K20-M11",
+      "konzept": "K20",
+      "art": "MUSS",
+      "wortlaut_kurz": "Der Ablaufzeitpunkt MUSS nach dem Versandzeitpunkt liegen (`invitation_frist`) und die Frist des Mandanten einhalten. Vorgabe sind 24 Stunden (F11); …",
+      "wortlaut_voll": "Der Ablaufzeitpunkt MUSS nach dem Versandzeitpunkt liegen (`invitation_frist`) und die Frist des Mandanten einhalten. Vorgabe sind 24 Stunden (F11); belegt durch T8 und T19.",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:56",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 97
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-105",
+      "klausel": "K20-M19",
+      "konzept": "K20",
+      "art": "MUSS",
+      "wortlaut_kurz": "*Portalzugang entfernen* löscht ausschließlich die `membership` des gewählten Portals. `actor` (Eigentümer K03) bleibt bestehen; Mitgliedschaften …",
+      "wortlaut_voll": "*Portalzugang entfernen* löscht ausschließlich die `membership` des gewählten Portals. `actor` (Eigentümer K03) bleibt bestehen; Mitgliedschaften anderer Portale bleiben unverändert. Offene Einladungen desselben Portals werden atomar WIDERRUFEN.",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:273",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "aufbewahrungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "aufbewahrungskritisch",
+          "begriff": "löscht",
+          "stelle": 25
+        }
+      ],
+      "belege_kurz": "aufbewahrungs (Wort „löscht“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Einladung"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-106",
+      "klausel": "K20-M25",
+      "konzept": "K20",
+      "art": "MUSS",
+      "wortlaut_kurz": "Wiederversand zeigt: *Der vorherige Link ist ungültig.* Der Nachweis einer Zugangsänderung trägt `retention_class = BETRIEBSPROTOKOLL`; …",
+      "wortlaut_voll": "Wiederversand zeigt: *Der vorherige Link ist ungültig.* Der Nachweis einer Zugangsänderung trägt `retention_class = BETRIEBSPROTOKOLL`; personenbezogene Anzeige wird nach K15 minimiert.",
+      "herkunft": "260801_FREIRAUM_K20_Zugaenge-und-Nutzer-EXMA_v1.3.md:279",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "aufbewahrungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "aufbewahrungskritisch",
+          "begriff": "retention_class",
+          "stelle": 98
+        }
+      ],
+      "belege_kurz": "aufbewahrungs (Wort „retention_class“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Bauspur"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-107",
+      "klausel": "K23-M04",
+      "konzept": "K23",
+      "art": "MUSS",
+      "wortlaut_kurz": "Eine Klausel ohne belegenden Test MUSS einzeln als Restrisiko mit Träger, Kritikalität und Annahmeentscheidung aufgeführt werden. Eine …",
+      "wortlaut_voll": "Eine Klausel ohne belegenden Test MUSS einzeln als Restrisiko mit Träger, Kritikalität und Annahmeentscheidung aufgeführt werden. Eine Abdeckungsquote ersetzt diese Liste nicht (F34). Ist die Klausel sicherheits-, mandanten-, freigabe-, aufbewahrungs- oder wiederherstellungskritisch, sperrt der fehlende Test die Freigabe.",
+      "herkunft": "260801_FREIRAUM_K23_Test-und-Abnahmekonzept_v1.1.md:59",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch",
+        "freigabekritisch",
+        "aufbewahrungskritisch",
+        "wiederherstellungskritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "mandanten",
+          "stelle": 214
+        },
+        {
+          "gruppe": "freigabekritisch",
+          "begriff": "Freigabe",
+          "stelle": 314
+        },
+        {
+          "gruppe": "aufbewahrungskritisch",
+          "begriff": "aufbewahrungs",
+          "stelle": 237
+        },
+        {
+          "gruppe": "wiederherstellungskritisch",
+          "begriff": "wiederherstellungskritisch",
+          "stelle": 257
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „mandanten“); freigabe (Wort „Freigabe“); aufbewahrungs (Wort „aufbewahrungs“); wiederherstellungs (Wort „wiederherstellungskritisch“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-108",
+      "klausel": "K23-M10",
+      "konzept": "K23",
+      "art": "MUSS",
+      "wortlaut_kurz": "Es MUSS eine Lastprüfung geben, die mehrere Mandanten gleichzeitig prototypisieren lässt. Ihre Zielwerte legt der Founder fest (O-K23-1).",
+      "wortlaut_voll": "Es MUSS eine Lastprüfung geben, die mehrere Mandanten gleichzeitig prototypisieren lässt. Ihre Zielwerte legt der Founder fest (O-K23-1).",
+      "herkunft": "260801_FREIRAUM_K23_Test-und-Abnahmekonzept_v1.1.md:65",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandanten",
+          "stelle": 44
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandanten“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-109",
+      "klausel": "K23-M11",
+      "konzept": "K23",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Lastprüfung MUSS die Mandantentrennung unter Last nachweisen, nicht nur die Antwortzeit.",
+      "wortlaut_voll": "Die Lastprüfung MUSS die Mandantentrennung unter Last nachweisen, nicht nur die Antwortzeit.",
+      "herkunft": "260801_FREIRAUM_K23_Test-und-Abnahmekonzept_v1.1.md:66",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantentrennung",
+          "stelle": 25
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantentrennung“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-110",
+      "klausel": "K23-M12",
+      "konzept": "K23",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jeder Prüflauf MUSS gegen deterministisch erzeugte, synthetische und je Mandant gekennzeichnete Daten in einer abgetrennten Umgebung laufen. …",
+      "wortlaut_voll": "Jeder Prüflauf MUSS gegen deterministisch erzeugte, synthetische und je Mandant gekennzeichnete Daten in einer abgetrennten Umgebung laufen. Datensatzfassung, Erzeugungsregel und Bereinigung werden nachgewiesen. Produktionsdaten und Produktionsgeheimnisse werden nie verwendet.",
+      "herkunft": "260801_FREIRAUM_K23_Test-und-Abnahmekonzept_v1.1.md:67",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandant",
+          "stelle": 72
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandant“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-111",
+      "klausel": "K23-M23",
+      "konzept": "K23",
+      "art": "MUSS",
+      "wortlaut_kurz": "Die Lastprüfung MUSS außerhalb der Produktion mit getrennten Testidentitäten und kleinsten erforderlichen Berechtigungen laufen. Sie zeichnet neben …",
+      "wortlaut_voll": "Die Lastprüfung MUSS außerhalb der Produktion mit getrennten Testidentitäten und kleinsten erforderlichen Berechtigungen laufen. Sie zeichnet neben Antwortzeit und Fehlerquote auch Warteschlangen, Ressourcenverbrauch, Mandantenfairness und Trennungsverstöße auf.",
+      "herkunft": "260801_FREIRAUM_K23_Test-und-Abnahmekonzept_v1.1.md:78",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "sicherheitskritisch",
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "sicherheitskritisch",
+          "begriff": "Berechtigungen",
+          "stelle": 106
+        },
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenfairness",
+          "stelle": 218
+        }
+      ],
+      "belege_kurz": "sicherheits (Wort „Berechtigungen“); mandanten (Wort „Mandantenfairness“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-112",
+      "klausel": "K25-G14",
+      "konzept": "K25",
+      "art": "GILT",
+      "wortlaut_kurz": "Es GILT: Mehrere Hüllen laufen gleichzeitig. Ihre Trennung folgt der Mandantentrennung des Hostings (K12, K13).",
+      "wortlaut_voll": "Es GILT: Mehrere Hüllen laufen gleichzeitig. Ihre Trennung folgt der Mandantentrennung des Hostings (K12, K13).",
+      "herkunft": "260801_FREIRAUM_K25_Wortschatz-und-Sperren-Prototyp-Erzeuger_v1.1.md:146",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantentrennung",
+          "stelle": 69
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantentrennung“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    },
+    {
+      "kennung": "RR-T-113",
+      "klausel": "K25-M22",
+      "konzept": "K25",
+      "art": "MUSS",
+      "wortlaut_kurz": "Jede Auswahl MUSS einen vollständigen Auswahlvermerk erzeugen: Auswahlkennung, Zeitpunkt, Anwendungs- und Mandantenbezug, Fassung der bestätigten …",
+      "wortlaut_voll": "Jede Auswahl MUSS einen vollständigen Auswahlvermerk erzeugen: Auswahlkennung, Zeitpunkt, Anwendungs- und Mandantenbezug, Fassung der bestätigten Anforderungen, Profil mit Herkunft, Kandidaten vor und nach dem Filter, Deckungsgrade, Kennung und Fassung je Vorlage, angewandte Gleichstandsregel, Zweitplatzierter, Erzeuger- und Review-Agentenstand sowie Klartextsatz. Der Klartextsatz wird aus den übrigen Feldern gebildet, fügt keine Aussage hinzu und ersetzt kein Feld.",
+      "herkunft": "260801_FREIRAUM_K25_Wortschatz-und-Sperren-Prototyp-Erzeuger_v1.1.md:89",
+      "kritikalitaet_vorschlag": "kritisch",
+      "kritikalitaet_status": "Triage-Vorschlag, nicht festgestellt",
+      "gruppen_vorschlag": [
+        "mandantenkritisch"
+      ],
+      "belegstellen": [
+        {
+          "gruppe": "mandantenkritisch",
+          "begriff": "Mandantenbezug",
+          "stelle": 106
+        }
+      ],
+      "belege_kurz": "mandanten (Wort „Mandantenbezug“)",
+      "sperrend_keine_annahme_genuegt": true,
+      "stationen": [
+        "Mandant"
+      ],
+      "prueffall": null,
+      "traeger": "",
+      "annahmeentscheidung": "",
+      "frist": ""
+    }
+  ]
+}

@@ -1,0 +1,1244 @@
+{
+  "K00-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Zeichnungsblock“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K00-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabepaket“ (Stelle 362) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-D04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_at“ (Stelle 7) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 89) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Zugangscode“ (Stelle 84) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-D11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_at“ (Stelle 271) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_needs_state“ (Stelle 10) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 156); aufbewahrungskritisch: „löschen“ (Stelle 91) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 186) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Einmal-Link“ (Stelle 81); aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 23) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „RLS“ (Stelle 53) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-G22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Wiederanlauf“ (Stelle 65) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 136); aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 147) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 31); aufbewahrungskritisch: „löschbar“ (Stelle 164) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „IN_PROD“ (Stelle 166) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweite Faktor“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 44) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 136) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 5) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 168) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M24": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabevorgang“ (Stelle 184) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M25": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 97) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 26) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenzugehörigkeit“ (Stelle 187) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M28": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Berechtigung“ (Stelle 134) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 168) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M32": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Selbstfreigabe“ (Stelle 129) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M33": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsfälligkeit“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K01-M35": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 61) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 26) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 41); mandantenkritisch: „Mandanten“ (Stelle 73) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 70) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-D12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Berechtigung“ (Stelle 70) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 71) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 58) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 85) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenbezug“ (Stelle 150) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 72) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 13) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-G17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 208) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 6) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 6) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 56) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 6) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 6) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 6) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 33) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantengrenze“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 89) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisse“ (Stelle 108) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenmenge“ (Stelle 97) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M24": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Ausfall“ (Stelle 0) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 78) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M29": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K02-M31": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D01": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) ein Vorgang ohne gültige Sitzung wird nicht wirksam; (2) ein Vorgang mit status WARTET_2FA wird abgelehnt; (3) ein Vorgang mit status GESPERRT wird abgelehnt; (4) in keinem der beiden Fälle entsteht ein Teil-Zugang. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Streuwert“ (Stelle 87) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweiter Faktor“ (Stelle 12) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheit“ (Stelle 78) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Einmal-Link“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Zugangscodes“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweite Faktor“ (Stelle 4); mandantenkritisch: „Mandanten“ (Stelle 179) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-D11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Ausfall“ (Stelle 139) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-G01": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) eine nicht erfüllte Vorbedingung sperrt; (2) eine nicht prüfbare Vorbedingung sperrt ebenso; (3) die Sperre wird angezeigt; (4) die Anzeige trägt die Begründung. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-G03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 70) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-G06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweiter Faktor“ (Stelle 67) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-G07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 111) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „MFA“ (Stelle 138); freigabekritisch: „Freigabe“ (Stelle 284) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 33) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M05": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) der zweite Faktor ist ein Code per E-Mail; (2) der Code ist sechsstellig; (3) mfa_method trägt den Wert EMAIL_CODE; (4) ein anderes Verfahren führt das Datenmodell nicht. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweite Faktor“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Anmeldung“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Einmal-Link“ (Stelle 4); mandantenkritisch: „Mandanten“ (Stelle 73) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Zugangscode“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Anmeldung“ (Stelle 39) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M13": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) jede Prüfung der Anmeldung läuft serverseitig; (2) eine allein in der Oberfläche erfolgte Prüfung wird als nicht erfolgt behandelt. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Anmeldung“ (Stelle 17) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M15": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) ein E-Mail-Code ist zehn Minuten gültig; (2) ein E-Mail-Code ist genau einmal gültig; (3) ein neuer Code entwertet alle älteren Codes desselben Kontos; (4) gespeichert wird nur der kryptografische Prüfwert des Codes. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 2 — vom Bau beansprucht, ohne Scheibenangabe — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Authentifizierungsverfahren“ (Stelle 16); freigabekritisch: „Freigabeberechtigung“ (Stelle 101) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Einmal-Link“ (Stelle 269); mandantenkritisch: „Mandanten“ (Stelle 89) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Anmeldung“ (Stelle 68); mandantenkritisch: „Mandant“ (Stelle 87); wiederherstellungskritisch: „Ausfall“ (Stelle 108) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 64) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M25": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) der Einladungsbefehl läuft serverseitig; (2) der Einladungsbefehl ist idempotent; (3) er prüft den Zielmandanten; (4) er prüft den Entscheidungsnachweis; (5) er prüft die Domäne; (6) er legt Einladung und Ereignis atomar an; (7) Portal, Builder und Service-Schlüssel umgehen diese Prüfung nicht; (8) Fehlermeldungen geben nicht preis, ob ein Konto existiert. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 2 — vom Bau beansprucht, ohne Scheibenangabe — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 173); wiederherstellungskritisch: „idempotenter“ (Stelle 20) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M26": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) der Versand nutzt verwaltete Identität oder Secret-Referenz; (2) der Versand nutzt eine erlaubte Ausgangsverbindung; (3) die Telemetrie ist datensparsam; (4) kein Code steht im Log; (5) keine vollständige E-Mail-Adresse steht im Log; (6) Providerfehler wirkt fail-closed und alarmiert den Betrieb mit Runbook-Verweis; (7) fehlender Nachweis wirkt fail-closed und alarmiert den Betrieb mit Runbook-Verweis; (8) unklare Konfiguration wirkt fail-closed und alarmiert den Betrieb mit Runbook-Verweis. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 252) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K03-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahme“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 33) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 94) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabekandidat“ (Stelle 99); wiederherstellungskritisch: „Wiederanlauf“ (Stelle 32) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Kenntnisnahme“ (Stelle 37) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 32) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 30) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 52) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K04-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Kenntnisnahme“ (Stelle 4); aufbewahrungskritisch: „Auskunftspflicht“ (Stelle 122) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-D12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 194) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-G07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 94) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabekandidat“ (Stelle 60) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogene“ (Stelle 46) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-M24": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 105) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 137); mandantenkritisch: „Mandanten“ (Stelle 30) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K05-M31": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheitsweg“ (Stelle 86); aufbewahrungskritisch: „personenbezogen“ (Stelle 220) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 327) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 80) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-G13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabekandidat“ (Stelle 48) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 24) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 93) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K06-M34": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmeverfahren“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-D01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabestufen“ (Stelle 53) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 26) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 129) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Zeichnung“ (Stelle 53) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 33) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 32) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 103); wiederherstellungskritisch: „idempotenter“ (Stelle 45) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 281); freigabekritisch: „Freigabestufen“ (Stelle 259) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabenachweise“ (Stelle 241) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 72) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „mandantengebundenen“ (Stelle 116); freigabekritisch: „Freigabezugang“ (Stelle 136) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M24": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_until“ (Stelle 1) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Missbrauch“ (Stelle 143) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M28": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + aufbewahrungskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantentrennung“ (Stelle 60); aufbewahrungskritisch: „Retention“ (Stelle 143); wiederherstellungskritisch: „Restore“ (Stelle 186) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K07-M29": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 18) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheitslogik“ (Stelle 37) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8); freigabekritisch: „freigegeben“ (Stelle 83) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 149) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabetor“ (Stelle 100) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 108) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „tenant_id“ (Stelle 109) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 150); mandantenkritisch: „Mandant“ (Stelle 45) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabenachweis“ (Stelle 181) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M25": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 87); mandantenkritisch: „RLS“ (Stelle 73); freigabekritisch: „Freigabestatus“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 90) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 310) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M31": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 243) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M32": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 227); freigabekritisch: „freigegeben“ (Stelle 195) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K08-M33": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 186) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Unterschrift“ (Stelle 0) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 50) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 10) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_at“ (Stelle 10) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Unterschrift“ (Stelle 17) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeblock“ (Stelle 22) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeblock“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Unterschrift“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeblock“ (Stelle 125) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 42) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 18) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Unterschrift“ (Stelle 50) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 96) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 24) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K09-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 71); wiederherstellungskritisch: „idempotent“ (Stelle 127) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-D04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 93) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüsselwerte“ (Stelle 48) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 13) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-G03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungslauf“ (Stelle 151) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 23) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 122) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 62) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüsselwerte“ (Stelle 99); aufbewahrungskritisch: „personenbezogenen“ (Stelle 121) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 77) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 239) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimniswerte“ (Stelle 232) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimniswerte“ (Stelle 259); mandantenkritisch: „Mandant“ (Stelle 56) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 260); aufbewahrungskritisch: „personenbezogene“ (Stelle 91) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabezeile“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Verschlüsselung“ (Stelle 109); wiederherstellungskritisch: „Restore“ (Stelle 168) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M33": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 228) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M34": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Kenntnisnahme“ (Stelle 219) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M35": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 57) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K10-M37": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahme“ (Stelle 104) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 50) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 50) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-D10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 79) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenbezug“ (Stelle 117) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 76) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 3) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 259) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 127) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 146) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 167); freigabekritisch: „Abnahmekriterium“ (Stelle 31) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 193) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 145) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M28": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 121) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M29": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „IN_PROD“ (Stelle 18) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K11-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_until“ (Stelle 48) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-G06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsuntergrenze“ (Stelle 147) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 48) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 22) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 41) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „mandantengebundener“ (Stelle 71); freigabekritisch: „Freigabezugang“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Berechtigungsprüfung“ (Stelle 47) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 37) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K12-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Wiederherstellungsziel“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenschutzschicht“ (Stelle 105) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-D10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüsselverwaltung“ (Stelle 30) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-D13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Zugangscode“ (Stelle 4); freigabekritisch: „Abnahmetest“ (Stelle 297) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 150) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „RLS“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-G13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 150) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisscan“ (Stelle 100) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M05": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) jeder Aufruf aus einer Oberfläche läuft über den Serverpfad; (2) der Serverpfad prüft das aktive Konto; (3) der Serverpfad prüft die Mitgliedschaft; (4) der Serverpfad prüft die Rolle; (5) der Serverpfad prüft den Mandanten; (6) der Serverpfad prüft den Objektbezug; (7) alle fünf Prüfungen liegen vor dem Lesen und vor dem Schreiben. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 126) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „RLS“ (Stelle 14); freigabekritisch: „Abnahme“ (Stelle 256) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 181) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantengrenze“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 180) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „privilegierte“ (Stelle 185); mandantenkritisch: „Mandanten“ (Stelle 150) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisse“ (Stelle 193) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „privilegierte“ (Stelle 139); mandantenkritisch: „RLS“ (Stelle 120) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 132) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Wiederanlauf“ (Stelle 143) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeschwelle“ (Stelle 125) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Backup“ (Stelle 82) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M24": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeweg“ (Stelle 204) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K13-M25": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „RLS“ (Stelle 176) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabezeile“ (Stelle 5) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 122) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 86) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabezeile“ (Stelle 136) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Rollentrennung“ (Stelle 45); mandantenkritisch: „Mandantengrenze“ (Stelle 65) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigaberecht“ (Stelle 108) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-D12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 93) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8); freigabekritisch: „Freigaben“ (Stelle 172) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Rollentrennung“ (Stelle 103); freigabekritisch: „Freigabe“ (Stelle 89) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenspalte“ (Stelle 32) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 160) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 13) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheits“ (Stelle 13) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 105) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigaberecht“ (Stelle 178) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsfrist“ (Stelle 31) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-G16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 37) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 114) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Vier-Augen“ (Stelle 5) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 306); freigabekritisch: „Freigabezeile“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 184) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabezeile“ (Stelle 0) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 5) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 84); mandantenkritisch: „Mandanten“ (Stelle 136) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 199) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 44) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Token“ (Stelle 14) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 62) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweiter Faktor“ (Stelle 134) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisreferenzen“ (Stelle 0); wiederherstellungskritisch: „Notfallzugriff“ (Stelle 96) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K14-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisreferenzen“ (Stelle 138) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-D02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_due“ (Stelle 126) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-D04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_rule“ (Stelle 7) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_due“ (Stelle 1) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 96) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „aufbewahrt“ (Stelle 92) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_rule“ (Stelle 10) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 40) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Pseudonymisierungszeitpunkt“ (Stelle 35) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Regelfrist“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheitsmittel“ (Stelle 32) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 5) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 162) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsmatrix“ (Stelle 42) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_rule“ (Stelle 67) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_due“ (Stelle 40) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_due“ (Stelle 1) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungslauf“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogenen“ (Stelle 62) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch + aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 70); aufbewahrungskritisch: „retention_rule“ (Stelle 33) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungslauf“ (Stelle 6); wiederherstellungskritisch: „idempotent“ (Stelle 173) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 41) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K15-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrungsklasse“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K16-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K16-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 17) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K16-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „mandantengebunden“ (Stelle 40) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K16-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 100) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K16-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_at“ (Stelle 49) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 21) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-D13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-D15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 106) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 96) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 97) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 88) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenbezug“ (Stelle 34) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 198) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-G16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheitsentscheidung“ (Stelle 85) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeschwelle“ (Stelle 93) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 152) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 34) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogene“ (Stelle 195) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 136) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeschwelle“ (Stelle 163) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M28": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Token“ (Stelle 55) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M29": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 289) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabeschwellen“ (Stelle 0) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M33": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogene“ (Stelle 74) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M37": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M41": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 143) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M42": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Sicherheitsinstanz“ (Stelle 333) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M44": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 36) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K17-M46": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 215) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 65) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 58) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8); freigabekritisch: „freigegeben“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 59) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M17": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Selbstfreigabe“ (Stelle 113) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmekriterium“ (Stelle 88) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M26": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 173); freigabekritisch: „Freigabe“ (Stelle 71) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Token“ (Stelle 205) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M29": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Tokens“ (Stelle 275); mandantenkritisch: „RLS“ (Stelle 61) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M30": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „idempotenter“ (Stelle 19) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M31": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 263); freigabekritisch: „Freigabe“ (Stelle 88) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M32": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 0) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K18-M33": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — wiederherstellungskritisch: „Wiederherstellungszeit“ (Stelle 200) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „zweiten Faktor“ (Stelle 51) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed_at“ (Stelle 404) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-G07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Rollentrennung“ (Stelle 64); freigabekritisch: „Freigaben“ (Stelle 83) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenvorgabe“ (Stelle 51) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-M09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 120) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K19-M14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Berechtigungsprüfung“ (Stelle 63) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-D03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Einmal-Link“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-D10": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) eine abgelaufene Einladung wirkt nicht erneut; (2) eine eingelöste Einladung wirkt nicht erneut; (3) eine widerrufene Einladung wirkt nicht erneut; (4) ein verfallener Link führt zu einem neuen Vorgang, nicht zu einer Verlängerung. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahmetest“ (Stelle 118) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G09": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Anmeldung“ (Stelle 87) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 91) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-G11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 63) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 121) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Streuwert“ (Stelle 119) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M08": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) gespeichert wird allein der Streuwert des Links; (2) wer den Datenbestand liest, kann keine fremde Einladung einlösen. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Streuwert“ (Stelle 28) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 44) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 97) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M14": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) EINGELOEST steht nie ohne redeemed_at; (2) redeemed_at steht nie ohne EINGELOEST; (3) beides wird gemeinsam gesetzt (invitation_einloesung); (4) der Beleg ist T11 - der Wortlaut benennt ihn selbst. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M15": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) nach der Einlösung wechselt das Konto von WARTET_2FA auf AKTIV; (2) der Kontozustand bleibt bei K03 - K20 setzt ihn nicht selbst; (3) der Beleg ist T12 - der Wortlaut benennt ihn selbst. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M18": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) jede Änderung an Zugang, Rolle, Mitgliedschaft oder Einladung steht im internen Nachweis; (2) der Eintrag trägt den Zeitpunkt; (3) der Eintrag trägt die handelnde Instanz; (4) der Eintrag trägt den Wert davor und den Wert danach. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „löscht“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „sealed“ (Stelle 1) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K20-M25": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) der Wiederversand zeigt den Satz: Der vorherige Link ist ungültig; (2) der Nachweis einer Zugangsänderung trägt retention_class = BETRIEBSPROTOKOLL; (3) die personenbezogene Anzeige ist nach K15 minimiert. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „retention_class“ (Stelle 98) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-D08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 59) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 79) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-G02": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 59) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-G03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Rollentrennung“ (Stelle 48); freigabekritisch: „Freigabe“ (Stelle 34) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-G04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 45) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-G07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 60) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 4) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabezeile“ (Stelle 53) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 26) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K21-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 154) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-D01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 36) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-D04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabegrund“ (Stelle 36) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-D06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 192); freigabekritisch: „IN_PROD“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-D09": {
+    "akzeptanzkriterium": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) kein Geheimnis in Manifest, Log, Screenshot oder Fehlerausgabe; (2) kein Zugangswert in Manifest, Log, Screenshot oder Fehlerausgabe; (3) keine unmaskierte personenbezogene Angabe in Manifest, Log, Screenshot oder Fehlerausgabe; (4) ein solcher Fund sperrt den Lauf. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau beansprucht und ganz gedeckt — dort noch ohne Haken. ⟨zeichnet: ⟩ ⟨am: ⟩",
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + aufbewahrungskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Geheimnisse“ (Stelle 0); aufbewahrungskritisch: „personenbezogene“ (Stelle 43) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-G01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabepaket“ (Stelle 76) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Abnahme“ (Stelle 13) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 133) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M01": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 307) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M04": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch + freigabekritisch + aufbewahrungskritisch + wiederherstellungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „mandanten“ (Stelle 214); freigabekritisch: „Freigabe“ (Stelle 314); aufbewahrungskritisch: „aufbewahrungs“ (Stelle 237); wiederherstellungskritisch: „wiederherstellungskritisch“ (Stelle 257) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandanten“ (Stelle 44) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M11": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantentrennung“ (Stelle 25) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M12": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandant“ (Stelle 72) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M13": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „gezeichnet“ (Stelle 121) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „IN_PROD“ (Stelle 18) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M15": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „freigegeben“ (Stelle 54) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „Aufbewahrung“ (Stelle 315) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M20": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 46) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „ABNAHME“ (Stelle 204) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K23-M23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch + mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Berechtigungen“ (Stelle 106); mandantenkritisch: „Mandantenfairness“ (Stelle 218) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-D03": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabestufe“ (Stelle 94) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-D05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogene“ (Stelle 154) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-D07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „Schlüssel“ (Stelle 38) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-D18": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 9) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-D23": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabe“ (Stelle 85) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G05": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 76) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G06": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 55) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G07": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Siegel“ (Stelle 59) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G08": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 111) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G10": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 8) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-G14": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantentrennung“ (Stelle 69) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M16": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 325) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M19": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 297) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M21": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: sicherheitskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — sicherheitskritisch: „fail-closed“ (Stelle 133) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M22": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: mandantenkritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — mandantenkritisch: „Mandantenbezug“ (Stelle 106) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M27": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: freigabekritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — freigabekritisch: „Freigabestatus“ (Stelle 102) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  },
+  "K25-M28": {
+    "kritikalitaet": "⟨VORSCHLAG · NICHT GEZEICHNET⟩ kritisch: aufbewahrungskritisch · fehlender Test SPERRT die Freigabe (K23-M04) · Quelle: triage.json vom 14.08.2026, Beleg im eigenen Wortlaut — aufbewahrungskritisch: „personenbezogen“ (Stelle 73) · K23-G08: die Kritikalität begründet der fachliche Eigentümer, nicht der Harness · ⟨zeichnet: ⟩ ⟨am: ⟩"
+  }
+}

@@ -12,6 +12,33 @@ Auftraggebers.
 
 ---
 
+## Diese Liste hat seit dem 16.08.2026 zwei Teile
+
+| Teil | Datei | Was darin steht | Einträge |
+|---|---|---|---|
+| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen. `RR-01` ist der erste — und **geschlossen** | 1, geschlossen |
+| **B · aus fehlenden Prüffällen** | **`restrisiken_teilschnitt.md`** | je Klausel des Teilschnitts, die als kritisch vorgeschlagen ist und **keinen Prüffall** hat — einzeln, wie `K23-M04` es verlangt | **113, alle offen** |
+
+**Der Stand von Teil B, gemessen am 16.08.2026:**
+
+| | |
+|---|---|
+| **Einträge** | **113** |
+| **davon in einer sperrenden Klasse** nach `K23-M04` | **113** — dort ersetzt **keine** Annahmeentscheidung den Test |
+| **Träger eingetragen** | **0 von 113** |
+| **Annahmeentscheidungen gezeichnet** | **0 von 113** |
+| **Wer das Fehlende liefert** | **M. Veil** zeichnet Träger, Annahmeentscheidung und Frist (Zeichnung B-5 vom 16.08.2026). Die **Akzeptanzkriterien**, ohne die kein Prüffall schreibbar ist, liefern die **fachlichen Eigentümer** (`K23-M02`) |
+
+**Teil B ist ein Vorschlag, keine Entscheidung.** Der Harness hat die Zeilen vorbereitet und
+die Felder für Träger und Annahmeentscheidung **absichtlich leer gelassen**. Ein Feld, das
+aussieht wie entschieden, wäre schlimmer als ein leeres.
+
+**Damit ist die Tor-II-Sperrbedingung heute nicht erfüllt** — nicht wegen dieser Liste,
+sondern weil 113 Einträge ohne Annahmeentscheidung darin stehen und für alle 113 eine
+Annahme nach `K23-M04` ohnehin nicht genügen würde.
+
+---
+
 ## RR-01 · Gate 5 ist im Repo nicht mechanisch erzwungen — **GESCHLOSSEN am 09.08.2026**
 
 | Feld | Wert |
@@ -137,11 +164,22 @@ Sperre zu messen, ist genau das, wogegen K23-M04 geschrieben ist.
 
 Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte Wahrheit
 (Blatt 26:59–63). Die 1.231 Klauseln ohne Akzeptanzkriterium und ohne Test stehen im
-Klauselregister (`nachweise/klauselregister/register.json`) und werden von dort aus
-fortgeschrieben, sobald die Pflegedatei entsteht.
+Klauselregister (`nachweise/klauselregister/register.json`).
 
-**Hier stehen nur Restrisiken, die keiner Klausel zugeordnet sind** — solche, die aus einer
-Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 ist der erste.
+**Auf diesem Blatt stehen nur Restrisiken, die keiner Klausel zugeordnet sind** — solche, die
+aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 ist der erste und
+bisher einzige.
+
+**Die klauselgebundenen Restrisiken stehen seit dem 16.08.2026 in
+`restrisiken_teilschnitt.md`** — dort einzeln, mit `RR-T-001` bis `RR-T-113`, jeweils mit
+dem Wort, das die Kritikalität ausgelöst hat. Maschinenlesbar daneben:
+`restrisiken_teilschnitt.json`.
+
+**Was noch fehlt:** Die 113 Einträge decken den **Teilschnitt** ab, nicht den ganzen Bestand.
+Die Triage schlägt insgesamt **386** kritische Klauseln ohne Prüffall vor. Die übrigen **273**
+liegen außerhalb des Teilschnitts und sind **nicht** aufgeführt — die Einengung auf den
+Teilschnitt ist mit B-4 und B-5 am 16.08.2026 gezeichnet. Wird der Umfang später wieder
+verbreitert, wächst diese Liste mit.
 
 ---
 
