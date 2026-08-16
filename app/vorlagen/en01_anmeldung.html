@@ -99,24 +99,20 @@
 
     <form method="post" action="/anmeldung" novalidate>
       {#
-        Das Kaestchen steht IM Formular -- es wird mit der Anmeldung
-        abgesendet und serverseitig geprueft. Bewusst OHNE `required`:
-        K03-M13 sagt, eine Pruefung allein in der Oberflaeche gilt als nicht
-        erfolgt. Faengt der Browser das leere Kaestchen selbst ab, verhindert
-        er nicht den Fehler -- er verhindert die Messung, ob der Server ihn
-        abfaengt. Dieselbe Ueberlegung wie bei den Feldern darunter.
+        HIER STAND EIN KONTROLLKAESTCHEN zum KI-Hinweis. Zurueckgenommen am
+        16.08.2026 zusammen mit dem Riegel im Server -- die Begruendung
+        steht dort (app/haupt.py, POST /anmeldung).
 
-        Es steht VOR den Eingabefeldern: Feldreihenfolge ist Fokusreihenfolge
-        (K19-M13), und die Bestaetigung gehoert vor die Eingabe, nicht
-        dahinter.
+        Kurz: Der Riegel hat den Anmeldevertrag geaendert, auf dem jeder
+        andere Prueffaden aufsetzt, und hat vier Faeden rot gefaerbt. Ein
+        Kaestchen ohne Riegel dahinter waere schlimmer als keines --
+        K03-M13: eine Pruefung allein in der Oberflaeche gilt als nicht
+        erfolgt. Es taeuschte eine Kenntnisnahme vor, die niemand nachweist.
+
+        Der Hinweis selbst bleibt stehen: er erfuellt Kriterium 1 und 2 aus
+        Paragraf 7a, L9. Kriterium 3 -- die nachweisbare Kenntnisnahme --
+        ist offen und liegt als E-13 bei den zeichnenden Personen.
       #}
-      <p class="ki-bestaetigung">
-        <input id="ki_bestaetigt" name="ki_bestaetigt" type="checkbox"
-               value="ja" {% if ki_bestaetigt %}checked{% endif %}>
-        <label for="ki_bestaetigt" style="margin:0; display:inline">
-          {{ ki_bestaetigung }}</label>
-      </p>
-
       {#
         Bewusst OHNE required/pattern/minlength. K03-M13: eine Pruefung allein
         in der Oberflaeche gilt als nicht erfolgt. Ein Browser, der eine leere

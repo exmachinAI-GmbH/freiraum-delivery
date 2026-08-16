@@ -183,33 +183,45 @@ def anmeldemaske(request: Request):
 @app.post("/anmeldung")
 def anmeldung_absenden(request: Request,
                        email: str = Form(default=""),
-                       code: str = Form(default=""),
-                       ki_bestaetigt: str = Form(default="")):
+                       code: str = Form(default="")):
     # request.client.host ist die Herkunft, wie der Prozess sie sieht. Hinter
     # einem Lastverteiler ist das dessen Adresse -- die Auswertung der
     # weitergereichten Adresse gehoert zur Zielumgebung und ist als offener
     # Punkt vermerkt, nicht hier stillschweigend geraten.
     herkunft = request.client.host if request.client else ""
 
-    # BAUAUFGABE L9 -- Kriterium 1: der Hinweis kommt VOR der ersten Nutzung.
+    # BAUAUFGABE L9 -- Kriterium 1 und 2 traegt die Maske, Kriterium 3 NICHT.
     #
-    # Diese Pruefung steht VOR dem Anmeldeversuch, und das ist Absicht, nicht
-    # Reihenfolge nach Geschmack:
+    # HIER STAND EIN RIEGEL. Er wies die Anmeldung ab, solange das Kaestchen
+    # zum KI-Hinweis nicht gesetzt war. ZURUECKGENOMMEN am 16.08.2026,
+    # nachdem der blinde Prueflauf gemessen hat, was er kostet:
     #
-    #   1 "vor der ersten Nutzung" heisst vor der Anmeldung, nicht danach.
-    #     Waere die Reihenfolge umgekehrt, entstuende die Sitzung zuerst und
-    #     der Hinweis kaeme, wenn die Nutzung schon begonnen hat.
-    #   2 Ein fehlendes Haekchen darf keinen Versuch verbrauchen. Nach fuenf
-    #     Fehlversuchen sperrt login_attempt_guard das Konto fuer 15 Minuten
-    #     (Nr. 35). Wer sein Haekchen vergisst, hat nichts falsch gemacht --
-    #     ihn dafuer in die Drosselung laufen zu lassen waere eine Strafe
-    #     ohne Anlass. Dieselbe Ueberlegung wie bei MELDUNG_BETRIEB.
-    #   3 Sie beruehrt die Datenbank NICHT und verraet deshalb nichts. Die
-    #     Meldung sagt nichts ueber das Konto aus -- die Kontoauskunft bleibt
-    #     die eine Meldung aus K03-M16.
-    if not ki_hinweis.bestaetigt(ki_bestaetigt):
-        return _en01(request, meldung=ki_hinweis.MELDUNG_HINWEIS_OFFEN,
-                     adresse=email, ki_bestaetigt=False)
+    #   anmeldung     8 von 30 bestanden   (vorher vollstaendig)
+    #   vorpruefung   8 von 32             (vorher 30 von 32)
+    #   anmeldecode  13 von 17             (vorher 16 von 17)
+    #
+    # KEIN EINZIGER PRUEFFALL KENNT DAS FELD `ki_bestaetigt`. Der Riegel hat
+    # den Anmeldevertrag geaendert, auf dem jeder andere Faden aufsetzt --
+    # und er hat es getan, ohne dass eine Klausel das verlangt:
+    # Paragraf 7a, L9 sagt "vor der ERSTEN Nutzung", nicht "vor jeder".
+    #
+    # DIE FRAGE, DIE DAHINTERSTEHT, IST OFFEN und wird nicht still
+    # entschieden: Einmal je Person oder bei jeder Anmeldung? Einmal je
+    # Person setzt voraus, dass man VOR der Anmeldung weiss, wer kommt --
+    # und das hiesse, die Adresse gegen die Datenbank zu pruefen, bevor der
+    # Code stimmt. Genau diese Kontoauskunft wollte K03-M16 nicht.
+    # Der saubere Ausweg waere ein Riegel NACH der Anmeldung und VOR der
+    # Uebersicht. Er ist nicht gebaut, weil er dieselbe Frage voraussetzt.
+    #
+    # WAS DAMIT GILT: Der Hinweis steht sichtbar ueber dem Formular
+    # (Kriterium 1 und 2). Die nachweisbare Kenntnisnahme (Kriterium 3) ist
+    # NICHT erzwungen -- L9 ist damit NICHT erfuellt, und das steht so in
+    # nachweise/vorbedingungen/L9_portal_hinweis_260816.md.
+    # Vorgelegt als E-13 in arbeit/Vorlagen/entscheidung_tor1_260816.md.
+    #
+    # Kein Alibi-Kaestchen: eine Pruefung, die nur in der Oberflaeche steht,
+    # gilt nach K03-M13 als nicht erfolgt. Lieber eine offene Luecke, die
+    # jeder sieht, als ein Bedienelement, das Sicherheit vortaeuscht.
 
     with verbindung() as conn:
         sitzung_id = anmelden(conn, email, code, herkunft)
@@ -218,17 +230,7 @@ def anmeldung_absenden(request: Request,
         # 200 mit Meldung, ausdruecklich KEIN Cookie: eine Sitzung entsteht
         # nur aus einer bestaetigten zweiten Stufe (K03-M09, K03-D01).
         # Das Haekchen bleibt gesetzt: die Bestaetigung war nicht der Fehler.
-        return _en01(request, meldung=MELDUNG_MISSERFOLG, adresse=email,
-                     ki_bestaetigt=True)
-
-    # Kriterium 3: die Kenntnisnahme als bleibender Nachweis. ERST JETZT --
-    # vorher ist nicht bekannt, WER bestaetigt hat, und ein Nachweis ohne
-    # Person ist keiner. Der Aufruf ist wirkungslos, wenn schon eine Zeile
-    # besteht ("vor der ERSTEN Nutzung").
-    with verbindung() as conn:
-        stand = sitzung_pruefen(conn, sitzung_id)
-        if stand is not None:
-            ki_hinweis.kenntnis_buchen(conn, stand)
+        return _en01(request, meldung=MELDUNG_MISSERFOLG, adresse=email)
 
     antwort = RedirectResponse("/", status_code=UMLEITUNG)
     keks_setzen(antwort, sitzung_id)

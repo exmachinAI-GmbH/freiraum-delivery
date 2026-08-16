@@ -80,6 +80,20 @@ VALUES ('00000000-0000-0000-0000-0000000000f1','00000000-0000-0000-0000-00000000
         'DE-DMB_001_01','Pilotprojekt',current_date,
         '00000000-0000-0000-0000-0000000000e1');
 
+-- Die Herrichtung traegt project_no='DE-DMB_001_01' HIER fest ein --
+-- an der Zeile vorbei, die K01-M38 dem serverseitigen Befehl vorbehaelt
+-- ("sie wird vergeben, nicht eingegeben"). Ohne diese Zeile bliebe der
+-- Zaehler bei 1 stehen, und MT-95/MT-95b (Stufe 14, unten) zoegen beim
+-- ersten Aufruf von create_app_after_fit dieselbe Nummer 001 und
+-- scheiterten an der Eindeutigkeitsbedingung -- einer FREMDEN Bedingung,
+-- nicht an dem, was sie messen sollen (Massstab F07/H06). Der Zaehler
+-- wird deshalb auf den naechsten freien Wert vorgezogen. Die uebrigen
+-- mit fester Nummer eingetragenen Zeilen (Zeile ~86 '_009_01', ~97
+-- '_010_01', ~119 '_002_01') sind Gegentests, die alle an einer
+-- EXCEPTION scheitern und daher nie committen -- sie belegen keine
+-- Nummer und brauchen keine weitere Zaehlerkorrektur.
+UPDATE nummernvorrat SET naechste_nummer = 2 WHERE praefix = 'PROJ';
+
 -- Gegentest O-K01-6: ohne Eignungsnachweis entsteht keine Zeile.
 DO $$ BEGIN
   INSERT INTO app(tenant_id,project_no,name,created_at)

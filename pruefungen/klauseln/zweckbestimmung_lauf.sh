@@ -695,8 +695,8 @@ lies_felder() {      # $1 name -> setzt FELD1..NEIN2, ANTWORT_ZIEL, VERBORGEN
         VERBORGEN+=("${rest%%|*}=${rest#*|}")
         ;;
       FELD)
-        local n t z k j ne
-        IFS='|' read -r n t z k j ne <<< "$rest"
+        local n _ z k j ne
+        IFS='|' read -r n _ z k j ne <<< "$rest"
         case "$k" in
           F1) [ -n "$FELD1" ] || { FELD1="$n"; JA1="$j"; NEIN1="$ne"; ANTWORT_ZIEL="${ANTWORT_ZIEL:-$z}"; };;
           F2) [ -n "$FELD2" ] || { FELD2="$n"; JA2="$j"; NEIN2="$ne"; ANTWORT_ZIEL="${ANTWORT_ZIEL:-$z}"; };;
@@ -748,7 +748,6 @@ zweck_antwort() {    # $1 keks  $2 name  $3 feld  $4 wert
 # ---------------------------------------------------------------------
 ZIELE_NULL=""; ZIELE_EINS=""; ZIELE_ZWEI=""; ZIELE_FREI=""
 WEITER_ZIEL=""; WEITER_GRUND=""
-ST_HALB_UI=""
 if [ -n "$ZWECK_PFAD" ]; then
   ZIELE_NULL="$(zieltexte zb_f0)"
   zweck_antwort "$KEKS_FREI" zb_f1 "$FELD1" "$NEIN1" >/dev/null
@@ -758,15 +757,58 @@ if [ -n "$ZWECK_PFAD" ]; then
   hole "$ZWECK_PFAD" zb_f2s "$KEKS_FREI" >/dev/null
   ZIELE_ZWEI="$(zieltexte zb_f2s)"
 
-  # Das Ziel "Weiter": das einzige, das erst mit der zweiten Antwort
-  # erscheint. Ist es keines oder sind es mehrere, ist es nicht
-  # bestimmbar -- dann sperren die Faelle, die es brauchen.
+  # Das Ziel "Weiter": erscheint erst mit der zweiten Antwort. Die
+  # fruehere Fassung verlangte, dass GENAU EIN Ziel neu erscheint --
+  # eine Annahme, die in keiner Klausel verankert ist (K19-M06 regelt
+  # das AUSBLENDEN einer Schaltflaeche, nicht die Anzahl gleichzeitig
+  # neu erscheinender Wege; K04-M08 ist halt-bezogen). EN-04a fuehrt
+  # sechs Aktionen -- nichts verbietet, dass mehrere zugleich neu
+  # erscheinen. Ersetzt durch eine Erkennung an der WIRKUNG:
+  #
+  #   Der Anlageweg ist derjenige, nach dessen Aufruf gilt: genau eine
+  #   neue Anwendungszeile ist entstanden * der Eignungs-Check traegt
+  #   danach einen Verweis auf diese Anwendung * im Verlauf steht eine
+  #   Zeile mit dem Anlass DISCOVERY.
+  #
+  # Die Differenz bleibt gegen ZIELE_NULL (nicht ZIELE_EINS) -- sonst
+  # pruefte ZB-03 seine eigene Ableitung, und die zweite Zusicherung
+  # (der Weiterweg steht nicht schon mit einer Antwort offen) waere
+  # tautologisch.
   neu="$(comm -13 <(printf '%s\n' "$ZIELE_NULL" | sort -u) <(printf '%s\n' "$ZIELE_ZWEI" | sort -u))"
   anz="$(printf '%s\n' "$neu" | grep -c . || true)"
   if [ "$anz" = "1" ]; then
     WEITER_ZIEL="$(printf '%s\n' "$neu" | grep . | head -1)"
+  elif [ "$anz" -gt 1 ]; then
+    cid_w="$(dbz "SELECT c.id::text FROM fit_check c JOIN actor a ON a.id=c.actor_id
+                   WHERE a.email='zb_frei@zbpruef.example' ORDER BY c.started_at DESC LIMIT 1")"
+    vorher_w="$(dbz "SELECT count(*) FROM app WHERE tenant_id='$MANDANT_A'")"
+    treffer_w=(); i_w=0
+    while IFS= read -r kand; do
+      [ -n "$kand" ] || continue
+      i_w=$((i_w+1))
+      sende "$kand" "zb_f3_probe$i_w" "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+      nachher_w="$(dbz "SELECT count(*) FROM app WHERE tenant_id='$MANDANT_A'")"
+      if [ "${nachher_w:-0}" = "$(( ${vorher_w:-0} + 1 ))" ]; then
+        rueck_w="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid_w'")"
+        ev_w=0
+        if [ "$rueck_w" != "(leer)" ]; then
+          ev_w="$(dbz "SELECT count(*) FROM event WHERE action ILIKE '%DISCOVERY%'
+                        AND (coalesce(object_ref,'') LIKE '%$rueck_w%'
+                             OR coalesce(value,'') LIKE '%$rueck_w%')")"
+        fi
+        [ "${ev_w:-0}" -ge 1 ] && treffer_w+=("$kand")
+      fi
+      vorher_w="$nachher_w"
+    done <<EOF
+$neu
+EOF
+    if [ "${#treffer_w[@]}" = "1" ]; then
+      WEITER_ZIEL="${treffer_w[0]}"
+    else
+      WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem; die Wirkung (genau eine neue Anwendungszeile, Eignungs-Check-Verweis darauf, Verlauf-Anlass DISCOVERY) grenzt sie nicht auf einen einzigen Kandidaten ein (${#treffer_w[@]} erfuellen sie) -- Kandidaten: $(printf '%s' "$neu" | tr '\n' ' ')"
+    fi
   else
-    WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"
+    WEITER_GRUND="mit beiden Antworten erscheint kein neues Ziel"
   fi
   if [ -n "$WEITER_ZIEL" ]; then
     sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
@@ -1041,22 +1083,31 @@ else
   st=$(sende "$WEITER_ZIEL" zb_h2 "$KEKS_HALB" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
   nachher="$(anz_apps "$MANDANT_A")"
   stand="$(stand_von 'zb_halb@zbpruef.example')"
-  m=""
+  m=""; pruefbar=1
+  # 401/403 VOR 2*|4*): eine abgewiesene Sitzung ist eine FREMDE
+  # Bedingung (s. Kopfkommentar), keine Antwort im Sinne von F5 -- und
+  # damit nicht messbar, nicht "in Ordnung" (K23-M22: bestanden ·
+  # fehlgeschlagen · GESPERRT · nicht ausgefuehrt).
   case "$st" in
+    401|403)
+      pruefbar=0
+      sperr ZB-04 "Status $st -- die Sitzung selbst wurde abgewiesen; gemessen waere dann eine fremde Bedingung, nicht F5"
+      ;;
     2*|4*) : ;;
     303)   ziel="$(nur_pfad "$(kopfzeile zb_h2 location)")"
            case "$ziel" in
              "$ZWECK_PFAD") : ;;   # zurueck auf den Bildschirm ist eine Abweisung
              *) m="$m der Weiterweg wurde mit 303 auf '$ziel' angenommen, obwohl nur eine Frage beantwortet ist;";;
            esac;;
-    401|403) m="$m Status $st -- die Sitzung selbst wurde abgewiesen; gemessen waere dann eine fremde Bedingung, nicht F5;";;
     5*)    m="$m Status $st -- abgewiesen wird der Weiterweg damit nicht, der Weg stuerzt ab;";;
     *)     m="$m unerwarteter Status $st;";;
   esac
-  [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher), obwohl nur eine Zweckfrage beantwortet ist (K01-M27);"
-  case "$stand" in *"|(leer)") : ;; *) m="$m der Check traegt jetzt '$stand' -- er ist mit einer Anwendung verknuepft;";; esac
-  [ -z "$m" ] && ok ZB-04 'Der Weiterweg wird serverseitig abgewiesen, wenn erst eine Zweckfrage beantwortet ist -- der ausgeblendete Knopf ist nicht die Autorisierung (K19-M14, F5)' \
-              || nok ZB-04 "Weiter mit halber Antwort:$m"
+  if [ "$pruefbar" = "1" ]; then
+    [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher), obwohl nur eine Zweckfrage beantwortet ist (K01-M27);"
+    case "$stand" in *"|(leer)") : ;; *) m="$m der Check traegt jetzt '$stand' -- er ist mit einer Anwendung verknuepft;";; esac
+    [ -z "$m" ] && ok ZB-04 'Der Weiterweg wird serverseitig abgewiesen, wenn erst eine Zweckfrage beantwortet ist -- der ausgeblendete Knopf ist nicht die Autorisierung (K19-M14, F5)' \
+                || nok ZB-04 "Weiter mit halber Antwort:$m"
+  fi
 fi
 pruefe_sql_marke
 
@@ -1313,23 +1364,31 @@ else
   st=$(sende "$ANLEGEN_ZIEL" zb_o4 "$KEKS_OHNE" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
   nachher="$(anz_apps "$MANDANT_A")"
   stand="$(stand_von 'zb_ohne@zbpruef.example')"
-  m=""
+  m=""; pruefbar=1
   [ "${nw:-0}" = "0" ] || m="$m der Aufbau des Falls stimmt nicht: es liegt schon ein Nachweis vor;"
+  # 401/403 VOR 2*|4*), aus demselben Grund wie bei ZB-04: eine
+  # abgewiesene Sitzung ist eine fremde Bedingung -- GESPERRT, nicht
+  # GESCHEITERT (K23-M22).
   case "$st" in
+    401|403)
+      pruefbar=0
+      sperr ZB-11 "Status $st -- die Sitzung selbst wurde abgewiesen; gemessen waere eine fremde Bedingung, nicht F2"
+      ;;
     2*|4*) : ;;
     303) ziel="$(nur_pfad "$(kopfzeile zb_o4 location)")"
          case "$ziel" in
            "$ZWECK_PFAD") : ;;
            *) m="$m die Anlage wurde mit 303 auf '$ziel' angenommen, obwohl die Kenntnisnahme fehlt;";;
          esac;;
-    401|403) m="$m Status $st -- die Sitzung selbst wurde abgewiesen; gemessen waere eine fremde Bedingung, nicht F2;";;
     5*) m="$m Status $st -- abgewiesen wird die Anlage damit nicht, der Weg stuerzt ab;";;
     *)  m="$m unerwarteter Status $st;";;
   esac
-  [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher), obwohl die Kenntnisnahme fehlt (F2, K04-M21);"
-  case "$stand" in *"|(leer)") : ;; *) m="$m der Check traegt jetzt '$stand' -- er ist mit einer Anwendung verknuepft;";; esac
-  [ -z "$m" ] && ok ZB-11 'Treffer in Frage 1 ohne Kenntnisnahme: die Anlage wird serverseitig abgewiesen, es entsteht keine Zeile (F2, K04-M21, K19-M14)' \
-              || nok ZB-11 "Anlage ohne Kenntnisnahme:$m"
+  if [ "$pruefbar" = "1" ]; then
+    [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher), obwohl die Kenntnisnahme fehlt (F2, K04-M21);"
+    case "$stand" in *"|(leer)") : ;; *) m="$m der Check traegt jetzt '$stand' -- er ist mit einer Anwendung verknuepft;";; esac
+    [ -z "$m" ] && ok ZB-11 'Treffer in Frage 1 ohne Kenntnisnahme: die Anlage wird serverseitig abgewiesen, es entsteht keine Zeile (F2, K04-M21, K19-M14)' \
+                || nok ZB-11 "Anlage ohne Kenntnisnahme:$m"
+  fi
 fi
 pruefe_sql_marke
 

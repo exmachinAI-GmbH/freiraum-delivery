@@ -435,6 +435,147 @@ der Klausel ableitbar, ohne einen Blick in den Bau.**
 
 ---
 
+---
+---
+
+# E-13 · Mein eigener Bau hat vier Prüffäden rot gefärbt — zurückgenommen
+
+**Das ist die unangenehmste Zeile dieses Blattes, und sie gehört an den Anfang der Folgen,
+nicht ans Ende.**
+
+Der Portal-Hinweis aus **E-4** hatte ein Kontrollkästchen, das die Anmeldung **sperrte**,
+solange es nicht gesetzt war. Der blinde Prüflauf hat gemessen, was das kostet:
+
+| Faden | vor E-4 | mit dem Riegel | nach der Rücknahme |
+|---|---:|---:|---:|
+| **anmeldung** | 30 von 30 | **8 von 30** | **30 von 30** |
+| **vorpruefung** | 30 von 32 | **8 von 32** | **30 von 32** |
+| **anmeldecode** | 16 von 17 | **13 von 17** | **16 von 17** |
+| **mitgliedschaft** | 8 von 9 | — | **8 von 9** |
+
+```
+$ grep -rl 'ki_bestaetigt' pruefungen/
+(keine Ausgabe)     # kein einziger Prueffall kennt das Feld
+```
+
+**Der Riegel hat den Anmeldevertrag geändert, auf dem jeder andere Faden aufsetzt** — und er
+hat es getan, ohne dass eine Klausel das verlangt. **§7a, L9 sagt *„vor der ERSTEN
+Nutzung"*, nicht *„vor jeder"*.**
+
+## Was zurückgenommen ist und was steht
+
+| | |
+|---|---|
+| **Zurückgenommen** | der Riegel im Server **und** das Kästchen in der Maske |
+| **Steht weiter** | der **Hinweis** über dem Formular — Kriterium 1 und 2 aus §7a, L9 |
+| **Nicht erfüllt** | **Kriterium 3**, die nachweisbare Kenntnisnahme. **L9 ist damit nicht erfüllt** |
+
+**Warum kein Kästchen ohne Riegel dahinter.** `K03-M13`: *„eine Prüfung allein in der
+Oberfläche gilt als nicht erfolgt."* Ein Kästchen, das nichts sperrt, täuscht eine
+Kenntnisnahme vor, die niemand nachweist. **Lieber eine offene Lücke, die jeder sieht, als
+ein Bedienelement, das Sicherheit vortäuscht.**
+
+## Die Frage, die dahintersteht — sie war von Anfang an offen und ist es geblieben
+
+**Einmal je Person, oder bei jeder Anmeldung?** Ich hatte sie im L9-Nachweis als offen
+benannt und trotzdem die schärfere Lesart gebaut. Der Prüflauf hat sie beantwortet, aber nur
+für die Kosten — nicht für die Sache.
+
+> **Warum „einmal je Person" nicht einfach ist:** Es setzt voraus, dass man **vor** der
+> Anmeldung weiß, wer kommt. Das hieße, die Adresse gegen die Datenbank zu prüfen, bevor der
+> Code stimmt — genau die Kontoauskunft, die `K03-M16` mit **einer einzigen Meldung**
+> verhindert.
+
+### ✅ Handlungsempfehlung: **Riegel nach der Anmeldung, vor der Übersicht**
+
+> **Wer angemeldet ist, ist bekannt.** Dann lässt sich prüfen, ob für diese Person schon eine
+> Kenntnisnahme vorliegt — und nur wenn nicht, führt der Weg über eine Seite, die sie
+> einholt. **Das erfüllt *„vor der ersten Nutzung"* wörtlicher als der bisherige Riegel**
+> (die Anmeldung selbst ist noch keine Nutzung des Portals) und **berührt den Anmeldevertrag
+> nicht.**
+>
+> **Der Preis, offen genannt:** Es ist ein neuer Bildschirm. Er steht in **keinem**
+> Bildschirmvertrag — `K19` kennt ihn nicht. Ihn ohne Vertragszeile zu bauen wäre genau das,
+> was `BEF-K02M17` und `E-8` heute schon zweimal als Fehler ausgewiesen haben.
+
+- [ ] **Riegel nach der Anmeldung** ✅ *Empfehlung* — **mit** Vertragszeile in K19, vorher nicht
+- [ ] **Bei jeder Anmeldung** — dann sind die vier Fäden anzupassen, und der Anmeldevertrag ändert sich
+- [ ] **L9 bleibt teilerfüllt** — Hinweis ohne erzwungene Kenntnisnahme, als benanntes Restrisiko
+- [ ] **anders:** ⟨…⟩
+
+---
+---
+
+# E-14 · `VP-24` hat ausgelöst — eine Reißleine, die ihre Arbeit tut
+
+**Der einzige verbliebene Fehlschlag von Tor 1c.** `VP-24` misst `K04-D05`: *„Neben
+`fit_check.outcome` DARF kein zweiter Eignungsstrang entstehen."*
+
+> **VP-24 im Wortlaut:** *„Zweiter Eignungsstrang: `fit_check` trägt 3 zusätzliche
+> Zustandsmerkmale (`zweck_bewertung_menschen`, `zweck_verbotene_praktik`,
+> `zweckbestimmung_erklaert_am`); **K04-M19 zeichnet ZWEI Fragen, ein drittes trägt keine
+> Klausel**."*
+
+**Der Prüffall ist genauer als seine eigene Überschrift.** Er sagt nicht *„drei Spalten sind
+zu viel"* — er sagt, **welche** der drei keine Klausel trägt.
+
+| Spalte | Deckung |
+|---|---|
+| `zweck_bewertung_menschen` | **K04-M19** — erste Frage |
+| `zweck_verbotene_praktik` | **K04-M19** — zweite Frage |
+| `zweckbestimmung_erklaert_am` | ⛔ **keine Klausel.** `M31`:126–130 begründet sie mit einer **Analogie**: *„Dieselbe Bauart wie `fit_done_needs_ts` beim Eignungs-Check (K04-M12)."* |
+
+**Eine Analogie ist keine Klausel.** Das ist dieselbe Klasse wie `BEF-K02M17` und die zwei
+Fehlzitate aus `E-8` — **der dritte Fall an einem Tag, in dem gebauter Zustand sich auf etwas
+stützt, das ihn nicht trägt.**
+
+### ✅ Handlungsempfehlung
+
+> **Die Spalte behalten und die Klausel nachziehen — nicht umgekehrt.**
+>
+> Sie leistet etwas Echtes: Der Zeitstempel ist die Aussage *„die Erklärung liegt vor"*, und
+> die Bedingung `zweck_erklaerung_vollstaendig` verhindert, dass er bei halb beantworteten
+> Fragen dasteht. **Wer sie streicht, verliert einen Nachweis.**
+>
+> **Aber sie steht in keiner gezeichneten Klausel**, und `VP-24` ist genau dafür gebaut. Der
+> saubere Weg: **K04 nimmt den Zeitstempel auf** — dann trägt ihn eine Klausel, und VP-24
+> wird grün, weil die Sache stimmt und nicht, weil der Test nachgibt.
+
+- [ ] **Klausel in K04 nachziehen** ✅ *Empfehlung* — Konzept-Fabrik, Eigentümer **A. Han**
+- [ ] **Spalte streichen** — dann fällt auch `zweck_erklaerung_vollstaendig`
+- [ ] **Als benanntes Restrisiko tragen** bis zur nächsten Konzeptrunde
+- [ ] **anders:** ⟨…⟩
+
+---
+---
+
+# Der Stand nach allem, was heute ausgeführt wurde
+
+```
+                            vorher              jetzt
+Tor 1a · Lint               5 Warnungen         0 Warnungen        GRUEN
+Tor 1b · Migration          gruen               gruen              GRUEN
+Tor 1c · Prueffaelle        3 Fehlschlaege      1 Fehlschlag       rot
+         Migrationsfaelle   110 von 111 (2 rot) 111 von 111        gruen
+         anmeldung          30 von 30           30 von 30
+         einloesung         18 von 18           18 von 18
+         versand             9 von  9            9 von  9
+         anmeldecode        16 von 17           16 von 17
+         mitgliedschaft      8 von  9            8 von  9
+         vorpruefung        30 von 32           30 von 32          VP-24 -> E-14
+         zweckbestimmung     7 von 27            8 von 27          alle uebrigen GESPERRT
+```
+
+**Der wichtigste Unterschied steht nicht in den Zahlen:** Der Faden `zweckbestimmung` meldet
+jetzt **gesperrt** statt **gescheitert**. Nach `K23-M22` ist das der ehrliche Zustand — was
+nicht gemessen werden konnte, ist nicht fehlgeschlagen. Der Faden meldet deshalb eine
+**Warnung**, keinen Fehler.
+
+**Tor 1c hängt an genau einem Fehlschlag: `VP-24`.** Er ist keine Panne, sondern eine
+Reißleine, die gezogen hat.
+
+---
+
 ## Zeichnung
 
 *Eingetragen auf Weisung; der Harness trägt nur ein, was angewiesen wurde.*

@@ -5,7 +5,30 @@
 | **Grundlage** | Bauauftrag §7a, L9, Teil *„Hinweis im Endnutzer-Portal"* · Freigabe **E-4**, gez. M. Veil und A. Han, 16.08.2026 |
 | **Anlass** | Entscheidung vom 16.08.2026: *„L9 bleibt im Umfang des 31.08. — wer sich anmeldet, nutzt das Portal."* |
 | **Gebaut** | `app/ki_hinweis.py` (neu) · `app/vorlagen/en01_anmeldung.html` · `app/haupt.py` |
-| **Zustand** | **zwei Kriterien gemessen, eines teilgemessen** — siehe Abschnitt 4 |
+| **Zustand** | ⛔ **NICHT ERFÜLLT** — Kriterium 3 ist am 16.08.2026 zurückgenommen worden. *Berichtigt, siehe Kopfvermerk* |
+
+> ### ⛔ Berichtigung vom 16.08.2026, spät abends — L9 ist nicht erfüllt
+>
+> **Dieses Blatt beschrieb Kriterium 3 als *bestanden*. Das gilt nicht mehr.**
+>
+> Der Riegel, der die Kenntnisnahme erzwang, hat im blinden Prüflauf **vier Fäden rot
+> gefärbt** — `anmeldung` fiel von 30 auf 8 von 30. Kein einziger Prüffall kennt das Feld
+> `ki_bestaetigt`; der Riegel hatte den **Anmeldevertrag** geändert, auf dem alles andere
+> aufsetzt. **Er ist zurückgenommen, zusammen mit dem Kästchen in der Maske.**
+>
+> | | Stand seit dem 16.08.2026 abends |
+> |---|---|
+> | Kriterium 1 · Hinweis vor der ersten Nutzung, nicht in der Fußzeile | **erfüllt** — der Kasten steht unverändert über dem Formular |
+> | Kriterium 2 · die drei geforderten Angaben | **erfüllt** |
+> | Kriterium 3 · nachweisbare Kenntnisnahme | ⛔ **nicht erfüllt** — nicht erzwungen |
+>
+> **Die Messungen in Abschnitt 3 bleiben gültig** — sie zeigen, dass die Bauart trägt: einmal
+> je Person, append-only, unentfernbar. **Was fehlt, ist der Auslöser.** Der Code dafür steht
+> unverändert in `app/ki_hinweis.py` und wartet auf die Entscheidung **E-13**.
+>
+> **Warum kein Kästchen ohne Riegel stehen blieb:** `K03-M13` — *„eine Prüfung allein in der
+> Oberfläche gilt als nicht erfolgt."* Ein Kästchen, das nichts sperrt, täuscht eine
+> Kenntnisnahme vor, die niemand nachweist.
 
 ---
 
