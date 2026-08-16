@@ -14,6 +14,11 @@ Was bleibt, liegt bei A. Han — und eines davon hält alles andere auf.**
 > was daran hängt: ein Restrisiko, eine gefahrene Messung, ein umgeschriebenes
 > Korrekturblatt, vier Kreuze in BA-1, ein angelegtes Etikett, 157 Eigentümer im Register.
 
+**Zu jedem offenen Punkt liegt eine Handlungsempfehlung vor:**
+`arbeit/Vorlagen/empfehlungen_offene_punkte_260816.md` — **E-1 bis E-7**, jede mit ihrem
+gemessenen Grund. Zwei Punkte trugen bisher gar keine (O-K15-3 und die 142 fehlenden
+Abnahmekriterien); ein siebter ist beim Messen neu entstanden (**`BEF-K02M17`**).
+
 **Was noch offen ist, auf einen Blick:**
 
 | | Was | Wer | Hält es etwas auf? |
@@ -23,7 +28,8 @@ Was bleibt, liegt bei A. Han — und eines davon hält alles andere auf.**
 | **L9-A4** | Portal-Hinweis nach Artikel 4 **bauen** | **Harness** · Abnahme A. Han | ja — neuer Bauposten im Umfang des 31.08. |
 | **C-2** | Starttor 14 | A. Han · M. Veil | **löst sich mit dem Vollzug von BA-1 auf** |
 | **142 Kriterien** | je Klausel ein Abnahmekriterium | A. Han (154) · M. Veil (3) | ja — Bedingung 4 des Liefertors |
-| **O-K15-3** | Aufräumlauf für Einladungen, 90 Tage? | **beide Founder** | nein — Frist *vor Produktion* |
+| **O-K15-3** | Aufräumlauf für Einladungen, 90 Tage? | **beide Founder** | nein — Frist *vor Produktion* · **E-5** |
+| **BEF-K02M17** | Falsche Belegzeile im Bau — Zitat existiert nicht | Harness · Klausel: A. Han | nein, aber **Gate 10 (Herkunft)** · **E-7** |
 
 ---
 

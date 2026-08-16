@@ -174,6 +174,55 @@ Sperre zu messen, ist genau das, wogegen K23-M04 geschrieben ist.
 | **Annahmeentscheidung** | **gezeichnet am 16.08.2026** (M. Veil) — **und sie genügt nach `K23-M04` nicht.** Siehe *Was dieser Eintrag nicht leistet* |
 | **Frist** | **keine.** Der Vorrang ist eine Dauerentscheidung, kein Aufschub. Was befristet ist, ist der **Nachweis** darüber — siehe unten |
 
+### ⚠ Berichtigung vom 16.08.2026, spät — die Lage ist besser, als dieser Eintrag sie beschrieb
+
+**Beim Ausarbeiten der Handlungsempfehlungen ist gemessen worden, dass die Frage schon
+einmal entschieden **und gebaut** worden ist. Drei Funde, jeder mit seinem Befehl:**
+
+**1 · Es gibt einen Beschluss, und er sagt dasselbe wie Weg A.**
+
+```
+$ grep -n "Nr\. 60\|^| 60 |" 260804_Nachweisprotokoll_Freigabe.md
+115:| 60 | Protokollzeilen und der taegliche Aufraeumlauf widersprechen sich | wie Empfehlung — Option A |
+```
+
+**Beschluss Nr. 60, gezeichnet am 04.08.2026** — zwölf Tage vor der heutigen Entscheidung,
+zu genau derselben Frage, mit demselben Ergebnis. **M. Veil hat heute bestätigt, nicht neu
+entschieden.** Das ist kein Fehler, aber es gehört hier hin: Dieser Eintrag las sich, als
+sei ein Kreis zum ersten Mal geöffnet worden.
+
+**2 · Der Bau führt Weg A bereits aus.**
+
+```
+$ sed -n '1477,1496p' migrations/M30__pilot_sammelmigration.sql
+-- 10h · Eigene Klasse fuer Protokollzeilen
+INSERT INTO retention_rule(class,…) VALUES ('EREIGNIS',
+  'Unveraenderbare Ereigniszeilen (Protokoll)','BEZUGSOBJEKT',NULL,NULL,0,NULL,
+  'Beschluss Nr. 60 (Option A) und Nr. 16: Beweiswert vor Loeschzusage. '
+  'Ohne Faelligkeit und ohne Anonymisierung -- die Zeile bleibt, wie sie ist');
+ALTER TABLE event ALTER COLUMN retention_class SET DEFAULT 'EREIGNIS';
+```
+
+**Die Tabelle `event` trägt seit M30 die Klasse `EREIGNIS`, nicht mehr `BETRIEBSPROTOKOLL`** —
+eine Klasse ohne Fälligkeit und ohne Anonymisierung. **Damit ist der Widerspruch im Bau
+strukturell aufgelöst**, nicht getragen: Es gibt dort keine unerfüllbare Löschfrist mehr,
+weil die Klasse, die sie trug, für das Protokoll nicht mehr gilt.
+
+**3 · Was dadurch tatsächlich offen bleibt — und es ist deutlich weniger:**
+
+| | Was | Stand |
+|---|---|---|
+| Der Bau | `event` = `EREIGNIS`, append-only per Trigger `event_append_only` | **erledigt** |
+| Die **Konzepte** | `O-K15-6` und `O-K02-6` stehen weiter als **offen** in K15 v1.6 und K02 v1.3 | ⛔ **offen** |
+| **`K02-M17`** | sagt gezeichnet: *„Jeder Protokolleintrag MUSS eine Aufbewahrungsklasse tragen; **Vorgabe ist das Betriebsprotokoll**."* — **das Gegenteil dessen, was gebaut ist** | ⛔ **Widerspruch** |
+| **`K15-G11`** | *„Solange O-K15-2, O-K15-4 bis O-K15-6 und O-K15-9 offen sind, bleibt die automatisierte Entfernung **gesperrt**; eine manuelle Umgehung ist unzulässig."* | ⛔ **vier weitere Punkte sperren** |
+
+> **Was das für diesen Eintrag heißt.** `RR-02` bleibt bestehen, aber sein Gegenstand ist ein
+> anderer als beschrieben: **Nicht ein verklemmter Kreis, sondern ein Bau, der einer
+> gezeichneten Klausel widerspricht** — mit Beschluss Nr. 60 als Deckung, aber ohne dass die
+> Klausel nachgezogen wurde. Und **K15-G11** zeigt, dass das Schließen von O-K15-6 allein die
+> automatisierte Löschung nicht freigibt: **vier weitere offene Punkte sperren sie weiter.**
+
 ### Was mit dieser Entscheidung geschlossen ist
 
 **Der Kreis ist offen.** O-K15-6 lautete *„Vorrang klären"* — der Vorrang ist geklärt. Damit
