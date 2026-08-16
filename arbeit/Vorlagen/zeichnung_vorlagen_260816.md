@@ -6,9 +6,15 @@
 |---|---|
 | **Betrifft** | `entscheidung_traeger_zweckbestimmung_260816.md` · `entscheidung_anlagefunktion_fassung_260816.md` · `entscheidung_steuertexte_260816.md` |
 | **Datum** | **16.08.2026** |
-| **Form** | getrennte Zeichnungsdatei nach **F40** |
+| **Form** | **Nachweis, keine Zeichnung** — berichtigt am 16.08.2026, siehe unten |
 
-## Vermerk zur Form nach F40
+## Vermerk zur Form — berichtigt am 16.08.2026
+
+> **Berichtigung.** Dieser Vermerk berief sich auf die Festlegung **F40**. Das trägt nicht:
+> F40 regelt die getrennte Datei und dass sie *„von keinem Werkzeug erreicht wird"* — eine
+> Regel zum Abschreiben einer Unterschrift gibt es nicht. **Dieses Blatt ist ein Nachweis,
+> keine Zeichnung.** Die Sachentscheidungen sind davon nicht berührt. Vollständig behandelt
+> in `nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`.
 
 **Die Kreuze sind vom Orchestrator übertragen, nicht selbsttätig gesetzt.** Wortlaut der
 Weisung des Auftraggebers vom 16.08.2026:
@@ -26,7 +32,7 @@ Auftragnehmers vom 16.08.2026:
 
 > „Vorlage 1 gem. Handlungsempfehlung freigebeben und gezeichnet. Gez. A. Han, 16.8.26"
 
-**Gez. A. Han, für den Auftragnehmer (Nr. 158), 16.08.2026** — übertragen nach F40.
+**Gez. A. Han, für den Auftragnehmer (Nr. 158), 16.08.2026** — abgeschrieben aus der Weisung — siehe Formvermerk.
 
 | | Steht A. Hans Zeichnung? | Warum |
 |---|---|---|
@@ -135,4 +141,4 @@ ist aufgeschrieben.
 ---
 
 *Angelegt am 16.08.2026 vom Orchestrator des Coding-Harness, auf Weisung des Auftraggebers.
-Die Kreuze sind übertragen, nicht selbsttätig gesetzt (F40). Der Harness zeichnet nie.*
+Die Kreuze sind abgeschrieben, nicht selbsttätig gesetzt; dieses Blatt ist ein Nachweis. Der Harness zeichnet nie.*

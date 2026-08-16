@@ -6,12 +6,23 @@
 |---|---|
 | **Betrifft** | `entscheidungen_schlussrunde_260816.md`, Abschnitt B.1 — die fünf sperrenden Punkte |
 | **Datum** | **16.08.2026** |
-| **Form** | getrennte Zeichnungsdatei nach **F40** |
+| **Form** | **Nachweis, keine Zeichnung** — siehe Vermerk unten |
 
-## Vermerk zur Form nach F40
+## Vermerk zur Form — berichtigt am 16.08.2026
 
-**Die Kreuze sind vom Orchestrator übertragen, nicht selbsttätig gesetzt.** Wortlaut der
-Weisung des Auftraggebers vom 16.08.2026:
+**Die Kreuze unten sind vom Orchestrator aus der Weisung des Auftraggebers abgeschrieben.**
+
+> **Berichtigung.** Frühere Fassungen dieses Vermerks beriefen sich dafür auf die Festlegung
+> **F40**. **Das trägt nicht.** F40 regelt, dass die Zeichnung in einer eigenen Datei liegt
+> und *„von keinem Werkzeug erreicht wird"* — ihr Anlass war ein Schaden, bei dem ein Werkzeug
+> eine Unterschrift erreichen konnte. Eine Festlegung, die dem Harness das Abschreiben einer
+> Unterschrift erlaubt, gibt es nicht.
+>
+> **Dieses Blatt ist deshalb ein Nachweis, keine Zeichnung.** Es hält fest, was angewiesen
+> wurde — im Wortlaut, mit Datum. Die Sachentscheidungen sind davon **nicht** berührt.
+> Vollständig behandelt in `nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`.
+
+Wortlaut der Weisung des Auftraggebers vom 16.08.2026:
 
 > „B-1 bis B-5 gem. Handlungsempfehlungen freigegeben. Setze alles komplett um, so dass alle
 > offenen Themen gem. Deinen Handlungsempfehlungen, die ich voll unterstütze, geschlossen und
@@ -25,7 +36,7 @@ Weisung des Auftraggebers vom 16.08.2026:
 
 | | Entschieden | Zustand |
 |---|---|---|
-| **B-1** | **Die vier Starttore 05, 11, 13 und 15 sind abgenommen.** Nachweis: A. Han. Abnahme: M. Veil | **[x]** · siehe Vorbehalt |
+| **B-1** | **Die Starttore 05, 11, 13 und 15 sind abgenommen.** Nachweis: A. Han. Abnahme: M. Veil | **[x]** · **zwei Vorbehalte**, siehe unten |
 | **B-2** | **Der Teilschnitt wird als eigene Abnahmeeinheit `teilschnitt-anmeldung` benannt** | **[x]** · auszufertigen |
 | **B-3** | **Die Fremdprüfung wird angefordert** — mit Träger, Frist und benannten zeichnenden Personen | **[x]** · Anforderung auszufertigen, **anfordern muss ein Mensch** |
 | **B-4** | **Die Nachweispflicht wird auf die Klauseln des Teilschnitts eingeengt**, und je Klausel wird ein fachlicher Eigentümer benannt | **[x]** · siehe Grenze |
@@ -33,7 +44,33 @@ Weisung des Auftraggebers vom 16.08.2026:
 
 ---
 
-## ⚠ Vorbehalt zu B-1 · Starttor 13
+## ⚠ Vorbehalt 1 zu B-1 · Starttor 14 fehlt — ein Fehler dieser Vorlage
+
+**Berichtigt am 16.08.2026, nachdem die Messung es gefunden hat.**
+
+Bedingung 6 des Liefertors nennt **fünf** Starttore, nicht vier. Der gezeichnete Auftrag sagt
+an drei Stellen dasselbe:
+
+> „Die Starttore **05, 11, 13, 14 und 15** aus Abschnitt 4 sind nachgewiesen — sie betreffen
+> den **Bau**."
+> — Bauauftrag v1.1, Zeile 728 · Blatt 36, Zeile 69 · Zeichnungsblatt, Zeile 31.
+> Alle drei gezeichnet von M. Veil am 07.08.2026.
+
+**Die Vorlage, auf der diese Zeichnung beruht, nannte vier.** Sie berief sich dafür auf das
+Korrekturblatt **BA-1** — und BA-1 ist **ein Entwurf, kein vollzogenes Blatt**. Es liegt
+ungezeichnet auf einem Zweig; sein Vollzug steht aus.
+
+**Folge:** **Starttor 14** (*Übergabe K04 → K07*, Zuständig: A. Han, Stand im Auftrag:
+*„offen"*) hat **keinen Nachweis** und ist nicht abgenommen. Es wird als Befund **ST-14**
+geführt, das Kreuz bleibt leer.
+
+> **Handlungsempfehlung:** Erst klären, ob BA-1 vollzogen werden soll — dann folgt die
+> Vierer-Auswahl aus dem Korrekturblatt. Bis dahin gilt der gezeichnete Auftrag, und der
+> verlangt fünf. **Ein Nachweis zu Starttor 14 fehlt in jedem Fall.**
+
+---
+
+## ⚠ Vorbehalt 2 zu B-1 · Starttor 13
 
 Der Auftragstext führt Starttor 13 als *„entschieden (Nr. 66); **Verdrahtung offen**"*. Die
 Empfehlung sagte ausdrücklich: **vorher klären, sonst nimmt man etwas ab, das offen ist.**
@@ -99,5 +136,6 @@ ersetzt keine Annahmeentscheidung den Test.
 ---
 
 *Angelegt am 16.08.2026 vom Orchestrator des Coding-Harness, auf Weisung des Auftraggebers.
-Die Kreuze sind übertragen, nicht selbsttätig gesetzt (F40). Der Harness zeichnet nie — und
+Die Kreuze sind abgeschrieben, nicht selbsttätig gesetzt — dieses Blatt ist ein Nachweis,
+keine Zeichnung (siehe Formvermerk vom 16.08.2026). Der Harness zeichnet nie — und
 er erfindet keinen Umfang.*
