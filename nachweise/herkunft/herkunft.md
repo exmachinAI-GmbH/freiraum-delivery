@@ -14,8 +14,8 @@ und er ist **Bedingung 4 der technischen Lieferabnahme (Tor II)**.
 |---|---|
 | Anforderungen insgesamt | 1231 |
 | **vom gebauten Code genannt** | **135** |
-| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 30 |
-| davon nur nebenbei erwähnt | 105 |
+| davon ausdrücklich als umgesetzt erklärt (`umsetzt:`) | 32 |
+| davon nur nebenbei erwähnt | 103 |
 | vom Code genannt **und** von einem Prüffall gemessen | 84 |
 | **vom Code genannt und von niemandem gemessen** | **51** |
 | **davon als kritisch vorgeschlagen** | **23** |

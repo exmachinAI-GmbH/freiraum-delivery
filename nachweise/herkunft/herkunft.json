@@ -2,7 +2,7 @@
   "vorbemerkung": "Herkunftsgraph nach K23-M03, Bedingung 4 des Tor II. Jede Kante traegt ihren Beleg. Eine fehlende Kante ist ein Befund, kein Sperrsignal -- wer sperrt, ist Tor II. Die Staerke einer Kante wird nie geraten: 'erklaert' verlangt eine Zeile 'umsetzt:', 'belegt' verlangt einen bestandenen Lauf in einem Protokoll.",
   "grundlage": "K23-M03 · Quelle -> Klausel -> Umsetzung -> Test -> Nachweis",
   "register": "register.json",
-  "register_erzeugt": "2026-08-16T12:21:21+00:00",
+  "register_erzeugt": "2026-08-16T17:33:39+00:00",
   "kanten": [
     {
       "von": "260802_FREIRAUM_K00_Beschluss-Log_v1.10.md:52",
@@ -11005,105 +11005,112 @@
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:186"
+      "beleg": "app/haupt.py:219"
     },
     {
       "von": "K03-M09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:244"
+      "beleg": "app/haupt.py:288"
     },
     {
       "von": "K03-M16",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:146"
+      "beleg": "app/haupt.py:147"
+    },
+    {
+      "von": "K03-M16",
+      "nach": "app/haupt.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/haupt.py:209"
     },
     {
       "von": "K03-M17",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:370"
+      "beleg": "app/haupt.py:414"
     },
     {
       "von": "K03-M26",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:161"
+      "beleg": "app/haupt.py:173"
     },
     {
       "von": "K14-G04",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:293"
+      "beleg": "app/haupt.py:337"
     },
     {
       "von": "K20-D02",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:300"
+      "beleg": "app/haupt.py:344"
     },
     {
       "von": "K20-D03",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:344"
+      "beleg": "app/haupt.py:388"
     },
     {
       "von": "K20-D10",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:215"
+      "beleg": "app/haupt.py:259"
     },
     {
       "von": "K20-D10",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:239"
+      "beleg": "app/haupt.py:283"
     },
     {
       "von": "K20-G01",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:317"
+      "beleg": "app/haupt.py:361"
     },
     {
       "von": "K20-G01",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:396"
+      "beleg": "app/haupt.py:440"
     },
     {
       "von": "K20-G04",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:396"
+      "beleg": "app/haupt.py:440"
     },
     {
       "von": "K20-M02",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:292"
+      "beleg": "app/haupt.py:336"
     },
     {
       "von": "K20-M13",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:374"
+      "beleg": "app/haupt.py:418"
     },
     {
       "von": "K23-D09",
@@ -11117,21 +11124,56 @@
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:95"
+      "beleg": "app/haupt.py:96"
     },
     {
       "von": "K23-D09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:128"
+      "beleg": "app/haupt.py:129"
     },
     {
       "von": "K23-D09",
       "nach": "app/haupt.py",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/haupt.py:201"
+      "beleg": "app/haupt.py:245"
+    },
+    {
+      "von": "K03-M13",
+      "nach": "app/ki_hinweis.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/ki_hinweis.py:1"
+    },
+    {
+      "von": "K04-G12",
+      "nach": "app/ki_hinweis.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/ki_hinweis.py:1"
+    },
+    {
+      "von": "K04-M21",
+      "nach": "app/ki_hinweis.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/ki_hinweis.py:1"
+    },
+    {
+      "von": "K10-M34",
+      "nach": "app/ki_hinweis.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erklaert",
+      "beleg": "app/ki_hinweis.py:1"
+    },
+    {
+      "von": "K03-M16",
+      "nach": "app/ki_hinweis.py",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/ki_hinweis.py:68"
     },
     {
       "von": "K03-D01",
@@ -11376,14 +11418,21 @@
       "nach": "app/vorlagen/en01_anmeldung.html",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/vorlagen/en01_anmeldung.html:68"
+      "beleg": "app/vorlagen/en01_anmeldung.html:104"
+    },
+    {
+      "von": "K03-M13",
+      "nach": "app/vorlagen/en01_anmeldung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en01_anmeldung.html:121"
     },
     {
       "von": "K03-M16",
       "nach": "app/vorlagen/en01_anmeldung.html",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/vorlagen/en01_anmeldung.html:60"
+      "beleg": "app/vorlagen/en01_anmeldung.html:72"
     },
     {
       "von": "K19-D06",
@@ -11418,14 +11467,21 @@
       "nach": "app/vorlagen/en01_anmeldung.html",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/vorlagen/en01_anmeldung.html:57"
+      "beleg": "app/vorlagen/en01_anmeldung.html:69"
     },
     {
       "von": "K19-M13",
       "nach": "app/vorlagen/en01_anmeldung.html",
       "art": "klausel_umsetzung",
       "staerke": "erwaehnt",
-      "beleg": "app/vorlagen/en01_anmeldung.html:72"
+      "beleg": "app/vorlagen/en01_anmeldung.html:110"
+    },
+    {
+      "von": "K19-M13",
+      "nach": "app/vorlagen/en01_anmeldung.html",
+      "art": "klausel_umsetzung",
+      "staerke": "erwaehnt",
+      "beleg": "app/vorlagen/en01_anmeldung.html:125"
     },
     {
       "von": "K04-D03",
@@ -15804,8 +15860,8 @@
     "_zahlen": {
       "klauseln_gesamt": 1231,
       "vom_code_genannt": 135,
-      "davon_erklaert": 30,
-      "davon_nur_erwaehnt": 105,
+      "davon_erklaert": 32,
+      "davon_nur_erwaehnt": 103,
       "vom_code_genannt_mit_test": 84,
       "vom_code_genannt_ohne_test": 51,
       "vom_code_genannt_ohne_belegten_test": 88,

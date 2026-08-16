@@ -43,6 +43,18 @@
              border-radius: .25rem; cursor: pointer; }
     .meldung { border: 2px solid currentColor; border-radius: .25rem;
                padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+    /* Bauaufgabe L9, Kriterium 1: "vor der ersten Nutzung, NICHT IN EINER
+       FUSSZEILE". Der Kasten steht deshalb ueber dem Formular, im Lesefluss,
+       mit eigenem Rahmen -- nicht kleiner gesetzt und nicht ans Ende
+       geschoben. Die Schriftgroesse bleibt die des Fliesstextes. */
+    .ki { border: 1px solid currentColor; border-radius: .25rem;
+          padding: .75rem .85rem; margin: 0 0 1.25rem; }
+    .ki h2 { font-size: 1rem; margin: 0 0 .5rem; }
+    .ki p { margin: 0 0 .6rem; }
+    .ki p:last-of-type { margin-bottom: 0; }
+    .ki-bestaetigung { display: flex; gap: .55rem; align-items: flex-start;
+                       margin: .85rem 0 0; font-weight: 600; }
+    .ki-bestaetigung input { width: auto; flex: none; margin-top: .2rem; }
   </style>
 </head>
 <body>
@@ -63,7 +75,48 @@
       <p class="meldung" role="alert">{{ meldung }}</p>
     {% endif %}
 
+    {#
+      BAUAUFGABE L9 -- der Portal-Hinweis nach Artikel 4 der KI-Verordnung.
+      Gebaut am 16.08.2026, nachdem M. Veil entschieden hat, dass die
+      Anmeldung schon "Nutzung im Endnutzer-Portal" ist.
+
+      Kriterium 1 verlangt "vor der ersten Nutzung, NICHT IN EINER FUSSZEILE".
+      Deshalb steht der Kasten HIER: ueber dem Formular, vor dem ersten
+      Eingabefeld, im Lesefluss. Wer ihn nach unten schiebt oder kleiner
+      setzt, bricht das Kriterium -- auch wenn der Text unveraendert bleibt.
+
+      Der Wortlaut steht NICHT in dieser Vorlage, sondern in
+      `app/ki_hinweis.py` -- je geforderter Angabe eine Konstante. So kann
+      ein Prueffall die drei Angaben EINZELN treffen statt nur "irgendein
+      Text ist da".
+    #}
+    <section class="ki" aria-labelledby="ki-titel">
+      <h2 id="ki-titel">Hinweis zum Einsatz Kuenstlicher Intelligenz</h2>
+      {% for absatz in ki_hinweis %}
+        <p>{{ absatz }}</p>
+      {% endfor %}
+    </section>
+
     <form method="post" action="/anmeldung" novalidate>
+      {#
+        Das Kaestchen steht IM Formular -- es wird mit der Anmeldung
+        abgesendet und serverseitig geprueft. Bewusst OHNE `required`:
+        K03-M13 sagt, eine Pruefung allein in der Oberflaeche gilt als nicht
+        erfolgt. Faengt der Browser das leere Kaestchen selbst ab, verhindert
+        er nicht den Fehler -- er verhindert die Messung, ob der Server ihn
+        abfaengt. Dieselbe Ueberlegung wie bei den Feldern darunter.
+
+        Es steht VOR den Eingabefeldern: Feldreihenfolge ist Fokusreihenfolge
+        (K19-M13), und die Bestaetigung gehoert vor die Eingabe, nicht
+        dahinter.
+      #}
+      <p class="ki-bestaetigung">
+        <input id="ki_bestaetigt" name="ki_bestaetigt" type="checkbox"
+               value="ja" {% if ki_bestaetigt %}checked{% endif %}>
+        <label for="ki_bestaetigt" style="margin:0; display:inline">
+          {{ ki_bestaetigung }}</label>
+      </p>
+
       {#
         Bewusst OHNE required/pattern/minlength. K03-M13: eine Pruefung allein
         in der Oberflaeche gilt als nicht erfolgt. Ein Browser, der eine leere

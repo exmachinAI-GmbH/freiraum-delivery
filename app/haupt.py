@@ -53,6 +53,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
+from app import ki_hinweis
 from app.anmeldung import MELDUNG_MISSERFOLG, anmelden
 from app.datenbank import verbindung
 from app.einladung import MELDUNG_MISSERFOLG as MELDUNG_EINLADUNG
@@ -153,10 +154,21 @@ MELDUNG_BETRIEB = ("Die Anmeldung ist zurzeit nicht moeglich, weil der Dienst "
                    "Angaben. Bitte versuchen Sie es spaeter erneut.")
 
 
-def _en01(request, meldung=None, adresse=None, status=200):
+def _en01(request, meldung=None, adresse=None, status=200,
+          ki_bestaetigt=False):
     antwort = VORLAGEN.TemplateResponse(
         request, "en01_anmeldung.html",
-        {"meldung": meldung, "adresse": adresse}, status_code=status)
+        {"meldung": meldung, "adresse": adresse,
+         # Bauaufgabe L9: der Wortlaut kommt aus dem Modul, nicht aus der
+         # Vorlage. Drei Absaetze, je eine geforderte Angabe.
+         "ki_hinweis": ki_hinweis.HINWEIS,
+         "ki_bestaetigung": ki_hinweis.BESTAETIGUNG,
+         # Ein gesetztes Haekchen ueberlebt eine Fehlermeldung. Wer seinen
+         # Code vertippt, soll nicht zweimal bestaetigen muessen -- das
+         # erzeugt Klickmuedigkeit, und Klickmuedigkeit ist das Gegenteil
+         # einer Kenntnisnahme.
+         "ki_bestaetigt": ki_bestaetigt},
+        status_code=status)
     # Die Maske traegt die Eingabe zurueck; im Cache eines Zwischenspeichers
     # hat sie nichts verloren (K03-M26, datensparsam).
     antwort.headers["Cache-Control"] = "no-store"
@@ -171,12 +183,33 @@ def anmeldemaske(request: Request):
 @app.post("/anmeldung")
 def anmeldung_absenden(request: Request,
                        email: str = Form(default=""),
-                       code: str = Form(default="")):
+                       code: str = Form(default=""),
+                       ki_bestaetigt: str = Form(default="")):
     # request.client.host ist die Herkunft, wie der Prozess sie sieht. Hinter
     # einem Lastverteiler ist das dessen Adresse -- die Auswertung der
     # weitergereichten Adresse gehoert zur Zielumgebung und ist als offener
     # Punkt vermerkt, nicht hier stillschweigend geraten.
     herkunft = request.client.host if request.client else ""
+
+    # BAUAUFGABE L9 -- Kriterium 1: der Hinweis kommt VOR der ersten Nutzung.
+    #
+    # Diese Pruefung steht VOR dem Anmeldeversuch, und das ist Absicht, nicht
+    # Reihenfolge nach Geschmack:
+    #
+    #   1 "vor der ersten Nutzung" heisst vor der Anmeldung, nicht danach.
+    #     Waere die Reihenfolge umgekehrt, entstuende die Sitzung zuerst und
+    #     der Hinweis kaeme, wenn die Nutzung schon begonnen hat.
+    #   2 Ein fehlendes Haekchen darf keinen Versuch verbrauchen. Nach fuenf
+    #     Fehlversuchen sperrt login_attempt_guard das Konto fuer 15 Minuten
+    #     (Nr. 35). Wer sein Haekchen vergisst, hat nichts falsch gemacht --
+    #     ihn dafuer in die Drosselung laufen zu lassen waere eine Strafe
+    #     ohne Anlass. Dieselbe Ueberlegung wie bei MELDUNG_BETRIEB.
+    #   3 Sie beruehrt die Datenbank NICHT und verraet deshalb nichts. Die
+    #     Meldung sagt nichts ueber das Konto aus -- die Kontoauskunft bleibt
+    #     die eine Meldung aus K03-M16.
+    if not ki_hinweis.bestaetigt(ki_bestaetigt):
+        return _en01(request, meldung=ki_hinweis.MELDUNG_HINWEIS_OFFEN,
+                     adresse=email, ki_bestaetigt=False)
 
     with verbindung() as conn:
         sitzung_id = anmelden(conn, email, code, herkunft)
@@ -184,7 +217,18 @@ def anmeldung_absenden(request: Request,
     if sitzung_id is None:
         # 200 mit Meldung, ausdruecklich KEIN Cookie: eine Sitzung entsteht
         # nur aus einer bestaetigten zweiten Stufe (K03-M09, K03-D01).
-        return _en01(request, meldung=MELDUNG_MISSERFOLG, adresse=email)
+        # Das Haekchen bleibt gesetzt: die Bestaetigung war nicht der Fehler.
+        return _en01(request, meldung=MELDUNG_MISSERFOLG, adresse=email,
+                     ki_bestaetigt=True)
+
+    # Kriterium 3: die Kenntnisnahme als bleibender Nachweis. ERST JETZT --
+    # vorher ist nicht bekannt, WER bestaetigt hat, und ein Nachweis ohne
+    # Person ist keiner. Der Aufruf ist wirkungslos, wenn schon eine Zeile
+    # besteht ("vor der ERSTEN Nutzung").
+    with verbindung() as conn:
+        stand = sitzung_pruefen(conn, sitzung_id)
+        if stand is not None:
+            ki_hinweis.kenntnis_buchen(conn, stand)
 
     antwort = RedirectResponse("/", status_code=UMLEITUNG)
     keks_setzen(antwort, sitzung_id)
