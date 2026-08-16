@@ -821,10 +821,20 @@ aufbewahrungskritischen Klauseln die gezeichnete Annahme nicht anstelle eines Te
 
 **Zur Löschkette — der Vorrang zwischen O-K15-6 und O-K02-6:**
 
-- [ ] **Weg A** — die Unversehrtheit des Protokolls hat Vorrang; BETRIEBSPROTOKOLL wird dort
-      als nicht vollziehbar geführt und als Restrisiko getragen, Träger: ⟨Name⟩
+- [x] **Weg A** — die Unversehrtheit des Protokolls hat Vorrang; BETRIEBSPROTOKOLL wird dort
+      als nicht vollziehbar geführt und als Restrisiko getragen, **Träger: M. Veil** ·
+      **gez. M. Veil, 16.08.2026** · Weisung im Wortlaut: *„Das Protokoll bleibt lückenlos.
+      Es wird nie etwas entfernt. Die Löschregel steht dann zwar auf dem Papier, wird an
+      dieser einen Stelle aber nicht ausgeführt — und das wird ausdrücklich als bekanntes
+      Risiko aufgeschrieben, damit es niemand übersieht."*
 - [ ] **Weg B** — die Löschregel hat Vorrang; ein eng umgrenzter Ausnahmeweg wird gebaut
 - [ ] **Mit B-19 sichten** — die Kette wandert in die Prioritätenliste
+
+> **Zum Träger — abgeleitet, nicht angewiesen.** Die Weisung nennt keinen Namen. Der Harness
+> hat **M. Veil** eingetragen, weil O-K15-6 als Entscheider *„Founder"* führt und die Weisung
+> von M. Veil stammt: Wer ein Restrisiko annimmt, trägt es. **Das ist eine Ableitung.** Ist
+> ein anderer Träger gewollt, wird der Name hier ersetzt — die Sachentscheidung ist davon
+> nicht berührt.
 
 **Zu O-K15-3 (Aufräumlauf für Einladungen):**
 
@@ -981,9 +991,17 @@ darf in keinem Bericht als *bestanden* erscheinen.
 
 **E-6 — die ungemessenen Zustände (hier gibt der Orchestrator keine Empfehlung):**
 
-- [ ] **Nachmessen** — ein halber Tag, jetzt für fünf Bildschirme statt für einen
+- [x] **Nachmessen** — ein halber Tag, jetzt für fünf Bildschirme statt für einen ·
+      **gez. M. Veil, 16.08.2026** · Weisung im Wortlaut: *„Jetzt nachmessen. Der Wert wird
+      geprüft, bevor entschieden wird. Dauert wenig, und danach ist die Sache sauber belegt
+      statt geschätzt."*
 - [ ] **Als benanntes Restrisiko tragen** — Träger: ⟨Name⟩, Frist: ⟨Datum⟩
 - [ ] **Nur den Fokusring nachmessen, den Rest tragen**
+
+> **Nachweis der Messung:** `nachweise/gestaltung/E6_nachmessung_260816.md`, erhoben am
+> 16.08.2026. **Sie schließt E-6 nicht vollständig** — was mit den Mitteln des Repositoriums
+> messbar war, ist gemessen; was ein laufender Bildschirm braucht, ist dort benannt und
+> bleibt bis dahin nach K23-M22 **gesperrt**, nicht bestanden.
 
 **Zur Form:**
 

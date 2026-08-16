@@ -118,6 +118,92 @@ Zwischentermine.* Im Wortlaut:
 
 ## Feld 4 · Neuer Wortlaut
 
+> ### ⚠ Dieses Feld ist am 16.08.2026 zweigeteilt worden
+>
+> Bis zur Entscheidung standen hier die Wortlaute für **2.1-a** — eigene Termine je
+> Meilenstein, eingetragen in Anlage T. **Gezeichnet wurde 2.1-d.** Die maßgeblichen
+> Wortlaute stehen deshalb unter **Fassung D**; die alten bleiben darunter stehen,
+> **überschrieben wird nichts** (§12.5 Nr. 5 sinngemäß).
+>
+> | | gilt | Wortlaute |
+> |---|---|---|
+> | **Fassung D** | **ja — gezeichnet 16.08.2026** | (a-D) · (b-D) · (c-D) · (d-D) · (e-D) — **fünf Stellen** |
+> | Fassung A | nein — 2.1-a ist nicht gezeichnet | (a) · (b) · (b2) · (b3) · (c) · (d) · (e) — neun Stellen |
+
+---
+
+### Fassung D — maßgeblich
+
+**Der Gedanke in einem Satz:** Der Auftragstext wird an fünf Stellen von *„alle zwölf zum
+31.08."* auf *„die des gezeichneten Umfangs zum 31.08."* eingeengt, und an **einer** Stelle
+wird gesagt, **wie** die zurückgestellten zu ihrem Termin kommen. **Keine Tabelle, keine
+Datumszeile, kein Platzhalter im Auftrag.**
+
+**(a-D) neu — Kopftabelle, Zeile *Endtermin*:**
+
+> **31. August 2026 für den gezeichneten Teilschnitt** (Blatt 57, Weg A, gez. 10.08.2026) —
+> bis dahin sind **M1, M2 und M3** eingetreten und **Tor II** in diesem Umfang gezeichnet.
+> Die zurückgestellten Meilensteine und Bauaufgaben tragen zunächst **keinen eigenen
+> Termin**; ihre Termine werden nach §6a festgelegt.
+
+**(b-D) neu — §6a, an die Stelle des Sperrsatzes:**
+
+> **Für den Umfang des 31.08.2026 trägt kein Meilenstein ein eigenes Datum — es gibt einen
+> Endtermin für alle: den 31. August 2026.**
+>
+> **Die mit Weg A zurückgestellten Meilensteine M4 bis M12 und die zurückgestellten
+> Bauaufgaben tragen zunächst keinen Einzeltermin.** Ihre Termine werden festgelegt, sobald
+> die Lieferung des Teilschnitts abgenommen ist — **mit einem eigenen Korrekturblatt nach
+> §12.2, spätestens vierzehn Tage nach der Zeichnung von Tor II.**
+>
+> **Das ist eine benannte Zurückstellung, keine Lücke.** Der Grund steht dabei: Wie viel nach
+> der Abnahme noch aussteht, ist vor der Abnahme nicht bekannt. Ein Termin, der auf einer
+> Schätzung beruht, wird beim ersten Verzug verschoben und bindet niemanden; ein Termin, der
+> nach der Abnahme aus dem gemessenen Reststand gebildet wird, bindet.
+
+**(c-D) neu — §6a, Begründungsabsatz:**
+
+> Das ist Absicht — **für den Umfang eines Tores**. Zwölf Einzeltermine würden zwölf
+> Verhandlungen erzeugen und beim ersten Verzug reihum verschoben. Ein Endtermin für die
+> nachrechenbaren Zustände **eines** Umfangs erzeugt eine Frage: **Sind sie eingetreten?**
+> **Was aus einem Umfang herausgenommen wird, braucht dagegen einen eigenen Termin** — sonst
+> wäre die Herausnahme eine Streichung, und das war sie nicht. **Wann dieser Termin gebildet
+> wird, steht im vorstehenden Absatz.**
+
+**(d-D) neu — §9, Tor II, Bedingungen 1 und 2:** *(wortgleich mit Fassung A, (d) — die
+Bedingungen ändern sich durch die Terminfrage nicht)*
+
+> | 1 | **Die Meilensteine des gezeichneten Umfangs sind eingetreten** — für den Teilschnitt
+> nach Blatt 57 sind das **M1, M2 und M3**, je mit der Nachrechnung aus Abschnitt 6a. Die
+> zurückgestellten Meilensteine treten zu ihrem nach §6a festzulegenden Termin ein; sie
+> halten diese Bedingung **nicht** auf |
+>
+> | 2 | **Die Bauaufgaben des gezeichneten Umfangs sind erfüllt**, je mit dem dort genannten
+> Abnahmekriterium. Die zurückgestellten Bauaufgaben treten zu ihrem nach §6a festzulegenden
+> Termin ein. **Nicht in Tor II:** L7 (= E10, Tor III) · L8 (Vorbedingung, A. Han, Tor III) ·
+> Vertragsbaustein und Einweisung aus L9 (Vertrieb, Geschäftsführung — außerhalb der Tore) |
+
+**(e-D) neu — §10a:** *(wortgleich mit Fassung A, (e), bis auf den Schlusssatz)*
+
+> **31. August 2026.** Bis dahin sind die Meilensteine des gezeichneten Teilschnitts
+> eingetreten und **Tor II** in diesem Umfang gezeichnet — die technische Lieferabnahme, der
+> Wechsel nach `ABNAHME`.
+>
+> **Was der Endtermin nicht ist:** eine Reihe von Zwischenterminen **innerhalb** seines
+> Umfangs. Die Meilensteine des Teilschnitts tragen bewusst keine eigenen Daten
+> (Abschnitt 6a). **Die zurückgestellten Meilensteine liegen außerhalb dieses Endtermins;
+> ihre Termine werden nach der Abnahme gebildet (Abschnitt 6a).**
+
+> **Warum Fassung D ohne Tabelle T auskommt.** Tabelle T war der Ort, an dem die Termine
+> stehen sollten. Ohne Termine wäre sie eine Tabelle aus leeren Zellen — und ein
+> `__________` in einer eingefrorenen Fassung ist nach §12.4 Nr. 4 **ein Nichtvollzug**. Die
+> Liste dessen, was zurückgestellt ist, geht dadurch nicht verloren: Sie steht in Anlage T
+> dieses Blattes und im Blatt 57. **Sie gehört auf das Korrekturblatt, nicht in den Auftrag.**
+
+---
+
+### Fassung A — nicht gezeichnet, bleibt zum Vergleich stehen
+
 **Die Termine stehen hier bewusst noch nicht.** Sie werden in **Anlage T** dieses Blattes
 eingetragen — von Hand, vor der Zeichnung. Erst der Vollzug trägt die dort eingetragenen
 Werte **wörtlich** in den Auftrag.
@@ -216,43 +302,61 @@ Werte **wörtlich** in den Auftrag.
 **Vollständig. Wer eine Stelle wegstreicht, macht aus dem Vollzug einen Nichtvollzug.**
 Reihenfolge: **von unten nach oben** — die letzte Stelle im Dokument zuerst.
 
-| # | Datei | Abschnitt | Ankerzitat (Fundstelle) | gilt bei Kreuz |
-|---|---|---|---|---|
-| **2.1-S1** | `03_N5_BAUAUFTRAG_v1.1_260807.md` | §10a · Absatz *Was der Endtermin nicht ist* | „**Was der Endtermin nicht ist:** eine Reihe von Zwischenterminen." | **2.1-a** · 2.1-b |
-| **2.1-S2** | dieselbe | §10a · erster Absatz | „**31. August 2026.** Bis dahin sind die zwölf Meilensteine eingetreten und **Tor II** gezeichnet" | **2.1-a** · 2.1-b · 2.1-c |
-| **2.1-S3** | dieselbe | §9 · Tor II · Bedingung 2 | „**Die Bauaufgaben L1–L6 sind erfüllt** und **von L9 der Portal-Hinweis**" | **2.1-a** · 2.1-b · 2.1-c |
-| **2.1-S4** | dieselbe | §9 · Tor II · Bedingung 1 | „**Die zwölf Meilensteine M1–M12 sind eingetreten**, je mit der Nachrechnung aus Abschnitt 6a" | **2.1-a** · 2.1-b · 2.1-c |
-| **2.1-S5** | dieselbe | §7a · am Ende, neu eingefügt | Einfügemarke: nach „**Warum sie hier stehen und nicht verschwiegen werden.**" bis zum Beginn von „### L1" | **2.1-a** *(Tabelle T Teil 2)* |
-| **2.1-S6** | dieselbe | §6a · Begründungsabsatz | „Das ist Absicht. Zwölf Einzeltermine würden zwölf Verhandlungen erzeugen und beim" *(Satz läuft über den Zeilenumbruch weiter — der Anker steht bewusst auf einer Zeile)* | **2.1-a** · 2.1-b |
-| **2.1-S7** | dieselbe | §6a · neu eingefügt nach dem Sperrsatz | Einfügemarke: unmittelbar nach „**Woran der Auftraggeber vor dem Endtermin misst:**"-Absatz | **2.1-a** *(Tabelle T Teil 1)* |
-| **2.1-S8** | dieselbe | §6a · Sperrsatz | „**Kein Meilenstein trägt ein eigenes Datum — es gibt einen Endtermin für alle: den 31. August 2026.**" | **2.1-a** · 2.1-b · 2.1-c |
-| **2.1-S9** | dieselbe | Kopftabelle · Zeile *Endtermin* | „**31. August 2026** — bis dahin sind die Meilensteine M1 bis M12 eingetreten" | **2.1-a** · 2.1-b · 2.1-c |
+| # | Datei | Abschnitt | Ankerzitat (Fundstelle) | gilt bei Kreuz | **2.1-d** |
+|---|---|---|---|---|---|
+| **2.1-S1** | `03_N5_BAUAUFTRAG_v1.1_260807.md` | §10a · Absatz *Was der Endtermin nicht ist* | „**Was der Endtermin nicht ist:** eine Reihe von Zwischenterminen." | 2.1-a · 2.1-b | **✅ (e-D)** |
+| **2.1-S2** | dieselbe | §10a · erster Absatz | „**31. August 2026.** Bis dahin sind die zwölf Meilensteine eingetreten und **Tor II** gezeichnet" | 2.1-a · 2.1-b · 2.1-c | **✅ (e-D)** |
+| **2.1-S3** | dieselbe | §9 · Tor II · Bedingung 2 | „**Die Bauaufgaben L1–L6 sind erfüllt** und **von L9 der Portal-Hinweis**" | 2.1-a · 2.1-b · 2.1-c | **✅ (d-D)** |
+| **2.1-S4** | dieselbe | §9 · Tor II · Bedingung 1 | „**Die zwölf Meilensteine M1–M12 sind eingetreten**, je mit der Nachrechnung aus Abschnitt 6a" | 2.1-a · 2.1-b · 2.1-c | **✅ (d-D)** |
+| **2.1-S5** | dieselbe | §7a · am Ende, neu eingefügt | Einfügemarke: nach „**Warum sie hier stehen und nicht verschwiegen werden.**" bis zum Beginn von „### L1" | 2.1-a *(Tabelle T Teil 2)* | **entfällt** |
+| **2.1-S6** | dieselbe | §6a · Begründungsabsatz | „Das ist Absicht. Zwölf Einzeltermine würden zwölf Verhandlungen erzeugen und beim" *(Satz läuft über den Zeilenumbruch weiter — der Anker steht bewusst auf einer Zeile)* | 2.1-a · 2.1-b | **✅ (c-D)** |
+| **2.1-S7** | dieselbe | §6a · neu eingefügt nach dem Sperrsatz | Einfügemarke: unmittelbar nach „**Woran der Auftraggeber vor dem Endtermin misst:**"-Absatz | 2.1-a *(Tabelle T Teil 1)* | **entfällt** |
+| **2.1-S8** | dieselbe | §6a · Sperrsatz | „**Kein Meilenstein trägt ein eigenes Datum — es gibt einen Endtermin für alle: den 31. August 2026.**" | 2.1-a · 2.1-b · 2.1-c | **✅ (b-D)** |
+| **2.1-S9** | dieselbe | Kopftabelle · Zeile *Endtermin* | „**31. August 2026** — bis dahin sind die Meilensteine M1 bis M12 eingetreten" | 2.1-a · 2.1-b · 2.1-c | **✅ (a-D)** |
 
 > **Warum S9 auch bei 2.1-c gilt.** Wird gar kein Termin gesetzt, bleibt der Satz „bis dahin
 > sind die Meilensteine M1 bis M12 eingetreten" trotzdem falsch — neun sind zurückgestellt.
 > Dann ist der Satz auf den Teilschnitt einzuengen, ohne einen Termin zu nennen.
+
+### Bei der gezeichneten Fassung 2.1-d: **sieben Stellen, nicht neun**
+
+**S5 und S7 entfallen** — beides sind Einfügemarken für Tabelle T. Ohne Termine gibt es keine
+Tabelle einzufügen. **Die übrigen sieben bleiben vollständig**, und das ist der Punkt: Die
+Einengung des Umfangs auf den Teilschnitt ist von der Terminfrage **unabhängig**. Der Satz
+„bis dahin sind die Meilensteine M1 bis M12 eingetreten" ist auch dann falsch, wenn kein
+einziger Termin gesetzt wird.
+
+> **Der Vollzug von 2.1-d gilt erst als vollständig, wenn alle sieben Haken stehen**
+> (§12.4 Nr. 4). **Teilvollzug ist Nichtvollzug** — auch bei einer schlankeren Fassung.
+
+**Die einzige Stelle, die 2.1-d gegenüber 2.1-c hinzufügt**, ist der zweite Absatz von
+**(b-D)**: der Satz, der sagt, **wann und womit** die Termine gebildet werden. Ohne ihn wäre
+2.1-d nur 2.1-c — „terminlos" ohne Weg zurück. **Dieser Absatz ist der ganze Unterschied
+zwischen einer Zurückstellung und einer Streichung.**
 
 ## Feld 6 · Vollzugsspalte je Stelle
 
 *Nach §12.4 Nr. 2: je Stelle Datum und Zeichen des Ausführenden. **Der Harness trägt hier
 nichts ein.***
 
-| # | Stelle | eingetragen am | Zeichen | Rückverweis am Ort gesetzt (§12.4 Nr. 3) |
-|---|---|---|---|---|
-| 2.1-S1 | §10a *Was der Endtermin nicht ist* | | | ☐ |
-| 2.1-S2 | §10a erster Absatz | | | ☐ |
-| 2.1-S3 | §9 Tor II Bedingung 2 | | | ☐ |
-| 2.1-S4 | §9 Tor II Bedingung 1 | | | ☐ |
-| 2.1-S5 | §7a Tabelle T Teil 2 | | | ☐ |
-| 2.1-S6 | §6a Begründungsabsatz | | | ☐ |
-| 2.1-S7 | §6a Tabelle T Teil 1 | | | ☐ |
-| 2.1-S8 | §6a Sperrsatz | | | ☐ |
-| 2.1-S9 | Kopftabelle *Endtermin* | | | ☐ |
+| # | Stelle | Wortlaut | eingetragen am | Zeichen | Rückverweis am Ort gesetzt (§12.4 Nr. 3) |
+|---|---|---|---|---|---|
+| 2.1-S1 | §10a *Was der Endtermin nicht ist* | (e-D) | | | ☐ |
+| 2.1-S2 | §10a erster Absatz | (e-D) | | | ☐ |
+| 2.1-S3 | §9 Tor II Bedingung 2 | (d-D) | | | ☐ |
+| 2.1-S4 | §9 Tor II Bedingung 1 | (d-D) | | | ☐ |
+| ~~2.1-S5~~ | ~~§7a Tabelle T Teil 2~~ | **entfällt bei 2.1-d** | — | — | — |
+| 2.1-S6 | §6a Begründungsabsatz | (c-D) | | | ☐ |
+| ~~2.1-S7~~ | ~~§6a Tabelle T Teil 1~~ | **entfällt bei 2.1-d** | — | — | — |
+| 2.1-S8 | §6a Sperrsatz | (b-D) | | | ☐ |
+| 2.1-S9 | Kopftabelle *Endtermin* | (a-D) | | | ☐ |
 
-**Rückverweis-Wortlaut für alle neun Stellen:** *(geändert am 16.08.2026 — Korrekturblatt
-BA-2, Korrektur 2.1)*
+**Rückverweis-Wortlaut für alle sieben Stellen:** *(geändert am 16.08.2026 — Korrekturblatt
+BA-2, Korrektur 2.1, Fassung D)*
 
-> **Korrektur 2.1 gilt erst als vollzogen, wenn alle neun Haken stehen** (§12.4 Nr. 4).
+> **Korrektur 2.1 gilt erst als vollzogen, wenn alle sieben Haken stehen** (§12.4 Nr. 4).
+> **Und sie darf nicht begonnen werden, solange die Vorfrage nicht beantwortet ist** — siehe
+> den Sperrvermerk in Feld 7.
 
 ## Feld 7 · Entscheidungskreuz
 
@@ -265,21 +369,90 @@ BA-2, Korrektur 2.1)*
 - [ ] **2.1-V2 · BA-1 ist nicht vollzogen.** Dann ist **zuerst** BA-1 zu vollziehen. Dieses
       Blatt bleibt bis dahin liegen — *„Am Auftrag ist nichts geändert."*
 
+> ### ⛔ Die Vorfrage ist am 16.08.2026 gemessen worden — und sie sperrt dieses Blatt
+>
+> **Der Harness hat hier kein Kreuz gesetzt, weil die Folge eine Entscheidung ist.** Die
+> **Tatsache** ist dagegen gemessen und eindeutig, mit den Befehlen daneben:
+>
+> ```
+> $ ls arbeit/Vorlagen/korrekturblatt_BA-1*
+> zsh: no matches found            # BA-1 liegt nicht im Arbeitsbaum
+>
+> $ git branch -a --contains <BA-1-Commit>
+> nachtraege/korrekturblatt-wega
+> remotes/origin/nachtraege/korrekturblatt-wega   # nur dieser eine Zweig, nicht main
+>
+> $ git show nachtraege/korrekturblatt-wega:arbeit/Vorlagen/korrekturblatt_BA-1_wegA_260815.md \
+>     | grep -c '\[x\]'
+> 0                                # kein einziges Kreuz gesetzt
+>
+> $ grep -c 'BA-1' 03_N5_BAUAUFTRAG_v1.1_260807.md
+> 0                                # null Rueckverweise im Auftragstext
+> ```
+>
+> **Vier Messungen, ein Ergebnis: BA-1 ist nicht vollzogen.** Es liegt ungezeichnet auf einem
+> Nebenzweig, trägt kein einziges gesetztes Kreuz, seine Zeichnungstabelle ist leer, und im
+> Auftragstext steht sein Name nirgends.
+>
+> **Damit trifft der Sachverhalt von 2.1-V2 zu**, und die Folge steht dort im Wortlaut:
+> *„Dann ist **zuerst** BA-1 zu vollziehen. Dieses Blatt bleibt bis dahin liegen."*
+>
+> **Was das praktisch heißt.** Korrektur 2.1 setzt eine Zurückstellung voraus, die im
+> Auftragstext **nicht steht**. Der Auftrag sagt an fünf Stellen unverändert, dass zum
+> 31.08.2026 alle zwölf Meilensteine eingetreten sind. Ein Termin für etwas zu setzen, das
+> noch gar nicht zurückgestellt ist, wäre kein Vollzug, sondern eine zweite Änderung im
+> Gewand der ersten.
+>
+> **Die Entscheidung darunter ist deshalb gültig gezeichnet, aber noch nicht vollziehbar.**
+> Sie wartet auf BA-1, nicht auf sich selbst. Vollständig behandelt in der Vorlage
+> `arbeit/Vorlagen/vorfrage_BA1_vollzug_260816.md`.
+
 ### Die Entscheidung
 
-- [x] **2.1-a · Eigene Termine je Meilenstein und je Bauaufgabe**, wie in Anlage T
-      eingetragen. **Vorschlag des Harness.** — **gez. M. Veil, 16.08.2026**
+- [ ] **2.1-a · Eigene Termine je Meilenstein und je Bauaufgabe**, wie in Anlage T
+      eingetragen. **Vorschlag des Harness.**
 - [ ] **2.1-b · Ein gemeinsamer Zweittermin** für alle zurückgestellten Punkte:
       ⟨Datum vom Auftraggeber⟩
 - [ ] **2.1-c · Kein Termin.** Die zurückgestellten Punkte bleiben ausdrücklich terminlos —
       als benannte Entscheidung, nicht als Lücke. Dann sind nur S9, S8, S4, S3 und S2 zu
       vollziehen.
-- [ ] **2.1-d · anders:** ⟨Wortlaut⟩
+- [x] **2.1-d · anders — die Termine werden nach der Abnahme festgelegt.**
+      Wortlaut der Entscheidung:
+      > **„Die zurückgestellten Meilensteine M4 bis M12 und die zurückgestellten Bauaufgaben
+      > tragen zunächst keinen Einzeltermin. Ihre Termine werden festgelegt, sobald die
+      > Lieferung des Teilschnitts zum 31.08.2026 abgenommen ist — mit einem eigenen
+      > Korrekturblatt, spätestens vierzehn Tage nach der Zeichnung von Tor II."**
+
+      **gez. M. Veil, 16.08.2026** · Weisung im Wortlaut: *„Erst nach dem 31.08. festlegen.
+      Das Korrekturblatt trägt ein: ‚Die Termine werden festgelegt, sobald die Lieferung am
+      31.08. abgenommen ist.' Ehrlich, weil heute niemand weiß, wie viel danach noch zu tun
+      ist — und es blockiert nichts."*
+
+> ### Vermerk zur Rücknahme eines Kreuzes — 16.08.2026
+>
+> **Bei 2.1-a stand bis zum 16.08.2026 abends ein Kreuz.** Es beruhte auf der allgemeinen
+> Weisung *„allen Handlungsempfehlungen wird gefolgt"* und darauf, dass 2.1-a der Vorschlag
+> des Harness war.
+>
+> **Es ist zurückgenommen worden**, weil derselbe Tag eine **besondere** Weisung zu genau
+> dieser Frage gebracht hat, und die besondere geht der allgemeinen vor. Der Harness hat das
+> Kreuz nicht stillschweigend verschoben, sondern hier vermerkt — **eine zurückgenommene
+> Zeichnung, die niemand sieht, ist schlimmer als gar keine.**
+>
+> **Sachlich ist die neue Entscheidung die belastbarere.** 2.1-a hätte neun Termine
+> gebraucht, die heute niemand kennt; Anlage T wäre leer geblieben, und ein Blatt mit leerer
+> Anlage T *„wird nicht gezeichnet, sondern zurückgegeben"* (Feld 4). 2.1-d füllt Anlage T
+> nicht mit erfundenen Daten, sondern mit **einer Regel, die trägt**.
 
 ### Zusatzentscheidung zu Tabelle T Teil 2
 
 - [ ] **2.1-Z · Welche Bauaufgaben zurückgestellt sind**, wird mit den Kästchen in Tabelle T
       Teil 2 entschieden. Der Harness hat sie **gemessen zugeordnet, aber keines gesetzt.**
+
+> **2.1-Z bleibt offen — und mit 2.1-d ist das weniger dringend, aber nicht erledigt.**
+> Welche Bauaufgaben zurückgestellt sind, entscheidet **den Umfang des 31.08.**, nicht nur
+> ihren Termin. Diese Frage bleibt also auch dann zu beantworten, wenn kein einziger Termin
+> gesetzt wird. Siehe die Frage an M. Veil im Begleitblatt.
 
 > **Offen gelassen und hier benannt:** Die Vorlage der Schlussrunde spricht von **vier**
 > zurückgestellten Bauaufgaben. Der Harness kommt bei der Messung gegen den Teilschnitt auf
@@ -485,7 +658,7 @@ Korrekturblatt BA-2, Korrektur 2.2; Grundlage Blatt 59, L1-E5/A, gez. 10.08.2026
 ---
 ---
 
-# Anlage T · Die Termine — hier trägt der Auftraggeber ein
+# Anlage T · Die Termine — **ausgefüllt am 16.08.2026**
 
 > **Dieses Blatt wird ohne ausgefüllte Anlage T nicht gezeichnet.** Ein Korrekturblatt zu
 > Terminen, das keine Termine trägt, ist kein Korrekturblatt. Die Anlage wird **vor** der
@@ -493,6 +666,39 @@ Korrekturblatt BA-2, Korrektur 2.2; Grundlage Blatt 59, L1-E5/A, gez. 10.08.2026
 >
 > **Der Harness hat hier kein Datum eingetragen und wird keines eintragen.** Ein Termin ist
 > Umfang. Umfang zu erfinden ist ihm verboten.
+
+## ✅ Die Anlage ist ausgefüllt — mit einer Regel statt mit neun Daten
+
+**Entscheidung 2.1-d, gez. M. Veil, 16.08.2026:**
+
+> **„Die zurückgestellten Meilensteine M4 bis M12 und die zurückgestellten Bauaufgaben tragen
+> zunächst keinen Einzeltermin. Ihre Termine werden festgelegt, sobald die Lieferung des
+> Teilschnitts zum 31.08.2026 abgenommen ist — mit einem eigenen Korrekturblatt, spätestens
+> vierzehn Tage nach der Zeichnung von Tor II."**
+
+**Damit ist die Sperre dieses Blattes aufgehoben.** Der Satz aus Feld 4 — *„Ein Blatt mit
+leerer Anlage T wird nicht gezeichnet, sondern zurückgegeben"* — meint eine Anlage **ohne
+Aussage**, nicht eine Anlage ohne Datum. Sie trägt jetzt eine Aussage, und die ist prüfbar:
+
+| | Was prüfbar ist | Wie |
+|---|---|---|
+| 1 | **Ob der Auslöser eingetreten ist** | Tor II für den Teilschnitt ist gezeichnet — ja oder nein |
+| 2 | **Ob die Frist gehalten wurde** | Zeichnungsdatum von Tor II plus 14 Tage gegen das Datum des Nachfolgeblattes |
+| 3 | **Welche Punkte betroffen sind** | die Tabellen unten — sie bleiben stehen und sind die Arbeitsliste des Nachfolgeblattes |
+
+> **Warum die beiden Tabellen trotzdem stehen bleiben.** Sie tragen keine Termine mehr, aber
+> sie tragen die **Liste dessen, was zurückgestellt ist**, samt Abhängigkeiten. Genau das
+> braucht das Nachfolgeblatt, und genau das ginge verloren, wenn man sie jetzt löscht.
+> **Sie sind ab hier eine Arbeitsliste, kein Terminplan.**
+
+### Nachfolgeblatt — was daraus zu tun ist
+
+| | Was | Wann | Wer |
+|---|---|---|---|
+| **BA-3** | Korrekturblatt nach §12.2, das die Termine für M4–M12 und die zurückgestellten Bauaufgaben setzt — auf Grundlage des **nach der Abnahme gemessenen** Reststandes | **binnen 14 Tagen** nach Zeichnung von Tor II | Vorlage: Harness · Zeichnung: **M. Veil und A. Han** (§12.3) |
+
+**Der Termin für BA-3 ist der einzige, den dieses Blatt setzt** — und er ist keine Schätzung,
+sondern an ein Ereignis gebunden, das ohnehin stattfinden muss.
 
 ## Teil 1 · Meilensteine
 
@@ -544,7 +750,8 @@ die im Auftrag stehen — keine Planung.
 
 | | Schritt | Regel | Stand |
 |---|---|---|---|
-| 1 | Beide Korrekturen vollständig vollzogen — **9 + 5 = 14 Haken** | §12.4 Nr. 4 | ☐ |
+| 0 | **Vorfrage 2.1-V beantwortet und, falls 2.1-V2, BA-1 zuvor vollzogen** | Feld 7, Sperrvermerk | ⛔ **offen — gemessen am 16.08.2026** |
+| 1 | Beide Korrekturen vollständig vollzogen — **7 + 5 = 12 Haken** *(bei der gezeichneten Fassung 2.1-d; bei 2.1-a wären es 9 + 5 = 14)* | §12.4 Nr. 4 | ☐ |
 | 2 | Neue Fassungsnummer: **v1.2** | §12.5 Nr. 1 | ☐ |
 | 3 | Datei einfrieren, nicht mehr beschreiben | §12.5 Nr. 2 | ☐ |
 | 4 | SHA-256 bilden — **in die Zeichnungsdatei**, nie in den Auftrag selbst | §12.5 Nr. 3 | ☐ |
@@ -566,11 +773,11 @@ ein Blatt mit einer nicht gezeichneten Korrektur ist kein vollzogenes Blatt.
 
 | | |
 |---|---|
-| **Es setzt keinen Termin** | Anlage T ist leer. Termine sind Umfang, und Umfang zu erfinden ist dem Harness verboten |
-| **Es entscheidet nicht, welche vier Bauaufgaben zurückgestellt sind** | Es misst fünf Kandidaten und legt sie nebeneinander |
-| **Es setzt kein Kreuz** | Kein einziges — auch kein abgeschriebenes. *„Ein abgeschriebenes Kreuz ist ein Nachweis, keine Zeichnung"* (`nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`) |
+| **Es setzt keinen Meilensteintermin** | *Berichtigt am 16.08.2026:* Es setzt **einen** Termin — die Vierzehntagesfrist für BA-3. Der ist nicht erfunden, sondern an ein Ereignis gebunden. Neun Einzeltermine setzt es weiterhin nicht |
+| **Es entscheidet nicht, welche vier Bauaufgaben zurückgestellt sind** | Es misst fünf Kandidaten und legt sie nebeneinander. **Kreuz 2.1-Z ist weiterhin offen** — und es entscheidet den Umfang des 31.08., nicht nur einen Termin |
+| **Es setzt kein Kreuz aus eigenem Antrieb** | *Berichtigt am 16.08.2026:* Kreuze bei 2.1-d und 2.2-a sind **auf Weisung eingetragen**, je mit dem Wortlaut der Weisung daneben — so wie die berichtigte Regel es seit dem 16.08.2026 vorschreibt. Was der Harness nie tut, ist eine Weisung erfinden |
 | **Es ändert nichts am Auftrag** | Erst die Zeichnung, dann der Vollzug, dann die neue Fassung |
-| **Es vollzieht BA-1 nicht** | BA-1 liegt ungezeichnet auf einem Zweig. Ob es vollzogen wird, ist Kreuz 2.1-V |
+| **Es vollzieht BA-1 nicht — und kann ohne BA-1 selbst nicht vollzogen werden** | BA-1 liegt ungezeichnet auf einem Zweig; am 16.08.2026 mit vier Befehlen gemessen. **Die Vorfrage 2.1-V ist damit tatsächlich beantwortet (2.1-V2 trifft zu) und sperrt den Vollzug von Korrektur 2.1** — siehe Sperrvermerk in Feld 7 |
 | **Es nimmt `schema_migration` nicht auf** | Nicht beauftragt. Es fragt danach (Kreuz 2.2-Z) |
 
 ---

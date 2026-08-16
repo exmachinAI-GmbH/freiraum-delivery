@@ -29,7 +29,7 @@ Bauplan und deine Schreibgrenzen. Mehr brauchst du nicht, und mehr sollst du nic
   Zugänge kommen aus der Umgebung, nie aus dem Repo (`README.md`:30).
 - **Nur synthetische Daten**, deterministisch erzeugt, je Mandant gekennzeichnet, in einer
   abgetrennten Umgebung (K23-M12 :67). Nie gegen die Zielumgebung.
-- **Jede Migration führt ihre Negativfälle mit.** Mindestens vier (`README.md`:34), jeder
+- **Die vier Negativfälle jeder Migration müssen scheitern**, bevor sie als angewendet gilt (`README.md`:204), jeder
   mit der Zeile `-- erwartet: <Bedingungsname>` im Kopf. Ein Negativfall, der an einer
   **fremden** Bedingung scheitert, ist kein bestandener Test (Bauauftrag §9 Tor I Nr. 6,
   :649; offener Punkt O-K23-7).

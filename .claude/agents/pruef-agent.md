@@ -10,7 +10,8 @@ tools: Read, Write
 # Ist nur EIN Modell verfuegbar, ist die Modellvielfalt nicht herstellbar. Das ist dann
 # eine BEWUSSTE ABWEICHUNG und gehoert nach K00 -- nicht stillschweigend uebergangen (F27).
 # CLAUDE_CODE_SUBAGENT_MODEL ueberschreibt diesen Eintrag und macht die Modellvielfalt
-# zunichte. Diese Variable darf im Harness nicht gesetzt sein (F27, kanon.yaml:358).
+# zunichte. Diese Variable darf im Harness nicht gesetzt sein
+# (F27, config/kanon.yaml:358 -- Konzept-Fabrik, ausserhalb dieses Repos).
 model: sonnet
 ---
 

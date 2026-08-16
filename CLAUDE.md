@@ -116,7 +116,7 @@ Entscheidung legt er je Scheibe ein Paket vor und nennt es *Vorlage*, nicht *Fre
 | Sieht nie | die Prüfdateien | **den Umsetzungscode** |
 | Werkzeuge | Read, Write, Edit, Bash, Grep, Glob | Read, Write |
 | Schreibt nach | `app/ install/ mail/ migrations/ seeds/ schema/ werkzeuge/` sowie die erzeugten Nachweise unter `nachweise/` und die Bauunterlagen unter `arbeit/` | ausschließlich `pruefungen/` |
-| Modell | Sitzungsmodell | **anderes Modell** als der Bau (F27, `kanon.yaml`:346–359) |
+| Modell | Sitzungsmodell | **anderes Modell** als der Bau (F27, `config/kanon.yaml`:346–359 — **Konzept-Fabrik**, außerhalb dieses Repos) |
 
 **Beide laufen gleichzeitig und ohne einander zu kennen** (C-4, Blatt 26:30). Wer den Code
 kennt, schreibt den Prüffall auf den Code — nicht auf die Klausel. Das ist gemessen: Am
@@ -133,9 +133,10 @@ in `.claude/settings.json`. Diese Datei existiert noch nicht — **offener Punkt
 
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag
-§9 Tor I Nr. 6 (:649) und `README.md`:34 des Repos. Als **Klausel** ist die Regel **noch
-nicht gefasst** — sie steht als **offener Punkt O-K23-7** (`K23_entwurf.md`:297,
-Entscheider Konzept-Fabrik-Owner · K23) und **nicht** in der exportierten K23 v1.1.
+§9 Tor I Nr. 6 (:649) und `README.md`:204 des Repos. Als **Klausel** ist die Regel **noch
+nicht gefasst** — sie steht als **offener Punkt O-K23-7** (`arbeit/Entwürfe/K23_entwurf.md`:300
+— **Konzept-Fabrik**, außerhalb dieses Repos; Entscheider Konzept-Fabrik-Owner · K23) und
+**nicht** in der exportierten K23 v1.1.
 
 **Der Orchestrator schreibt zusammen, entscheidet aber nichts fachlich.** Kein Agent
 entscheidet „nach eigenem Urteil" (Blatt 11:170). Widerspruch zwischen Quellen: benennen,
@@ -184,8 +185,8 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
 | **Vertikale Scheiben führen den Bau** (G1, Blatt 11:25) | Scheibe n+1 = Faden von n **plus eine benannte Breite**; bestanden erst, wenn der **ganze** Lauf wieder durchgeht (Blatt 11:40–48) |
 | **Eigene Datenbank je Pilot-Anlauf** | `sealed` ist unumkehrbar (K20-M21); nach F36 wird nichts gelöscht (`README.md`:31, `aufbau.sh`:11–14). Die Prüfumgebung aus `aufbau.sh` ist **kein** Pilotlauf |
 | **Nur synthetische Daten** | deterministisch erzeugt, je Mandant gekennzeichnet, in abgetrennter Umgebung (K23-M12, :67) |
-| **Vier Negativfälle je Migration müssen scheitern** (`README.md`:34) | und zwar je an der eigenen Bedingung, mit Meldung im Wortlaut (Bauauftrag :649) |
-| **Keine Geheimnisse im Repo** (`README.md`:30) | `.env*` gitignored; Zugänge in Key Vault/Passwortmanager. Ein Fund sperrt den Lauf (K23-D09, :92) |
+| **Die vier Negativfälle jeder Migration müssen scheitern** (`README.md`:204) | und zwar je an der eigenen Bedingung, mit Meldung im Wortlaut (Bauauftrag :649) |
+| **Keine Zugangsdaten im Repository** (`README.md`:196) | `.env*` gitignored; Zugänge in Key Vault/Passwortmanager. Ein Fund sperrt den Lauf (K23-D09, :92) |
 | **Verarbeitung in der EU** (F05) | ein Dienst außerhalb bricht K13 (`README.md`:35) |
 | **Stop statt Endlosschleife** | Max. drei Anläufe je Gate, dann Eskalation an die Founder — **übertragen** aus der Konzept-Fabrik (`CLAUDE.md`:179), dort für Tabletop-Runden gesetzt. Für Code **nicht gezeichnet** |
 | **Bei Verzug: melden, sobald es sich abzeichnet** | nicht am 31. August. Über Umfang oder Termin entscheidet der Auftraggeber (G2, Blatt 11:26) |

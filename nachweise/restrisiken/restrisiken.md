@@ -16,7 +16,7 @@ Auftraggebers.
 
 | Teil | Datei | Was darin steht | Einträge |
 |---|---|---|---|
-| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen. `RR-01` ist der erste — und **geschlossen** | 1, geschlossen |
+| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen | **2** — `RR-01` **geschlossen**, `RR-02` **offen und getragen** |
 | **B · aus fehlenden Prüffällen** | **`restrisiken_teilschnitt.md`** | je Klausel des Teilschnitts, die als kritisch vorgeschlagen ist und **keinen Prüffall** hat — einzeln, wie `K23-M04` es verlangt | **113, alle offen** |
 
 **Der Stand von Teil B, gemessen am 16.08.2026:**
@@ -159,6 +159,61 @@ Sperre zu messen, ist genau das, wogegen K23-M04 geschrieben ist.
 | 4 | Das Manifest je Lauf führt den Commit-Hash — eine Umgehung ist nachträglich **auffindbar**, wenn auch nicht verhindert | mit dem ersten Manifest |
 
 ---
+---
+
+## RR-02 · Die Aufbewahrungsklasse `BETRIEBSPROTOKOLL` ist im Protokoll nicht vollziehbar — **OFFEN, getragen seit 16.08.2026**
+
+| Feld | Wert |
+|---|---|
+| **Betroffene Punkte** | **O-K15-6** (*„Das Protokoll ist bewusst nur ergänzbar; ein Entfernen ist per Regel unterbunden. Damit ist die Klasse BETRIEBSPROTOKOLL im Protokoll nicht vollziehbar. **Vorrang klären.**"*) · **O-K02-6** (*„… im Betrieb identisch sperrend, aber aufschiebbar, **solange O-K15-6 offen ist**"*) · geschlossen an **O-K20-4** |
+| **Kritikalität** | **kritisch — aufbewahrungskritisch.** Nach `K23-M04` ersetzt in dieser Klasse eine Annahmeentscheidung **den Test nicht.** Das gilt für diesen Eintrag ausdrücklich weiter |
+| **Befund** | Zwei gezeichnete Regeln widersprechen sich. Regel 1: Aus dem Protokoll wird nichts entfernt — es ist *„bewusst nur ergänzbar"*. Regel 2: Einträge der Klasse `BETRIEBSPROTOKOLL` müssen nach ihrer Frist verschwinden. **Beide gelten, eine kann nicht erfüllt werden.** Keines der beiden Konzepte konnte allein entscheiden, welche weicht: K15 verwies auf K02, K02 wartete auf K15 — ein Kreis, der sich ohne einen Eingriff von außen nicht öffnet |
+| **Entscheidung** | **Weg A — die Unversehrtheit des Protokolls hat Vorrang.** Aus dem Protokoll wird nichts entfernt. Die Aufbewahrungsklasse `BETRIEBSPROTOKOLL` wird **im Protokoll** als **nicht vollziehbar** geführt und als dieses benannte Restrisiko getragen |
+| **Grundlage** | Zeichnung **B-20** vom 16.08.2026, `arbeit/Vorlagen/vorlage_neun_entscheidungen_260816.md`. Weisung im Wortlaut: *„Das Protokoll bleibt lückenlos. Es wird nie etwas entfernt. Die Löschregel steht dann zwar auf dem Papier, wird an dieser einen Stelle aber nicht ausgeführt — und das wird ausdrücklich als bekanntes Risiko aufgeschrieben, damit es niemand übersieht."* |
+| **Träger** | **M. Veil** — *abgeleitet, nicht angewiesen:* O-K15-6 führt als Entscheider *„Founder"*, und die Weisung stammt von M. Veil. Wer ein Restrisiko annimmt, trägt es. Ist ein anderer Träger gewollt, wird der Name hier ersetzt |
+| **Annahmeentscheidung** | **gezeichnet am 16.08.2026** (M. Veil) — **und sie genügt nach `K23-M04` nicht.** Siehe *Was dieser Eintrag nicht leistet* |
+| **Frist** | **keine.** Der Vorrang ist eine Dauerentscheidung, kein Aufschub. Was befristet ist, ist der **Nachweis** darüber — siehe unten |
+
+### Was mit dieser Entscheidung geschlossen ist
+
+**Der Kreis ist offen.** O-K15-6 lautete *„Vorrang klären"* — der Vorrang ist geklärt. Damit
+fällt auch die Bedingung weg, unter der O-K02-6 aufschiebbar war (*„solange O-K15-6 offen
+ist"*). Beide Punkte haben ab dem 16.08.2026 eine Antwort, an der sie fortgeschrieben werden
+können.
+
+### Was dieser Eintrag **nicht** leistet — offen benannt
+
+**`K23-M04` sagt für aufbewahrungskritische Klauseln, dass eine gezeichnete Annahme den Test
+nicht ersetzt.** Dieser Eintrag ist eine Annahme. **Er hebt die Sperre also nicht auf.**
+
+Was er leistet, ist etwas anderes und Geringeres, aber Notwendiges: Er macht aus einem
+**stillschweigenden** Zustand einen **benannten**. Vorher galt eine Löschregel, die an einer
+Stelle nicht ausgeführt wurde, ohne dass irgendwo stand, dass sie dort nicht ausgeführt wird.
+Genau das verbietet `K23-D07`: *ein Restrisiko darf nicht stillschweigend übernommen werden.*
+
+**Was zum Aufheben der Sperre nötig bleibt — drei Dinge, keines davon Harness-Arbeit:**
+
+| | Was | Wer |
+|---|---|---|
+| 1 | **Die Aufbewahrungsregel im Wortlaut ändern**, so dass `BETRIEBSPROTOKOLL` für das Protokoll gar nicht erst eine Löschfrist trägt. Erst dann gibt es keine unerfüllte Regel mehr, sondern nur noch eine, die dort nicht gilt | Eigentümer **K02** und **K15**, gemeinsam |
+| 2 | **Ein Prüffall, der belegt, dass aus dem Protokoll nichts entfernt werden kann** — der Test, den die Annahme nicht ersetzt | Prüf-Agent, blind, nach dem Akzeptanzkriterium des fachlichen Eigentümers |
+| 3 | **Die datenschutzrechtliche Seite prüfen lassen.** Eine Löschpflicht wird durch eine Projektentscheidung nicht kleiner. Was hier entschieden ist, ist der **Vorrang im Bau** — nicht, dass die Pflicht entfällt | **M. Veil**, mit fachlicher Beratung |
+
+> **Punkt 3 ist der wichtigste und der einzige, der außerhalb des Projekts liegt.** Die
+> Entscheidung vom 16.08.2026 löst den Kreis im Bau. Sie entscheidet nicht, ob die
+> Aufbewahrungspflicht rechtlich hinter der Beweisführung zurücktritt — das kann sie nicht,
+> und dieses Blatt behauptet es nicht.
+
+### Ein verwandter Punkt, der **nicht** mitentschieden ist
+
+**O-K15-3** — *„Der Aufräumlauf für Einladungen außerhalb des Zustands VERSANDT (Vorschlag:
+90 Tage) ist eine Betriebsregel, keine Schemaregel, und **noch nicht beschlossen**."* ·
+Träger: *Founder · Umsetzung K20* · Frist: *vor Produktion*.
+
+Er stand auf demselben Blatt B-20 und ist **nicht** angewiesen worden. Er bleibt offen und
+wird hier nur genannt, damit er nicht im Schatten von RR-02 verschwindet.
+
+---
 
 ## Wie diese Liste geführt wird
 
@@ -167,8 +222,8 @@ Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte
 Klauselregister (`nachweise/klauselregister/register.json`).
 
 **Auf diesem Blatt stehen nur Restrisiken, die keiner Klausel zugeordnet sind** — solche, die
-aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 ist der erste und
-bisher einzige.
+aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 (geschlossen) und
+RR-02 (offen, getragen).
 
 **Die klauselgebundenen Restrisiken stehen seit dem 16.08.2026 in
 `restrisiken_teilschnitt.md`** — dort einzeln, mit `RR-T-001` bis `RR-T-113`, jeweils mit
