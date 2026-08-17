@@ -119,7 +119,7 @@ der Harness tut das nicht und darf es nicht."*).
 
 | | |
 |---|---|
-| **#26** | `OPEN`, `REVIEW_REQUIRED`, keine Review, kein Kommentar |
+| **#26** | `OPEN`, `REVIEW_REQUIRED`, keine Review, kein Kommentar — **und eine förmliche Reviewanfrage liegt seit dem 16.08.2026, 11:21 Uhr bei `AndrewExma`** (`gh pr view 26 --json reviewRequests` → `['AndrewExma']`). Das ist mehr als *„keine Review"*: die Anfrage steht sichtbar in seiner Liste, seit **30 Stunden** |
 | **Zweig `scheibe/m4-zweckbestimmung`** | **18 zurück**, 28 voraus |
 | **Was das praktisch heißt** | A. Hans verschärfter `AC-16`-Prüffall aus #27 ist auf diesem Zweig **nicht** enthalten. **Jede Faden-Zahl aus meinen Läufen von gestern Abend ist gegen einen anderen Prüfstand gemessen als den heutigen** |
 
