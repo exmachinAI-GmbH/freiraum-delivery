@@ -952,40 +952,140 @@ pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
 # =====================================================================
 # AC-16 · Teilaussage 1 der M2-Nachrechnung (echte Zustellung) -- siehe
 #         ERWEITERUNG 2026-08-14 im Kopf dieser Datei und Randbemerkung
-#         (7). HINWEIS: Ohne einen bestandenen Lauf dieses Falls stuetzt
-#         sich Teilaussage 1 ("eine echte Zustellung mit abgelesenem
-#         Mailkopf") weiterhin NUR auf den Einzellauf vom 10.08.2026
-#         (Zustellung an einen fremden Anbieter, Mailkopf abgelesen:
-#         dkim=pass, spf=pass, dmarc=pass) -- nicht auf einen
-#         wiederholbaren Prueflauf.
+#         (7).
 #
-#         Diese Pruefumgebung kann selbst KEINE echte Mail an einen
-#         fremden Anbieter schicken: die SMTP-Zugangsdaten liegen im
-#         macOS-Schluesselbund von A. Han, nicht hier
-#         (nachweise/vorbedingungen/B2_mailversand/B2_Zugangsablage_260806.md
-#         Abschn. 2/3 -- dort auch die vier erwarteten Umgebungsnamen).
-#         Dieser Fall fuehrt die echte Zustellung darum NUR aus, wenn
-#         FREIRAUM_ECHTVERSAND=ja gesetzt ist UND alle noetigen Werte
-#         vorliegen -- sonst GESPERRT mit einer Meldung, die sagt WAS
-#         fehlt und WAS zu tun ist (SPR-9). Kein Uebergehen, kein
-#         stillschweigendes Bestehen.
+#         BEFUND Blatt 89: die vorige Fassung dieses Falls prüfte den
+#         Inhalt von FREIRAUM_PRUEF_ECHT_MAILKOPF, ohne die Datei an
+#         irgendetwas zu binden -- kein Nonce, keine Nachrichtenkennung,
+#         kein Zeitbezug. Der am 10.08.2026 abgelesene Kopf (Blatt 55)
+#         liess den Fall seither beliebig oft bestehen, auch ohne dass
+#         je wieder eine Mail verschickt wurde. Was er belegte, stand
+#         schon vorher in Blatt 55 -- das ist die gefaehrliche Richtung:
+#         falsch GRUEN.
 #
-#         Kopffelder als Beleg (B2_Abnahmeprotokoll.md Abschn. 5/6): "am
-#         zugestellten Kopf geprueft, ob DKIM-Signature mit
-#         d=freiraum.top erscheint und ob die DMARC-Auswertung des
-#         Empfaengers greift". Gemessen werden darum DKIM-Signature
-#         (d=freiraum.top) sowie ein Authentication-Results-Feld mit
-#         dkim=pass, spf=pass, dmarc=pass -- dieselben Felder wie im
-#         Einzellauf vom 10.08.2026.
+#         BERICHTIGT: der Kopf wird jetzt an einen NACHWEISLICH FRISCHEN
+#         Versand gebunden, gemessen am server-eigenen, unveraenderlichen
+#         Nachweis mail_delivery (append-only, migrations/M30 Abschn.
+#         3c: kind, recipient, status, sent_at) -- nicht an Vertrauen in
+#         die Datei allein. Die Datei muss zusaetzlich Date, To und
+#         Message-ID tragen, die zu GENAU DIESEM mail_delivery-Datensatz
+#         passen.
 #
-#         Diese Umgebung kann nicht selbst in ein fremdes Postfach
-#         schauen; FREIRAUM_PRUEF_ECHT_MAILKOPF benennt darum eine vom
-#         Aufrufer bereitgestellte Datei mit dem tatsaechlich beim
-#         fremden Anbieter zugestellten Mailkopf (analog zu
-#         FREIRAUM_PRUEF_MAILFANG fuer den lokalen Testempfaenger). Das
-#         Pruefkonto muss zuvor mit denselben Werten in
-#         anmeldecode_daten.sql (Abschn. 4b) angelegt worden sein.
+#         ZWEI DURCHGAENGE (der schwierige Teil): diese Umgebung kann
+#         selbst keine echte Mail verschicken (SMTP-Zugangsdaten im
+#         macOS-Schluesselbund von A. Han, siehe
+#         nachweise/vorbedingungen/B2_mailversand/B2_Zugangsablage_260806.md)
+#         und nicht selbst in ein fremdes Postfach schauen -- ein Mensch
+#         muss dazwischen in Gmail nachsehen, das dauert Minuten. Der
+#         Einladungstoken ist EINMALIG (K20-D10): eine zweite Einloesung
+#         desselben Tokens schluege fehl und wuerde, unbedacht behandelt,
+#         den ERSTEN (echten) Beleg mit einem Fehlschlag ueberschreiben,
+#         der gar keiner ist. Deshalb loest dieser Fall NUR dann eine
+#         neue Einloesung aus, wenn NOCH KEIN frischer mail_delivery-
+#         Nachweis vorliegt:
+#
+#           DURCHGANG 1 (verschicken) -- kein frischer Versand bekannt:
+#             loest die Einloesung aus, bestaetigt am server-eigenen
+#             mail_delivery-Nachweis, dass tatsaechlich ein Anmeldecode
+#             uebergeben wurde, und legt sich dann GESPERRT mit der
+#             Anweisung, den Kopf jetzt zu holen. Kein Kopf wird in
+#             diesem Durchgang gelesen -- er kann noch gar nicht vorliegen.
+#
+#           DURCHGANG 2 (ablesen, pruefen) -- ein frischer Versand liegt
+#             bereits vor (derselbe mail_delivery-Datensatz, noch
+#             innerhalb des Fensters): loest KEINE zweite Einloesung aus
+#             (das wuerde an K20-D10 scheitern und faelschlich als
+#             Fehlschlag durchgehen) -- liest stattdessen die vom
+#             Menschen abgelegte Kopfdatei und bindet sie an GENAU
+#             DIESEN Versand.
+#
+#         Damit entwertet der zweite Durchgang den ersten Beleg nicht:
+#         beide messen denselben, unveraenderten mail_delivery-Datensatz.
+#
+#         DAS FENSTER: FENSTER_MIN_AC16 = 20 Minuten (unten). Begruendet:
+#         eng genug, dass ein Kopf vom Vortag -- wie Blatt 55 -- nicht
+#         mehr durchgeht (der Blatt-55-Kopf ist mehrere TAGE alt, liegt
+#         also um Groessenordnungen ausserhalb); weit genug, dass ein
+#         Mensch das fremde Postfach von Hand oeffnen, den Rohkopf
+#         kopieren und ablegen kann, ohne dass Durchgang 2 an der Uhr
+#         statt an der Klausel scheitert. Zusaetzlich eine ENGERE
+#         Toleranz BINDUNG_TOLERANZ_SEK_AC16 = 5 Minuten dafuer, wie nah
+#         die Date-Zeile am server-eigenen sent_at liegen muss -- Date
+#         und sent_at entstehen auf derselben Seite (dem eigenen Server)
+#         nahezu gleichzeitig, ein Auseinanderklaffen von mehr als
+#         Minuten bedeutet: dieser Kopf gehoert nicht zu diesem Versand.
+#
+#         ACHTUNG ZEITZONE: Mailkoepfe tragen RFC-5322-Datumsangaben mit
+#         Zeitzone (z.B. "+0200" oder "GMT"), kein ISO-Format. Ein
+#         eigenes Regex oder `date -d` (BSD/GNU rechnen hier
+#         unterschiedlich) waere ein Ratespiel -- stattdessen python3s
+#         email.utils.parsedate_to_datetime, das genau fuer dieses
+#         Format gebaut ist. Gegen selbst gebaute Kopfdateien erprobt
+#         (siehe Abschlussbericht): "+0200" und "GMT" fuer dieselbe
+#         Instanz ergeben denselben Epochenwert; ein Kopf mit "-0000"
+#         (RFC 5322: Zeitzone dem Absender unbekannt) wird ABSICHTLICH
+#         als nicht auswertbar behandelt statt heimlich als UTC
+#         angenommen -- eine geratene Zeitzone waere schlimmer als ein
+#         gesperrter Fall.
+#
+#         WAS UNVERAENDERT BLEIBT: die vier fachlichen Marken
+#         (B2_Abnahmeprotokoll.md Abschn. 5/6) -- DKIM-Signature
+#         d=freiraum.top, Authentication-Results dkim=pass/spf=pass/
+#         dmarc=pass.
 # =====================================================================
+FENSTER_MIN_AC16=20
+FENSTER_SEK_AC16=$((FENSTER_MIN_AC16 * 60))
+# Wie nah die Date-Zeile am server-eigenen sent_at liegen muss (siehe
+# Begruendung oben) -- enger als das Gesamtfenster, weil beide
+# Zeitpunkte vom selben Server stammen und praktisch gleichzeitig sind.
+BINDUNG_TOLERANZ_SEK_AC16=300
+# Toleranz gegen Uhrendrift zwischen der Pruefumgebung und dem Server,
+# der sent_at setzt -- kein fachliches Fenster, nur ein Sicherheitsabstand
+# gegen ein falsches NEGATIV bei ein paar Sekunden Differenz.
+UHR_TOLERANZ_SEK_AC16=120
+
+# Liefert "epoche_sent_at|alter_sek" fuer den juengsten NACHWEISLICH
+# UEBERGEBENEN Anmeldecode-Versand an $1, oder eine leere Zeile, wenn
+# noch keiner vorliegt. mail_delivery ist der server-eigene,
+# unveraenderliche Nachweis (append-only, K20-M-Reihe/migrations/M30
+# Abschn. 3c) -- die Bindung haengt an IHM, nicht an der vom Menschen
+# geschriebenen Kopfdatei.
+juengster_versand_ac16() {   # $1 Adresse
+  dbz "SELECT extract(epoch from sent_at)::bigint::text || '|' ||
+              extract(epoch from (now() - sent_at))::bigint::text
+         FROM mail_delivery
+        WHERE kind='ANMELDECODE' AND status='UEBERGEBEN' AND recipient='$1'
+        ORDER BY sent_at DESC LIMIT 1"
+}
+
+# Wandelt eine RFC-5322-Datumszeile (mit Zeitzone, numerisch oder
+# benannt) in Sekunden seit der Epoche -- siehe Begruendung "ACHTUNG
+# ZEITZONE" oben. Leere Ausgabe = nicht auswertbar (auch bei "-0000",
+# bewusst).
+epoche_aus_datumszeile() {   # $1 Datumszeile
+  python3 -c '
+import sys
+from email.utils import parsedate_to_datetime
+try:
+    dt = parsedate_to_datetime(sys.argv[1])
+    if dt.tzinfo is None:
+        print("")
+    else:
+        print(int(dt.timestamp()))
+except Exception:
+    print("")
+' "$1"
+}
+
+# Liest eine einzelne Kopfzeile aus einer vom Aufrufer gelieferten Datei
+# (nicht aus $ARBEIT/*.kopf wie kopfzeile() oben -- FREIRAUM_PRUEF_ECHT_MAILKOPF
+# ist eine externe, vom Menschen abgelegte Datei).
+kopfzeile_datei() {   # $1 Datei  $2 Feldname
+  grep -i "^$2:" "$1" 2>/dev/null | head -1 | sed "s/^[^:]*:[[:space:]]*//" | tr -d '\r'
+}
+
+KLAUSEL_AC16="B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)"
+
 echt_fehlt=""
 [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]        || echt_fehlt="$echt_fehlt FREIRAUM_ECHTVERSAND=ja setzen;"
 [ -n "${FREIRAUM_SMTP_HOST:-}" ]              || echt_fehlt="$echt_fehlt FREIRAUM_SMTP_HOST fehlt;"
@@ -999,27 +1099,105 @@ echt_fehlt=""
 case "${FREIRAUM_PRUEF_ECHT_EMPFAENGER:-}" in *"'"*) echt_fehlt="$echt_fehlt FREIRAUM_PRUEF_ECHT_EMPFAENGER enthaelt ein Hochkomma -- das Pruefskript kann es nicht sicher in SQL setzen;";; esac
 
 if [ -n "$echt_fehlt" ]; then
-  sperr AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung nicht ausgefuehrt -- fehlt:$echt_fehlt Teilaussage 1 der M2-Nachrechnung bleibt ohne diesen Lauf nur durch den Einzellauf vom 10.08.2026 belegt, nicht durch einen wiederholbaren Prueflauf."
+  sperr AC-16 "$KLAUSEL_AC16" "Echte Zustellung nicht ausgefuehrt -- fehlt:$echt_fehlt Teilaussage 1 der M2-Nachrechnung bleibt ohne diesen Lauf nur durch den Einzellauf vom 10.08.2026 belegt, nicht durch einen wiederholbaren Prueflauf."
 else
   konto_ac16="$(dbz "SELECT count(*) FROM actor WHERE email = '$FREIRAUM_PRUEF_ECHT_EMPFAENGER'")"
   pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
   if [ "${konto_ac16:-0}" != "1" ]; then
-    sperr AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Kein Pruefkonto fuer FREIRAUM_PRUEF_ECHT_EMPFAENGER=$FREIRAUM_PRUEF_ECHT_EMPFAENGER gefunden -- anmeldecode_daten.sql mit denselben FREIRAUM_ECHTVERSAND=ja und FREIRAUM_PRUEF_ECHT_EMPFAENGER zuerst einspielen."
+    sperr AC-16 "$KLAUSEL_AC16" "Kein Pruefkonto fuer FREIRAUM_PRUEF_ECHT_EMPFAENGER=$FREIRAUM_PRUEF_ECHT_EMPFAENGER gefunden -- anmeldecode_daten.sql mit denselben FREIRAUM_ECHTVERSAND=ja und FREIRAUM_PRUEF_ECHT_EMPFAENGER zuerst einspielen."
   else
-    st_echt=$(post_einladung "tok-ac-echtversand-9e2f5c8b1a4d0716" ac16)
-    m=""
-    [ "$st_echt" = "303" ] || m="$m Status $st_echt statt 303 auf die Einloesung fuer $FREIRAUM_PRUEF_ECHT_EMPFAENGER;"
-    if [ ! -s "$FREIRAUM_PRUEF_ECHT_MAILKOPF" ]; then
-      m="$m die Datei FREIRAUM_PRUEF_ECHT_MAILKOPF ($FREIRAUM_PRUEF_ECHT_MAILKOPF) ist leer oder fehlt nach dem Versand -- ohne sie ist der beim fremden Anbieter zugestellte Mailkopf nicht lesbar;"
-    else
-      kopf_echt="$(cat "$FREIRAUM_PRUEF_ECHT_MAILKOPF")"
-      printf '%s' "$kopf_echt" | grep -qi 'd=freiraum\.top' || m="$m DKIM-Signature mit d=freiraum.top nicht im abgelesenen Kopf gefunden;"
-      printf '%s' "$kopf_echt" | grep -qi 'dkim=pass'        || m="$m dkim=pass nicht im abgelesenen Kopf gefunden;"
-      printf '%s' "$kopf_echt" | grep -qi 'spf=pass'         || m="$m spf=pass nicht im abgelesenen Kopf gefunden;"
-      printf '%s' "$kopf_echt" | grep -qi 'dmarc=pass'       || m="$m dmarc=pass nicht im abgelesenen Kopf gefunden;"
+    versandinfo_ac16="$(juengster_versand_ac16 "$FREIRAUM_PRUEF_ECHT_EMPFAENGER")"
+    pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+    epoche_sent_ac16=""; alter_sek_ac16=""
+    if [ -n "$versandinfo_ac16" ]; then
+      epoche_sent_ac16="${versandinfo_ac16%%|*}"
+      alter_sek_ac16="${versandinfo_ac16##*|}"
     fi
-    [ -z "$m" ] && ok AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung an $FREIRAUM_PRUEF_ECHT_EMPFAENGER durchgefuehrt und am zugestellten Mailkopf abgelesen: DKIM-Signature d=freiraum.top, Authentication-Results dkim=pass/spf=pass/dmarc=pass (B2_Abnahmeprotokoll.md Abschn. 5/6) -- Teilaussage 1 der M2-Nachrechnung damit wiederholbar belegt, nicht mehr nur durch den Einzellauf vom 10.08.2026" \
-                || nok AC-16 "B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)" "Echte Zustellung:$m"
+
+    frisch_ac16=0
+    if [ -n "$alter_sek_ac16" ] \
+       && [ "$alter_sek_ac16" -lt "$FENSTER_SEK_AC16" ] \
+       && [ "$alter_sek_ac16" -gt "-$UHR_TOLERANZ_SEK_AC16" ]; then
+      frisch_ac16=1
+    fi
+
+    if [ "$frisch_ac16" -eq 0 ]; then
+      # DURCHGANG 1: kein frischer, server-eigener Versandnachweis --
+      # jetzt auslösen. Der Token ist einmalig (K20-D10); dieser Zweig
+      # laeuft darum nur, solange noch KEIN frischer Nachweis vorliegt.
+      st_echt=$(post_einladung "tok-ac-echtversand-9e2f5c8b1a4d0716" ac16)
+      if [ "$st_echt" != "303" ]; then
+        invstatus_ac16="$(dbz "SELECT i.status::text FROM invitation i
+                                  JOIN actor a ON a.id = i.actor_id
+                                 WHERE a.email='$FREIRAUM_PRUEF_ECHT_EMPFAENGER'
+                                 ORDER BY i.sent_at DESC LIMIT 1")"
+        pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+        sperr AC-16 "$KLAUSEL_AC16" "Kein frischer Versand ausloesbar: Status $st_echt statt 303 auf die Einloesung fuer $FREIRAUM_PRUEF_ECHT_EMPFAENGER (Einladungsstatus: ${invstatus_ac16:-unbekannt}) -- der Einladungstoken ist einmalig (K20-D10); anmeldecode_daten.sql mit FREIRAUM_ECHTVERSAND=ja und FREIRAUM_PRUEF_ECHT_EMPFAENGER=$FREIRAUM_PRUEF_ECHT_EMPFAENGER neu einspielen (frischer Token), dann diesen Lauf wiederholen."
+      else
+        versandinfo_ac16b="$(juengster_versand_ac16 "$FREIRAUM_PRUEF_ECHT_EMPFAENGER")"
+        pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+        if [ -z "$versandinfo_ac16b" ]; then
+          sperr AC-16 "$KLAUSEL_AC16" "Einloesung fuer $FREIRAUM_PRUEF_ECHT_EMPFAENGER erfolgreich (303), aber mail_delivery zeigt (noch) keinen uebergebenen Anmeldecode-Versand -- entweder verzoegert (diesen Lauf in Kuerze erneut starten, OHNE anmeldecode_daten.sql neu einzuspielen) oder der Versand ist tatsaechlich fehlgeschlagen (kind=ANMELDECODE, recipient=$FREIRAUM_PRUEF_ECHT_EMPFAENGER, status<>UEBERGEBEN in mail_delivery pruefen)."
+        else
+          sent_txt_ac16="$(dbz "SELECT sent_at::text FROM mail_delivery
+                                  WHERE kind='ANMELDECODE' AND status='UEBERGEBEN'
+                                    AND recipient='$FREIRAUM_PRUEF_ECHT_EMPFAENGER'
+                                  ORDER BY sent_at DESC LIMIT 1")"
+          pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
+          sperr AC-16 "$KLAUSEL_AC16" "Echter Versand ausgeloest und von mail_delivery bestaetigt (sent_at=$sent_txt_ac16, kind=ANMELDECODE, status=UEBERGEBEN). Jetzt binnen $FENSTER_MIN_AC16 Minuten den ZUGESTELLTEN Rohkopf bei $FREIRAUM_PRUEF_ECHT_EMPFAENGER lesen (mit DKIM-Signature und Authentication-Results), unveraendert nach $FREIRAUM_PRUEF_ECHT_MAILKOPF ablegen und DIESEN Lauf mit denselben Umgebungswerten wiederholen -- anmeldecode_daten.sql dabei NICHT erneut einspielen, das wuerfe den soeben erzeugten, einmaligen Token weg und entwertete diesen Beleg."
+        fi
+      fi
+    else
+      # DURCHGANG 2: ein frischer, server-eigener Versandnachweis liegt
+      # vor (mail_delivery.sent_at vor ${alter_sek_ac16}s, Fenster
+      # ${FENSTER_SEK_AC16}s) -- KEINE zweite Einloesung ausloesen
+      # (K20-D10), stattdessen den abgelesenen Kopf an GENAU DIESEN
+      # Versand binden.
+      if [ ! -s "${FREIRAUM_PRUEF_ECHT_MAILKOPF:-}" ]; then
+        sperr AC-16 "$KLAUSEL_AC16" "Ein frischer Versand liegt vor (mail_delivery.sent_at vor ${alter_sek_ac16}s, Fenster ${FENSTER_SEK_AC16}s), aber die Datei FREIRAUM_PRUEF_ECHT_MAILKOPF ($FREIRAUM_PRUEF_ECHT_MAILKOPF) ist leer oder fehlt -- Rohkopf jetzt aus dem Postfach von $FREIRAUM_PRUEF_ECHT_EMPFAENGER ablegen und diesen Lauf innerhalb des Fensters wiederholen."
+      else
+        kopf_echt="$(cat "$FREIRAUM_PRUEF_ECHT_MAILKOPF" | tr -d '\r')"
+        m=""
+        datumszeile_ac16="$(kopfzeile_datei "$FREIRAUM_PRUEF_ECHT_MAILKOPF" Date)"
+        an_zeile_ac16="$(kopfzeile_datei "$FREIRAUM_PRUEF_ECHT_MAILKOPF" To)"
+        msgid_zeile_ac16="$(kopfzeile_datei "$FREIRAUM_PRUEF_ECHT_MAILKOPF" Message-ID)"
+
+        if [ -z "$datumszeile_ac16" ]; then
+          m="$m keine Date-Kopfzeile im abgelesenen Kopf gefunden -- Anforderung 1 (Zeitbezug) nicht pruefbar;"
+        else
+          epoche_kopf_ac16="$(epoche_aus_datumszeile "$datumszeile_ac16")"
+          if [ -z "$epoche_kopf_ac16" ]; then
+            m="$m Date-Kopfzeile '$datumszeile_ac16' laesst sich nicht als RFC-5322-Datum MIT Zeitzone lesen (numerisch wie +0200 oder benannt wie GMT erwartet, kein ISO-Format, keine Zeitzone '-0000');"
+          else
+            if [ "$epoche_kopf_ac16" -ge "$epoche_sent_ac16" ]; then
+              abstand_ac16=$((epoche_kopf_ac16 - epoche_sent_ac16))
+            else
+              abstand_ac16=$((epoche_sent_ac16 - epoche_kopf_ac16))
+            fi
+            [ "$abstand_ac16" -le "$BINDUNG_TOLERANZ_SEK_AC16" ] || m="$m Date '$datumszeile_ac16' liegt ${abstand_ac16}s vom server-eigenen Versand (mail_delivery.sent_at) entfernt, mehr als die Bindungstoleranz von ${BINDUNG_TOLERANZ_SEK_AC16}s -- dieser Kopf ist nicht nachweislich der zu diesem Versand gehoerende (Anforderung 1);"
+          fi
+        fi
+
+        [ -n "$msgid_zeile_ac16" ] || m="$m keine Message-ID-Kopfzeile im abgelesenen Kopf gefunden -- ohne sie ist der Kopf keiner einzelnen Nachricht zuzuordnen;"
+
+        if [ -z "$an_zeile_ac16" ]; then
+          m="$m keine To-Kopfzeile im abgelesenen Kopf gefunden;"
+        else
+          case "$an_zeile_ac16" in
+            *"$FREIRAUM_PRUEF_ECHT_EMPFAENGER"*) : ;;
+            *) m="$m To '$an_zeile_ac16' nennt nicht FREIRAUM_PRUEF_ECHT_EMPFAENGER ($FREIRAUM_PRUEF_ECHT_EMPFAENGER);" ;;
+          esac
+        fi
+
+        printf '%s' "$kopf_echt" | grep -qi 'd=freiraum\.top' || m="$m DKIM-Signature mit d=freiraum.top nicht im abgelesenen Kopf gefunden;"
+        printf '%s' "$kopf_echt" | grep -qi 'dkim=pass'        || m="$m dkim=pass nicht im abgelesenen Kopf gefunden;"
+        printf '%s' "$kopf_echt" | grep -qi 'spf=pass'         || m="$m spf=pass nicht im abgelesenen Kopf gefunden;"
+        printf '%s' "$kopf_echt" | grep -qi 'dmarc=pass'       || m="$m dmarc=pass nicht im abgelesenen Kopf gefunden;"
+
+        [ -z "$m" ] && ok AC-16 "$KLAUSEL_AC16" "Echte Zustellung an $FREIRAUM_PRUEF_ECHT_EMPFAENGER, gebunden an einen server-eigenen frischen Versandnachweis (mail_delivery.sent_at vor ${alter_sek_ac16}s) und am zugestellten Kopf abgelesen: Date liegt ${BINDUNG_TOLERANZ_SEK_AC16}s-genau am Versand, To nennt den Empfaenger, Message-ID vorhanden, DKIM-Signature d=freiraum.top, Authentication-Results dkim=pass/spf=pass/dmarc=pass (B2_Abnahmeprotokoll.md Abschn. 5/6) -- Teilaussage 1 der M2-Nachrechnung damit wiederholbar UND an diesen Lauf gebunden belegt, nicht mehr nur durch den Einzellauf vom 10.08.2026" \
+                    || nok AC-16 "$KLAUSEL_AC16" "Echte Zustellung:$m"
+      fi
+    fi
   fi
 fi
 pruefe_sql_marke  # S3 (2026-08-14): siehe AC-01.
