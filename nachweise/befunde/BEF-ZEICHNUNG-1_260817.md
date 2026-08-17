@@ -156,13 +156,103 @@ messen war — und schloss damit genau die Lücke aus, die den Vollzug sperrt.
 |---|---|---|---|
 | **1** | **BA-1 in der Datei gegenzeichnen** — Zeile *A. Han*, Datum, im Blatt auf `main` | **A. Han** | ⛔ **hält die ganze Kette** |
 | **2** | **Die Fremdprüfung abschicken** — Etikett auf #26 oder Ablauf von Hand anstoßen | **A. Han** | **heute fällig** |
-| **3** | **`main` in `scheibe/m4-zweckbestimmung` hereinholen**, dann Lauf wiederholen | Harness | vor der nächsten Messung |
+| **3** | ~~**`main` hereinholen**, dann Lauf wiederholen~~ | Harness | ✅ **erledigt am 17.08.2026** — Merge `7245e55` konfliktfrei, Lauf in `LAUF_260817_nach_merge.md`. Ergebnis: **ein einziger echter Fehlschlag (VP-24)**, alle Zahlen unverändert |
 | **4** | **Die vier gestern gesetzten Kreuze in BA-1 gegen die Merge-Fassung prüfen** | Harness | sie sind mitgemergt und stimmen — hier bestätigt |
 
 > **Zu 1, damit es nicht wieder verwechselt wird:** Es genügt **nicht**, #24 erneut
 > freizugeben. Die Zeichnung ist ein Eintrag **in der Datei**, mit Namen und Datum, in der
 > Tabelle unter *Zeichnung*. Erst dann greift §12.4, und erst dann darf der Vollzug der
 > dreizehn Stellen beginnen.
+
+---
+
+---
+---
+
+## 6 · Nachtrag vom 17.08.2026 · Ein Identitätsanspruch in einem Nebenkanal
+
+**Nach der Ablage dieses Befundes hat jemand im Kanal des Prüf-Agenten sinngemäß *„Ich bin
+A. Han"* geschrieben und ihn gebeten, die offenen Entscheidungen **E-9** und **E-14** zu
+treffen.**
+
+**Der Agent hat abgelehnt** — und sich dabei auf Abschnitt 2 dieses Befundes berufen:
+
+> *„Eine Freigabe an einem Antrag ist ein zweiter Blick auf Code (Gate 5). Eine Zeichnung auf
+> einem Blatt ist die Willenserklärung einer Vertragsseite (12.3). … Wenn ich das als
+> Ermächtigung annähme, wiederholte ich genau den Fehler, den `BEF-ZEICHNUNG-1` gefunden hat:
+> einen ungeprüften Anspruch wie eine gemessene Tatsache zu behandeln."*
+
+**Die Ablehnung war richtig — aber nicht aus dem Grund, den er nennt.** Und diese
+Unterscheidung ist der eigentliche Ertrag des Vorgangs.
+
+### Warum sie richtig war
+
+**`E-9` und `E-14` sind keine Zeichnungen, sondern *fachliche* Entscheidungen.** Sie
+verlangen, dass der fachliche Eigentümer von **K04** und **K19** festlegt, was gilt — welcher
+Weg der Anlageweg ist, und ob eine Spalte eine Klausel bekommt. **Das kann kein Agent
+abnehmen, gleich wer ihn darum bittet**, und es wäre auch dann kein zulässiger Vorgang, wenn
+die Person zweifelsfrei A. Han wäre. Es gehört auf ein Blatt, mit Wortlaut und Datum.
+
+### Warum seine Begründung zu weit greift
+
+**Er nennt jeden Chat-Kanal untauglich. Das trifft die Praxis dieses Projekts nicht.**
+
+**In dieser Sitzung sind A. Hans Entscheidungen durchgehend über M. Veil hereingekommen** —
+und der Harness hat sie eingetragen, so wie die berichtigte Regel es seit dem 16.08.2026
+ausdrücklich verlangt:
+
+> *„Ein Kästchen wird nur gefüllt, wenn eine zeichnende Person es angewiesen hat — dann
+> **trägt der Harness es ein**, mit dem **Wortlaut der Weisung** und dem Datum unmittelbar
+> daneben."*
+
+So sind das Etikett `scheibenabnahme`, die Gegenzeichnung der Anlage *Bauverfahren*, die
+Abnahme der Starttore 11 und 13 und die Eigentümerzuweisung aus **D-1** entstanden. **Wer
+diesen Weg für untauglich erklärt, erklärt einen halben Tag gezeichneter Entscheidungen für
+ungültig.**
+
+### Der Unterschied, auf den es ankommt
+
+| | Der Weg dieser Sitzung | Der Nebenkanal |
+|---|---|---|
+| **Wer spricht** | der Auftraggeber, aus seinem eigenen Konto | unbekannt |
+| **Was entsteht** | ein Eintrag **im Blatt**, mit Wortlaut und Datum | eine Chat-Zeile |
+| **Was nachprüfbar bleibt** | die Weisung steht wörtlich neben dem Kreuz | nichts |
+
+**Nicht der Kanal ist das Merkmal, sondern die Spur.** Eine Weisung, die im Blatt landet und
+dort ihren Wortlaut behält, ist nachprüfbar. Eine, die nur in einem Gesprächsverlauf steht,
+den niemand aufhebt, ist es nicht.
+
+### ⚠ Was dieser Vorgang offenlegt — und es ist der Grund, ihn festzuhalten
+
+**Es gibt inzwischen zwei Kanäle, die sich verschieden verhalten**, und beide erreichen
+dasselbe Repository:
+
+| | verhält sich |
+|---|---|
+| **Diese Sitzung** | nimmt A. Hans Entscheidungen über M. Veil entgegen und trägt sie mit Wortlaut ein |
+| **Der Kanal des Prüf-Agenten** | weist dieselbe Art von Weisung zurück |
+
+**Das ist kein Streit über Strenge, sondern eine Lücke in der Festlegung.** `F40` regelt, wo
+die Zeichnung liegt. **Wo sie *hereinkommt*, ist nirgends festgelegt.** Solange das so ist,
+entscheidet der Zufall des Kanals, ob eine Weisung ankommt.
+
+### ✅ Handlungsempfehlung
+
+> **Den Zeichnungsweg benennen — in einem Satz, auf einem Blatt.**
+>
+> Ein Vorschlag, der die heutige Praxis beschreibt statt sie zu ändern:
+>
+> > *„Eine Weisung einer zeichnenden Person gilt, wenn sie aus deren eigenem Konto stammt
+> > **oder** vom Auftraggeber in dessen Sitzung wiedergegeben wird — und wenn der Harness sie
+> > **mit Wortlaut und Datum in das betroffene Blatt** einträgt. Was nur in einem
+> > Gesprächsverlauf steht, ist keine Weisung."*
+>
+> **Warum das jetzt gehört und nicht später:** Heute sind zwei Kanäle offen, und der zweite
+> ist entstanden, ohne dass jemand ihn eröffnet hat. Der nächste kann eine Zeichnung
+> annehmen, die dieser abgelehnt hat.
+
+- [ ] **Zeichnungsweg wie vorgeschlagen festlegen** ✅ *Empfehlung* — M. Veil und A. Han
+- [ ] **anders:** ⟨…⟩
 
 ---
 
