@@ -174,6 +174,26 @@ done
 echo
 echo "== Klausel-Prueffaelle =="
 
+# ---------------------------------------------------------------------
+# Auflage aus Blatt 90 Punkt 2: Laeuft dieser Lauf mit echtem Versand,
+# sagt er es SELBST -- und zwar VOR den Faellen, nicht danach.
+#
+# Der Grund ist gemessen: Am 17.08.2026 entstand ein Lauf mit neun roten
+# Faellen, weil der echte Wirt keine Adresse @pruef.example annimmt. Wer
+# ihn spaeter liest, haelt neun Fehlschlaege fuer einen Baubefund. Sie
+# sind keiner -- sie sind die Folge dieses Zustands.
+# ---------------------------------------------------------------------
+if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+  echo "::warning::ECHTVERSAND-LAUF — dieser Lauf misst NUR AC-16."
+  echo "   Der Server verschickt ueber den echten Wirt (${FREIRAUM_SMTP_HOST:-<nicht gesetzt>})."
+  echo "   Die uebrigen Faelle brauchen den oertlichen Faenger und TRAGEN HIER NICHT:"
+  echo "   Adressen @pruef.example nimmt kein fremder Anbieter an, der Versand"
+  echo "   scheitert, und die Anwendung entwertet daraufhin den Code (mail/versand.py)."
+  echo "   Ihre Fehlschlaege sind KEIN Baubefund (Blatt 90, Abschn. 4)."
+  echo "   Fuer einen vollstaendigen Lauf: FREIRAUM_ECHTVERSAND leer lassen."
+  echo
+fi
+
 freier_port() {
   # Port 0 binden und den zugeteilten melden. Ein fester Port hat am
   # 10.08.2026 zehn Faelle gegen einen alten Server messen lassen.
@@ -340,12 +360,37 @@ PY
     merke "$kennung" gesperrt "Datendatei brach ab, Rueckgabewert null"; return
   fi
 
-  FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
-  FREIRAUM_CODE_PFEFFER="$pfeffer" \
-  FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
-  FREIRAUM_UMGEBUNG=lokal \
-  FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
-    .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  # ---------------------------------------------------------------------
+  # Der Wirt des Servers: Faenger oder echter Weg?
+  #
+  # BEFUND BEF-AC-16-2 (Blatt 90, 17.08.2026): Diese Stelle setzte den Wirt
+  # UNBEDINGT auf 127.0.0.1. AC-16 braucht aber den echten Versandweg zu
+  # einem fremden Anbieter -- und bekam ihn nie. Der Fall war ueber diesen
+  # Prueflauf nicht schwer zu erfuellen, sondern UNERFUELLBAR.
+  #
+  # Entstanden aus der Rollentrennung: Der Faenger (11.08.) musste den Wirt
+  # setzen, damit die uebrigen Faelle den versandten Code lesen koennen;
+  # AC-16 (14.08.) durfte diesen Prueflauf nicht lesen. Beide Seiten haben
+  # richtig gehandelt, und die Luecke lag zwischen ihnen.
+  #
+  # Weg A aus Blatt 90: Mit FREIRAUM_ECHTVERSAND=ja gehen die Werte des
+  # Aufrufers durch. OHNE die Variable bleibt alles wie bisher -- der
+  # Normalfall ist unberuehrt.
+  # ---------------------------------------------------------------------
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
+    FREIRAUM_CODE_PFEFFER="$pfeffer" \
+    FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+    FREIRAUM_UMGEBUNG=lokal \
+      .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  else
+    FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
+    FREIRAUM_CODE_PFEFFER="$pfeffer" \
+    FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+    FREIRAUM_UMGEBUNG=lokal \
+    FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
+      .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  fi
   pid=$!
 
   # Warten, bis er antwortet -- und aufgeben, statt ewig zu haengen.
