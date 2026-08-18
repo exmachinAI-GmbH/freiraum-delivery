@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "_kopf.html" %}
   <title>Einladung annehmen · FREIRAUM</title>
   {#
     bildschirm: keiner -- Bestaetigungsseite zur Einloesung; K19 fuehrt
@@ -25,21 +24,6 @@
     K19-D06 gilt auch hier: keine Restlaufzeit, kein Rueckwaertszaehler, kein
     Ablaufzeitpunkt als Datum.
   #}
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
-           display: flex; justify-content: center; padding: 2rem 1rem; }
-    main { width: 100%; max-width: 28rem; }
-    .kasten { border: 1px solid currentColor; border-radius: .5rem;
-              padding: 1.25rem 1.25rem 1.5rem; }
-    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
-    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
-    button { margin-top: 1.25rem; padding: .6rem 1.2rem; font: inherit;
-             border-radius: .25rem; cursor: pointer; }
-    .meldung { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
-  </style>
 </head>
 <body>
 <main>
