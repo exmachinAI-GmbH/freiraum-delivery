@@ -378,10 +378,24 @@ PY
   # Normalfall ist unberuehrt.
   # ---------------------------------------------------------------------
   if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    # OHNE FREIRAUM_UMGEBUNG=lokal -- und das ist der ganze Punkt.
+    #
+    # Gemessen am 18.08.2026: Mit "lokal" faellt die Portvorgabe in
+    # mail/versand.py auf 1025 (der oertliche Faenger); ohne sie auf 587
+    # (der uebliche Einlieferungsport). Der erste Anlauf dieses Zweiges
+    # liess zwar den WIRT durch, behielt aber "lokal" -- die Anwendung
+    # versuchte mail.bytecamp.net:1025, wo nichts horcht. Die Mail kam
+    # wieder nicht an, und AC-16 sperrte zu Recht.
+    #
+    #   UMGEBUNG=lokal -> Port 1025 · mail.bytecamp.net:1025 zu
+    #   UMGEBUNG=""    -> Port 587  · mail.bytecamp.net:587  offen
+    #
+    # Ohne "lokal" sind FREIRAUM_SMTP_HOST und FREIRAUM_DSN Pflicht
+    # (BEF-L2-1). Beide werden hier gesetzt -- der Aufrufer liefert den
+    # Wirt, diese Zeile den DSN.
     FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
     FREIRAUM_CODE_PFEFFER="$pfeffer" \
     FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
-    FREIRAUM_UMGEBUNG=lokal \
       .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
   else
     FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
@@ -415,6 +429,15 @@ PY
         "$lauf" 2>&1)
   rc=$?
   set -e
+  # Bei echtem Versand das Serverprotokoll AUFHEBEN. Zweimal ist am
+  # 17./18.08.2026 geraten worden, warum keine Mail ankam -- der Grund
+  # stand jedesmal im Protokoll, und das Protokoll war geloescht. Es
+  # traegt keine Zugangswerte: der DSN wird maskiert (BEF-L2-1), und ein
+  # smtplib-Fehler zeigt die Antwort des Servers, nicht das Kennwort.
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ] && [ -s "$log" ]; then
+    cp "$log" "/tmp/freiraum_server_${kennung}.log" 2>/dev/null || true
+    echo "   Serverprotokoll aufgehoben: /tmp/freiraum_server_${kennung}.log"
+  fi
   rm -f "$log"
 
   summe=$(printf '%s\n' "$aus" | sed -n 's/^SUMME: //p' | head -1)
