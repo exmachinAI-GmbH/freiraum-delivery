@@ -10,10 +10,14 @@ WOZU ER DA IST
     aus Nachlaessigkeit, sondern weil nichts danach fragte. Am 18.08.2026
     trug 1 von 8 Vorlagen ihren Kasten.
 
-    CLAUDE.md nennt K19 seit jeher als verbindliche UI-Referenz. Der Text
-    hat nicht getragen. Dieses Werkzeug ist der Unterschied zwischen einer
-    Regel und einer Schranke: es macht aus der Weisung eine Bedingung, an
-    der ein Lauf scheitert.
+    Die CLAUDE.md der Konzeptfabrik fuehrt K19 als verbindliche
+    UI-Referenz (Z. 51). Die CLAUDE.md DIESES Repos nennt K19 kein
+    einziges Mal -- gemessen am 18.08.2026: null Treffer. Der Bau hatte
+    die Regel also nie vor Augen, und nichts hat danach gefragt.
+
+    Dieses Werkzeug ist der Unterschied zwischen einer Regel und einer
+    Schranke: es macht aus der Weisung eine Bedingung, an der ein Lauf
+    scheitert.
 
 WAS ER PRUEFT -- vier Pruefungen je Vorlage in app/vorlagen/
 
