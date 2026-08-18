@@ -421,8 +421,10 @@ pruefe_bildschirm EN-01 /anmeldung
 # EN-04a · Zweckbestimmung. Der Bildschirm besteht in
 # schema/K19_screens.yaml, die Build-Referenz fuehrt fuer ihn aber
 # keinen Kasten. GESPERRT, nicht durchgefallen -- der Bau ist damit
-# nicht beurteilt.
-pruefe_bildschirm EN-04a /zweck
+# nicht beurteilt. Eine Adresse wird hier NICHT genannt: der Fall sperrt,
+# bevor er eine Seite holt, und ein geratener Pfad waere eine erfundene
+# Fundstelle.
+pruefe_bildschirm EN-04a '(ohne Adresse -- der Fall sperrt vorher)'
 
 printf '\n'
 [ "$gesperrt" -gt 0 ] && printf 'davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): %s\n' "$gesperrt"
