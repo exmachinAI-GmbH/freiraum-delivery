@@ -203,7 +203,26 @@ freier_port() {
 klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   local lauf="$1" kennung="$2"
   local daten="${lauf%_lauf.sh}_daten.sql"
-  local db="klausel_${kennung}_$$"
+  # BEFUND BEF-AC-16-3 (Blatt 91, 18.08.2026): Bei echtem Versand wird
+  # NICHT geklont. Der Prueflauf klont sonst je Lauf eine frische
+  # Datenbank und wirft sie danach weg -- und mit ihr den
+  # mail_delivery-Nachweis, auf den sich der zweite Durchgang von
+  # AC-16 stuetzt. Durchgang 2 fand deshalb nie einen frischen
+  # Versand, hielt sich fuer Durchgang 1 und verschickte erneut.
+  # Gemessen: Mail 1 um 11:27:03, Mail 2 um 11:32:24 -- 321 s
+  # Abstand bei 300 s Bindungstoleranz. Die Schleife konnte sich nie
+  # schliessen; jeder Pruefversuch entwertete den soeben geholten Kopf.
+  #
+  # Der Preis ist benannt (Blatt 91 Abschn. 7): Ohne Klonen laufen die
+  # Faelle gegen dieselbe Datenbank und stoeren einander. Im
+  # Echtversand-Lauf ist das hinnehmbar, weil er nach Blatt 90 ohnehin
+  # NUR AC-16 misst.
+  local db
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    db="$PGDATABASE"
+  else
+    db="klausel_${kennung}_$$"
+  fi
   local port pfeffer schluessel pid=0 log rc summe
   local smtp_port smtp_pid=0 mailfang gescheitert geblockt
 
@@ -237,7 +256,12 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
       cp "$mailfang" "$FREIRAUM_PRUEF_MAILFANG_BEHALTEN/${kennung}_mailfang.txt" 2>/dev/null || true
     fi
     rm -f "$mailfang" 2>/dev/null || true
-    psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
+    # Bei Echtversand ist $db die Datenbank des Aufrufers -- sie gehoert
+    # ihm, nicht diesem Lauf. Sie zu loeschen naehme dem naechsten
+    # Durchgang genau den Nachweis, den er braucht.
+    if [ "${FREIRAUM_ECHTVERSAND:-}" != "ja" ]; then
+      psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
+    fi
     return 0
   }
   trap aufraeumen RETURN
@@ -336,7 +360,9 @@ while True:
 PY
   smtp_pid=$!
 
-  if ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    : # keine Kopie -- $db IST $PGDATABASE (Blatt 91)
+  elif ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
     echo "   $kennung — GESPERRT: Wegwerfdatenbank aus $PGDATABASE nicht anlegbar"
     merke "$kennung" gesperrt "Vorlage $PGDATABASE nicht kopierbar"; return
   fi
