@@ -104,6 +104,29 @@ jobs:
           # HINWEIS blockiert nicht, FEHLER schon (Exit 1).
           python3 werkzeuge/k19_screens_lint.py schema/K19_screens.yaml
 
+      # -----------------------------------------------------------------
+      # Die KAESTEN. Bis zum 18.08.2026 lag im Repo allein die
+      # Maschinenquelle -- sie fuehrt je Bildschirm Zugangsmarke,
+      # Eigentuemer und Aktionen, aber keinen Kasten. Deshalb konnte kein
+      # Lauf je pruefen, ob eine Vorlage der gezeichneten Anordnung folgt,
+      # und deshalb ist die Luecke ein Vierteljahr lang niemandem
+      # aufgefallen (Blatt 94, BEF-UI-1, Punkt 3).
+      #
+      # Aenderungsregel "keine", wie bei K19_screens.yaml: weicht die Kopie
+      # von ihrer Summe ab, ist die KOPIE ungueltig -- nicht das Original.
+      # Das Original liegt in der Konzeptfabrik und wird hier nie gelesen.
+      # -----------------------------------------------------------------
+      - name: UI-Vertrag — die Kaesten (schema/K19_build_referenz.md)
+        run: |
+          set -euo pipefail
+          if [ ! -f schema/K19_build_referenz.md ]; then
+            echo "::error::schema/K19_build_referenz.md fehlt — Tor 1a GESPERRT (K23-M22)."
+            echo "Ohne die Kaesten misst dieser Lauf die Anordnung der Bildschirme nicht."
+            exit 1
+          fi
+          ( cd schema && shasum -a 256 -c K19_build_referenz.sha256 ) \
+            || { echo "::error::schema/K19_build_referenz.md weicht von der hinterlegten Pruefsumme ab"; exit 1; }
+
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |
           set -euo pipefail
