@@ -767,8 +767,31 @@ if [ -n "$ZWECK_PFAD" ]; then
   #
   #   Der Anlageweg ist derjenige, nach dessen Aufruf gilt: genau eine
   #   neue Anwendungszeile ist entstanden * der Eignungs-Check traegt
-  #   danach einen Verweis auf diese Anwendung * im Verlauf steht eine
-  #   Zeile mit dem Anlass DISCOVERY.
+  #   danach einen Verweis auf diese Anwendung * in app_state_history
+  #   steht fuer diese Anwendung eine OFFENE Zeile mit dem ZUSTAND
+  #   DISCOVERY.
+  #
+  # BERICHTIGT AM 18.08.2026 -- PRUEFFEHLER, kein Baufehler.
+  # Hier stand bis dahin "im Verlauf steht eine Zeile mit dem Anlass
+  # DISCOVERY", und die dritte Wirkung suchte sie in `event`
+  # (action ILIKE '%DISCOVERY%'). Diese Zeile gibt es nicht und soll es
+  # nicht geben: K01-M21 verteilt die beiden Orte ausdruecklich --
+  #
+  #   "Der Protokolleintrag gehoert `event` (K02), die Verlaufszeile
+  #    `app_state_history` und der Sicht `app_state_aktuell` (beide K11)."
+  #    (nachweise/klauselregister/register.json, K01-M21, Herkunft
+  #     260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md:71)
+  #
+  # "Verlaufszeile" ist also ein FESTER BEGRIFF und meint
+  # app_state_history, nicht event; "Anlass" gab es hier ohnehin nie --
+  # app_state_history fuehrt einen ZUSTAND. Die Rang-1-Quelle
+  # schema/K19_screens.yaml:250 (EN-04a, anwendung_anlegen,
+  # zustand_erfolg) verlangt woertlich "Anwendungszeile angelegt,
+  # fit_check.app_id gesetzt, Verlaufszeile DISCOVERY erzeugt".
+  # Die Wirkung wird deshalb dort gesucht, wo der Wortlaut sie hinlegt.
+  # Dieselbe Zeile sucht pruefungen/migration/M30__pruefung.sql:122-125
+  # (MT-02) bereits richtig; von dort ist die Form uebernommen.
+  # Gezeichnet: Blatt 95, E1a und E2a, 18.08.2026.
   #
   # Die Differenz bleibt gegen ZIELE_NULL (nicht ZIELE_EINS) -- sonst
   # pruefte ZB-03 seine eigene Ableitung, und die zweite Zusicherung
@@ -792,9 +815,12 @@ if [ -n "$ZWECK_PFAD" ]; then
         rueck_w="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid_w'")"
         ev_w=0
         if [ "$rueck_w" != "(leer)" ]; then
-          ev_w="$(dbz "SELECT count(*) FROM event WHERE action ILIKE '%DISCOVERY%'
-                        AND (coalesce(object_ref,'') LIKE '%$rueck_w%'
-                             OR coalesce(value,'') LIKE '%$rueck_w%')")"
+          # Die Verlaufszeile nach K01-M21: app_state_history, offene
+          # Zeile (upper_inf), Zustand DISCOVERY -- dieselbe Form wie
+          # MT-02 in pruefungen/migration/M30__pruefung.sql:122-125.
+          ev_w="$(dbz "SELECT count(*) FROM app_state_history
+                        WHERE app_id='$rueck_w' AND state='DISCOVERY'
+                          AND upper_inf(gueltig)")"
         fi
         [ "${ev_w:-0}" -ge 1 ] && treffer_w+=("$kand")
       fi
@@ -805,7 +831,7 @@ EOF
     if [ "${#treffer_w[@]}" = "1" ]; then
       WEITER_ZIEL="${treffer_w[0]}"
     else
-      WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem; die Wirkung (genau eine neue Anwendungszeile, Eignungs-Check-Verweis darauf, Verlauf-Anlass DISCOVERY) grenzt sie nicht auf einen einzigen Kandidaten ein (${#treffer_w[@]} erfuellen sie) -- Kandidaten: $(printf '%s' "$neu" | tr '\n' ' ')"
+      WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem; die Wirkung (genau eine neue Anwendungszeile, Eignungs-Check-Verweis darauf, offene Verlaufszeile app_state_history mit Zustand DISCOVERY) grenzt sie nicht auf einen einzigen Kandidaten ein (${#treffer_w[@]} erfuellen sie) -- Kandidaten: $(printf '%s' "$neu" | tr '\n' ' ')"
     fi
   else
     WEITER_GRUND="mit beiden Antworten erscheint kein neues Ziel"
