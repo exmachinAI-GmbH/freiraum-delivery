@@ -127,6 +127,23 @@ jobs:
           ( cd schema && shasum -a 256 -c K19_build_referenz.sha256 ) \
             || { echo "::error::schema/K19_build_referenz.md weicht von der hinterlegten Pruefsumme ab"; exit 1; }
 
+      # -----------------------------------------------------------------
+      # DER UI-RIEGEL (Blatt 94, Punkt 4 -- gezeichnet 18.08.2026).
+      #
+      # Er macht aus der Weisung vom 11.08.2026 (Blatt 70, "kein Bildschirm
+      # ohne seinen K19-Kasten") eine Bedingung, an der dieser Lauf
+      # scheitert. CLAUDE.md nennt K19 seit jeher als verbindliche
+      # UI-Referenz; der Text hat nicht getragen -- am 18.08.2026 trug 1 von
+      # 8 Vorlagen ihren Kasten.
+      #
+      # Ein GESPERRT sperrt den Lauf NICHT (K23-M22, Blatt 64): heute trifft
+      # es EN-04a, fuer den die Referenz keinen Kasten fuehrt. Ein Lauf ohne
+      # eine einzige bestandene Vorlage gilt dagegen als Fehlschlag -- sonst
+      # liefe ein Riegel gruen durch, der nichts gemessen hat.
+      # -----------------------------------------------------------------
+      - name: UI-Riegel — jede Vorlage traegt ihren Kasten (Blatt 70)
+        run: python3 werkzeuge/k19_kasten_pruefung.py
+
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |
           set -euo pipefail
