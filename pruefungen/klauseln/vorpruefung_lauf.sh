@@ -1713,15 +1713,30 @@ pruefe_sql_marke
 #   * Zusaetzliche Merkmale sind NUR zulaessig, wenn ihr Name sie als
 #     Traeger der Zweckbestimmung oder der Kenntnisnahme ausweist. Ein
 #     beliebiges neues Feld an fit_check faellt weiterhin durch.
-#   * Es sind HOECHSTENS ZWEI. K04-M19 zeichnet ZWEI Fragen ("er fragt
-#     zweierlei getrennt"); ein drittes Zustandsmerkmal waere Umfang, den
-#     keine Klausel traegt.
+#   * Es sind HOECHSTENS ZWEI FRAGEN. K04-M19 zeichnet ZWEI Fragen ("er
+#     fragt zweierlei getrennt") -- eine dritte Frage waere Umfang, den
+#     keine Klausel traegt. Gezaehlt wird dabei die FRAGE, nicht die
+#     Spalte: M31 legt neben den zwei Fragen (boolesch) auch einen
+#     Zeitpunkt an (`zweckbestimmung_erklaert_am`, timestamptz), der
+#     festhaelt, WANN beide Fragen beantwortet vorlagen. Ein Zeitpunkt
+#     beantwortet keine Frage und zaehlt darum NICHT gegen die Schwelle
+#     von zwei -- s.u. bei "frage_typ"/"zeitpunkt_typ". NACHGESCHAERFT AM
+#     18.08.2026: bis dahin zaehlte diese Stelle jede zusaetzliche Spalte
+#     mit, unabhaengig vom Typ, und meldete darum einen Fehlschlag, den
+#     es fachlich nicht gab (Befund, Blatt 93, 18.08.2026). Eine echte
+#     dritte boolesche Frage faellt weiterhin durch -- das ist eine
+#     Praezisierung, keine Lockerung.
 #   * Kein zusaetzliches Merkmal darf die EIGNUNG spiegeln. K04-D05 gilt
 #     unveraendert -- die Zeichnung hat den Traeger der Zweckbestimmung
 #     entschieden, nicht das Verbot des zweiten Eignungsstrangs
 #     aufgehoben. Diese Bedingung galt bisher nur fuer andere Tabellen;
 #     sie gilt jetzt AUCH fuer fit_check selbst. Das ist strenger als
 #     vorher, nicht lockerer (K23-D05).
+#   * Eine zusaetzliche Spalte, deren Typ weder eindeutig Frage
+#     (boolean) noch eindeutig Zeitpunkt (timestamp/date) ist, gilt
+#     NICHT stillschweigend als das eine oder das andere: der Fall wird
+#     dafuer GESPERRT (K23-M22, "was nicht gemessen werden konnte, ist
+#     gesperrt"), mit Spaltenname und gefundenem Typ in der Meldung.
 # =====================================================================
 spalten="$(dbz "SELECT string_agg(column_name, ',' ORDER BY column_name)
                   FROM information_schema.columns
@@ -1768,19 +1783,77 @@ zusatz_spiegel="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY colu
                         WHERE table_schema='public' AND table_name='fit_check'
                           AND column_name NOT IN ('outcome')
                           AND column_name ~* '(geeignet|eignung|fit_ok|fit_status|fit_result|fit_ergebnis)'")"
+
+# ---------------------------------------------------------------------
+# NACHGESCHAERFT AM 18.08.2026 -- K04-M19 ZEICHNET ZWEI FRAGEN, KEINE
+# ZWEI SPALTEN.
+#
+# Vorher zaehlte die Schwelle "hoechstens zwei" jede zusaetzliche Spalte
+# an fit_check mit -- auch `zweckbestimmung_erklaert_am`, einen
+# Zeitpunkt. Ein Zeitpunkt beantwortet keine Frage; er haelt fest, WANN
+# beide Fragen beantwortet vorlagen (M31 Z. 108-110, Rang 1, Kommentar
+# auf der Spalte selbst: "Zeitpunkt, zu dem BEIDE Fragen beantwortet
+# vorlagen"). Gezaehlt wird jetzt der DATENTYP, nicht der Spaltenname.
+#
+# information_schema.columns fuehrt den Typ ueber ZWEI Spalten, die
+# Postgres unterschiedlich schreibt: data_type traegt den SQL-Standard-
+# namen ('boolean', 'timestamp with time zone'), udt_name den internen
+# Kurznamen ('bool', 'timestamptz'). Beide werden geprueft, damit die
+# Erkennung nicht an der Schreibweise vorbeilaeuft.
+#
+# Eine zusaetzliche Spalte, die WEDER als boolesch NOCH als Zeitpunkt
+# oder Datum zu erkennen ist, ist keine Frage, die diese Messung sicher
+# verneinen kann -- und kein Zeitpunkt, den sie sicher freigeben kann.
+# Sie faellt NICHT stillschweigend auf eine der beiden Seiten; der Fall
+# wird dafuer GESPERRT (K23-M22), mit Spaltenname UND gefundenem Typ in
+# der Meldung.
+# ---------------------------------------------------------------------
+frage_typ="(data_type = 'boolean' OR udt_name = 'bool')"
+zeitpunkt_typ="(data_type ~* '^timestamp' OR data_type = 'date' OR udt_name ~* '^timestamp' OR udt_name = 'date')"
+
+zusatz_fragen="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY column_name),'')
+                         FROM information_schema.columns
+                        WHERE table_schema='public' AND table_name='fit_check'
+                          AND column_name NOT IN ('actor_id','app_id','completed_at','id','outcome',
+                                                  'retention_class','started_at','tenant_id',
+                                                  'zweckbestimmung_ack_at')
+                          AND $frage_typ")"
+zusatz_zeitpunkte="$(dbz "SELECT coalesce(string_agg(column_name, ',' ORDER BY column_name),'')
+                             FROM information_schema.columns
+                            WHERE table_schema='public' AND table_name='fit_check'
+                              AND column_name NOT IN ('actor_id','app_id','completed_at','id','outcome',
+                                                      'retention_class','started_at','tenant_id',
+                                                      'zweckbestimmung_ack_at')
+                              AND $zeitpunkt_typ")"
+zusatz_unklar="$(dbz "SELECT coalesce(string_agg(column_name||':'||data_type, ', ' ORDER BY column_name),'')
+                         FROM information_schema.columns
+                        WHERE table_schema='public' AND table_name='fit_check'
+                          AND column_name NOT IN ('actor_id','app_id','completed_at','id','outcome',
+                                                  'retention_class','started_at','tenant_id',
+                                                  'zweckbestimmung_ack_at')
+                          AND NOT $frage_typ AND NOT $zeitpunkt_typ")"
+
 zusatz_n=0
 [ -z "$zusatz" ] || zusatz_n="$(printf '%s' "$zusatz" | awk -F, '{print NF}')"
+zusatz_fragen_n=0
+[ -z "$zusatz_fragen" ] || zusatz_fragen_n="$(printf '%s' "$zusatz_fragen" | awk -F, '{print NF}')"
+zusatz_zeitpunkte_n=0
+[ -z "$zusatz_zeitpunkte" ] || zusatz_zeitpunkte_n="$(printf '%s' "$zusatz_zeitpunkte" | awk -F, '{print NF}')"
 pruefe_sql_marke
 
-m=""
-[ -z "$fehlend" ]   || m="$m fit_check fuehrt die Merkmale der Quelle nicht vollstaendig -- es fehlen: $fehlend (gefunden: '$spalten');"
-[ -z "$ungedeckt" ] || m="$m fit_check traegt Merkmale, die weder in der Quelle stehen noch von der Zeichnung vom 16.08.2026 gedeckt sind: $ungedeckt;"
-[ "${zusatz_n:-0}" -le 2 ] || m="$m fit_check traegt $zusatz_n zusaetzliche Zustandsmerkmale ($zusatz); K04-M19 zeichnet ZWEI Fragen, ein drittes traegt keine Klausel;"
-[ -z "$zusatz_spiegel" ] || m="$m ein zusaetzliches Merkmal an fit_check spiegelt die Eignung: $zusatz_spiegel (K04-D05);"
-[ -z "$fremdstrang" ] || m="$m ein zweites Ergebnisfeld vom Typ fit_outcome besteht: $fremdstrang;"
-[ -z "$spiegel" ]     || m="$m ein gespiegeltes Eignungskennzeichen besteht: $spiegel;"
-[ -z "$m" ] && ok VP-24 "Neben fit_check.outcome besteht kein zweiter Eignungsstrang: die Quelle ist vollstaendig, die $zusatz_n zusaetzlichen Merkmale (${zusatz:-keine}) sind Traeger der Zweckbestimmung nach der Zeichnung vom 16.08.2026, kein gespiegeltes Kennzeichen (K04-D05, K04-M19)" \
-            || nok VP-24 "Zweiter Eignungsstrang:$m"
+if [ -n "$zusatz_unklar" ]; then
+  sperr VP-24 "Nicht messbar: fit_check traegt zusaetzliche Spalte(n), deren Typ diese Messung weder als Frage (boolean) noch als Zeitpunkt (timestamp/date) erkennt: $zusatz_unklar. Zu tun: den Typ in VP-24 (frage_typ bzw. zeitpunkt_typ) ergaenzen oder per Zeichnung klaeren, ob die Spalte ueberhaupt Traeger der Zweckbestimmung sein darf."
+else
+  m=""
+  [ -z "$fehlend" ]   || m="$m fit_check fuehrt die Merkmale der Quelle nicht vollstaendig -- es fehlen: $fehlend (gefunden: '$spalten');"
+  [ -z "$ungedeckt" ] || m="$m fit_check traegt Merkmale, die weder in der Quelle stehen noch von der Zeichnung vom 16.08.2026 gedeckt sind: $ungedeckt;"
+  [ "${zusatz_fragen_n:-0}" -le 2 ] || m="$m fit_check traegt $zusatz_fragen_n zusaetzliche FRAGEN (boolesch: $zusatz_fragen); K04-M19 zeichnet ZWEI Fragen, eine dritte traegt keine Klausel;"
+  [ -z "$zusatz_spiegel" ] || m="$m ein zusaetzliches Merkmal an fit_check spiegelt die Eignung: $zusatz_spiegel (K04-D05);"
+  [ -z "$fremdstrang" ] || m="$m ein zweites Ergebnisfeld vom Typ fit_outcome besteht: $fremdstrang;"
+  [ -z "$spiegel" ]     || m="$m ein gespiegeltes Eignungskennzeichen besteht: $spiegel;"
+  [ -z "$m" ] && ok VP-24 "Neben fit_check.outcome besteht kein zweiter Eignungsstrang: die Quelle ist vollstaendig, $zusatz_n zusaetzliche Merkmale insgesamt -- davon $zusatz_fragen_n Frage(n) (${zusatz_fragen:-keine}) und $zusatz_zeitpunkte_n Zeitpunkt(e) (${zusatz_zeitpunkte:-keine}) -- als Traeger der Zweckbestimmung nach der Zeichnung vom 16.08.2026, kein gespiegeltes Kennzeichen (K04-D05, K04-M19)" \
+              || nok VP-24 "Zweiter Eignungsstrang:$m"
+fi
 pruefe_sql_marke
 
 # =====================================================================
