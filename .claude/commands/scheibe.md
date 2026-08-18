@@ -16,9 +16,11 @@ Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder 
 1. **Verfassung prüfen.** `./install.sh --pruefsumme`. Stimmt die Prüfsumme der Anlage
    „Bauverfahren" nicht mit dem Kopf der `CLAUDE.md` überein: **STOP**, Meldung an den
    Founder. Es wird nicht gebaut, sondern gefragt.
-   **Heute meldet dieser Schritt planmäßig „gesperrt": die Anlage existiert nicht**
-   (Blatt 26:28, :178). Bis zu ihrer Zeichnung läuft jeder Lauf mit dem Kopfvermerk
-   *Verfassung nicht belegt*.
+   **Nachgezogen am 16.08.2026:** Die Anlage „Bauverfahren" **existiert** und ist am
+   07.08.2026 von M. Veil gezeichnet; ihre Prüfsumme steht im Kopf der `CLAUDE.md`. Der
+   frühere Vermerk *„die Anlage existiert nicht"* stammte aus der Zeit vor der Zeichnung und
+   ist überholt. **Der Schritt meldet also nicht mehr planmäßig „gesperrt"** — was er meldet,
+   ist zu messen. Offen ist allein die Gegenzeichnung des Auftragnehmers.
 
 2. **Klauseln laden.** Erzeuge oder lies `nachweise/klauselregister/register.json`:
    `python3 werkzeuge/klauselregister.py --konzepte "$FREIRAUM_KONZEPTE" \`
@@ -28,8 +30,11 @@ Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder 
    Fehlt einer Klausel das **Akzeptanzkriterium**, liefert es der in derselben Zeile
    eingetragene fachliche Eigentümer nach; bis dahin bleibt der Bauauftrag unvollständig
    (K23-M02, K23:57). Die Klausel geht als Rückfrage hinaus, nicht in den Bau.
-   **Die Zuordnung Klausel → Scheibe existiert heute nicht** — sie ist zu erarbeiten, ehe
-   dieser Schritt trägt. Der Harness erfindet sie nicht.
+   **Nachgezogen am 16.08.2026:** Die Zuordnung Klausel → Scheibe **existiert** seit
+   Antrag #21 für Scheibe 1 — `nachweise/klauselschnitt/` führt Zeichnungsblatt,
+   Lesefassung und Wortmarken. Der frühere Vermerk *„existiert heute nicht"* ist überholt.
+   **Unverändert gilt:** Der Harness erfindet die Zuordnung nicht, und das Zeichnungsblatt
+   trägt bis heute kein gesetztes Kreuz — der Schnitt ist gemessen, nicht gezeichnet.
 
 3. **Voraussetzungen prüfen.** Für Scheibe 1: V0 (N2 gegen die Zielumgebung), V1 (L2
    Identitätsvertrag), V2 (L1 Zeilenschutz), V3 (H07-Postfächer), V4 (dünner L3-Träger und

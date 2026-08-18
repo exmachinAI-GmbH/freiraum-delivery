@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Write(./.env)",
+      "Write(./.env.*)",
+      "Edit(//Users/mveil/Library/CloudStorage/Dropbox-exmachinAI/Team-Ordner exmachinAI/02_exmachinAI_GmbH/02_Projekte/01_AEGIRA _AI_TRUST_PLATFORM/50_APPS/30_FREIRAUM/**)",
+      "Write(//Users/mveil/Library/CloudStorage/Dropbox-exmachinAI/Team-Ordner exmachinAI/02_exmachinAI_GmbH/02_Projekte/01_AEGIRA _AI_TRUST_PLATFORM/50_APPS/30_FREIRAUM/**)",
+      "Edit(//**/10_KNOWLEDGE_REPO/**)",
+      "Write(//**/10_KNOWLEDGE_REPO/**)",
+      "Edit(//**/30_DELIVERY_HARNESS/**)",
+      "Write(//**/30_DELIVERY_HARNESS/**)",
+      "Edit(//**/v2.9_PIVOT/**)",
+      "Write(//**/v2.9_PIVOT/**)"
+    ]
+  }
+}

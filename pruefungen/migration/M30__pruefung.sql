@@ -80,6 +80,20 @@ VALUES ('00000000-0000-0000-0000-0000000000f1','00000000-0000-0000-0000-00000000
         'DE-DMB_001_01','Pilotprojekt',current_date,
         '00000000-0000-0000-0000-0000000000e1');
 
+-- Die Herrichtung traegt project_no='DE-DMB_001_01' HIER fest ein --
+-- an der Zeile vorbei, die K01-M38 dem serverseitigen Befehl vorbehaelt
+-- ("sie wird vergeben, nicht eingegeben"). Ohne diese Zeile bliebe der
+-- Zaehler bei 1 stehen, und MT-95/MT-95b (Stufe 14, unten) zoegen beim
+-- ersten Aufruf von create_app_after_fit dieselbe Nummer 001 und
+-- scheiterten an der Eindeutigkeitsbedingung -- einer FREMDEN Bedingung,
+-- nicht an dem, was sie messen sollen (Massstab F07/H06). Der Zaehler
+-- wird deshalb auf den naechsten freien Wert vorgezogen. Die uebrigen
+-- mit fester Nummer eingetragenen Zeilen (Zeile ~86 '_009_01', ~97
+-- '_010_01', ~119 '_002_01') sind Gegentests, die alle an einer
+-- EXCEPTION scheitern und daher nie committen -- sie belegen keine
+-- Nummer und brauchen keine weitere Zaehlerkorrektur.
+UPDATE nummernvorrat SET naechste_nummer = 2 WHERE praefix = 'PROJ';
+
 -- Gegentest O-K01-6: ohne Eignungsnachweis entsteht keine Zeile.
 DO $$ BEGIN
   INSERT INTO app(tenant_id,project_no,name,created_at)
@@ -1253,20 +1267,193 @@ END $$;
 
 -- Stufe 14 · Der scharfe Rechteschnitt (Zeichnung 5.8.2026) --------------
 
--- Positiv: der kanalisierte Weg funktioniert.
+-- =====================================================================
+-- NACHGEZOGEN AM 16.08.2026 · MT-95, MT-95b UND MT-98
+-- WORAUF SICH DIE AENDERUNG STUETZT -- UND WORAUF AUSDRUECKLICH NICHT
+-- =====================================================================
+-- Bis heute riefen diese drei Faelle create_app_after_fit in einer
+-- Gestalt auf, die eine PROJEKTNUMMER UEBERGIBT ('DE-DMB_002_01',
+-- 'DE-DMB_005_01', 'DE-DMB_004_01'). Diese Gestalt misst einen Weg, den
+-- zwei GEZEICHNETE KLAUSELN verbieten:
+--
+--   K01-M38 · MUSS
+--     "Die Projektnummer MUSS der serverseitige Befehl bilden, in
+--      derselben Transaktion, in der die Anwendungszeile entsteht.
+--      SIE WIRD VERGEBEN, NICHT EINGEGEBEN."
+--
+--   K01-D19 · DARF NICHT
+--     "Kein Bildschirm, kein Formular und kein Endpunkt DARF die
+--      Projektnummer zur Eingabe, Auswahl oder Aenderung anbieten.
+--      EIN DENNOCH MITGESENDETER WERT WIRD VERWORFEN."
+--
+-- BEIDE KLAUSELN GALTEN VORHER. Ein Prueffall, der eine Projektnummer
+-- uebergibt, war damit schon vorher falsch -- er ist nur nie
+-- aufgefallen, weil eine zweite Fassung des Befehls offenstand, die den
+-- Wert entgegennahm, und ihn trug.
+--
+-- DIE BEGRUENDUNG IST DIE KLAUSEL, NICHT DER BAU. Dass eine Fassung des
+-- Befehls entfernt worden ist, ist NICHT der Grund dieser Aenderung und
+-- traegt sie auch nicht. Traegt der Befehl morgen wieder einen Parameter
+-- fuer die Projektnummer, wird dieser Fall NICHT zurueckgedreht -- er
+-- meldet dann einen VERSTOSS gegen K01-M38 (siehe mt_lage unten).
+--
+-- KEIN PRUEFWERT WIRD GESENKT (K23-D05). Jeder der drei Faelle misst
+-- weiterhin genau das, was er vorher gemessen hat, und zusaetzlich:
+--   * MT-95  belegt die angelegte Zeile jetzt ueber die vom Befehl
+--            ZURUECKGEGEBENE Kennung statt ueber eine vom Aufrufer
+--            bestimmte Nummer, und prueft, dass die vergebene Nummer die
+--            Form aus K01-M35/M38 traegt (drei Buchstaben = Kunden-Code).
+--   * MT-95b findet die unter fr_portal entstandene Zeile ebenfalls ueber
+--            die zurueckgegebene Kennung -- schaerfer als vorher, denn
+--            damit ist belegt, dass der Rueckgabewert auf DIESE Zeile
+--            zeigt.
+--   * MT-98  ist unveraendert ein Negativfall an der Mandantenbedingung.
+--
+-- DIE GESTALT WIRD ERFRAGT, NICHT ANGENOMMEN. Wer sie raet, misst im
+-- Fehlerfall "Funktion nicht vorhanden" -- also eine FREMDE Bedingung
+-- (Massstab F07). mt_lage unten trennt drei Faelle sauber:
+--   leer                    -> messbar
+--   'VERSTOSS ...'          -> der Befehl nimmt eine Projektnummer
+--                              entgegen: FEHLSCHLAG an K01-M38
+--   'NICHT MESSBAR ...'     -> die Gestalt gibt den Aufruf nicht her:
+--                              der Fall meldet das, statt es als
+--                              fehlendes Recht auszugeben
+-- =====================================================================
+CREATE TEMP TABLE mt_befehl ON COMMIT DROP AS
+WITH f AS (
+  SELECT p.pronargs,
+         coalesce(p.proargnames, ARRAY[]::text[]) AS namen,
+         (SELECT coalesce(string_agg(format_type(t.typ,NULL), ',' ORDER BY t.pos),'')
+            FROM unnest(p.proargtypes) WITH ORDINALITY AS t(typ,pos))  AS typen
+    FROM pg_proc p WHERE p.proname = 'create_app_after_fit'
+)
+SELECT (SELECT count(*)        FROM f)                                        AS fassungen,
+       (SELECT max(pronargs)   FROM f)                                        AS werte,
+       (SELECT coalesce(string_agg(array_to_string(namen,','),' | '),'(keine)') FROM f) AS namen,
+       (SELECT coalesce(string_agg(typen,' | '),'(keine)')                     FROM f) AS typen,
+       (SELECT coalesce(string_agg(n,','),'')
+          FROM f, unnest(f.namen) AS n
+         WHERE n ~* '(project|projekt|nummer|(^|_)no$|(^|_)nr($|_))')          AS nr_param;
+
+CREATE TEMP TABLE mt_lage ON COMMIT DROP AS
+SELECT CASE
+  WHEN b.fassungen = 0
+    THEN 'NICHT MESSBAR: create_app_after_fit besteht nicht'
+  -- Zuerst die Klausel, dann die Messbarkeit: ein Parameter fuer die
+  -- Projektnummer ist kein fehlender Befund, sondern der Verstoss selbst.
+  WHEN b.nr_param <> ''
+    THEN 'VERSTOSS gegen K01-M38 ("sie wird vergeben, nicht eingegeben"): '
+         ||'der Befehl nimmt eine Projektnummer entgegen -- Parameter: '||b.nr_param
+  WHEN b.fassungen > 1
+    THEN 'NICHT MESSBAR: es bestehen '||b.fassungen||' Fassungen von create_app_after_fit ('
+         ||b.namen||'); welche gemeint ist, liesse sich nur raten'
+  WHEN b.werte <> 4
+    THEN 'NICHT MESSBAR: create_app_after_fit besteht nicht in der Gestalt mit vier Werten '
+         ||'(gefunden: '||coalesce(b.werte::text,'—')||' -- '||b.namen||')'
+  WHEN b.typen <> 'uuid,text,uuid,uuid'
+    THEN 'NICHT MESSBAR: die Werte tragen die Typen '||b.typen||' statt uuid,text,uuid,uuid; '
+         ||'die Zuordnung liesse sich nur raten'
+  -- Drei der vier Werte sind uuid. Ohne Namen waere eine Vertauschung
+  -- STILL -- der Fall scheiterte dann an einer fremden Bedingung, statt
+  -- an seiner eigenen. Deshalb wird die Reihenfolge an den Namen geprueft.
+  WHEN NOT (b.namen ~* '^[^,|]*(tenant|mandant)[^,|]*,[^,|]*(name|bezeichn)[^,|]*,[^,|]*(fit|check|eignung)[^,|]*,[^,|]*(actor|konto|account)[^,|]*$')
+    THEN 'NICHT MESSBAR: die vier Werte heissen "'||b.namen||'"; welcher Wert wohin gehoert, '
+         ||'liesse sich nur raten (erwartet der Reihe nach: Mandant, Name, Eignungs-Check, Konto)'
+  ELSE ''
+END AS lage
+FROM mt_befehl b;
+
+-- Positiv: der kanalisierte Weg funktioniert -- UND der Befehl vergibt
+-- die Nummer selbst (K01-M38, K01-M35).
 DO $$
-DECLARE neu uuid;
+DECLARE neu uuid; lage text; nr text;
 BEGIN
-  -- a3 ist Manfred Mueller beim Kunden (Mandant 2) -- das passende Konto.
-  neu := create_app_after_fit('00000000-0000-0000-0000-000000000002',
-                              'DE-DMB_002_01','Zweitanwendung',
-                              '00000000-0000-0000-0000-0000000000e1',
-                              '00000000-0000-0000-0000-0000000000a3');
-  INSERT INTO mt VALUES ('MT-95','create_app_after_fit legt die Anwendung an (O-K01-20)',
-    neu IS NOT NULL, 'Zeile angelegt: '||coalesce(neu::text,'—'));
+  SELECT l.lage INTO lage FROM mt_lage l;
+  IF lage <> '' THEN
+    INSERT INTO mt VALUES ('MT-95','create_app_after_fit legt die Anwendung an, Nummer vergeben (O-K01-20, K01-M38)',
+      false, lage);
+  ELSE
+    -- a3 ist Manfred Mueller beim Kunden (Mandant 2) -- das passende Konto.
+    -- KEINE Projektnummer im Aufruf: sie wird vergeben, nicht eingegeben.
+    neu := create_app_after_fit('00000000-0000-0000-0000-000000000002',
+                                'Zweitanwendung',
+                                '00000000-0000-0000-0000-0000000000e1',
+                                '00000000-0000-0000-0000-0000000000a3');
+    SELECT a.project_no INTO nr FROM app a WHERE a.id = neu;
+    INSERT INTO mt VALUES ('MT-95','create_app_after_fit legt die Anwendung an, Nummer vergeben (O-K01-20, K01-M38)',
+      neu IS NOT NULL AND nr ~ '^DE-DMB_[0-9]{3}_[0-9]{2}$',
+      'Zeile angelegt: '||coalesce(neu::text,'—')||', vergebene Nummer: '||coalesce(nr,'—')
+      ||' (Kunden-Code des Mandanten: DE-DMB, K01-M35)');
+  END IF;
 EXCEPTION WHEN others THEN
-  INSERT INTO mt VALUES ('MT-95','create_app_after_fit legt die Anwendung an (O-K01-20)',
+  INSERT INTO mt VALUES ('MT-95','create_app_after_fit legt die Anwendung an, Nummer vergeben (O-K01-20, K01-M38)',
     false,'FEHLER: '||SQLERRM);
+END $$;
+
+-- ---------------------------------------------------------------------
+-- MT-95b · DIE OFFENE TUER (nachgetragen 16.08.2026)
+--
+-- WARUM ES IHN GIBT. MT-95 ruft den Befehl OHNE Rollenwechsel auf, also
+-- als Eigentuemer der Datenbank. MT-96 und MT-97 messen, was dem
+-- Portalpfad VERWEHRT ist. Damit misst diese Stelle bisher nur die
+-- geschlossene Tuer: Fielen die Rechte-Anweisungen der Migration ersatzlos
+-- weg, blieben MT-96 und MT-97 GRUEN -- ihnen genuegt, dass etwas
+-- scheitert. Die Bauaufgabe L1 sagt dazu: "Ein Regime, das alles
+-- verbietet, bestuende jeden Negativtest -- und die Anwendung liefe
+-- nicht."
+--
+-- WAS ER MISST. Unter DERSELBEN Rolle, der MT-96 den direkten Weg
+-- verwehrt, MUSS der vorgesehene Weg GELINGEN: fr_portal ruft
+-- create_app_after_fit auf, und die Zeile entsteht wirklich. Erst beide
+-- Faelle zusammen sind eine Unterscheidung -- verwehrt ist der eine Weg,
+-- offen der andere.
+--
+-- WORAN ER SCHEITERT, WENN ER SCHEITERT: an seiner eigenen Bedingung.
+-- Mandant, Konto und Eignungs-Check sind dieselben wie in MT-95, das
+-- ohne Rollenwechsel gelingt. Unterschieden ist allein die Rolle. Fehlt
+-- dem Portalpfad das Ausfuehrungsrecht -- oder laeuft der Befehl mit den
+-- Rechten des Aufrufers statt mit denen seines Eigentuemers --, faellt
+-- er hier auf.
+--
+-- NACHGEZOGEN AM 16.08.2026, gestuetzt auf K01-M38 und K01-D19 (Wortlaut
+-- und Begruendung im Block ueber MT-95): der Aufruf uebergibt keine
+-- Projektnummer mehr. Die entstandene Zeile wird ueber die vom Befehl
+-- ZURUECKGEGEBENE Kennung wiedergefunden. Das misst mehr als vorher --
+-- vorher belegte "eine Zeile mit DE-DMB_005_01" nur, dass irgendeine
+-- Zeile mit dieser Nummer stand; jetzt ist belegt, dass der
+-- Rueckgabewert auf genau diese Zeile zeigt.
+--
+-- Die Gestalt des Befehls wird nicht angenommen, sondern ERFRAGT
+-- (mt_lage): gaebe es ihn in der klauselgemaessen Gestalt nicht,
+-- scheiterte der Fall an "Funktion nicht vorhanden" -- also an einer
+-- FREMDEN Bedingung. Dann meldet er das ausdruecklich, statt es als
+-- fehlendes Recht auszugeben.
+-- ---------------------------------------------------------------------
+DO $$
+DECLARE neu uuid; lage text; steht int; nr text;
+BEGIN
+  SELECT l.lage INTO lage FROM mt_lage l;
+  IF lage <> '' THEN
+    INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+      false,'NICHT GEMESSEN: '||lage||' -- der Rechteweg ist damit nicht pruefbar');
+  ELSE
+    SET LOCAL ROLE fr_portal;
+    neu := create_app_after_fit('00000000-0000-0000-0000-000000000002',
+                                'Ueber den Portalpfad',
+                                '00000000-0000-0000-0000-0000000000e1',
+                                '00000000-0000-0000-0000-0000000000a3');
+    RESET ROLE;
+    SELECT count(*) INTO steht FROM app WHERE id = neu;
+    SELECT a.project_no INTO nr FROM app a WHERE a.id = neu;
+    INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+      neu IS NOT NULL AND steht = 1,
+      'unter fr_portal angelegt: '||coalesce(neu::text,'—')||', Zeilen zu dieser Kennung: '||steht
+      ||', vergebene Nummer: '||coalesce(nr,'—'));
+  END IF;
+EXCEPTION WHEN others THEN
+  RESET ROLE;
+  INSERT INTO mt VALUES ('MT-95b','Der Portalpfad DARF den Serverbefehl aufrufen (L1)',
+    false,'FEHLER unter fr_portal: '||SQLERRM);
 END $$;
 
 -- Gegentest: der Portalpfad kommt an der Tabelle nicht mehr vorbei.
@@ -1302,15 +1489,35 @@ END $$;
 
 -- Gegentest: der Befehl selbst prueft. Ein Konto eines fremden Mandanten
 -- darf keine Anwendung anlegen (K14-D07).
-DO $$ BEGIN
-  -- a1 ist der Erst-Admin des Betreibers (Mandant 1) und hat beim Kunden
-  -- nichts anzulegen (K14-D07).
-  PERFORM create_app_after_fit('00000000-0000-0000-0000-000000000002',
-                               'DE-DMB_004_01','Fremd',
-                               '00000000-0000-0000-0000-0000000000e1',
-                               '00000000-0000-0000-0000-0000000000a1');
-  INSERT INTO mt VALUES ('MT-98','Ein Konto fremden Mandanten legt nichts an (K01-M27)',
-    false,'FEHLER: wurde angenommen');
+--
+-- NACHGEZOGEN AM 16.08.2026, gestuetzt auf K01-M38 und K01-D19 (Wortlaut
+-- und Begruendung im Block ueber MT-95): der Aufruf uebergibt keine
+-- Projektnummer mehr. Am Gemessenen aendert das nichts -- der Fall
+-- scheitert an der MANDANTENBEDINGUNG, und die Meldung wird weiterhin
+-- im Wortlaut auf die Kennung ANLAGE geprueft (Bauauftrag §9 Tor I
+-- Nr. 6: ein Negativfall gilt erst als bestanden, wenn er an SEINER
+-- eigenen Bedingung scheitert).
+--
+-- Ist die Gestalt des Befehls nicht messbar, meldet der Fall das
+-- ausdruecklich -- sonst scheiterte er an "Funktion nicht vorhanden"
+-- und waere ein bestandener Negativfall, der nichts gemessen hat.
+DO $$
+DECLARE lage text;
+BEGIN
+  SELECT l.lage INTO lage FROM mt_lage l;
+  IF lage <> '' THEN
+    INSERT INTO mt VALUES ('MT-98','Ein Konto fremden Mandanten legt nichts an (K01-M27)',
+      false,'NICHT GEMESSEN: '||lage);
+  ELSE
+    -- a1 ist der Erst-Admin des Betreibers (Mandant 1) und hat beim Kunden
+    -- nichts anzulegen (K14-D07).
+    PERFORM create_app_after_fit('00000000-0000-0000-0000-000000000002',
+                                 'Fremd',
+                                 '00000000-0000-0000-0000-0000000000e1',
+                                 '00000000-0000-0000-0000-0000000000a1');
+    INSERT INTO mt VALUES ('MT-98','Ein Konto fremden Mandanten legt nichts an (K01-M27)',
+      false,'FEHLER: wurde angenommen');
+  END IF;
 EXCEPTION WHEN others THEN
   INSERT INTO mt VALUES ('MT-98','Ein Konto fremden Mandanten legt nichts an (K01-M27)',
     SQLERRM LIKE '%ANLAGE%', 'Meldung: '||SQLERRM);

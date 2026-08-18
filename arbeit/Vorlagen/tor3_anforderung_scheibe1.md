@@ -1,5 +1,15 @@
 # Fremdprüfung anfordern — Scheibe 1, erster Durchlauf
 
+> **Hinweis vom 16.08.2026 — bitte zuerst lesen.** Für den Teilschnitt gilt seit heute die
+> Ausfertigung **`arbeit/Vorlagen/tor3_anforderung_teilschnitt_260816.md`**. Sie ist auf die
+> am 16.08.2026 gezeichnete Abnahmeeinheit `teilschnitt-anmeldung` zugeschnitten, nennt
+> Träger, Frist und zeichnende Personen und zählt die Roh-Belege einzeln auf.
+>
+> **Dieses Blatt bleibt als Vorgeschichte liegen.** Es ist auf den Stand vom 14.08.2026
+> zugeschnitten und nennt einen anderen Commit und eine kürzere Belegliste. Beide Blätter
+> werden von `werkzeuge/fremdreview.py --stand` genannt, weil das Werkzeug alle Dateien mit
+> dem Namensanfang `tor3_anforderung` aufzählt. **Verwendet wird das Blatt zum Teilschnitt.**
+
 **Wozu dieses Blatt da ist.** Die Fremdprüfung (Tor 3) ist an vier Stellen verbindlich
 beschrieben — `CLAUDE.md` Abschnitt 2 (Messstufe 3), `pruefungen/tor3.sh`,
 `nachweise/fremdreview/README.md` und `.claude/commands/scheibe.md`:73 — und **gegen den

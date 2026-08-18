@@ -27,10 +27,23 @@ on:
         required: false
         type: string
 
-  # Der Zusatzfall: ein Pull Request, der eine Scheibenabnahme TRAEGT,
-  # wird mit dem Etikett `scheibenabnahme` versehen. Ohne das Etikett
-  # laeuft hier nichts -- sonst waere Tor 3 doch wieder ein Gate je
-  # Aenderung, und C-4 sagt ausdruecklich das Gegenteil.
+  # Der Zusatzfall: ein Pull Request, der eine Abnahme TRAEGT, wird mit
+  # einem der beiden Abnahme-Etiketten versehen. Ohne Etikett laeuft hier
+  # nichts -- sonst waere Tor 3 doch wieder ein Gate je Aenderung, und C-4
+  # sagt ausdruecklich das Gegenteil.
+  #
+  # ZWEI ETIKETTEN, nicht eines -- Stand 16.08.2026:
+  #   `scheibenabnahme`       Abnahme einer ganzen Scheibe (der urspruengliche Fall)
+  #   `teilschnitt-anmeldung` Abnahme des mit Blatt 57 / Weg A gezeichneten
+  #                           Teilschnitts (Mandant .. Anmeldung) am 31.08.2026
+  #
+  # WARUM BEIDE. Der Gegenstand, der am 31.08.2026 abgenommen wird, ist seit
+  # der Zeichnung von Weg A (10.08.2026) NICHT MEHR eine Scheibe, sondern der
+  # Teilschnitt. Ein Ablauf, der nur auf `scheibenabnahme` hoert, loest fuer
+  # genau diesen Gegenstand nicht aus -- Tor 3 bliebe still, und zwar
+  # unauffaellig: ein uebersprungener Lauf ist gruen. Genau das ist zwischen
+  # dem 07.08. und dem 16.08.2026 29 Mal passiert, weil das Etikett
+  # `scheibenabnahme` im Repository gar nicht existierte.
   pull_request:
     types: [labeled, synchronize, reopened]
     branches: [main]
@@ -48,7 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      contains(github.event.pull_request.labels.*.name, 'scheibenabnahme')
+      contains(github.event.pull_request.labels.*.name, 'scheibenabnahme') ||
+      contains(github.event.pull_request.labels.*.name, 'teilschnitt-anmeldung')
     steps:
       # Ganze Historie: das Blatt nennt einen Commit-Hash, und der wird
       # gegen dieses Repo geprueft. Mit einem flachen Klon faende

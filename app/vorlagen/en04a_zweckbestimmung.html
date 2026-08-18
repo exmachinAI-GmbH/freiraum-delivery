@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zweckbestimmung · FREIRAUM</title>
+  {#
+    bildschirm: EN-04a
+
+    umsetzt: K04-M19 (zwei GETRENNTE Fragen mit je zwei Antworten -- zwei
+             Formulare, zwei Schreibvorgaenge, keine gemeinsame Absendung),
+             K04-M20 (bei Treffer in Frage 1 die drei Ansagen; bei Treffer
+             in Frage 2 stattdessen Grund und Verweis auf Art. 5),
+             K04-D09 (ein Treffer in Frage 1 haelt NICHT auf -- der Weg
+             geht nach der Bestaetigung weiter), K04-D10 (ein Treffer in
+             Frage 2 fuehrt in das Halt-Feld, und dort gibt es keine
+             Bestaetigung), K19-M03 (genau eine Zugangsmarke), K19-M13
+             (Statusansagen ohne Fokuswechsel; `halt`, `hinweis`, `warnung`
+             und `angelegt` tragen role="alert" und ziehen den Fokus nicht),
+             K01-D19 (kein Feld, keine Auswahl, kein verdecktes Feld fuer
+             die Projektnummer -- sie wird nach der Anlage nur ANGEZEIGT)
+
+    zur Haelfte umgesetzt: K04-M08 -- weil dieser Bildschirm die drei
+             Auswege ZEIGT und den vierten nicht anbietet, ihn aber nicht
+             VERHINDERN kann. Durchgesetzt wird der Halt in
+             app/zweckbestimmung.py, in den Wegen POST
+             /zweckbestimmung/antwort, /kenntnis und /anlegen. Dieselbe
+             Aufteilung wie auf EN-04, aus demselben Grund: "Was der Server
+             entscheidet, entscheidet nicht der Browser."
+
+    zur Haelfte umgesetzt: K04-M21 -- weil dieser Bildschirm die
+             Bestaetigung EINHOLT; dass der Nachweis erhalten bleibt und in
+             das Uebergabe-Paket eingeht, halten app/zweckbestimmung.py
+             (Spalte und Ereigniszeile) und K10 (Paket, nicht gebaut)
+
+    EN-04a aus schema/K19_screens.yaml, uebernommen und nicht frei
+    gezeichnet (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt sechs
+    Aktionen: zweckfrage_beantworten, kenntnis_nehmen, anwendung_anlegen,
+    antwort_aendern, termin, zur_uebersicht. Alle sechs stehen hier.
+
+    DER WORTLAUT DER BEIDEN FRAGEN STEHT NICHT IN DIESER DATEI. Er kommt
+    aus app/zweckbestimmung.py und ist dort als ABGELEITET, NICHT BELEGT
+    gekennzeichnet (offener Punkt O-M4-1). Stuende er hier, gaebe es zwei
+    Orte, an denen er geaendert werden koennte -- und der Server prueft
+    gegen den einen, der Bildschirm zeigte den anderen.
+
+    ZWEI FRAGEN, ZWEI FORMULARE. K04-M19 verlangt, dass "zweierlei
+    getrennt" gefragt wird. Getrennt heisst hier auch: getrennt absendbar.
+    Ein Formular mit beiden Fragen und einer Schaltflaeche waere EINE
+    Antwort auf zwei Fragen -- und wer die zweite Frage falsch verstanden
+    hat, muesste die erste noch einmal beantworten.
+
+    KEINE VORBELEGUNG. Solange eine Frage unbeantwortet ist, ist weder
+    [Ja] noch [Nein] gewaehlt. Eine Vorbelegung waere eine Antwort, die
+    niemand gegeben hat -- und bei diesen beiden Fragen waere sie die
+    folgenreichste Vorbelegung des ganzen Weges.
+
+    DER VORRANG DER ZWEITEN FRAGE STEHT UEBER BEIDEN FRAGEN und nicht erst
+    im Halt. Wer erst nach dem Absenden erfaehrt, dass die zweite Frage den
+    Weg beendet, hat sie unter falscher Annahme beantwortet (K04-D10).
+
+    DIE VIER BENANNTEN ORTE. Dieser Bildschirm traegt vier abgrenzbare
+    Bereiche, und sie tragen ihre Namen aus demselben Grund wie `halt` und
+    `hinweis` auf EN-04: ohne einen benannten Ort laesst sich ein Bereich
+    nur raten, und ein Prueffall, der raten muss, bleibt auf GESPERRT --
+    ein Fall, der nur sperren kann, misst nichts.
+
+        id="hinweis"   die noch offene Frage im WORTLAUT, an der Stelle
+                       der Schaltflaeche (K19-M06)
+        id="warnung"   die drei Ansagen aus K04-M20 und die Bestaetigung
+        id="halt"      Grund, Verweis auf Art. 5 und die drei Auswege
+        id="angelegt"  die Bestaetigung nach der Anlage mit der vergebenen
+                       Projektnummer
+
+    `warnung` und `halt` schliessen einander aus, und das ist keine
+    Gestaltung, sondern K04-M20: "Bei einem Treffer in der zweiten Frage
+    MUSS er STATTDESSEN den Grund der Ablehnung nennen." Stattdessen heisst
+    nicht zusaetzlich. Wer im Halt daneben noch eine Schaltflaeche
+    [Kenntnis genommen] saehe, saehe einen vierten Ausweg.
+
+    DIE SCHALTFLAECHE ZUR ANLAGE WIRD HIER TATSAECHLICH AUSGEBLENDET,
+    solange eine Frage offen ist -- anders als [Weiter] auf EN-04, wo sie
+    stehen bleibt. Der Unterschied ist kein Sinneswandel, sondern die
+    Bedienlage: auf EN-04 muesste die Schaltflaeche nach der letzten
+    Antwort ohne Neuladen wieder erscheinen, und dieser Bildschirm traegt
+    kein Skript. Hier laedt jede Antwort die Seite ohnehin neu (Formular,
+    Umleitung, Anzeige) -- die Schaltflaeche ist also im selben Moment
+    wieder da, in dem ihre Bedingung erfuellt ist. K19-M06 verlangt beides,
+    Ausblenden UND Hinweis an ihrer Stelle; hier ist beides zu haben.
+
+    DIE PROJEKTNUMMER WIRD NUR ANGEZEIGT, UND ERST NACH DER ANLAGE.
+    K01-D19 verbietet Eingabe, Auswahl und Aenderung -- nicht die Auskunft
+    darueber, was vergeben wurde. Es gibt auf diesem Bildschirm kein Feld,
+    keine Liste und kein verdecktes Feld, in dem eine Nummer stuende, bevor
+    der Serverbefehl sie gebildet hat.
+  #}
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
+           display: flex; justify-content: center; padding: 2rem 1rem; }
+    main { width: 100%; max-width: 42rem; }
+    .kasten { border: 1px solid currentColor; border-radius: .5rem;
+              padding: 1.25rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
+    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
+    h2 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
+    fieldset { border: 1px solid currentColor; border-radius: .25rem;
+               margin: 0 0 1.25rem; padding: .75rem 1rem 1rem; }
+    legend { font-weight: 600; padding: 0 .35rem; }
+    .wahl { display: inline-block; margin: .35rem 1.25rem .35rem 0; }
+    .gewaehlt { font-weight: 600; }
+    .vorrang { border-left: 4px solid currentColor; padding: .1rem 0 .1rem .75rem;
+               margin: 0 0 1.25rem; }
+    .fuss { font-size: .875rem; margin: 1rem 0 0; }
+    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
+             cursor: pointer; margin-top: .5rem; }
+    .meldung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
+    #halt { border: 3px solid currentColor; border-radius: .25rem;
+            padding: .9rem 1rem; margin: 1.25rem 0 0; }
+    #halt h2 { margin-top: 0; }
+    #warnung { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .9rem 1rem; margin: 1.25rem 0; }
+    #warnung h2 { margin-top: 0; }
+    #hinweis { border: 2px solid currentColor; border-radius: .25rem;
+               padding: .6rem .75rem; margin: 0 0 .75rem; }
+    #hinweis p { margin: 0; font-weight: 600; }
+    #hinweis ul { margin: .4rem 0 0; }
+    #angelegt { border: 2px solid currentColor; border-radius: .25rem;
+                padding: .9rem 1rem; margin: 0 0 1rem; }
+    #angelegt h2 { margin-top: 0; }
+    .nummer { font-family: ui-monospace, monospace; font-weight: 600; }
+    .auswege { display: flex; flex-wrap: wrap; gap: .75rem;
+               align-items: center; margin-top: .75rem; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-04a · Zweckbestimmung</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {% if angelegt %}
+      {#
+        NACH DER ANLAGE. Der Weg dorthin ist eine Umleitung (303), damit
+        ein Neuladen keine zweite Anwendung anlegt. Die Projektnummer steht
+        hier als AUSKUNFT ueber das Ergebnis -- nicht in einem Feld, nicht
+        in einer Auswahl, nicht aenderbar (K01-D19).
+      #}
+      <div id="angelegt" role="alert">
+        <h2>Ihre Anwendung ist angelegt</h2>
+        <p>{{ meldung_angelegt }}</p>
+        <p>Projektnummer: <span class="nummer">{{ angelegt.projektnummer }}</span></p>
+        <p>{{ hinweis_nach_anlage }}</p>
+      </div>
+      <p class="fuss"><a href="/uebersicht">Zur Uebersicht</a></p>
+
+    {% else %}
+
+      {#
+        Statusansage ohne Fokuswechsel (K19-M13). Sie blickt zurueck auf
+        einen abgeschlossenen Vorgang: die Terminquittung, eine ungueltige
+        Angabe, eine Abweisung.
+      #}
+      {% if meldung %}
+        <p class="meldung" role="alert">{{ meldung }}</p>
+      {% endif %}
+
+      <p>Angemeldet als {{ anzeigename }}</p>
+      <p>Ihr Vorhaben ist geeignet. Zwei Fragen fehlen noch -- sie
+        entscheiden nicht darueber, ob FREIRAUM Sie begleitet, sondern
+        darueber, welche Pflichten aus der KI-Verordnung an Ihrer Anwendung
+        haengen.</p>
+
+      {# Der Vorrang der zweiten Frage, VOR beiden Fragen (K04-D10). #}
+      <p class="vorrang">{{ vorrangsatz }}</p>
+
+      {#
+        DIE BEIDEN FRAGEN. Jede in einem eigenen Formular mit einer eigenen
+        Schaltflaeche -- getrennt gefragt heisst getrennt beantwortet
+        (K04-M19).
+      #}
+      {% for frage in fragen %}
+        <fieldset>
+          <legend>Frage {{ frage.nummer }} von 2</legend>
+          <p>{{ frage.text }}</p>
+
+          {% if halt %}
+            {#
+              Nach einem Treffer in Frage 2 stehen die Antworten fest.
+              Geaendert wird ueber den ersten der drei Auswege, nicht hier
+              -- sonst gaebe es einen vierten Weg aus dem Halt heraus
+              (K04-M08).
+            #}
+            <p class="{% if frage.antwort is not none %}gewaehlt{% endif %}">
+              {% if frage.antwort is none %}
+                Nicht beantwortet
+              {% else %}
+                Ihre Antwort: {% if frage.antwort %}Ja{% else %}Nein{% endif %}
+              {% endif %}
+            </p>
+          {% else %}
+            <form method="post" action="/zweckbestimmung/antwort">
+              {# Der Server glaubt weder die Frage noch die Antwort: beide
+                 werden gegen die zugelassenen Werte geprueft.
+
+                 JE FRAGE EIGENE FELDNAMEN, UND KEINER KOMMT ZWEIMAL VOR.
+                 `frage.feld` ist `antwort_bewertung` bzw.
+                 `antwort_praktik`, `frage.marke` ist `frage_bewertung`
+                 bzw. `frage_praktik`. Beide kommen aus FELDNAME_ANTWORT
+                 und FELDNAME_FRAGE in app/zweckbestimmung.py, damit
+                 Vorlage und Serverpfad dieselben Namen aus derselben
+                 Quelle nehmen.
+
+                 BIS ZUM 16.08.2026 HIESSEN BEIDE MARKEN `frage`. Auf einer
+                 Seite mit beiden Formularen stand dieser Name damit
+                 zweimal, mit verschiedenen Werten. Wer die Seite als
+                 Ganzes einliest und alle verborgenen Felder mitschickt,
+                 sendet ihn zweimal -- und bei doppeltem Schluessel gewinnt
+                 der letzte Wert. Der Server nahm dann immer die zweite
+                 Frage und schrieb beim Beantworten der ERSTEN nichts:
+                 keine Meldung, keine Weiterleitung, die Antwort still
+                 verloren. Zwei Felder desselben Namens sind eine Falle,
+                 gleich wer sie stellt.
+
+                 Die Marke bleibt trotzdem stehen: der Server soll die
+                 Frage nicht ableiten, sondern pruefen koennen. Antwortfeld
+                 und Marke muessen dieselbe Frage nennen; sonst wird nichts
+                 geschrieben. #}
+              <input type="hidden" name="{{ frage.marke }}" value="{{ frage.code }}">
+              <label class="wahl">
+                <input type="radio" name="{{ frage.feld }}" value="ja"
+                       {% if frage.antwort is true %}checked{% endif %}>
+                Ja
+              </label>
+              <label class="wahl">
+                <input type="radio" name="{{ frage.feld }}" value="nein"
+                       {% if frage.antwort is false %}checked{% endif %}>
+                Nein
+              </label>
+              <div>
+                <button type="submit">Antwort speichern</button>
+              </div>
+            </form>
+
+            {% if frage.antwort is not none %}
+              <form method="post" action="/zweckbestimmung/aendern">
+                {# EIGENER NAME, auch gegenueber dem Antwortformular
+                   derselben Frage: `frage.ruecknahme` ist
+                   `ruecknahme_bewertung` bzw. `ruecknahme_praktik`. Sind
+                   beide Fragen beantwortet, stehen hier vier Formulare --
+                   und nach dieser Aenderung kommt kein Feldname der Seite
+                   zweimal vor. Frueher hiessen alle vier Felder `frage`,
+                   und die Ruecknahme traf immer das letzte davon. #}
+                <input type="hidden" name="{{ frage.ruecknahme }}" value="{{ frage.code }}">
+                <button type="submit">Antwort zuruecknehmen</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </fieldset>
+      {% endfor %}
+
+      {% if halt %}
+        {#
+          DER HALT (K04-D10, K04-M20 zweite Haelfte, K04-M08). Er nennt den
+          GRUND und verweist auf Art. 5 -- und er bietet GENAU DREI
+          Auswege. Keine Bestaetigung, keine Warnung, kein "trotzdem
+          fortfahren": dort heilt keine Aufklaerung und keine Bestaetigung.
+        #}
+        <div id="halt" role="alert">
+          <h2>Hier geht es nicht weiter</h2>
+          <p>{{ halt_grund }}</p>
+          <p>{{ halt_verweis }}</p>
+          <p>Sie haben drei Moeglichkeiten:</p>
+          <div class="auswege">
+            <form method="post" action="/zweckbestimmung/aendern">
+              {#
+                Ausweg 1. Nimmt die Antwort auf die ZWEITE Frage zurueck --
+                die, die aufhaelt. Danach ist die Erklaerung unvollstaendig,
+                der Halt fort und der Bildschirm wieder offen. Die
+                Kenntnisnahme, falls eine vorliegt, bleibt stehen
+                (offener Punkt O-M4-3).
+              #}
+              <input type="hidden" name="{{ marke_halt }}" value="{{ code_halt }}">
+              <button type="submit">Antwort aendern</button>
+            </form>
+            <form method="post" action="/zweckbestimmung/termin">
+              {# Ausweg 2. Vermerkt den Wunsch nach einem Gespraech. Am
+                 Halt aendert das nichts. #}
+              <button type="submit">Termin vereinbaren</button>
+            </form>
+            {# Ausweg 3. Zurueck zur Uebersicht; der Check bleibt bestehen. #}
+            <a href="/uebersicht">Zur Uebersicht</a>
+          </div>
+        </div>
+
+      {% else %}
+
+        {% if warnung %}
+          {#
+            DIE DREI ANSAGEN AUS K04-M20, und es sind drei: die Warnung zu
+            Anhang III, der Hinweis auf die Anbieterpflichten aus Art. 9,
+            11, 14, 17 und 43 und die Aufforderung zu bestaetigen. Sie
+            stehen als drei getrennte Absaetze, damit keine in der anderen
+            untergeht.
+
+            DAS IST KEIN HALT (K04-D09). Der Weg geht weiter, sobald
+            bestaetigt ist -- FREIRAUM entscheidet nicht, was gebaut werden
+            darf, es sorgt dafuer, dass bekannt ist, was gebaut wird.
+
+            Die Warnung bleibt auch NACH der Bestaetigung stehen: sie ist
+            der Grund, aus dem bestaetigt wurde, und ein Grund, der nach
+            der Bestaetigung verschwindet, war keiner.
+          #}
+          <div id="warnung" role="alert">
+            <h2>Was das fuer Sie bedeutet</h2>
+            <p>{{ warnung_anhang_iii }}</p>
+            <p>{{ hinweis_anbieterpflichten }}</p>
+            {% if kenntnis_vorliegend %}
+              <p class="gewaehlt">Sie haben das zur Kenntnis genommen.
+                Diese Bestaetigung bleibt als Nachweis erhalten.</p>
+            {% else %}
+              <p>{{ aufforderung_bestaetigen }}</p>
+              <form method="post" action="/zweckbestimmung/kenntnis">
+                <button type="submit">Kenntnis genommen</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if hinweis %}
+          {#
+            DER HINWEIS AUF DIE FEHLENDE FRAGE (K19-M06, EN-04a/
+            zweckfrage_beantworten, zustand_leer). Er steht AN DER STELLE
+            der Schaltflaeche, die es hier gerade nicht gibt -- nicht oben
+            im Kasten. Gezeigt wird ausschliesslich der Wortlaut der noch
+            offenen Fragen; der Wortlaut einer beantworteten Frage kommt
+            aus dem Server gar nicht erst mit.
+          #}
+          <div id="hinweis" role="alert">
+            <p>{{ hinweis.satz }}</p>
+            <ul>
+              {% for frage in hinweis.fragen %}
+                <li>Frage {{ frage.nummer }} von 2: {{ frage.text }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if anlage_offen %}
+          {#
+            DER WEITERWEG. Er erscheint erst, wenn beide Fragen beantwortet
+            sind, die zweite verneint ist und -- bei einem Treffer in der
+            ersten -- die Bestaetigung vorliegt. Kein Feld, keine Auswahl,
+            kein verdecktes Feld: dieses Formular sendet nichts ausser dem
+            Absenden selbst. Die Projektnummer vergibt der Serverbefehl
+            (K01-M38, K01-D19).
+          #}
+          <form method="post" action="/zweckbestimmung/anlegen">
+            <button type="submit">Anwendung anlegen</button>
+          </form>
+        {% endif %}
+
+        <p class="fuss"><a href="/uebersicht">Zur Uebersicht</a> — Ihre
+          Antworten bleiben erhalten.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</main>
+</body>
+</html>

@@ -36,6 +36,11 @@ Seit dem 15.08.2026 kommen die Wege der Vorpruefung hinzu -- /uebersicht,
 /vorpruefung und /eignung. Sie stehen mit ihrem eigenen Vertrag im Kopf von
 app/vorpruefung.py und sind hier nur eingebunden.
 
+Seit dem 16.08.2026 kommen die Wege der Zweckbestimmung hinzu --
+/zweckbestimmung und die fuenf Wege darunter. Sie stehen mit ihrem eigenen
+Vertrag im Kopf von app/zweckbestimmung.py und sind hier ebenfalls nur
+eingebunden.
+
 Der Import von app.datenbank steht bewusst am Anfang: fehlt einer der drei
 Pflichtwerte der Umgebung, bricht er hier ab -- beim START, nicht beim ersten
 Anmeldeversuch (Befund BEF-L2-1 vom 10.08.2026).
@@ -48,6 +53,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
+from app import ki_hinweis
 from app.anmeldung import MELDUNG_MISSERFOLG, anmelden
 from app.datenbank import verbindung
 from app.einladung import MELDUNG_MISSERFOLG as MELDUNG_EINLADUNG
@@ -62,6 +68,7 @@ from app.sitzung import (
     sitzung_pruefen,
 )
 from app.vorpruefung import router as vorpruefung_router
+from app.zweckbestimmung import router as zweckbestimmung_router
 
 # Gegen __file__, nicht gegen das Arbeitsverzeichnis: der Server soll aus
 # jedem Verzeichnis startbar sein, ohne seine Vorlagen zu verlieren.
@@ -75,6 +82,12 @@ app = FastAPI(title="FREIRAUM · Anmeldung", docs_url=None, redoc_url=None)
 # nicht erreichbare Datenbank gilt fuer beide: sie haengt am `app`-Objekt,
 # nicht an einer einzelnen Route (siehe `datenbank_weg` weiter unten).
 app.include_router(vorpruefung_router)
+
+# Scheibe 2, M4: die Zweckbestimmung (EN-04a). Ebenfalls eine eigene Datei
+# und hier nur eingebunden. Sie steht NACH der Vorpruefung, weil sie den Weg
+# fortsetzt, den jene bis GEEIGNET fuehrt -- die Reihenfolge der beiden
+# Zeilen entscheidet fachlich nichts, die Pfade ueberschneiden sich nicht.
+app.include_router(zweckbestimmung_router)
 
 
 class TokenAusDemProtokoll(logging.Filter):
@@ -141,10 +154,21 @@ MELDUNG_BETRIEB = ("Die Anmeldung ist zurzeit nicht moeglich, weil der Dienst "
                    "Angaben. Bitte versuchen Sie es spaeter erneut.")
 
 
-def _en01(request, meldung=None, adresse=None, status=200):
+def _en01(request, meldung=None, adresse=None, status=200,
+          ki_bestaetigt=False):
     antwort = VORLAGEN.TemplateResponse(
         request, "en01_anmeldung.html",
-        {"meldung": meldung, "adresse": adresse}, status_code=status)
+        {"meldung": meldung, "adresse": adresse,
+         # Bauaufgabe L9: der Wortlaut kommt aus dem Modul, nicht aus der
+         # Vorlage. Drei Absaetze, je eine geforderte Angabe.
+         "ki_hinweis": ki_hinweis.HINWEIS,
+         "ki_bestaetigung": ki_hinweis.BESTAETIGUNG,
+         # Ein gesetztes Haekchen ueberlebt eine Fehlermeldung. Wer seinen
+         # Code vertippt, soll nicht zweimal bestaetigen muessen -- das
+         # erzeugt Klickmuedigkeit, und Klickmuedigkeit ist das Gegenteil
+         # einer Kenntnisnahme.
+         "ki_bestaetigt": ki_bestaetigt},
+        status_code=status)
     # Die Maske traegt die Eingabe zurueck; im Cache eines Zwischenspeichers
     # hat sie nichts verloren (K03-M26, datensparsam).
     antwort.headers["Cache-Control"] = "no-store"
@@ -166,12 +190,46 @@ def anmeldung_absenden(request: Request,
     # Punkt vermerkt, nicht hier stillschweigend geraten.
     herkunft = request.client.host if request.client else ""
 
+    # BAUAUFGABE L9 -- Kriterium 1 und 2 traegt die Maske, Kriterium 3 NICHT.
+    #
+    # HIER STAND EIN RIEGEL. Er wies die Anmeldung ab, solange das Kaestchen
+    # zum KI-Hinweis nicht gesetzt war. ZURUECKGENOMMEN am 16.08.2026,
+    # nachdem der blinde Prueflauf gemessen hat, was er kostet:
+    #
+    #   anmeldung     8 von 30 bestanden   (vorher vollstaendig)
+    #   vorpruefung   8 von 32             (vorher 30 von 32)
+    #   anmeldecode  13 von 17             (vorher 16 von 17)
+    #
+    # KEIN EINZIGER PRUEFFALL KENNT DAS FELD `ki_bestaetigt`. Der Riegel hat
+    # den Anmeldevertrag geaendert, auf dem jeder andere Faden aufsetzt --
+    # und er hat es getan, ohne dass eine Klausel das verlangt:
+    # Paragraf 7a, L9 sagt "vor der ERSTEN Nutzung", nicht "vor jeder".
+    #
+    # DIE FRAGE, DIE DAHINTERSTEHT, IST OFFEN und wird nicht still
+    # entschieden: Einmal je Person oder bei jeder Anmeldung? Einmal je
+    # Person setzt voraus, dass man VOR der Anmeldung weiss, wer kommt --
+    # und das hiesse, die Adresse gegen die Datenbank zu pruefen, bevor der
+    # Code stimmt. Genau diese Kontoauskunft wollte K03-M16 nicht.
+    # Der saubere Ausweg waere ein Riegel NACH der Anmeldung und VOR der
+    # Uebersicht. Er ist nicht gebaut, weil er dieselbe Frage voraussetzt.
+    #
+    # WAS DAMIT GILT: Der Hinweis steht sichtbar ueber dem Formular
+    # (Kriterium 1 und 2). Die nachweisbare Kenntnisnahme (Kriterium 3) ist
+    # NICHT erzwungen -- L9 ist damit NICHT erfuellt, und das steht so in
+    # nachweise/vorbedingungen/L9_portal_hinweis_260816.md.
+    # Vorgelegt als E-13 in arbeit/Vorlagen/entscheidung_tor1_260816.md.
+    #
+    # Kein Alibi-Kaestchen: eine Pruefung, die nur in der Oberflaeche steht,
+    # gilt nach K03-M13 als nicht erfolgt. Lieber eine offene Luecke, die
+    # jeder sieht, als ein Bedienelement, das Sicherheit vortaeuscht.
+
     with verbindung() as conn:
         sitzung_id = anmelden(conn, email, code, herkunft)
 
     if sitzung_id is None:
         # 200 mit Meldung, ausdruecklich KEIN Cookie: eine Sitzung entsteht
         # nur aus einer bestaetigten zweiten Stufe (K03-M09, K03-D01).
+        # Das Haekchen bleibt gesetzt: die Bestaetigung war nicht der Fehler.
         return _en01(request, meldung=MELDUNG_MISSERFOLG, adresse=email)
 
     antwort = RedirectResponse("/", status_code=UMLEITUNG)

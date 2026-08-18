@@ -151,6 +151,35 @@ jobs:
             git --no-pager diff --stat -- nachweise/herkunft/
           fi
 
+      # Fundstellenprobe der Steuerungstexte.
+      #
+      # Bis zum 16.08.2026 hat kein Tor je eine Behauptung ueber ein DOKUMENT
+      # nachgeschlagen. Klauselregister und Herkunftsgraph rechnen den Code
+      # nach; wenn CLAUDE.md aber schreibt, in `README.md`:30 stehe "Keine
+      # Geheimnisse im Repo", hat das niemand aufgeschlagen. Der README ist am
+      # 14.08.2026 von 84 auf 265 Zeilen umgeschrieben worden. Die Fundstelle
+      # zeigte seither ins Leere, und zwoelf gruene Laeufe haben es nicht
+      # gemerkt.
+      #
+      # DIESER SCHRITT SPERRT -- anders als der Herkunftsgraph darueber, der
+      # nur `::warning::` meldet. Genau deshalb: der abgelegte Herkunftsgraph
+      # auf der Hauptspur ist nachweislich veraltet, obwohl jeder Lauf es
+      # anzeigt. Eine Warnung bewirkt in diesem Projekt nichts. Das ist der
+      # Beleg im eigenen Haus.
+      #
+      # Gesperrt wird nur an den ANWEISENDEN Texten (CLAUDE.md, .claude/,
+      # README, CONTRIBUTING, AGENTS, install.sh, aufbau.sh, ruff.toml). Wer
+      # sie liest, handelt danach. Nachweise und Arbeitsstaende sind datiert:
+      # ihre Verweise werden gemeldet, sperren aber nicht -- sonst zwaenge
+      # dieser Schritt dazu, Nachweise nachtraeglich umzuschreiben.
+      #
+      # FREIRAUM_KONZEPTE liegt im Lauf nicht vor. Fundstellen in den
+      # Konzepten melden deshalb GESPERRT, nicht bestanden (K23-M22).
+      - name: Fundstellen der Steuerungstexte nachschlagen (K23-M22)
+        run: |
+          set -euo pipefail
+          python3 werkzeuge/fundstellen.py
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

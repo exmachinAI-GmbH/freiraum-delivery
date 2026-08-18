@@ -2,7 +2,7 @@
 
 | Feld | Wert |
 |---|---|
-| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag — **gezeichnet von M. Veil am 07.08.2026**; für den Auftragnehmer zeichnet A. Han (Nr. 158), seine Unterschrift steht aus |
+| **Gezeichnete Verfassung** | Anlage **„Bauverfahren"** zum Bauauftrag — **von beiden Vertragsseiten gezeichnet:** M. Veil am 07.08.2026, A. Han für den Auftragnehmer (Nr. 158) am 16.08.2026. **Damit ist diese Datei keine Vorschlagsfassung mehr, sondern die ausführbare Seite einer vollständig gezeichneten Anlage** |
 | Ablageort | `03_AGENT_HARNESS_CODING/30_DELIVERY_HARNESS/` — **bewusst außerhalb dieses Repos**: `--pruefsumme` misst diese Datei *gegen* die Anlage; lägen beide hier, änderte ein Commit beide Seiten. Überschreibbar mit `FREIRAUM_ANLAGE` |
 | **Prüfsumme der Anlage** | `ded747a7a98bcc7fa11442b92e0d09a244c0b4ee2051f10fb251bdb68300274d` — gezeichnet 07.08.2026, Nachweis in `Anlage_Bauverfahren_zeichnung.md` |
 | Nachgerechnet mit | `./install.sh --pruefsumme` · Regel: `shasum -a 256 <Anlage>` |
@@ -14,8 +14,13 @@
 Bei Abweichung gilt die **Anlage**. Stimmt die Prüfsumme oben nicht, redet diese Datei über
 eine andere Fassung als die unterschriebene: dann wird **nicht gebaut, sondern gefragt**.
 
-**Solange die Anlage nicht gezeichnet ist, ist diese Datei ein Vorschlag.** Sie steuert die
-Arbeit, sie ersetzt keine Zeichnung.
+**Die Anlage ist seit dem 16.08.2026 von beiden Vertragsseiten gezeichnet.** Diese Datei ist
+damit die ausführbare Seite einer gezeichneten Anlage — kein Vorschlag mehr. Der frühere Satz
+*„Solange die Anlage nicht gezeichnet ist, ist diese Datei ein Vorschlag"* ist mit der
+Gegenzeichnung A. Hans gegenstandslos geworden.
+
+**Was unverändert gilt:** Sie steuert die Arbeit, sie ersetzt keine Zeichnung. Bei Abweichung
+gilt die Anlage. Und stimmt die Prüfsumme oben nicht, wird nicht gebaut, sondern gefragt.
 
 ---
 
@@ -110,8 +115,8 @@ Entscheidung legt er je Scheibe ein Paket vor und nennt es *Vorlage*, nicht *Fre
 | Sieht | Klauseln, Code, Schema, Läufe | **nur** Klauseln und Akzeptanzkriterien |
 | Sieht nie | die Prüfdateien | **den Umsetzungscode** |
 | Werkzeuge | Read, Write, Edit, Bash, Grep, Glob | Read, Write |
-| Schreibt nach | `install/ mail/ migrations/ seeds/ schema/ werkzeuge/` | ausschließlich `pruefungen/` |
-| Modell | Sitzungsmodell | **anderes Modell** als der Bau (F27, `kanon.yaml`:346–359) |
+| Schreibt nach | `app/ install/ mail/ migrations/ seeds/ schema/ werkzeuge/` sowie die erzeugten Nachweise unter `nachweise/` und die Bauunterlagen unter `arbeit/` | ausschließlich `pruefungen/` |
+| Modell | Sitzungsmodell | **anderes Modell** als der Bau (F27, `config/kanon.yaml`:346–359 — **Konzept-Fabrik**, außerhalb dieses Repos) |
 
 **Beide laufen gleichzeitig und ohne einander zu kennen** (C-4, Blatt 26:30). Wer den Code
 kennt, schreibt den Prüffall auf den Code — nicht auf die Klausel. Das ist gemessen: Am
@@ -128,9 +133,10 @@ in `.claude/settings.json`. Diese Datei existiert noch nicht — **offener Punkt
 
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag
-§9 Tor I Nr. 6 (:649) und `README.md`:34 des Repos. Als **Klausel** ist die Regel **noch
-nicht gefasst** — sie steht als **offener Punkt O-K23-7** (`K23_entwurf.md`:297,
-Entscheider Konzept-Fabrik-Owner · K23) und **nicht** in der exportierten K23 v1.1.
+§9 Tor I Nr. 6 (:649) und `README.md`:204 des Repos. Als **Klausel** ist die Regel **noch
+nicht gefasst** — sie steht als **offener Punkt O-K23-7** (`arbeit/Entwürfe/K23_entwurf.md`:300
+— **Konzept-Fabrik**, außerhalb dieses Repos; Entscheider Konzept-Fabrik-Owner · K23) und
+**nicht** in der exportierten K23 v1.1.
 
 **Der Orchestrator schreibt zusammen, entscheidet aber nichts fachlich.** Kein Agent
 entscheidet „nach eigenem Urteil" (Blatt 11:170). Widerspruch zwischen Quellen: benennen,
@@ -179,8 +185,8 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
 | **Vertikale Scheiben führen den Bau** (G1, Blatt 11:25) | Scheibe n+1 = Faden von n **plus eine benannte Breite**; bestanden erst, wenn der **ganze** Lauf wieder durchgeht (Blatt 11:40–48) |
 | **Eigene Datenbank je Pilot-Anlauf** | `sealed` ist unumkehrbar (K20-M21); nach F36 wird nichts gelöscht (`README.md`:31, `aufbau.sh`:11–14). Die Prüfumgebung aus `aufbau.sh` ist **kein** Pilotlauf |
 | **Nur synthetische Daten** | deterministisch erzeugt, je Mandant gekennzeichnet, in abgetrennter Umgebung (K23-M12, :67) |
-| **Vier Negativfälle je Migration müssen scheitern** (`README.md`:34) | und zwar je an der eigenen Bedingung, mit Meldung im Wortlaut (Bauauftrag :649) |
-| **Keine Geheimnisse im Repo** (`README.md`:30) | `.env*` gitignored; Zugänge in Key Vault/Passwortmanager. Ein Fund sperrt den Lauf (K23-D09, :92) |
+| **Die vier Negativfälle jeder Migration müssen scheitern** (`README.md`:204) | und zwar je an der eigenen Bedingung, mit Meldung im Wortlaut (Bauauftrag :649) |
+| **Keine Zugangsdaten im Repository** (`README.md`:196) | `.env*` gitignored; Zugänge in Key Vault/Passwortmanager. Ein Fund sperrt den Lauf (K23-D09, :92) |
 | **Verarbeitung in der EU** (F05) | ein Dienst außerhalb bricht K13 (`README.md`:35) |
 | **Stop statt Endlosschleife** | Max. drei Anläufe je Gate, dann Eskalation an die Founder — **übertragen** aus der Konzept-Fabrik (`CLAUDE.md`:179), dort für Tabletop-Runden gesetzt. Für Code **nicht gezeichnet** |
 | **Bei Verzug: melden, sobald es sich abzeichnet** | nicht am 31. August. Über Umfang oder Termin entscheidet der Auftraggeber (G2, Blatt 11:26) |
@@ -189,6 +195,16 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
 
 ## 6 · Was du nie tust
 
+- **Ein Kreuz setzen, für das keine Weisung vorliegt.** Ein Kästchen wird nur gefüllt, wenn
+  eine zeichnende Person es angewiesen hat — dann **trägt der Harness es ein**, mit dem
+  **Wortlaut der Weisung** und dem Datum unmittelbar daneben. Fehlt die Weisung, bleibt das
+  Kästchen leer, auch wenn die Sache offensichtlich scheint.
+  *Berichtigt am 16.08.2026. Zuvor stand hier, der Harness dürfe überhaupt kein Kreuz setzen.
+  Das verfehlte den Zweck: Wer entscheidet, hat gezeichnet — und ein Blatt mit leeren
+  Kästchen, das in Wahrheit entschieden ist, stellt den Stand falsch dar. Was der Harness nie
+  darf, ist eine Unterschrift **erfinden**; eine erteilte einzutragen ist Buchführung, keine
+  Anmaßung. Der Anlass und die Grenze stehen in
+  `nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md`.*
 - **Den Status „Freigegeben", `ABNAHME` oder `IN_PROD` setzen.** Das tut ein Mensch
   (K23-G01 :99, K23-D06 :89). `IN_PROD` verlangt die zweite natürliche Person (K23-M21 :76).
 - **Einen Prüfwert senken, eine Schwelle lockern oder eine Kritikalität herabstufen**, damit
