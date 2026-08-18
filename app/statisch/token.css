@@ -101,6 +101,23 @@
   --control-line: #8C887A;   /* war #D8D5C8 -> 1,47 · jetzt 3,55 */
   --btn-line:     #6E6E6E;   /* war #404040 -> 1,91 · jetzt 3,88 */
 
+  /* ── E-6 · Schrift AUF der Leitfarbe, gemessen 18.08.2026 ──────────
+     Die Schaltflaeche trug ihre Schrift zuerst in var(--surface). Das ist
+     im hellen Modus #FFFFFF und richtig -- im dunklen aber #1C1C19, also
+     dunkel auf dunkelrot. Gemessen:
+
+         ruhend  #1C1C19 auf #D63E17   3,71   Schwelle 4,50   faellt durch
+         hover   #1C1C19 auf #B8330F   2,86   Schwelle 4,50   faellt durch
+
+     Ein eigener Token, in BEIDEN Modi hell. Er wird bewusst NICHT im
+     Dunkelmodus ueberschrieben: die Flaeche darunter ist die Leitfarbe und
+     wechselt nicht mit dem Modus, also darf die Schrift darauf es auch
+     nicht.
+
+         ruhend  #FFFFFF auf #D63E17   4,60   besteht
+         hover   #FFFFFF auf #B8330F   5,97   besteht                  */
+  --auf-akzent:   #FFFFFF;
+
   /* ── Ebene 3 · Bauteilpalette, Textton und Rahmen je Marke ─────────
      Die Flaeche kommt aus dem passenden Tint der Ebene 1 bzw. 2.       */
   --tag-acc-ink:      #CC3B16;   /* E-4, s.u. */
@@ -259,7 +276,7 @@ button {
   padding: .55rem 1rem;
   font: inherit;
   font-family: var(--disp);
-  color: var(--surface);
+  color: var(--auf-akzent);        /* E-6, nicht --surface: s. oben */
   background: var(--accent-ink);
   border: 1px solid var(--btn-line);       /* E-1 */
   border-radius: 6px;
