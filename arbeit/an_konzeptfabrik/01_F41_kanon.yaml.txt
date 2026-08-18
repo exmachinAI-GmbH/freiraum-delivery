@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────────────────
+# ENTWURF F41 · zum Einfügen in config/kanon.yaml, unter `festlegungen`,
+# hinter F40. Der Orchestrator fügt ihn NICHT selbst ein — CLAUDE.md
+# Abschn. 6: "Eine Datei in der Konzept-Fabrik oder in v2.9_PIVOT/
+# verändern" steht unter dem, was er nie tut.
+#
+# Grundlage: Blatt 94 (BEF-UI-1), Punkt 6, gezeichnet 18.08.2026.
+# ─────────────────────────────────────────────────────────────────────────
+
+  # F41 ist am 18.08.2026 aus einem Befund entstanden, nicht aus einer
+  # Ueberlegung -- wie F40.
+  F41: >
+    Kein Bildschirm entsteht ohne seinen K19-Kasten. Wer eine Oberflaeche
+    baut, nimmt Kennung, Anordnung, Aktionen, Statusleiste und Zugangsmarke
+    aus der K19-Build-Referenz -- und zeichnet nicht frei. Die Gestaltung
+    kommt aus dem gezeichneten Token-Schema (Blatt 78, entnommen aus dem
+    Gesamtbuild v2.9), nie aus dem Build selbst (K23-D02).
+
+    DAS GILT AUCH FUER DEN BAU, nicht nur fuer Konzepte. Das ist der Punkt,
+    an dem es bisher gescheitert ist.
+
+    ANLASS: M. Veil hat die Regel am 11.08.2026 beim Ansehen von EN-01
+    ausgesprochen ("Trage ein, es muss immer ein K19 Bildschirm sein",
+    Blatt 70). Sie stand danach in einem Blatt und in der CLAUDE.md der
+    KONZEPTFABRIK, die K19 als verbindliche UI-Referenz fuehrt -- nicht
+    aber in der CLAUDE.md des Lieferrepos, die K19 gar nicht nennt.
+    Gemessen am 18.08.2026, eine Woche
+    spaeter: 1 von 8 Vorlagen trug ihren Kasten, und im Lieferrepo stand kein
+    einziger Wert des Token-Schemas -- FF5229, FBFBF8 und 141412 ergaben null
+    Treffer. Aufgefallen ist es nicht durch einen Lauf, sondern weil M. Veil
+    nachfragte.
+
+    Der Fehler lag nicht bei dem, der baute. Er lag darin, dass kein Werkzeug
+    die Regel erreichen konnte: Die Kaesten lagen allein in der
+    Konzeptfabrik, und das Token-Schema hatte nie eine Form, die ein Lauf
+    haette lesen koennen.
+
+    REGEL, durchgesetzt von werkzeuge/k19_kasten_pruefung.py in Tor 1a:
+      kein Marker bildschirm:            -> FEHLER
+      bildschirm: keiner ohne Grund      -> FEHLER
+      Kennung ohne Kasten in der Referenz-> GESPERRT (K23-M22, nicht gruen)
+      Kasten nicht woertlich uebernommen -> FEHLER
+      eigene Farbwerte trotz token.css   -> FEHLER
+
+    Die Referenz wird als Kopie mit Pruefsumme im Lieferrepo mitgefuehrt
+    (schema/K19_build_referenz.md). Aenderungsregel "keine": weicht die Kopie
+    ab, ist die KOPIE ungueltig -- nicht das Original.
+
+    GRENZE, ausdruecklich: Der Riegel prueft, ob eine Vorlage ihren Kasten
+    ZITIERT, nicht ob sie ihm FOLGT. Wer das messen will, braucht einen
+    Prueffall beim blinden Pruef-Agenten. Ein Riegel, der zu viel verspricht,
+    ist schlimmer als keiner.
