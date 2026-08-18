@@ -174,6 +174,26 @@ done
 echo
 echo "== Klausel-Prueffaelle =="
 
+# ---------------------------------------------------------------------
+# Auflage aus Blatt 90 Punkt 2: Laeuft dieser Lauf mit echtem Versand,
+# sagt er es SELBST -- und zwar VOR den Faellen, nicht danach.
+#
+# Der Grund ist gemessen: Am 17.08.2026 entstand ein Lauf mit neun roten
+# Faellen, weil der echte Wirt keine Adresse @pruef.example annimmt. Wer
+# ihn spaeter liest, haelt neun Fehlschlaege fuer einen Baubefund. Sie
+# sind keiner -- sie sind die Folge dieses Zustands.
+# ---------------------------------------------------------------------
+if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+  echo "::warning::ECHTVERSAND-LAUF — dieser Lauf misst NUR AC-16."
+  echo "   Der Server verschickt ueber den echten Wirt (${FREIRAUM_SMTP_HOST:-<nicht gesetzt>})."
+  echo "   Die uebrigen Faelle brauchen den oertlichen Faenger und TRAGEN HIER NICHT:"
+  echo "   Adressen @pruef.example nimmt kein fremder Anbieter an, der Versand"
+  echo "   scheitert, und die Anwendung entwertet daraufhin den Code (mail/versand.py)."
+  echo "   Ihre Fehlschlaege sind KEIN Baubefund (Blatt 90, Abschn. 4)."
+  echo "   Fuer einen vollstaendigen Lauf: FREIRAUM_ECHTVERSAND leer lassen."
+  echo
+fi
+
 freier_port() {
   # Port 0 binden und den zugeteilten melden. Ein fester Port hat am
   # 10.08.2026 zehn Faelle gegen einen alten Server messen lassen.
@@ -183,7 +203,26 @@ freier_port() {
 klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
   local lauf="$1" kennung="$2"
   local daten="${lauf%_lauf.sh}_daten.sql"
-  local db="klausel_${kennung}_$$"
+  # BEFUND BEF-AC-16-3 (Blatt 91, 18.08.2026): Bei echtem Versand wird
+  # NICHT geklont. Der Prueflauf klont sonst je Lauf eine frische
+  # Datenbank und wirft sie danach weg -- und mit ihr den
+  # mail_delivery-Nachweis, auf den sich der zweite Durchgang von
+  # AC-16 stuetzt. Durchgang 2 fand deshalb nie einen frischen
+  # Versand, hielt sich fuer Durchgang 1 und verschickte erneut.
+  # Gemessen: Mail 1 um 11:27:03, Mail 2 um 11:32:24 -- 321 s
+  # Abstand bei 300 s Bindungstoleranz. Die Schleife konnte sich nie
+  # schliessen; jeder Pruefversuch entwertete den soeben geholten Kopf.
+  #
+  # Der Preis ist benannt (Blatt 91 Abschn. 7): Ohne Klonen laufen die
+  # Faelle gegen dieselbe Datenbank und stoeren einander. Im
+  # Echtversand-Lauf ist das hinnehmbar, weil er nach Blatt 90 ohnehin
+  # NUR AC-16 misst.
+  local db
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    db="$PGDATABASE"
+  else
+    db="klausel_${kennung}_$$"
+  fi
   local port pfeffer schluessel pid=0 log rc summe
   local smtp_port smtp_pid=0 mailfang gescheitert geblockt
 
@@ -217,7 +256,12 @@ klausellauf() {  # $1 = Prueflauf-Datei · $2 = Kennung
       cp "$mailfang" "$FREIRAUM_PRUEF_MAILFANG_BEHALTEN/${kennung}_mailfang.txt" 2>/dev/null || true
     fi
     rm -f "$mailfang" 2>/dev/null || true
-    psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
+    # Bei Echtversand ist $db die Datenbank des Aufrufers -- sie gehoert
+    # ihm, nicht diesem Lauf. Sie zu loeschen naehme dem naechsten
+    # Durchgang genau den Nachweis, den er braucht.
+    if [ "${FREIRAUM_ECHTVERSAND:-}" != "ja" ]; then
+      psql -d postgres -qAt -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null 2>&1 || true
+    fi
     return 0
   }
   trap aufraeumen RETURN
@@ -316,7 +360,9 @@ while True:
 PY
   smtp_pid=$!
 
-  if ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    : # keine Kopie -- $db IST $PGDATABASE (Blatt 91)
+  elif ! psql -d postgres -qAt -c "CREATE DATABASE \"$db\" TEMPLATE \"$PGDATABASE\"" >/dev/null 2>&1; then
     echo "   $kennung — GESPERRT: Wegwerfdatenbank aus $PGDATABASE nicht anlegbar"
     merke "$kennung" gesperrt "Vorlage $PGDATABASE nicht kopierbar"; return
   fi
@@ -340,12 +386,51 @@ PY
     merke "$kennung" gesperrt "Datendatei brach ab, Rueckgabewert null"; return
   fi
 
-  FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
-  FREIRAUM_CODE_PFEFFER="$pfeffer" \
-  FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
-  FREIRAUM_UMGEBUNG=lokal \
-  FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
-    .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  # ---------------------------------------------------------------------
+  # Der Wirt des Servers: Faenger oder echter Weg?
+  #
+  # BEFUND BEF-AC-16-2 (Blatt 90, 17.08.2026): Diese Stelle setzte den Wirt
+  # UNBEDINGT auf 127.0.0.1. AC-16 braucht aber den echten Versandweg zu
+  # einem fremden Anbieter -- und bekam ihn nie. Der Fall war ueber diesen
+  # Prueflauf nicht schwer zu erfuellen, sondern UNERFUELLBAR.
+  #
+  # Entstanden aus der Rollentrennung: Der Faenger (11.08.) musste den Wirt
+  # setzen, damit die uebrigen Faelle den versandten Code lesen koennen;
+  # AC-16 (14.08.) durfte diesen Prueflauf nicht lesen. Beide Seiten haben
+  # richtig gehandelt, und die Luecke lag zwischen ihnen.
+  #
+  # Weg A aus Blatt 90: Mit FREIRAUM_ECHTVERSAND=ja gehen die Werte des
+  # Aufrufers durch. OHNE die Variable bleibt alles wie bisher -- der
+  # Normalfall ist unberuehrt.
+  # ---------------------------------------------------------------------
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
+    # OHNE FREIRAUM_UMGEBUNG=lokal -- und das ist der ganze Punkt.
+    #
+    # Gemessen am 18.08.2026: Mit "lokal" faellt die Portvorgabe in
+    # mail/versand.py auf 1025 (der oertliche Faenger); ohne sie auf 587
+    # (der uebliche Einlieferungsport). Der erste Anlauf dieses Zweiges
+    # liess zwar den WIRT durch, behielt aber "lokal" -- die Anwendung
+    # versuchte mail.bytecamp.net:1025, wo nichts horcht. Die Mail kam
+    # wieder nicht an, und AC-16 sperrte zu Recht.
+    #
+    #   UMGEBUNG=lokal -> Port 1025 · mail.bytecamp.net:1025 zu
+    #   UMGEBUNG=""    -> Port 587  · mail.bytecamp.net:587  offen
+    #
+    # Ohne "lokal" sind FREIRAUM_SMTP_HOST und FREIRAUM_DSN Pflicht
+    # (BEF-L2-1). Beide werden hier gesetzt -- der Aufrufer liefert den
+    # Wirt, diese Zeile den DSN.
+    FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
+    FREIRAUM_CODE_PFEFFER="$pfeffer" \
+    FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+      .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  else
+    FREIRAUM_DSN="postgresql://$PGUSER:${PGPASSWORD:-pilot}@$PGHOST:$PGPORT/$db" \
+    FREIRAUM_CODE_PFEFFER="$pfeffer" \
+    FREIRAUM_SITZUNG_SCHLUESSEL="$schluessel" \
+    FREIRAUM_UMGEBUNG=lokal \
+    FREIRAUM_SMTP_HOST=127.0.0.1 FREIRAUM_SMTP_PORT="$smtp_port" FREIRAUM_SMTP_TLS=0 \
+      .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
+  fi
   pid=$!
 
   # Warten, bis er antwortet -- und aufgeben, statt ewig zu haengen.
@@ -370,6 +455,15 @@ PY
         "$lauf" 2>&1)
   rc=$?
   set -e
+  # Bei echtem Versand das Serverprotokoll AUFHEBEN. Zweimal ist am
+  # 17./18.08.2026 geraten worden, warum keine Mail ankam -- der Grund
+  # stand jedesmal im Protokoll, und das Protokoll war geloescht. Es
+  # traegt keine Zugangswerte: der DSN wird maskiert (BEF-L2-1), und ein
+  # smtplib-Fehler zeigt die Antwort des Servers, nicht das Kennwort.
+  if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ] && [ -s "$log" ]; then
+    cp "$log" "/tmp/freiraum_server_${kennung}.log" 2>/dev/null || true
+    echo "   Serverprotokoll aufgehoben: /tmp/freiraum_server_${kennung}.log"
+  fi
   rm -f "$log"
 
   summe=$(printf '%s\n' "$aus" | sed -n 's/^SUMME: //p' | head -1)
