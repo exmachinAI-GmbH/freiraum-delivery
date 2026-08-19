@@ -240,7 +240,7 @@ Gemessen mit `grep -n "Solange O-K"`:
 | **K06-G13** | *„Solange O-K06-11 offen ist, bleibt K06 Freigabekandidat"* | `O-K06-11` |
 | **K21-G04** | *„Solange O-K21-1 offen ist, ist eine Freigabe über Weg B ein Restrisiko"* | `O-K21-1` — **geschlossen**, die Sperre greift nicht mehr |
 | **K23, Gate 14** | *„Solange O-K23-1 offen ist, schlägt es an, wenn …"* | `O-K23-1` (Zielwerte der Lastprüfung) |
-| **K05-G12** | *„Solange O-K05-1 und O-K05-2 offen sind, bleibt K05 Freigabekandidat"* | **geschlossen** — die Sperre greift nicht mehr |
+| **K05-G12** | *„Solange O-K05-1 und O-K05-2 offen sind, bleibt K05 Freigabekandidat"* | ⚠ **berichtigt am 19.08.2026: die Sperre greift weiterhin.** Geschlossen ist die Entscheidung in **K05 Abschn. 8**; **Abschn. 5 führt dieselben Punkte weiter als offen** — und `K05-G11` verbietet ausdrücklich, eine dort als offen ausgewiesene Zeile stillschweigend als Träger anzunehmen. Der Träger ist im Schema gemessen vorhanden, das Nachziehen ist M. Veil vorgelegt (`arbeit/an_konzeptfabrik/K05_abschnitt5_nachziehen.md`); gezeichnet als **Entscheidung 2** in `arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md`. Bis zum Nachzug: **offen** |
 
 ### 3.3 · Die Verklemmung in der Löschkette
 
