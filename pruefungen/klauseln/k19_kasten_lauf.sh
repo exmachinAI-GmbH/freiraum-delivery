@@ -15,8 +15,14 @@
 #   pruefungen/klauseln/k19_kasten_lauf.sh
 #
 # Umgebung:
-#   FREIRAUM_PRUEF_URL   Vorgabe http://localhost:8099
-#   FREIRAUM_K19_REF     Vorgabe schema/K19_build_referenz.md
+#   FREIRAUM_PRUEF_URL    Vorgabe http://localhost:8099
+#   FREIRAUM_K19_REF      Vorgabe schema/K19_build_referenz.md
+#   FREIRAUM_CODE_PFEFFER wie am Server gesetzt -- der Lauf stellt sich
+#                         seinen Anmeldecode selbst aus (K03-M15). Fehlt
+#                         er, bleibt nur EN-03 gesperrt; EN-01 misst
+#                         weiter.
+#   PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE
+#                         Vorgabe localhost/55433/postgres/pilot/freiraum_pruef
 #
 # ---------------------------------------------------------------------
 # WAS HIER GEMESSEN WIRD -- UND WAS SCHON WOANDERS GEMESSEN WIRD
@@ -73,9 +79,19 @@
 #   * Eine SCHALTFLAECHE ist ein Element mit ihrer Aufschrift
 #     ("Anmelden").
 #   * Eine Zeile OHNE Klammern ist ein Hinweis. Aufeinanderfolgende
-#     solche Zeilen gehoeren zusammen: der Umbruch ist eine Eigenschaft
-#     der Kastenbreite, nicht des Textes. Sie werden mit einem Leerzeichen
-#     verbunden.
+#     solche Zeilen gehoeren zusammen, WENN die vorige mitten im Satz
+#     endet: dann ist der Umbruch eine Eigenschaft der Kastenbreite,
+#     nicht des Textes, und beide Zeilen werden mit einem Leerzeichen
+#     verbunden. Endet die vorige Zeile auf . ? oder !, ist der Satz zu
+#     Ende und der naechste Hinweis ein eigener.
+#     NACHGEBESSERT 19.08.2026: zuvor wurden ALLE aufeinanderfolgenden
+#     klammerlosen Zeilen zu einem Text verbunden. Bei EN-01 traf das zu
+#     ("... neuer Link ueber" / "Ihre Ansprechperson."), bei EN-03 nicht:
+#     dort steht eine Frage, die mit "?" endet, und darunter eine eigene
+#     Erlaeuterung. Beide zu einer Zeichenkette zu verbinden verlangte
+#     von der Seite, dass zwischen ihnen NICHTS steht -- eine Bedingung,
+#     die kein Kasten zusagt. Der Fall waere an der Kastenbreite
+#     gescheitert statt am Bau (F07).
 #
 # NICHT GEMESSEN wird "die Seite zeigt NUR, was der Kasten fuehrt".
 # Das waere der schaerfere Fall, und er ist hier bewusst nicht gebaut:
@@ -117,49 +133,90 @@
 # ---------------------------------------------------------------------
 # WELCHE BILDSCHIRME DIESER LAUF FUEHRT
 # ---------------------------------------------------------------------
-# EN-01 · /anmeldung · Zugangsmarke "offen" -- der einzige Bildschirm mit
-#   vollstaendigem Kasten, der OHNE Sitzung erreichbar ist. Alle uebrigen
-#   ENDUSER-Bildschirme tragen "nach Anmeldung"; sie zu messen verlangte
-#   den Anmeldeweg samt FREIRAUM_CODE_PFEFFER und damit eine zweite,
-#   fremde Vorbedingung. Sie sind hier NICHT als bestanden gefuehrt,
-#   sondern gar nicht gefuehrt -- ein Fall, der nichts misst, ist
-#   schaedlicher als kein Fall.
+# EN-01 · /anmeldung · Zugangsmarke "offen", ohne Sitzung erreichbar.
+# EN-03 · /vorpruefung · Zugangsmarke "nach Anmeldung". Dafuer gibt es
+#   seit dem 19.08.2026 k19_kasten_daten.sql: EIN Konto, mit dem der Lauf
+#   durch EN-01 hindurchkommt. Ohne Sitzung bleibt EN-03 GESPERRT -- nie
+#   bestanden.
 # EN-04a · GESPERRT, kein Kasten in der Referenz (siehe oben).
 #
+# NICHT gefuehrt wird EN-02, obwohl sein Kasten vollstaendig ist. Er
+# mischt Aufschriften mit PLATZHALTERN fuer Daten: "Name der Anwendung",
+# "zweite Anwendung", "[Zustandsname]", "Stufe 03". Das sind keine
+# Beschriftungen, sondern Beispielwerte -- "[Zustandsname]" kommt nach
+# K19-M05 aus lifecycle_state_label. Sie als Text zu fordern hiesse,
+# einen Selektor zu erfinden. Ausgewiesen statt stillschweigend
+# weggelassen; ein Fall dafuer braucht zuerst eine Festlegung, welche
+# Zeilen eines Kastens Platzhalter sind.
+#
+# Die uebrigen ENDUSER-Bildschirme (EN-05 bis EN-14) verlangen einen
+# gefahrenen Weg -- Eignungs-Check, Zweckbestimmung, Stufen. Diesen Weg
+# messen vorpruefung_lauf.sh und zweckbestimmung_lauf.sh; ihn hier ein
+# zweites Mal zu fahren, hiesse ihre Vorbedingungen zu erben und an
+# fremden Bedingungen zu scheitern (F07).
+#
 # ---------------------------------------------------------------------
-# GEGENPROBE (F07), ausgefuehrt am 18.08.2026
+# GEGENPROBE (F07)
 # ---------------------------------------------------------------------
 # Gegen synthetische Seiten, ueber HTTP ausgeliefert -- dieselbe Bauart
 # des Nachweises, die vorpruefung_lauf.sh am 15.08.2026 fuer VP-14/VP-12
-# benutzt hat. Gemessen am 18.08.2026, fuenf Durchgaenge:
-#   * Seite, die dem Kasten folgt            -> A und B BESTANDEN
-#   * Hinweiszeile entfernt                  -> A GESCHEITERT
-#                                               ("HINWEIS: Einmal-Link 24
-#                                                Stunden gueltig, ..."),
-#                                               B GESPERRT
-#   * [Anmelden] vor die Felder gezogen      -> A BESTANDEN,
-#                                               B GESCHEITERT
-#                                               ("BRUCH: SCHALTFLAECHE:
-#                                                Anmelden")
-#   * "Anmelden" nur in Stilblock und HTML-  -> A GESCHEITERT
-#     Kommentar, keine Schaltflaeche            ("SCHALTFLAECHE: Anmelden")
-#   * Seite nicht erreichbar (404)           -> A und B GESPERRT
+# benutzt hat. Gemessen am 18. und 19.08.2026:
 #
-# Der dritte Durchgang ist der entscheidende: A bleibt dabei GRUEN und
-# nur B faellt. B scheitert also an SEINER eigenen Bedingung, nicht an
-# der von A (F07).
+#   Seite folgt dem Kasten                 -> A und B BESTANDEN
+#   EN-01 ohne Hinweiszeile                -> A GESCHEITERT
+#                                             ("HINWEIS: Einmal-Link 24
+#                                              Stunden gueltig, ..."),
+#                                             B GESPERRT
+#   EN-01 [Anmelden] vor die Felder        -> A BESTANDEN, B GESCHEITERT
+#                                             ("BRUCH: SCHALTFLAECHE:
+#                                              Anmelden")
+#   EN-01 "Anmelden" nur in Stilblock und  -> A GESCHEITERT
+#         HTML-Kommentar                      ("SCHALTFLAECHE: Anmelden")
+#   EN-03 ohne die Erlaeuterung            -> A GESCHEITERT
+#                                             ("HINWEIS: Ein Direkt-
+#                                              Prototyp ist ein
+#                                              Arbeitsdokument: ..."),
+#                                             B GESPERRT
+#   EN-03 Schaltflaechen vertauscht        -> A BESTANDEN, B GESCHEITERT
+#                                             ("BRUCH: SCHALTFLAECHE:
+#                                              Ueberspringen")
+#   Seite nicht erreichbar (404)           -> A und B GESPERRT
+#   ohne FREIRAUM_CODE_PFEFFER             -> EN-03 GESPERRT mit Grund,
+#                                             EN-01 misst weiter
+#   ohne k19_kasten_daten.sql (Sicht fehlt)-> EN-03 GESPERRT mit Grund
+#   Konto GESPERRT statt AKTIV             -> EN-03 GESPERRT, und zwar
+#                                             als FREMDE Bedingung
+#                                             benannt (F07)
+#   Rolle 'Endnutzer' fehlt                -> k19_kasten_daten.sql bricht
+#                                             ab: "ABBRUCH -- AUFBAU
+#                                             UNBRAUCHBAR (F07):
+#                                             k19_seite@ gehoert keinem
+#                                             freigeschalteten Portal an"
+#
+# Die beiden Vertausch-Durchgaenge sind die entscheidenden: A bleibt
+# dabei GRUEN und nur B faellt. B scheitert also an SEINER eigenen
+# Bedingung, nicht an der von A. Und jeder Durchgang, der einen
+# Bildschirm bricht, laesst den anderen gruen -- die beiden Bildschirme
+# messen einander nicht.
 #
 # ZUM STAND IN DIESEM ARBEITSBAUM. Der blinde Arbeitsbaum fuehrt kein
-# app/; ein Server laesst sich hier nicht starten. Gegen den WIRKLICHEN
-# Bau ist dieser Fall daher noch nicht gelaufen -- sein Ergebnis dort ist
-# GESPERRT, bis jemand ihn gegen einen laufenden Server faehrt. Die fuenf
-# Durchgaenge oben belegen die TAUGLICHKEIT des Falls, nicht den Stand
-# des Baus. Beides nicht zu verwechseln, ist der ganze Sinn von K23-M22.
+# app/; ein Server laesst sich hier nicht starten. Die Durchgaenge oben
+# liefen gegen ein DOPPEL, das nur Tueren aufmacht -- sie belegen die
+# TAUGLICHKEIT des Falls, nicht den Stand des Baus. Gegen den wirklichen
+# Bau ist sein Ergebnis GESPERRT, bis jemand ihn dort faehrt. Beides
+# nicht zu verwechseln, ist der ganze Sinn von K23-M22.
 # =====================================================================
 
 set -u
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
+
+: "${PGHOST:=localhost}"
+: "${PGPORT:=55433}"
+: "${PGUSER:=postgres}"
+: "${PGPASSWORD:=pilot}"
+: "${PGDATABASE:=freiraum_pruef}"
+export PGHOST PGPORT PGUSER PGPASSWORD PGDATABASE
 HIER="$(cd "$(dirname "$0")/../.." && pwd)"
 REFERENZ="${FREIRAUM_K19_REF:-$HIER/schema/K19_build_referenz.md}"
 
@@ -239,16 +296,26 @@ for roh in rumpf:
         continue
     klammern = list(re.finditer(r"\[([^\[\]]*)\]", z))
     if not klammern:
-        # Zeile ohne Klammern -> Hinweis; der Umbruch gehoert der
-        # Kastenbreite, nicht dem Text.
-        hinweis.append(z.strip())
+        # Zeile ohne Klammern -> Hinweis. Der Umbruch gehoert der
+        # Kastenbreite, nicht dem Text -- ABER nur mitten im Satz. Endet
+        # die laufende Zeile auf . ? oder !, ist der Hinweis zu Ende und
+        # der naechste ein eigener (Nachbesserung 19.08.2026).
+        if hinweis and hinweis[-1].rstrip().endswith((".", "?", "!")):
+            hinweis_abschliessen()
+        # Der Spaltentrenner nach Abschn. 5 trennt auch hier: links
+        # Gespraech oder Navigation, rechts Arbeitsflaeche. Er wird als
+        # "│" UND als "|" gesetzt -- beide gelten.
+        for teil in re.split(r"[\u2502|]", z):
+            teil = teil.strip()
+            if teil:
+                hinweis.append(teil)
         continue
     hinweis_abschliessen()
     # Text VOR der ersten Klammer ist die Beschriftung des Feldes.
     vor = z[:klammern[0].start()]
     # Spaltentrenner "│" nach Abschn. 5 abwerfen; der Text der rechten
     # Spalte bleibt als eigene Beschriftung erhalten.
-    for teil in vor.split("│"):
+    for teil in re.split(r"[\u2502|]", vor):
         teil = teil.strip()
         if teil:
             elemente.append(("BESCHRIFTUNG", teil))
@@ -267,7 +334,7 @@ for roh in rumpf:
             elemente.append(("SCHALTFLAECHE", kern))
     # Text zwischen bzw. hinter Klammern -> weitere Beschriftungen.
     rest = z[klammern[-1].end():]
-    for teil in rest.split("│"):
+    for teil in re.split(r"[\u2502|]", rest):
         teil = teil.strip()
         if teil:
             elemente.append(("BESCHRIFTUNG", teil))
@@ -355,11 +422,50 @@ elif auftrag == "zaehlen":
 PY
 }
 
-hole() {             # $1 pfad  $2 name -> Statuscode
-  local p="$ARBEIT/$2" st
+hole() {             # $1 pfad  $2 name  [$3 kekswert] -> Statuscode
+  local p="$ARBEIT/$2" st ex=()
+  [ -n "${3:-}" ] && ex=(-H "Cookie: fr_sitzung=$3")
   st=$(curl -sS -o "$p.rumpf" -D "$p.kopf" -w '%{http_code}' --max-time 25 \
-        "$BASIS$1" 2>"$p.fehler") || st="000"
+        ${ex[@]+"${ex[@]}"} "$BASIS$1" 2>"$p.fehler") || st="000"
+  [ -f "$p.kopf" ] && tr -d '\r' < "$p.kopf" > "$p.kopf.rein" && mv "$p.kopf.rein" "$p.kopf"
   printf '%s' "$st"
+}
+
+# ---------------------------------------------------------------------
+# Werkzeug: Die Sitzung
+#
+# Derselbe Weg durch die Tuer wie in vorpruefung_lauf.sh: der Lauf
+# stellt sich seinen Code selbst aus (K03-M15, Ableitung in
+# k19_kasten_daten.sql als pruef_codewert), sendet POST /anmeldung und
+# liest fr_sitzung aus der Antwort. Er kennt den Server nur durch seine
+# Tueren -- auch hier.
+#
+# FAIL-CLOSED: Gelingt das nicht, bleibt $KEKS leer und JEDER Bildschirm
+# mit der Marke "nach Anmeldung" meldet GESPERRT. Nie bestanden, und nie
+# gegen eine Fehlerseite gemessen.
+# ---------------------------------------------------------------------
+db() { psql -X -tAq -v ON_ERROR_STOP=1 -c "$1" 2>/dev/null; }
+
+sitzungswert() {     # $1 name -> der Wert des Sitzungskekses
+  grep -i '^set-cookie:[[:space:]]*fr_sitzung=' "$ARBEIT/$1.kopf" 2>/dev/null \
+    | head -1 | sed 's/^[^=]*=//' | cut -d';' -f1
+}
+
+anmelden() {         # $1 email  $2 code  $3 name -> setzt ANM_STATUS, ANM_KEKS
+  ANM_STATUS=""; ANM_KEKS=""
+  local p="$ARBEIT/$3"
+  db "DELETE FROM login_code
+       WHERE actor_id = (SELECT id FROM actor WHERE email='$1')
+         AND consumed_at IS NULL AND superseded_at IS NULL" >/dev/null || return 1
+  db "INSERT INTO login_code (actor_id, code_hash, issued_at, expires_at)
+      SELECT id, pruef_codewert('$2','$FREIRAUM_CODE_PFEFFER'), now(), now() + interval '10 minutes'
+        FROM actor WHERE email='$1'" >/dev/null || return 1
+  ANM_STATUS=$(curl -sS -o "$p.rumpf" -D "$p.kopf" -w '%{http_code}' --max-time 25 \
+        -X POST --data-urlencode "email=$1" --data-urlencode "code=$2" \
+        "$BASIS/anmeldung" 2>"$p.fehler") || ANM_STATUS="000"
+  [ -f "$p.kopf" ] && tr -d '\r' < "$p.kopf" > "$p.kopf.rein" && mv "$p.kopf.rein" "$p.kopf"
+  ANM_KEKS="$(sitzungswert "$3")"
+  [ -n "$ANM_KEKS" ]
 }
 
 printf 'FREIRAUM · K19-M01 — folgt die ausgelieferte Seite ihrem Kasten? Gegen %s\n' "$BASIS"
@@ -369,8 +475,8 @@ printf 'Referenz: %s\n\n' "$REFERENZ"
 # Ein Bildschirm, zwei Faelle. Die Schleife hat genau eine Zeile Daten
 # je Bildschirm: Kennung und Adresse. Alles Weitere steht im Kasten.
 # =====================================================================
-pruefe_bildschirm() {  # $1 Kennung  $2 Pfad
-  local kennung="$1" pfad="$2" el="$ARBEIT/$1.elemente" st anzahl fehlend folge
+pruefe_bildschirm() {  # $1 Kennung  $2 Pfad  [$3 Sitzungskeks]
+  local kennung="$1" pfad="$2" keks="${3:-}" el="$ARBEIT/$1.elemente" st anzahl fehlend folge
 
   if ! kasten_elemente "$kennung" > "$el" 2>"$ARBEIT/$1.kastenfehler"; then
     sperr "$kennung-A" "Die Build-Referenz fuehrt fuer $kennung keinen Kasten -- es gibt nichts, dem die Seite folgen koennte (K19-G01: fail-closed, der Bildschirm gilt als nicht belegt). Kein Baufehler."
@@ -385,7 +491,7 @@ pruefe_bildschirm() {  # $1 Kennung  $2 Pfad
     return
   fi
 
-  st="$(hole "$pfad" "$kennung")"
+  st="$(hole "$pfad" "$kennung" "$keks")"
   if [ "$st" != "200" ]; then
     sperr "$kennung-A" "GET $pfad antwortete mit $st statt 200 -- eine Fehlerseite gegen einen Kasten zu halten misst den Fehler, nicht den Kasten."
     sperr "$kennung-B" "GET $pfad antwortete mit $st statt 200."
@@ -412,11 +518,53 @@ pruefe_bildschirm() {  # $1 Kennung  $2 Pfad
   fi
 }
 
+# ---------------------------------------------------------------------
+# Die Sitzung fuer die Bildschirme mit der Marke "nach Anmeldung".
+#
+# Sie wird VOR den Faellen hergestellt und einmal. Jede Vorbedingung
+# wird einzeln geprueft und einzeln benannt: ein GESPERRT, das nicht
+# sagt WARUM, ist so wenig wert wie ein gruener Lauf, der nichts misst.
+#
+# Der Aufbau selbst (Konto AKTIV, Portal freigeschaltet) steht in
+# k19_kasten_daten.sql und wird DORT geprueft -- diese Datei liest nur,
+# ob er eingespielt ist. Fehlt die Sicht, ist die Datenlage unbekannt,
+# und ein Lauf gegen eine unbekannte Datenlage misst nichts (F07).
+# ---------------------------------------------------------------------
+KEKS=""; SITZUNG_GRUND=""
+if ! command -v psql >/dev/null 2>&1; then
+  SITZUNG_GRUND="psql fehlt -- ohne Datenbank stellt sich der Lauf keinen Anmeldecode aus (K03-M15)"
+elif [ -z "${FREIRAUM_CODE_PFEFFER:-}" ]; then
+  SITZUNG_GRUND="FREIRAUM_CODE_PFEFFER ist nicht gesetzt -- der ausgestellte Code traege einen anderen Pruefwert als der Server erwartet, und die Anmeldung scheiterte an der Pruefdatenlage statt am Kasten (F07)"
+elif [ -z "$(db 'SELECT 1')" ]; then
+  SITZUNG_GRUND="die Datenbank $PGDATABASE auf $PGHOST:$PGPORT ist nicht erreichbar"
+elif [ "$(db "SELECT count(*) FROM pg_views WHERE viewname='pruef_k19_kasten_lage'")" != "1" ]; then
+  SITZUNG_GRUND="die Sicht pruef_k19_kasten_lage fehlt -- pruefungen/klauseln/k19_kasten_daten.sql ist nicht eingespielt"
+elif [ "$(db "SELECT count(*) FROM pruef_k19_kasten_lage WHERE email='k19_seite@k19pruef.example' AND status='AKTIV' AND freigeschaltete_portale >= 1")" != "1" ]; then
+  SITZUNG_GRUND="das Konto k19_seite@k19pruef.example ist nicht aktiv oder gehoert keinem freigeschalteten Portal an -- die Anmeldung scheiterte an einer fremden Bedingung (F07)"
+elif ! anmelden 'k19_seite@k19pruef.example' '190001' k19anm; then
+  SITZUNG_GRUND="die Anmeldung von k19_seite@k19pruef.example scheiterte (Status $ANM_STATUS, kein fr_sitzung in der Antwort)"
+else
+  KEKS="$ANM_KEKS"
+fi
+printf 'Sitzung: %s\n\n' "$( [ -n "$KEKS" ] && printf 'steht' || printf 'KEINE — %s' "$SITZUNG_GRUND" )"
+
 # EN-01 · Anmeldung · Zugangsmarke "offen" (K19 Abschn. 6).
 # Die Adresse /anmeldung stammt aus der Wegetabelle des Scheibenplans,
 # nicht aus der Vorlage: dieselbe Adresse, gegen die VP-01 misst, dass
-# jeder Aufruf ohne Sitzung dort endet.
+# jeder Aufruf ohne Sitzung dort endet. Bewusst OHNE Keks geholt -- die
+# Marke lautet "offen", und ein Bildschirm, den nur ein Angemeldeter
+# sieht, traegt sie nicht.
 pruefe_bildschirm EN-01 /anmeldung
+
+# EN-03 · Direkt-Prototyp-Check · Zugangsmarke "nach Anmeldung".
+# Die Adresse /vorpruefung stammt aus derselben Wegetabelle; VP-04 misst
+# gegen sie die beiden Wege des Bildschirms.
+if [ -z "$KEKS" ]; then
+  sperr EN-03-A "Ohne Sitzung nicht messbar: $SITZUNG_GRUND"
+  sperr EN-03-B "Ohne Sitzung nicht messbar: $SITZUNG_GRUND"
+else
+  pruefe_bildschirm EN-03 /vorpruefung "$KEKS"
+fi
 
 # EN-04a · Zweckbestimmung. Der Bildschirm besteht in
 # schema/K19_screens.yaml, die Build-Referenz fuehrt fuer ihn aber

@@ -83,6 +83,28 @@
 #     app mit Vorgabe EUR und kennt keinen Mandanten mit einer anderen;
 #     ein Fall dazu haette nichts, wogegen er scheitern koennte.
 #     Ausgewiesen als GESPERRT.
+#
+# ---------------------------------------------------------------------
+# 3. DIE PROBE VERUNREINIGT IHRE EIGENE MESSUNG NICHT (ab 19.08.2026)
+# ---------------------------------------------------------------------
+# Befund vom 19.08.2026, PRUEFFEHLER: ZB-05, ZB-07 und ZB-08 haben die
+# ABSOLUTE Zahl der Anwendungen im Mandanten gemessen -- also die Summe
+# aller vier Fahrten und aller Proben dieses Laufs. ZB-12 las aus
+# demselben Grund "die neueste Anwendung des Mandanten" statt der
+# Anwendung ihrer Fahrt. Und die Kandidatenprobe sandte den Weiterweg,
+# der danach ein zweites Mal gesandt wurde -- ein verbrauchter Schritt,
+# aus dessen Antwort die Ziele abgeleitet wurden (ZB-06).
+#
+# Seither gilt in dieser Datei ohne Ausnahme:
+#
+#   Jede Wirkungsmessung bezieht sich auf den fit_check DER GEPRUEFTEN
+#   FAHRT oder auf einen Stand, der VOR DIESER FAHRT genommen wurde.
+#   Nie auf den Mandanten als Ganzes.
+#
+# Die Staende stehen vor Fahrt 1, 3 und 4; die Begruendung im Einzelnen
+# im Block "DIE STAENDE VOR DEN FAHRTEN". Keine Bedingung ist dabei
+# weggefallen oder weicher geworden (K23-D05) -- sie zeigen nur noch auf
+# ihre eigene Fahrt.
 # =====================================================================
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
@@ -741,14 +763,61 @@ zweck_antwort() {    # $1 keks  $2 name  $3 feld  $4 wert
   sende "${ANTWORT_ZIEL:-$ZWECK_PFAD}" "$2" "$1" ${VERBORGEN[@]+"${VERBORGEN[@]}"} ${f[@]+"${f[@]}"}
 }
 
+# =====================================================================
+# DIE STAENDE VOR DEN FAHRTEN -- und warum es sie gibt
+# ---------------------------------------------------------------------
+# BEFUND VOM 19.08.2026 · PRUEFFEHLER, kein Baufehler.
+# ZB-05, ZB-07 und ZB-08 haben ihre Wirkung an der ABSOLUTEN Zahl der
+# Anwendungen im Mandanten gemessen: "es entstanden $apps Anwendungen im
+# Mandanten". Diese Zahl ist die Summe ALLER Fahrten und aller Proben
+# dieses Laufs -- und sie waechst mit jeder.
+#
+# Der Beleg, an dem es aufgefallen ist: ZB-07 beklagte eine Anwendung im
+# Mandanten und beklagte fit_check.app_id der verbotenen Fahrt NICHT.
+# Die verbotene Fahrt selbst hatte also nichts angelegt; gezaehlt wurde
+# die Spur einer FREMDEN Fahrt.
+#
+# Woher die Spur stammt: Die Kandidatenprobe oben MUSS jeden Kandidaten
+# absenden -- anders ist der Anlageweg nicht zu erkennen. Der Kandidat,
+# der besteht, legt dabei eine Anwendung an, und die bleibt liegen. Die
+# Probe kann ihre eigene Spur nicht vermeiden. Sie muss sie ABZIEHEN.
+#
+# Also gilt ab jetzt fuer JEDE Wirkungsmessung dieses Laufs:
+#
+#   Gemessen wird gegen den fit_check DER GEPRUEFTEN FAHRT oder gegen
+#   einen Stand, der VOR DIESER FAHRT genommen wurde. Nie gegen den
+#   Mandanten als Ganzes.
+#
+# Deshalb stehen hier die Staende. Sie werden im Augenblick genommen, auf
+# den sich die jeweilige Klausel bezieht -- nicht am Ende des Laufs, wo
+# alle vier Fahrten und alle Proben schon durchgelaufen sind.
+#
+# Kein Fall wird dadurch nachgiebiger (K23-D05): jede Bedingung bleibt
+# wortgleich, sie bezieht sich nur noch auf ihre eigene Fahrt. Eine
+# Anwendung, die die gepruefte Fahrt anlegt, faellt weiter auf.
+# =====================================================================
+anz_apps() {         # $1 mandant -> Anwendungen des ganzen Mandanten
+  # NUR fuer Staende, die unmittelbar vor und nach EINEM Schritt genommen
+  # werden. Als absolute Zahl misst sie die Summe aller Proben.
+  dbz "SELECT count(*) FROM app WHERE tenant_id='$1'"
+}
+apps_vom_check() {   # $1 fit_check -> Anwendungen, die auf DIESEN Check zeigen
+  # Die fahrtgebundene Gegenrichtung zu fit_check.app_id. K04-M17
+  # verlangt die Verknuepfung beidseitig; eine Anwendung, die diesen
+  # Check traegt, gehoert dieser Fahrt -- und keiner anderen.
+  dbz "SELECT count(*) FROM app WHERE fit_check_id='$1'"
+}
+
 # ---------------------------------------------------------------------
 # Fahrt 1 · zb_frei · beide Fragen NEIN -> W6
 # Dabei entstehen die drei Zielmengen, aus deren UNTERSCHIED das Ziel
 # "Weiter" abgeleitet wird.
 # ---------------------------------------------------------------------
 ZIELE_NULL=""; ZIELE_EINS=""; ZIELE_ZWEI=""; ZIELE_FREI=""
-WEITER_ZIEL=""; WEITER_GRUND=""
+WEITER_ZIEL=""; WEITER_GRUND=""; WEITER_PROBE=""
+APPS_VOR_FREI=""; APPS_NACH_ZWEI_NEIN=""
 if [ -n "$ZWECK_PFAD" ]; then
+  APPS_VOR_FREI="$(anz_apps "$MANDANT_A")"
   ZIELE_NULL="$(zieltexte zb_f0)"
   zweck_antwort "$KEKS_FREI" zb_f1 "$FELD1" "$NEIN1" >/dev/null
   hole "$ZWECK_PFAD" zb_f1s "$KEKS_FREI" >/dev/null
@@ -756,6 +825,11 @@ if [ -n "$ZWECK_PFAD" ]; then
   zweck_antwort "$KEKS_FREI" zb_f2 "$FELD2" "$NEIN2" >/dev/null
   hole "$ZWECK_PFAD" zb_f2s "$KEKS_FREI" >/dev/null
   ZIELE_ZWEI="$(zieltexte zb_f2s)"
+  # Der Stand fuer ZB-05, an GENAU der Stelle genommen, auf die sich die
+  # Klausel bezieht: beide Zweckfragen sind beantwortet, der Weg zur
+  # Anlage ist noch NICHT gegangen. Alles, was danach kommt -- auch die
+  # Kandidatenprobe --, gehoert nicht mehr in diese Messung.
+  APPS_NACH_ZWEI_NEIN="$(anz_apps "$MANDANT_A")"
 
   # Das Ziel "Weiter": erscheint erst mit der zweiten Antwort. Die
   # fruehere Fassung verlangte, dass GENAU EIN Ziel neu erscheint --
@@ -805,7 +879,7 @@ if [ -n "$ZWECK_PFAD" ]; then
     cid_w="$(dbz "SELECT c.id::text FROM fit_check c JOIN actor a ON a.id=c.actor_id
                    WHERE a.email='zb_frei@zbpruef.example' ORDER BY c.started_at DESC LIMIT 1")"
     vorher_w="$(dbz "SELECT count(*) FROM app WHERE tenant_id='$MANDANT_A'")"
-    treffer_w=(); i_w=0
+    treffer_w=(); treffer_probe_w=(); i_w=0
     while IFS= read -r kand; do
       [ -n "$kand" ] || continue
       i_w=$((i_w+1))
@@ -822,7 +896,12 @@ if [ -n "$ZWECK_PFAD" ]; then
                         WHERE app_id='$rueck_w' AND state='DISCOVERY'
                           AND upper_inf(gueltig)")"
         fi
-        [ "${ev_w:-0}" -ge 1 ] && treffer_w+=("$kand")
+        if [ "${ev_w:-0}" -ge 1 ]; then
+          treffer_w+=("$kand")
+          # Welche Antwort der Probe zu diesem Kandidaten gehoert. Sie
+          # ist der Weiterweg, EINMAL gegangen -- siehe unten.
+          treffer_probe_w+=("zb_f3_probe$i_w")
+        fi
       fi
       vorher_w="$nachher_w"
     done <<EOF
@@ -830,6 +909,7 @@ $neu
 EOF
     if [ "${#treffer_w[@]}" = "1" ]; then
       WEITER_ZIEL="${treffer_w[0]}"
+      WEITER_PROBE="${treffer_probe_w[0]}"
     else
       WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem; die Wirkung (genau eine neue Anwendungszeile, Eignungs-Check-Verweis darauf, offene Verlaufszeile app_state_history mit Zustand DISCOVERY) grenzt sie nicht auf einen einzigen Kandidaten ein (${#treffer_w[@]} erfuellen sie) -- Kandidaten: $(printf '%s' "$neu" | tr '\n' ' ')"
     fi
@@ -837,7 +917,31 @@ EOF
     WEITER_GRUND="mit beiden Antworten erscheint kein neues Ziel"
   fi
   if [ -n "$WEITER_ZIEL" ]; then
-    sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+    # DIE SPUR DER PROBE ABZIEHEN -- der zweite Grund des Befundes vom
+    # 19.08.2026, und der schwerere.
+    #
+    # Hier stand bis heute ein zweites `sende "$WEITER_ZIEL" zb_f3`.
+    # Hatte die Kandidatenprobe den Weiterweg schon gesendet -- und das
+    # MUSS sie, sonst erkennt sie ihn nicht --, dann wurde der Schritt
+    # ZWEIMAL gegangen. Beim zweiten Mal war er verbraucht: die Anwendung
+    # bestand bereits. Was danach als "Seite nach dem Weiterweg" gelesen
+    # wurde, war in Wahrheit die Seite nach einem WIEDERHOLTEN Weiterweg.
+    # Aus dieser Seite entstehen ZIELE_FREI und daraus KENNTNIS_ZIEL und
+    # ANLEGEN_ZIEL -- deshalb fand ZB-06 "drei Ziele statt einem".
+    #
+    # Die Probe kann ihre Spur nicht vermeiden. Also wird sie abgezogen,
+    # indem der Schritt NICHT wiederholt wird: die Antwort der Probe IST
+    # die Antwort auf den Weiterweg. Sie wird uebernommen statt neu
+    # geholt.
+    #
+    # Ohne Probe (genau ein neues Ziel) ist $WEITER_PROBE leer -- dann
+    # ist dieses `sende` das erste und einzige, wie bisher.
+    if [ -n "${WEITER_PROBE:-}" ]; then
+      cp "$ARBEIT/$WEITER_PROBE.rumpf" "$ARBEIT/zb_f3.rumpf" 2>/dev/null
+      cp "$ARBEIT/$WEITER_PROBE.kopf"  "$ARBEIT/zb_f3.kopf"  2>/dev/null
+    else
+      sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+    fi
     ziel3="$(nur_pfad "$(kopfzeile zb_f3 location)")"
     [ -n "$ziel3" ] && hole "$ziel3" zb_f3s "$KEKS_FREI" >/dev/null || cp "$ARBEIT/zb_f3.rumpf" "$ARBEIT/zb_f3s.rumpf" 2>/dev/null
     ZIELE_FREI="$(zieltexte zb_f3s)"
@@ -867,8 +971,13 @@ fi
 # Fahrt 3 · zb_verboten · Frage 1 NEIN, Frage 2 JA -> W3 (Halt)
 # ---------------------------------------------------------------------
 KEKS_VERBOTEN=""; ZIELE_HALT=""; VERBOTEN_GRUND=""
+APPS_VOR_VERBOTEN=""; APPS_NACH_VERBOTEN=""
 if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_verboten@zbpruef.example' '820003' zbverb; then
   KEKS_VERBOTEN="$FAHRT_KEKS"
+  # Der Stand VOR dieser Fahrt. Was die Fahrten 1 und 2 und die
+  # Kandidatenprobe hinterlassen haben, steht schon darin und wird damit
+  # abgezogen (Befund vom 19.08.2026, siehe oben).
+  APPS_VOR_VERBOTEN="$(anz_apps "$MANDANT_A")"
   zweck_antwort "$KEKS_VERBOTEN" zb_v1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_VERBOTEN" zb_v2 "$FELD2" "$JA2"   >/dev/null
   if [ -n "$WEITER_ZIEL" ]; then
@@ -877,6 +986,7 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_verboten@zbpruef.example' '820003' z
     [ -n "$z" ] && hole "$z" zb_v3s "$KEKS_VERBOTEN" >/dev/null || cp "$ARBEIT/zb_v3.rumpf" "$ARBEIT/zb_v3s.rumpf" 2>/dev/null
     ZIELE_HALT="$(zieltexte zb_v3s)"
   fi
+  APPS_NACH_VERBOTEN="$(anz_apps "$MANDANT_A")"
 else
   VERBOTEN_GRUND="${FAHRT_GRUND:-$ZWECK_GRUND}"
 fi
@@ -885,8 +995,10 @@ fi
 # Fahrt 4 · zb_beide · Frage 1 JA UND Frage 2 JA -> der Vorrangfall
 # ---------------------------------------------------------------------
 KEKS_BEIDE=""; BEIDE_GRUND=""
+APPS_VOR_BEIDE=""; APPS_NACH_BEIDE=""
 if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_beide@zbpruef.example' '820004' zbbeide; then
   KEKS_BEIDE="$FAHRT_KEKS"
+  APPS_VOR_BEIDE="$(anz_apps "$MANDANT_A")"
   zweck_antwort "$KEKS_BEIDE" zb_b1 "$FELD1" "$JA1" >/dev/null
   zweck_antwort "$KEKS_BEIDE" zb_b2 "$FELD2" "$JA2" >/dev/null
   if [ -n "$WEITER_ZIEL" ]; then
@@ -894,6 +1006,7 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_beide@zbpruef.example' '820004' zbbe
     z="$(nur_pfad "$(kopfzeile zb_b3 location)")"
     [ -n "$z" ] && hole "$z" zb_b3s "$KEKS_BEIDE" >/dev/null || cp "$ARBEIT/zb_b3.rumpf" "$ARBEIT/zb_b3s.rumpf" 2>/dev/null
   fi
+  APPS_NACH_BEIDE="$(anz_apps "$MANDANT_A")"
 else
   BEIDE_GRUND="${FAHRT_GRUND:-$ZWECK_GRUND}"
 fi
@@ -922,9 +1035,8 @@ printf 'Entdeckung: Ziel Weiter = %s · Ziel Kenntnisnahme = %s · Ziel Anlage =
   "${WEITER_ZIEL:-NICHT BESTIMMBAR}" "${KENNTNIS_ZIEL:-NICHT BESTIMMBAR}" "${ANLEGEN_ZIEL:-NICHT BESTIMMBAR}"
 
 # Hilfsfunktionen fuer die Auswertung
-anz_apps() {         # $1 mandant
-  dbz "SELECT count(*) FROM app WHERE tenant_id='$1'"
-}
+# anz_apps() und apps_vom_check() stehen weiter oben, vor Fahrt 1 --
+# die Staende vor den Fahrten brauchen sie schon dort.
 check_von() {        # $1 email -> die Kennung seines juengsten Checks
   dbz "SELECT c.id::text FROM fit_check c JOIN actor a ON a.id=c.actor_id
         WHERE a.email='$1' ORDER BY c.started_at DESC LIMIT 1"
@@ -1153,8 +1265,18 @@ else
   enthaelt_lose zb_f3s 'Artikel 5'  && m="$m der Verweis auf Artikel 5 steht auch ohne Treffer in Frage 2 auf der Seite (K04-M20);"
   enthaelt_lose zb_f3s 'Art. 5'     && m="$m der Verweis auf Art. 5 steht auch ohne Treffer in Frage 2 auf der Seite (K04-M20);"
   [ -n "$ANLEGEN_ZIEL" ] || m="$m der Weg zur Anlage ist nicht bestimmbar: $ANLEGEN_GRUND;"
-  apps="$(anz_apps "$MANDANT_A")"
-  [ "${apps:-0}" = "0" ] || m="$m es entstand schon eine Anwendung, bevor der Weg zur Anlage gegangen wurde ($apps) -- W7 ist dann kein eigener Schritt mehr und K04-M18 nicht pruefbar;"
+  # BERICHTIGT 19.08.2026: Hier stand die ABSOLUTE Zahl der Anwendungen
+  # im Mandanten -- sie enthielt die Spur der Kandidatenprobe und aller
+  # spaeteren Fahrten. Gemessen wird jetzt der Zuwachs zwischen dem Stand
+  # VOR dieser Fahrt und dem Stand unmittelbar nach der zweiten Antwort,
+  # also genau an der Stelle, auf die sich die Klausel bezieht.
+  # Die Bedingung selbst ist wortgleich geblieben.
+  if [ -z "$APPS_VOR_FREI" ] || [ -z "$APPS_NACH_ZWEI_NEIN" ]; then
+    m="$m der Stand vor der Fahrt wurde nicht genommen -- ohne ihn ist der Zuwachs nicht messbar;"
+  else
+    zuwachs=$(( APPS_NACH_ZWEI_NEIN - APPS_VOR_FREI ))
+    [ "$zuwachs" = "0" ] || m="$m es entstand schon eine Anwendung, bevor der Weg zur Anlage gegangen wurde (Zuwachs $zuwachs zwischen dem Stand vor der Fahrt und dem Stand nach der zweiten Antwort) -- W7 ist dann kein eigener Schritt mehr und K04-M18 nicht pruefbar;"
+  fi
   [ -z "$m" ] && ok ZB-05 'Beide Zweckfragen verneint: weder Anhang-III-Warnung noch Artikel-5-Verweis, der Weg zur Anlage wird frei und noch keine Anwendung angelegt (W6)' \
               || nok ZB-05 "Kein Treffer:$m"
 fi
@@ -1209,9 +1331,18 @@ pruefe_sql_marke
 if [ -z "$ZIELE_HALT" ]; then
   sperr ZB-07 "Nicht messbar: ${VERBOTEN_GRUND:-die Fahrt mit Treffer in Frage 2 kam nicht bis zur Auswertung}"
 else
-  apps="$(anz_apps "$MANDANT_A")"
   cid="$(check_von 'zb_verboten@zbpruef.example')"
   appid="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid'")"
+  # BERICHTIGT 19.08.2026 -- der Fall, an dem der Befund aufgefallen ist.
+  # Hier stand die ABSOLUTE Zahl der Anwendungen im Mandanten. Sie
+  # beklagte "1 Anwendung", waehrend fit_check.app_id dieser Fahrt leer
+  # war: gezaehlt wurde die Spur der Kandidatenprobe aus Fahrt 1.
+  # Jetzt zwei fahrtgebundene Messungen statt einer mandantenweiten:
+  #   * der Zuwachs zwischen dem Stand VOR und NACH DIESER Fahrt
+  #   * die Anwendungen, die auf DIESEN Check zeigen (K04-M17, die
+  #     Gegenrichtung zu app_id -- sie faengt auch eine Anwendung, die
+  #     einseitig verknuepft wurde)
+  apps_check="$(apps_vom_check "$cid")"
   m=""
   { enthaelt_lose zb_v3s 'Artikel 5' || enthaelt_lose zb_v3s 'Art. 5'; } \
     || m="$m der Halt verweist nicht auf Artikel 5 (K04-M20);"
@@ -1229,7 +1360,13 @@ else
     && m="$m nach dem Treffer in Frage 2 steht der Weg zur Anlage '$ANLEGEN_ZIEL' offen (K04-D10);"
   enthaelt_lose zb_v3s 'Anhang III' \
     && m="$m der Halt zeigt die Warnung zu Anhang III statt des Grundes nach Artikel 5 (K04-M20: 'stattdessen');"
-  [ "${apps:-0}" = "0" ] || m="$m es entstanden $apps Anwendungen im Mandanten (K04-D10);"
+  if [ -z "$APPS_VOR_VERBOTEN" ] || [ -z "$APPS_NACH_VERBOTEN" ]; then
+    m="$m der Stand vor der Fahrt wurde nicht genommen -- ohne ihn ist der Zuwachs nicht messbar;"
+  else
+    zuwachs=$(( APPS_NACH_VERBOTEN - APPS_VOR_VERBOTEN ))
+    [ "$zuwachs" = "0" ] || m="$m die verbotene Fahrt legte $zuwachs Anwendung(en) an (Zuwachs zwischen dem Stand vor und nach dieser Fahrt) (K04-D10);"
+  fi
+  [ "${apps_check:-0}" = "0" ] || m="$m $apps_check Anwendung(en) tragen den Eignungs-Check dieser Fahrt als fit_check_id (K04-D10, K04-M17);"
   [ "$appid" = "(leer)" ] || m="$m fit_check.app_id traegt '$appid' statt leer;"
   [ -z "$m" ] && ok ZB-07 'Treffer in Frage 2: Halt mit Grund und Verweis auf Artikel 5, keine Kenntnisnahme, kein Weg zur Anlage, keine Anwendung (K04-M20, K04-D10)' \
               || nok ZB-07 "Treffer in Frage 2:$m"
@@ -1254,10 +1391,38 @@ pruefe_sql_marke
 if [ -z "$KEKS_BEIDE" ] || [ ! -f "$ARBEIT/zb_b3s.rumpf" ]; then
   sperr ZB-08 "Nicht messbar: ${BEIDE_GRUND:-die Fahrt mit beiden Treffern kam nicht bis zur Auswertung}"
 else
-  apps="$(anz_apps "$MANDANT_A")"
   cid="$(check_von 'zb_beide@zbpruef.example')"
   appid="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid'")"
-  nw="$(nachweise 'zb_beide@zbpruef.example')"
+  apps_check="$(apps_vom_check "$cid")"
+  # Der Nachweis der Kenntnisnahme -- GETRENNT gemessen und GETRENNT
+  # gemeldet (Auflage vom 19.08.2026).
+  #
+  # Bisher stand hier eine einzige Zahl aus nachweise(). Sie zaehlt zwei
+  # ganz verschiedene Dinge zusammen:
+  #   (a) fit_check.zweckbestimmung_ack_at -- der Traeger, den K04-G12
+  #       als eigene Spalte offenlaesst. Er gehoert eindeutig DIESEM
+  #       Check und bedeutet eindeutig eine Kenntnisnahme.
+  #   (b) ein Ereignis, dessen action eines von KENNTNIS, ACK, ZWECK oder
+  #       ANHANG enthaelt und das DIESEN Check nennt. Auch das ist an die
+  #       Fahrt gebunden -- aber "ZWECK" trifft ebenso ein Ereignis, das
+  #       nur die BEANTWORTUNG der beiden Zweckfragen protokolliert, und
+  #       die hat in dieser Fahrt stattgefunden.
+  #
+  # Ob der Fund also eine Kenntnisnahme ist oder eine Zweckerklaerung,
+  # entscheidet der WORTLAUT der action -- und der wird ab jetzt
+  # mitgemeldet, statt in einer Summe zu verschwinden. Keine der beiden
+  # Bedingungen ist weggefallen; beide lassen den Fall weiterhin fallen.
+  nw_spalte=0
+  if [ "${ACK_SPALTE:-0}" = "1" ]; then
+    nw_spalte="$(dbz "SELECT count(*) FROM fit_check
+                       WHERE id='$cid' AND zweckbestimmung_ack_at IS NOT NULL")"
+  fi
+  nw_ereignisse="$(dbz "SELECT coalesce(string_agg(DISTINCT action, ', ' ORDER BY action), '')
+                          FROM event
+                         WHERE (action ILIKE '%KENNTNIS%' OR action ILIKE '%ACK%'
+                                OR action ILIKE '%ZWECK%' OR action ILIKE '%ANHANG%')
+                           AND (coalesce(object_ref,'') LIKE '%$cid%'
+                                OR coalesce(value,'')  LIKE '%$cid%')")"
   m=""
   { enthaelt_lose zb_b3s 'Artikel 5' || enthaelt_lose zb_b3s 'Art. 5'; } \
     || m="$m obwohl Frage 2 zutrifft, verweist die Seite nicht auf Artikel 5 -- Frage 1 hat den Vorrang bekommen (K04-D10);"
@@ -1267,9 +1432,19 @@ else
     && m="$m die Kenntnisnahme '$KENNTNIS_ZIEL' steht offen, obwohl Frage 2 zutrifft -- dort heilt keine Bestaetigung (K04-D10);"
   [ -n "$ANLEGEN_ZIEL" ] && fuehrt_zu zb_b3s "$ANLEGEN_ZIEL" \
     && m="$m der Weg zur Anlage steht offen, obwohl Frage 2 zutrifft (K04-D10);"
-  [ "${apps:-0}" = "0" ] || m="$m es entstanden $apps Anwendungen im Mandanten (K04-D10);"
+  if [ -z "$APPS_VOR_BEIDE" ] || [ -z "$APPS_NACH_BEIDE" ]; then
+    m="$m der Stand vor der Fahrt wurde nicht genommen -- ohne ihn ist der Zuwachs nicht messbar;"
+  else
+    zuwachs=$(( APPS_NACH_BEIDE - APPS_VOR_BEIDE ))
+    [ "$zuwachs" = "0" ] || m="$m die Fahrt mit beiden Treffern legte $zuwachs Anwendung(en) an (Zuwachs zwischen dem Stand vor und nach dieser Fahrt) (K04-D10);"
+  fi
+  [ "${apps_check:-0}" = "0" ] || m="$m $apps_check Anwendung(en) tragen den Eignungs-Check dieser Fahrt als fit_check_id (K04-D10, K04-M17);"
   [ "$appid" = "(leer)" ] || m="$m fit_check.app_id traegt '$appid' statt leer;"
-  [ "${nw:-0}" = "0" ] || m="$m es wurde ein Nachweis der Kenntnisnahme geschrieben, obwohl Frage 2 zutrifft (K04-D10);"
+  # Zwei getrennte Bedingungen, zwei getrennte Meldungen.
+  [ "${nw_spalte:-0}" = "0" ] \
+    || m="$m fit_check.zweckbestimmung_ack_at ist gesetzt -- die Kenntnisnahme wurde in DIESER Fahrt vermerkt, obwohl Frage 2 zutrifft (K04-D10);"
+  [ -z "$nw_ereignisse" ] \
+    || m="$m auf dem Eignungs-Check dieser Fahrt stehen Ereignisse mit den Merkmalen der Kenntnisnahme -- action im Wortlaut: [$nw_ereignisse]. Traegt eines davon nur die BEANTWORTUNG der Zweckfragen, ist das Merkmal 'ZWECK' zu weit gefasst und der Befund gehoert der Pruefung; nennt es die Kenntnisnahme, gehoert er dem Bau (K04-D10);"
   [ -z "$m" ] && ok ZB-08 'Frage 1 UND Frage 2 treffen zu: es gilt der Halt nach Frage 2 — kein Anhang-III-Weg, keine Kenntnisnahme, keine Anwendung. Der Vorrang der zweiten Frage haelt (K04-D10 vor K04-D09)' \
               || nok ZB-08 "Vorrang der zweiten Frage:$m"
 fi
@@ -1434,9 +1609,16 @@ else
   vorher="$(anz_apps "$MANDANT_A")"
   st=$(sende "$ANLEGEN_ZIEL" zb_a6 "$KEKS_ANHANG" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
   nachher="$(anz_apps "$MANDANT_A")"
+  # BERICHTIGT 19.08.2026, gleicher Befund wie bei ZB-05/07/08:
+  # Hier stand "die neueste Anwendung DES MANDANTEN" (ORDER BY
+  # project_no DESC ueber tenant_id). Das ist nicht notwendig die
+  # Anwendung DIESER Fahrt -- die Kandidatenprobe legt eine eigene an,
+  # und deren Nummer kann die hoehere sein. Gelesen wird jetzt die Zeile,
+  # die den Eignungs-Check dieser Fahrt traegt.
+  # Die Bedingungen bleiben wortgleich; nur der ZUGRIFF ist gebunden.
   zeile="$(dbz "SELECT concat_ws('|', a.project_no, a.lifecycle_state::text, a.currency::text,
                        coalesce(a.fit_check_id::text,'(leer)'))
-                  FROM app a WHERE a.tenant_id='$MANDANT_A'
+                  FROM app a WHERE a.fit_check_id='$cid'
                  ORDER BY a.project_no DESC LIMIT 1")"
   rueck="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid'")"
   APP_NR_1="$(printf '%s' "$zeile" | cut -d'|' -f1)"
@@ -1445,7 +1627,7 @@ else
   [ "$((nachher - vorher))" = "1" ] || m="$m es entstanden $((nachher - vorher)) Anwendungen statt genau einer;"
   case "$zeile" in
     *"|DISCOVERY|EUR|$cid") : ;;
-    "") m="$m es entstand keine Anwendungszeile;";;
+    "") m="$m keine Anwendungszeile traegt den Eignungs-Check dieser Fahrt ($cid) -- entweder entstand keine, oder sie wurde ohne die Verknuepfung angelegt (K04-M17);";;
     *)  m="$m die Zeile steht auf '$zeile' -- erwartet waren Zustand DISCOVERY, Waehrung EUR und die Verknuepfung auf den Check $cid (K04-M17, K01-M27);";;
   esac
   # K04-M17: beidseitig. Die Anwendung zeigt auf den Check (oben) UND
