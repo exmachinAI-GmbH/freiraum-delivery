@@ -79,6 +79,31 @@
     <p class="hinweis">Dieser Bildschirm aendert nichts. Ein Vorgang entsteht
       erst im naechsten Schritt.</p>
 
+    {#
+      DER DAUERHINWEIS. Der Kasten aus K19 fuehrt ihn als letzte Zeile von
+      EN-02: "Dauerhinweis: KI-Vorschlaege koennen Fehler enthalten." Er
+      fehlte hier (Blatt 94 Abschn. 4).
+
+      ER IST NICHT DER HINWEIS AUS L9. Die beiden werden leicht
+      verwechselt, sind aber verschiedene Dinge:
+
+        app/ki_hinweis.py   der Hinweis nach Artikel 4 der KI-Verordnung.
+                            Er erscheint EINMAL, vor der ersten Nutzung, auf
+                            EN-01, und seine Kenntnisnahme ist nachweisbar
+                            (Bauaufgabe L9, K04-M21).
+        dieser Satz         ein DAUERhinweis. Er steht immer da, wird nie
+                            bestaetigt und traegt keinen Nachweis.
+
+      Deshalb kommt sein Wortlaut nicht aus dem Modul, sondern aus dem
+      Kasten: es ist eine Beschriftung, keine Willenserklaerung.
+
+      Er steht am Fuss des Bildschirms, wie im Kasten -- nicht in einer
+      Fusszeile ausserhalb des Inhalts. K19-D06 und L9 Kriterium 1 wenden
+      sich beide gegen versteckte Hinweise.
+    #}
+    <p class="hinweis">Dauerhinweis: KI-Vorschlaege koennen Fehler
+      enthalten.</p>
+
     <form method="post" action="/abmelden">
       <button type="submit">Ausloggen</button>
     </form>
