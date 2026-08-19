@@ -155,9 +155,19 @@ Zielbedingung; das Ergebnis war ein bestandener Test, der nichts misst
 `migrations/pruefe_negativfaelle.sh`:2–5). **K23-D05** verbietet, einen Prüfwert zu senken,
 damit ein Lauf besteht; die Trennung setzt das mechanisch durch.
 
-**Die Pfadgrenzen sind Anweisung, nicht Mechanik.** Das Werkzeugfeld im Frontmatter
-beschränkt Werkzeuge, nicht Pfade. Wer die Blindheit mechanisch will, braucht `deny`-Regeln
-in `.claude/settings.json`. Diese Datei existiert noch nicht — **offener Punkt**.
+**Die Pfadgrenzen sind teils Mechanik, teils Anweisung.** Das Werkzeugfeld im Frontmatter
+beschränkt Werkzeuge, nicht Pfade. `.claude/settings.json` **existiert** und sperrt Schreib-
+zugriffe auf die Konzept-Fabrik (`10_KNOWLEDGE_REPO/**`, `v2.9_PIVOT/**`,
+`30_DELIVERY_HARNESS/**`).
+
+*Berichtigt am 19.08.2026. Zuvor stand hier, die Datei existiere nicht — und der Orchestrator
+hat sich am 18.08. darauf verlassen, statt nachzusehen.*
+
+**Was sie NICHT abdeckt, und das ist der offene Punkt:** Die Regeln greifen nach **Werkzeug**,
+nicht nach Pfad — gesperrt sind `Edit` und `Write`, nicht die Kommandozeile. Ein `cat >>` geht
+daran vorbei; genau so ist am 18.08.2026 in `config/kanon.yaml` geschrieben worden.
+**Die Blindheit des Prüf-Agenten ist unverändert Anweisung, nicht Mechanik.**
+Beides steht in Blatt 97 (BEF-HARNESS-1) mit Vorschlag zur Behebung.
 
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag
