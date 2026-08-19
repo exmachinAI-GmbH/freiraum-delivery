@@ -23,3 +23,6 @@ build/
 
 # Merker des AC-16-Echtversands (traegt eine Adresse)
 .ac16_empfaenger
+
+# Arbeitsbaeume der Subagenten -- keine Lieferung
+.claude/worktrees/
