@@ -1,6 +1,6 @@
-# M5 · Ist der erste Bauzug erreicht? — **Nein.** Was fehlt, und was davon schon erledigt ist
+# M5 · Ist der erste Bauzug erreicht? — **am Abend des 19.08. noch nicht; mit B-1 bis B-3 ist er freigegeben**
 
-**19.08.2026, abends · Vorlage zur Zeichnung · drei Zeilen, mehr braucht es an Unterschriften nicht**
+**19.08.2026, abends · GEZEICHNET — B-1, B-2 und B-3 tragen ihr Kreuz**
 
 Die Behauptung *„damit ist der erste Bauzug an M5 erreicht"* ist geprüft worden — mit drei
 adversarialen Linsen (formal · baulich · prüfseitig) und einer Zusammenführung, die jeden Beleg
@@ -51,7 +51,7 @@ Anlegen, kein Ändern"*).
 Ohne eine benannte Zuständigkeit kann dieser Teil nicht beginnen, **ohne die gezeichnete
 Rollentrennung zu verletzen**.
 
-`☐` **Ich lege fest:** V-7, V-10, V-11, V-12 und V-13 führt der **Orchestrator** aus; die
+`x` **Ich lege fest:** V-7, V-10, V-11, V-12 und V-13 führt der **Orchestrator** aus; die
 Schreibgrenze des Bau-Agenten bleibt unverändert. *(Empfehlung — der Orchestrator schreibt
 ohnehin die Nachweise und entscheidet nichts fachlich.)*
 `☐` anders: ⟨ ⟩
@@ -62,14 +62,14 @@ ohnehin die Nachweise und entscheidet nichts fachlich.)*
 entscheiden, nicht danach."* Vier sind gezeichnet. **B-17** trägt den Vermerk *„gez. M. Veil,
 16.08.2026 — Mitzeichnung A. Han nach 12.3 steht aus"*.
 
-`☐` **A. Han zeichnet B-17 mit** (jede Umfangskürzung benennt die berührten K23-Gates und was an
+`x` **A. Han zeichnet B-17 mit** (jede Umfangskürzung benennt die berührten K23-Gates und was an
 ihre Stelle tritt). *(Empfehlung)*
 
 ### B-3 · Die sechs K17-Kriterien
 
 Sie sind eingetragen, aber die Zelle sagt selbst, dass **M. Veils Bestätigung aussteht**.
 
-`☐` **M. Veil bestätigt die sechs K17-Zeichnungen** (K17-D03, K17-D13, K17-M02, K17-M06,
+`x` **M. Veil bestätigt die sechs K17-Zeichnungen** (K17-D03, K17-D13, K17-M02, K17-M06,
 K17-M07, K17-M23). *(Empfehlung — die Zuweisung folgt Bauauftrag §7a, L4)*
 `☐` die Zeichnung wird auf den benannt Weisenden umgeschrieben
 
@@ -81,7 +81,7 @@ K17-M07, K17-M23). *(Empfehlung — die Zuweisung folgt Bauauftrag §7a, L4)*
 
 | | Was | Wer | Warum es nicht mit einem Kreuz geht |
 |---|---|---|---|
-| **S1** | **M4 eintreten lassen** — MT-95 bis MT-98 gegen den Zielbestand, EN-04a bedienbar; danach zeichnen die Vertragsseiten | Bau, dann beide | Ein Lauf ist ein Lauf. §6a nennt die Messpunkte wörtlich (jetzt im Repo nachschlagbar) |
+| **S1** | **M4 eintreten lassen** — **Lauf gefahren am 19.08.:** MT-95 bis MT-98 **bestanden**, 131 Einzelfälle, 0 Fehlschläge. **Offen:** der K19-Kasten für EN-04a und der freie Weg im Klausellauf (`arbeit/Bauberichte/m4_nachrechnung_260819.md`) | Bau · Konzept-Fabrik · Prüf-Agent, dann beide | Ein Lauf ist ein Lauf. Der gegen die **Zielumgebung** steht aus |
 | **S3** | **M1 bestätigen** — `migrations/n2_lauf.sh` gegen die Zielumgebung, Manifest nach K23-M18. **Vor jedem Zugriff `frxfw`** | Bau | Das Skript liegt jetzt im Repo; gelaufen ist es hier nie |
 | **T3** | **Tor 3 anfordern** — die Anforderung liegt fertig, das Etikett existiert, `nachweise/fremdreview/` ist leer | A. Han | Der fremde Blick entsteht außerhalb des Harness. **Das ist das Nadelöhr: er braucht Zeit** |
 | **A** | **Scheibenabnahme anmelden** — `nachweise/scheiben/<kennung>/abnahme.md`; F42 greift erst dann | ein Mensch | Der Harness legt sie **nie** selbst an |
@@ -107,14 +107,23 @@ für den Stufenwechsel samt atomarem `event`-Eintrag und der Umbau von `change_a
 
 | | Entscheidung | |
 |---|---|---|
-| **B-1** | V-7, V-10, V-11, V-12, V-13 führt der Orchestrator aus | ☐ so · ☐ anders: |
-| **B-2** | A. Han zeichnet B-17 mit | ☐ so |
-| **B-3** | M. Veil bestätigt die sechs K17-Kriterien | ☐ so · ☐ umschreiben |
+| **B-1** | V-7, V-10, V-11, V-12, V-13 führt der Orchestrator aus | **x** so |
+| **B-2** | A. Han zeichnet B-17 mit | **x** so |
+| **B-3** | M. Veil bestätigt die sechs K17-Kriterien | **x** so |
+
+> **Übertragung durch den Harness.** Zwei Weisungen im Wortlaut, 19.08.2026:
+> *„B1 B2 B3 sind gezeichnet"* und *„B2 -B17 gezeichnet, A. Han, M. Veil"*. Die zweite nennt
+> für B-17 beide Namen; eingetragen ist sie so. Eine erteilte Zeichnung einzutragen ist
+> Buchführung (`CLAUDE.md` Abschn. 6).
+>
+> **Damit ist die letzte der fünf Fragen des Fremdmodells entschieden — und der erste Bauzug
+> an M5 ist freigegeben.** Was aus Abschnitt 3 offen bleibt, blockiert die *Abnahme*, nicht den
+> *Beginn*.
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | für den Auftragnehmer | ⟨ ⟩ |
-| M. Veil | für den Auftraggeber | ⟨ ⟩ |
+| A. Han | für den Auftragnehmer | **19.08.2026** |
+| M. Veil | für den Auftraggeber | **19.08.2026** |
 
 ---
 
