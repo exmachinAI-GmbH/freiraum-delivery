@@ -60,6 +60,11 @@
 #   2. Drei der vier Wortlaute aus K04-M07 stehen dort ANDERS als in der
 #      Klausel. Siehe VP-08 und VP-08b -- das ist ein Widerspruch
 #      zwischen Klausel und Rang 1, kein Baufehler.
+#      ENTSCHIEDEN AM 18.08.2026 (nachweise/befunde/
+#      ENTSCHEIDUNG-VP-08b_260818.md, gez. M. Veil und A. Han): die
+#      Rang-1-Quelle gewinnt, der Wortlaut aus K04-M07 wird nicht
+#      erzwungen. VP-08b misst seither den SACHVERHALT und sperrt
+#      deswegen nicht mehr -- siehe dort.
 #
 # Und die Umkehrung, die hier besonders zaehlt: der KATALOG der drei
 # Eignungsfragen ist Startbestand und damit Pruefgegenstand.
@@ -906,43 +911,202 @@ fi
 pruefe_sql_marke
 
 # =====================================================================
-# VP-08b · WIDERSPRUCH · K04-M07 gegen Rang 1
+# VP-08b · K04-M07 · die drei uebrigen Ausschluss-SACHVERHALTE
 #
-#         K04-M07 nennt drei weitere Ausschlussantworten im Wortlaut:
-#         "reine Netzseite", "etwas zum Installieren auf Rechner oder
-#         Geraet", "Wegwerf-Versuch ohne Produktivbetrieb".
+# ---------------------------------------------------------------------
+# UMGEBAUT AM 18.08.2026 -- WARUM
+# ---------------------------------------------------------------------
+# Dieser Fall meldete seit dem 14.08.2026 GESPERRT. Er verlangte die
+# BUCHSTABENFOLGE aus K04-M07 ("reine Netzseite", "etwas zum Installieren
+# auf Rechner oder Geraet", "Wegwerf-Versuch ohne Produktivbetrieb") und
+# fand sie im Startbestand nicht: das Zielschema
+# (schema/freiraum_datamodel.sql:737-756, "SEED: Eignungs-Check") fuehrt
+# dieselben drei Sachverhalte in anderen Worten. Der Fall mass damit
+# nicht den Bau, sondern den Widerspruch zweier Quellen -- und der ist
+# nicht Sache eines Laufs.
 #
-#         Das ZIELSCHEMA fuehrt an derselben Stelle einen eigenen
-#         Startbestand -- schema/freiraum_datamodel.sql, Zeilen 737-756,
-#         "SEED: Eignungs-Check". Er traegt dieselben drei Sachverhalte,
-#         aber in anderen Worten:
-#           'Eine Website, die unser Unternehmen oder Produkt darstellt'
-#           'Etwas, das lokal auf dem Rechner oder Geraet installiert wird'
-#           'Nur zum Ausprobieren einer Idee - danach vermutlich nicht weiter'
-#         Nur die vierte, die der Datenfrage, steht dort woertlich wie in
-#         der Klausel (VP-08).
+# Der Widerspruch ist am 18.08.2026 von beiden Foundern entschieden
+# (nachweise/befunde/ENTSCHEIDUNG-VP-08b_260818.md, gez. M. Veil und
+# A. Han):
 #
-#         Das Zielschema ist Rang 1 und gewinnt jeden Widerspruch; es wird
-#         benutzt, nie geaendert. Der Bau kann diesen Teil der Klausel
-#         also gar nicht erfuellen, ohne eine hoehere Quelle zu brechen.
-#         Ein Prueffall daraus wuerde nicht den Bau messen, sondern das
-#         Zielschema -- deshalb GESPERRT, mit dem Befund als Evidenz.
-#         Aufzuloesen hat das ein Mensch, nicht dieser Lauf.
+#   "Die Rang-1-Quelle gewinnt. Der Wortlaut aus K04-M07 wird nicht
+#    erzwungen."  (Abschn. 2)
+#
+#   "Der Startbestand fuehrt fuer jeden der drei Sachverhalte genau eine
+#    nicht-geeignete Antwort. Gemessen wird der Sachverhalt, nicht die
+#    Buchstabenfolge aus K04-M07. Fehlt einer der drei, faellt der Fall
+#    durch -- nicht gesperrt, sondern durch."  (Abschn. 3)
+#
+# Eine Frage, die entschieden ist, ist messbar geworden. Der Fall misst
+# ab jetzt den Sachverhalt.
+#
+# ---------------------------------------------------------------------
+# WIE EIN SACHVERHALT GEMESSEN WIRD
+# ---------------------------------------------------------------------
+# Ein Sachverhalt ist keine Zeichenkette, aber er ist auch nicht
+# unmessbar. Gemessen wird er ueber KENNZEICHEN: Wortstaemme, die diesen
+# einen Sachverhalt tragen und keinen anderen. Je Sachverhalt sind
+# mehrere Schreibweisen zugelassen -- gerade das ist der Unterschied zur
+# Buchstabenfolge. Verglichen wird gegen label_de UND value_token
+# zusammen, kleingeschrieben: K04-M06 verlangt beide Felder, und der
+# Sachverhalt darf in jedem von beiden stehen.
+#
+#   SV-A  reine Netzseite
+#         Kennzeichen: netzseite · webseite · website · internetseite ·
+#                      homepage
+#         "Netzseite" ist das eingedeutschte Wort fuer "Website"; K04-M07
+#         benutzt das eine, der Startbestand das andere
+#         (schema/freiraum_datamodel.sql:743 'Eine Website, die unser
+#         Unternehmen oder Produkt darstellt' / 'Website / Marketing').
+#
+#   SV-B  etwas zum Installieren auf Rechner oder Geraet
+#         Kennzeichen: installi · installa
+#         (deckt installieren, installiert, Installierte, Installation)
+#         Rang 1, Z. 744: 'Etwas, das lokal auf dem Rechner oder Geraet
+#         installiert wird' / 'Installierte Software'.
+#
+#   SV-C  Wegwerf-Versuch ohne Produktivbetrieb
+#         Kennzeichen: wegwerf · ausprobier
+#         Rang 1, Z. 749: 'Nur zum Ausprobieren einer Idee - danach
+#         vermutlich nicht weiter' / 'Wegwerf-Versuch'.
+#         NICHT als Kennzeichen taugt "produktivbetrieb": das Wort steht
+#         auch in der ZUSAGENDEN Antwort 'Zunaechst wenige Personen, aber
+#         mit dem Ziel Produktivbetrieb' (Rang 1, Z. 748). Ein Kennzeichen,
+#         das eine geeignete Antwort trifft, misst nicht den Ausschluss.
+#
+#   SV-D  Datenfrage 'Nein — es geht um Darstellung, Inhalte oder
+#         Gestaltung'
+#         Kennzeichen: "darstellung, inhalte oder gestaltung" ·
+#                      "nur darstellung"
+#         SV-D wird hier NICHT als eigene Bedingung gemessen -- das tut
+#         VP-08. Er wird nur gebraucht, damit die ABDECKUNG unten alle
+#         vier Ausschluesse aus K04-M07 kennt.
+#
+# ---------------------------------------------------------------------
+# WAS DER FALL PRUEFT -- und warum drei Zeilen zu zaehlen nicht genuegt
+# ---------------------------------------------------------------------
+# Der Vermerk nennt genau die Falle (Abschn. 3): "Ein Fall, der nur
+# nachsieht, ob drei Zeilen existieren, besteht auch dann, wenn eine
+# davon den falschen Sachverhalt traegt." Deshalb zwei Bedingungen, nicht
+# eine:
+#
+#   (1) EINDEUTIGKEIT · Je Sachverhalt SV-A, SV-B, SV-C traegt GENAU EINE
+#       nicht-geeignete Antwort sein Kennzeichen. Null heisst: der
+#       Sachverhalt fehlt. Zwei heisst: er ist doppelt belegt und die
+#       Zuordnung nicht entscheidbar.
+#
+#   (2) ABDECKUNG · JEDE nicht-geeignete Antwort traegt einen der vier
+#       Sachverhalte aus K04-M07. Eine nicht-geeignete Antwort ohne
+#       Sachverhalt ist ein Ausschluss, den die Klausel nicht kennt.
+#       DAS ist die Bedingung, die den falschen Sachverhalt merkt: wer
+#       eine der vier Zeilen umschreibt, verliert ihren Sachverhalt --
+#       (1) meldet ihn als fehlend, (2) meldet die Zeile als
+#       unzugeordnet. Beides an der eigenen Bedingung dieses Falls.
+#
+# KEINE DIMENSIONSBEDINGUNG. K04-M07 bindet nur den VIERTEN Ausschluss an
+# eine Frage ("bei der Datenfrage"); die ersten drei nennt sie ohne
+# Zuordnung. Eine Bedingung "SV-A muss an der ART-Frage haengen" waere
+# erfunden. Die gemessene Dimension steht deshalb in der Meldung als
+# Feststellung, nie als Bedingung.
+#
+# FAIL-CLOSED · WANN DER FALL SPERRT UND NICHT DURCHFAELLT
+#   * Der Katalog stammt nicht aus dem Startbestand (ERSATZ) -- dann
+#     bestaetigte der Fall meine eigene Hand.
+#   * Ein Kennzeichen trifft eine GEEIGNETE Antwort, oder eine Antwort
+#     traegt zwei Kennzeichen. Dann trennt das Messwerkzeug die
+#     Sachverhalte nicht mehr, und was es meldet, traegt niemand
+#     (K23-M22). Das ist eine Aussage ueber das Werkzeug, nicht ueber den
+#     Bau -- deshalb GESPERRT und nicht GESCHEITERT.
+# Der Grund, aus dem der Fall bis zum 17.08.2026 sperrte -- der fehlende
+# Wortlaut --, ist kein Sperrgrund mehr.
+#
+# GEGENPROBE (F07), ausgefuehrt am 18.08.2026 gegen eine Wegwerfdatenbank:
+#   a) label_de UND value_token der Wegwerf-Antwort auf einen fremden
+#      Sachverhalt gesetzt ('Ein Bericht, den jemand liest' / 'Bericht'):
+#      VP-08b GESCHEITERT -- "der Sachverhalt 'Wegwerf-Versuch ohne
+#      Produktivbetrieb' hat keine nicht-geeignete Antwort" UND "eine
+#      nicht-geeignete Antwort traegt keinen der vier Ausschluesse".
+#      VP-08 blieb dabei BESTANDEN -- der Fall scheiterte also an seiner
+#      eigenen Bedingung, nicht an der Zaehlung von VP-08.
+#   b) dieselbe Antwort auf den Sachverhalt SV-A umgeschrieben (die Zeile
+#      besteht weiter, sie traegt nur den falschen Sachverhalt):
+#      VP-08b GESCHEITERT -- SV-A doppelt belegt, SV-C fehlt. Genau der
+#      Fall, den der Vermerk als Falle benennt.
 # =====================================================================
+# Die Kennzeichen als POSIX-Muster (psql-Operator ~ gegen kleingeschriebenen
+# Text). Sie stehen hier oben, damit sichtbar bleibt, was der Fall fuer
+# einen Sachverhalt haelt -- und damit eine Aenderung daran auffaellt.
+SV_A_RX='netzseite|webseite|website|internetseite|homepage'
+SV_B_RX='installi|installa'
+SV_C_RX='wegwerf|ausprobier'
+SV_D_RX='darstellung, inhalte oder gestaltung|nur darstellung'
+
+# Der gemeinsame Vorspann jeder Abfrage: je Antwortmoeglichkeit ihr
+# kleingeschriebener Text aus label_de und value_token, dazu die Dimension
+# ihrer Frage und die vier Kennzeichen als Tabelle.
+SV_WITH="WITH muster(sv,rx) AS (VALUES
+           ('SV-A','$SV_A_RX'),('SV-B','$SV_B_RX'),
+           ('SV-C','$SV_C_RX'),('SV-D','$SV_D_RX')),
+         antwort AS (
+           SELECT o.id, o.is_eligible, q.dimension::text AS dimension,
+                  lower(coalesce(o.label_de,'') || ' ' || coalesce(o.value_token,'')) AS t
+             FROM fit_option o JOIN fit_question q ON q.code = o.question_code),
+         treffer AS (
+           SELECT a.id, a.is_eligible, a.dimension, m.sv
+             FROM antwort a JOIN muster m ON a.t ~ m.rx)"
+
 if [ "$KATALOG_HERKUNFT" != "BESTAND" ]; then
   sperr VP-08b "Nicht messbar: der Katalog stammt nicht aus dem Startbestand (katalog_herkunft=$KATALOG_HERKUNFT)."
 else
-  n1="$(dbz "SELECT count(*) FROM fit_option WHERE NOT is_eligible AND label_de ILIKE '%reine Netzseite%'")"
-  n2="$(dbz "SELECT count(*) FROM fit_option WHERE NOT is_eligible AND label_de ILIKE '%Installieren auf Rechner oder Ger%'")"
-  n3="$(dbz "SELECT count(*) FROM fit_option WHERE NOT is_eligible AND label_de ILIKE '%Wegwerf-Versuch ohne Produktivbetrieb%'")"
-  fehlend=""
-  [ "${n1:-0}" -ge 1 ] || fehlend="$fehlend 'reine Netzseite';"
-  [ "${n2:-0}" -ge 1 ] || fehlend="$fehlend 'etwas zum Installieren auf Rechner oder Geraet';"
-  [ "${n3:-0}" -ge 1 ] || fehlend="$fehlend 'Wegwerf-Versuch ohne Produktivbetrieb';"
-  if [ -z "$fehlend" ]; then
-    ok VP-08b 'Auch die drei uebrigen Ausschlussantworten aus K04-M07 stehen im Wortlaut — der Widerspruch zum Startbestand des Zielschemas besteht nicht mehr'
+  # Zuerst das Werkzeug selbst: trennen die Kennzeichen die Sachverhalte?
+  sv_geeignet="$(dbz "$SV_WITH
+      SELECT string_agg(DISTINCT sv, ', ' ORDER BY sv) FROM treffer WHERE is_eligible")"
+  sv_doppelt="$(dbz "$SV_WITH
+      SELECT string_agg(x, '; ') FROM (
+        SELECT id::text || ' traegt ' || string_agg(sv, '+' ORDER BY sv) AS x
+          FROM treffer GROUP BY id HAVING count(*) > 1) y")"
+
+  if [ -n "$sv_geeignet" ] || [ -n "$sv_doppelt" ]; then
+    untauglich=""
+    [ -z "$sv_geeignet" ] || untauglich="$untauglich die Kennzeichen von $sv_geeignet treffen auch eine GEEIGNETE Antwortmoeglichkeit;"
+    [ -z "$sv_doppelt" ]  || untauglich="$untauglich eine Antwortmoeglichkeit traegt zwei Kennzeichen ($sv_doppelt);"
+    sperr VP-08b "Die Kennzeichen trennen die Sachverhalte nicht mehr:$untauglich Was dieses Werkzeug ueber K04-M07 meldete, traegt niemand (K23-M22). Der Bau ist damit nicht beurteilt."
   else
-    sperr VP-08b "WIDERSPRUCH K04-M07 gegen Rang 1: diese Wortlaute fehlen im Startbestand:$fehlend Das Zielschema (schema/freiraum_datamodel.sql:737-756) fuehrt dieselben Sachverhalte in anderen Worten und gewinnt als Rang 1. Der Bau darf es nicht aendern -- der Fall misst darum nicht den Bau. Entscheidung durch einen Menschen noetig."
+    # (1) Eindeutigkeit je Sachverhalt
+    zA="$(dbz "$SV_WITH SELECT count(*) FROM treffer WHERE sv='SV-A' AND NOT is_eligible")"
+    zB="$(dbz "$SV_WITH SELECT count(*) FROM treffer WHERE sv='SV-B' AND NOT is_eligible")"
+    zC="$(dbz "$SV_WITH SELECT count(*) FROM treffer WHERE sv='SV-C' AND NOT is_eligible")"
+    # (2) Abdeckung: nicht-geeignete Antworten ohne jeden Sachverhalt
+    ohne_sv="$(dbz "$SV_WITH
+        SELECT string_agg(left(t, 60), '; ') FROM antwort a
+         WHERE NOT a.is_eligible
+           AND NOT EXISTS (SELECT 1 FROM treffer t2 WHERE t2.id = a.id)")"
+    # Nur fuer die Meldung: wo die drei gefunden wurden.
+    wo="$(dbz "$SV_WITH
+        SELECT string_agg(sv || '/' || dimension, ' ' ORDER BY sv)
+          FROM treffer WHERE NOT is_eligible AND sv <> 'SV-D'")"
+    pruefe_sql_marke
+
+    m=""
+    case "${zA:-0}" in
+      1) : ;;
+      0) m="$m der Sachverhalt 'reine Netzseite' hat keine nicht-geeignete Antwortmoeglichkeit;";;
+      *) m="$m der Sachverhalt 'reine Netzseite' ist $zA-fach belegt statt genau einmal;";;
+    esac
+    case "${zB:-0}" in
+      1) : ;;
+      0) m="$m der Sachverhalt 'etwas zum Installieren auf Rechner oder Geraet' hat keine nicht-geeignete Antwortmoeglichkeit;";;
+      *) m="$m der Sachverhalt 'etwas zum Installieren auf Rechner oder Geraet' ist $zB-fach belegt statt genau einmal;";;
+    esac
+    case "${zC:-0}" in
+      1) : ;;
+      0) m="$m der Sachverhalt 'Wegwerf-Versuch ohne Produktivbetrieb' hat keine nicht-geeignete Antwortmoeglichkeit;";;
+      *) m="$m der Sachverhalt 'Wegwerf-Versuch ohne Produktivbetrieb' ist $zC-fach belegt statt genau einmal;";;
+    esac
+    [ -z "$ohne_sv" ] || m="$m eine nicht-geeignete Antwortmoeglichkeit traegt keinen der vier Ausschluesse aus K04-M07: $ohne_sv;"
+
+    [ -z "$m" ] && ok VP-08b "Alle drei uebrigen Ausschluss-Sachverhalte aus K04-M07 sind im Startbestand mit genau einer nicht-geeigneten Antwort belegt ($wo), und keine nicht-geeignete Antwort bleibt ohne Ausschluss-Sachverhalt (Entscheidung vom 18.08.2026: Sachverhalt statt Wortlaut)" \
+                || nok VP-08b "K04-M07, Sachverhalte:$m"
   fi
 fi
 pruefe_sql_marke
