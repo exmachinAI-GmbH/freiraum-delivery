@@ -1,11 +1,21 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "_kopf.html" %}
   <title>Vorpruefung 1 von 2 · FREIRAUM</title>
   {#
     bildschirm: EN-03
+
+    Der Kasten der Quelle (schema/K19_build_referenz.md,
+    woertlich uebernommen -- K19-M01, Blatt 70):
+
+      ╭─ EN-03 · Direkt-Prototyp-Check ─── [Vorpruefung 1 von 2] ─╮
+      │  Zugang: nach Anmeldung  │
+      │  Braucht Ihr Anliegen wirklich eine Anwendung?            │
+      │  Ein Direkt-Prototyp ist ein Arbeitsdokument: sofort da,  │
+      │  ungepruefte Grundlage, nicht Gegenstand einer Anfrage.   │
+      │  [Check starten]   [Ueberspringen]                        │
+      ╰───────────────────────────────────────────────────────────╯
 
     EN-03 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet
     (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt genau zwei Aktionen, und
@@ -29,23 +39,6 @@
     EN-03; [Ueberspringen] bleibt offen, es entsteht kein Vorschlag."
     Die Schaltflaeche bleibt deshalb stehen und bleibt bedienbar.
   #}
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
-           display: flex; justify-content: center; padding: 2rem 1rem; }
-    main { width: 100%; max-width: 34rem; }
-    .kasten { border: 1px solid currentColor; border-radius: .5rem;
-              padding: 1.25rem; }
-    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
-    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
-    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
-    .wege { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
-    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
-             cursor: pointer; }
-    .meldung { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
-  </style>
 </head>
 <body>
 <main>
@@ -62,6 +55,22 @@
     {% endif %}
 
     <p>Angemeldet als {{ anzeigename }}</p>
+
+    {#
+      DIE LEITFRAGE. Der Kasten aus K19 fuehrt sie als erste Zeile des
+      Bildschirms: "Braucht Ihr Anliegen wirklich eine Anwendung?" Sie
+      fehlte hier (Blatt 94 Abschn. 4) -- der Bildschirm begann ohne die
+      Frage, um die es geht.
+
+      Der Absatz darunter umschrieb, was der Kasten woertlich sagt. Die
+      Umschreibung war nicht falsch, aber sie war frei gezeichnet
+      (K19-M01). Jetzt steht der Wortlaut der Quelle da, und der erklaerende
+      Satz bleibt daneben stehen: er sagt, was der Kasten nicht sagt --
+      dass dieser Schritt uebersprungen werden darf.
+    #}
+    <h2>Braucht Ihr Anliegen wirklich eine Anwendung?</h2>
+    <p>Ein Direkt-Prototyp ist ein Arbeitsdokument: sofort da, ungepruefte
+      Grundlage, nicht Gegenstand einer Anfrage.</p>
     <p>Bevor es losgeht, zwei kurze Vorpruefungen. Die erste hilft Ihnen bei
       der Frage, ob ein schnelles Arbeitsdokument reicht oder eine richtige
       Anwendung noetig ist. Sie koennen sie ueberspringen.</p>

@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "_kopf.html" %}
   <title>Einladung senden · FREIRAUM</title>
   {#
+    bildschirm: keiner -- Maske des Verwaltenden; K19 fuehrt fuer sie
+    keinen eigenen Kasten. Wie einladung.html von EN-01 uebernommen;
+    eine erfundene EX-Kennung waere ungezeichneter Umfang.
+
     Die Maske des Verwaltenden. Wie bei app/vorlagen/einladung.html gilt:
     K19 fuehrt fuer diesen Bildschirm KEINEN eigenen Kasten, den dieser
     Harness einsehen kann -- also erfindet diese Seite keine Kennung
@@ -23,24 +26,6 @@
     deshalb auch nach dem Erfolg nicht -- weder ganz noch gekuerzt, weder
     als Text noch als Adresse. Wer ihn braucht, hat die Mail.
   #}
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
-           display: flex; justify-content: center; padding: 2rem 1rem; }
-    main { width: 100%; max-width: 28rem; }
-    .kasten { border: 1px solid currentColor; border-radius: .5rem;
-              padding: 1.25rem 1.25rem 1.5rem; }
-    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
-    label { display: block; font-weight: 600; margin: 1rem 0 .25rem; }
-    input { width: 100%; box-sizing: border-box; padding: .55rem .6rem;
-            font: inherit; border: 1px solid currentColor; border-radius: .25rem; }
-    .hinweis { font-size: .875rem; margin: 1rem 0 0; }
-    button { margin-top: 1.25rem; padding: .6rem 1.2rem; font: inherit;
-             border-radius: .25rem; cursor: pointer; }
-    .meldung { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
-  </style>
 </head>
 <body>
 <main>

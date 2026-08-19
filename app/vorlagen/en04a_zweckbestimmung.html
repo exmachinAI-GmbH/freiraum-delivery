@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "_kopf.html" %}
   <title>Zweckbestimmung · FREIRAUM</title>
   {#
     bildschirm: EN-04a
@@ -94,46 +93,6 @@
     keine Liste und kein verdecktes Feld, in dem eine Nummer stuende, bevor
     der Serverbefehl sie gebildet hat.
   #}
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
-           display: flex; justify-content: center; padding: 2rem 1rem; }
-    main { width: 100%; max-width: 42rem; }
-    .kasten { border: 1px solid currentColor; border-radius: .5rem;
-              padding: 1.25rem; }
-    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
-    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
-    h2 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
-    fieldset { border: 1px solid currentColor; border-radius: .25rem;
-               margin: 0 0 1.25rem; padding: .75rem 1rem 1rem; }
-    legend { font-weight: 600; padding: 0 .35rem; }
-    .wahl { display: inline-block; margin: .35rem 1.25rem .35rem 0; }
-    .gewaehlt { font-weight: 600; }
-    .vorrang { border-left: 4px solid currentColor; padding: .1rem 0 .1rem .75rem;
-               margin: 0 0 1.25rem; }
-    .fuss { font-size: .875rem; margin: 1rem 0 0; }
-    button { padding: .6rem 1.2rem; font: inherit; border-radius: .25rem;
-             cursor: pointer; margin-top: .5rem; }
-    .meldung { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .6rem .75rem; margin: 0 0 1rem; font-weight: 600; }
-    #halt { border: 3px solid currentColor; border-radius: .25rem;
-            padding: .9rem 1rem; margin: 1.25rem 0 0; }
-    #halt h2 { margin-top: 0; }
-    #warnung { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .9rem 1rem; margin: 1.25rem 0; }
-    #warnung h2 { margin-top: 0; }
-    #hinweis { border: 2px solid currentColor; border-radius: .25rem;
-               padding: .6rem .75rem; margin: 0 0 .75rem; }
-    #hinweis p { margin: 0; font-weight: 600; }
-    #hinweis ul { margin: .4rem 0 0; }
-    #angelegt { border: 2px solid currentColor; border-radius: .25rem;
-                padding: .9rem 1rem; margin: 0 0 1rem; }
-    #angelegt h2 { margin-top: 0; }
-    .nummer { font-family: ui-monospace, monospace; font-weight: 600; }
-    .auswege { display: flex; flex-wrap: wrap; gap: .75rem;
-               align-items: center; margin-top: .75rem; }
-  </style>
 </head>
 <body>
 <main>
