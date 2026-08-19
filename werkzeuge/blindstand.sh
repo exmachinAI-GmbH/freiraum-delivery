@@ -52,7 +52,20 @@ mkdir -p "$ZIEL"
 
 # git archive statt cp: keine .git, keine Objektdatenbank, kein Weg
 # zurueck ueber git show.
-git archive HEAD pruefungen schema | tar -x -C "$ZIEL"
+#
+# WAS MITGEHT, SAGT DIE ROLLENDATEI -- NICHT DIE BEQUEMLICHKEIT.
+# .claude/agents/pruef-agent.md:55 laesst genau zwei Orte zu:
+# nachweise/klauselregister/ und pruefungen/klauseln/. Zeile 57 fuehrt
+# schema/ ausdruecklich unter "nie gelesen".
+#
+# BERICHTIGT AM 19.08.2026, wenige Stunden nach dem Bau. Die erste Fassung
+# archivierte "pruefungen schema" -- also genau umgekehrt: sie gab dem
+# Pruef-Agenten die DDL, die er nicht sehen darf, und nahm ihm die einzige
+# mitgefuehrte Quelle der Klauselwortlaute (register.json liegt unter
+# nachweise/). Im Blindstand waeren die 101 M5-Klauseln nicht nachschlagbar
+# gewesen. Gefunden hat es eine adversariale Pruefung der eigenen Arbeit,
+# nicht ein Lauf: arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md, Befund S-F.
+git archive HEAD pruefungen nachweise/klauselregister | tar -x -C "$ZIEL"
 
 # Die absolute Pfadform ist "//" PLUS Pfad OHNE fuehrenden Schraegstrich.
 # Am 19.08.2026 stand hier "//$QUELLE" -- und $QUELLE beginnt bereits mit
