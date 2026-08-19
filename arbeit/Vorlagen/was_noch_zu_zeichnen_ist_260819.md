@@ -1,6 +1,6 @@
 # Was noch zu zeichnen ist — **28 Punkte, nach Unterschrift sortiert**
 
-**19.08.2026, abends · Vorlage zur Zeichnung**
+**19.08.2026, abends · GEZEICHNET, soweit eine Empfehlung vorlag — neun Punkte bleiben offen**
 
 Vier Durchgänge durch den ganzen Bestand haben gesucht, was auf eine Unterschrift wartet.
 Danach hat ein fünfter jeden Fund am Beleg nachgeschlagen und **zwölf wieder gestrichen** —
@@ -262,19 +262,34 @@ vorlegen, so wie heute die 101 von M5.
 
 ## Zeichnung
 
-| Gruppe | Punkte | gezeichnet | Datum | Ausnahmen |
+| Gruppe | Punkte | gezeichnet | Datum | offen geblieben |
 |---|---|---|---|---|
-| **M. Veil** | V-1 … V-7 | ☐ | ⟨ ⟩ | |
-| **A. Han** | H-1 … H-8 | ☐ | ⟨ ⟩ | |
-| **Beide** | B-1 … B-11 | ☐ | ⟨ ⟩ | |
+| **M. Veil** | V-1 … V-7 | **x** | 19.08.2026 | V-1, V-2, V-3 (Anordnung), V-4, V-5 |
+| **A. Han** | H-1 … H-8 | **x** | 19.08.2026 | H-1, H-7 |
+| **Beide** | B-1 … B-11 | **x** | 19.08.2026 | B-2 (Inhalt), B-3, B-5 (Zahl) |
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | für den Auftragnehmer | ⟨ ⟩ |
-| M. Veil | für den Auftraggeber | ⟨ ⟩ |
+| A. Han | für den Auftragnehmer | **19.08.2026** |
+| M. Veil | für den Auftraggeber | **19.08.2026** |
 
-*Blockweise zeichnen geht — Ausnahmen mit Kennung in die letzte Spalte. Bei den ⊘-Punkten
-braucht es eine eigene Angabe; ein Blockkreuz allein trägt sie nicht.*
+> **Übertragung durch den Harness.** Weisung im Wortlaut, 19.08.2026:
+> *„Gezeichnet gem. Handlungsempfehlungen- A.Han, M. Veil"*.
+>
+> **Eingetragen ist, wo eine Empfehlung stand — neunzehn Punkte.** Die Weisung sagt
+> *„gemäß Handlungsempfehlungen"*; wo keine steht, trägt sie nichts.
+>
+> **Neun Punkte bleiben deshalb offen** (die ⊘-Zeilen). Sie brauchen eine eigene Angabe, keine
+> Zustimmung: bei **V-1** je Zeile Träger und Frist, bei **V-2** welche vier Bauaufgaben, bei
+> **V-3** die Reihenfolge im Kasten, bei **V-4** zwei Namen, bei **V-5** eine von zwei
+> Wortbedeutungen, bei **H-1** eine Unterschrift in den Korrekturblättern selbst, bei **H-7**
+> ein Datum, bei **B-2** der Inhalt des Beschlusses, bei **B-3** drei Namen, bei **B-5** die
+> Zahl der Starttore. **Ein Blockkreuz trägt sie nicht** — und der Harness rät keine davon.
+>
+> **Was der Harness am selben Abend eingetragen hat:** E-9, E-13 und E-14 in
+> `entscheidung_tor1_260816.md` (die drei, die den Bau berühren). Die übrigen sechzehn stehen
+> in ihren eigenen Blättern und werden dort nachgetragen — die Liste mit Fundstellen liegt in
+> `zeichnungen_260819.json`.
 
 ---
 

@@ -378,7 +378,7 @@ DANACH:
 | | Entscheidung | angenommen | abweichend |
 |---|---|---|---|
 | **E-8** | NULL/NULL-Riegel aus M31 2b zurücknehmen | **[x]** M. Veil | ✅ **vollzogen** |
-| **E-9** | `antwort_aendern` ist halt-only | **[x]** M. Veil | ⛔ Bau-Anteil wartet auf **A. Han** als Eigentümer K19/K04 · Prüf-Anteil erteilt |
+| **E-9** | `antwort_aendern` ist halt-only | **[x]** M. Veil · **[x]** A. Han, 19.08.2026 | ✅ **beide** — der Bau-Anteil ist damit frei: der Knopf *Antwort zurücknehmen* entfällt im offenen Zustand |
 | **E-10** | Prüf-Agent bekommt die vier shellcheck-Änderungen | **[x]** M. Veil | ✅ **erteilt** |
 | **E-11** | Kennung `MG-11` klären | **[x]** M. Veil | ✅ **geklärt** — sie existiert, auf einem anderen Zweig |
 | **E-12** | Herrichtung schreibt den Nummernzähler nicht fort | *neu, 16.08.* | ✅ **erteilt** — beim Vollzug von E-8 sichtbar geworden |
@@ -498,7 +498,8 @@ für die Kosten — nicht für die Sache.
 > Bildschirmvertrag — `K19` kennt ihn nicht. Ihn ohne Vertragszeile zu bauen wäre genau das,
 > was `BEF-K02M17` und `E-8` heute schon zweimal als Fehler ausgewiesen haben.
 
-- [ ] **Riegel nach der Anmeldung** ✅ *Empfehlung* — **mit** Vertragszeile in K19, vorher nicht
+- [x] **Riegel nach der Anmeldung** ✅ *Empfehlung* — **mit** Vertragszeile in K19, vorher nicht
+      · **gez. A. Han und M. Veil, 19.08.2026** (Weisung: *„Gezeichnet gem. Handlungsempfehlungen- A.Han, M. Veil"*)
 - [ ] **Bei jeder Anmeldung** — dann sind die vier Fäden anzupassen, und der Anmeldevertrag ändert sich
 - [ ] **L9 bleibt teilerfüllt** — Hinweis ohne erzwungene Kenntnisnahme, als benanntes Restrisiko
 - [ ] **anders:** ⟨…⟩
@@ -541,7 +542,8 @@ stützt, das ihn nicht trägt.**
 > saubere Weg: **K04 nimmt den Zeitstempel auf** — dann trägt ihn eine Klausel, und VP-24
 > wird grün, weil die Sache stimmt und nicht, weil der Test nachgibt.
 
-- [ ] **Klausel in K04 nachziehen** ✅ *Empfehlung* — Konzept-Fabrik, Eigentümer **A. Han**
+- [x] **Klausel in K04 nachziehen** ✅ *Empfehlung* — Konzept-Fabrik, Eigentümer **A. Han**
+      · **gez. A. Han und M. Veil, 19.08.2026** (Weisung: *„Gezeichnet gem. Handlungsempfehlungen- A.Han, M. Veil"*)
 - [ ] **Spalte streichen** — dann fällt auch `zweck_erklaerung_vollstaendig`
 - [ ] **Als benanntes Restrisiko tragen** bis zur nächsten Konzeptrunde
 - [ ] **anders:** ⟨…⟩
@@ -583,7 +585,8 @@ Reißleine, die gezogen hat.
 | Name | Rolle | Datum | Anmerkung |
 |---|---|---|---|
 | **M. Veil** | Auftraggeber | **16.08.2026** | *„hiermit freigegeben, gez. M. Veil“* — alle vier Punkte |
-| **A. Han** | für den Auftragnehmer (Nr. 158) | | ⛔ **erforderlich für E-8 und E-9** |
+| **A. Han** | für den Auftragnehmer (Nr. 158) | **19.08.2026** | *„Gezeichnet gem. Handlungsempfehlungen- A.Han, M. Veil"* — E-8, E-9, E-13 und E-14 |
+| **M. Veil** | Auftraggeber | **19.08.2026** | dieselbe Weisung, für E-13 und E-14 |
 
 ---
 
