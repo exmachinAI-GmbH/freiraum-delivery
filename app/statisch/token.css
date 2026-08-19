@@ -1,0 +1,331 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   FREIRAUM · Gestaltungsquelle
+   Token-Schema v1.1 -- Blatt 78 mit den Berichtigungen aus Blatt 82 (E-1
+   bis E-4), gezeichnet von M. Veil am 18.08.2026.
+
+   HERKUNFT, und sie ist eine Kette mit genau einem erlaubten Leser:
+
+       Gesamtbuild v2.9
+             |  werkzeuge/build_inventar.py    <- der EINE erlaubte Leser
+             v
+       quellen/build-inventar.md, Abschnitt 6  (Konzeptfabrik)
+             |
+             v
+       Blatt 78, Token-Schema v1  ->  E-1..E-4  ->  DIESE DATEI
+
+   Der Gesamtbuild wurde fuer diese Datei NICHT gelesen (K23-D02, F41).
+   Wer einen Wert nachrechnen will, faehrt build_inventar.py und vergleicht
+   mit Blatt 78 -- nicht mit dem Build.
+
+   26 Variablen fuehrt das Schema, jede im Build benutzt, keine tote.
+   [data-theme="dark"] ueberschreibt 16 davon; die sieben Leitfarben und die
+   drei Schriften bleiben in beiden Modi gleich.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Schriften ─────────────────────────────────────────────────────────
+   Mitgeliefert, nicht nachgeladen: ein Bildschirm, der eine Schrift von
+   einem fremden Wirt holt, verarbeitet ausserhalb der EU (F05). Die drei
+   Lizenzen liegen daneben in schriften/.
+   ------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Inter';
+  src: url('schriften/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('schriften/space-grotesk-latin-wght-normal.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('schriften/space-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('schriften/space-mono-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ── Ebene 1 · Grundwerte (hell) ───────────────────────────────────── */
+:root {
+  color-scheme: light dark;
+
+  /* Leitfarben -- gelten in BEIDEN Modi, unveraendert */
+  --accent:       #FF5229;   /* Leitfarbe                       */
+  --accent-ink:   #D63E17;   /* Leitfarbe fuer Text/Schaltflaechen */
+  --accent-dark:  #B8330F;   /* gedrueckt                       */
+  --gold:         #FF8204;   /* Hinweis                         */
+  --forest:       #2E5E4E;   /* Zustimmung                      */
+  --claret:       #C7000B;   /* Ablehnung, Sperre               */
+  --indigo:       #3E4E7A;   /* Verweis                         */
+
+  /* Flaechen, Text, Linien */
+  --bg:           #FBFBF8;
+  --surface:      #FFFFFF;
+  --panel:        #F5F4EF;
+  --ink:          #111111;
+  --ink-2:        #0A0A0A;
+  --text:         #111111;
+  --muted:        #57564E;
+  --line:         #E6E4DB;
+  --peri:         #D8D5C8;
+  --accent-tint:  #FFF0EC;
+  --gold-tint:    #FBF4E2;
+  --forest-tint:  #EEF5F0;
+  --claret-tint:  #FDEEF0;
+  --indigo-tint:  #EEF1F8;
+
+  /* Schrift und Schatten */
+  --disp:      'Space Grotesk', 'Segoe UI', sans-serif;
+  --body:      'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono:      'Space Mono', 'JetBrains Mono', monospace;
+  --shadow:    0 8px 26px rgba(17, 17, 17, .07);
+  --shadow-lg: 0 18px 44px rgba(17, 17, 17, .13);
+
+  /* ── E-1 · Bedienelementgrenzen, gezeichnet 18.08.2026 ─────────────
+     WCAG 1.4.11 verlangt an Bedienelementgrenzen 3:1. Gemessen waren
+     1,47 (Eingabefeld hell) und 1,49 (dunkel) -- ein Eingabefeld, dessen
+     Rahmen man kaum sieht, ist die unsichtbare Grenze zwischen "hier kann
+     ich schreiben" und "hier nicht".
+
+     EIGENE TOKEN, NICHT --peri UEBERSCHRIEBEN: --peri ist derselbe Wert
+     (#D8D5C8), traegt aber auch die ZIERLINIEN -- und die bleiben nach E-2
+     ausdruecklich, wie sie sind. Wuerde --peri global angehoben, waere E-2
+     verletzt. Deshalb zwei Rollen, zwei Namen.                         */
+  --control-line: #8C887A;   /* war #D8D5C8 -> 1,47 · jetzt 3,55 */
+  --btn-line:     #6E6E6E;   /* war #404040 -> 1,91 · jetzt 3,88 */
+
+  /* ── E-6 · Schrift AUF der Leitfarbe, gemessen 18.08.2026 ──────────
+     Die Schaltflaeche trug ihre Schrift zuerst in var(--surface). Das ist
+     im hellen Modus #FFFFFF und richtig -- im dunklen aber #1C1C19, also
+     dunkel auf dunkelrot. Gemessen:
+
+         ruhend  #1C1C19 auf #D63E17   3,71   Schwelle 4,50   faellt durch
+         hover   #1C1C19 auf #B8330F   2,86   Schwelle 4,50   faellt durch
+
+     Ein eigener Token, in BEIDEN Modi hell. Er wird bewusst NICHT im
+     Dunkelmodus ueberschrieben: die Flaeche darunter ist die Leitfarbe und
+     wechselt nicht mit dem Modus, also darf die Schrift darauf es auch
+     nicht.
+
+         ruhend  #FFFFFF auf #D63E17   4,60   besteht
+         hover   #FFFFFF auf #B8330F   5,97   besteht                  */
+  --auf-akzent:   #FFFFFF;
+
+  /* ── Ebene 3 · Bauteilpalette, Textton und Rahmen je Marke ─────────
+     Die Flaeche kommt aus dem passenden Tint der Ebene 1 bzw. 2.       */
+  --tag-acc-ink:      #CC3B16;   /* E-4, s.u. */
+  --tag-acc-line:     #FFD7C9;
+  --tag-gold-ink:     #886D1B;   /* berichtigt, Blatt 76 */
+  --tag-gold-line:    #F0E2B8;
+  --tag-forest-ink:   var(--forest);
+  --tag-forest-line:  #CFE3D7;
+  --tag-claret-ink:   var(--claret);
+  --tag-claret-line:  #F3C4C7;
+  --tag-indigo-ink:   var(--indigo);
+  --tag-indigo-line:  #C9D2E8;
+  --tag-mut-ink:      var(--muted);
+}
+
+/* ── Ebene 2 · Dunkelmodus ─────────────────────────────────────────────
+   Ueberschreibt 16 der 26. Zwei Wege in denselben Zustand: die
+   Systemvorgabe und die ausdrueckliche Wahl am Element. Beide muessen
+   wirken, sonst greift ein Umschalter nicht gegen die Systemvorgabe.
+   ------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #141412;
+    --surface:     #1C1C19;
+    --panel:       #201F1C;
+    --ink:         #FBFBF8;
+    --ink-2:       #000000;
+    --text:        #F3F2EC;
+    --muted:       #B0AEA3;
+    --line:        #2E2E29;
+    --peri:        #3A3A34;
+    --accent-tint: #2A1712;
+    --gold-tint:   #2A2213;
+    --forest-tint: #12241D;
+    --claret-tint: #2A1214;
+    --indigo-tint: #181D2A;
+    --shadow:      0 8px 26px rgba(0, 0, 0, .4);
+    --shadow-lg:   0 18px 44px rgba(0, 0, 0, .55);
+
+    --control-line: #7A7770;   /* E-1: war #3A3A34 -> 1,49 · jetzt 3,82 */
+    --btn-line:     #6E6E6E;   /* E-1: war #383838 -> 1,79 · jetzt 4,12 */
+
+    /* E-3 · der echte Textfehler. #2E5E4E auf #12241D ergab 2,18 --
+       Waldgruen auf Waldgruen, unlesbar. #8FCDAE stand schon im Schema
+       als Textton der Marke forest im Dunkelmodus; stehen geblieben war
+       an dieser einen Stelle der HELLE Ton. Jetzt 8,88.               */
+    --tag-acc-ink:     #FFA184;
+    --tag-acc-line:    #5A2E1F;
+    --tag-gold-ink:    #E8C25A;
+    --tag-gold-line:   #4A3A18;
+    --tag-forest-ink:  #8FCDAE;
+    --tag-forest-line: #25493B;
+    --tag-claret-ink:  #FF9AA1;
+    --tag-claret-line: #5A2328;
+    --tag-indigo-ink:  #AABCE8;
+    --tag-indigo-line: #2A3652;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:          #141412;
+  --surface:     #1C1C19;
+  --panel:       #201F1C;
+  --ink:         #FBFBF8;
+  --ink-2:       #000000;
+  --text:        #F3F2EC;
+  --muted:       #B0AEA3;
+  --line:        #2E2E29;
+  --peri:        #3A3A34;
+  --accent-tint: #2A1712;
+  --gold-tint:   #2A2213;
+  --forest-tint: #12241D;
+  --claret-tint: #2A1214;
+  --indigo-tint: #181D2A;
+  --shadow:      0 8px 26px rgba(0, 0, 0, .4);
+  --shadow-lg:   0 18px 44px rgba(0, 0, 0, .55);
+
+  --control-line: #7A7770;
+  --btn-line:     #6E6E6E;
+
+  --tag-acc-ink:     #FFA184;
+  --tag-acc-line:    #5A2E1F;
+  --tag-gold-ink:    #E8C25A;
+  --tag-gold-line:   #4A3A18;
+  --tag-forest-ink:  #8FCDAE;
+  --tag-forest-line: #25493B;
+  --tag-claret-ink:  #FF9AA1;
+  --tag-claret-line: #5A2328;
+  --tag-indigo-ink:  #AABCE8;
+  --tag-indigo-line: #2A3652;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   E-4 · DER DUENNE RAND -- offener Punkt O-TS-4, gezeichnet mitsamt Auflage
+
+   --accent-ink (#D63E17) auf --forest-tint (#EEF5F0) ergibt 4,16 gegen die
+   Schwelle 4,5. Ersatz ist --tag-acc-ink (#CC3B16) mit 4,51.
+
+   DER RAND IST 0,01. Aendert sich die Flaeche #EEF5F0, ist E-4 NEU ZU
+   RECHNEN. Das ist die Auflage aus der Zeichnung, nicht ein Hinweis.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Grundsatz ─────────────────────────────────────────────────────────
+   Bis hierher stehen nur Werte. Ab hier steht Wirkung -- und zwar so
+   wenig wie moeglich: Was die Kaesten aus K19 an Anordnung vorgeben,
+   regelt diese Datei nicht (F41, Trennung von Anordnung und Gestaltung).
+   ------------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+main { width: 100%; max-width: 34rem; }
+
+h1, h2, h3 { font-family: var(--disp); color: var(--ink); text-wrap: balance; }
+h1 { font-size: 1.5rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; }
+
+a { color: var(--accent-ink); }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  /* Der Fokusring. E-6 nennt ihn den wichtigsten der ungemessenen
+     Zustaende: wer mit der Tastatur bedient, sieht ohne ihn nicht, wo er
+     ist. Er steht hier, BEVOR die Nachmessung vorliegt -- ein Ring, den
+     niemand gemessen hat, ist besser als keiner. Gemessen wird er in
+     E-6; bis dahin gilt er als gesetzt, nicht als geprueft (K23-M22). */
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+label { display: block; margin: .75rem 0 .25rem; color: var(--muted); }
+
+input, select, textarea {
+  width: 100%;
+  padding: .55rem .7rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--control-line);   /* E-1 */
+  border-radius: 6px;
+}
+
+button {
+  padding: .55rem 1rem;
+  font: inherit;
+  font-family: var(--disp);
+  color: var(--auf-akzent);        /* E-6, nicht --surface: s. oben */
+  background: var(--accent-ink);
+  border: 1px solid var(--btn-line);       /* E-1 */
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: var(--accent-dark); }
+button:disabled {
+  background: var(--panel);
+  color: var(--muted);
+  border-color: var(--peri);
+  cursor: not-allowed;
+}
+
+.karte {
+  background: var(--surface);
+  border: 1px solid var(--line);   /* Zierde -- E-2: bleibt, wie sie ist */
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.leise  { color: var(--muted); font-size: .9rem; }
+.mono   { font-family: var(--mono); }
+.meldung { border-left: 3px solid var(--claret); padding-left: .75rem; }
+
+/* Bewegungsreduktion -- E-5, Vertrag "dazu". */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* E-5 · Vertrag 1 · Druckmodus. Flaechen weiss, Text #111111, Schatten
+   aus, Marken MIT RAHMEN statt mit Flaeche: was am Bildschirm durch Farbe
+   unterschieden wird, ist auf Papier durch Text oder Form zu
+   unterscheiden. */
+@media print {
+  body { background: #FFFFFF; color: #111111; }
+  .karte { box-shadow: none; border: 1px solid #111111; }
+}
+
+/* E-5 · Vertrag 2 · Erzwungene Farbmodi. Die Anwendung gibt die
+   Farbfuehrung AB und ueberschreibt keine Systemfarben. Was dann noch
+   traegt -- Rahmen, Text -- muss ohne die eigene Palette funktionieren. */
+@media (forced-colors: active) {
+  button, input, select, textarea, .karte { border: 1px solid; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 3px solid;
+  }
+}

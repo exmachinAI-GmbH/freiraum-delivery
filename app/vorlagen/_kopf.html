@@ -1,0 +1,18 @@
+{#
+  bildschirm: keiner -- Teilstueck, kein Bildschirm. Es traegt den Kopf,
+  den alle Vorlagen gemeinsam haben, und wird per {% include %} eingebunden.
+
+  WARUM ES DIESE DATEI GIBT (Blatt 94, Punkt 2): Bis zum 18.08.2026 brachte
+  jede der acht Vorlagen ihren eigenen <style>-Block mit. Acht Orte fuer
+  eine Sache -- und keiner davon kannte das gezeichnete Token-Schema. Ab
+  hier gibt es EINEN Ort: app/statisch/token.css.
+
+  ES IST DIE ERSTE STUFE DER GRUNDVORLAGE, nicht ihre letzte. Eine echte
+  Grundvorlage mit {% extends %} und Bloecken waere ein Umbau aller acht
+  Dateien; dieses Teilstueck erreicht dasselbe Ziel -- Gestaltung an einer
+  Stelle -- mit einer Zeile Aenderung je Vorlage. Der Umbau kann folgen,
+  wenn ein Bildschirm ihn braucht; heute braucht ihn keiner.
+#}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/statisch/token.css">
