@@ -155,16 +155,27 @@ Zielbedingung; das Ergebnis war ein bestandener Test, der nichts misst
 `migrations/pruefe_negativfaelle.sh`:2–5). **K23-D05** verbietet, einen Prüfwert zu senken,
 damit ein Lauf besteht; die Trennung setzt das mechanisch durch.
 
-**Die Pfadgrenzen sind Anweisung, nicht Mechanik.** Das Werkzeugfeld im Frontmatter
-beschränkt Werkzeuge, nicht Pfade. Wer die Blindheit mechanisch will, braucht `deny`-Regeln
-in `.claude/settings.json`.
+**Die Pfadgrenzen sind teils Mechanik, teils Anweisung.** Das Werkzeugfeld im Frontmatter
+beschränkt Werkzeuge, nicht Pfade. `.claude/settings.json` **existiert** und sperrt Schreib-
+zugriffe auf die Konzept-Fabrik (`10_KNOWLEDGE_REPO/**`, `v2.9_PIVOT/**`,
+`30_DELIVERY_HARNESS/**`).
 
-*Berichtigt am 19.08.2026: **die Datei existiert** — sie ist seit dem 19.08. versioniert und
-führt 14 `deny`-Einträge (`.env*` und die Konzept-Fabrik). Was sie **nicht** führt, ist die
-Rollentrennung Bau/Prüfung; dafür gibt es seit dem 19.08. `werkzeuge/blindstand.sh`, das die
-Blindheit über die Sandbox herstellt statt über Pfadregeln. Der offene Punkt ist damit
-kleiner geworden und ein anderer: nicht „es gibt keine Datei", sondern „der Blindstand ist
-an keinen Lauf angeschlossen" (V-13).*
+*Berichtigt am 19.08.2026. Zuvor stand hier, die Datei existiere nicht — und der Orchestrator
+hat sich am 18.08. darauf verlassen, statt nachzusehen.*
+
+**Was sie NICHT abdeckt, und das ist der offene Punkt:** Die Regeln greifen nach **Werkzeug**,
+nicht nach Pfad — gesperrt sind `Edit` und `Write`, nicht die Kommandozeile. Ein `cat >>` geht
+daran vorbei; genau so ist am 18.08.2026 in `config/kanon.yaml` geschrieben worden.
+**Die Blindheit des Prüf-Agenten ist unverändert Anweisung, nicht Mechanik.**
+Beides steht in Blatt 97 (BEF-HARNESS-1) mit Vorschlag zur Behebung.
+
+*Nachtrag vom 19.08.2026, aus dem M5-Zweig:* Für die Blindheit gibt es seit demselben Tag
+`werkzeuge/blindstand.sh` — es stellt sie **über die Sandbox** her (`sandbox.filesystem.denyRead`,
+vom Betriebssystem durchgesetzt, auch gegen `cat >>` und jeden Kindprozess) statt über
+Pfadregeln. Damit ist der offene Punkt ein anderer geworden: nicht mehr *„die Regeln greifen nach
+Werkzeug, nicht nach Pfad"*, sondern **„der Blindstand ist an keinen Lauf angeschlossen"** (V-13,
+gezeichnet am 19.08. als Aufgabe des Orchestrators).
+
 
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag

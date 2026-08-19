@@ -59,6 +59,10 @@ jobs:
   fremdreview:
     name: Tor 3 · Nachweis des fremden Blicks
     runs-on: ubuntu-latest
+    # Zeitschranke wie in tore.yml (Blatt 100). Tor 3 laeuft selten, aber
+    # `cancel-in-progress: false` gilt hier ebenso -- ein haengender Lauf
+    # blockierte also auch hier jeden folgenden desselben Zweiges.
+    timeout-minutes: 15
     if: >-
       github.event_name == 'workflow_dispatch' ||
       contains(github.event.pull_request.labels.*.name, 'scheibenabnahme') ||
