@@ -313,7 +313,7 @@ wird hier nur genannt, damit er nicht im Schatten von RR-02 verschwindet.
 | **Entscheidung** | **Feststellen und führen, nicht aufheben.** Zu K05-G12 entsteht in M5 kein Prüffall; das Akzeptanzkriterium bleibt insoweit offen, und der Bauauftrag ist an dieser Stelle unvollständig. **Ausdrücklich nicht** als erfüllt gekennzeichnet — `K05-G11` verbietet es im Wortlaut |
 | **Grundlage** | `arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md`, **T-2**, gez. A. Han, 19.08.2026. Weisung im Wortlaut: *„T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5"* |
 | **Träger** | **M. Veil** — die Sperre hängt an K05 Abschn. 5, und die Konzept-Fabrik gehört ihm |
-| **Annahmeentscheidung** | **offen.** A. Han hat als fachlicher Eigentümer die Führung gezeichnet, nicht die Annahme des Risikos; die trifft der Auftraggeber |
+| **Annahmeentscheidung** | **gezeichnet am 19.08.2026, abends** — Weisung im Wortlaut: *[hiermit alles freigezeichnet, setze um was fehlt, lege ggf. Handlungsempfehlung zur Zeichnung vor, fuehre PR aus]*. Die Weisung ist am Harness von A. Han erteilt worden, in einem Satz und ohne Aufteilung nach Personen; die Annahme steht dem Auftraggeber zu. **Nach `K23-M04` ersetzt sie den fehlenden Test in dieser Kritikalitätsklasse nicht** — der Eintrag bleibt offen, bis K05 Abschn. 5 nachgezogen ist |
 | **Erledigungsbedingung** | **„K05 Abschn. 5 nachgezogen"** — Entscheidung 2 vom 19.08.2026 (`m5_vor_dem_bauzug_260819.md`). Mit dem Nachzug entfällt die Sperre, und dieser Eintrag schließt sich |
 
 > **Was dieser Eintrag nicht leistet.** Er ersetzt den fehlenden Test nicht — nach `K23-M04`

@@ -1,0 +1,22 @@
+OK       T0  Ausgangslage: ein aktiver Plattform-Admin|1|1
+OK       T1  Status ausserhalb der Domaene|Fehler|Fehler
+OK       T2  status_before_lock ohne Sperre|Fehler|Fehler
+OK       T3  versiegelt mit Geldrechten|Fehler|Fehler
+OK       T4  Kennung ausserhalb des Musters|Fehler|Fehler
+OK       T5  Kennung doppelt|Fehler|Fehler
+OK       T6  Einladung im Rahmen der Frist|1|1
+OK       T7  Einladung in fremde Domaene|Fehler|Fehler
+OK       T8  Einladung ueber 24 h hinaus|Fehler|Fehler
+OK       T9  zweite offene Einladung|Fehler|Fehler
+OK       T10 Wiederversand: genau eine offene Einladung|1|1
+OK       T11 Einloesung ohne Zeitstempel|Fehler|Fehler
+OK       T12 nach Einloesung zwei aktive Admins|2|2
+OK       T13 alle Plattform-Admins sperren|Fehler|Fehler
+OK       T14 einen von zwei Admins sperren|1|1
+OK       T15 versiegelten Erst-Admin loeschen|Fehler|Fehler
+OK       T16 Entsperren stellt Vorzustand her|AKTIV|AKTIV
+OK       T17 Erst-Admin bei zweitem Aktiven loeschbar|geloescht|geloescht
+OK       T18 Region ausserhalb EU/EWR|Fehler|Fehler
+OK       T19 Einladungsfrist 0 Stunden|Fehler|Fehler
+OK       T20 Journey-Stufe MITBESTIMMUNG entfernt|Fehler|Fehler
+OK       T21 Journey hat fuenf Stufen|5|5

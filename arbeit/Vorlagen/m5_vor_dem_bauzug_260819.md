@@ -198,8 +198,8 @@ und zwar bei je einem anderen.**
 | **2** | **S-B · K05-G12.** *(Empfehlung: nachziehen, nicht abhaken)* K05 Abschn. 5 wird nach der vorliegenden Vorlage nachgezogen. **Begründung:** `K05-G11` verbietet ausdrücklich, eine als offen ausgewiesene Zeile stillschweigend als Träger anzunehmen — „erfüllt ankreuzen" wäre genau das. Der Träger ist gemessen vorhanden; es fehlt nur die Zeile, die es sagt. **Danach:** der dritte, abweichende Stand im Repo wird auf denselben Wortlaut gebracht | **x** nachziehen · ☐ als erfüllt kennzeichnen · ☐ anders: |
 | **3** | **S-C · Eigentümer.** *(Empfehlung: nach dem Muster vom 16.08.)* Fachlicher Eigentümer für die M5-Klauseln ist **A. Han für den Auftragnehmer**, **außer für K17** — dort M. Veil, wie schon in der Runde vom 16.08. (K15, K17). **Begründung:** Die Einengung auf den Teilschnitt war eine Terminentscheidung, keine Zuständigkeitsentscheidung; die Verteilung ist bereits einmal gezeichnet worden und wird nur fortgeschrieben. **Danach trägt der Harness sie ein** — Buchführung, keine Anmaßung | **x** so · ☐ andere Verteilung: |
 | **4** | **S-D · K11.** *(Empfehlung: Auslegung zeichnen)* Die Verlaufszeile `app_state_history` gilt **nur für `lifecycle_state`**; der Stufenwechsel wird über `event` nachgewiesen. **Begründung:** Das gezeichnete Schema kann es nicht anders — `app_state_history.state` ist vom Typ `lifecycle_state`, der Trigger feuert nur darauf. Die Gegenvariante verlangt eine Erweiterung des eingefrorenen Schemas für einen Meilenstein, der ausdrücklich Vorarbeit ist. **Der M5-Nachweis hängt am `event`-Eintrag, nicht an der Verlaufszeile.** Restrisiko: wird die Verlaufszeile später doch für `journey_phase` verlangt, ist das eine Migration, kein Umbau von M5 | **x** nur `lifecycle_state` · ☐ auch der Stufenwechsel (Schemaerweiterung) · ☐ anders: |
-| **5** | **S-E · Ablage.** *(Empfehlung: Zeile A des Ablage-Nachtrags)* Privater Objektspeicher in `swedencentral`, im Prüfstand eine Attrappe hinter **derselben** Schnittstelle. **Begründung:** Variante B bricht `K05-M25` im Wortlaut (*„Dateistand"* und *„K05 besitzt weiterhin keine Tabelle"*), Variante C überlebt keinen Neustart und damit nicht den Meilenstein selbst. **Offen bleibt nur die Zahl hinter *kurzlebig*** — sie steht in keiner Klausel, und der Harness trägt sie nicht ein | **x** Zeile A · ☐ anders: · Zugriffsdauer: **⟨Minuten: ⟩ — offen, nicht mitgezeichnet** · ☐ Frage an K13 |
-| **6** | **S-G · Antwortlisten.** *(Empfehlung: liefern, hilfsweise das Hausmuster)* Zwölf Themen, drei Einordnungsfragen, sieben Ziele im Wortlaut — **22 kurze Positionen**. Kommen sie nicht rechtzeitig, gilt das bereits gebaute Muster: der **freie Weg** (*Was anderes* / *+ Anderes Ziel*) trägt, die Auswahllisten führen die **benannte Meldung zum ungezeichneten Wortlaut** und werden als Seed nachgereicht — genau wie EN-03a (`app/vorpruefung.py`: *„Ihn zu erfinden wäre Umfang, den niemand gezeichnet hat"*). **Begründung:** M5 ist an *abbrechen, neu anmelden, weitermachen* nachrechenbar; das trägt der freie Weg auch ohne die Listen | **x** wird geliefert bis **⟨Datum: ⟩ — offen** · **x** bis dahin Hausmuster, Nachreichung als Seed |
+| **5** | **S-E · Ablage.** *(Empfehlung: Zeile A des Ablage-Nachtrags)* Privater Objektspeicher in `swedencentral`, im Prüfstand eine Attrappe hinter **derselben** Schnittstelle. **Begründung:** Variante B bricht `K05-M25` im Wortlaut (*„Dateistand"* und *„K05 besitzt weiterhin keine Tabelle"*), Variante C überlebt keinen Neustart und damit nicht den Meilenstein selbst. **Offen bleibt nur die Zahl hinter *kurzlebig*** — sie steht in keiner Klausel, und der Harness trägt sie nicht ein | **x** Zeile A · ☐ anders: · Zugriffsdauer: **10 Minuten** (aus T-5, 19.08.2026) · ☐ Frage an K13 |
+| **6** | **S-G · Antwortlisten.** *(Empfehlung: liefern, hilfsweise das Hausmuster)* Zwölf Themen, drei Einordnungsfragen, sieben Ziele im Wortlaut — **22 kurze Positionen**. Kommen sie nicht rechtzeitig, gilt das bereits gebaute Muster: der **freie Weg** (*Was anderes* / *+ Anderes Ziel*) trägt, die Auswahllisten führen die **benannte Meldung zum ungezeichneten Wortlaut** und werden als Seed nachgereicht — genau wie EN-03a (`app/vorpruefung.py`: *„Ihn zu erfinden wäre Umfang, den niemand gezeichnet hat"*). **Begründung:** M5 ist an *abbrechen, neu anmelden, weitermachen* nachrechenbar; das trägt der freie Weg auch ohne die Listen | **x** wird geliefert bis **⟨Datum: ⟩ — weiterhin offen; bis dahin gilt der Rückfallweg** · **x** bis dahin Hausmuster, Nachreichung als Seed |
 | **7** | **S-H · Meldungswortlaut.** *(Empfehlung: nachgereichte Bauentscheidung)* Das Kriterium verlangt *eine Meldung, die den Grund nennt*; der Wortlaut entsteht beim Bau und wird als Katalog geführt. **Begründung:** Tor I Nr. 6 verlangt den Wortlaut dort, wo es einen gibt — bei den Migrations-Negativfällen kommt er aus `RAISE EXCEPTION`. Für die elf Bildschirmaktionen gibt es keine solche Quelle; ihn ins Kriterium zu schreiben hieße, ihn zu erfinden | **x** nachgereichte Bauentscheidung · ☐ Teil des Kriteriums (Eigentümer liefert elf Wortlaute) |
 | **8** | **Die vierzehn verzögernden Punkte** werden vom Bau ohne weitere Zeichnung ausgeführt, **ausgenommen V-1, V-2, V-3, V-4, V-5, V-6 und V-14** — sie brauchen eine Entscheidung und werden einzeln vorgelegt *(Empfehlung: so)* | **x** so · ☐ anders: |
 
@@ -209,10 +209,20 @@ und zwar bei je einem anderen.**
 > Harness je Entscheidung die ausgewiesene Empfehlung. Eine erteilte Zeichnung einzutragen ist
 > Buchführung, eine zu erfinden wäre Anmaßung (`CLAUDE.md` Abschn. 6).
 >
-> **Zwei Werte sind ausdrücklich NICHT mitgezeichnet**, weil sie in keiner Empfehlung standen:
-> die **Zugriffsdauer** in Entscheidung 5 (K05-M27 sagt *kurzlebig* und nennt keine Zahl) und
-> der **Liefertermin** in Entscheidung 6. Bis der Termin gesetzt ist, gilt dort der
-> Rückfallweg — der freie Weg trägt, die Auswahllisten führen die benannte Meldung.
+> **Zwei Werte waren zunächst NICHT mitgezeichnet**, weil sie in keiner Empfehlung standen:
+> die **Zugriffsdauer** in Entscheidung 5 und der **Liefertermin** in Entscheidung 6.
+>
+> **Nachgetragen am 19.08.2026, abends** — Weisung im Wortlaut: *„hiermit alles freigezeichnet,
+> setze um was fehlt, lege ggf. Handlungsempfehlung zur Zeichnung vor, führe PR aus."*
+>
+> - **Zugriffsdauer: 10 Minuten.** Nicht aus dieser Weisung geraten, sondern aus der eigenen
+>   Zeichnung **T-5** desselben Tages übernommen (`m5_teil1_fuenf_ohne_massstab_260819.md`);
+>   dort mit Herkunft: `K03-M15`/`M18` als kürzestes beziffertes Maß, unter der Sitzungsgrenze
+>   `K03-M17`.
+> - **Liefertermin der Antwortlisten: weiterhin kein Datum genannt.** Damit gilt der gezeichnete
+>   **Rückfallweg**: der freie Weg trägt, die Auswahllisten führen die benannte Meldung zum
+>   ungezeichneten Wortlaut und werden als Seed nachgereicht. **Ein Datum erfindet der Harness
+>   nicht** — es bleibt offen, und der Bau läuft ohne die Listen an.
 
 | Name | Rolle | Datum | Bemerkung |
 |---|---|---|---|

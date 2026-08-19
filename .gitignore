@@ -20,3 +20,6 @@ __pycache__/
 .pytest_cache/
 dist/
 build/
+
+# Merker des AC-16-Echtversands (traegt eine Adresse)
+.ac16_empfaenger
