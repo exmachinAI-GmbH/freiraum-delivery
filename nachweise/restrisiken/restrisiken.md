@@ -264,6 +264,51 @@ wird hier nur genannt, damit er nicht im Schatten von RR-02 verschwindet.
 
 ---
 
+---
+
+## RR-03 · Der Verlauf ist Kontrolldatum des Übergangswächters und nicht schreibgeschützt — **OFFEN, angelegt 19.08.2026**
+
+| | |
+|---|---|
+| **Was** | `app_state_history` trägt keinen Schreibschutz. Wer die Verlaufszeile ändert, verändert damit die Grundlage, auf der `lifecycle_transition_guard` entscheidet |
+| **Gemessen am 19.08.2026** | Unter `SET ROLE fr_portal` gelang nach **einem einzigen `UPDATE`** auf die Verlaufszeile ein Wechsel `PAUSIERT → IN_PROD` — **ohne `sealed_at`, ohne `approval`** |
+| **Kritikalität** | **hoch, aber heute nicht erreichbar.** Alle sechs `fr_*`-Rollen sind `NOLOGIN`, `pg_auth_members` ist leer; die Anwendung verbindet als `postgres`. Wer heute herankommt, könnte ohnehin auch den `event`-Wächter abschalten |
+| **Wann es scharf wird** | **mit der Rollenabbildung.** Sobald eine `fr_*`-Rolle anmeldefähig wird, ist der Weg offen |
+| **Träger** | offen — *nicht angewiesen.* Der Eigentümer ist nach K01/K11 zu bestimmen |
+| **Annahmeentscheidung** | **keine.** Blatt 99 Punkt 3, gezeichnet am 19.08.2026, sagt: *zu entscheiden, **bevor** die Rollenabbildung kommt* |
+
+### Warum das kein Append-only-Problem ist
+
+Der ursprüngliche Verdacht lautete: `app_state_history` fehlt der Schreibschutz, den `event`
+hat. **Er wurde geprüft und zurückgewiesen** (Blatt 99, Befund A, 0 von 3 Stimmen):
+
+- **Keine der 1231 Klauseln** verlangt Unveränderlichkeit für `app_state_history`. Wo sie
+  gewollt ist, steht sie namentlich da — K02-D01, K11-D07, K14-G09 — und genau diese vier
+  Tabellen tragen den Wächter.
+- Die Auslassung ist begründet: `schema/freiraum_datamodel.sql:446` — *„Bewusst NICHT
+  bitemporal: Transaktionszeit liefert bereits das append-only EVENT-Log."*
+- **Ein pauschaler Wächter würde den Bau zerbrechen.** Gemessen: `change_app_state` bricht ab,
+  weil er die Verlaufszeile selbst aktualisiert, um sie zu schließen — genau das, was K11-M09
+  verlangt.
+
+**Der Befund liegt woanders**, und deshalb steht er hier als eigener Punkt: nicht *„der Verlauf
+ist änderbar"*, sondern *„der Verlauf entscheidet mit, ob ein Übergang erlaubt ist"*. Ein
+Kontrolldatum, das der Kontrollierte ändern kann, ist keine Kontrolle.
+
+### Was noch nicht gemessen ist
+
+- Ob der Weg auch mit der künftigen Rollenabbildung besteht — **die gibt es noch nicht.**
+- Ob ein Riegel **nur gegen `DELETE`** genügt. Gemessen ist, dass er den Bau nicht zerbricht;
+  ob er den Weg schließt, ist offen.
+- Ob weitere Wächter im Bestand auf Daten entscheiden, die der Aufrufer ändern kann. Geprüft
+  wurde dieser eine.
+
+### Wie er geschlossen wird
+
+Nicht durch ein Werkzeug allein. Zu entscheiden ist, **worauf** der Übergangswächter sich
+stützen soll, wenn die Verlaufszeile es nicht sicher kann. Das ist Konzeptarbeit bei K01/K11 —
+nicht Bau, nicht Prüfung.
+
 ## Wie diese Liste geführt wird
 
 Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte Wahrheit
