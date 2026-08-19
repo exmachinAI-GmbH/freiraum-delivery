@@ -1,6 +1,12 @@
 -- N3 · Pseudonymisierung nach dem Ende der Aufbewahrung
 -- erwartet: pseudonym_vor_frist
 --
+-- UMBENANNT AM 19.08.2026 (war: N3_pseudonym_vor_frist.sql). Der Riegel in Tor 1b zaehlt seit
+-- diesem Tag JE MIGRATION vier Negativfaelle statt vier ueber alle (V-7,
+-- gezeichnet als Entscheidung 8). Dafuer muss der Dateiname sagen, zu
+-- welcher Migration der Fall gehoert. Diese vier pruefen Bedingungen, die
+-- M30 einfuehrt -- am Inhalt ist nichts geaendert.
+--
 -- Wer erst pseudonymisiert, nachdem die Frist abgelaufen ist, pseudonymisiert
 -- nie: die Zeile ist dann bereits entfernt. Die Massnahme muss VOR dem
 -- Fristende greifen, sonst ist sie eine Absichtserklaerung.

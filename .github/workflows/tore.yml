@@ -400,6 +400,22 @@ jobs:
             echo "::error::nur $anzahl Negativfaelle gefunden, mindestens vier verlangt"
             exit 1
           fi
+          # V-7, gezeichnet am 19.08.2026 (Entscheidung 8, Ausfuehrung durch den
+          # Orchestrator nach B-1): JE MIGRATION vier Negativfaelle, nicht vier
+          # ueber alle. Bis hierher zaehlte ein einziger Zaehler -- acht Dateien
+          # zu zwei Migrationen liessen eine dritte Migration ohne einen
+          # einzigen eigenen Fall durch. CLAUDE.md Abschn. 5 und README.md:204
+          # sagen "die vier Negativfaelle JEDER Migration".
+          for m in migrations/M*.sql; do
+            kennung=$(basename "$m" | sed -n 's/^\(M[0-9]\{2\}\)__.*/\1/p')
+            [ -n "$kennung" ] || continue
+            eigene=$(find migrations/negativfaelle -name "${kennung}_*.sql" | wc -l | tr -d ' ')
+            if [ "$eigene" -lt 4 ]; then
+              echo "::error::$kennung hat nur $eigene eigene Negativfaelle (verlangt: vier)"
+              exit 1
+            fi
+            echo "  $kennung: $eigene eigene Negativfaelle"
+          done
 
   # -------------------------------------------------------------------
   prueflauf:

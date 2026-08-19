@@ -1,6 +1,12 @@
 -- N4 · Eine Aufbewahrungsfrist von null Tagen
 -- erwartet: tagesfrist_positiv
 --
+-- UMBENANNT AM 19.08.2026 (war: N4_tagesfrist_positiv.sql). Der Riegel in Tor 1b zaehlt seit
+-- diesem Tag JE MIGRATION vier Negativfaelle statt vier ueber alle (V-7,
+-- gezeichnet als Entscheidung 8). Dafuer muss der Dateiname sagen, zu
+-- welcher Migration der Fall gehoert. Diese vier pruefen Bedingungen, die
+-- M30 einfuehrt -- am Inhalt ist nichts geaendert.
+--
 -- Eine Frist von null Tagen ist keine Aufbewahrung, sondern sofortiges
 -- Loeschen -- und das ist nach den Entscheidungen Nr. 14/15 gesperrt. Wer
 -- keine Frist will, traegt keine Klasse ein, nicht die Zahl null.
