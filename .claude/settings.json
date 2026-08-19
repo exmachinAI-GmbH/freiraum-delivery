@@ -15,7 +15,11 @@
       "Edit(//**/30_DELIVERY_HARNESS/**)",
       "Write(//**/30_DELIVERY_HARNESS/**)",
       "Edit(//**/v2.9_PIVOT/**)",
-      "Write(//**/v2.9_PIVOT/**)"
+      "Write(//**/v2.9_PIVOT/**)",
+      "Bash(*10_KNOWLEDGE_REPO*)",
+      "Bash(*v2.9_PIVOT*)",
+      "Bash(*30_DELIVERY_HARNESS*)",
+      "Bash(*config/kanon.yaml*)"
     ]
   }
 }

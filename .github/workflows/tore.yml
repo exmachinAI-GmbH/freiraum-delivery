@@ -201,6 +201,24 @@ jobs:
       - name: F42 — keine Scheibenabnahme ohne fremden Blick (C-4)
         run: python3 werkzeuge/tor3_pflicht.py
 
+      # -----------------------------------------------------------------
+      # Blatt 97, Punkt 2 -- gezeichnet 19.08.2026.
+      #
+      # Die deny-Regeln greifen nach WERKZEUG, nicht nach Pfad. Eine Regel
+      # auf die Kommandozeile prueft den Befehlstext; wer den Pfad in eine
+      # Variable legt, entgeht ihr. Blatt 97 nennt das "eine halbe
+      # Schranke" -- und DIESE Pruefung die Haelfte, die traegt: sie
+      # verhindert nichts, sie STELLT FEST, unabhaengig vom Werkzeug.
+      #
+      # HIER MELDET SIE IMMER GESPERRT. Die Konzept-Fabrik liegt in einer
+      # Dropbox und ist im Lauf nicht erreichbar. Das ist keine
+      # Nachlaessigkeit, sondern die Lage -- und sie sagt es, statt gruen
+      # durchzulaufen (K23-M22). Getragen wird sie auf dem Rechner, auf
+      # dem gebaut wird.
+      # -----------------------------------------------------------------
+      - name: Konzept-Fabrik unberuehrt? (Blatt 97, Punkt 2)
+        run: python3 werkzeuge/konzeptfabrik_unberuehrt.py
+
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |
           set -euo pipefail

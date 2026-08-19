@@ -1,0 +1,14 @@
+# Grundstand der Konzept-Fabrik · Blatt 97, Punkt 2
+#
+# Aufgenommen, damit ein spaeterer Lauf feststellen kann, ob dort
+# geschrieben wurde. Eine Abweichung ist KEIN Verstoss an sich --
+# M. Veil aendert die Konzept-Fabrik und darf das. Sie heisst nur:
+# hier ist etwas passiert, sieh nach.
+#
+# Neu aufnehmen mit:
+#   python3 werkzeuge/konzeptfabrik_unberuehrt.py --erzeugen
+
+56d30dd3063e17b395bfa570c268ccadde6bbf164f17fb8e74045ec5b8006b2b  03_KONZEPTE_v2.9/concepts-md/260801_FREIRAUM_K19_Build-Referenz_v1.3.md
+9dd84f2a8b1c276e34ada40baca337e0b1ebbad21966494b5bda89504f17a870  CLAUDE.md
+c660e786a9a60aa9e3b38ae5f456204d894f68cb87b9378cd4433811faab9701  config/kanon.yaml
+f08f7bd5c245dc77135a8bbeb7a6a6dd37022a5c4a0de82e6b58cd260d04d458  quellen/build-inventar.md
