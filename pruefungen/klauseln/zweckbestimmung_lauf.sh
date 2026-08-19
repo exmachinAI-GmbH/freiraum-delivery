@@ -105,6 +105,70 @@
 # im Block "DIE STAENDE VOR DEN FAHRTEN". Keine Bedingung ist dabei
 # weggefallen oder weicher geworden (K23-D05) -- sie zeigen nur noch auf
 # ihre eigene Fahrt.
+#
+# ---------------------------------------------------------------------
+# 4. JEDER SPERRGRUND NENNT ETWAS (ab 19.08.2026)
+# ---------------------------------------------------------------------
+# Im Lauf vom 19.08.2026 meldete ZB-05:
+#
+#     GESPERRT  Nicht messbar: die Fahrt mit zwei Nein-Antworten kam
+#               nicht bis zur Auswertung ()
+#
+# Die Klammer war LEER. Beide Variablen, aus denen der Grund kam, waren
+# gesetzt-und-leer. Ein Sperrgrund, der nichts nennt, sagt zwar DASS
+# etwas fehlte, aber nicht WAS.
+#
+# Seither: jeder Weg, der eine Zielmenge nicht zustande bringt, setzt
+# seinen eigenen Grund (FREI_GRUND, ANHANG_GRUND, VERBOTEN_GRUND) mit
+# Status und Weiterleitung im Wortlaut, und jeder sperr() geht durch
+# grund(). Ist wider Erwarten kein Grund gesetzt, sagt der Lauf auch
+# DAS -- und benennt, dass der Befund ihm selbst gehoert.
+#
+# ---------------------------------------------------------------------
+# 5. WELCHE FAHRT NICHT ZUSTANDE KAM -- und was daraus folgt
+# ---------------------------------------------------------------------
+# Aus demselben Lauf laesst sich ablesen, WELCHE der vier Fahrten
+# haengenblieb, ohne dass ein Mensch nachsehen muesste:
+#
+#   * ZB-06 FIEL (nicht: sperrte) mit KENNTNIS_GRUND  -> ZIELE_ANHANG
+#     lag vor, sonst haette ZB-06 vorher gesperrt.
+#   * ZB-05 sperrte, und zwar mit leerem Grund        -> der Bildschirm
+#     war gefunden und der Weiterweg bestimmt.
+#   * Bleibt genau eine Moeglichkeit: ZIELE_FREI war leer.
+#
+# ALSO: die Fahrt FREIER WEG (beide Fragen verneint). Der Weiterweg
+# wurde bestimmt und gegangen, aber die Seite danach fuehrte kein
+# einziges Ziel -- weder ein Formular noch einen Verweis auf einen Pfad.
+# Und weil KENNTNIS_ZIEL und ANLEGEN_ZIEL aus dem UNTERSCHIED der
+# Zielmengen entstehen, fiel mit ihr auch alles, was auf ihnen steht.
+#
+# ZWEI URSACHEN KOMMEN IN FRAGE, und sie gehoeren verschiedenen Seiten:
+#
+#   (a) PRUEFFEHLER -- heute behoben. Die Folgeseite wurde bisher NACH
+#       der ganzen Kandidatenschleife geholt, also nachdem auch alle
+#       uebrigen Kandidaten gesendet worden waren. Darunter koennen Wege
+#       sein, die den Stand veraendern. Gelesen wurde dann die Seite in
+#       einem Stand, den eine FREMDE Probe hergestellt hat. Ab jetzt
+#       wird der Folgeseite sofort gefolgt, im Stand des Treffers.
+#
+#   (b) BAUBEFUND. Nach dem Weiterweg endet der freie Weg auf einer
+#       Seite ohne jeden Weiterweg. Dann ist K19_screens.yaml:250
+#       (EN-04a, zweckfrage_beantworten, zustand_erfolg: "sonst kein
+#       Treffer -> anwendung_anlegen, danach EN-05") nicht erfuellt.
+#
+# WELCHE VON BEIDEN ES IST, ENTSCHEIDET DER NAECHSTE LAUF, nicht dieser
+# Kommentar. Der blinde Arbeitsbaum kann keinen Server starten; die
+# Ursache (a) ist beseitigt, und wenn die Seite danach immer noch kein
+# Ziel fuehrt, nennt FREI_GRUND Status und Weiterleitung im Wortlaut --
+# und dann ist es (b) und gehoert auf ein Blatt an den Bau.
+#
+# BIS DAHIN SPERRT ZB-06, STATT ZU FALLEN. Nicht um den Lauf gruen zu
+# machen -- sperr() zaehlt weiter zu den nicht bestandenen Faellen und
+# die Summe bleibt dieselbe --, sondern weil ein Fall, der an der
+# FREMDEN Fahrt scheitert, ueber seine eigene Klausel nichts gemessen
+# hat (F07, K23-M22). Was ZB-06 messen KONNTE -- Anhang III, die fuenf
+# Anbieterpflichten, der ausbleibende Halt --, wird weiter gemessen und
+# laesst ihn weiter FALLEN, wenn es nicht stimmt.
 # =====================================================================
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
@@ -142,6 +206,27 @@ nok() { gesamt=$((gesamt+1)); gescheitert=$((gescheitert+1))
 # ein Lauf, der nichts gemessen hat, ist kein gruener Lauf.
 sperr() { gesamt=$((gesamt+1)); gescheitert=$((gescheitert+1)); gesperrt=$((gesperrt+1))
         printf '%-7s GESPERRT     %s\n' "$1" "$(printf '%s' "$2" | tr '\n' ' ')"; }
+
+# ---------------------------------------------------------------------
+# EIN SPERRGRUND, DER NICHTS NENNT (Befund vom 19.08.2026)
+#
+# ZB-05 meldete "Nicht messbar: ... kam nicht bis zur Auswertung ()" --
+# mit leerer Klammer. Die Variable, aus der der Grund kam, war
+# gesetzt-und-leer. Ein solcher Grund sagt, DASS etwas fehlte, aber
+# nicht WAS; er ist fast so schlecht wie kein Grund.
+#
+# grund() gibt den ersten Kandidaten zurueck, der etwas sagt. Sagt
+# keiner etwas, sagt SIE es -- und benennt dabei, wem der Befund
+# gehoert. Ein Prueflauf, der seinen eigenen blinden Fleck verschweigt,
+# stellt den Stand falsch dar.
+# ---------------------------------------------------------------------
+grund() {            # $1.. Kandidaten -> der erste, der etwas sagt
+  local g
+  for g in "$@"; do
+    if [ -n "$g" ]; then printf '%s' "$g"; return; fi
+  done
+  printf 'kein Grund gesetzt -- das ist ein Befund ueber diesen Prueflauf, nicht ueber den Bau'
+}
 
 abbruch() { printf 'ABBRUCH: %s\n' "$1"; printf 'SUMME: 0 von 0 bestanden, 0 gescheitert\n'; exit 2; }
 
@@ -365,6 +450,12 @@ merkmale_im_bereich() {   # $1 name  $2 marke  $3 F1|F2  -> Anzahl
 # Alle Ziele der Seite: Formularziele UND Verweisziele, als reine Pfade,
 # ohne Dubletten. Anker, leere Ziele und Fremdadressen fallen weg -- sie
 # sind keine Wege im Sinne der Wegetabelle.
+# Die erste Zeile der Antwort im Wortlaut -- Evidenz fuer jeden Grund,
+# der sonst nur "es kam nichts" sagen koennte (Bauauftrag :649).
+statuszeile() {      # $1 name -> "HTTP/1.1 303 See Other" o. ae.
+  head -1 "$ARBEIT/$1.kopf" 2>/dev/null | tr -d '\r'
+}
+
 zieltexte() {        # $1 name -> je Zeile ein Pfad
   python3 - "$ARBEIT/$1.rumpf" <<'PY'
 import html, re, sys
@@ -814,7 +905,8 @@ apps_vom_check() {   # $1 fit_check -> Anwendungen, die auf DIESEN Check zeigen
 # "Weiter" abgeleitet wird.
 # ---------------------------------------------------------------------
 ZIELE_NULL=""; ZIELE_EINS=""; ZIELE_ZWEI=""; ZIELE_FREI=""
-WEITER_ZIEL=""; WEITER_GRUND=""; WEITER_PROBE=""
+WEITER_ZIEL=""; WEITER_GRUND=""; WEITER_PROBE=""; WEITER_FOLGE=""; WEITER_FOLGEZIEL=""
+FREI_GRUND=""
 APPS_VOR_FREI=""; APPS_NACH_ZWEI_NEIN=""
 if [ -n "$ZWECK_PFAD" ]; then
   APPS_VOR_FREI="$(anz_apps "$MANDANT_A")"
@@ -879,7 +971,7 @@ if [ -n "$ZWECK_PFAD" ]; then
     cid_w="$(dbz "SELECT c.id::text FROM fit_check c JOIN actor a ON a.id=c.actor_id
                    WHERE a.email='zb_frei@zbpruef.example' ORDER BY c.started_at DESC LIMIT 1")"
     vorher_w="$(dbz "SELECT count(*) FROM app WHERE tenant_id='$MANDANT_A'")"
-    treffer_w=(); treffer_probe_w=(); i_w=0
+    treffer_w=(); treffer_probe_w=(); treffer_folge_w=(); treffer_ziel_w=(); i_w=0
     while IFS= read -r kand; do
       [ -n "$kand" ] || continue
       i_w=$((i_w+1))
@@ -901,6 +993,26 @@ if [ -n "$ZWECK_PFAD" ]; then
           # Welche Antwort der Probe zu diesem Kandidaten gehoert. Sie
           # ist der Weiterweg, EINMAL gegangen -- siehe unten.
           treffer_probe_w+=("zb_f3_probe$i_w")
+          # UND DIE FOLGESEITE SOFORT, nicht erst nach der Schleife.
+          #
+          # BEFUND VOM 19.08.2026, zweite Lage desselben Fehlers: die
+          # Folgeseite wurde bisher NACH der ganzen Schleife geholt --
+          # also nachdem auch alle UEBRIGEN Kandidaten gesendet worden
+          # waren. Darunter koennen Wege sein, die den Stand veraendern
+          # (etwa eine Zuruecknahme der Antwort). Was danach unter
+          # "Seite nach dem Weiterweg" gelesen wurde, war die Seite in
+          # einem Stand, den eine FREMDE Probe hergestellt hat.
+          # Ein GET veraendert nichts (das misst ZB-19), also wird hier
+          # sofort gefolgt -- im Stand, den dieser Kandidat hinterlassen
+          # hat, und in keinem anderen.
+          z_w="$(nur_pfad "$(kopfzeile "zb_f3_probe$i_w" location)")"
+          if [ -n "$z_w" ]; then
+            hole "$z_w" "zb_f3_probe${i_w}_folge" "$KEKS_FREI" >/dev/null
+          else
+            cp "$ARBEIT/zb_f3_probe$i_w.rumpf" "$ARBEIT/zb_f3_probe${i_w}_folge.rumpf" 2>/dev/null
+          fi
+          treffer_folge_w+=("zb_f3_probe${i_w}_folge")
+          treffer_ziel_w+=("${z_w:-(keine Weiterleitung)}")
         fi
       fi
       vorher_w="$nachher_w"
@@ -910,13 +1022,17 @@ EOF
     if [ "${#treffer_w[@]}" = "1" ]; then
       WEITER_ZIEL="${treffer_w[0]}"
       WEITER_PROBE="${treffer_probe_w[0]}"
+      WEITER_FOLGE="${treffer_folge_w[0]}"
+      WEITER_FOLGEZIEL="${treffer_ziel_w[0]}"
     else
       WEITER_GRUND="mit beiden Antworten erscheinen $anz neue Ziele statt genau einem; die Wirkung (genau eine neue Anwendungszeile, Eignungs-Check-Verweis darauf, offene Verlaufszeile app_state_history mit Zustand DISCOVERY) grenzt sie nicht auf einen einzigen Kandidaten ein (${#treffer_w[@]} erfuellen sie) -- Kandidaten: $(printf '%s' "$neu" | tr '\n' ' ')"
     fi
   else
     WEITER_GRUND="mit beiden Antworten erscheint kein neues Ziel"
   fi
-  if [ -n "$WEITER_ZIEL" ]; then
+  if [ -z "$WEITER_ZIEL" ]; then
+    FREI_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
+  else
     # DIE SPUR DER PROBE ABZIEHEN -- der zweite Grund des Befundes vom
     # 19.08.2026, und der schwerere.
     #
@@ -936,15 +1052,37 @@ EOF
     #
     # Ohne Probe (genau ein neues Ziel) ist $WEITER_PROBE leer -- dann
     # ist dieses `sende` das erste und einzige, wie bisher.
+    st3=""
     if [ -n "${WEITER_PROBE:-}" ]; then
       cp "$ARBEIT/$WEITER_PROBE.rumpf" "$ARBEIT/zb_f3.rumpf" 2>/dev/null
       cp "$ARBEIT/$WEITER_PROBE.kopf"  "$ARBEIT/zb_f3.kopf"  2>/dev/null
+      # Auch die Folgeseite stammt aus der Probe -- geholt in dem Stand,
+      # den DIESER Kandidat hinterlassen hat (siehe oben).
+      cp "$ARBEIT/$WEITER_FOLGE.rumpf" "$ARBEIT/zb_f3s.rumpf" 2>/dev/null
+      ziel3="$WEITER_FOLGEZIEL"
     else
-      sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+      st3=$(sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
+      ziel3="$(nur_pfad "$(kopfzeile zb_f3 location)")"
+      [ -n "$ziel3" ] && hole "$ziel3" zb_f3s "$KEKS_FREI" >/dev/null || cp "$ARBEIT/zb_f3.rumpf" "$ARBEIT/zb_f3s.rumpf" 2>/dev/null
     fi
-    ziel3="$(nur_pfad "$(kopfzeile zb_f3 location)")"
-    [ -n "$ziel3" ] && hole "$ziel3" zb_f3s "$KEKS_FREI" >/dev/null || cp "$ARBEIT/zb_f3.rumpf" "$ARBEIT/zb_f3s.rumpf" 2>/dev/null
     ZIELE_FREI="$(zieltexte zb_f3s)"
+    # ---------------------------------------------------------------
+    # DER GRUND, WENN NICHTS HERAUSKOMMT (Befund vom 19.08.2026)
+    #
+    # ZB-05 meldete "Nicht messbar: ... kam nicht bis zur Auswertung ()"
+    # -- mit LEERER Klammer. Beide Variablen, aus denen der Grund kam,
+    # waren gesetzt-und-leer: der Bildschirm war gefunden (kein
+    # ZWECK_GRUND) und der Weiterweg bestimmt (kein WEITER_GRUND). Nur
+    # ZIELE_FREI blieb leer, und dafuer gab es keinen Namen.
+    #
+    # Ein Sperrgrund, der nichts nennt, sagt zwar dass etwas fehlte,
+    # aber nicht was -- er ist fast so schlecht wie keiner. Deshalb
+    # traegt jeder Weg hierher ab jetzt seinen eigenen Grund, mit
+    # Status und Weiterleitung im Wortlaut.
+    # ---------------------------------------------------------------
+    if [ -z "$ZIELE_FREI" ]; then
+      FREI_GRUND="die Antwort auf den Weiterweg '$WEITER_ZIEL' (Status '$(statuszeile zb_f3)'${st3:+ / $st3}, Weiterleitung '${ziel3:-keine}') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen)"
+    fi
   fi
 fi
 
@@ -957,11 +1095,14 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_anhang@zbpruef.example' '820002' zba
   hole "$ZWECK_PFAD" zb_a0 "$KEKS_ANHANG" >/dev/null
   zweck_antwort "$KEKS_ANHANG" zb_a1 "$FELD1" "$JA1"   >/dev/null
   zweck_antwort "$KEKS_ANHANG" zb_a2 "$FELD2" "$NEIN2" >/dev/null
-  if [ -n "$WEITER_ZIEL" ]; then
-    sende "$WEITER_ZIEL" zb_a3 "$KEKS_ANHANG" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+  if [ -z "$WEITER_ZIEL" ]; then
+    ANHANG_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
+  else
+    sta=$(sende "$WEITER_ZIEL" zb_a3 "$KEKS_ANHANG" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
     z="$(nur_pfad "$(kopfzeile zb_a3 location)")"
     [ -n "$z" ] && hole "$z" zb_a3s "$KEKS_ANHANG" >/dev/null || cp "$ARBEIT/zb_a3.rumpf" "$ARBEIT/zb_a3s.rumpf" 2>/dev/null
     ZIELE_ANHANG="$(zieltexte zb_a3s)"
+    [ -n "$ZIELE_ANHANG" ] || ANHANG_GRUND="die Antwort auf den Weiterweg '$WEITER_ZIEL' (Status $sta, Weiterleitung '${z:-keine}') fuehrt auf eine Seite ohne jedes Ziel"
   fi
 else
   ANHANG_GRUND="${FAHRT_GRUND:-$ZWECK_GRUND}"
@@ -980,11 +1121,14 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_verboten@zbpruef.example' '820003' z
   APPS_VOR_VERBOTEN="$(anz_apps "$MANDANT_A")"
   zweck_antwort "$KEKS_VERBOTEN" zb_v1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_VERBOTEN" zb_v2 "$FELD2" "$JA2"   >/dev/null
-  if [ -n "$WEITER_ZIEL" ]; then
-    sende "$WEITER_ZIEL" zb_v3 "$KEKS_VERBOTEN" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
+  if [ -z "$WEITER_ZIEL" ]; then
+    VERBOTEN_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
+  else
+    stv=$(sende "$WEITER_ZIEL" zb_v3 "$KEKS_VERBOTEN" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
     z="$(nur_pfad "$(kopfzeile zb_v3 location)")"
     [ -n "$z" ] && hole "$z" zb_v3s "$KEKS_VERBOTEN" >/dev/null || cp "$ARBEIT/zb_v3.rumpf" "$ARBEIT/zb_v3s.rumpf" 2>/dev/null
     ZIELE_HALT="$(zieltexte zb_v3s)"
+    [ -n "$ZIELE_HALT" ] || VERBOTEN_GRUND="die Antwort auf den Weiterweg '$WEITER_ZIEL' (Status $stv, Weiterleitung '${z:-keine}') fuehrt auf eine Halt-Seite ohne jedes Ziel"
   fi
   APPS_NACH_VERBOTEN="$(anz_apps "$MANDANT_A")"
 else
@@ -1014,8 +1158,32 @@ fi
 # ---------------------------------------------------------------------
 # Die beiden verbleibenden Ziele aus dem UNTERSCHIED der Fahrten
 # ---------------------------------------------------------------------
-KENNTNIS_ZIEL=""; KENNTNIS_GRUND=""
-ANLEGEN_ZIEL="";  ANLEGEN_GRUND=""
+# ---------------------------------------------------------------------
+# ZWEI GRUENDE, DIE NICHT DASSELBE SIND (Befund vom 19.08.2026)
+#
+# Ein Ziel kann aus zwei ganz verschiedenen Gruenden fehlen:
+#
+#   ABLEITUNG LIEF NICHT   Eine der beiden Zielmengen fehlt. Dann ist
+#                          ueber die Aufforderung zu bestaetigen NICHTS
+#                          gesagt -- der Fall hat sie nicht gesucht,
+#                          sondern konnte nicht suchen. Zustand:
+#                          GESPERRT (K23-M22).
+#   ABLEITUNG LIEF         Beide Zielmengen liegen vor, der Unterschied
+#                          ergibt aber nicht genau ein Ziel. DAS ist eine
+#                          Aussage ueber den Bau. Zustand: der Fall faellt.
+#
+# Bis heute war beides derselbe leere String, und ZB-06 fiel in beiden
+# Lagen mit "es gibt keine Aufforderung zu bestaetigen". Im ersten Fall
+# scheiterte er damit an einer FREMDEN Bedingung -- der freien Fahrt --
+# und mass ueber seine eigene nichts (F07).
+#
+# Es wird dabei KEINE Bedingung weggenommen: faellt die Ableitung aus,
+# zaehlt der Fall weiterhin als nicht bestanden (sperr() zaehlt zu den
+# gescheiterten). Nur der NAME des Ergebnisses wird richtig -- und der
+# Grund steht daneben.
+# ---------------------------------------------------------------------
+KENNTNIS_ZIEL=""; KENNTNIS_GRUND=""; KENNTNIS_ABLEITUNG="lief"
+ANLEGEN_ZIEL="";  ANLEGEN_GRUND="";  ANLEGEN_ABLEITUNG="lief"
 if [ -n "$ZIELE_ANHANG" ] && [ -n "$ZIELE_FREI" ]; then
   neu="$(comm -13 <(printf '%s\n' "$ZIELE_FREI" | sort -u) <(printf '%s\n' "$ZIELE_ANHANG" | sort -u))"
   anz="$(printf '%s\n' "$neu" | grep -c . || true)"
@@ -1027,7 +1195,14 @@ if [ -n "$ZIELE_ANHANG" ] && [ -n "$ZIELE_FREI" ]; then
   if [ "$anz" = "1" ]; then ANLEGEN_ZIEL="$(printf '%s\n' "$neu" | grep . | head -1)"
   else ANLEGEN_GRUND="beim freien Weg erscheinen $anz Ziele, die es nach Treffer in Frage 1 nicht gibt, statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
 else
-  KENNTNIS_GRUND="eine der beiden Fahrten (freier Weg / Treffer in Frage 1) kam nicht zustande"
+  KENNTNIS_ABLEITUNG="fehlt"; ANLEGEN_ABLEITUNG="fehlt"
+  if [ -z "$ZIELE_FREI" ] && [ -z "$ZIELE_ANHANG" ]; then
+    KENNTNIS_GRUND="KEINE der beiden Fahrten kam bis zur Auswertung -- freier Weg: ${FREI_GRUND:-ohne benannten Grund}; Treffer in Frage 1: ${ANHANG_GRUND:-ohne benannten Grund}"
+  elif [ -z "$ZIELE_FREI" ]; then
+    KENNTNIS_GRUND="die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- ${FREI_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
+  else
+    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 1 kam nicht bis zur Auswertung -- ${ANHANG_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Der freie Weg kam durch"
+  fi
   ANLEGEN_GRUND="$KENNTNIS_GRUND"
 fi
 
@@ -1046,8 +1221,85 @@ stand_von() {        # $1 email -> outcome|app_id
          FROM fit_check c JOIN actor a ON a.id=c.actor_id
         WHERE a.email='$1' ORDER BY c.started_at DESC LIMIT 1"
 }
-# Der Nachweis der Kenntnisnahme -- gesucht an BEIDEN Orten, die
-# K04-G12 und O-K04-8 offenlassen: eigene Spalte ODER Ereignis nach K02.
+# =====================================================================
+# DER NACHWEIS DER KENNTNISNAHME -- nachgeschaerft am 19.08.2026
+# ---------------------------------------------------------------------
+# WAS FALSCH WAR. Diese Funktion suchte ein Ereignis, dessen action eines
+# von KENNTNIS, ACK, ZWECK oder ANHANG enthaelt. "ZWECK" trifft aber auch
+# die BEANTWORTUNG der beiden Zweckfragen. Gemessen am 19.08.2026 gegen
+# einen laufenden Server: die Beantwortung schreibt
+#
+#     action = 'ZWECKBESTIMMUNG_BEANTWORTET'
+#
+# ZB-08 meldete daraufhin "es wurde ein Nachweis der Kenntnisnahme
+# geschrieben, obwohl Frage 2 zutrifft" -- fuer eine Fahrt, in der gar
+# keine Kenntnisnahme stattgefunden hatte. PRUEFFEHLER, kein Baufehler:
+# der Bau schreibt nichts, was K04-D10 verbietet.
+#
+# ---------------------------------------------------------------------
+# WORAN MAN DIE KENNTNISNAHME ERKENNT -- gemessen, nicht geraten
+# ---------------------------------------------------------------------
+# (1) GEMESSEN AM 19.08.2026 in einer Wegwerfdatenbank (Schema + M30 +
+#     M31): zwei Fahrten, beide mit Treffer in Frage 1 und beide Fragen
+#     beantwortet, die eine MIT und die andere OHNE Bestaetigung.
+#     Verglichen wurden alle vier Spalten der Zweckbestimmung und alle
+#     Ereigniszeilen.
+#
+#       Fahrt ohne Bestaetigung : menschen=t praktik=f erklaert=t ack=f
+#       Fahrt mit  Bestaetigung : menschen=t praktik=f erklaert=t ack=t
+#       Ereignisse, die die DATENBANK dabei schrieb: 0 (beide Fahrten)
+#
+#     GENAU EINE Spalte unterscheidet die beiden:
+#     fit_check.zweckbestimmung_ack_at.
+#
+# (2) Dass die Datenbank kein Ereignis schreibt, ist kein Zufall. M31
+#     sagt es selbst (Z. 99-103): "Der Serverpfad schreibt Antwort,
+#     Ruecknahme und Kenntnisnahme je in derselben Transaktion wie die
+#     Spalte." Der Traeger steht in der Datenbank, das Ereignis schreibt
+#     der Serverpfad. event.action ist freier Text -- kein Enum, keine
+#     CHECK-Bedingung (schema/freiraum_datamodel.sql:534). Aus einer
+#     Rang-1-Quelle laesst sich der Wortlaut der action also NICHT
+#     ableiten, und ein blinder Prueflauf darf ihn nicht erfinden.
+#
+# (3) Was die Rang-1-Quellen sehr wohl trennen, sind die beiden
+#     VORGAENGE. schema/K19_screens.yaml (EN-04a) nennt sie beim Namen:
+#
+#       Z. 228-230  zweckfrage_beantworten -> create_purpose_declaration
+#       Z. 236-238  kenntnis_nehmen        -> create_purpose_acknowledgement
+#
+#     Das Merkmal der Kenntnisnahme ist also "acknowledgement" -- ACK --,
+#     das der Beantwortung "declaration". Die Muster unten stammen aus
+#     diesen beiden Namen, nicht aus einer Vermutung ueber den Bau.
+#
+# ---------------------------------------------------------------------
+# WAS DIE FUNKTION JETZT TUT
+# ---------------------------------------------------------------------
+#   * Traeger: fit_check.zweckbestimmung_ack_at dieses Checks. Eindeutig
+#     und gezeichnet (M31). Die Beantwortung hat ihre eigene Spalte
+#     (zweckbestimmung_erklaert_am) und kann hier nicht durchschlagen.
+#   * Protokoll: eine Ereigniszeile DIESES Checks, deren action ein
+#     Kenntnisnahme-Merkmal traegt -- kenntnis · bestaetig · acknowledg ·
+#     ack als eigenes Wort. K04-G12 laesst beide Orte offen, deshalb
+#     bleibt der zweite Ort erhalten.
+#   * WEGGEFALLEN sind ZWECK und ANHANG als Merkmale. Sie benennen den
+#     GEGENSTAND ("Zweckbestimmung", "Anhang III"), nicht den VORGANG,
+#     und tragen deshalb die Beantwortung mit. Das ist keine Lockerung
+#     nach K23-D05: der Fall misst dieselbe Sache schaerfer. Was
+#     verlorenginge, waere eine Kenntnisnahme, die weder Spalte noch ein
+#     als solches benanntes Ereignis hinterlaesst -- die waere nach
+#     K04-M21 ohnehin kein Nachweis.
+#
+# GEGENPROBE zur Nachschaerfung selbst (ausgefuehrt 19.08.2026):
+#   'ZWECKBESTIMMUNG_BEANTWORTET'            -> 0 Treffer (vorher 1)
+#   'ZWECKBESTIMMUNG_KENNTNIS_GENOMMEN'      -> 1 Treffer
+#   'PURPOSE_ACK'                            -> 1 Treffer
+#   'ZWECKBESTIMMUNG_BESTAETIGT'             -> 1 Treffer
+#   Spalte zweckbestimmung_ack_at gesetzt    -> 1 Treffer
+# =====================================================================
+# Das Merkmal des VORGANGS Kenntnisnahme. "ack" nur als eigenes Wort,
+# damit es nicht zufaellig in einem laengeren Wort trifft.
+ACK_MERKMAL='kenntnis|bestaetig|acknowledg|(^|[^a-z])ack([^a-z]|$)'
+
 nachweise() {        # $1 email -> Anzahl
   local cid n1 n2
   cid="$(check_von "$1")"
@@ -1058,8 +1310,7 @@ nachweise() {        # $1 email -> Anzahl
                 WHERE id='$cid' AND zweckbestimmung_ack_at IS NOT NULL")"
   fi
   n2="$(dbz "SELECT count(*) FROM event
-              WHERE (action ILIKE '%KENNTNIS%' OR action ILIKE '%ACK%'
-                     OR action ILIKE '%ZWECK%' OR action ILIKE '%ANHANG%')
+              WHERE action ~* '$ACK_MERKMAL'
                 AND (coalesce(object_ref,'') LIKE '%$cid%'
                      OR coalesce(value,'')  LIKE '%$cid%')")"
   printf '%s' $(( ${n1:-0} + ${n2:-0} ))
@@ -1081,7 +1332,7 @@ nachweise() {        # $1 email -> Anzahl
 #         nicht gab.
 # ---------------------------------------------------------------------
 if [ -z "$KEKS_FREI" ]; then
-  sperr ZB-01 "Nicht messbar: GEEIGNET wurde nicht erreicht -- $ZWECK_GRUND"
+  sperr ZB-01 "Nicht messbar: GEEIGNET wurde nicht erreicht -- $(grund "$ZWECK_GRUND")"
 elif [ -z "$ZWECK_PFAD" ]; then
   nok ZB-01 "Nach GEEIGNET oeffnet sich kein Bildschirm der Zweckbestimmung: $ZWECK_GRUND (K04-M19, K19 EN-04 zustand_erfolg)"
 else
@@ -1109,7 +1360,7 @@ pruefe_sql_marke
 #         umwerfen.
 # ---------------------------------------------------------------------
 if [ -z "$ZWECK_PFAD" ] || [ -z "$KEKS_ANHANG" ]; then
-  sperr ZB-02 "Nicht messbar: ${ANHANG_GRUND:-$ZWECK_GRUND}"
+  sperr ZB-02 "Nicht messbar: $(grund "$ANHANG_GRUND" "$ZWECK_GRUND")"
 else
   # zb_anhang hat beide Zweckfragen beantwortet; der Vergleich laeuft
   # gegen den Startbestand, der sich dadurch nicht aendern darf.
@@ -1144,7 +1395,7 @@ pruefe_sql_marke
 if [ -z "$ZWECK_PFAD" ] || [ -z "$KEKS_FREI" ]; then
   sperr ZB-03 "Nicht messbar: ${ZWECK_GRUND:-der Bildschirm wurde nicht erreicht}"
 elif [ -z "$WEITER_ZIEL" ]; then
-  sperr ZB-03 "Der Weiterweg ist nicht bestimmbar: $WEITER_GRUND. Ohne ihn ist nicht entscheidbar, ob er ausgeblendet war (K19-M06, fail-closed)"
+  sperr ZB-03 "Der Weiterweg ist nicht bestimmbar: $(grund "$WEITER_GRUND"). Ohne ihn ist nicht entscheidbar, ob er ausgeblendet war (K19-M06, fail-closed)"
 else
   m=""
   printf '%s\n' "$ZIELE_NULL" | grep -qx -- "$WEITER_ZIEL" \
@@ -1210,9 +1461,9 @@ pruefe_sql_marke
 #         wird der Status ausdruecklich unterschieden.
 # ---------------------------------------------------------------------
 if [ -z "$WEITER_ZIEL" ]; then
-  sperr ZB-04 "Nicht messbar: der Weiterweg ist nicht bestimmbar ($WEITER_GRUND)"
+  sperr ZB-04 "Nicht messbar: der Weiterweg ist nicht bestimmbar -- $(grund "$WEITER_GRUND")"
 elif ! bis_geeignet 'zb_halb@zbpruef.example' '820006' zbhalb; then
-  sperr ZB-04 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-04 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_HALB="$FAHRT_KEKS"
   hole "$ZWECK_PFAD" zb_h0 "$KEKS_HALB" >/dev/null
@@ -1258,13 +1509,23 @@ pruefe_sql_marke
 #         immer nennt, bestuende beide.
 # ---------------------------------------------------------------------
 if [ -z "$ZIELE_FREI" ]; then
-  sperr ZB-05 "Nicht messbar: die Fahrt mit zwei Nein-Antworten kam nicht bis zur Auswertung (${WEITER_GRUND:-$ZWECK_GRUND})"
+  # BERICHTIGT 19.08.2026: hier stand "(${WEITER_GRUND:-$ZWECK_GRUND})",
+  # und beide waren gesetzt-und-leer -- der Lauf meldete eine LEERE
+  # Klammer. Jetzt traegt jeder Weg hierher seinen eigenen Grund
+  # (FREI_GRUND, gesetzt in Fahrt 1), und wenn wider Erwarten keiner
+  # gesetzt ist, sagt der Fall auch DAS.
+  sperr ZB-05 "Nicht messbar: die Fahrt mit zwei Nein-Antworten kam nicht bis zur Auswertung -- $(grund "$FREI_GRUND" "$WEITER_GRUND" "$ZWECK_GRUND")"
 else
   m=""
   enthaelt_lose zb_f3s 'Anhang III' && m="$m die Warnung zu Anhang III steht auch ohne Treffer in Frage 1 auf der Seite (K04-M20);"
   enthaelt_lose zb_f3s 'Artikel 5'  && m="$m der Verweis auf Artikel 5 steht auch ohne Treffer in Frage 2 auf der Seite (K04-M20);"
   enthaelt_lose zb_f3s 'Art. 5'     && m="$m der Verweis auf Art. 5 steht auch ohne Treffer in Frage 2 auf der Seite (K04-M20);"
-  [ -n "$ANLEGEN_ZIEL" ] || m="$m der Weg zur Anlage ist nicht bestimmbar: $ANLEGEN_GRUND;"
+  # Der Weg zur Anlage: fehlt er, WEIL die Ableitung gar nicht lief, ist
+  # das eine fremde Bedingung -- dann sperrt der Fall unten, statt hier
+  # rot zu werden (F07, Befund vom 19.08.2026).
+  if [ "$ANLEGEN_ABLEITUNG" = "lief" ]; then
+    [ -n "$ANLEGEN_ZIEL" ] || m="$m der Weg zur Anlage ist nicht bestimmbar: $ANLEGEN_GRUND;"
+  fi
   # BERICHTIGT 19.08.2026: Hier stand die ABSOLUTE Zahl der Anwendungen
   # im Mandanten -- sie enthielt die Spur der Kandidatenprobe und aller
   # spaeteren Fahrten. Gemessen wird jetzt der Zuwachs zwischen dem Stand
@@ -1277,8 +1538,17 @@ else
     zuwachs=$(( APPS_NACH_ZWEI_NEIN - APPS_VOR_FREI ))
     [ "$zuwachs" = "0" ] || m="$m es entstand schon eine Anwendung, bevor der Weg zur Anlage gegangen wurde (Zuwachs $zuwachs zwischen dem Stand vor der Fahrt und dem Stand nach der zweiten Antwort) -- W7 ist dann kein eigener Schritt mehr und K04-M18 nicht pruefbar;"
   fi
-  [ -z "$m" ] && ok ZB-05 'Beide Zweckfragen verneint: weder Anhang-III-Warnung noch Artikel-5-Verweis, der Weg zur Anlage wird frei und noch keine Anwendung angelegt (W6)' \
-              || nok ZB-05 "Kein Treffer:$m"
+  # Reihenfolge mit Bedacht: eine GEMESSENE Beanstandung schlaegt die
+  # Sperre. Nur wenn nichts zu beanstanden war UND ein Teil ungemessen
+  # blieb, ist das Ergebnis GESPERRT -- sonst waere ein halb gemessener
+  # Fall gruen (K23-M22).
+  if [ -n "$m" ]; then
+    nok ZB-05 "Kein Treffer:$m"
+  elif [ "$ANLEGEN_ABLEITUNG" != "lief" ]; then
+    sperr ZB-05 "Am Uebrigen nichts zu beanstanden, aber nicht messbar, ob der Weg zur Anlage frei wird: $ANLEGEN_GRUND"
+  else
+    ok ZB-05 'Beide Zweckfragen verneint: weder Anhang-III-Warnung noch Artikel-5-Verweis, der Weg zur Anlage wird frei und noch keine Anwendung angelegt (W6)'
+  fi
 fi
 pruefe_sql_marke
 
@@ -1306,14 +1576,24 @@ else
   m=""
   enthaelt_lose zb_a3s 'Anhang III' || m="$m die Warnung nennt den Anhang III der KI-Verordnung nicht (K04-M20);"
   [ -z "$fehlen" ] || m="$m die Anbieterpflichten sind unvollstaendig -- es fehlen die Artikel$fehlen (K04-M20);"
-  [ -n "$KENNTNIS_ZIEL" ] || m="$m es gibt keine Aufforderung zu bestaetigen: $KENNTNIS_GRUND (K04-M20);"
+  # Fehlt das Ziel, WEIL die Ableitung nicht lief, misst dieser Fall
+  # ueber die Aufforderung nichts -- er scheiterte dann an der fremden
+  # Fahrt, nicht an K04-M20 (F07). Der Fall sperrt in diesem Fall unten.
+  if [ "$KENNTNIS_ABLEITUNG" = "lief" ]; then
+    [ -n "$KENNTNIS_ZIEL" ] || m="$m es gibt keine Aufforderung zu bestaetigen: $KENNTNIS_GRUND (K04-M20);"
+  fi
   # K04-D09: kein Halt. Das Ergebnis bleibt GEEIGNET, und der Weg endet
   # nicht in den drei Auswegen.
   case "$stand" in GEEIGNET*) : ;; *) m="$m der Eignungs-Check steht auf '$stand' -- der Treffer in Frage 1 hat als Halt gewirkt (K04-D09);";; esac
   enthaelt_lose zb_a3s 'Artikel 5' && m="$m die Seite verweist auf Artikel 5, obwohl nur Frage 1 zutrifft -- das ist die Begruendung des Halts (K04-M20, D09);"
   enthaelt_lose zb_a3s 'Art. 5'    && m="$m die Seite verweist auf Art. 5, obwohl nur Frage 1 zutrifft (K04-M20, D09);"
-  [ -z "$m" ] && ok ZB-06 'Treffer in Frage 1: Warnung zu Anhang III, alle fuenf Anbieterpflichten (Art. 9, 11, 14, 17, 43) und eine Aufforderung zu bestaetigen — und KEIN Halt, das Ergebnis bleibt GEEIGNET (K04-M20, K04-D09)' \
-              || nok ZB-06 "Treffer in Frage 1:$m"
+  if [ -n "$m" ]; then
+    nok ZB-06 "Treffer in Frage 1:$m"
+  elif [ "$KENNTNIS_ABLEITUNG" != "lief" ]; then
+    sperr ZB-06 "Warnung, Anbieterpflichten und der ausbleibende Halt sind gemessen und in Ordnung; nicht messbar blieb allein, ob eine Aufforderung zu bestaetigen erscheint: $KENNTNIS_GRUND"
+  else
+    ok ZB-06 'Treffer in Frage 1: Warnung zu Anhang III, alle fuenf Anbieterpflichten (Art. 9, 11, 14, 17, 43) und eine Aufforderung zu bestaetigen — und KEIN Halt, das Ergebnis bleibt GEEIGNET (K04-M20, K04-D09)'
+  fi
 fi
 pruefe_sql_marke
 
@@ -1354,6 +1634,12 @@ else
     enthaelt_lose zb_v3s "$w" && grund_da=1
   done
   [ "$grund_da" = "1" ] || m="$m der Halt nennt den Grund der Ablehnung nicht (K04-M20);"
+  # Die beiden Teilpruefungen, die ein abgeleitetes Ziel brauchen, duerfen
+  # nicht STILL ausfallen: ohne Ziel ist nicht gemessen, ob der Weg offen
+  # steht -- das ist kein "in Ordnung" (K23-M22, Befund vom 19.08.2026).
+  ungemessen=""
+  [ -n "$KENNTNIS_ZIEL" ] || ungemessen="$ungemessen ob die Kenntnisnahme offen steht (ihr Ziel ist nicht bestimmbar: $KENNTNIS_GRUND);"
+  [ -n "$ANLEGEN_ZIEL" ]  || ungemessen="$ungemessen ob der Weg zur Anlage offen steht (sein Ziel ist nicht bestimmbar: $ANLEGEN_GRUND);"
   [ -n "$KENNTNIS_ZIEL" ] && printf '%s\n' "$ZIELE_HALT" | grep -qx -- "$KENNTNIS_ZIEL" \
     && m="$m nach dem Treffer in Frage 2 steht die Kenntnisnahme '$KENNTNIS_ZIEL' offen -- dort heilt keine Bestaetigung (K04-D10);"
   [ -n "$ANLEGEN_ZIEL" ] && printf '%s\n' "$ZIELE_HALT" | grep -qx -- "$ANLEGEN_ZIEL" \
@@ -1368,8 +1654,13 @@ else
   fi
   [ "${apps_check:-0}" = "0" ] || m="$m $apps_check Anwendung(en) tragen den Eignungs-Check dieser Fahrt als fit_check_id (K04-D10, K04-M17);"
   [ "$appid" = "(leer)" ] || m="$m fit_check.app_id traegt '$appid' statt leer;"
-  [ -z "$m" ] && ok ZB-07 'Treffer in Frage 2: Halt mit Grund und Verweis auf Artikel 5, keine Kenntnisnahme, kein Weg zur Anlage, keine Anwendung (K04-M20, K04-D10)' \
-              || nok ZB-07 "Treffer in Frage 2:$m"
+  if [ -n "$m" ]; then
+    nok ZB-07 "Treffer in Frage 2:$m"
+  elif [ -n "$ungemessen" ]; then
+    sperr ZB-07 "Halt, Grund und Artikel-5-Verweis sind gemessen und in Ordnung; ungemessen blieb:$ungemessen"
+  else
+    ok ZB-07 'Treffer in Frage 2: Halt mit Grund und Verweis auf Artikel 5, keine Kenntnisnahme, kein Weg zur Anlage, keine Anwendung (K04-M20, K04-D10)'
+  fi
 fi
 pruefe_sql_marke
 
@@ -1395,23 +1686,19 @@ else
   appid="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid'")"
   apps_check="$(apps_vom_check "$cid")"
   # Der Nachweis der Kenntnisnahme -- GETRENNT gemessen und GETRENNT
-  # gemeldet (Auflage vom 19.08.2026).
+  # gemeldet (Auflage vom 19.08.2026), und seit demselben Tag am
+  # richtigen Merkmal.
   #
-  # Bisher stand hier eine einzige Zahl aus nachweise(). Sie zaehlt zwei
-  # ganz verschiedene Dinge zusammen:
-  #   (a) fit_check.zweckbestimmung_ack_at -- der Traeger, den K04-G12
-  #       als eigene Spalte offenlaesst. Er gehoert eindeutig DIESEM
-  #       Check und bedeutet eindeutig eine Kenntnisnahme.
-  #   (b) ein Ereignis, dessen action eines von KENNTNIS, ACK, ZWECK oder
-  #       ANHANG enthaelt und das DIESEN Check nennt. Auch das ist an die
-  #       Fahrt gebunden -- aber "ZWECK" trifft ebenso ein Ereignis, das
-  #       nur die BEANTWORTUNG der beiden Zweckfragen protokolliert, und
-  #       die hat in dieser Fahrt stattgefunden.
+  #   (a) fit_check.zweckbestimmung_ack_at -- der Traeger nach M31.
+  #       Gemessen am 19.08.2026: er ist die EINZIGE Spalte, die eine
+  #       Fahrt mit Bestaetigung von einer ohne unterscheidet.
+  #   (b) eine Ereigniszeile DIESES Checks, deren action den VORGANG
+  #       Kenntnisnahme benennt (ACK_MERKMAL, siehe nachweise()).
   #
-  # Ob der Fund also eine Kenntnisnahme ist oder eine Zweckerklaerung,
-  # entscheidet der WORTLAUT der action -- und der wird ab jetzt
-  # mitgemeldet, statt in einer Summe zu verschwinden. Keine der beiden
-  # Bedingungen ist weggefallen; beide lassen den Fall weiterhin fallen.
+  # Die frueheren Merkmale ZWECK und ANHANG sind weg: sie trafen
+  # 'ZWECKBESTIMMUNG_BEANTWORTET' mit, also die blosse Beantwortung.
+  # Der action-Wortlaut wird weiterhin mitgemeldet -- eine Zahl allein
+  # haette diesen Befund nie sichtbar gemacht.
   nw_spalte=0
   if [ "${ACK_SPALTE:-0}" = "1" ]; then
     nw_spalte="$(dbz "SELECT count(*) FROM fit_check
@@ -1419,8 +1706,7 @@ else
   fi
   nw_ereignisse="$(dbz "SELECT coalesce(string_agg(DISTINCT action, ', ' ORDER BY action), '')
                           FROM event
-                         WHERE (action ILIKE '%KENNTNIS%' OR action ILIKE '%ACK%'
-                                OR action ILIKE '%ZWECK%' OR action ILIKE '%ANHANG%')
+                         WHERE action ~* '$ACK_MERKMAL'
                            AND (coalesce(object_ref,'') LIKE '%$cid%'
                                 OR coalesce(value,'')  LIKE '%$cid%')")"
   m=""
@@ -1428,6 +1714,9 @@ else
     || m="$m obwohl Frage 2 zutrifft, verweist die Seite nicht auf Artikel 5 -- Frage 1 hat den Vorrang bekommen (K04-D10);"
   enthaelt_lose zb_b3s 'Anhang III' \
     && m="$m die Seite zeigt die Warnung zu Anhang III, obwohl Frage 2 zutrifft -- bei Treffer in Frage 2 tritt die Ablehnung an die STELLE der Kenntnisnahme (K04-M20, D10);"
+  ungemessen=""
+  [ -n "$KENNTNIS_ZIEL" ] || ungemessen="$ungemessen ob die Kenntnisnahme offen steht (ihr Ziel ist nicht bestimmbar: $KENNTNIS_GRUND);"
+  [ -n "$ANLEGEN_ZIEL" ]  || ungemessen="$ungemessen ob der Weg zur Anlage offen steht (sein Ziel ist nicht bestimmbar: $ANLEGEN_GRUND);"
   [ -n "$KENNTNIS_ZIEL" ] && fuehrt_zu zb_b3s "$KENNTNIS_ZIEL" \
     && m="$m die Kenntnisnahme '$KENNTNIS_ZIEL' steht offen, obwohl Frage 2 zutrifft -- dort heilt keine Bestaetigung (K04-D10);"
   [ -n "$ANLEGEN_ZIEL" ] && fuehrt_zu zb_b3s "$ANLEGEN_ZIEL" \
@@ -1444,9 +1733,14 @@ else
   [ "${nw_spalte:-0}" = "0" ] \
     || m="$m fit_check.zweckbestimmung_ack_at ist gesetzt -- die Kenntnisnahme wurde in DIESER Fahrt vermerkt, obwohl Frage 2 zutrifft (K04-D10);"
   [ -z "$nw_ereignisse" ] \
-    || m="$m auf dem Eignungs-Check dieser Fahrt stehen Ereignisse mit den Merkmalen der Kenntnisnahme -- action im Wortlaut: [$nw_ereignisse]. Traegt eines davon nur die BEANTWORTUNG der Zweckfragen, ist das Merkmal 'ZWECK' zu weit gefasst und der Befund gehoert der Pruefung; nennt es die Kenntnisnahme, gehoert er dem Bau (K04-D10);"
-  [ -z "$m" ] && ok ZB-08 'Frage 1 UND Frage 2 treffen zu: es gilt der Halt nach Frage 2 — kein Anhang-III-Weg, keine Kenntnisnahme, keine Anwendung. Der Vorrang der zweiten Frage haelt (K04-D10 vor K04-D09)' \
-              || nok ZB-08 "Vorrang der zweiten Frage:$m"
+    || m="$m auf dem Eignungs-Check dieser Fahrt steht eine Ereigniszeile, deren action den Vorgang Kenntnisnahme benennt -- action im Wortlaut: [$nw_ereignisse]. Bei Treffer in Frage 2 heilt keine Bestaetigung (K04-D10);"
+  if [ -n "$m" ]; then
+    nok ZB-08 "Vorrang der zweiten Frage:$m"
+  elif [ -n "$ungemessen" ]; then
+    sperr ZB-08 "Artikel-5-Verweis, ausbleibende Anhang-III-Warnung, keine Anwendung und kein Nachweis der Kenntnisnahme sind gemessen und in Ordnung; ungemessen blieb:$ungemessen"
+  else
+    ok ZB-08 'Frage 1 UND Frage 2 treffen zu: es gilt der Halt nach Frage 2 — kein Anhang-III-Weg, keine Kenntnisnahme, keine Anwendung. Der Vorrang der zweiten Frage haelt (K04-D10 vor K04-D09)'
+  fi
 fi
 pruefe_sql_marke
 
@@ -1552,9 +1846,9 @@ pruefe_sql_marke
 #         steht auf GEEIGNET. Fehlt allein die Kenntnisnahme.
 # ---------------------------------------------------------------------
 if [ -z "$ANLEGEN_ZIEL" ]; then
-  sperr ZB-11 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar ($ANLEGEN_GRUND)"
+  sperr ZB-11 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- $(grund "$ANLEGEN_GRUND")"
 elif ! bis_geeignet 'zb_ohne@zbpruef.example' '820005' zbohne; then
-  sperr ZB-11 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-11 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_OHNE="$FAHRT_KEKS"
   zweck_antwort "$KEKS_OHNE" zb_o1 "$FELD1" "$JA1"   >/dev/null
@@ -1658,9 +1952,9 @@ pruefe_sql_marke
 #         02.08.2026 drei von vier Negativfaellen wertlos.
 # ---------------------------------------------------------------------
 if [ -z "$ANLEGEN_ZIEL" ]; then
-  sperr ZB-13 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar ($ANLEGEN_GRUND)"
+  sperr ZB-13 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- $(grund "$ANLEGEN_GRUND")"
 elif ! bis_geeignet 'zb_zweit@zbpruef.example' '820013' zbzweit; then
-  sperr ZB-13 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-13 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_ZWEIT="$FAHRT_KEKS"
   zweck_antwort "$KEKS_ZWEIT" zb_z1 "$FELD1" "$NEIN1" >/dev/null
@@ -1757,9 +2051,9 @@ pruefe_sql_marke
 #         weist ab. Genau diese Unterscheidung ist K04-M18.
 # ---------------------------------------------------------------------
 if [ -z "$ANLEGEN_ZIEL" ]; then
-  sperr ZB-15 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar ($ANLEGEN_GRUND)"
+  sperr ZB-15 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- $(grund "$ANLEGEN_GRUND")"
 elif ! bis_geeignet 'zb_wechsel@zbpruef.example' '820008' zbwech; then
-  sperr ZB-15 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-15 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_WECHSEL="$FAHRT_KEKS"
   zweck_antwort "$KEKS_WECHSEL" zb_w1 "$FELD1" "$NEIN1" >/dev/null
@@ -1819,11 +2113,11 @@ pruefe_sql_marke
 #                   ein Fall, der nichts gemessen hat, ist nicht gruen.
 # ---------------------------------------------------------------------
 if [ -z "$KENNTNIS_ZIEL" ]; then
-  sperr ZB-16 "Nicht messbar: die Aufforderung zu bestaetigen wurde nicht gefunden ($KENNTNIS_GRUND)"
+  sperr ZB-16 "Nicht messbar: die Aufforderung zu bestaetigen wurde nicht gefunden -- $(grund "$KENNTNIS_GRUND")"
 elif [ "${ACK_SPALTE:-0}" != "1" ]; then
   sperr ZB-16 'Nicht messbar: die Kenntnisnahme haengt an keiner Spalte von fit_check; mit welchem Mittel sie unschreibbar zu machen waere, ist ohne Kenntnis des Traegers nicht entscheidbar (K04-G12)'
 elif ! bis_geeignet 'zb_nachweis@zbpruef.example' '820009' zbnw; then
-  sperr ZB-16 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-16 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_NW="$FAHRT_KEKS"
   zweck_antwort "$KEKS_NW" zb_n1 "$FELD1" "$JA1"   >/dev/null
@@ -1862,9 +2156,9 @@ pruefe_sql_marke
 #         entfernt (K04-D03), und der Weg beginnt wieder bei W1.
 # ---------------------------------------------------------------------
 if [ -z "$ZWECK_PFAD" ] || [ -z "$WEITER_ZIEL" ]; then
-  sperr ZB-17 "Nicht messbar: ${ZWECK_GRUND:-$WEITER_GRUND}"
+  sperr ZB-17 "Nicht messbar: $(grund "$ZWECK_GRUND" "$WEITER_GRUND")"
 elif ! bis_geeignet 'zb_aendern@zbpruef.example' '820010' zbaend; then
-  sperr ZB-17 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-17 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_AEND="$FAHRT_KEKS"
   zweck_antwort "$KEKS_AEND" zb_e1 "$FELD1" "$NEIN1" >/dev/null
@@ -1913,9 +2207,9 @@ pruefe_sql_marke
 #         was er war: kein Weiterweg, keine Anwendung.
 # ---------------------------------------------------------------------
 if [ -z "$ZWECK_PFAD" ] || [ -z "$WEITER_ZIEL" ]; then
-  sperr ZB-18 "Nicht messbar: ${ZWECK_GRUND:-$WEITER_GRUND}"
+  sperr ZB-18 "Nicht messbar: $(grund "$ZWECK_GRUND" "$WEITER_GRUND")"
 elif ! bis_geeignet 'zb_termin@zbpruef.example' '820011' zbterm; then
-  sperr ZB-18 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-18 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_TERM="$FAHRT_KEKS"
   zweck_antwort "$KEKS_TERM" zb_t1 "$FELD1" "$NEIN1" >/dev/null
@@ -1964,9 +2258,9 @@ pruefe_sql_marke
 #         tilgt, waere keiner (K04-D03).
 # ---------------------------------------------------------------------
 if [ -z "$ZWECK_PFAD" ] || [ -z "$WEITER_ZIEL" ]; then
-  sperr ZB-19 "Nicht messbar: ${ZWECK_GRUND:-$WEITER_GRUND}"
+  sperr ZB-19 "Nicht messbar: $(grund "$ZWECK_GRUND" "$WEITER_GRUND")"
 elif ! bis_geeignet 'zb_uebersicht@zbpruef.example' '820012' zbueb; then
-  sperr ZB-19 "Nicht messbar: $FAHRT_GRUND"
+  sperr ZB-19 "Nicht messbar: $(grund "$FAHRT_GRUND")"
 else
   KEKS_UEB="$FAHRT_KEKS"
   zweck_antwort "$KEKS_UEB" zb_u1 "$FELD1" "$NEIN1" >/dev/null
@@ -2408,8 +2702,24 @@ $ZUST_ZEILEN
 EOF
 PROBE_SETZ+=(${PROBE_SPAT[@]+"${PROBE_SPAT[@]}"})
 
-# Der Vorgang wird an denselben Merkmalen erkannt wie in nachweise() --
-# eine zweite, engere Liste waere ein zweiter Massstab.
+# Die Merkmale sind hier BREITER als in nachweise() -- und das ist seit
+# dem 19.08.2026 Absicht, nicht Nachlaessigkeit.
+#
+# nachweise() sucht EINEN Vorgang: die Kenntnisnahme. Es misst deshalb
+# seit dem 19.08.2026 nur noch deren Merkmale (kenntnis, bestaetig,
+# acknowledg, ack) -- "ZWECK" traegt auch die Beantwortung mit, und die
+# ist ein anderer Vorgang.
+#
+# ZB-26 misst etwas anderes: dass ueber den GANZEN Bestand Zustand und
+# Vorgang dasselbe sagen. Die Zustandsseite deckt ALLE vier Spalten der
+# Zweckbestimmung ab -- die beiden Antwortspalten, den Zeitpunkt der
+# Erklaerung UND die Kenntnisnahme. Die Vorgangsseite muss deshalb
+# ebenso weit sein. Verengte man sie auf die Kenntnisnahme, meldete
+# ZB-26 jede blosse Beantwortung als "Zustand ohne Vorgang" -- also
+# einen Fehlschlag gegen eine Klausel, die nichts dergleichen verlangt.
+#
+# Zwei Massstaebe waeren es nur, wenn sie dasselbe messen sollten. Sie
+# messen zweierlei, und die Begruendung steht hier.
 EV_PRAED="EXISTS (SELECT 1 FROM event e
                    WHERE (e.action ILIKE '%KENNTNIS%' OR e.action ILIKE '%ACK%'
                           OR e.action ILIKE '%ZWECK%'    OR e.action ILIKE '%ANHANG%'
