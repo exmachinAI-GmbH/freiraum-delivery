@@ -41,6 +41,18 @@ jobs:
   lint:
     name: Tor 1a · Lint und Geheimnisschranke
     runs-on: ubuntu-latest
+      # ZEITSCHRANKE (Blatt 100). Ein Lauf, der nicht messen kann, soll das
+      # SAGEN -- nicht endlos warten. Am 19.08.2026 stand Tor 1a dieses
+      # Auftrags 2h 14m im apt-get-Download, waehrend 1b (19s) und 1c (1m17s)
+      # laengst gruen waren. Weil `cancel-in-progress: false` gilt, stellte
+      # sich jeder neue Lauf desselben Zweiges dahinter an: PR #36 zeigte
+      # stundenlang "Expected -- Waiting for status to be reported", ohne dass
+      # irgendetwas lief.
+      #
+      # Der laengste ehrliche Lauf dieser Woche dauerte 3m48. Fuenfzehn
+      # Minuten sind grosszuegig und trotzdem eine Schranke -- und ein
+      # Abbruch ist ein sichtbarer Befund statt eines stillen Stillstands.
+    timeout-minutes: 15
     steps:
       # GANZE HISTORIE, nicht flach. F42 prueft, ob der im Tor-3-Nachweis
       # genannte Commit ein VORFAHR des Abnahmestandes ist. Mit einem
@@ -288,6 +300,7 @@ jobs:
   migration:
     name: Tor 1b · Migration gegen frische Datenbank
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       postgres:
         image: postgres:16
@@ -392,6 +405,7 @@ jobs:
   prueflauf:
     name: Tor 1c · Prueflauf gegen die blinden Prueffaelle
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: [migration]
     services:
       postgres:
@@ -450,6 +464,7 @@ jobs:
   sperre:
     name: Tor 1 · Sperre
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: [lint, migration, prueflauf]
     if: always()
     steps:
