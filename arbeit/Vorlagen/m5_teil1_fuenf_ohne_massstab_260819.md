@@ -1,6 +1,6 @@
 # M5 · Die fünf Klauseln ohne Maßstab — **fünf Festlegungen, die A. Han zeichnen kann**
 
-**19.08.2026 · Vorlage zur Zeichnung · noch nicht gezeichnet**
+**19.08.2026 · gezeichnet von A. Han · alle fünf Festlegungen nach Empfehlung, 10 Minuten bei T-5**
 
 Am 19.08.2026 sind 90 von 95 Akzeptanzkriterien gezeichnet worden. **Fünf blieben liegen**,
 weil im Register ausdrücklich *NICHT ABLEITBAR* steht — der Klauselwortlaut trage keinen
@@ -52,7 +52,7 @@ dem ein Wortlaut ersetzt ist, während die Marke steht), und muss auffallen.
 angehängten* neuen Stand kommt — kein Zustand des Bildschirmvertrags verlangt heute, dass Bau
 oder Server den vorigen Wortlaut dagegen hält. Das bleibt offen und gehört genannt.
 
-`☐` **Ich lege fest:** K05-D03 wird in M5 an *„oder sie findet nicht statt"* gemessen; die erste
+`x` **Ich lege fest:** K05-D03 wird in M5 an *„oder sie findet nicht statt"* gemessen; die erste
 Hälfte hängt am gezeichneten Kriterium zu `K05-M12`/`K19-G09`. Ein elfter Serverbefehl entsteht
 dafür nicht.
 
@@ -81,7 +81,7 @@ dessen Prüffall eine *„Ergebniszeile je Klausel"* voraussetzte — die es nic
 **Ausdrücklich nicht:** die Sperre als erfüllt ankreuzen. `K05-G11` verbietet es im Wortlaut —
 und dasselbe Kästchen ist am selben Tag bewusst **nicht** angekreuzt worden.
 
-`☐` **Ich stelle fest und lege fest:** K05-G12 trägt kein Merkmal am Bau; für M5 entsteht kein
+`x` **Ich stelle fest und lege fest:** K05-G12 trägt kein Merkmal am Bau; für M5 entsteht kein
 Prüffall; das Feld *Test* trägt „kein Test — Restrisiko"; eine Restrisikozeile mit Träger
 M. Veil und der Erledigungsbedingung aus Entscheidung 2 wird geführt.
 
@@ -108,7 +108,7 @@ Grundlage ist `K05-D12`/`K05-M30`, **nicht** Blatt 100 E4 (das betrifft den Date
 **Der Preis, ausdrücklich in Kauf genommen:** Bis zur F31-Freigabe misst zu dieser Klausel
 nichts. Tragbar, weil der beobachtbare Rest dreifach gezeichnet gemessen ist.
 
-`☐` **Ich lege fest:** K05-M20 bleibt zurückgestellt bis zur F31-Freigabe des Stimmwegs; der in
+`x` **Ich lege fest:** K05-M20 bleibt zurückgestellt bis zur F31-Freigabe des Stimmwegs; der in
 Release 1 beobachtbare Rest ist durch die gezeichneten Kriterien zu `K05-M21`, `K05-M30` und
 `K05-D12` gedeckt und wird unter K05-M20 nicht ein zweites Mal gemessen.
 
@@ -143,7 +143,7 @@ abweisen muss, sagt kein Wortlaut — und das Schema erzwingt es nicht (kein CHE
 `role.portal_code = membership.portal_code`). Solange es je Portal genau eine Rolle gibt, fällt
 die Rolle mit der Mitgliedschaft zusammen.
 
-`☐` **Ich stelle fest:** Die ausreichende Rolle ist gesetzt (*Endnutzer*, Rechtestufe `V`); eine
+`x` **Ich stelle fest:** Die ausreichende Rolle ist gesetzt (*Endnutzer*, Rechtestufe `V`); eine
 Rollenmatrix je Aufruf entfällt; die Rolle trägt in Release 1 keinen eigenen Negativfall.
 
 ---
@@ -173,8 +173,8 @@ Hash prüfen · sperren*). Liest der Server selbst, ist Teil (2) **nicht anwendb
 vermerkt, nicht als bestanden. Ebenfalls offen: der Träger der Ablage (Punkt A), der Widerruf
 eines bereits ausgestellten Zugriffs bei Abmeldung, und der Wortlaut der Abweisung.
 
-`☐` **Ich lege fest:** (1) Ein serverseitig ausgestellter Zugriff auf die Protokolldatei gilt
-höchstens **⟨10⟩ Minuten**, serverseitig gegen den gespeicherten Ausstellungszeitpunkt geprüft.
+`x` **Ich lege fest:** (1) Ein serverseitig ausgestellter Zugriff auf die Protokolldatei gilt
+höchstens **10 Minuten**, serverseitig gegen den gespeicherten Ausstellungszeitpunkt geprüft.
 (2) `document.content_ref` trägt mindestens die Schlüsselform des Datenmodells (`uuid`, Fassung
 4, serverseitig erzeugt, ohne fachlichen Bestandteil). Die längeren Fristen für aus der Hand
 gegebene Zugänge (`K07-M23`, `K12-M04/M10/M11`, `K14-M21`) bleiben unberührt.
@@ -185,19 +185,33 @@ gegebene Zugänge (`K07-M23`, `K12-M04/M10/M11`, `K14-M21`) bleiben unberührt.
 
 | | Klausel | Festlegung | |
 |---|---|---|---|
-| **T-1** | `K05-D03` | an der zweiten Hälfte messen; erste Hälfte über `K05-M12` | ☐ so · ☐ zurückstellen · ☐ anders: |
-| **T-2** | `K05-G12` | kein Prüffall; Vermerk „kein Test — Restrisiko"; eine Restrisikozeile | ☐ so · ☐ anders: |
-| **T-3** | `K05-M20` | zurückstellen bis F31, mit Deckungsanzeige | ☐ so · ☐ jetzt messen · ☐ anders: |
-| **T-4** | `K05-M24` | eine Rolle je Portal — Feststellung, kein eigener Rollenfall | ☐ so · ☐ anders: |
-| **T-5** | `K05-M27` | ⟨ ⟩ Minuten · Schlüsselform `uuid` v4 | ☐ 10 Minuten · ☐ ⟨andere Zahl: ⟩ · ☐ Frist an K13 |
+| **T-1** | `K05-D03` | an der zweiten Hälfte messen; erste Hälfte über `K05-M12` | **x** so · ☐ zurückstellen · ☐ anders: |
+| **T-2** | `K05-G12` | kein Prüffall; Vermerk „kein Test — Restrisiko"; eine Restrisikozeile | **x** so · ☐ anders: |
+| **T-3** | `K05-M20` | zurückstellen bis F31, mit Deckungsanzeige | **x** so · ☐ jetzt messen · ☐ anders: |
+| **T-4** | `K05-M24` | eine Rolle je Portal — Feststellung, kein eigener Rollenfall | **x** so · ☐ anders: |
+| **T-5** | `K05-M27` | **10** Minuten · Schlüsselform `uuid` v4 | **x** 10 Minuten · ☐ ⟨andere Zahl: ⟩ · ☐ Frist an K13 |
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | fachlicher Eigentümer, für den Auftragnehmer | ⟨ ⟩ |
+| A. Han | fachlicher Eigentümer, für den Auftragnehmer | **19.08.2026** |
 
-**Nach der Zeichnung trägt der Harness die fünf Zellen ein** — die fertigen Texte liegen in
-`nachweise/klauselregister/M5_teil1_vorschlaege_260819.json`, je mit `ERFUELLT WENN`,
-`GEMESSEN DURCH` und Negativfall. Er setzt kein Kreuz, für das keine Weisung vorliegt.
+> **Übertragung durch den Harness.** Weisung im Wortlaut, 19.08.2026: *„T-1 bis T-5 alle so
+> zeichnen, 10 Minuten bei T-5"*. Eingetragen ist je Zeile die ausgewiesene Empfehlung; bei T-5
+> die angewiesene Zahl. Eine erteilte Zeichnung einzutragen ist Buchführung, eine zu erfinden
+> wäre Anmaßung (`CLAUDE.md` Abschn. 6).
+
+**Vollzogen am 19.08.2026:**
+
+- Die **fünf Zellen** stehen in `pflege.json`, je mit `⟨GEZEICHNET⟩`, Name, Datum und der
+  Weisung — eingetragen mit `M5_teil1_zeichnung_eintragen.py`, das eine andere als die
+  angewiesene Zahl abgewiesen hätte.
+- **`K05-G12`** trägt im Feld `test` den gezeichneten Vermerk *„kein Test — Restrisiko"* —
+  ausdrücklich **keine** Aussage über einen Lauf.
+- Die verlangte Zeile steht als **`RR-06`** in `nachweise/restrisiken/restrisiken.md`: Träger
+  M. Veil, Erledigungsbedingung *„K05 Abschn. 5 nachgezogen"*, Annahmeentscheidung offen.
+
+**Damit sind 95 von 101 M5-Klauseln gezeichnet.** Die übrigen sechs gehören K17 und liegen bei
+M. Veil.
 
 ---
 

@@ -16,7 +16,7 @@ Auftraggebers.
 
 | Teil | Datei | Was darin steht | Einträge |
 |---|---|---|---|
-| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen | **4** — `RR-01` **geschlossen** · `RR-02`, `RR-04`, `RR-05` **offen und getragen**. *`RR-03` ist auf dem Zweig `konzeptfabrik-unberuehrt` vergeben (Blatt 99, Punkt 3) und hier bewusst freigelassen — eine Nummer wird nie zweimal vergeben* |
+| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen | **5** — `RR-01` **geschlossen** · `RR-02`, `RR-04`, `RR-05`, `RR-06` **offen und getragen**. *`RR-03` ist auf dem Zweig `konzeptfabrik-unberuehrt` vergeben (Blatt 99, Punkt 3) und hier bewusst freigelassen — eine Nummer wird nie zweimal vergeben* |
 | **B · aus fehlenden Prüffällen** | **`restrisiken_teilschnitt.md`** | je Klausel des Teilschnitts, die als kritisch vorgeschlagen ist und **keinen Prüffall** hat — einzeln, wie `K23-M04` es verlangt | **113, alle offen** |
 
 **Der Stand von Teil B, gemessen am 16.08.2026:**
@@ -303,6 +303,25 @@ wird hier nur genannt, damit er nicht im Schatten von RR-02 verschwindet.
 
 ---
 
+## RR-06 · Zu `K05-G12` entsteht in M5 kein Prüffall — **OFFEN, getragen seit 19.08.2026**
+
+| Feld | Wert |
+|---|---|
+| **Betroffene Klausel** | **`K05-G12`** — *„Solange O-K05-1 und O-K05-2 offen sind, bleibt K05 Freigabekandidat. Für Gesprächsinhalt und Herkunftsmarke fehlt der belegte Träger; der Produktivweg bleibt gesperrt."* |
+| **Kritikalität** | **kritisch — freigabekritisch** (Triagevorschlag: *„Freigabekandidat"*). Nach `K23-M04` ersetzt in dieser Klasse eine Annahmeentscheidung **den Test nicht** |
+| **Befund** | Die Klausel richtet sich an den **Freigabeprozess**, nicht an den Bau. Gemessen am Bildschirmvertrag: EN-05 führt fünf, EN-06 sechs Aktionen mit zusammen zehn Serverbefehlen — **keiner** ist ein *Produktivweg*, keiner setzt einen *Freigabestand*. Für M5 ist an ihr nichts zu messen; das Feld `test` trägt deshalb den Vermerk *„kein Test — Restrisiko"* |
+| **Entscheidung** | **Feststellen und führen, nicht aufheben.** Zu K05-G12 entsteht in M5 kein Prüffall; das Akzeptanzkriterium bleibt insoweit offen, und der Bauauftrag ist an dieser Stelle unvollständig. **Ausdrücklich nicht** als erfüllt gekennzeichnet — `K05-G11` verbietet es im Wortlaut |
+| **Grundlage** | `arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md`, **T-2**, gez. A. Han, 19.08.2026. Weisung im Wortlaut: *„T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5"* |
+| **Träger** | **M. Veil** — die Sperre hängt an K05 Abschn. 5, und die Konzept-Fabrik gehört ihm |
+| **Annahmeentscheidung** | **offen.** A. Han hat als fachlicher Eigentümer die Führung gezeichnet, nicht die Annahme des Risikos; die trifft der Auftraggeber |
+| **Erledigungsbedingung** | **„K05 Abschn. 5 nachgezogen"** — Entscheidung 2 vom 19.08.2026 (`m5_vor_dem_bauzug_260819.md`). Mit dem Nachzug entfällt die Sperre, und dieser Eintrag schließt sich |
+
+> **Was dieser Eintrag nicht leistet.** Er ersetzt den fehlenden Test nicht — nach `K23-M04`
+> kann er das in dieser Kritikalitätsklasse auch nicht. Er macht nur sichtbar, dass an dieser
+> Klausel in M5 nichts gemessen wird, und wer das zu ändern hat.
+
+---
+
 ## Wie diese Liste geführt wird
 
 Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte Wahrheit
@@ -311,7 +330,7 @@ Klauselregister (`nachweise/klauselregister/register.json`).
 
 **Auf diesem Blatt stehen nur Restrisiken, die keiner Klausel zugeordnet sind** — solche, die
 aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 (geschlossen), RR-02,
-RR-04 und RR-05 (offen, getragen); RR-03 ist auf einem anderen Zweig vergeben.
+RR-04, RR-05 und RR-06 (offen, getragen); RR-03 ist auf einem anderen Zweig vergeben.
 
 **Die klauselgebundenen Restrisiken stehen seit dem 16.08.2026 in
 `restrisiken_teilschnitt.md`** — dort einzeln, mit `RR-T-001` bis `RR-T-113`, jeweils mit

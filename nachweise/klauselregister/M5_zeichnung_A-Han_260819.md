@@ -27,52 +27,17 @@
 
 | Teil | Was | Zahl | Was zu tun ist |
 |---|---|---:|---|
-| **1** | Kriterien **ohne Maßstab** (*NICHT ABLEITBAR*) | **5** | **keine Unterschrift** — hier fehlt eine Angabe, die nur der Eigentümer liefern kann |
-| **2** | Bestandskriterien vom 16.08., **für M5 zu eng** | **4** | **zwei Teile zeichnen**: der alte Eintrag bleibt, die Ergänzung kommt hinzu |
-| **3** | Der Rest, nach Konzept | **86** | durchsehen und zeichnen |
+| **1** | Kriterien **ohne Maßstab** (*NICHT ABLEITBAR*) | **1** | **keine Unterschrift** — hier fehlt eine Angabe, die nur der Eigentümer liefern kann |
+| **2** | Bestandskriterien vom 16.08., **für M5 zu eng** | **6** | **zwei Teile zeichnen**: der alte Eintrag bleibt, die Ergänzung kommt hinzu |
+| **3** | Der Rest, nach Konzept | **88** | durchsehen und zeichnen |
 
 ---
 
-## Teil 1 · Fünf Klauseln ohne Maßstab — hier hilft keine Unterschrift
+## Teil 1 · Die Klauseln, die keinen Maßstab trugen — **erledigt**
 
-Der Vorschlag sagt in diesen Fällen ausdrücklich, **was fehlt und wer es festlegen muss**.
-Ein Kriterium daraufhin zu erfinden, wäre genau der Mangel, an dem die Gegenprobe 14
-Vorschläge gekippt hat.
-
----
-
-### K05-D03 · DARF NICHT
-
-> Ein Eintrag der rechten Spalte DARF NICHT stillschweigend durch eine Formulierung des Assistenten ersetzt werden. Eine Änderung ist sichtbar oder sie findet nicht statt.
-
-*Konzept K05, Zeile 79 · Gegenprobe: **ersetzt · nicht_messbar***
-
-**Vorgeschlagenes Kriterium**
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-NICHT ABLEITBAR: Der Wortlaut verlangt, dass eine Ersetzung eines Eintrags der rechten Spalte
-  durch eine Formulierung des Assistenten sichtbar ist oder unterbleibt; er sagt nicht, woran
-  Sichtbarkeit beobachtbar ist — keine Marke, kein Hinweis, kein Vergleichsstand ist genannt.
-  Der Bildschirmvertrag fuehrt fuer EN-05 und EN-06 keine Aktion, keinen Serverbefehl und keinen
-  Zustand, in dem der Assistent einen bestehenden Eintrag umformuliert. Ohne diese Festlegung
-  ist weder der Positivfall abgrenzbar (jede beliebige Anzeige koennte als sichtbare Aenderung
-  gelten) noch ein Negativfall aufbaubar (die Ersetzung laesst sich nicht herbeifuehren, ohne
-  sie zugleich zu unterstellen). Der fachliche Eigentuemer muss festlegen: (a) woran eine
-  Aenderung an einem bestehenden Eintrag sichtbar gemacht wird — Anzeige am Eintrag selbst,
-  getrennte Angabe von Ursprung und Bearbeitungszustand nach K19-G09, oder Fassungsvergleich mit
-  Anzeige der Vorfassung; (b) ueber welchen Serverbefehl und in welchem Zustand von EN-06 eine
-  solche Ersetzung ueberhaupt stattfinden darf; (c) welcher festgehaltene Ausgangswortlaut als
-  Vergleichsstand gilt und wann er festgehalten wird. Erst danach ist ein Prueffall mit eigenem
-  Negativfall schreibbar.
-· Quelle: „Ein Eintrag der rechten Spalte DARF NICHT stillschweigend durch eine Formulierung des
-  Assistenten ersetzt werden. Eine Änderung ist sichtbar oder sie findet nicht statt."
-· K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
-  die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+Sie sind am 19.08.2026 mit eigenen Festlegungen geschlossen worden (`arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md`). Vier davon brauchten
+gar keine neue Angabe — sie stand woanders. `K05-G12` traegt weiterhin keinen Prueffall;
+das ist gezeichnet und als `RR-06` in der Restrisikoliste gefuehrt.
 
 ---
 
@@ -85,167 +50,54 @@ NICHT ABLEITBAR: Der Wortlaut verlangt, dass eine Ersetzung eines Eintrags der r
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-NICHT ABLEITBAR: Der Wortlaut nennt drei Sperren, aber fuer keine ein beobachtbares Merkmal. (1)
-  „bleibt K05 Freigabekandidat" — wo der Freigabestand eines Konzepts gefuehrt wird und welcher
-  Wert Freigabekandidat bedeutet, sagen weder der Klauselwortlaut noch der Bildschirmvertrag;
-  das Klauselregister fuehrt zu K05 allein „dokumentversion: v1.3 · Freigegeben", eine andere
-  Wortmarke, an der die Klausel nicht ohne Auslegung gemessen werden kann. (2) „der Produktivweg
-  bleibt gesperrt" — der Bildschirmvertrag kennt weder einen Produktivweg noch eine Sperre;
-  welcher Aufruf gesperrt ist, woran die Sperre erkennbar wird und mit welcher Meldung sie
-  abweist, ist nirgends gezeichnet. (3) „Der Stimmweg ist zusätzlich durch K05-D12 gesperrt, bis
-  ein bewerteter Fall vorliegt (F31)" — welcher der gezeichneten Wege der Stimmweg ist und was
-  ein bewerteter Fall nach F31 ist, bestimmt der Wortlaut nicht. Der fachliche Eigentuemer muss
-  festlegen: den Ort und den Wert des Freigabestands (Freigabekandidat gegen freigegeben); den
-  beobachtbaren Aufruf, an dem die Sperre des Produktivwegs sichtbar wird, samt erwarteter
-  Meldung im Wortlaut; die Zuordnung des Stimmwegs zu einer Aktion des Bildschirmvertrags und
-  das Merkmal eines bewerteten Falls nach F31. Erst dann ist ein Prueffall mit Positiv- und
-  Negativfall schreibbar.
-· Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
-  fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
-  Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨GEZEICHNET⟩ NICHT ABLEITBAR AM BAU — mit einer Festlegung des Eigentuemers zur Fuehrung,
+  kenntlich gemacht und mit genannter Herkunft. GEMESSEN, nicht behauptet: Der Bildschirmvertrag
+  fuehrt fuer EN-05 fuenf und fuer EN-06 sechs Aktionen mit zehn verschiedenen Serverbefehlen
+  (record_topic, record_classification, record_goals, confirm_initial_problem, confirm_app_name,
+  record_interview_answer, upload_interview_document, skip_interview_question,
+  save_interview_progress, complete_interview). Keine davon ist ein Produktivweg, keine setzt
+  einen Freigabestand, keine ist das freihaendige Sprechen. K05-G12 traegt deshalb im Bauzug M5
+  kein beobachtbares Merkmal; ein Kriterium, das an einem Aufruf von EN-05 oder EN-06
+  anschluege, waere erfunden. FESTLEGUNG DES EIGENTUEMERS, deren Massstab NICHT aus dieser
+  Klausel stammt: (1) Fuer M5 entsteht zu K05-G12 kein Prueffall. Das Feld Test traegt den
+  Vermerk, den K23-M02 selbst vorschreibt: kein Test — Restrisiko. Die Registerzeile bleibt
+  damit gueltig; das Akzeptanzkriterium bleibt offen, und der Bauauftrag bleibt insoweit
+  unvollstaendig — so sagt es K23-M02, und das wird hier nicht ueberdeckt. (2) K05-G12 steht mit
+  genau einer eigenen Zeile in der Restrisikoliste des Bauzugs M5 (K23-M04, K23-D07): Traeger M.
+  Veil als Eigentuemer der Konzept-Fabrik; Erledigungsbedingung "K05 Abschn. 5 nachgezogen" nach
+  Entscheidung 2 vom 19.08.2026; Annahmeentscheidung des Auftraggebers offen. Nach K23-M04
+  ersetzt in dieser Klasse keine Annahmeentscheidung den Test. (3) Kritikalitaet, nach K23-G08
+  vom fachlichen Eigentuemer begruendet: freigabekritisch — Beleg im eigenen Wortlaut,
+  "Freigabekandidat" (Stelle 60). NICHT MITGEZEICHNET, ausdruecklich: ob die Sperre S-B den
+  Bauzug M5 aufhaelt. Das Blatt vom 19.08.2026 fuehrt S-B unter den acht Sperren des Bauzugs und
+  haelt fest: "S-B | K05-G12 | nein — zwei Zeilen in der Konzept-Fabrik aendern | M. Veil".
+  Diese Frage entscheidet der Auftraggeber auf eigenem Blatt, nicht dieses Kriterium. EBENFALLS
+  NICHT GEMESSEN, weil anderswo gemessen: Restrisikofuehrung und Freigabesperre sind bereits
+  Gegenstand des Kriteriums zu K23-M04 ("Zu jeder Klausel ohne zugeordneten belegenden Test
+  existiert genau ein eigener Eintrag in der Restrisikoliste mit ausgefuelltem Traeger,
+  ausgefuellter Kritikalitaet und ausgefuellter Annahmeentscheidung; und es wird keine Freigabe
+  erteilt, solange darunter eine Klausel steht, die als … freigabekritisch gefuehrt ist");
+  K05-G12 gehoert zu dessen Menge und wird dort mitgemessen, nicht hier ein zweites Mal. Der
+  Stimmweg wird hier nicht gemessen: dafuer stehen K05-D12, K05-M30 und K05-D09 mit eigenen
+  Zeilen. Ein Meldungswortlaut gehoert nicht in diesen Eintrag: es wird kein Aufruf gemessen
+  (Entscheidung 7 vom 19.08.2026 — der Meldungswortlaut ist nachgereichte Bauentscheidung).
+· Quelle: "Es GILT: Solange O-K05-1 und O-K05-2 offen sind, bleibt K05 Freigabekandidat. Fuer
+  Gespraechsinhalt und Herkunftsmarke fehlt der belegte Traeger; der Produktivweg bleibt
+  gesperrt. Der Stimmweg ist zusaetzlich durch K05-D12 gesperrt, bis ein bewerteter Fall
+  vorliegt (F31)." (K05-G12, K05 v1.3:105) · Herkunft der Festlegung: K23-M02 (Vermerk "kein
+  Test — Restrisiko"); K23-M04 und K23-D07 (eigene Restrisikozeile mit Traeger, Kritikalitaet,
+  Annahmeentscheidung; kein stillschweigend uebernommenes Restrisiko); K23-G08 (die
+  Kritikalitaet begruendet der fachliche Eigentuemer); Entscheidung 2 vom 19.08.2026, gez. M.
+  Veil und A. Han (arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md); Bildschirmvertrag
+  schema/K19_screens.yaml zu EN-05 und EN-06.
+· K23-M02: das Abnahmekriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
+  die Schreibarbeit ab, nicht die Entscheidung.
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5“ ·
+  Vorlage: arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
-
----
-
-### K05-M20 · MUSS
-
-> Der Stimmweg MUSS zwei getrennte Bedienungen führen: Das Mikrofon diktiert in das Eingabefeld, *Sprechen* führt das Gespräch freihändig.
-
-*Konzept K05, Zeile 67 · Gegenprobe: **ersetzt · nicht_messbar***
-
-**Vorgeschlagenes Kriterium**
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-NICHT ABLEITBAR: Der Wortlaut verlangt zwei getrennte Bedienungen, von denen die zweite —
-  *Sprechen*, das freihaendige Gespraech — nach K05-M30 in Release 1 ausgeblendet und
-  serverseitig gesperrt ist; der Bildschirmvertrag EN-05/EN-06 fuehrt fuer sie weder eine Aktion
-  noch einen Serverbefehl. Ob die beiden Bedienungen getrennt sind, ist an der gebauten Stufe
-  deshalb nicht beobachtbar, und ein Negativfall (eine einzige Bedienung leistet beides) laesst
-  sich nicht herstellen, solange die zweite Bedienung nicht existiert. Der fachliche Eigentuemer
-  muss festlegen: ob K05-M20 mit dem freihaendigen Weg zurueckgestellt wird — dann mit einem
-  ausdruecklichen Zusatz wie bei K05-M29 — oder ob fuer Release 1 allein die Mikrofon-Bedienung
-  gemessen wird; im zweiten Fall zusaetzlich, an welchem Merkmal ausser dem bereits von K05-M21
-  gemessenen (diktierter Text steht vor dem Senden sichtbar und aenderbar im Eingabefeld) die
-  Trennung von der nicht vorhandenen zweiten Bedienung nachgewiesen werden soll. ·
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
-
----
-
-### K05-M24 · MUSS
-
-> Jeder Aufruf aus den Stufen 01 und 02 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3).
-
-*Konzept K05, Zeile 71 · Vorschlag vom 16.08.2026 · für M5 zu eng*
-
-**Vorgeschlagenes Kriterium**
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-NICHT ABLEITBAR aus dem Klauselwortlaut. Der fachliche Eigentuemer liefert nach: Die
-  Rollenmatrix: welche Rolle je Aufruf der Stufen 01 und 02 mindestens ausreicht. Ohne sie
-  laesst sich kein Negativfall bauen, der allein an der Rolle scheitert und nicht schon an
-  Mitgliedschaft, Mandant oder Objektbezug - genau das verlangt die Klausel aber als eigene
-  Pruefdimension. Die vier uebrigen Pruefungen (Konto, Mitgliedschaft, Mandant, Objektbezug)
-  waeren fuer sich messbar; ableitbar wird die Klausel, sobald der fachliche Eigentuemer je
-  Aufruf die ausreichende Rolle benennt.
-· Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
-  liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
-  Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-**Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-ERGAENZUNG (kein Ersatz) zum Eintrag vom 16.08.2026; die Rollendimension bleibt offen, bis der
-  Eigentuemer die Rollenmatrix nachliefert.
-ERFUELLT WENN: Fuer die vier ohne Rollenmatrix messbaren Pruefungen - aktives Konto,
-  Mitgliedschaft, Mandant, Objektbezug - gilt an jedem Aufruf der Stufen 01 und 02: liegt eine
-  davon nicht vor, wird weder gelesen noch geschrieben; es entsteht keine document-Zeile und
-  kein event-Eintrag, und der vorhandene Stand bleibt unveraendert.
-GEMESSEN DURCH: Aufbau: gespeicherter Gespraechsstand bei Mandant A. Positivfall: eine gueltige
-  Sitzung von A ruft nacheinander die Serverbefehle der Stufen 01 und 02 auf dem eigenen Stand
-  auf - jeder Aufruf geht durch, Zustand Erfolg. Negativfall, je Aufruf einzeln und bei sonst
-  gueltigen Angaben: (a) ohne aktives Konto, also aus der abgemeldeten oder abgelaufenen Sitzung
-  heraus; (b) mit aktivem Konto ohne Mitgliedschaft im Mandanten des Standes; (c) mit gueltiger
-  Mitgliedschaft in einem anderen Mandanten; (d) mit gueltiger Sitzung, aber der Kennung eines
-  fremden Standes. Nach jedem Fall Datenbestand lesen. NICHT ERFUELLT: ein Negativfall liefert
-  Daten oder hinterlaesst eine neue oder geaenderte document-Zeile oder einen event-Eintrag;
-  oder ein Negativfall scheitert erkennbar an einer anderen Bedingung als der geprueften (etwa
-  (b) an einer fehlenden Rolle) - dann misst er nichts. Den Wortlaut der Abweisung legt die
-  Klausel nicht fest; er ist vom Eigentuemer nachzutragen.
-· Quelle: 'Jeder Aufruf aus den Stufen 01 und 02 MUSS ueber den Serverpfad laufen, der Konto,
-  Mitgliedschaft, Rolle, Mandant und Objektbezug prueft' (K05-M24); Berechtigungszeilen von
-  EN-05 und EN-06 ·
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
-
----
-
-### K05-M27 · MUSS
-
-> RLS und Serverpfad leiten den Mandanten ausschließlich über `document.app_id → app.tenant_id` ab. Dateiobjekte verwenden nicht erratbare Schlüssel und sind nur über kurzlebige, serverseitig autorisierte Zugriffe erreichbar. Zwei-Mandanten- und Zwei-Anwendungs-Negativtests sind Produktionsgate.
-
-*Konzept K05, Zeile 330 · Vorschlag vom 16.08.2026 · für M5 zu eng*
-
-**Vorgeschlagenes Kriterium**
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-NICHT ABLEITBAR aus dem Klauselwortlaut. Der fachliche Eigentuemer liefert nach: Zwei
-  Zahlenwerte: (1) die Hoechstgueltigkeit eines Zugriffs auf ein Dateiobjekt - 'kurzlebig' in
-  Sekunden oder Minuten; (2) das Mindestmass fuer 'nicht erratbar' - Schluessellaenge bzw.
-  Entropie. Ohne (1) ist kein Ablauftest entscheidbar, ohne (2) kein Ratetest. Die
-  Mandantenableitung ausschliesslich ueber document.app_id -> app.tenant_id und die Zwei-
-  Mandanten- sowie Zwei-Anwendungs-Negativtests waeren fuer sich messbar.
-· Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
-  liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
-  Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-**Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
-
-```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-ERGAENZUNG (kein Ersatz) zum Eintrag vom 16.08.2026; die Anforderungen an Dateiobjekte (nicht
-  erratbare Schluessel, kurzlebige Zugriffe) bleiben mangels der beiden Zahlenwerte unmessbar
-  und betreffen datei_anhaengen
-· Stufe: zurueckgestellt (Blatt 100, E4).
-ERFUELLT WENN: Der Mandant des Gespraechsstands wird im Serverpfad wie in der Policy
-  ausschliesslich ueber document.app_id -> app.tenant_id abgeleitet: eine am Datensatz
-  mitgefuehrte oder aus der Sitzung uebernommene Mandantenangabe entscheidet nie, und Zwei-
-  Mandanten- wie Zwei-Anwendungs-Negativtest sind bestanden.
-GEMESSEN DURCH: Aufbau: Mandant A mit zwei Anwendungen A1 und A2, Mandant B mit einer Anwendung;
-  je ein gespeicherter Gespraechsstand (EN-06 · zwischenspeichern · Zustand Erfolg).
-  Positivfall: eine Sitzung von A liest den Stand von A1 ueber den Serverpfad und ueber
-  unmittelbare Abfrage - die document-Zeile ist da. Negativfall Zwei-Mandanten: Sitzung und
-  Mandantenkontext von B auf den Stand von A1, auf beiden Wegen - keine Zeile. Negativfall Zwei-
-  Anwendungen: Sitzung von A liest mit dem Objektbezug von A2 den Stand von A1 - keine Zeile.
-  Gegenprobe zur Ausschliesslichkeit: wird app.tenant_id der zugehoerigen Anwendung auf einen
-  anderen Mandanten gesetzt, ist die document-Zeile fuer die Sitzung von A nicht mehr lesbar.
-  NICHT ERFUELLT: einer der beiden Negativfaelle liefert die Zeile; oder die Zeile bleibt nach
-  der Gegenprobe lesbar - dann stammt der Mandant nicht aus app.tenant_id. Anmeldung,
-  Mandantenkontext und Schluessel sind in allen Faellen gueltig, damit sie allein an der
-  Ableitung scheitern.
-· Quelle: 'RLS und Serverpfad leiten den Mandanten ausschliesslich ueber document.app_id ->
-  app.tenant_id ab' und 'Zwei-Mandanten- und Zwei-Anwendungs-Negativtests sind Produktionsgate'
-  (K05-M27) ·
-⟨zeichnet: ⟩ ⟨am: ⟩
-```
-
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -488,6 +340,226 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Pos
 · Quelle: 'mandantengebundener Schreibvorgang' und 'wird die gemeinsame Transaktion
   zurueckgerollt' (K02-M21); EN-06 · zwischenspeichern · Zustand Erfolg und Zustand Fehler ('der
   vorige Stand bleibt gueltig') ·
+⟨zeichnet: ⟩ ⟨am: ⟩
+```
+
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
+
+---
+
+### K05-M24 · MUSS
+
+> Jeder Aufruf aus den Stufen 01 und 02 MUSS über den Serverpfad laufen, der Konto, Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3).
+
+*Konzept K05, Zeile 71 · Vorschlag vom 16.08.2026 · für M5 zu eng*
+
+**Vorgeschlagenes Kriterium**
+
+```
+⟨GEZEICHNET⟩ Ersetzt den Eintrag vom 16.08.2026 und dessen Ergaenzung. Die Rollenmatrix ist
+  keine ausstehende Festlegung, sondern Bestand: das Endnutzer-Portal fuehrt in Release 1 genau
+  eine Rolle (F08 ueber K14-G04 und K20-M02; Rechtestufe ueber K20-M03; Fortbestand ueber
+  K20-M23; freiraum_datamodel.sql Z. 685-687, 691-692).
+ERFUELLT WENN: Jeder gebaute Serverbefehl der Aktionen von EN-05 und EN-06 - record_topic,
+  record_classification, record_goals, confirm_initial_problem, confirm_app_name,
+  record_interview_answer, skip_interview_question, save_interview_progress, complete_interview
+  (upload_interview_document
+· Stufe: zurueckgestellt (Blatt 100, E4)) - prueft vor jedem Lesen und Schreiben die im Wortlaut
+  genannten Angaben: aktives Konto, Mitgliedschaft, Rolle, Mandant, Objektbezug. Faellt eine
+  davon aus, wird weder gelesen noch geschrieben: keine Nutzdaten in der Antwort, keine neue
+  oder geaenderte document-Zeile, kein event-Eintrag, der vorhandene Stand unveraendert. Als
+  ausreichende Rolle gilt genau die eine Rolle des Endnutzer-Portals - role.portal_code =
+  'ENDUSER', role.name = 'Endnutzer', role_right = 'V' -; eine zweite ENDUSER-Rolle gibt es in
+  Release 1 nicht, eine Matrix je Aufruf entfaellt deshalb. Die Rolle steht als role_id in
+  derselben membership-Zeile wie Portal und Reichweite (K20-M04; DDL Z. 185-191) und wird mit
+  der Mitgliedschaft gemessen.
+GEMESSEN DURCH: Aufbau: Mandant A mit Anwendung A1 und gespeichertem Gespraechsstand (EN-06 ·
+  zwischenspeichern · Zustand Erfolg). Konto k1: actor.tenant_id = A, status AKTIV, membership
+  (ENDUSER, Rolle Endnutzer, tenant_scope A). Konto k5: wie k1, aber status GESPERRT. Konto k3:
+  actor.tenant_id = A, status AKTIV, KEINE membership-Zeile in A - der Mandant des Kontos
+  stimmt, die Mitgliedschaft fehlt. Mandant B mit Konto k2 gleicher Bauart wie k1, tenant_scope
+  B. Positivfall: k1 ruft in gueltiger Sitzung nacheinander die neun gebauten Serverbefehle auf
+  dem eigenen Stand auf - jeder Aufruf erreicht den im Bildschirmvertrag gezeichneten Zustand
+  Erfolg; danach abmelden, neu anmelden, EN-06 oeffnen: der Stand ist da (M5). Negativfall, je
+  Serverbefehl einzeln und mit jeweils allen uebrigen Angaben gueltig: (a) Konto - k5 in
+  gueltiger Sitzung, actor.status GESPERRT (ersatzweise WARTET_2FA); erwartet: abgelehnt, kein
+  Teil-Zugang (K01-D07, K03-D01, K03-M08; K19 Z. 125 "abgelehnt (fail-closed)"). NICHT ueber
+  eine abgemeldete oder abgelaufene Sitzung zu bauen - die scheitert am Sitzungszweig (K19 Z.
+  122), nicht am Kontozustand, und misst dann nichts. (b) Mitgliedschaft und Rolle - k3, aktives
+  Konto im Mandanten A, aber ohne membership-Zeile in A; damit fehlt zugleich die einzige Rolle
+  des Portals. (c) Mandant - k2 aus B auf den Stand von A1; erwartet: dieselbe Antwort wie auf
+  ein nicht vorhandenes Objekt (K01-M15). (d) Objektbezug - k1 mit der Kennung eines fremden
+  Standes; erwartet ebenso: nicht vorhanden. Nach jedem Fall den Datenbestand lesen: document
+  und event von A1 unveraendert. NICHT ERFUELLT: ein Negativfall liefert Nutzdaten oder
+  hinterlaesst eine neue oder geaenderte document-Zeile oder einen event-Eintrag; oder ein
+  Negativfall scheitert erkennbar an einer anderen als der geprueften Bedingung - dann misst er
+  nichts. Den Wortlaut der Abweisungsmeldung legt die Klausel nicht fest; gemessen wird die
+  Wirkung (kein Lesen, kein Schreiben). NICHT GEMESSEN, zur Zeichnung offen: ein Negativfall,
+  der ALLEIN an der Rolle scheitert. Aufbaubar waere er - das Datenmodell bindet
+  membership.portal_code nicht an role.portal_code (Z. 185-191, kein CHECK; die einzigen Trigger
+  auf membership sind die Plattform-Admin-Waechter Z. 627-629), eine Zeile (ENDUSER,
+  tenant_scope A, role_id der Rolle Plattform-Admin) laesst sich also anlegen. Keine Quelle sagt
+  jedoch, dass der Serverpfad sie abweisen MUSS; bei genau einer Rolle je Portal faellt die
+  Rolle mit der Mitgliedschaft zusammen (K20-M04: "Ein Zugang MUSS als Zeile in membership aus
+  Konto, Portal, Rolle und Reichweite bestehen"). Ob dieser Fall gefordert wird, legt der
+  Eigentuemer fest; ohne seine Zeichnung wird er nicht gemessen.
+· Quelle: „Jeder Aufruf aus den Stufen 01 und 02 MUSS über den Serverpfad laufen, der Konto,
+  Mitgliedschaft, Rolle, Mandant und Objektbezug prüft (K13 Abschn. 3)." (K05-M24); die
+  Erstreckung auf alle neun gebauten Serverbefehle stammt aus „Jeder Aufruf" dieses Wortlauts,
+  nicht aus dem Bildschirmvertrag. Rolle als Bestand, nicht als Wahl: F08 über K14-G04 („Release
+  1 kennt genau eine Rolle je Portal — Plattform-Admin im Betriebs-Portal, Endnutzer im
+  Endnutzer-Portal — und ausdrücklich keinen Rechte-Baukasten"), K20-M02, K20-M03, K20-M23;
+  Rolle als Spalte des Zugangs: K20-M04, K20-G11; schema/freiraum_datamodel.sql Z. 146-170
+  (actor.tenant_id, actor.status), 172-177, 185-191, 685-687, 691-692; Kontozustand K01-D07,
+  K03-D01, K03-M08; Mandantenschnitt K01-M15; schema/K19_build_referenz.md Z. 122 und 125
+  (getrennte Zweige Sitzung / Kontozustand), Z. 165, Z. 649; Berechtigungszeilen von
+  thema_waehlen, vorschlag_waehlen und frage_ignorieren (EN-05/EN-06), die K05-M24 ausdrücklich
+  nennen
+· K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
+  die Schreibarbeit ab, nicht die Entscheidung.
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5“ ·
+  Vorlage: arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md
+```
+
+**Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
+
+```
+⟨VORSCHLAG · NICHT GEZEICHNET⟩
+ERGAENZUNG (kein Ersatz) zum Eintrag vom 16.08.2026; die Rollendimension bleibt offen, bis der
+  Eigentuemer die Rollenmatrix nachliefert.
+ERFUELLT WENN: Fuer die vier ohne Rollenmatrix messbaren Pruefungen - aktives Konto,
+  Mitgliedschaft, Mandant, Objektbezug - gilt an jedem Aufruf der Stufen 01 und 02: liegt eine
+  davon nicht vor, wird weder gelesen noch geschrieben; es entsteht keine document-Zeile und
+  kein event-Eintrag, und der vorhandene Stand bleibt unveraendert.
+GEMESSEN DURCH: Aufbau: gespeicherter Gespraechsstand bei Mandant A. Positivfall: eine gueltige
+  Sitzung von A ruft nacheinander die Serverbefehle der Stufen 01 und 02 auf dem eigenen Stand
+  auf - jeder Aufruf geht durch, Zustand Erfolg. Negativfall, je Aufruf einzeln und bei sonst
+  gueltigen Angaben: (a) ohne aktives Konto, also aus der abgemeldeten oder abgelaufenen Sitzung
+  heraus; (b) mit aktivem Konto ohne Mitgliedschaft im Mandanten des Standes; (c) mit gueltiger
+  Mitgliedschaft in einem anderen Mandanten; (d) mit gueltiger Sitzung, aber der Kennung eines
+  fremden Standes. Nach jedem Fall Datenbestand lesen. NICHT ERFUELLT: ein Negativfall liefert
+  Daten oder hinterlaesst eine neue oder geaenderte document-Zeile oder einen event-Eintrag;
+  oder ein Negativfall scheitert erkennbar an einer anderen Bedingung als der geprueften (etwa
+  (b) an einer fehlenden Rolle) - dann misst er nichts. Den Wortlaut der Abweisung legt die
+  Klausel nicht fest; er ist vom Eigentuemer nachzutragen.
+· Quelle: 'Jeder Aufruf aus den Stufen 01 und 02 MUSS ueber den Serverpfad laufen, der Konto,
+  Mitgliedschaft, Rolle, Mandant und Objektbezug prueft' (K05-M24); Berechtigungszeilen von
+  EN-05 und EN-06 ·
+⟨zeichnet: ⟩ ⟨am: ⟩
+```
+
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
+
+---
+
+### K05-M27 · MUSS
+
+> RLS und Serverpfad leiten den Mandanten ausschließlich über `document.app_id → app.tenant_id` ab. Dateiobjekte verwenden nicht erratbare Schlüssel und sind nur über kurzlebige, serverseitig autorisierte Zugriffe erreichbar. Zwei-Mandanten- und Zwei-Anwendungs-Negativtests sind Produktionsgate.
+
+*Konzept K05, Zeile 330 · Vorschlag vom 16.08.2026 · für M5 zu eng*
+
+**Vorgeschlagenes Kriterium**
+
+```
+⟨GEZEICHNET⟩ ERGAENZUNG (kein Ersatz) zu den beiden ebenfalls ungezeichneten Vorschlaegen vom
+  16.08.2026 und vom 19.08.2026; sie schliesst allein die beiden Zahlenwerte zu Dateiobjekten.
+  BEIDES IST FESTLEGUNG DES EIGENTUEMERS, keine Ableitung aus dem Klauselwortlaut: (1) die
+  Hoechstgueltigkeit eines ausgestellten Zugriffs betraegt 10 Minuten; (2) als Mindestmass fuer
+  nicht erratbar wird die Schluesselform uebernommen, die das eingefrorene Datenmodell fuer
+  Objektidentitaet selbst fuehrt - uuid mit Vorgabe gen_random_uuid(), an sechzehn Stellen und
+  namentlich an document.id. GEMESSEN ist allein diese Vorlage (Rang 1); ihre Uebertragung auf
+  document.content_ref ist die Festlegung, denn M30 Zeile 492 fuehrt die Spalte als reines text
+  ohne Formatbedingung. Gemessen wird an der Protokolldatei des Gespraechsstands (K05-M25,
+  K05-M26); der Anhang datei_anhaengen bleibt zurueckgestellt (Blatt 100, E4) und wird nach
+  demselben Massstab gemessen, sobald er gebaut wird. Die laengeren Fristen fuer Zugaenge, die
+  aus der Hand gegeben werden, bleiben unberuehrt (K07-M23 und K12-M04/M10/M11: 14 Tage;
+  K14-M21: 90 Tage).
+ERFUELLT WENN: (1) der Wert, den document.content_ref fuer einen INTERVIEW_PROTOCOL-Stand
+  fuehrt, genau einen Bestandteil im Muster
+  ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$ enthaelt - die Form, die
+  gen_random_uuid() erzeugt - und ausser ihm nur Zeichen, die bei jedem Stand dieselben sind
+  (fester Praefix, feste Endung); er wird serverseitig erzeugt und enthaelt keinen Bestandteil
+  aus document.filename, app_id, actor_id, Speicherzeitpunkt oder laufender Nummer; und (2)
+  sofern der Serverpfad einen Zugriff auf dieses Dateiobjekt ausstellt, liefert dieser Zugriff
+  spaetestens 10 Minuten nach seiner Ausstellung keinen Inhalt mehr, und der Ablauf wird bei
+  jedem Abruf serverseitig gegen den gespeicherten Ausstellungszeitpunkt geprueft, nie gegen
+  eine Angabe im Aufruf (Hausform K12-M05). Stellt der Serverpfad keinen Zugriff aus, sondern
+  liest er das Objekt selbst und gibt nur den Inhalt zurueck, ist (2) NICHT ANWENDBAR und wird
+  so vermerkt - nicht als bestanden.
+GEMESSEN DURCH: Aufbau: Mandant A, ein Gespraechsstand zweimal nacheinander gespeichert (EN-06 ·
+  zwischenspeichern · Zustand Erfolg), also zwei document-Zeilen mit content_ref und
+  content_sha256; in allen Faellen dieselbe gueltige Sitzung von A, derselbe Mandant und
+  derselbe Objektbezug wie im Positivfall, damit kein Fall an einer anderen Bedingung scheitert.
+  Welche Rolle ausreicht, bestimmt die noch ausstehende Rollenmatrix zu K05-M24; sie wird hier
+  nicht gemessen, und in allen Faellen wird dieselbe Sitzung verwendet. Positivfall Schluessel:
+  beide content_ref werden gelesen - beide tragen den Bestandteil im Muster, und sie
+  unterscheiden sich in mehr als einer Stelle, nicht nur in der letzten. Negativfall Schluessel:
+  aus dem content_ref der ersten Zeile wird durch Weiterzaehlen der letzten Stelle ein zweiter
+  Wert gebildet und mit ihm der Abruf verlangt - er trifft die zweite document-Zeile nicht und
+  liefert kein Byte; waere der Schluessel fortzaehlbar, traefe er sie, und nur daran scheitert
+  der Fall. Gegenprobe zur Herkunft, ohne Aufruf: beide content_ref werden gegen
+  document.filename, app_id, actor_id, den Speicherzeitpunkt in allen im Bau verwendeten
+  Schreibweisen und gegen die Zeilennummer verglichen - keine gemeinsame Teilzeichenkette von
+  sechs oder mehr Zeichen. Positivfall Dauer (nur bei ausgestelltem Zugriff): ein Zugriff wird
+  ausgestellt und sofort abgerufen - die Datei kommt, ihr SHA-256 stimmt mit
+  document.content_sha256 ueberein. Negativfall Dauer: derselbe, in nichts veraenderte Zugriff
+  wird nach der Uhr des Servers 11 Minuten nach seiner Ausstellung erneut abgerufen, bei
+  weiterhin gueltiger Anmeldung, gueltigem Mandanten, unveraendertem Objekt und richtigem
+  Schluessel - er liefert keine Datei und scheitert damit allein am Ablauf. NICHT ERFUELLT: ein
+  content_ref traegt den Bestandteil im Muster nicht, wird nicht serverseitig erzeugt oder
+  enthaelt einen Bestandteil aus Dateiname, app_id, actor_id, Zeitpunkt oder laufender Nummer;
+  oder ein hochgezaehlter Schluessel liefert Inhalt; oder ein ausgestellter Zugriff liefert nach
+  11 Minuten noch Inhalt; oder der Ablauf wird gegen eine im Aufruf mitgegebene Angabe statt
+  gegen den gespeicherten Ausstellungszeitpunkt geprueft; oder ein Negativfall scheitert
+  erkennbar an einer anderen Bedingung als der geprueften - dann misst er nichts. Den Wortlaut
+  der Abweisung legt die Klausel nicht fest; er ist vom Eigentuemer nachzutragen (K14-D12: Grund
+  und Kennung, Wortlaut fuehrt K16).
+· Quelle: „Dateiobjekte verwenden nicht erratbare Schluessel und sind nur ueber kurzlebige,
+  serverseitig autorisierte Zugriffe erreichbar" (K05-M27); die Schluesselform als VORLAGE
+  gemessen an schema/freiraum_datamodel.sql:329/330 (document.id uuid PRIMARY KEY DEFAULT
+  gen_random_uuid(), sechzehn gleichartige Stellen) und die Luecke an
+  migrations/M30__pilot_sammelmigration.sql:492 (content_ref ohne Formatbedingung; nur
+  content_sha256 traegt eine - document_sha_fmt, Zeile 500/501); gestuetzt durch K07-M25 („ist
+  nicht der Ablageschluessel"), K07-M23 und K12-M10 („serververmittelter, zufaelliger, objekt-
+  und mandantengebundener" Zugang) sowie als blosses Vorbild aus fremder Zustaendigkeit K18-M27
+  („opake content_ref"); die Pruefweise des Ablaufs nach K12-M05; die Zahl 10 Minuten ist eine
+  Festlegung des Eigentuemers, angelehnt an K03-M15 und K03-M18 (je zehn Minuten - nachgezaehlt
+  das kuerzeste im Register bezifferte Mass) und unterhalb der Sitzungsgrenze aus K03-M17 (30
+  Minuten Untaetigkeit); die Fristen aus F11 (24 Stunden, 14 Tage) gelten Verweisen, die aus der
+  Hand gegeben werden, und sind hier ausdruecklich nicht das Vorbild ·
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5“ ·
+  Vorlage: arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md
+```
+
+**Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
+
+```
+⟨VORSCHLAG · NICHT GEZEICHNET⟩
+ERGAENZUNG (kein Ersatz) zum Eintrag vom 16.08.2026; die Anforderungen an Dateiobjekte (nicht
+  erratbare Schluessel, kurzlebige Zugriffe) bleiben mangels der beiden Zahlenwerte unmessbar
+  und betreffen datei_anhaengen
+· Stufe: zurueckgestellt (Blatt 100, E4).
+ERFUELLT WENN: Der Mandant des Gespraechsstands wird im Serverpfad wie in der Policy
+  ausschliesslich ueber document.app_id -> app.tenant_id abgeleitet: eine am Datensatz
+  mitgefuehrte oder aus der Sitzung uebernommene Mandantenangabe entscheidet nie, und Zwei-
+  Mandanten- wie Zwei-Anwendungs-Negativtest sind bestanden.
+GEMESSEN DURCH: Aufbau: Mandant A mit zwei Anwendungen A1 und A2, Mandant B mit einer Anwendung;
+  je ein gespeicherter Gespraechsstand (EN-06 · zwischenspeichern · Zustand Erfolg).
+  Positivfall: eine Sitzung von A liest den Stand von A1 ueber den Serverpfad und ueber
+  unmittelbare Abfrage - die document-Zeile ist da. Negativfall Zwei-Mandanten: Sitzung und
+  Mandantenkontext von B auf den Stand von A1, auf beiden Wegen - keine Zeile. Negativfall Zwei-
+  Anwendungen: Sitzung von A liest mit dem Objektbezug von A2 den Stand von A1 - keine Zeile.
+  Gegenprobe zur Ausschliesslichkeit: wird app.tenant_id der zugehoerigen Anwendung auf einen
+  anderen Mandanten gesetzt, ist die document-Zeile fuer die Sitzung von A nicht mehr lesbar.
+  NICHT ERFUELLT: einer der beiden Negativfaelle liefert die Zeile; oder die Zeile bleibt nach
+  der Gegenprobe lesbar - dann stammt der Mandant nicht aus app.tenant_id. Anmeldung,
+  Mandantenkontext und Schluessel sind in allen Faellen gueltig, damit sie allein an der
+  Ableitung scheitern.
+· Quelle: 'RLS und Serverpfad leiten den Mandanten ausschliesslich ueber document.app_id ->
+  app.tenant_id ab' und 'Zwei-Mandanten- und Zwei-Anwendungs-Negativtests sind Produktionsgate'
+  (K05-M27) ·
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
@@ -1525,7 +1597,7 @@ GEMESSEN DURCH: Aufbau: ein Konto mit eigenem Mandanten. Positivfall in drei Sch
 
 ---
 
-### K05 — 51 Klauseln (28 von der Gegenprobe gehalten, 23 ersetzt)
+### K05 — 53 Klauseln (28 von der Gegenprobe gehalten, 25 ersetzt)
 
 ---
 
@@ -1602,6 +1674,89 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-06 mit gestellter Fachfrage. Pos
   vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
   Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
   nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
+```
+
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
+
+---
+
+### K05-D03 · DARF NICHT
+
+> Ein Eintrag der rechten Spalte DARF NICHT stillschweigend durch eine Formulierung des Assistenten ersetzt werden. Eine Änderung ist sichtbar oder sie findet nicht statt.
+
+*Konzept K05, Zeile 79 · Gegenprobe: **ersetzt · nicht_messbar***
+
+**Vorgeschlagenes Kriterium**
+
+```
+⟨GEZEICHNET⟩
+ERFUELLT WENN: In den Stufen 01 und 02 tritt an die Stelle eines bestehenden Eintrags der
+  rechten Spalte keine Formulierung des Assistenten. Nach jeder Aktion des Bildschirmvertrags
+  von EN-05 und EN-06 und nach dem Weg abbrechen, neu anmelden, weitermachen traegt jeder
+  Eintrag, der vor der Handlung stand, denselben Wortlaut wie bei seiner Entstehung; ein
+  inhaltlicher Eintrag traegt dabei weiterhin dieselbe einzige Herkunftsmarke (K05-M11), ein
+  Uebersprungvermerk weiterhin ausschliesslich den Wortlaut (Frage uebersprungen) und keine
+  Marke (K05-M10). Vergleichsstand ist der vor der Handlung festgehaltene Anzeigestand derselben
+  Eintraege; ein Vergleich mit einem frueheren Dateistand ist nicht Teil dieses Kriteriums.
+  Findet an einem Eintrag dennoch eine Aenderung statt, so ist sie nur dann sichtbar, wenn
+  Ursprung und Bearbeitungszustand getrennt lesbar am Eintrag stehen — gemessen wird das nicht
+  hier, sondern durch das am 19.08.2026 gezeichnete Kriterium zu K05-M12 (K19-G09).
+GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten mit gueltiger Mitgliedschaft
+  und Objektbezug; ein Gespraech, das Stufe 01 vollstaendig durchlaufen hat (Eintraege zu
+  Branche, Funktion, Anwendung, Zielen, Ausgangsproblem und Name) und in Stufe 02 je einen
+  Eintrag ueber vorschlag_waehlen, einen ueber freitext_antworten mit festgehaltenem gesendetem
+  Wortlaut und einen Uebersprungvermerk fuehrt; vor der Handlung festgehalten: Wortlaut und
+  Marke jedes Eintrags der rechten Spalte.
+Positivfall: die weiteren Aktionen von EN-06 der Reihe nach fahren — vorschlag_waehlen,
+  freitext_antworten, frage_ignorieren, zwischenspeichern (Zustand Erfolg: „Stand ueberlebt das
+  Abmelden") —, danach abmelden, neu anmelden und weitermachen. Erwartete Beobachtung: jeder
+  zuvor festgehaltene Eintrag steht wortgleich und mit unveraenderter Marke wieder da; der ueber
+  freitext_antworten entstandene Eintrag traegt genau den gesendeten Wortlaut und die Marke Ihre
+  Angabe; der Uebersprungvermerk traegt ausschliesslich den Wortlaut (Frage uebersprungen); kein
+  bestehender Eintrag hat einen Bearbeitungszustand erhalten, weil keiner geaendert wurde.
+Negativfall (stille Ersetzung, gegen den Bau gefahren): derselbe Aufbau; ueber den Serverpfad
+  wird versucht, den Wortlaut genau eines bereits stehenden Eintrags durch eine Formulierung des
+  Assistenten zu ersetzen, waehrend Anmeldung, Mitgliedschaft, Mandant und Objektbezug gueltig
+  sind, genau eine Marke bestimmbar ist und das Speichern Erfolg meldet; die Aufrufform richtet
+  sich nach der Umsetzung, das Kriterium schreibt keine vor. Danach die rechte Spalte lesen,
+  abmelden, neu anmelden, weitermachen und erneut lesen. Erfuellt ist beides: entweder der
+  Versuch wird abgewiesen und der bestehende Eintrag steht in beiden Lesungen wortgleich mit
+  unveraenderter Marke, oder es entsteht ein zusaetzlicher Eintrag mit eigener Marke, waehrend
+  der bestehende unveraendert bleibt. NICHT ERFUELLT: der bestehende Eintrag traegt nach dem
+  Versuch oder nach der Wiederaufnahme den Wortlaut des Assistenten und weiterhin allein seine
+  bisherige Herkunftsmarke — dann hat die Ersetzung stattgefunden und ist nicht sichtbar. Weil
+  Berechtigung, Marke und Speichern gueltig sind, scheitert der Fall allein an der stillen
+  Ersetzung und nicht an der Berechtigung (K05-M24), an der Marke (K05-M11) oder am Dreischritt
+  (K05-M26). Den Wortlaut einer Abweisung legt weder die Klausel noch der Bildschirmvertrag
+  fest; solange er fehlt, wird an Bestand und Anzeige gemessen, nicht an einer Meldung.
+· Quelle: „Ein Eintrag der rechten Spalte DARF NICHT stillschweigend durch eine Formulierung des
+  Assistenten ersetzt werden. Eine Änderung ist sichtbar oder sie findet nicht statt." (K05-D03,
+  Konzept K05 Zeile 79). Das Merkmal fuer „sichtbar" stammt nicht aus D03, sondern aus K05-M12
+  (Zeile 59 desselben Konzepts) und K19-G09 — beide mit gezeichnetem Kriterium vom 19.08.2026;
+  dieses Kriterium verweist darauf und misst es nicht erneut. Der Befund „keine Ersetzung in M5"
+  stammt aus dem Bildschirmvertrag: keiner der zehn Serverbefehle von EN-05/EN-06 ersetzt einen
+  Eintrag; die Fehlerzustaende lauten „bisherige Antworten bleiben unveraendert", „Auswahl
+  bleibt unveraendert", „der vorige Stand bleibt gueltig". Anker: EN-05 und EN-06, alle
+  Aktionen; EN-06 · zwischenspeichern · Zustand Erfolg.
+· Festlegung des Eigentuemers, kenntlich gemacht: gezeichnet wird allein die Zuordnung — dass
+  K05-D03 in M5 an ihrer zweiten Haelfte („sie findet nicht statt") gemessen wird, und zwar am
+  Schreibweg, und dass ihre erste Haelfte am bereits gezeichneten Merkmal von K05-M12 haengt.
+  Ein neuer Wert, eine Frist, eine Schwelle, ein Serverbefehl oder eine Anzeigeform wird nicht
+  eingefuehrt.
+· Nicht gemessen: ob ein bei der Wiederaufnahme geladener Stand gegen einen frueheren Stand auf
+  veraenderte Wortlaute geprueft wird. Weder K05-D03 noch K05-M25/M26 noch der Bildschirmvertrag
+  verlangen eine solche Pruefung; sie waere neuer Umfang und ist vom Eigentuemer zu
+  beschliessen, bevor sie gemessen werden kann.
+· Deckung mit bereits Gezeichnetem: der Positivfall ueberschneidet sich mit dem gezeichneten
+  Kriterium zu K05-M15 („dieselben Beitraege, dieselben Herkunftsmarken, dieselben
+  Uebersprungvermerke" nach Abmelden und Neuanmelden); eigenstaendig sind hier die
+  Wortgleichheit und der Negativfall am Schreibweg.
+· Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Akzeptanzkriterium liefert
+  der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
+  Entscheidung.
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5“ ·
+  Vorlage: arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md
 ```
 
 `x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
@@ -3254,6 +3409,85 @@ GEMESSEN DURCH: Aufbau: Gespraech in Stufe 02 mit vorhandenem Stand, angemeldete
 
 ---
 
+### K05-M20 · MUSS
+
+> Der Stimmweg MUSS zwei getrennte Bedienungen führen: Das Mikrofon diktiert in das Eingabefeld, *Sprechen* führt das Gespräch freihändig.
+
+*Konzept K05, Zeile 67 · Gegenprobe: **ersetzt · nicht_messbar***
+
+**Vorgeschlagenes Kriterium**
+
+```
+⟨GEZEICHNET⟩
+· Stufe: zurueckgestellt bis zur Freigabe eines eigenen, bewerteten Falls nach F31 (K05-D12,
+  K05-M30) — nicht nach Blatt 100 E4, die nur datei_anhaengen betrifft. Grund, gemessen und
+  nicht gewaehlt: K05-M20 verlangt ZWEI getrennte Bedienungen; die zweite (*Sprechen*, das
+  freihaendige Gespraech) darf in Release 1 gezeichnet nicht betrieben werden und bleibt
+  ausgeblendet (K05-D12, K05-M30). Die Zweiheit ist damit nicht herstellbar und folglich nicht
+  messbar. DECKUNG IN RELEASE 1 (kein Teil dieses Kriteriums, hier nur nachgewiesen, damit keine
+  Luecke entsteht): der gesamte in Release 1 beobachtbare Rest ist bereits gezeichnet gemessen —
+  K05-M21 (diktierter Text steht vor dem Absenden im Eingabefeld sichtbar und aenderbar,
+  abgesendeter Beitrag rechts mit Marke Ihre Angabe), K05-M30 (auf EN-05 und EN-06 keine
+  Bedienung fuer den freihaendigen Sprachweg sichtbar, unmittelbarer Aufruf des vor dem Lauf
+  benannten Serverpfads abgewiesen und ohne Wirkung, Diktat weiter nutzbar), K05-D12 (Bedienung
+  nicht vorhanden, Serverpfad weist jeden Aufruf ab); alle drei gez. A. Han, 19.08.2026. Dieses
+  Kriterium misst sie nicht ein zweites Mal und formuliert sie nicht abweichend. ERFUELLT WENN
+  (zu messen ab der Freigabe nach F31, nicht vorher): Der Stimmweg fuehrt an derselben
+  gestellten Fachfrage in EN-06 zwei fuer sich bedienbare Bedienungen, und jede leistet genau
+  ihr Teil und nicht das des anderen: das Mikrofon endet im Freitextfeld — diktierter Text steht
+  dort sichtbar und aenderbar, und solange nicht gesendet wird, entsteht rechts kein Eintrag,
+  kein Aufruf von record_interview_answer, kein Beitrag im INTERVIEW_PROTOCOL-Stand, keine
+  document-Zeile und kein event-Eintrag (K05-M25, K05-M26); *Sprechen* fuehrt das Gespraech
+  freihaendig, also ohne den Zwischenschritt ueber Freitextfeld und Senden.
+GEMESSEN DURCH: Aufbau: freigegebener, bewerteter Fall nach F31 fuer den freihaendigen Stimmweg;
+  angemeldete Sitzung im eigenen Mandanten, app.journey_phase = INTERVIEW, EN-06 mit gestellter
+  Fachfrage (EN-06 · vorschlag_waehlen · Zustand laden); funktionierende Spracherkennung;
+  Datenbestand vor dem Lauf festgehalten; die Bezeichnung des Mikrofon-Bedienelements und der
+  Weg, ueber den *Sprechen* das Gespraech fuehrt, sind vor dem Lauf benannt (siehe OFFEN).
+  Positivfall 1 — das Mikrofon endet im Feld: Diktat starten, einen Satz sprechen, Diktat
+  beenden, NICHT senden. Erwartete Beobachtung: der Satz steht im Freitextfeld und ist dort
+  aenderbar; rechts entsteht kein Eintrag; kein Aufruf von record_interview_answer; keine neue
+  oder geaenderte document-Zeile, kein neuer event-Eintrag. Anschliessend senden. Erwartete
+  Beobachtung: genau ein Eintrag rechts mit der Marke Ihre Angabe (EN-06 · freitext_antworten ·
+  Zustand Erfolg). Positivfall 2 — *Sprechen* fuehrt das Gespraech: an frisch gestellter
+  Fachfrage *Sprechen* bedienen und antworten, ohne das Freitextfeld zu benutzen und ohne zu
+  senden. Erwartete Beobachtung: das Gespraech geht weiter (Eintrag rechts bzw. naechste
+  Fachfrage), ohne dass ein Zwischenstand im Freitextfeld gesendet wurde. Negativfall, misst die
+  Trennung: eine der beiden Bedienungen leistet beides — entweder entsteht nach dem Beenden des
+  Diktats und OHNE Senden rechts ein Eintrag, ein Aufruf von record_interview_answer oder die
+  naechste Fachfrage; oder *Sprechen* endet lediglich im Freitextfeld und fuehrt das Gespraech
+  nicht. Anmeldung, Mitgliedschaft, Rolle, Mandant und Objektbezug sind dabei gueltig und der
+  Fall nach F31 freigegeben, damit er allein an der Trennung haengt und nicht an Rechten oder an
+  der Sperre. NICHT ERFUELLT: der Negativfall tritt ein; oder eine der beiden Bedienungen ist an
+  der Fachfrage nicht fuer sich bedienbar; oder ein diktierter Text erzeugt vor dem Senden eine
+  document-Zeile oder einen event-Eintrag. OFFEN, vom fachlichen Eigentuemer vor dem Lauf
+  nachzutragen (keine Quelle enthaelt es, deshalb hier nicht gesetzt): (a) die Bezeichnung des
+  Bedienelements Mikrofon — der Bildschirmvertrag nennt das Diktat nur in der Eingabezeile von
+  EN-06 · freitext_antworten, der Kasten EN-06 fuehrt kein Mikrofonsymbol, und EN-05 fuehrt
+  ueberhaupt kein Diktat; (b) der Serverbefehl oder Weg, ueber den *Sprechen* das Gespraech
+  fuehrt — keiner der zehn Serverbefehle von EN-05 und EN-06 fuehrt ihn (dieselbe Luecke ist im
+  gezeichneten Kriterium zu K05-M30 vermerkt); (c) der Wortlaut der Abweisung (Bauauftrag §9 Tor
+  I Nr. 6).
+· Quelle: „Der Stimmweg MUSS zwei getrennte Bedienungen führen: Das Mikrofon diktiert in das
+  Eingabefeld, *Sprechen* führt das Gespräch freihändig." (K05-M20); „Der freihändige Stimmweg
+  DARF NICHT betrieben werden, solange für ihn kein eigener, bewerteter Fall freigegeben ist
+  (F31). ... Bis dahin bleibt die Bedienung ausgeblendet, und der Serverpfad weist den Aufruf
+  ab." (K05-D12); „Der freihändige Sprachweg bleibt in Release 1 ausgeblendet und serverseitig
+  gesperrt." (K05-M30); Bildschirmvertrag EN-06 · freitext_antworten (Eingabe, Zustand laden,
+  Zustand leer, Zustand Erfolg); K05-M25 und K05-M26 fuer INTERVIEW_PROTOCOL-Stand, document-
+  Zeile und event-Eintrag; Rang 1 fuer journey_phase = INTERVIEW und document_kind =
+  INTERVIEW_PROTOCOL (freiraum_datamodel.sql). K23-M02: das Akzeptanzkriterium liefert der
+  fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
+  Entscheidung.
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5“ ·
+  Vorlage: arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md
+```
+
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
+
+---
+
 ### K05-M21 · MUSS
 
 > Diktierter Text MUSS vor dem Absenden im Eingabefeld sichtbar und änderbar sein. Er zählt als eigene Angabe des Nutzers.
@@ -4232,20 +4466,20 @@ Einzelne Ausnahmen tragen Sie darunter mit Kennung ein.
 
 | Block | Einträge | gezeichnet | Datum | Ausnahmen (Kennungen) |
 |---|---:|---|---|---|
-| Teil 1 · ohne Maßstab | 5 | *keine Zeichnung — Lieferung* | | |
-| Teil 2 · Bestand plus Ergänzung | 4 | **x** (4/4) | 19.08.2026 | |
+| Teil 1 · ohne Maßstab, mit eigener Festlegung | 1 | **x** (1/1) | 19.08.2026 | |
+| Teil 2 · Bestand plus Ergänzung | 6 | **x** (6/6) | 19.08.2026 | |
 | Teil 3 · K01 | 9 | **x** (9/9) | 19.08.2026 | |
 | Teil 3 · K02 | 7 | **x** (7/7) | 19.08.2026 | |
 | Teil 3 · K03 | 4 | **x** (4/4) | 19.08.2026 | |
 | Teil 3 · K04 | 2 | **x** (2/2) | 19.08.2026 | |
-| Teil 3 · K05 | 51 | **x** (51/51) | 19.08.2026 | |
+| Teil 3 · K05 | 53 | **x** (53/53) | 19.08.2026 | |
 | Teil 3 · K10 | 3 | **x** (3/3) | 19.08.2026 | |
 | Teil 3 · K13 | 6 | **x** (6/6) | 19.08.2026 | |
 | Teil 3 · K19 | 4 | **x** (4/4) | 19.08.2026 | |
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | fachlicher Eigentümer, für den Auftragnehmer | 19.08.2026 — Teile 2 und 3 |
+| A. Han | fachlicher Eigentümer, für den Auftragnehmer | 19.08.2026 — alle 95 |
 
 ---
 

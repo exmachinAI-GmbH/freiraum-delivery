@@ -149,10 +149,21 @@ def main():
     t.append("")
     t.append("---\n")
 
-    t.append("## Teil 1 · Fünf Klauseln ohne Maßstab — hier hilft keine Unterschrift\n")
-    t.append("Der Vorschlag sagt in diesen Fällen ausdrücklich, **was fehlt und wer es festlegen muss**.")
-    t.append("Ein Kriterium daraufhin zu erfinden, wäre genau der Mangel, an dem die Gegenprobe 14")
-    t.append("Vorschläge gekippt hat.\n")
+    t1_offen = [k for k in ohne_massstab
+                if not kriterium(k, pflege, reg).startswith("⟨GEZEICHNET⟩")]
+    if t1_offen:
+        t.append("## Teil 1 · Klauseln ohne Maßstab — hier hilft keine Unterschrift\n")
+        t.append("Der Vorschlag sagt in diesen Fällen ausdrücklich, **was fehlt und wer es "
+                 "festlegen muss**.")
+        t.append("Ein Kriterium daraufhin zu erfinden, wäre genau der Mangel, an dem die "
+                 "Gegenprobe 14\nVorschläge gekippt hat.\n")
+    else:
+        t.append("## Teil 1 · Die Klauseln, die keinen Maßstab trugen — **erledigt**\n")
+        t.append("Sie sind am 19.08.2026 mit eigenen Festlegungen geschlossen worden "
+                 "(`arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md`). Vier davon "
+                 "brauchten\ngar keine neue Angabe — sie stand woanders. `K05-G12` traegt "
+                 "weiterhin keinen Prueffall;\ndas ist gezeichnet und als `RR-06` in der "
+                 "Restrisikoliste gefuehrt.\n")
     t.append("---\n")
     for k in ohne_massstab:
         t.append(block(k, reg, kriterium(k, pflege, reg), marker(k),
@@ -183,11 +194,13 @@ def main():
     t.append("Einzelne Ausnahmen tragen Sie darunter mit Kennung ein.\n")
     t.append("| Block | Einträge | gezeichnet | Datum | Ausnahmen (Kennungen) |")
     t.append("|---|---:|---|---|---|")
-    t.append(f"| Teil 1 · ohne Maßstab | {len(ohne_massstab)} | *keine Zeichnung — Lieferung* | | |")
     def stand(gruppe):
         n = sum(1 for k in gruppe if kriterium(k, pflege, reg).startswith("⟨GEZEICHNET⟩"))
         return (f"**x** ({n}/{len(gruppe)})", "19.08.2026") if n == len(gruppe) and gruppe \
             else (f"☐ ({n}/{len(gruppe)})", "⟨ ⟩")
+    kreuz1, datum1 = stand(ohne_massstab)
+    t.append(f"| Teil 1 · ohne Maßstab, mit eigener Festlegung | {len(ohne_massstab)} | "
+             f"{kreuz1} | {datum1} | |")
     kreuz, datum = stand(zu_eng)
     t.append(f"| Teil 2 · Bestand plus Ergänzung | {len(zu_eng)} | {kreuz} | {datum} | |")
     for konzept in sorted({reg[k]["konzept"] for k in rest}):
@@ -199,7 +212,7 @@ def main():
     t.append("|---|---|---|")
     offen = [k for k in meine if not kriterium(k, pflege, reg).startswith("⟨GEZEICHNET⟩")]
     t.append("| A. Han | fachlicher Eigentümer, für den Auftragnehmer | "
-             + ("19.08.2026 — Teile 2 und 3" if len(offen) == len(ohne_massstab) else "⟨ ⟩") + " |")
+             + ("19.08.2026 — alle 95" if not offen else "⟨ ⟩") + " |")
     t.append("")
     t.append("---\n")
     t.append("*Erzeugt am 19.08.2026 von `M5_sichtblatt_erzeugen.py`. Wortlaut und Herkunft aus")
