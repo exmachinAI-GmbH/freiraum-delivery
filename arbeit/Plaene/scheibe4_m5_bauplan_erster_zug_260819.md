@@ -1,4 +1,4 @@
-# M5 · Bauplan des ersten Zuges — **liegt bereit, wartet auf drei Kreuze**
+# M5 · Bauplan des ersten Zuges — **freigegeben, noch nicht gebaut**
 
 **19.08.2026 · Bauunterlage.** Was hier steht, ist die Reihenfolge, in der gebaut wird.
 
