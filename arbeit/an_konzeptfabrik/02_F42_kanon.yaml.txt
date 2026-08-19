@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────────────────────
+# ENTWURF F42 · zum Einfügen in config/kanon.yaml, unter `festlegungen`,
+# hinter F41. Der Wortlaut stammt aus M. Veils Vorgabe vom 18.08.2026;
+# ergänzt sind allein die Fundstellen der gebauten Durchsetzung.
+#
+# Der Orchestrator fügt ihn NICHT selbst ein (Entscheidung 2, 18.08.2026).
+# ─────────────────────────────────────────────────────────────────────────
+
+  # F42 ist am 18.08.2026 aus derselben Beobachtung entstanden wie F41:
+  # eine gezeichnete Regel, die kein Lauf erzwingt, wird nicht eingehalten.
+  F42: >
+    Eine Scheibe gilt erst als abgenommen, wenn zu ihrem Abnahmestand ein
+    gezeichneter Tor-3-Nachweis vorliegt. Fehlt er, ist die Scheibe
+    GESPERRT -- nicht abgenommen (K23-M22).
+
+    WO ER LIEGT
+      nachweise/fremdreview/<scheibe>_<JJMMTT>.md  mit  <datei>.sha256
+      daneben. (Die Vorgabe nannte nachweise/tor3/; die Ablage wurde am
+      18.08.2026 auf das bestehende Verzeichnis festgelegt, weil dort
+      VORLAGE, README und werkzeuge/fremdreview.py bereits liegen.)
+
+    WAS ER FUEHRT
+      scheibe          welche Scheibe
+      geprueft_commit  gegen welchen Stand geprueft wurde
+      pruefendes_modell / datum
+      befunde          "keine" MUSS dastehen, nicht fehlen
+      Zeichnungsblock nach F40
+
+    DIE BINDUNG, auf die es ankommt
+      geprueft_commit MUSS ein Vorfahr des Abnahmestandes sein. Ohne diese
+      Bedingung ist der Nachweis das, was AC-16 vor Blatt 89 war: ein
+      Beleg, den jedes beliebige alte Blatt erfuellt.
+
+    DER AUSLOESER
+      nachweise/scheiben/<kennung>/abnahme.md. Ihr Entstehen ist ein
+      Commit, und an einen Commit kann ein Lauf sich haengen. Der Harness
+      legt sie nie selbst an -- eine Abnahme anzumelden ist eine
+      Willenserklaerung.
+
+    DURCHGESETZT VON werkzeuge/tor3_pflicht.py in Tor 1a.
+
+    GRENZE, ausdruecklich
+      Diese Festlegung erzwingt die ABLAGE, nicht die Pruefung. Ob ein
+      Mensch wirklich eine frische Instanz gefragt hat, kann kein Riegel
+      sehen. Dagegen schuetzt allein die Zeichnung -- eine
+      Willenserklaerung, keine Messung.
+
+    GRUNDLAGE
+      C-4, gezeichnet (Blatt 26:30): "einmal je Scheibenabnahme, nicht je
+      Aenderung". F42 macht daraus eine Bedingung, an der ein Lauf
+      scheitert.
