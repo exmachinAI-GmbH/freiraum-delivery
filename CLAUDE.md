@@ -157,7 +157,14 @@ damit ein Lauf besteht; die Trennung setzt das mechanisch durch.
 
 **Die Pfadgrenzen sind Anweisung, nicht Mechanik.** Das Werkzeugfeld im Frontmatter
 beschränkt Werkzeuge, nicht Pfade. Wer die Blindheit mechanisch will, braucht `deny`-Regeln
-in `.claude/settings.json`. Diese Datei existiert noch nicht — **offener Punkt**.
+in `.claude/settings.json`.
+
+*Berichtigt am 19.08.2026: **die Datei existiert** — sie ist seit dem 19.08. versioniert und
+führt 14 `deny`-Einträge (`.env*` und die Konzept-Fabrik). Was sie **nicht** führt, ist die
+Rollentrennung Bau/Prüfung; dafür gibt es seit dem 19.08. `werkzeuge/blindstand.sh`, das die
+Blindheit über die Sandbox herstellt statt über Pfadregeln. Der offene Punkt ist damit
+kleiner geworden und ein anderer: nicht „es gibt keine Datei", sondern „der Blindstand ist
+an keinen Lauf angeschlossen" (V-13).*
 
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag

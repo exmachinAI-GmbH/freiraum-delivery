@@ -65,7 +65,17 @@ mkdir -p "$ZIEL"
 # nachweise/). Im Blindstand waeren die 101 M5-Klauseln nicht nachschlagbar
 # gewesen. Gefunden hat es eine adversariale Pruefung der eigenen Arbeit,
 # nicht ein Lauf: arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md, Befund S-F.
-git archive HEAD pruefungen nachweise/klauselregister | tar -x -C "$ZIEL"
+# WAS MITGEHT, IST ZUGESCHNITTEN -- NICHT GANZE VERZEICHNISSE.
+# Berichtigt am 19.08.2026, zweiter Durchgang: `pruefungen` ging bis dahin
+# VOLLSTAENDIG mit, und darin liegt pruefungen/migration/ -- Schema- und
+# Umsetzungswissen, das die Rollengrenze ausschliesst
+# (.claude/agents/pruef-agent.md:57). Mitgehen duerfen nur die Klauselfaelle
+# und die Klauselwortlaute.
+git archive HEAD pruefungen/klauseln nachweise/klauselregister 2>/dev/null | tar -x -C "$ZIEL" || {
+  echo "HINWEIS: pruefungen/klauseln gibt es noch nicht -- nur die Klauseln gehen mit." >&2
+  git archive HEAD nachweise/klauselregister | tar -x -C "$ZIEL"
+}
+mkdir -p "$ZIEL/pruefungen/klauseln"
 
 # Die absolute Pfadform ist "//" PLUS Pfad OHNE fuehrenden Schraegstrich.
 # Am 19.08.2026 stand hier "//$QUELLE" -- und $QUELLE beginnt bereits mit
