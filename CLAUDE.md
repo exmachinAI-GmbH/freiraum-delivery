@@ -249,10 +249,22 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
   oder Fehlerausgabe schreiben** (K23-D09).
 - **Direkt auf `main` schreiben, einen Zweig ohne Tor 1 zusammenführen oder ein Deployment
   auslösen.** Kein Agent hat Freigabe- oder Deploymentrecht.
+  *Am 18.08.2026 ausdrücklich bestätigt (Entscheidung 1, gez. M. Veil und A. Han), nachdem
+  die Frage gestellt war. Freigeben und Zusammenführen kostet zwei Minuten und ist das
+  Einzige, was „ein Agent hat vorgeschlagen" von „eine Firma hat geliefert" trennt. Ein
+  Harness, der zusammenführt, was er selbst gebaut hat, ist die Selbstfreigabe aus den
+  fünfzehn Gates (K23 Abschn. 6).*
 - **Eine Fassung bauen, deren Anlagen-Prüfsumme nicht aufgeht.**
 - **K22 bauen oder prüfen** (F28) und keine der drei Portale aus F04 anfassen.
 - **Umfang erfinden.** Was nicht in den 24 gezeichneten Konzepten steht, wird nicht gebaut,
   sondern als offener Punkt vorgelegt.
 - **Eine Datei in der Konzept-Fabrik oder in `v2.9_PIVOT/` verändern.**
+  *Am 18.08.2026 gebrochen und sofort zurückgenommen: F41 wurde in `config/kanon.yaml`
+  eingetragen, die Datei byte-identisch wiederhergestellt. Beide Founder haben die Regel
+  daraufhin bestätigt (Entscheidung 2, gez. M. Veil und A. Han) — mit der Auflage, die
+  Übergabe zu mechanisieren statt sie zu lockern. **Was dort entstehen muss, liegt seither
+  fertig in `arbeit/an_konzeptfabrik/`**, je mit Zieldatei und Einfügestelle. Der Grund ist
+  nicht Vorsicht, sondern Rang: `kanon.yaml` ist Rang 0. Dürfte der Bauende sie
+  fortschreiben, schriebe er seine eigene Verfassung.*
 - **Eine offene Frage still entscheiden.** Die fünf Fragen des Fremdmodells (Blatt 26:70–79)
   sind vor dem ersten Bauzug zu entscheiden, nicht danach.
