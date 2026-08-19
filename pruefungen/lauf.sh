@@ -44,6 +44,44 @@ merke() {  # kennung · zustand · anmerkung
 }
 
 # ---------------------------------------------------------------------
+# Die FALLZAEHLUNG -- neben der Punktzaehlung, nicht an ihrer Stelle.
+#
+# merke() zaehlt PRUEFPUNKTE: ein Klausellauf ist EIN Punkt, ob er 9 oder
+# 27 Faelle fuehrt. Gemessen am 18.08.2026 meldete dieser Lauf am Ende
+# "gesperrt: 4" -- und 22 Einzelfaelle waren nicht gemessen:
+#
+#     zweckbestimmung  19        vorpruefung      1
+#     mitgliedschaft    1        anmeldecode      1
+#
+# Wer "4" liest, haelt 22 ungemessene Faelle fuer gemessen. Der Fehler war
+# nicht die kleine Zahl, sondern dass die groessere fehlte.
+#
+# Gelesen wird die Summenzeile des Klausellaufs im Wortlaut:
+#     SUMME: 8 von 27 bestanden, 19 gescheitert
+#     davon GESPERRT (...): 19
+# Fehlt sie, wird NICHTS gezaehlt -- eine geratene Zahl waere schlimmer als
+# keine (K23-M22).
+# ---------------------------------------------------------------------
+f_ok=0; f_fehl=0; f_gesperrt=0; f_ohne_summe=0
+
+faelle_zaehlen() {  # $1 = vollstaendige Ausgabe eines Klausellaufs
+  local best schlecht blockiert
+  best=$(printf '%s\n' "$1" | sed -n 's/^SUMME: \([0-9][0-9]*\) von .*/\1/p' | head -1)
+  schlecht=$(printf '%s\n' "$1" | sed -n 's/^SUMME:.*bestanden, \([0-9][0-9]*\) gescheitert.*/\1/p' | head -1)
+  blockiert=$(printf '%s\n' "$1" | sed -n 's/^davon GESPERRT[^:]*: *\([0-9][0-9]*\).*/\1/p' | head -1)
+
+  if [ -z "${best:-}" ] || [ -z "${schlecht:-}" ]; then
+    f_ohne_summe=$((f_ohne_summe+1))
+    return
+  fi
+  : "${blockiert:=0}"
+  f_ok=$((f_ok + best))
+  f_gesperrt=$((f_gesperrt + blockiert))
+  # Was gescheitert und NICHT gesperrt ist, ist echt fehlgeschlagen.
+  f_fehl=$((f_fehl + schlecht - blockiert))
+}
+
+# ---------------------------------------------------------------------
 # 0 · Ist das Werkzeug ueberhaupt da?
 #
 #     BEF-D3, gemessen am 10.08.2026: Ohne psql gab dieser Lauf die
@@ -467,6 +505,19 @@ PY
   rm -f "$log"
 
   summe=$(printf '%s\n' "$aus" | sed -n 's/^SUMME: //p' | head -1)
+
+  # BEFUND vom 18.08.2026: Die Summenzeile am Ende dieses Laufs zaehlt
+  # PRUEFPUNKTE -- und ein Klausellauf ist EIN Punkt, gleich ob er 9 oder
+  # 27 Faelle fuehrt. Am 18.08.2026 meldete der Lauf "gesperrt: 4", waehrend
+  # 22 EINZELFAELLE nicht gemessen waren (zweckbestimmung 19, vorpruefung 1,
+  # mitgliedschaft 1, anmeldecode 1). Wer "4" liest, haelt 22 ungemessene
+  # Faelle fuer gemessen.
+  #
+  # Die Punktzaehlung bleibt, wie sie ist -- sie ist fuer den Rueckgabewert
+  # richtig. Daneben tritt eine FALLZAEHLUNG. Zwei Zahlen, zwei Namen; die
+  # groessere zu verschweigen war der Fehler, nicht die kleinere zu fuehren.
+  faelle_zaehlen "$aus"
+
   case "$rc" in
     0) echo "   $kennung — ${summe:-bestanden}"
        merke "$kennung" bestanden "${summe:-ohne Summenzeile}" ;;
@@ -475,7 +526,16 @@ PY
        printf '%s\n' "$aus" | grep '^ABBRUCH' | head -1 | sed 's/^/      /' || true
        echo "   $kennung — GESPERRT: Aufbaupruefung (F07) hat nicht getragen"
        merke "$kennung" gesperrt "F07-Abbruch, nichts gemessen" ;;
-    *) printf '%s\n' "$aus" | grep -E 'GESCHEITERT|GESPERRT' | head -12 | sed 's/^/      /' || true
+    *) # BEFUND vom 18.08.2026: Hier stand `head -12` ohne einen Hinweis
+       # darauf, dass gekuerzt wird. Bei zweckbestimmung mit 19 offenen
+       # Punkten waren sieben Zeilen unsichtbar -- und nichts sagte es.
+       # Eine stille Kuerzung liest sich wie Vollstaendigkeit.
+       offen=$(printf '%s\n' "$aus" | grep -cE 'GESCHEITERT|GESPERRT' || true)
+       printf '%s\n' "$aus" | grep -E 'GESCHEITERT|GESPERRT' | head -12 | sed 's/^/      /' || true
+       if [ "${offen:-0}" -gt 12 ]; then
+         echo "      ... $((offen - 12)) weitere Zeile(n) hier nicht gezeigt;"
+         echo "      vollstaendig im Bericht (--bericht) und im Klausellauf selbst."
+       fi
        # Sind ALLE nicht bestandenen Faelle gesperrt, ist der Lauf nicht
        # fehlgeschlagen -- er hat einen Bereich nicht messen koennen. K23-M22
        # kennt vier Zustaende, und "gesperrt" ist keiner davon "fehlgeschlagen".
@@ -522,7 +582,14 @@ fi
 # ---------------------------------------------------------------------
 echo
 echo "======================================================="
-echo "bestanden: $ok · fehlgeschlagen: $fehl · gesperrt: $gesperrt"
+echo "Pruefpunkte: bestanden: $ok · fehlgeschlagen: $fehl · gesperrt: $gesperrt"
+# Ein Klausellauf ist EIN Punkt, fuehrt aber viele Faelle. Beide Zahlen
+# stehen da, damit "gesperrt: 4" nie wieder wie "vier Faelle" aussieht.
+if [ $((f_ok + f_fehl + f_gesperrt)) -gt 0 ]; then
+  echo "Einzelfaelle: bestanden: $f_ok · fehlgeschlagen: $f_fehl · gesperrt: $f_gesperrt"
+fi
+[ "${f_ohne_summe:-0}" -gt 0 ] && \
+  echo "::warning::$f_ohne_summe Klausellauf/-laeufe ohne Summenzeile -- ihre Faelle sind in der Einzelfallzaehlung NICHT enthalten"
 
 if [ -n "$BERICHT" ]; then
   mkdir -p "$(dirname "$BERICHT")"
