@@ -679,7 +679,18 @@ eingetretener Meilenstein von zwölf. Wenn die nächste Kürzung kommt, kommt si
 
 - [x] **Das achte Feld wird eingeführt** — jede Kürzung benennt die berührten Gates aus K23
       Abschnitt 6 und was an ihre Stelle tritt · *Empfehlung des Orchestrators* ·
-      **gez. M. Veil, 16.08.2026** — Mitzeichnung A. Han nach 12.3 steht aus
+      **gez. M. Veil, 16.08.2026** · **mitgezeichnet A. Han, 19.08.2026** — damit ist die
+      Mitzeichnung nach §12.3 vollzogen.
+
+> **Nachgetragen am 19.08.2026.** Weisung im Wortlaut: *„B2 -B17 gezeichnet, A. Han, M. Veil"*.
+> Der Nachtrag steht hier, weil die Zeichnung **an diesem Blatt** hängt und nicht an dem, das
+> sie eingefordert hat: `m5_bauzug_freigabe_260819.md` (B-2) trug das Kreuz seit dem Abend des
+> 19.08., dieses Blatt sagte weiter *„steht aus"*. **Zwei Stände derselben Unterschrift sind
+> einer zu viel** — derselbe Fehler wie bei K05-G12, der an diesem Tag schon einmal aufgefallen
+> ist.
+>
+> **Wirkung:** `CLAUDE.md` Abschn. 6 verlangt die fünf Fragen des Fremdmodells **vor dem ersten
+> Bauzug**. B-17 war die letzte offene. Mit diesem Nachtrag ist die Vorbedingung erfüllt.
 - [ ] **Abschnitt 12 genügt, wie er ist** — kein zusätzliches Feld
 - [ ] **Anders geregelt:** ⟨Regel⟩
 - [ ] **Zurückgestellt** — Begründung: ⟨Grund⟩

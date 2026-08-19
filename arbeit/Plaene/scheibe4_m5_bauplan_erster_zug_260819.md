@@ -1,9 +1,11 @@
 # M5 · Bauplan des ersten Zuges — **liegt bereit, wartet auf drei Kreuze**
 
-**19.08.2026 · Bauunterlage, kein Bau.** Was hier steht, ist die Reihenfolge, in der gebaut
-wird, sobald `m5_bauzug_freigabe_260819.md` gezeichnet ist. **Es ist noch nichts gebaut** —
-`CLAUDE.md` Abschn. 6 verlangt die fünf Fragen des Fremdmodells **vor** dem ersten Bauzug, und
-die fünfte (B-17) trägt erst eine Unterschrift.
+**19.08.2026 · Bauunterlage.** Was hier steht, ist die Reihenfolge, in der gebaut wird.
+
+**Stand am Abend des 19.08.: freigegeben.** `m5_bauzug_freigabe_260819.md` trägt B-1, B-2 und
+B-3; B-17 ist am selben Tag mitgezeichnet worden (`vorlage_neun_entscheidungen_260816.md`).
+Damit ist die letzte der fünf Fragen des Fremdmodells entschieden — die Vorbedingung aus
+`CLAUDE.md` Abschn. 6 ist erfüllt. **Gebaut ist noch nichts.**
 
 ---
 
