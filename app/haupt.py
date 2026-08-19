@@ -51,6 +51,7 @@ from pathlib import Path
 import psycopg
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app import ki_hinweis
@@ -75,6 +76,24 @@ from app.zweckbestimmung import router as zweckbestimmung_router
 VORLAGEN = Jinja2Templates(directory=str(Path(__file__).parent / "vorlagen"))
 
 app = FastAPI(title="FREIRAUM · Anmeldung", docs_url=None, redoc_url=None)
+
+# ---------------------------------------------------------------------------
+#  Die Gestaltung -- EINE Quelle, ausgeliefert, nicht nachgeladen
+#
+#  Bis zum 18.08.2026 gab es hier gar nichts: acht Vorlagen mit je eigenem
+#  <style>-Block, kein <link>, kein statischer Weg. Es gab schlicht keinen
+#  Ort, an dem eine CSS-Datei oder eine Schrift haette ankommen koennen --
+#  und deshalb stand im ganzen Repo kein einziger Wert des gezeichneten
+#  Token-Schemas (Blatt 94, BEF-UI-1).
+#
+#  MITGELIEFERT, NICHT NACHGELADEN: Die drei Schriften liegen unter
+#  app/statisch/schriften/. Ein Bildschirm, der eine Schrift von einem
+#  fremden Wirt holt, laesst dort eine Anfrage mit IP-Adresse zurueck --
+#  eine Verarbeitung ausserhalb der EU (F05). Die Lizenzen liegen daneben.
+# ---------------------------------------------------------------------------
+app.mount("/statisch",
+          StaticFiles(directory=str(Path(__file__).parent / "statisch")),
+          name="statisch")
 
 # Scheibe 2: die Vorpruefung (EN-02, EN-03, EN-04). Bewusst als eigene Datei
 # und hier nur eingebunden -- diese Datei traegt die Anmeldung und den Zugang,

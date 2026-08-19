@@ -1,11 +1,24 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "_kopf.html" %}
   <title>Uebersicht · FREIRAUM</title>
   {#
     bildschirm: EN-02
+
+    Der Kasten der Quelle (schema/K19_build_referenz.md,
+    woertlich uebernommen -- K19-M01, Blatt 70):
+
+      ╭─ EN-02 · Startseite ───────────────────── [nach Anmeldung] ─╮
+      │  Zugang: nach Anmeldung  │
+      │  GESPRAECH                 |  IHRE ANWENDUNGEN              │
+      │  [Neue Anwendung erstellen]|  Name der Anwendung            │
+      │  [Erklaervideo ansehen]    |  [Zustandsname]  Stufe 03      │
+      │  [Termin vereinbaren]      |  [Fortfuehren]                 │
+      │  [Etwas Eigenes eintippen] |  zweite Anwendung              │
+      │  [Nachricht         ][Senden]  [Ansehen]                    │
+      │  Dauerhinweis: KI-Vorschlaege koennen Fehler enthalten.     │
+      ╰─────────────────────────────────────────────────────────────╯
 
     EN-02 aus K19 Abschn. 6, uebernommen und nicht frei gezeichnet
     (K19-M01, K04-G10). Der Bildschirmvertrag fuehrt fuer EN-02 sieben
@@ -26,23 +39,6 @@
     ANGEZEIGT WIRD ALLEIN `fit_check.outcome`. Kein zweites Kennzeichen, kein
     gespiegelter Zustand, keine abgeleitete Spalte (K04-D05).
   #}
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.5 system-ui, sans-serif; margin: 0;
-           display: flex; justify-content: center; padding: 2rem 1rem; }
-    main { width: 100%; max-width: 34rem; }
-    .kasten { border: 1px solid currentColor; border-radius: .5rem;
-              padding: 1.25rem; }
-    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    /* Zugangsmarke, K19-M03: jeder Bildschirm traegt genau eine. */
-    .marke { font-size: .8rem; opacity: .8; margin: 0 0 1rem; }
-    h2 { font-size: 1rem; margin: 1.5rem 0 .5rem; }
-    .hinweis { font-size: .875rem; margin: .5rem 0 0; }
-    .stand { border: 1px solid currentColor; border-radius: .25rem;
-             padding: .6rem .75rem; margin: 0; }
-    button { margin-top: .75rem; padding: .6rem 1.2rem; font: inherit;
-             border-radius: .25rem; cursor: pointer; }
-  </style>
 </head>
 <body>
 <main>

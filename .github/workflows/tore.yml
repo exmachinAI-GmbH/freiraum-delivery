@@ -42,7 +42,15 @@ jobs:
     name: Tor 1a · Lint und Geheimnisschranke
     runs-on: ubuntu-latest
     steps:
+      # GANZE HISTORIE, nicht flach. F42 prueft, ob der im Tor-3-Nachweis
+      # genannte Commit ein VORFAHR des Abnahmestandes ist. Mit einem
+      # flachen Klon faende `git merge-base --is-ancestor` ihn nicht und
+      # meldete einen tragenden Nachweis als nicht tragend -- ein Riegel,
+      # der aus dem falschen Grund rot wird, ist schlimmer als keiner.
+      # tor3.yml fuehrt dieselbe Zeile aus demselben Grund.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Geheimnisschranke (K23-D09)
         run: |
@@ -103,6 +111,64 @@ jobs:
             || { echo "::error::schema/K19_screens.yaml weicht von der hinterlegten Pruefsumme ab"; exit 1; }
           # HINWEIS blockiert nicht, FEHLER schon (Exit 1).
           python3 werkzeuge/k19_screens_lint.py schema/K19_screens.yaml
+
+      # -----------------------------------------------------------------
+      # Die KAESTEN. Bis zum 18.08.2026 lag im Repo allein die
+      # Maschinenquelle -- sie fuehrt je Bildschirm Zugangsmarke,
+      # Eigentuemer und Aktionen, aber keinen Kasten. Deshalb konnte kein
+      # Lauf je pruefen, ob eine Vorlage der gezeichneten Anordnung folgt,
+      # und deshalb ist die Luecke ein Vierteljahr lang niemandem
+      # aufgefallen (Blatt 94, BEF-UI-1, Punkt 3).
+      #
+      # Aenderungsregel "keine", wie bei K19_screens.yaml: weicht die Kopie
+      # von ihrer Summe ab, ist die KOPIE ungueltig -- nicht das Original.
+      # Das Original liegt in der Konzeptfabrik und wird hier nie gelesen.
+      # -----------------------------------------------------------------
+      - name: UI-Vertrag — die Kaesten (schema/K19_build_referenz.md)
+        run: |
+          set -euo pipefail
+          if [ ! -f schema/K19_build_referenz.md ]; then
+            echo "::error::schema/K19_build_referenz.md fehlt — Tor 1a GESPERRT (K23-M22)."
+            echo "Ohne die Kaesten misst dieser Lauf die Anordnung der Bildschirme nicht."
+            exit 1
+          fi
+          ( cd schema && shasum -a 256 -c K19_build_referenz.sha256 ) \
+            || { echo "::error::schema/K19_build_referenz.md weicht von der hinterlegten Pruefsumme ab"; exit 1; }
+
+      # -----------------------------------------------------------------
+      # DER UI-RIEGEL (Blatt 94, Punkt 4 -- gezeichnet 18.08.2026).
+      #
+      # Er macht aus der Weisung vom 11.08.2026 (Blatt 70, "kein Bildschirm
+      # ohne seinen K19-Kasten") eine Bedingung, an der dieser Lauf
+      # scheitert. CLAUDE.md nennt K19 seit jeher als verbindliche
+      # UI-Referenz; der Text hat nicht getragen -- am 18.08.2026 trug 1 von
+      # 8 Vorlagen ihren Kasten.
+      #
+      # Ein GESPERRT sperrt den Lauf NICHT (K23-M22, Blatt 64): heute trifft
+      # es EN-04a, fuer den die Referenz keinen Kasten fuehrt. Ein Lauf ohne
+      # eine einzige bestandene Vorlage gilt dagegen als Fehlschlag -- sonst
+      # liefe ein Riegel gruen durch, der nichts gemessen hat.
+      # -----------------------------------------------------------------
+      - name: UI-Riegel — jede Vorlage traegt ihren Kasten (Blatt 70)
+        run: python3 werkzeuge/k19_kasten_pruefung.py
+
+      # -----------------------------------------------------------------
+      # F42 -- keine Scheibenabnahme ohne gezeichneten Tor-3-Nachweis.
+      #
+      # C-4 ist seit Blatt 26:30 gezeichnet ("einmal je Scheibenabnahme,
+      # nicht je Aenderung") und wurde bis zum 18.08.2026 von keinem Lauf
+      # erzwungen -- dieselbe Beobachtung wie bei F41.
+      #
+      # ER LAEUFT HIER, NICHT NUR IN tor3.yml: tor3.yml haengt an
+      # workflow_dispatch oder an einer Marke am Antrag. Beides setzt
+      # voraus, dass jemand daran denkt. Eine Schranke, an die man denken
+      # muss, ist keine.
+      #
+      # Ohne angemeldete Abnahme meldet der Lauf "nichts zu pruefen" und
+      # geht weiter -- F42 bremst den Alltag nicht, sondern die Abnahme.
+      # -----------------------------------------------------------------
+      - name: F42 — keine Scheibenabnahme ohne fremden Blick (C-4)
+        run: python3 werkzeuge/tor3_pflicht.py
 
       - name: Klauselregister — erzeugen oder nachweisen (K23-M01, K23-M02)
         run: |

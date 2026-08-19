@@ -49,6 +49,34 @@ Tor 4 dieses Harness ist **nicht** Tor II des Auftrags. Tor II ist der Wechsel n
 Wortgleich aus Bauauftrag :80–86. Das autoritative Zielschema ist eingefrorene Basis + M30
 in der Fassung mit der Prüfsumme aus dem gezeichneten N2-Nachweis (:88–90).
 
+### Die Oberfläche hat eigene Quellen — und sie sind zwei
+
+| | Quelle | was daraus kommt |
+|---|---|---|
+| **Verhalten** | `schema/K19_screens.yaml` | Zugangsmarke, Aktionen, Serverbefehl, vier Zustände je Aktion |
+| **Anordnung** | `schema/K19_build_referenz.md` | der Kasten je Bildschirm — Reihenfolge, Beschriftungen, Hinweise |
+| **Gestaltung** | Token-Schema (Blatt 78) → `app/statisch/token.css` | Farben, Schriften, Abstände, Radien |
+
+**Kein Bildschirm entsteht ohne seinen K19-Kasten** — Weisung M. Veils vom 11.08.2026 (Blatt 70),
+gezeichnet als Blatt 94 Punkt 6. *Als **F41** ist sie noch nicht in `config/kanon.yaml`
+eingetragen: die Datei liegt in der Konzept-Fabrik, und dorthin schreibt der Harness nicht
+(Abschn. 6). Der Entwurf ist M. Veil vorgelegt; bis zum Eintrag gilt Rang 0 weiterhin für
+F01–F40.* Die Gestaltung kommt aus dem gezeichneten Token-Schema, **nie** aus dem
+Gesamtbuild v2.9 selbst — der wurde einmal ausgelesen und wird nie wieder gelesen (K23-D02).
+
+**Durchgesetzt von `werkzeuge/k19_kasten_pruefung.py` in Tor 1a.** Er misst, ob jede Vorlage
+ihren Kasten trägt und ob eine Vorlage eigene Farbwerte führt. Was er **nicht** misst: ob eine
+Vorlage ihrem Kasten auch *folgt* — das kann nur ein Prüffall beim blinden Prüf-Agenten.
+
+> **Warum das hier steht.** Diese Datei nannte K19 bis zum 18.08.2026 **kein einziges Mal**.
+> Die Regel galt seit dem 11.08. und stand in einem Blatt und in der CLAUDE.md der
+> Konzeptfabrik — nicht hier. Gemessen am 18.08.: 1 von 8 Vorlagen trug ihren Kasten, und im
+> ganzen Repo stand kein einziger Farbwert des Token-Schemas. Aufgefallen ist es nicht durch
+> einen Lauf, sondern weil M. Veil nachfragte (Blatt 94, BEF-UI-1).
+>
+> **Dieser Abschnitt allein hätte das nicht verhindert.** Text, den ein Agent überliest, ist
+> kein Schutz. Was hält, ist der Riegel — dieser Abschnitt erklärt ihn.
+
 **Was gebaut wird**, steht in den **24 gezeichneten Konzepten** K00–K21, K23, K25
 (Bauauftrag :42) — als Klauseln `K##-M##` / `-D##` / `-G##`. Gemessen: **1231 Klauseln**
 in 24 Dateien unter `03_KONZEPTE_v2.9/concepts-md/`.
