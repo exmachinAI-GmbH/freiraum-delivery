@@ -167,18 +167,41 @@ Keine dieser 23 Lücken gefährdet Tor II unmittelbar. Zwei berühren es dennoch
 
 ---
 
+## 6 · Was eine Unterschrift erledigt — und was nicht
+
+**Nachgetragen am 19.08.2026.** Die erste Fassung dieses Blattes legte acht Kästchen vor
+**ohne Empfehlung** — anders als Blatt 100, das in jeder Zeile eine trug. Ein Kästchen ohne
+Empfehlung verschiebt die Arbeit nur: der Entscheider muss sich die Lage selbst erarbeiten,
+die der Harness gerade gemessen hat. Das ist hier nachgeholt.
+
+**Drei der acht sind mit Kreuz und Datum erledigt. Bei den übrigen beginnt danach die Arbeit —
+und zwar bei je einem anderen.**
+
+| | Sperre | mit der Unterschrift erledigt? | wer arbeitet danach |
+|---|---|---|---|
+| S-A | RLS | **nein** — die Zeichnung sagt nur, *wie weit* gebaut wird | Bau: Policies für drei Tabellen, `freiraum.tenant_id` in jedem Serverbefehl |
+| S-B | K05-G12 | **nein** — zwei Zeilen in der Konzept-Fabrik ändern | M. Veil (der Harness darf die Datei nicht anfassen) |
+| S-C | Eigentümer | **fast** — eine Weisung, dann trägt der Harness sie ein | M. Veil zeichnet · Harness trägt ein |
+| S-D | K11 | **ja**, wenn die Auslegung gezeichnet wird | — (bei der anderen Variante: Schemaerweiterung) |
+| S-E | Ablage | **nein** — Zeile A zeichnen, dann bauen | Bau: Attrappe hinter der Schnittstelle |
+| S-F | Blindstand | **erledigt** — am 19.08. behoben, keine Zeichnung nötig | — |
+| S-G | Antwortlisten | **nein** — 22 Positionen im Wortlaut liefern | fachlicher Eigentümer K05 |
+| S-H | Meldungswortlaut | **ja** | — (Wortlaut entsteht beim Bau) |
+
+---
+
 ## Zeichnung
 
 | | Entscheidung | |
 |---|---|---|
-| **1** | **S-A · RLS.** Punkt 09 wird mit M5 gezogen ☐ · M5 wird ausdrücklich ohne die zweite Hälfte der Mandantengrenze gebaut, mit anschlagendem Gate ☐ · anders: | ☐ |
-| **2** | **S-B · K05-G12.** K05 Abschn. 5 wird nachgezogen ☐ · G12 wird als erfüllt gekennzeichnet ☐ | ☐ |
-| **3** | **S-C · Eigentümer.** Die Einengung vom 16.08. wird für die M5-Klauseln aufgehoben ☐ | ☐ |
-| **4** | **S-D · K11.** K11-M10 gilt auch für den Stufenwechsel ☐ · nur für `lifecycle_state` ☐ | ☐ |
-| **5** | **S-E · Ablage.** Zeile A des Ablage-Nachtrags wird gezeichnet ☐ | ☐ |
-| **6** | **S-G · Antwortlisten.** Der Eigentümer liefert die zwölf Themen, drei Fragen und sieben Ziele bis ⟨Datum: ⟩ ☐ | ☐ |
-| **7** | **S-H · Meldungswortlaut.** Teil des Kriteriums ☐ · nachgereichte Bauentscheidung ☐ | ☐ |
-| **8** | **S-F und die verzögernden Punkte** werden vom Bau ohne weitere Zeichnung ausgeführt ☐ | ☐ |
+| **1** | **S-A · RLS.** *(Empfehlung: der mittlere Weg)* **Zeilenregeln für die drei Tabellen, die M5 anfasst** — `app`, `document`, `event` — als Teil von M5; der ganze Punkt 09 bleibt ein eigener Zug. **Begründung:** Ohne Zeilenschutz sind `K02-M20` und `K13-M08` — beide **tragend** — nach K23-M22 von Anfang an *gesperrt*; ein Meilenstein, dessen tragende Klauseln nicht gemessen werden können, ist keine Vorarbeit, sondern eine Behauptung. Der ganze Punkt 09 dagegen berührt 57 Tabellen und die bereits gebauten Wege M1–M4 — das ist eine eigene Scheibe. **Vorbedingung, die ohnehin fällt:** jeder Serverbefehl setzt `freiraum.tenant_id`; ohne sie lässt der gebaute Wächter durch. **Der Teilstand gehört als solcher in die Restrisikoliste** | ☐ so · ☐ ganz (Punkt 09 mit M5) · ☐ ohne, mit anschlagendem Gate · ☐ anders: |
+| **2** | **S-B · K05-G12.** *(Empfehlung: nachziehen, nicht abhaken)* K05 Abschn. 5 wird nach der vorliegenden Vorlage nachgezogen. **Begründung:** `K05-G11` verbietet ausdrücklich, eine als offen ausgewiesene Zeile stillschweigend als Träger anzunehmen — „erfüllt ankreuzen" wäre genau das. Der Träger ist gemessen vorhanden; es fehlt nur die Zeile, die es sagt. **Danach:** der dritte, abweichende Stand im Repo wird auf denselben Wortlaut gebracht | ☐ nachziehen · ☐ als erfüllt kennzeichnen · ☐ anders: |
+| **3** | **S-C · Eigentümer.** *(Empfehlung: nach dem Muster vom 16.08.)* Fachlicher Eigentümer für die M5-Klauseln ist **A. Han für den Auftragnehmer**, **außer für K17** — dort M. Veil, wie schon in der Runde vom 16.08. (K15, K17). **Begründung:** Die Einengung auf den Teilschnitt war eine Terminentscheidung, keine Zuständigkeitsentscheidung; die Verteilung ist bereits einmal gezeichnet worden und wird nur fortgeschrieben. **Danach trägt der Harness sie ein** — Buchführung, keine Anmaßung | ☐ so · ☐ andere Verteilung: |
+| **4** | **S-D · K11.** *(Empfehlung: Auslegung zeichnen)* Die Verlaufszeile `app_state_history` gilt **nur für `lifecycle_state`**; der Stufenwechsel wird über `event` nachgewiesen. **Begründung:** Das gezeichnete Schema kann es nicht anders — `app_state_history.state` ist vom Typ `lifecycle_state`, der Trigger feuert nur darauf. Die Gegenvariante verlangt eine Erweiterung des eingefrorenen Schemas für einen Meilenstein, der ausdrücklich Vorarbeit ist. **Der M5-Nachweis hängt am `event`-Eintrag, nicht an der Verlaufszeile.** Restrisiko: wird die Verlaufszeile später doch für `journey_phase` verlangt, ist das eine Migration, kein Umbau von M5 | ☐ nur `lifecycle_state` · ☐ auch der Stufenwechsel (Schemaerweiterung) · ☐ anders: |
+| **5** | **S-E · Ablage.** *(Empfehlung: Zeile A des Ablage-Nachtrags)* Privater Objektspeicher in `swedencentral`, im Prüfstand eine Attrappe hinter **derselben** Schnittstelle. **Begründung:** Variante B bricht `K05-M25` im Wortlaut (*„Dateistand"* und *„K05 besitzt weiterhin keine Tabelle"*), Variante C überlebt keinen Neustart und damit nicht den Meilenstein selbst. **Offen bleibt nur die Zahl hinter *kurzlebig*** — sie steht in keiner Klausel, und der Harness trägt sie nicht ein | ☐ Zeile A · ☐ anders: · Zugriffsdauer: ⟨Minuten: ⟩ oder ☐ Frage an K13 |
+| **6** | **S-G · Antwortlisten.** *(Empfehlung: liefern, hilfsweise das Hausmuster)* Zwölf Themen, drei Einordnungsfragen, sieben Ziele im Wortlaut — **22 kurze Positionen**. Kommen sie nicht rechtzeitig, gilt das bereits gebaute Muster: der **freie Weg** (*Was anderes* / *+ Anderes Ziel*) trägt, die Auswahllisten führen die **benannte Meldung zum ungezeichneten Wortlaut** und werden als Seed nachgereicht — genau wie EN-03a (`app/vorpruefung.py`: *„Ihn zu erfinden wäre Umfang, den niemand gezeichnet hat"*). **Begründung:** M5 ist an *abbrechen, neu anmelden, weitermachen* nachrechenbar; das trägt der freie Weg auch ohne die Listen | ☐ wird geliefert bis ⟨Datum: ⟩ · ☐ Hausmuster, Nachreichung als Seed |
+| **7** | **S-H · Meldungswortlaut.** *(Empfehlung: nachgereichte Bauentscheidung)* Das Kriterium verlangt *eine Meldung, die den Grund nennt*; der Wortlaut entsteht beim Bau und wird als Katalog geführt. **Begründung:** Tor I Nr. 6 verlangt den Wortlaut dort, wo es einen gibt — bei den Migrations-Negativfällen kommt er aus `RAISE EXCEPTION`. Für die elf Bildschirmaktionen gibt es keine solche Quelle; ihn ins Kriterium zu schreiben hieße, ihn zu erfinden | ☐ nachgereichte Bauentscheidung · ☐ Teil des Kriteriums (Eigentümer liefert elf Wortlaute) |
+| **8** | **Die vierzehn verzögernden Punkte** werden vom Bau ohne weitere Zeichnung ausgeführt, **ausgenommen V-1, V-2, V-3, V-4, V-5, V-6 und V-14** — sie brauchen eine Entscheidung und werden einzeln vorgelegt *(Empfehlung: so)* | ☐ so · ☐ anders: |
 
 | Name | Rolle | Datum | Bemerkung |
 |---|---|---|---|
