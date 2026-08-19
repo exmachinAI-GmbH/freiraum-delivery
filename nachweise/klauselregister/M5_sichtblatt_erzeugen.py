@@ -79,7 +79,12 @@ def block(k, reg, text, marker, ergaenzung=None):
     if ergaenzung:
         aus += ["**Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:",
                 "", "```", lesbar(ergaenzung), "```", ""]
-    aus += ["`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`", "", "---", ""]
+    if text.startswith("⟨GEZEICHNET⟩"):
+        aus += ["`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, "
+                "Wortlaut in der Zelle", "", "---", ""]
+    else:
+        aus += ["`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`",
+                "", "---", ""]
     return "\n".join(aus)
 
 
@@ -179,14 +184,22 @@ def main():
     t.append("| Block | Einträge | gezeichnet | Datum | Ausnahmen (Kennungen) |")
     t.append("|---|---:|---|---|---|")
     t.append(f"| Teil 1 · ohne Maßstab | {len(ohne_massstab)} | *keine Zeichnung — Lieferung* | | |")
-    t.append(f"| Teil 2 · Bestand plus Ergänzung | {len(zu_eng)} | ☐ | ⟨ ⟩ | |")
+    def stand(gruppe):
+        n = sum(1 for k in gruppe if kriterium(k, pflege, reg).startswith("⟨GEZEICHNET⟩"))
+        return (f"**x** ({n}/{len(gruppe)})", "19.08.2026") if n == len(gruppe) and gruppe \
+            else (f"☐ ({n}/{len(gruppe)})", "⟨ ⟩")
+    kreuz, datum = stand(zu_eng)
+    t.append(f"| Teil 2 · Bestand plus Ergänzung | {len(zu_eng)} | {kreuz} | {datum} | |")
     for konzept in sorted({reg[k]["konzept"] for k in rest}):
-        n = sum(1 for k in rest if reg[k]["konzept"] == konzept)
-        t.append(f"| Teil 3 · {konzept} | {n} | ☐ | ⟨ ⟩ | |")
+        gruppe = [k for k in rest if reg[k]["konzept"] == konzept]
+        kreuz, datum = stand(gruppe)
+        t.append(f"| Teil 3 · {konzept} | {len(gruppe)} | {kreuz} | {datum} | |")
     t.append("")
     t.append("| Name | Rolle | Datum |")
     t.append("|---|---|---|")
-    t.append("| A. Han | fachlicher Eigentümer, für den Auftragnehmer | ⟨ ⟩ |")
+    offen = [k for k in meine if not kriterium(k, pflege, reg).startswith("⟨GEZEICHNET⟩")]
+    t.append("| A. Han | fachlicher Eigentümer, für den Auftragnehmer | "
+             + ("19.08.2026 — Teile 2 und 3" if len(offen) == len(ohne_massstab) else "⟨ ⟩") + " |")
     t.append("")
     t.append("---\n")
     t.append("*Erzeugt am 19.08.2026 von `M5_sichtblatt_erzeugen.py`. Wortlaut und Herkunft aus")

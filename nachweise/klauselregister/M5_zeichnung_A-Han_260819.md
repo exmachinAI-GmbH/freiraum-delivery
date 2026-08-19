@@ -266,7 +266,7 @@ nichts**: der alte Eintrag steht, die Ergänzung kommt daneben.
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Lesen und Schreiben erreichen nur Objekte, deren Mandant der Mandant der
   angemeldeten Sitzung ist; auf ein Objekt eines fremden Mandanten antwortet das System genau so
   wie auf ein nirgends vergebenes Objekt - gleiche Antwort, kein Hinweis darauf, dass es das
@@ -283,7 +283,28 @@ NICHT ERFUELLT: Fall 2 liefert Daten oder aendert die Zeile von B; oder Fall 2 a
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+ERGAENZUNG FUER M5, mitgezeichnet: ERGAENZUNG (kein Ersatz) zum Kriterium vom 16.08.2026.
+ERFUELLT WENN: Auch der Wiederaufnahmestand ist an den Mandanten der jetzt angemeldeten Sitzung
+  gebunden - nach Abmelden und erneutem Anmelden liefert der Lesepfad des Gespraechsstands die
+  Saetze des Mandanten dieser Sitzung, und ein Gespraechsstand eines fremden Mandanten gilt auch
+  hier als nicht vorhanden, mit derselben Antwort wie auf eine nirgends vergebene Kennung.
+GEMESSEN DURCH: Aufbau: je ein gespeicherter Gespraechsstand bei Mandant A und bei Mandant B
+  (EN-06 · zwischenspeichern · Zustand Erfolg). Positivfall: der Nutzer von A meldet sich ab,
+  meldet sich neu an und ruft den Lesepfad mit der Kennung seines eigenen Standes auf - der
+  Stand ist da. Negativfall: dieselbe neue Sitzung von A ruft denselben Lesepfad zweimal auf,
+  einmal mit der Kennung des echten Standes von B und einmal mit einer formal gueltigen,
+  nirgends vergebenen Kennung; beide Antworten werden in Statuscode und Text verglichen. NICHT
+  ERFUELLT: der Stand von B wird geliefert, oder er wird anders abgewiesen als die nirgends
+  vergebene Kennung - dann ist seine Existenz verraten. Beide Kennungen muessen formal gueltig
+  und die neue Sitzung gueltig angemeldet sein, damit der Fall allein an der Mandantengrenze
+  scheitert.
+· Quelle: 'auf den Mandanten der angemeldeten Sitzung eingeschraenkt' und 'gilt als nicht
+  vorhanden' (K01-M15); EN-06 · zwischenspeichern · Zustand Erfolg ('Stand ueberlebt das
+  Abmelden')
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -311,7 +332,7 @@ GEMESSEN DURCH: Aufbau: je ein gespeicherter Gespraechsstand bei Mandant A und b
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -324,7 +345,7 @@ GEMESSEN DURCH: Aufbau: je ein gespeicherter Gespraechsstand bei Mandant A und b
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Beide Ebenen weisen den Zugriff auf fremde Mandantenzeilen je fuer sich ab: der
   Serverpfad bei einem Aufruf unter der Sitzung eines fremden Mandanten, und der Datenbestand
   bei einer Abfrage, die den Serverpfad umgeht und unmittelbar mit dem Mandantenkontext eines
@@ -339,7 +360,25 @@ GEMESSEN DURCH: Zwei getrennte Prueffaelle -- (a) gegen den Serverpfad: Sitzung 
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+ERGAENZUNG FUER M5, mitgezeichnet: ERGAENZUNG (kein Ersatz) zum Kriterium vom 16.08.2026.
+ERFUELLT WENN: Die zweifache Durchsetzung gilt auch fuer die Traeger des Gespraechsstands: fuer
+  die document-Zeile und den zugehoerigen event-Eintrag weist der Serverpfad den Fremdzugriff
+  ab, und der Datenbestand weist ihn auch dann ab, wenn der Serverpfad umgangen wird.
+GEMESSEN DURCH: Aufbau: ein gespeicherter Gespraechsstand bei Mandant A (EN-06 ·
+  zwischenspeichern · Zustand Erfolg), dazu Sitzung und Mandantenkontext von Mandant B.
+  Positivfall: dieselben beiden Wege unter dem eigenen Mandanten A liefern document-Zeile und
+  juengsten event-Eintrag. Negativfall: (a) Sitzung von B ruft den Serverpfad auf den Stand von
+  A auf; (b) unmittelbare Abfrage derselben document-Zeile und desselben event-Eintrags unter
+  dem Mandantenkontext von B, ohne Serverpfad; beide Faelle liefern keine Zeile. NICHT ERFUELLT:
+  einer der beiden Faelle liefert eine der Zeilen - liefert sie (b), haengt die Grenze fuer den
+  Gespraechsstand nur im Serverpfad. Anmeldung, Mandantenkontext und Schluessel sind gueltig,
+  damit die Faelle allein an der Mandantengrenze scheitern.
+· Quelle: 'im Serverpfad und im Datenbestand' (K02-M20); EN-06 · zwischenspeichern ·
+  Berechtigung (Dreischritt Datei, document-Zeile, event)
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -364,7 +403,7 @@ GEMESSEN DURCH: Aufbau: ein gespeicherter Gespraechsstand bei Mandant A (EN-06 �
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -377,7 +416,7 @@ GEMESSEN DURCH: Aufbau: ein gespeicherter Gespraechsstand bei Mandant A (EN-06 �
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ein mandantengebundener Schreibvorgang geht nur durch, wenn event.tenant_id
   gesetzt ist und mit dem Mandanten der Sitzung, dem Mandanten des Fachobjekts und dem Mandanten
   der Projektnummer uebereinstimmt; fehlt oder widerspricht einer dieser Bezuege, sind nach dem
@@ -399,7 +438,30 @@ GEMESSEN DURCH: Prueffaelle gegen die Datenbank, nach jedem Fall Fachobjekt und 
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+ERGAENZUNG FUER M5, mitgezeichnet: ERGAENZUNG (kein Ersatz) zum Kriterium vom 16.08.2026.
+ERFUELLT WENN: Der Prueffall wird auch mit dem Schreibvorgang des Gespraechsstands gefahren -
+  Fachobjekt ist die document-Zeile, Protokolleintrag der event-Eintrag aus EN-06 ·
+  zwischenspeichern. Geht der Vorgang durch, fuehren beide denselben Mandanten und der Stand ist
+  nach Abmelden und erneutem Anmelden lesbar; wird zurueckgerollt, steht weder eine neue
+  document-Zeile noch ein event-Eintrag, und der vor dem Vorgang gueltige Stand bleibt gueltig.
+GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Positivfall:
+  zwischenspeichern mit uebereinstimmenden Bezuegen - document-Zeile und event-Eintrag
+  entstanden, event.tenant_id gleich dem Mandanten der Sitzung, des Fachobjekts und der
+  Projektnummer; danach abmelden, neu anmelden, weitermachen - der Stand ist da. Negativfall:
+  derselbe Vorgang je einmal mit leerem event.tenant_id, mit vom Fachobjekt abweichendem
+  event.tenant_id und mit Projektnummer eines anderen Mandanten; nach jedem Fall document-Zeile
+  und event-Eintrag lesen. NICHT ERFUELLT: in einem Negativfall ist die document-Zeile
+  entstanden oder veraendert, oder ein event-Eintrag steht ohne seine document-Zeile
+  (Teilwirkung statt Ruecklauf), oder der vor dem Fall gueltige Stand ist nach dem erneuten
+  Anmelden nicht mehr da. Alle Faelle mit gueltiger Anmeldung und im Uebrigen gueltigen
+  Feldwerten, damit sie an der Mandantenpruefung scheitern und nicht an Format oder Rechten.
+· Quelle: 'mandantengebundener Schreibvorgang' und 'wird die gemeinsame Transaktion
+  zurueckgerollt' (K02-M21); EN-06 · zwischenspeichern · Zustand Erfolg und Zustand Fehler ('der
+  vorige Stand bleibt gueltig')
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -429,7 +491,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Pos
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -442,16 +504,38 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Pos
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) jeder
-  Aufruf aus einer Oberfläche läuft über den Serverpfad; (2) der Serverpfad prüft das aktive
-  Konto; (3) der Serverpfad prüft die Mitgliedschaft; (4) der Serverpfad prüft die Rolle; (5)
-  der Serverpfad prüft den Mandanten; (6) der Serverpfad prüft den Objektbezug; (7) alle fünf
-  Prüfungen liegen vor dem Lesen und vor dem Schreiben. Messweg, Schwelle und Evidenzform sagt
-  der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile
-  heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md,
-  Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort noch ohne Haken.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist:
+  (1) jeder Aufruf aus einer Oberfläche läuft über den Serverpfad; (2) der Serverpfad prüft das
+  aktive Konto; (3) der Serverpfad prüft die Mitgliedschaft; (4) der Serverpfad prüft die Rolle;
+  (5) der Serverpfad prüft den Mandanten; (6) der Serverpfad prüft den Objektbezug; (7) alle
+  fünf Prüfungen liegen vor dem Lesen und vor dem Schreiben. Messweg, Schwelle und Evidenzform
+  sagt der Wortlaut nicht — sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser
+  Zeile heute ⟨nicht benannt⟩ ist. Warum diese Klausel vorgelegt wird:
+  klauselschnitt/S1_zeichnung.md, Block 1b — vom Bau beansprucht, nur teilweise gedeckt — dort
+  noch ohne Haken.
+ERGAENZUNG FUER M5, mitgezeichnet: ERGAENZUNG (kein Ersatz) zum Eintrag vom 16.08.2026, der den
+  Wortlaut nur umstellt.
+ERFUELLT WENN: Kein Aufruf aus EN-05 oder EN-06 erreicht Daten am Serverpfad vorbei, und die
+  Pruefungen liegen vor dem Lesen und vor dem Schreiben: ein unmittelbar an den Datenbestand
+  gerichteter Schreibvorgang mit den Nutzdaten einer Oberflaechenaktion bewirkt nichts, und
+  Angaben, die der Server selbst ermittelt - Stufe und Mandant -, bleiben ohne Wirkung, wenn der
+  Aufruf sie mitgibt.
+GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Positivfall: die
+  Aktionen von EN-05 und EN-06 ueber den Serverpfad - Zustand Erfolg; bei EN-05 ·
+  name_bestaetigen wechselt journey_phase serverseitig von ORIENTIERUNG auf INTERVIEW.
+  Negativfall: (a) derselbe Schreibvorgang unmittelbar am Datenbestand ohne Serverpfad - danach
+  ist keine Zeile entstanden oder veraendert; (b) Aufruf ueber den Serverpfad mit mitgegebener
+  Stufe oder mitgegebenem Mandanten, die vom serverseitig ermittelten Wert abweichen - nach dem
+  Aufruf steht der serverseitig ermittelte Wert. NICHT ERFUELLT: (a) hinterlaesst eine Zeile,
+  oder in (b) steht der mitgegebene Wert. Sitzung, Rechte und uebrige Feldwerte sind gueltig,
+  damit die Faelle allein am Serverpfad scheitern.
+· Quelle: 'Jeder Aufruf aus einer Oberflaeche MUSS ueber den Serverpfad laufen ... bevor er
+  liest oder schreibt' (K13-M05); EN-05 · name_bestaetigen · Berechtigung ('der Stufenwechsel
+  wird serverseitig gesetzt, nie vom Client uebergeben')
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -479,7 +563,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Pos
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -498,7 +582,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit vorhandenem Gespraechsstand. Pos
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-05 und EN-06 wird jede Aktion, deren Vorbedingung nicht erfuellt oder
   nicht pruefbar ist, gesperrt statt zugelassen, und zu jeder gesetzten Sperre ist am Bildschirm
   ein Grund sichtbar; keine Sperre steht ohne sichtbaren Grund.
@@ -520,10 +604,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, eine app-Zeile in S
 · Quelle: „Ist eine Vorbedingung nicht erfüllt oder nicht prüfbar, wird gesperrt statt
   zugelassen (K19 Abschn. 3.2 und 3.3). Die Sperre wird begründet angezeigt, nie stillschweigend
   gesetzt." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -536,7 +623,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, eine app-Zeile in S
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-05 und EN-06 erscheint eine Sperre, deren Bedingung der Nutzer selbst
   erfuellen kann, ausgeblendet, und an Stelle der Schaltflaeche steht ein Hinweis; erfuellt der
   Nutzer die Bedingung, faellt der Hinweis fort und die Schaltflaeche steht an derselben Stelle
@@ -561,10 +648,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, EN-05 in Stufe ORIE
 · Quelle: „ausgeblendet, wo der Nutzer die Bedingung selbst erfüllen kann, mit einem Hinweis an
   Stelle der Schaltfläche; ausgegraut, wo eine Festlegung sie ihm dauerhaft verwehrt, mit Marke
   für den Grund" ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -577,7 +667,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, EN-05 in Stufe ORIE
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu einer Anwendung besteht genau eine Zeile in app; jeder Bezug auf die Anwendung
   laeuft ueber app.id; Zustand, Stufe, Siegel und Aufbewahrungsklasse sind ausschliesslich an
   dieser einen Zeile zu lesen, und keine zweite Stelle fuehrt fuer dieselbe Anwendung einen
@@ -598,10 +688,13 @@ GEMESSEN DURCH: Aufbau: ein Konto eines Mandanten mit zwei Anwendungen A und B; 
 · Quelle: „Eine Anwendung MUSS genau eine Zeile in `app` sein. `app` ist die Aggregatswurzel;
   die kanonische Kennung ist `app.id`. Zustand, Stufe, Siegel und Aufbewahrungsklasse hängen an
   dieser Zeile und nirgends sonst." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -614,7 +707,7 @@ GEMESSEN DURCH: Aufbau: ein Konto eines Mandanten mit zwei Anwendungen A und B; 
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede app-Zeile fuehrt beide Zustandsachsen belegt: lifecycle_state mit einem der
   acht Werte EINGELADEN, DISCOVERY, IN_BEARBEITUNG, BEAUFTRAGT, IN_DEV, ABNAHME, IN_PROD,
   PAUSIERT und journey_phase mit einem der fuenf Werte ORIENTIERUNG, INTERVIEW, UEBERSICHT,
@@ -635,10 +728,13 @@ GEMESSEN DURCH: Aufbau: ein Konto durchlaeuft EN-05 und EN-06. Positivfall — E
   acht Werten (EINGELADEN, DISCOVERY, IN_BEARBEITUNG, BEAUFTRAGT, IN_DEV, ABNAHME, IN_PROD,
   PAUSIERT) und `journey_phase` mit fünf Werten (ORIENTIERUNG, INTERVIEW, UEBERSICHT, PROTOTYP,
   ANGEBOT)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -651,7 +747,7 @@ GEMESSEN DURCH: Aufbau: ein Konto durchlaeuft EN-05 und EN-06. Positivfall — E
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: EN-05 und EN-06 sind zweigeteilt — links wird gesagt oder geklickt, rechts
   erscheint das Ergebnis derselben Handlung, auf demselben Bildschirm und ohne dass dazwischen
   ein getrenntes Formular oder ein zweiter Bildschirm aufgerufen wird; solange links keine
@@ -673,10 +769,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06, Fachfrage mit Vorschlaegen
   getrenntes Formular oder einen zweiten Bildschirm sichtbar wird.
 · Quelle: „Jeder Bildschirm mit Gespräch MUSS zweigeteilt sein: links wird gesagt oder geklickt,
   rechts erscheint das Ergebnis, unmittelbar und ohne Wechsel zwischen getrennten Formularen." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -689,7 +788,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06, Fachfrage mit Vorschlaegen
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf Stufe 02 (EN-06) steht unter dem Gespraech die Schaltflaeche Speichern,
   spaeter weitermachen; nach ihrem Erfolg ueberlebt der erreichte Gespraechsstand mit Marken und
   Uebersprungvermerken eine Abmeldung — nach neuer Anmeldung ist derselbe Stand da, und kein
@@ -710,10 +809,13 @@ GEMESSEN DURCH: Aufbau: ein Konto beantwortet auf EN-06 mindestens eine Fachfrag
 · Quelle: „Ab Stufe 02 MUSS unter dem Gespräch *Speichern, später weitermachen* stehen. Der
   Stand MUSS das Abmelden überleben; es gibt keinen Vorgang, der nur innerhalb einer Sitzung
   besteht." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -726,7 +828,7 @@ GEMESSEN DURCH: Aufbau: ein Konto beantwortet auf EN-06 mindestens eine Fachfrag
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ein vom Nutzer eingegebener oder diktierter Text wird auf EN-06 ausschliesslich
   als Antwort gefuehrt; eine darin enthaltene Handlungsanweisung wird nicht ausgefuehrt — sie
   loest keinen Serverbefehl, keinen Stufenwechsel und keine Aenderung am Gespraechsstand aus,
@@ -746,10 +848,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06 mit gestellter Fachfrage; d
 · Stufe: zurueckgestellt (Blatt 100, E4).
 · Quelle: „Text, den ein Nutzer eingibt, diktiert oder hochlädt, MUSS als Daten behandelt
   werden. Eine darin enthaltene Handlungsanweisung wird nicht ausgeführt." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -762,7 +867,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06 mit gestellter Fachfrage; d
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Vor jeder Uebergabe von EN-06 an ein Sprachmodell laeuft der Maskierungsschritt;
   in der uebergebenen Nutzlast steht keine der Angaben wortgleich, die der fachliche Eigentuemer
   vorab als personenbezogen bezeichnet hat, und die Rueckaufloesung ist in der Nutzlast nicht
@@ -788,10 +893,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06 mit gestellter Fachfrage; j
 · Quelle: „Vor jeder Übergabe an ein Sprachmodell MÜSSEN personenbezogene Angaben maskiert
   werden. Die Rückauflösung bleibt in der Plattform; ihre Aufbewahrung führt K15, den Modellpfad
   K17." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -804,7 +912,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto auf EN-06 mit gestellter Fachfrage; j
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu jedem Zustandswechsel auf EN-05 und EN-06 besteht ein Protokolleintrag in
   event, der Zeitpunkt, Projektnummer, handelnde Instanz sowie den Wert davor und den Wert
   danach traegt, dazu eine Verlaufszeile in app_state_history und der neue Wert in der Sicht
@@ -825,10 +933,13 @@ GEMESSEN DURCH: Aufbau: ein Konto auf EN-05 in Stufe ORIENTIERUNG. Positivfall �
 · Quelle: „Jeder Zustandswechsel MUSS nachweisbar geschrieben werden: Zeitpunkt, Projektnummer,
   handelnde Instanz, Wert davor und danach. Der Protokolleintrag gehört `event` (K02), die
   Verlaufszeile `app_state_history` und der Sicht `app_state_aktuell`." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -845,7 +956,7 @@ GEMESSEN DURCH: Aufbau: ein Konto auf EN-05 in Stufe ORIENTIERUNG. Positivfall �
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ein vorhandener Protokolleintrag traegt nach einem Aenderungsversuch Feld fuer
   Feld denselben Stand wie davor; der Versuch bleibt wirkungslos.
 GEMESSEN DURCH: Aufbau: ueber EN-06 · zwischenspeichern · Zustand Erfolg entsteht ein event-
@@ -870,10 +981,13 @@ GEMESSEN DURCH: Aufbau: ueber EN-06 · zwischenspeichern · Zustand Erfolg entst
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -886,7 +1000,7 @@ GEMESSEN DURCH: Aufbau: ueber EN-06 · zwischenspeichern · Zustand Erfolg entst
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Nach einem Schreibvorgang, dessen Protokolleintrag ausbleibt, ist die fachliche
   Aenderung nicht vorhanden: Fachobjekt und Protokolleintrag stehen nach dem Vorgang gemeinsam
   da oder gar nicht.
@@ -906,10 +1020,13 @@ GEMESSEN DURCH: Aufbau: EN-05 · name_bestaetigen mit gefuelltem Namensfeld, Sit
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -922,7 +1039,7 @@ GEMESSEN DURCH: Aufbau: EN-05 · name_bestaetigen mit gefuelltem Namensfeld, Sit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Je Schreibvorgang auf einem fachlichen Objekt zaehlt der Bestand genau einen
   neuen Protokolleintrag zu diesem Objekt — nicht keinen und nicht zwei.
 GEMESSEN DURCH: Aufbau: Zaehlstand der event-Eintraege zum betroffenen Objekt vor der Handlung
@@ -947,10 +1064,13 @@ GEMESSEN DURCH: Aufbau: Zaehlstand der event-Eintraege zum betroffenen Objekt vo
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -963,7 +1083,7 @@ GEMESSEN DURCH: Aufbau: Zaehlstand der event-Eintraege zum betroffenen Objekt vo
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder vorhandene Protokolleintrag traegt alle drei Angaben Zeitpunkt, Aktion und
   Quelle gefuellt; fehlt eine der drei, ist kein Eintrag entstanden.
 GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloesen und den
@@ -980,10 +1100,13 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -996,7 +1119,7 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Quelle jedes in den Stufen 01 und 02 entstandenen Protokolleintrags traegt
   einen der beiden im Wortlaut genannten Werte — Portal-Aktion oder Modell-Aenderung; ein
   dritter Wert kommt im Bestand nicht vor und laesst sich nicht schreiben.
@@ -1019,10 +1142,13 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen und EN-06 · interview_be
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1035,7 +1161,7 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen und EN-06 · interview_be
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ein Protokolleintrag zu einer Aenderung traegt beide Werte — den Wert vorher und
   den Wert jetzt; ein Protokolleintrag zu einer Neuanlage traegt den Anfangswert und keinen Wert
   vorher.
@@ -1060,10 +1186,13 @@ GEMESSEN DURCH: Positivfall Aenderung: EN-05 · name_bestaetigen in Zustand Erfo
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1076,7 +1205,7 @@ GEMESSEN DURCH: Positivfall Aenderung: EN-05 · name_bestaetigen in Zustand Erfo
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: In event.value und event.object_ref steht keines der vier im Wortlaut
   ausgeschlossenen Dinge: kein Geheimnis, keine Zugangsdaten, kein vollstaendiges Dokument, kein
   vollstaendiger Modellprompt.
@@ -1098,10 +1227,13 @@ GEMESSEN DURCH: Aufbau: in den Gespraechsstand werden vier eindeutig wiedererken
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1118,15 +1250,17 @@ GEMESSEN DURCH: Aufbau: in den Gespraechsstand werden vier eindeutig wiedererken
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist: (1) ein
-  Vorgang ohne gültige Sitzung wird nicht wirksam; (2) ein Vorgang mit status WARTET_2FA wird
-  abgelehnt; (3) ein Vorgang mit status GESPERRT wird abgelehnt; (4) in keinem der beiden Fälle
-  entsteht ein Teil-Zugang. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht — sie
-  ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩ ist.
-  Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau
+⟨GEZEICHNET⟩ Umstellung des eigenen Wortlauts, nichts ergänzt. Erfüllt, wenn nachgewiesen ist:
+  (1) ein Vorgang ohne gültige Sitzung wird nicht wirksam; (2) ein Vorgang mit status WARTET_2FA
+  wird abgelehnt; (3) ein Vorgang mit status GESPERRT wird abgelehnt; (4) in keinem der beiden
+  Fälle entsteht ein Teil-Zugang. Messweg, Schwelle und Evidenzform sagt der Wortlaut nicht —
+  sie ergänzt nach K23-M02 der fachliche Eigentümer, der in dieser Zeile heute ⟨nicht benannt⟩
+  ist. Warum diese Klausel vorgelegt wird: klauselschnitt/S1_zeichnung.md, Block 1a — vom Bau
   beansprucht und ganz gedeckt — dort noch ohne Haken.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -1160,7 +1294,7 @@ GEMESSEN DURCH: Aufbau — ein Gespraech in Stufe 02 mit vorhandenem Stand; drei
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1173,7 +1307,7 @@ GEMESSEN DURCH: Aufbau — ein Gespraech in Stufe 02 mit vorhandenem Stand; drei
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Authentisierungs-, Domaenen- und Fehlerentscheidungen auf EN-05 und EN-06 fallen
   bei ausgefallener oder abgeschalteter KI-Komponente genau so aus wie bei laufender, und keine
   dieser Entscheidungen uebernimmt ihr Ergebnis aus einer Modellausgabe.
@@ -1198,10 +1332,13 @@ GEMESSEN DURCH: Aufbau — dasselbe Konto, dasselbe Gespraech, dieselben Eingabe
   abhaengen") und Satz 2 ("Ein KI-Ausfall veraendert die sichere Entscheidung nicht"); Anker
   EN-06 · freitext_antworten · Zustand Fehler und EN-05 · name_bestaetigen · Zustand laden und
   Zustand leer. ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1214,12 +1351,11 @@ GEMESSEN DURCH: Aufbau — dasselbe Konto, dasselbe Gespraech, dieselben Eingabe
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
-Der Einwand zum Geltungsbereich der Eindeutigkeit ist berechtigt, traegt aber nur einen von drei
-  Teilen. Die Begruendung raeumt selbst ein, die uebrigen Teile waeren messbar — dann gehoeren
-  sie ins Kriterium und nicht in den Papierkorb. Ersatz: "ERFUELLT WENN: Jede Zeile in `actor`
-  traegt ein nicht leeres `email` und ein nicht leeres `display_name`; beim Einloesen der
-  Einladung ist `email` mit der eingeladenen Adresse vorbelegt.
+⟨GEZEICHNET⟩ Der Einwand zum Geltungsbereich der Eindeutigkeit ist berechtigt, traegt aber nur
+  einen von drei Teilen. Die Begruendung raeumt selbst ein, die uebrigen Teile waeren messbar —
+  dann gehoeren sie ins Kriterium und nicht in den Papierkorb. Ersatz: "ERFUELLT WENN: Jede
+  Zeile in `actor` traegt ein nicht leeres `email` und ein nicht leeres `display_name`; beim
+  Einloesen der Einladung ist `email` mit der eingeladenen Adresse vorbelegt.
 GEMESSEN DURCH: Abfrage gegen die Datenbank — Zahl der Zeilen mit leerem `email` oder leerem
   `display_name` ist null; dazu zwei Einfuegeversuche (einer ohne `email`, einer ohne
   `display_name`) und ein Prueffall: Einladung an eine Adresse versenden, Link einloesen,
@@ -1232,7 +1368,10 @@ GEMESSEN DURCH: Abfrage gegen die Datenbank — Zahl der Zeilen mit leerem `emai
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
 **Ergänzung für M5** — der Eintrag oben bleibt stehen, dies kommt hinzu:
@@ -1264,7 +1403,7 @@ GEMESSEN DURCH: Aufbau — eine an eine bekannte Adresse versendete Einladung, d
 ⟨zeichnet: ⟩ ⟨am: ⟩
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1277,7 +1416,7 @@ GEMESSEN DURCH: Aufbau — eine an eine bekannte Adresse versendete Einladung, d
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder Beitrag im INTERVIEW_PROTOCOL-Stand traegt eine actor.id; die actor.id
   eines bereits geschriebenen Beitrags ist nachtraeglich nicht mehr aenderbar; wer gehandelt
   hat, wird allein aus actor.id bestimmt — actor_label weist die handelnde Person nie aus.
@@ -1302,10 +1441,13 @@ GEMESSEN DURCH: Aufbau — zwei Konten desselben Mandanten mit gleichem actor_la
 · Quelle: K03-M20 Satz 1 ("MUSS actor.id revisionsfest fuehren") und Satz 2 ("actor_label bleibt
   Anzeige und ist kein Identitaetsnachweis"); Anker EN-05 · thema_waehlen · Zustand Erfolg und
   EN-06 · zwischenspeichern · Zustand Erfolg; je Beitrag actor.id nach K05-M25. ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1322,7 +1464,7 @@ GEMESSEN DURCH: Aufbau — zwei Konten desselben Mandanten mit gleichem actor_la
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ist das Ergebnis des Checks OFFEN, fehlt eine Antwort oder ist der Check nicht
   lesbar, wird die davon abhaengige Aktion gesperrt statt zugelassen — in allen drei Faellen und
   ohne Ausnahme.
@@ -1337,10 +1479,13 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, EN-05 aufgerufen; d
   Einen Meldungswortlaut nennt die Klausel nicht; ihn legt der fachliche Eigentuemer fest.
 · Quelle: „Es GILT fail-closed: Ist das Ergebnis OFFEN, fehlt eine Antwort oder ist der Check
   nicht lesbar, wird gesperrt statt zugelassen." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1353,7 +1498,7 @@ GEMESSEN DURCH: Aufbau: angemeldetes Konto, eigener Mandant, EN-05 aufgerufen; d
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Das Ergebnis steht in fit_check.outcome; das Feld fuehrt ausschliesslich einen
   der drei Werte OFFEN, GEEIGNET, NICHT_GEEIGNET, und ein fit_check, dessen Ergebnis noch nicht
   gesetzt wurde, liest OFFEN.
@@ -1370,10 +1515,13 @@ GEMESSEN DURCH: Aufbau: ein Konto mit eigenem Mandanten. Positivfall in drei Sch
   Meldungswortlaut nennt die Klausel nicht; ihn legt der fachliche Eigentuemer fest.
 · Quelle: „Das Ergebnis MUSS in `fit_check.outcome` stehen und einen der Werte OFFEN, GEEIGNET,
   NICHT_GEEIGNET führen. Vorgabe ist OFFEN." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1390,7 +1538,7 @@ GEMESSEN DURCH: Aufbau: ein Konto mit eigenem Mandanten. Positivfall in drei Sch
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Nach dem Ueberspringen einer Fachfrage steht der Uebersprungvermerk sichtbar in
   der rechten Spalte und geht in das Protokoll ein; scheitert das Schreiben des Vermerks, bleibt
   die Frage offen stehen. In keinem der beiden Faelle verschwindet die Frage spurlos.
@@ -1409,10 +1557,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit gestellt
   und geht in das Protokoll ein."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1425,7 +1576,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit gestellt
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder inhaltliche Eintrag der rechten Spalte traegt genau eine Herkunftsmarke;
   eine eigene Angabe des Nutzers traegt nie die Marke der KI-Notiz und eine KI-Notiz nie die
   Marke der eigenen Angabe; ein Eintrag mit gemischter oder fehlender Marke entsteht nicht; der
@@ -1447,10 +1598,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-06 mit gestellter Fachfrage. Pos
   Gesprächsinhalt benutzt werden"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1463,7 +1617,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-06 mit gestellter Fachfrage. Pos
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der Namensvorschlag erscheint nur mit seiner Marke, und das Feld, in dem er
   steht, ist ueberschreibbar: ein vom Nutzer geaenderter Name wird uebernommen.
 GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 bis zum Namensschritt
@@ -1481,10 +1635,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 bis zum Name
   sein."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1497,7 +1654,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 bis zum Name
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Eine frei eingetippte Antwort in Stufe 02, die mit keinem der angebotenen
   Vorschlaege uebereinstimmt, wird gleichwertig aufgenommen: sie laeuft ueber denselben
   Serverbefehl record_interview_answer wie eine gewaehlte Antwort, erzeugt ebenso einen Eintrag
@@ -1522,10 +1679,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
   Text wird gleichwertig aufgenommen."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1538,7 +1698,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Eine Stufe wird nicht uebersprungen und keine spaetere Stufe angesprungen: eine
   Aktion einer spaeteren Stufe wird abgewiesen, solange die Stufe des Gespraechs sie nicht
   erreicht hat, und der Stufenwechsel wird serverseitig gesetzt, nie vom Client uebergeben; eine
@@ -1557,10 +1717,13 @@ GEMESSEN DURCH: Aufbau: zwei angemeldete Sitzungen desselben Mandanten, eine Anw
   Zurückliegende Stufen öffnen sich ausschließlich als Nur-Ansicht"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1573,7 +1736,7 @@ GEMESSEN DURCH: Aufbau: zwei angemeldete Sitzungen desselben Mandanten, eine Anw
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Kein Inhalt, der im Nebenfragen-Fenster eingegeben oder dort ausgegeben wurde,
   erscheint in der rechten Spalte, in einer Anforderung oder in einem Dokument; der
   Bildschirmvertrag fuehrt fuer das Fenster in EN-05 und EN-06 keinen Serverbefehl, ueber den
@@ -1596,10 +1759,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
   Anforderung oder in ein Dokument einfließen (Eigentümer K16)."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1612,7 +1778,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf keinem Bildschirm der Stufen 01 und 02 — EN-05 und EN-06 — wird ein Betrag
   ausgegeben: in keinem der zu einer Aktion tatsaechlich gezeichneten Zustaende (laden, leer,
   Erfolg, Fehler; bei frage_ignorieren, zwischenspeichern und interview_beenden ist der Zustand
@@ -1634,10 +1800,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, eine Anwendung, zu
   führt keinen; die Angebotsangaben sind Felder des EXMA-Portals"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1650,7 +1819,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, eine Anwendung, zu
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Aus den Stufen 01 und 02 geht keine Aufnahme des Stimmwegs hinaus — der
   Bildschirmvertrag fuehrt fuer EN-05 und EN-06 keinen Serverbefehl, der eine Aufnahme
   weitergibt; diktierter Text ist vor dem Senden sichtbar und aenderbar und laeuft als Freitext
@@ -1675,10 +1844,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
   EU-Raum und ohne Maskierung weitergegeben werden (K13 Abschn. 3, K17)."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1691,7 +1863,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06 mit offener 
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der K05-Text fuehrt keine eigene Tabelle und keine eigene Sicht — er enthaelt
   keine Objektdefinition, keine Spaltenliste und keine Sichtbeschreibung; jeder darin genannte
   Objektname steht ausschliesslich als Verweis auf das zustaendige Konzept, so wie der
@@ -1713,10 +1885,13 @@ GEMESSEN DURCH: Aufbau: der gezeichnete K05-Text in der geltenden Fassung und de
   Objekte erscheinen ausschließlich als Verweis auf das zuständige Konzept."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1729,7 +1904,7 @@ GEMESSEN DURCH: Aufbau: der gezeichnete K05-Text in der geltenden Fassung und de
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der Stand des Gespraechs wird allein aus app.journey_phase gefuehrt: kein zweites
   gespeichertes Feld, kein Zaehler und keine abgeleitete Spalte fuehrt ihn ebenfalls, und jede
   im Bildschirmvertrag gezeichnete Stelle, die den Stand anzeigt oder auf ihn hin entscheidet,
@@ -1754,10 +1929,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ein Gespraech in O
   entstehen — kein gespiegeltes Feld, kein Zähler, keine abgeleitete Spalte"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1770,7 +1948,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ein Gespraech in O
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Solange fuer den freihaendigen Stimmweg kein eigener, bewerteter Fall freigegeben
   ist, ist seine Bedienung auf dem Bildschirm nicht vorhanden und der Serverpfad weist jeden
   Aufruf ab; erfuellter Zweck, Verarbeitung im EU-Raum und Maskierung aendern daran nichts.
@@ -1789,10 +1967,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06, kein freige
   Maskierung ersetzt diese Freigabe nicht"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1805,7 +1986,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-06, kein freige
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ist eine Vorbedingung einer Aktion der Stufen 01 oder 02 erfuellt und pruefbar,
   laeuft die Aktion durch; ist sie nicht erfuellt oder nicht pruefbar, wird gesperrt statt
   zugelassen, die Sperre wird mit Begruendung angezeigt, und der Datenstand bleibt unveraendert.
@@ -1828,10 +2009,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ausreichende Rolle
   gesperrt statt zugelassen. Die Sperre wird begründet angezeigt"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1844,7 +2028,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ausreichende Rolle
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Branche, Funktionsbereich und Anwendung sind Eingaben des Nutzers: jede der drei
   Fragen nimmt ueber ihre offene Alternative Andere ... einen eigenen Wortlaut an, der
   zeichengleich uebernommen und rechts unter Branche, Funktion oder Anwendung angezeigt wird und
@@ -1871,10 +2055,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 · einordnun
   festgelegten Werte. Eine Zielbranche gibt es nicht"
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1887,7 +2074,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 · einordnun
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede in den Stufen 01 und 02 vergebene Herkunftsmarke ist eine der in K19 Abschn.
   3 gefuehrten, und ihre Zuordnung folgt der dortigen Regel; K05 fuehrt fuer diese Stufen keine
   zusaetzliche Marke und keine abweichende Zuordnung ein. Jeder inhaltliche Eintrag traegt genau
@@ -1916,10 +2103,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 und EN-06; e
   um und erfindet sie nicht neu."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1932,7 +2122,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 und EN-06; e
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Rangfolge der Ziele entspricht genau der Reihenfolge, in der der Nutzer sie
   ausgewaehlt hat; sie wird nicht vom System bestimmt oder umsortiert.
 GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-05, Zielschritt mit geladener Zielliste.
@@ -1950,10 +2140,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-05, Zielschritt mit geladener Zi
   des Nutzers, keine Bewertung des Systems."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -1966,7 +2159,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-05, Zielschritt mit geladener Zi
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Bestaetigung des Ausgangsproblems wirkt als Tor: ohne sie findet der
   Namensschritt nicht statt, auch nicht bei unmittelbarem Aufruf des Serverpfads; mit ihr wird
   die bestaetigte Beschreibung gespeichert und ist die Beschreibung, auf die die weiteren
@@ -1987,10 +2180,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ausreichende Rolle
   Prototyp und Angebot bauen auf dieser einen Beschreibung auf."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2003,7 +2199,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, ausreichende Rolle
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der Namensvorschlag allein bewirkt nichts: solange er nicht bestaetigt ist,
   bleibt die Stufe unveraendert und kein Name ist gesetzt; erst die Bestaetigung fuehrt den
   Stufenwechsel herbei.
@@ -2021,10 +2217,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 bis zum Name
 · Quelle: „Der Namensvorschlag bleibt ein Vorschlag. Ohne Bestätigung wechselt die Stufe nicht."
 · K23-M02: das Akzeptanzkriterium liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm
   die Schreibarbeit ab, nicht die Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2037,7 +2236,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, eigener Mandant, EN-05 bis zum Name
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: K05 zeichnet zu EN-05 und EN-06 keinen eigenen Bildschirm — jede Darstellung
   dieser beiden Bildschirme in K05 ist die aus K19 Abschn. 6 uebernommene, und K05 fuegt ihr
   keine Zeile und kein Element hinzu, das der Kasten in K19 Abschn. 6 nicht fuehrt; K19 Abschn.
@@ -2067,10 +2266,13 @@ GEMESSEN DURCH: Aufbau: K05 in der vorliegenden Fassung; K19 Abschn. 6 mit den K
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2083,7 +2285,7 @@ GEMESSEN DURCH: Aufbau: K05 in der vorliegenden Fassung; K19 Abschn. 6 mit den K
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Fortschrittsanzeige fuehrt fuenf Stufen; auf EN-05 ist die laufende Stufe die
   Stufe 01 mit dem Namen ORIENTIERUNG, auf EN-06 die Stufe 02 mit dem Namen INTERVIEW.
 GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit outcome
@@ -2103,10 +2305,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2119,7 +2324,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Eine im Interview angehaengte Datei erscheint als Antwort auf die gestellte
   Fachfrage — Eintrag in der rechten Spalte mit der Marke Ihre Angabe, aufgenommen in den
   INTERVIEW_PROTOCOL-Stand — und erzeugt keinen Eintrag im Register der Quellen, das K08 fuehrt.
@@ -2142,10 +2347,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage; der Stand de
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2158,7 +2366,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage; der Stand de
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: K05 stellt fuer Portal-Hilfe und Nebenfragen-Fenster keine Regel auf — keine
   MUSS-, DARF-NICHT- oder GILT-Klausel von K05 schreibt ihr Verhalten, ihre Beschriftung oder
   ihren Inhalt vor —, und die Aktionsliste von EN-05 und EN-06 im Bildschirmvertrag fuehrt fuer
@@ -2186,10 +2394,13 @@ GEMESSEN DURCH: Aufbau: K05 in der vorliegenden Fassung; der Bildschirmvertrag E
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2202,7 +2413,7 @@ GEMESSEN DURCH: Aufbau: K05 in der vorliegenden Fassung; der Bildschirmvertrag E
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: K05 weist kein eigenes Datenobjekt aus, sondern nennt fuer jeden Inhalt des
   Gespraechs das tragende Konzept aus seinem Abschnitt 5; und ein vollstaendiger Durchlauf der
   Stufen 01 und 02 schreibt jeden dabei entstehenden Gespraechsinhalt ausschliesslich in
@@ -2233,10 +2444,13 @@ GEMESSEN DURCH: Aufbau: K05 in einer benannten Fassung mit Abschnitt 5 und desse
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2249,7 +2463,7 @@ GEMESSEN DURCH: Aufbau: K05 in einer benannten Fassung mit Abschnitt 5 und desse
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Beim ersten Betreten von Stufe 01 steht als erste Frage die offene Frage, in der
   der Nutzer in eigenen Worten beschreibt, welchen Arbeitsalltag FREIRAUM verbessern soll; keine
   Einordnungs-, Ziel-, Ausgangsproblem- oder Namensfrage steht vor ihr, und an dieser Stelle ist
@@ -2272,10 +2486,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2288,7 +2505,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Unter der Eingangsfrage stehen zwoelf haeufige Themen als Vorschlag, und die Wahl
   von „Was anderes" fuehrt in eine freie Eingabe, die einen eigenen Wortlaut als Thema annimmt.
 GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit outcome
@@ -2308,10 +2525,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2324,7 +2544,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung des eigenen Mandanten, fit_check mit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die drei Einordnungsfragen werden in der Reihenfolge Branche, dann
   Funktionsbereich, dann Anwendung gestellt: die Folgefrage erscheint erst, wenn die
   vorangehende beantwortet ist, und eine Antwort ausser der Reihe wird abgewiesen, ohne die
@@ -2349,10 +2569,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit gewaehltem Thema, keine Einordnung
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2365,7 +2588,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit gewaehltem Thema, keine Einordnung
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede der drei Einordnungsfragen fuehrt neben den vorgeschlagenen Antworten genau
   eine offene Alternative — die Branchenfrage „Andere Branche", die Funktionsbereichsfrage
   „Anderer Funktionsbereich", die Anwendungsfrage „Andere Anwendung" —, und ueber diese
@@ -2387,10 +2610,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit gewaehltem Thema, Antwortlisten al
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2403,7 +2629,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit gewaehltem Thema, Antwortlisten al
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zur Wahl stehen sieben Ziele und zusaetzlich „+ Anderes Ziel"; mehrere Ziele
   lassen sich zugleich waehlen; die Rangfolge rechts entspricht Zug um Zug der Reihenfolge der
   Auswahl.
@@ -2427,10 +2653,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05, Zielschritt erreicht, keine Auswahl g
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2443,7 +2672,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05, Zielschritt erreicht, keine Auswahl g
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Vor dem Weitergang wird das Ausgangsproblem zusammengefasst angezeigt, und beide
   Wege stehen bereit: „Weitere Details angeben" fuehrt in die Korrektur und die Zusammenfassung
   nimmt die Korrektur auf, „Ja, weiter zum Interview" bestaetigt ausdruecklich; ohne diese
@@ -2469,10 +2698,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit beantworteten Vorschritten, das Au
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2485,7 +2717,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit beantworteten Vorschritten, das Au
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zum Abschluss von Stufe 01 erscheint ein Namensvorschlag, der als Vorschlag der
   Modelle markiert ist (Bildschirmvertrag: Marke KI-Vorschlag) und in einem ueberschreibbaren
   Eingabefeld steht; der bestaetigte Name steht danach in app.name.
@@ -2509,10 +2741,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit bestaetigtem Ausgangsproblem, Schr
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2525,7 +2760,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-05 mit bestaetigtem Ausgangsproblem, Schr
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der Stufenwechsel wirkt nur als Ganzes: nach ihm steht app.journey_phase auf
   INTERVIEW, wo vorher ORIENTIERUNG stand, und im event-Bestand steht ein Protokolleintrag zu
   diesem Wechsel; scheitert eines von beiden, steht keines von beiden — journey_phase bleibt
@@ -2551,10 +2786,13 @@ GEMESSEN DURCH: Aufbau: frische Pruefdatenbank mit synthetischen Daten, eine Anw
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2567,7 +2805,7 @@ GEMESSEN DURCH: Aufbau: frische Pruefdatenbank mit synthetischen Daten, eine Anw
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: An jeder gestellten Fachfrage der Stufe 02 stehen alle drei Antwortwege zugleich
   und gleichrangig zur Wahl — einen Vorschlag anklicken, in eigenen Worten schreiben, ein
   Dokument anhaengen —; keiner ist einem anderen vorgeschaltet oder erst nach Nutzung eines
@@ -2591,10 +2829,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage, Frage und Vo
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2607,7 +2848,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage, Frage und Vo
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu jeder in Stufe 02 gestellten Frage steht „Diese Frage ignorieren" bereit, und
   nach ihrer Wahl steht in der rechten Spalte ausschliesslich der Wortlaut (Frage uebersprungen)
   — kein Inhalt aus dem Gespraech und keine Herkunftsmarke.
@@ -2632,10 +2873,13 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage, der Stand de
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2648,7 +2892,7 @@ GEMESSEN DURCH: Aufbau: Sitzung auf EN-06 mit gestellter Fachfrage, der Stand de
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder inhaltliche Eintrag der rechten Spalte traegt genau eine Herkunftsmarke —
   keiner traegt keine, keiner traegt zwei —, ein vom Nutzer selbst formulierter Eintrag traegt
   die Marke Ihre Angabe, und laesst sich die Marke nicht eindeutig bestimmen, entsteht rechts
@@ -2681,10 +2925,13 @@ GEMESSEN DURCH: Aufbau: Sitzung des eigenen Mandanten auf EN-06 mit gestellter F
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2697,7 +2944,7 @@ GEMESSEN DURCH: Aufbau: Sitzung des eigenen Mandanten auf EN-06 mit gestellter F
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: An einem Eintrag, der nach seiner Entstehung geaendert wurde, stehen zwei
   getrennte Angaben — die Herkunftsmarke, mit der er entstanden ist, und daneben der
   Bearbeitungszustand, dass er anschliessend bearbeitet wurde, in der Form, die K19 Abschn. 3
@@ -2727,10 +2974,13 @@ GEMESSEN DURCH: Aufbau: zwei Eintraege der rechten Spalte gleicher Herkunft, bei
 · Erzeugt am 19.08.2026 zu Blatt 100, Entscheidung 5. K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2743,7 +2993,7 @@ GEMESSEN DURCH: Aufbau: zwei Eintraege der rechten Spalte gleicher Herkunft, bei
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: EN-05 und EN-06 zeigen Bedienung und Ergebnis in einer einzigen Ansicht — links
   wird gesagt oder geklickt, rechts erscheint das Ergebnis; zwischen der Handlung links und dem
   Eintrag rechts oeffnet sich kein getrenntes Formular und wechselt der Bildschirm nicht.
@@ -2763,10 +3013,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit einem Gespraech in Stufe 01 (EN-
 · Quelle: „Beide Stufen MÜSSEN zweigeteilt sein: links wird gesagt oder geklickt, rechts
   erscheint das Ergebnis, unmittelbar und ohne Wechsel zwischen getrennten Formularen (K01
   Abschn. 3)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2779,7 +3032,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung mit einem Gespraech in Stufe 01 (EN-
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-05 und auf EN-06 steht ueber der Gespraechsspalte ein Hinweis mit der
   Aussage, dass Vorschlaege der Modelle Fehler enthalten koennen; er traegt keine Bedienung zum
   Wegklicken und bleibt in allen vier Zustaenden der Aktionen (laden, leer, Erfolg, Fehler)
@@ -2795,10 +3048,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-05 und EN-06 nacheinander geoeff
   Gespraech und Aktionen unveraendert funktionieren.
 · Quelle: „Über dem Gespräch MUSS in beiden Stufen der nicht wegklickbare Hinweis stehen, dass
   Vorschläge der Modelle Fehler enthalten können (K01 Abschn. 3)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2811,7 +3067,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-05 und EN-06 nacheinander geoeff
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-06 (Stufe 02) steht unter dem Gespraech die Bedienung mit dem Wortlaut
   „Speichern, später weitermachen"; nach ihrer erfolgreichen Ausfuehrung (Zustand Erfolg) zeigt
   dasselbe Gespraech nach Abmelden und erneutem Anmelden denselben Stand wie vor dem Abmelden —
@@ -2831,10 +3087,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02 mit mindesten
   erschiene.
 · Quelle: „Ab Stufe 02 MUSS unter dem Gespräch *Speichern, später weitermachen* stehen. Der
   Stand MUSS das Abmelden überleben (K01 Abschn. 3)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2847,7 +3106,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02 mit mindesten
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: EN-06 nennt oben in der rechten Spalte — vor und unabhaengig von den uebrigen
   Eintraegen — die Teilnehmer des Gespraechs, darunter mindestens den angemeldeten Nutzer und
   den Assistenten als Moderator; tritt ein eingeladener Mitarbeiter hinzu (K05-M17), erscheint
@@ -2864,10 +3123,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-06 im Zustand laden, in dem laut
 · Quelle: „Stufe 02 MUSS oben in der rechten Spalte die Teilnehmer des Gesprächs nennen:
   mindestens den angemeldeten Nutzer und den Assistenten als Moderator. Die Liste ist nicht
   abgeschlossen; eingeladene Mitarbeiter treten hinzu (K05-M17)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2880,7 +3142,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, EN-06 im Zustand laden, in dem laut
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Aktion 'Weitere Mitarbeiter einladen' aus Stufe 01/02 erzeugt den
   Einladungsstand ausschliesslich als Satz in invitation (Eigentuemer K20); K05 fuehrt fuer
   Einladungen weder eine eigene Tabelle noch eigene Felder.
@@ -2898,10 +3160,13 @@ GEMESSEN DURCH: Prueffall gegen Datenbank: Datenbestand vor und nach der Aktion 
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2914,7 +3179,7 @@ GEMESSEN DURCH: Prueffall gegen Datenbank: Datenbestand vor und nach der Aktion 
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Bedienung „Als Interview-Protokoll herunterladen" ist zu jedem Zeitpunkt des
   Gespraechs bedienbar und gibt den aktuellen Gespraechsstand aus; die Ausgabe fuehrt zu jedem
   Beitrag seine Herkunftsmarke und zu jeder uebersprungenen Frage ihren Uebersprungvermerk;
@@ -2941,10 +3206,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02 mit mindesten
 · Quelle: „*Als Interview-Protokoll herunterladen* MUSS jederzeit den aktuellen Stand ausgeben,
   mit Herkunftsmarken und Übersprungvermerken. Träger ist `document` mit `document_kind =
   INTERVIEW_PROTOCOL` (Eigentümer K10)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2957,7 +3225,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02 mit mindesten
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Nach der Bedienung „Bin fertig mit dem Interview" liegen drei Wirkungen gemeinsam
   vor: `app.journey_phase` steht auf UEBERSICHT, in `event` steht ein neuer Protokolleintrag zu
   diesem Vorgang (im Bildschirmvertrag mit `source = PORTAL_ACTION`), und der Gespraechsstand
@@ -2976,10 +3244,13 @@ GEMESSEN DURCH: Aufbau: Gespraech in Stufe 02 mit vorhandenem Stand, angemeldete
 · Quelle: „*Bin fertig mit dem Interview* MUSS `journey_phase` auf UEBERSICHT setzen (Eigentümer
   K01), einen Protokolleintrag in `event` erzeugen (Eigentümer K02) und den Gesprächsstand an
   K06 übergeben. Wie bei K05-M08 gilt: ohne Eintrag kein Wechsel." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -2992,7 +3263,7 @@ GEMESSEN DURCH: Aufbau: Gespraech in Stufe 02 mit vorhandenem Stand, angemeldete
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Diktierter Text steht vor dem Absenden im Eingabefeld von EN-06 sichtbar, ist
   dort vom Nutzer aenderbar, und der abgesendete Beitrag erscheint rechts mit der Marke „Ihre
   Angabe" — er zaehlt also als eigene Angabe des Nutzers.
@@ -3008,10 +3279,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, funktionierende Spracherken
   Zurechnung des diktierten Textes.
 · Quelle: „Diktierter Text MUSS vor dem Absenden im Eingabefeld sichtbar und änderbar sein. Er
   zählt als eigene Angabe des Nutzers." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3024,7 +3298,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, funktionierende Spracherken
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Eine Eingabe, deren Wortlaut eine Handlungsanweisung an das System enthaelt,
   wirkt ausschliesslich als Antwortdaten: sie erscheint rechts als Beitrag, und die im Text
   verlangte Handlung ist nicht ausgefuehrt — das gilt fuer getippte, diktierte und hochgeladene
@@ -3044,10 +3318,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung; als Ei
 · Quelle: „Jede Eingabe — getippt, diktiert oder hochgeladen — MUSS als Daten behandelt werden.
   Eine darin enthaltene Handlungsanweisung wird nicht ausgeführt (K01 Abschn. 3, Agentenbetrieb
   K17)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3060,7 +3337,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung; als Ei
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Keine Sendung an ein Sprachmodell fuehrt eine Angabe, die der fachliche
   Eigentuemer als personenbezogen benannt hat, im Wortlaut — sie steht in der Sendung nur als
   Maske; die Zuordnung von Maske zu Original ist nicht Teil der Sendung, sondern wird nur in der
@@ -3082,10 +3359,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung; die An
   Festlegung des Pruefers.
 · Quelle: „Vor jeder Übergabe an ein Sprachmodell MÜSSEN personenbezogene Angaben maskiert
   werden; die Rückauflösung bleibt in der Plattform (K01 Abschn. 3, Modellpfad K17)." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3098,7 +3378,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung; die An
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Der fachliche Gespraechsstand liegt als strukturierter Dateistand vor, den eine
   `document`-Zeile mit `document_kind = INTERVIEW_PROTOCOL` registriert; das Format der Datei
   fuehrt `app_id`, Revision, Zeit und Reihenfolge und je Beitrag `actor.id`, Erzeugungsart,
@@ -3127,10 +3407,13 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02; Datei-, `doc
   Datei; ihr Format enthält `app_id`, Revision, Zeit, Reihenfolge und je Beitrag `actor.id`
   (Eigentümer K03), Erzeugungsart, Herkunft, Bearbeitungszustand sowie Hash des Vorgängers. K05
   besitzt weiterhin keine Tabelle." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3143,7 +3426,7 @@ GEMESSEN DURCH: Aufbau: angemeldete Sitzung, Gespraech in Stufe 02; Datei-, `doc
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder erfolgreiche Speichervorgang legt in dieser Reihenfolge an: zuerst die
   Datei, dann die `document`-Zeile, zuletzt einen `event`-Eintrag, der sich nicht mehr aendern
   oder loeschen laesst; der juengste erfolgreiche `event`-Eintrag je Anwendung verweist in
@@ -3167,10 +3450,13 @@ GEMESSEN DURCH: Aufbau: Gespraech in Stufe 02 mit vorhandenem Stand; Datei-, `do
 · Quelle: „Jeder erfolgreiche Speichervorgang erzeugt zuerst die Datei, dann die
   `document`-Zeile und zuletzt ein append-only `event`. … Ein unvollständiger Dreischritt wird
   nicht sichtbar." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3183,7 +3469,7 @@ GEMESSEN DURCH: Aufbau: Gespraech in Stufe 02 mit vorhandenem Stand; Datei-, `do
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Am Bildschirm traegt ein Nutzerbeitrag als Anzeige die Marke „Ihre Angabe" (EN-06
   · freitext_antworten · Zustand Erfolg); derselbe Beitrag fuehrt im Dateistand zusaetzlich
   `actor.id`; ein KI-Beitrag fuehrt im Dateistand Modellversion, Promptversion und
@@ -3206,10 +3492,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit einem Nutzerbeitrag im Freitext und einem KI-B
 · Quelle: „*Ihre Angabe* bleibt die einfache Anzeige. Revisionsfest führt der Dateistand
   zusätzlich `actor.id` (Eigentümer K03); KI-Beiträge führen Modell-, Prompt- und
   Quellenversion. Änderung und Ursprung bleiben getrennt." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3222,7 +3511,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit einem Nutzerbeitrag im Freitext und einem KI-B
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Vor jeder Nutzung einer hochgeladenen Datei — vor dem Eintrag rechts, vor der
   Aufnahme in den Gespraechsstand und vor jedem Modellaufruf — liegen die vier Pruefungen auf
   Typ, Groesse, Malware und aktiven Inhalt je mit einem Ergebnis vor; liefert eine davon kein
@@ -3245,10 +3534,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung mit Anh
 · Quelle: „Uploads werden vor Nutzung auf Typ, Größe, Malware und aktiven Inhalt geprüft. Nicht
   prüfbare Dateien bleiben in Quarantäne. Text aus Datei, Tastatur oder Diktat gilt als Daten
   und kann keine Tools oder Systemregeln steuern." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3261,7 +3553,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit offener Fachfrage, angemeldete Sitzung mit Anh
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Im Release-1-Stand ist auf EN-05 und EN-06 keine Bedienung fuer den freihaendigen
   Sprachweg sichtbar; ein am Bildschirm vorbei abgesetzter Aufruf dieses Weges wird serverseitig
   abgewiesen und hinterlaesst keine Wirkung — auch bei gueltiger Anmeldung, gueltigen Rechten
@@ -3284,10 +3576,13 @@ GEMESSEN DURCH: Aufbau: Release-1-Stand, angemeldete Sitzung mit allen sonst noe
   „nicht gebaut" zu unterscheiden.
 · Quelle: „Der freihändige Sprachweg bleibt in Release 1 ausgeblendet und serverseitig gesperrt.
   Diktat bleibt zulässig, wenn der Text vor dem Senden sichtbar und änderbar ist." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3300,7 +3595,7 @@ GEMESSEN DURCH: Aufbau: Release-1-Stand, angemeldete Sitzung mit allen sonst noe
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Die Einladung eines Mitarbeiters in das ENDUSER-Portal entsteht als Satz in
   derselben `invitation`-Tabelle wie eine EXMA-Einladung und durchlaeuft dieselben Schritte des
   Sicherheitsweges, wie der fachliche Eigentuemer sie fuer EXMA benannt hat — kein Schritt
@@ -3328,10 +3623,13 @@ GEMESSEN DURCH: Aufbau: Datenbestand vor den Handlungen festgehalten; die Schrit
 · Quelle: „Mitarbeiter im ENDUSER-Portal werden über dieselbe `invitation`-Tabelle und denselben
   Sicherheitsweg wie EXMA-Zugänge eingeladen. Die Portalrolle und Mitgliedschaft sind
   portalbezogen; die Herkunft jedes Beitrags bleibt personenbezogen belegbar." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3344,7 +3642,7 @@ GEMESSEN DURCH: Aufbau: Datenbestand vor den Handlungen festgehalten; die Schrit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-05 und EN-06 gilt: zu jeder dynamischen Aenderung — neuer Eintrag rechts,
   Erscheinen der Folgefrage, Wechsel eines Zustands — ergeht eine Statusmeldung fuer
   Hilfstechnologien; jede Bedienung des Bildschirms ist ueber die Tastatur erreichbar und
@@ -3373,10 +3671,13 @@ GEMESSEN DURCH: Aufbau: EN-06 mit vorhandenem Gespraechsstand, Bedienung ausschl
 · Quelle: „Dynamische Änderungen werden als Statusmeldung für Hilfstechnologien ausgegeben;
   Tastaturreihenfolge, Fehlerfokus und gleichwertiger Textweg sind Pflicht. Speichern, Upload
   und Übergabe besitzen eindeutige Erfolg-, Fehler- und Wiederaufnahmezustände." ·
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3393,7 +3694,7 @@ GEMESSEN DURCH: Aufbau: EN-06 mit vorhandenem Gespraechsstand, Bedienung ausschl
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu jedem Dokument steht genau eine Zeile in document, und diese Zeile ist einer
   Anwendung zugeordnet; ohne Anwendung entsteht keine Zeile.
 GEMESSEN DURCH: Aufbau: Zaehlstand der document-Zeilen lesen. Positivfall: EN-06 ·
@@ -3412,10 +3713,13 @@ GEMESSEN DURCH: Aufbau: Zaehlstand der document-Zeilen lesen. Positivfall: EN-06
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3428,7 +3732,7 @@ GEMESSEN DURCH: Aufbau: Zaehlstand der document-Zeilen lesen. Positivfall: EN-06
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede document-Zeile traegt eine Dokumentart aus der geschlossenen Liste; die
   Liste fuehrt sieben Werte, ein achter entsteht nicht.
 GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloesen — die neue
@@ -3447,10 +3751,13 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3463,7 +3770,7 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede document-Zeile traegt einen gefuellten Dateinamen; ein Eintrag ohne Datei
   entsteht nicht, sondern gilt als Fehler.
 GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloesen — die neue
@@ -3479,10 +3786,13 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3499,7 +3809,7 @@ GEMESSEN DURCH: Positivfall: EN-06 · zwischenspeichern in Zustand Erfolg ausloe
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Beide Ebenen weisen den Fremdzugriff jede fuer sich ab - (a) bei umgangenem
   Serverpfad verweigert die Datenbank ueber die Policy, (b) bei fuer dieses Objekt
   abgeschalteter Policy verweigert der Serverpfad ueber die Autorisierung.
@@ -3513,10 +3823,13 @@ GEMESSEN DURCH: Zwei Prueflaeufe je Datenpfad mit zwei Mandanten: Lauf (a) unmit
 · Erzeugt am 16.08.2026 auf Weisung E-6 (gez. M. Veil und A. Han). K23-M02: das Abnahmekriterium
   liefert der fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3529,7 +3842,7 @@ GEMESSEN DURCH: Zwei Prueflaeufe je Datenpfad mit zwei Mandanten: Lauf (a) unmit
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jeder Zustandswechsel der Stufen 01 und 02 tritt nur ueber den im
   Bildschirmvertrag gefuehrten Serverbefehl ein, und unter den Zugaengen, mit denen diese Stufen
   arbeiten, besteht kein unmittelbares Schreibrecht auf app.
@@ -3555,10 +3868,13 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen in Zustand Erfolg ueber c
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3571,7 +3887,7 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen in Zustand Erfolg ueber c
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu jedem Schreibvorgang der Stufen 01 und 02 steht ein Protokolleintrag in event
   mit gefuelltem event_source, und kein fachlicher Schreibvorgang steht ohne diesen Eintrag;
   gemessen wird das Vorhandensein der Kante, nicht ihre Form.
@@ -3596,10 +3912,13 @@ GEMESSEN DURCH: Positivfall: die schreibenden Aktionen beider Bildschirme werden
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3612,7 +3931,7 @@ GEMESSEN DURCH: Positivfall: die schreibenden Aktionen beider Bildschirme werden
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede Aktion der Stufen 01 und 02 fuehrt einen benannten Fehlerfall, und dieser
   sperrt: nach seinem Eintritt ist keine fachliche Zeile entstanden oder veraendert; ein Aufruf,
   der unbeantwortet bleibt oder nicht pruefbar ist, endet in diesem Fehlerfall und gilt als
@@ -3632,10 +3951,13 @@ GEMESSEN DURCH: Aufbau: fuer jede Aktion von EN-05 und EN-06 den in der Maschine
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3648,7 +3970,7 @@ GEMESSEN DURCH: Aufbau: fuer jede Aktion von EN-05 und EN-06 den in der Maschine
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Fachliche Aenderung und Auditnachweis stehen nach jedem Vorgang gemeinsam oder
   gar nicht da; wo beide nicht in einer Transaktion entstehen koennen, liegt eine transaktionale
   Outbox vor, deren Wiederanlauf den ausstehenden Nachweis nachholt und deren Abgleich danach
@@ -3672,10 +3994,13 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen in Zustand Erfolg ausloes
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3688,7 +4013,7 @@ GEMESSEN DURCH: Positivfall: EN-05 · name_bestaetigen in Zustand Erfolg ausloes
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Zu jedem Modellpfad der Stufen 01 und 02 liegt ein Eintrag vor, der alle im
   Wortlaut genannten Angaben fuehrt — Deployment-ID, Anbieter, Region, Netzwerkversion,
   Policyversion, Zweck, Datenminimum, Evaluationssatz, Freigabeschwelle und menschliche
@@ -3711,10 +4036,13 @@ GEMESSEN DURCH: Positivfall: mit vollstaendigem Eintrag EN-05 · name_bestaetige
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3731,7 +4059,7 @@ GEMESSEN DURCH: Positivfall: mit vollstaendigem Eintrag EN-05 · name_bestaetige
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: In keinem Kasten von EN-05 und EN-06 ist eine Schaltflaeche bedienbar, solange
   die Vorbedingung ihres Vorgangs nicht erfuellt oder nicht pruefbar ist; bleibt die Pruefung
   unentschieden, ist die Schaltflaeche gesperrt.
@@ -3756,10 +4084,13 @@ GEMESSEN DURCH: Positivfall: mit stehender Zusammenfassung ist auf EN-05 ·
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3772,7 +4103,7 @@ GEMESSEN DURCH: Positivfall: mit stehender Zusammenfassung ist auf EN-05 ·
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Auf EN-06 sind KI-Notiz und eigene Angabe zwei verschiedene, sichtbare Marken,
   und jeder Eintrag rechts traegt genau eine davon; auf EN-05 traegt der Vorschlag die sichtbare
   Marke KI-Vorschlag.
@@ -3793,10 +4124,13 @@ GEMESSEN DURCH: Positivfall: auf EN-06 · freitext_antworten in Zustand Erfolg a
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3809,7 +4143,7 @@ GEMESSEN DURCH: Positivfall: auf EN-06 · freitext_antworten in Zustand Erfolg a
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Ist die Bedingung eines Vorgangs vom Nutzer selbst erfuellbar, ist die
   Schaltflaeche nicht vorhanden — ausgeblendet, nicht nur inaktiv — und an ihrer Stelle steht
   ein Hinweis, der genau diese Bedingung benennt; erfuellt der Nutzer die Bedingung, erscheint
@@ -3835,10 +4169,13 @@ GEMESSEN DURCH: Positivfall: EN-05 in den Leerzustand von ziele_waehlen bringen,
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3851,7 +4188,7 @@ GEMESSEN DURCH: Positivfall: EN-05 in den Leerzustand von ziele_waehlen bringen,
 **Vorgeschlagenes Kriterium**
 
 ```
-⟨VORSCHLAG · NICHT GEZEICHNET⟩
+⟨GEZEICHNET⟩
 ERFUELLT WENN: Jede Aktion von EN-05 und EN-06 fuehrt in der Maschinenquelle alle sieben im
   Wortlaut genannten Angaben — Eingabe, Serverbefehl, Berechtigungspruefung, Lade-, Leer-,
   Erfolgs- und Fehlerzustand — und keine davon ist leer; und der Serverbefehl weist einen Aufruf
@@ -3878,10 +4215,13 @@ GEMESSEN DURCH: Positivfall: die Maschinenquelle je Aktion lesen und die sieben 
 · Erzeugt am 19.08.2026 (Blatt 100, Entscheidung 5). K23-M02: das Abnahmekriterium liefert der
   fachliche Eigentuemer — dieser Vorschlag nimmt ihm die Schreibarbeit ab, nicht die
   Entscheidung.
-⟨zeichnet: ⟩ ⟨am: ⟩
+⟨zeichnet: A. Han, fachlicher Eigentuemer fuer den Auftragnehmer⟩ ⟨am: 19.08.2026⟩ · uebertragen
+  vom Harness auf die Weisung im Wortlaut: „Teil 2 und Teil 3 alle zeichnen, mache
+  Handlungsempfehlungen zu Teil 1, die ich zeichnen kann“ · Sichtblatt:
+  nachweise/klauselregister/M5_zeichnung_A-Han_260819.md, Teile 2 und 3
 ```
 
-`☐ gezeichnet   ☐ geändert (Wortlaut unten)   ☐ zurück an den Harness`
+`x gezeichnet · A. Han · 19.08.2026` — eingetragen auf Weisung, Wortlaut in der Zelle
 
 ---
 
@@ -3893,19 +4233,19 @@ Einzelne Ausnahmen tragen Sie darunter mit Kennung ein.
 | Block | Einträge | gezeichnet | Datum | Ausnahmen (Kennungen) |
 |---|---:|---|---|---|
 | Teil 1 · ohne Maßstab | 5 | *keine Zeichnung — Lieferung* | | |
-| Teil 2 · Bestand plus Ergänzung | 4 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K01 | 9 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K02 | 7 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K03 | 4 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K04 | 2 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K05 | 51 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K10 | 3 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K13 | 6 | ☐ | ⟨ ⟩ | |
-| Teil 3 · K19 | 4 | ☐ | ⟨ ⟩ | |
+| Teil 2 · Bestand plus Ergänzung | 4 | **x** (4/4) | 19.08.2026 | |
+| Teil 3 · K01 | 9 | **x** (9/9) | 19.08.2026 | |
+| Teil 3 · K02 | 7 | **x** (7/7) | 19.08.2026 | |
+| Teil 3 · K03 | 4 | **x** (4/4) | 19.08.2026 | |
+| Teil 3 · K04 | 2 | **x** (2/2) | 19.08.2026 | |
+| Teil 3 · K05 | 51 | **x** (51/51) | 19.08.2026 | |
+| Teil 3 · K10 | 3 | **x** (3/3) | 19.08.2026 | |
+| Teil 3 · K13 | 6 | **x** (6/6) | 19.08.2026 | |
+| Teil 3 · K19 | 4 | **x** (4/4) | 19.08.2026 | |
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | fachlicher Eigentümer, für den Auftragnehmer | ⟨ ⟩ |
+| A. Han | fachlicher Eigentümer, für den Auftragnehmer | 19.08.2026 — Teile 2 und 3 |
 
 ---
 
