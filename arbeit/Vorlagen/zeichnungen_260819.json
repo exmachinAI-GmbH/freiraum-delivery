@@ -1,0 +1,334 @@
+{
+ "punkte": [
+  {
+   "nr": "Z-1",
+   "titel": "E-9 · antwort_aendern — A. Hans Zeile fehlt, der Bau-Anteil liegt still",
+   "worum": "Der Bildschirmvertrag und der gebaute Bildschirm sagen Verschiedenes darüber, wann eine gegebene Antwort geändert werden darf; M. Veil hat entschieden, A. Hans Unterschrift fehlt, und ohne sie darf der Bau den Knopf nicht anfassen.",
+   "wer": "A. Han (fachlicher Eigentümer K19 und K04)",
+   "wirkung": "sperrt den Bau",
+   "empfehlung": "Lesart (A) halt-only zeichnen — der Bildschirmvertrag EN-04a nennt sechs Aktionen, und das Blatt weist eine Belegdichte von 3:1 für halt-only aus; die Folge ist, dass der Knopf 'Antwort zurücknehmen' im offenen Zustand entfernt wird, nicht dass der Test nachgibt. Wird die Rücknahme im offenen Zustand fachlich gewollt, gehört sie als eigene siebte Aktion in den Vertrag, nicht als stille Zweitbedeutung einer bestehenden.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/entscheidung_tor1_260816.md — Auswahl Z. 209-212 (alle vier Kästchen leer), Zeichnungstabelle Z. 381 ('[x] M. Veil · Bau-Anteil wartet auf A. Han'), Namenstabelle Z. 586 (A. Hans Datumsspalte leer, Vermerk 'erforderlich für E-8 und E-9')",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-2",
+   "titel": "BA-1 und BA-2 gegenzeichnen — und vorher #41 zusammenführen",
+   "worum": "Die beiden Korrekturblätter, die den Endtermin und den Umfang ändern, tragen M. Veils Kreuze seit dem 16.08.; in beiden fehlt nur A. Hans Datum, und solange es fehlt, ist am Auftrag nichts geändert.",
+   "wer": "A. Han",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Ob gezeichnet wird, kann der Harness nicht empfehlen — es ist eine Willenserklärung einer Vertragsseite nach §12.3. Empfohlen ist allein die Reihenfolge: erst Antrag #41 zusammenführen, dann zeichnen. Grund aus der Quelle: ab der Unterschrift ist bis zum letzten der dreizehn Haken keine Vorlage zur Freigabe mehr zulässig (§12.4 Nr. 5) — wer vorher nicht zusammenführt, sperrt zwei fertige Arbeitsstände hinter der eigenen Korrektur. BA-1 sagt denselben Satz selbst über drei frühere Anträge.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/ba1_ba2_handlungsempfehlung_260819.md (Kopf: 'noch nicht gezeichnet'; Zeichnungsblock am Ende: fünf Kästchen leer, beide Datumsfelder ⟨ ⟩) · /Users/andi/freiraum-delivery/arbeit/Vorlagen/korrekturblatt_BA-1_wegA_260815.md:655 (A. Han, Datumsspalte leer, '⛔ erforderlich') · /Users/andi/freiraum-delivery/arbeit/Vorlagen/korrekturblatt_BA-2_termine_und_ausnahme_260816.md:466 und :656 (beide Namenstabellen, A. Hans Datum leer)",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-3",
+   "titel": "BA-2 · die zwei Sachfragen, die kein Blatt beantwortet",
+   "worum": "Erstens ist offen, welche der zurückgestellten Bauaufgaben tatsächlich zurückgestellt sind — das Blatt zählt fünf Kandidaten für vier Plätze; zweitens ist offen, ob eine zweite Tabelle in denselben Vollzug kommt oder ein eigenes Blatt bekommt.",
+   "wer": "M. Veil",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Zu 2.1-Z darf der Harness nicht raten — das Blatt sagt es wörtlich ('Welche vier es sind, entscheidet der Auftraggeber — der Harness rät nicht'), und die Frage entscheidet nicht den Termin, sondern den Umfang des 31.08. Zu 2.2 ist eine Empfehlung zulässig: 2.2-Z1 ankreuzen (schema_migration in denselben Vollzug), weil die Grundlage dieselbe ist — Blatt 59, L1-E6/A, gez. 10.08.2026 — und ein getrenntes Blatt einen zweiten Vollzugsvorgang für denselben Sachverhalt erzeugt.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/korrekturblatt_BA-2_termine_und_ausnahme_260816.md:449 (2.1-Z, offen) mit den leeren Kästchen in Tabelle T Teil 2, Z. 258-265 (L1, L2, L3, L4, L5, L6, L9) · :647-651 (2.2-Z1 und 2.2-Z2, beide leer)",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-4",
+   "titel": "Das Beschlussblatt zur Festlegung auf Rang 0 ist nie ausgefertigt worden",
+   "worum": "Eines der vier Kreuze in BA-1 wirkt nur, wenn dazu ein eigenes Founder-Blatt ausgefertigt und von beiden gezeichnet wird — dieses Blatt gibt es im ganzen Bestand nicht.",
+   "wer": "beide (Founder-Beschluss, Ausfertigung in der Konzept-Fabrik)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Das Blatt nach dem Muster von F28 und F04 ausfertigen und zeichnen, mit dem in VA-1 Teil 4 vorgeschlagenen Wortlaut, und es als laufende Nummer im K00-Beschluss-Log führen. Der Harness empfiehlt den Vorgang, nicht den Inhalt: eine Festlegung auf Rang 0 ist ein Founder-Beschluss. Begründung aus der Quelle: BA-1 vermerkt zu Kreuz K3, die Festlegung werde 'nicht auf diesem Blatt gezeichnet, sondern auf einem eigenen'; VA-1 Teil 4 sagt: 'Ohne dieses Blatt bleibt Kreuz K3 wirkungslos. Die Entscheidung ist getroffen — die Urkunde fehlt.' Es ist Schritt 1 der Reihenfolge, vor dem Vollzug der dreizehn Stellen.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/vollzugsauftrag_VA-1_260815.md:168-200 (Teil 4, vorgeschlagener Wortlaut) und :208 (Teil 5, Schritt 1: 'Beschlussblatt Rang 0 ausfertigen und zeichnen · Konzept-Fabrik · beide Founder') · /Users/andi/freiraum-delivery/arbeit/Vorlagen/korrekturblatt_BA-1_wegA_260815.md, Vermerk zu Kreuz K3 unter der Namenstabelle · nachgesucht: kein Treffer für ein solches Blatt in arbeit/ und nachweise/",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-5",
+   "titel": "113 Restrisiken des Teilschnitts — ohne Träger, ohne Annahme, ohne Frist",
+   "worum": "Für jede Regel des Teilschnitts, die als kritisch gilt und keinen Prüffall hat, liegt eine Zeile vorbereitet; die drei Spalten, die ein Mensch füllt, sind in allen 113 Zeilen leer.",
+   "wer": "M. Veil (Träger, Annahme, Frist) · die fachlichen Eigentümer (Akzeptanzkriterien)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Nicht als Sammelunterschrift zeichnen. Empfohlen ist der Weg, den das Blatt selbst benennt: je Eintrag Träger und Frist eintragen und dazu entscheiden, welcher der beiden Wege gilt — Prüffall nachziehen oder Umfangsentscheidung. Grund: alle 113 fallen in eine Klasse, in der nach K23-M04 eine Annahmeentscheidung den fehlenden Test nicht ersetzt; eine Unterschrift allein macht die Sperrbedingung also nicht erfüllt. Sie ist der erste von zwei Schritten, der zweite hängt an den Akzeptanzkriterien (Z-7).",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/restrisiken/restrisiken_teilschnitt.md (Kopf Z. 13-16: 'Träger eingetragen 0 von 113', 'Annahmeentscheidungen gezeichnet 0 von 113'; Abschnitt 'Was ein Mensch jetzt tun muss', Z. 329-337) · maschinell nachgezählt in restrisiken_teilschnitt.json: 113 Zeilen, 113 ohne Träger, 113 ohne Annahmeentscheidung, 113 ohne Frist · Zusammenfassung in nachweise/restrisiken/restrisiken.md:20-38",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-6",
+   "titel": "Die Kritikalität ist im ganzen Klauselregister kein einziges Mal gezeichnet",
+   "worum": "Für 405 Regeln steht die Einstufung, wie schwer eine Verletzung wäre, nur als Vorschlag der Maschine da; für keine einzige Regel — auch keine der 101 von M5 — hat je ein Mensch unterschrieben.",
+   "wer": "die fachlichen Eigentümer (für M5: A. Han, für K17 M. Veil)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Der Harness darf hier nicht empfehlen — K23-G08 sagt, die Kritikalität begründet der fachliche Eigentümer, nicht der Harness. Empfohlen ist nur die Reihenfolge: zuerst die 25 M5-Klauseln zeichnen, die schon einen Vorschlag tragen, dann die 76 M5-Klauseln ohne Einstufung, dann der Rest. Grund: K23-M04 knüpft die Sperrwirkung eines fehlenden Tests an die Kritikalitätsklasse — solange keine Klausel eine gezeichnete Einstufung trägt, steht beim Nachrechnen des Liefertors für M5 kein einziger belastbarer Sperr- oder Nichtsperr-Satz zur Verfügung.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/klauselregister/register.json, Feld kritikalitaet — nachgezählt: 1231 Zeilen, 405 gefüllt, davon 405 mit der Marke ⟨VORSCHLAG · NICHT GEZEICHNET⟩ und den leeren Feldern ⟨zeichnet: ⟩ ⟨am: ⟩, 0 gezeichnet; gegen M5_klausellage_260819.json abgeglichen: von den 101 M5-Klauseln 25 mit ungezeichnetem Vorschlag, 76 ganz ohne Einstufung · /Users/andi/freiraum-delivery/nachweise/klauselregister/pflege.json: 510 gepflegte Zeilen, 405 mit Kritikalitätsvorschlag, 263 ohne fachlichen Eigentümer",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-7",
+   "titel": "146 Akzeptanzkriterien außerhalb der M5-Lage warten auf eine Unterschrift",
+   "worum": "Für 146 Regeln liegt ein Maßstab als Vorschlag vor, den niemand gezeichnet hat, und für 984 weitere gibt es überhaupt keinen — ohne Maßstab lässt sich kein Prüffall schreiben.",
+   "wer": "A. Han (18 Konzepte) · M. Veil (K15, K17)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Zuerst den Ausschnitt zeichnen, gegen den überhaupt gemessen wird (Z-8), und erst dann die Kriterien innerhalb dieses Ausschnitts. Der Inhalt eines Kriteriums ist nach K23-M02 Sache des fachlichen Eigentümers — der Harness hat die Vorschläge erzeugt und darf sie nicht selbst zeichnen. Grund: Bedingung 4 des Liefertors trägt nach dem Zuweisungsblatt erst, wenn die Kriterien im Register stehen, und ein Vorschlag ist keins.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/klauselregister/register.json, Feld akzeptanzkriterium — nachgezählt: 247 gefüllt, davon 101 mit der Marke ⟨GEZEICHNET⟩ (genau die M5-Klauseln, davon 95 vollständig und 6 aus K17) und 146 mit ⟨VORSCHLAG · NICHT GEZEICHNET⟩ samt leeren Feldern ⟨zeichnet: ⟩ ⟨am: ⟩; 984 Zeilen ohne Kriterium",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-8",
+   "titel": "Der Klauselschnitt der Scheibe 1 trägt kein einziges Kreuz",
+   "worum": "Das Blatt, das festlegt, welche Regeln zur ersten Scheibe gehören, hat neunzehn Kästchen, keines gesetzt, und eine vollständig leere Namenstabelle — auf genau dieser Zuordnung ruht der Ausschnitt von 157 Regeln, aus dem die 113 Restrisiken gerechnet sind.",
+   "wer": "beide (M. Veil zeichnet, A. Han dort, wo eine Regel an einer von ihm abzunehmenden Bauaufgabe hängt)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "'Wie vorgeschlagen' zeichnen und die Mitzeichnung dort setzen, wo das Blatt sie erfragt (L1, L2, L6 und die Voraussetzungen V0, V1, V3). Grund aus der Quelle: die Restrisikoliste des Teilschnitts führt diesen Punkt selbst als Nr. 5 dessen, was ein Mensch tun muss — 'Der Ausschnitt dieses Blattes ist damit gerechnet, aber nicht gezeichnet'; und das Blatt sagt über sich, jede Zeile ohne Haken bleibe offen. Solange es leer ist, hat die Zahl 157 keine Unterschrift, und die 113 Zeilen darüber auch nicht.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/klauselschnitt/S1_zeichnung.md, Blöcke 1a/1b, Block 3 und Abschnitt 'Menschliche Entscheidung' Z. 224-229 — nachgezählt: 0 gesetzte Kreuze in der ganzen Datei, Namenstabelle leer · /Users/andi/freiraum-delivery/nachweise/restrisiken/restrisiken_teilschnitt.md:337 und :32-41",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-9",
+   "titel": "Die Scheibenabnahme ist vorbereitet, aber nicht angemeldet — und der fremde Blick ist nicht angefordert",
+   "worum": "Das echte Abnahmeblatt der M5-Vorbereitung liegt fertig da, das Kästchen 'Die Scheibe wird zur Abnahme vorgelegt' ist leer und beide Namenszeilen sind leer; anmelden darf man sie erst, wenn ein Tor-3-Blatt vorliegt, und davon gibt es keines.",
+   "wer": "A. Han (fordert den fremden Blick an) · danach beide (melden an)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Zuerst den fremden Blick anfordern, nicht zuerst umbenennen. Die Anforderung liegt fertig vor. Erst wenn ein Tor-3-Blatt in nachweise/fremdreview/ liegt, das Blatt in abnahme.md umbenennen und die drei Kopffelder samt Kreuz und Namen füllen. Grund aus der Quelle: das Blatt sagt selbst, mit dem zweiten Namen schlüge Tor 1 sofort an, 'und zwar zu Recht: fail-closed'; das Freigabeblatt vom 19.08. nennt Tor 3 ausdrücklich das Nadelöhr, 'er braucht Zeit', und es läuft gegen den 31.08.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/scheiben/m5-vorbereitung/abnahme_VORBEREITET.md, Kopftabelle (⟨Commit-Hash⟩, ⟨JJJJ-MM-TT⟩, ⟨Name⟩) und Abschnitt 'Zeichnung' (☐ und zwei leere Namenszeilen) · /Users/andi/freiraum-delivery/nachweise/fremdreview/ enthält nur README.md und VORLAGE.md · /Users/andi/freiraum-delivery/arbeit/Vorlagen/m5_bauzug_freigabe_260819.md, Abschnitt 3, Zeilen T3 und A",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-10",
+   "titel": "Sieben verzögernde Punkte sind zur Einzelvorlage zugesagt — kein einziges Blatt existiert",
+   "worum": "Die achte Entscheidung vom 19.08. nimmt sieben der vierzehn Punkte ausdrücklich aus dem 'Bau führt ohne weitere Zeichnung aus' heraus und sagt, sie würden einzeln vorgelegt; zu keiner der sieben Kennungen gibt es ein Blatt.",
+   "wer": "V-1, V-3, V-6, V-14: beide · V-2: Eigentümer K05 und K19 · V-4: beide und Eigentümer K02 · V-5: Eigentümer K15/K17 und beide",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Die sieben Blätter anlegen lassen und in dieser Reihenfolge vorlegen: V-14 zuerst (es ist derselbe Vorgang wie Z-9 und hat null Puffer), dann V-5 (fällt für die Maskierung ein aufbewahrter Träger an, kippt der Migrationszuschnitt ein zweites Mal — und zwar nach Baubeginn), dann V-2 und V-4, dann V-1, V-3, V-6. Grund: die eigene Zeichnung vom 19.08. hat die Vorlage zugesagt; solange kein Blatt existiert, ist die Zusage unerfüllt, und der Bau läuft an Punkten vorbei, die er nach dieser Zeichnung nicht selbst entscheiden darf.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md, Zeichnung, Entscheidung 8 ('x so' — 'ausgenommen V-1, V-2, V-3, V-4, V-5, V-6 und V-14 — sie brauchen eine Entscheidung und werden einzeln vorgelegt') und Abschnitt 2, Tabelle Z. 103-116 · nachgesucht in arbeit/ und nachweise/: jede der sieben Kennungen kommt ausschließlich in diesem einen Blatt vor",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-11",
+   "titel": "Starttor 14 — die Abnahme steht aus, und ob es vier oder fünf Starttore sind, ist unentschieden",
+   "worum": "Von fünf Starttoren, die der Auftragstext nennt, sind vier abgenommen; beim fünften fehlt der Nachweis vollständig, das Abnahmekästchen ist leer, und daneben steht als eigene Zeile die Frage, ob die Abnahmebedingung für vier oder für fünf gilt.",
+   "wer": "beide",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Nicht getrennt entscheiden, sondern mit BA-1 zusammen: das Blatt vom 16.08. hält fest, dass sich der Punkt mit dem Vollzug von BA-1 auflöst. Wird trotzdem vorher gezeichnet, darf das Kreuz nicht 'gilt für vier' heißen — der Harness darf dazu nicht raten, denn ein Starttor aus einer gezeichneten Abnahmebedingung zu streichen ist eine Umfangsänderung und braucht ein Korrekturblatt nach Abschnitt 12. Bis dahin bleibt die Zeile stehen und ist als solche mitzuführen.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/vorbedingungen/starttore_abnahme_260816.md:173-176 ('Abnahme M. Veil: [ ] steht aus — der Harness setzt hier kein Kreuz'; 'Zu entscheiden: Gilt Bedingung 6 für vier Starttore oder für fünf?'; 'Wer entscheidet: M. Veil, gemeinsam mit A. Han'), Tabelle Z. 187 und Abschnitt 8, Zeile 2 · /Users/andi/freiraum-delivery/arbeit/Vorlagen/ZUR_ZEICHNUNG_260816.md, Zeile C-2",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-12",
+   "titel": "Prüfsumme der Anlage Baustrategie — eine Zeile ist ausdrücklich nachzuzeichnen",
+   "worum": "Der Weg ist gezeichnet, aber die vierte Zeile — dass Abschnitt 11.1 des Bauauftrags mit dem nächsten Korrekturblatt nachgezogen wird — blieb leer, weil an dem Tag die Weisung 'genau ein Kreuz' galt; das Blatt sagt selbst, sie gehöre dazu und sei nachzuzeichnen.",
+   "wer": "beide (das Kreuz M. Veil, die Mitzeichnung A. Han)",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Das vierte Kästchen setzen und A. Hans Datum eintragen — und den Nachzug von Abschnitt 11.1 in die Stellenliste des nächsten Korrekturblatts aufnehmen, also praktisch in den Vollzug von BA-1 oder BA-2. Grund aus der Quelle: das Blatt schreibt es sich selbst vor ('gehört dazu, egal welcher Weg gewählt wird; er ist nachzuzeichnen'), und im Bauauftrag steht in der Prüfsummenspalte weiterhin 'nicht gebildet — offener Punkt'. Wer die Nachweiskette nachrechnet, findet dort einen Bruch.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/vorbedingungen/pruefsumme_anlage_baustrategie_260816.md:166-171 (viertes Kästchen leer mit dem eigenen Vermerk) und Namenstabelle Z. 173 (A. Han, Datumsspalte leer)",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-13",
+   "titel": "EN-04a · der K19-Kasten und sein Fassungsspalt — beides hält M4 offen",
+   "worum": "Ein Bildschirm der Zweckbestimmung hat in der Bildschirm-Referenz keinen Beschreibungskasten und ist deshalb nicht messbar; der fertige Kasten liegt daneben, aber die Anordnung seiner Zeilen ist ein Vorschlag, der gezeichnet werden muss, und dahinter steht die ungeklärte Frage, welche Fassung der Bildschirmquelle überhaupt gilt.",
+   "wer": "M. Veil (Eigentümer Konzept-Fabrik) · fachlicher Eigentümer K19",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Erst die Anordnung zeichnen, dann den Kasten einfügen — nicht umgekehrt. Der Harness darf hier nicht empfehlen, in welcher Reihenfolge die Felder stehen: das Blatt sagt ausdrücklich, die Reihenfolge stamme aus einer Überlegung und sei 'zu zeichnen, nicht zu übernehmen'; würde sie ungezeichnet eingefügt, wäre eine Anordnung, die sich der Harness ausgedacht hat, verbindliche Bauvorgabe — genau die Umkehrung, die F41 verhindern soll. Gleichzeitig ist der Fassungsspalt (Konzept v1.3 gegen Maschinenquelle v1.2 mit Freigabekandidat-Vermerk, zwei Bildschirme nur in der Quelle) an die Konzept-Fabrik zu geben; die vorgeschlagene Frist war der 22.08.2026. Nach dem Einfügen zieht der Harness die Kopie und die Prüfsumme nach, sonst wird Tor 1a rot.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/an_konzeptfabrik/03_EN-04a_kasten.md:10-12 ('zu zeichnen, nicht zu übernehmen') und Abschnitt 'Nach dem Einfügen' · /Users/andi/freiraum-delivery/arbeit/Bauberichte/m4_nachrechnung_260819.md:89 und :103 ('Damit ist M4 nicht abschließend nachgerechnet') · /Users/andi/freiraum-delivery/nachweise/befunde/BEF-E_260814.md:101-120 (BEF-E3, 'offen · von der Konzept-Fabrik zu entscheiden', ohne Namen und ohne Frist) · /Users/andi/freiraum-delivery/nachweise/scheiben/m5-vorbereitung/abnahme_VORBEREITET.md, Punkt 2 der Gegengründe",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-14",
+   "titel": "E-13 · an welcher Stelle die Kenntnisnahme des KI-Hinweises eingeholt wird",
+   "worum": "Eine gezeichnete Bauaufgabe verlangt, dass die Kenntnisnahme des KI-Hinweises nachweisbar ist; der Riegel dafür war gebaut, hat vier Prüffäden rot gefärbt und ist zurückgenommen worden — der Code steht unverändert im Bestand und wartet auf diese Entscheidung.",
+   "wer": "A. Han (Abnahme der Bauaufgabe L9) gemeinsam mit M. Veil",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "'Riegel nach der Anmeldung' ankreuzen — aber ausdrücklich mit der Auflage 'mit Vertragszeile in K19, vorher nicht'. Grund aus der Quelle: wer angemeldet ist, ist bekannt, also lässt sich prüfen, ob für diese Person schon eine Kenntnisnahme vorliegt; das erfüllt 'vor der ersten Nutzung' wörtlicher als der zurückgenommene Riegel und berührt den Anmeldevertrag nicht. Der Preis ist offen benannt: es ist ein neuer Bildschirm, den K19 nicht kennt — ihn ohne Vertragszeile zu bauen wäre derselbe Fehler, den E-8 und BEF-K02M17 am selben Tag zweimal ausgewiesen haben.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/entscheidung_tor1_260816.md:501-504 (vier Kästchen, keines gesetzt) · /Users/andi/freiraum-delivery/nachweise/vorbedingungen/L9_portal_hinweis_260816.md, Kopfvermerk Z. 8 und Z. 27 ('Der Code dafür steht unverändert in app/ki_hinweis.py und wartet auf die Entscheidung E-13'; Kriterium 3 'nicht erfüllt')",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-15",
+   "titel": "Wer die Liefereinheit zeichnet, prüft und erzeugt (V-11)",
+   "worum": "Was am 31.08. gezeichnet wird, ist entschieden — der Teilschnitt als Ganzes; wer ihn zeichnet, wer ihn prüft und wer ihn erzeugt, steht daneben als drei leere Felder.",
+   "wer": "beide",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Der Harness darf die Namen nicht setzen — eine Personenzuweisung für die Zeichnungsberechtigung ist keine Kästchenübertragung. Empfohlen ist nur, sie jetzt zu setzen und nicht am Endtermin: das Blatt sagt über sich selbst, sonst sei 'die Einheit definiert und die Unterschrift nicht', und am Endtermin entstehe dann eine Vorlage statt einer Abnahme.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/vorlage_neun_entscheidungen_260816.md:458-459 (Zeichnung B-15, viertes Kästchen: 'Es zeichnen ⟨Namen⟩ · es prüft ⟨Name⟩ · es erzeugt ⟨Name⟩'; das erste Kästchen trägt 'gez. M. Veil, 16.08.2026')",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-16",
+   "titel": "Tresorzugriff und wer den echten Mailversand auslösen darf (B-12)",
+   "worum": "Der Umzug der drei Zugangswerte in einen neuen Tresor ist gezeichnet; zwei Felder daneben sind leer geblieben — wer Zugriff auf den Tresor bekommt, und wer den echten Mailversand auslösen darf, letzteres ausdrücklich offen seit dem 06.08.2026.",
+   "wer": "M. Veil",
+   "wirkung": "sperrt die Abnahme",
+   "empfehlung": "Der Harness gibt hier keine Empfehlung — das Blatt weist die Frage 'wer Zugriff auf den Tresor bekommt' selbst als eine der drei Stellen aus, an denen der Orchestrator bewusst keine gibt. Empfohlen ist nur, beide Felder vor der Abnahme zu füllen: der echte Mailweg gehört zum Teilschnitt, der am 31.08. abgenommen wird, und solange nur eine einzige Person ihn auslösen kann und das nirgends gezeichnet ist, hängt eine Abnahmestation an einem einzelnen Menschen, ohne dass es jemand entschieden hat.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/vorlage_neun_entscheidungen_260816.md:1193-1194 (Zeichnung B-12, drittes und viertes Kästchen: '⟨Namen⟩' und 'Wer den echten Versand auslöst (offen seit 06.08.2026): ⟨Name⟩'; erstes Kästchen 'gez. M. Veil, 16.08.2026') und :1231-1232 (der Vermerk, dass zu dieser Frage keine Empfehlung gegeben wird)",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-17",
+   "titel": "Der Liefertermin für die 22 Antwortlisten-Positionen fehlt",
+   "worum": "Zwölf Themen, drei Einordnungsfragen und sieben Ziele sollen im Wortlaut geliefert werden; das Kästchen ist gekreuzt, das Datum daneben ist ein leeres Feld geblieben.",
+   "wer": "fachlicher Eigentümer K05",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Ein Datum kann der Harness nicht empfehlen — das Blatt sagt es wörtlich ('Ein Datum erfindet der Harness nicht'). Empfohlen ist nur, überhaupt eines zu setzen, weil der Rückfallweg zwar trägt, aber dauerhaft wirkt: der freie Weg baut, die beiden Bildschirme gehen mit dem Hausmuster und einer sichtbaren Meldung zum ungezeichneten Wortlaut in die Abnahme, und ohne Termin sagt nichts, wann das aufhört.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md:202 (Zeichnung, Entscheidung 6: 'x wird geliefert bis ⟨Datum: ⟩ — weiterhin offen') und der Vermerk darunter ('Liefertermin der Antwortlisten: weiterhin kein Datum genannt')",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-18",
+   "titel": "Was 'vor der Übergabe' heißt — Lieferübergabe oder Kundenübergabe",
+   "worum": "Zwölf offene Konzeptpunkte tragen die Frist 'vor der Übergabe'; ob damit die Lieferübergabe oder die Übergabe an den Kunden gemeint ist, entscheidet, ob sie jetzt fällig sind oder erst später.",
+   "wer": "M. Veil",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Der Harness gibt hier keine Empfehlung und darf es nicht — das Blatt nennt diese Wortbedeutung selbst 'die größte Unschärfe dieser Sichtung' und legt bewusst keinen der beiden Wege vor. Empfohlen ist nur, sie zu beantworten statt sie stehen zu lassen: fällt die Antwort auf Lieferübergabe, rücken zwölf Punkte vor den 31.08., und dafür bleiben dann noch zwölf Tage.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/sichtung_offene_konzeptpunkte_260816.md:495-497 (beide Kästchen leer, mit dem Klammervermerk, warum sie leer bleiben) und Abschnitt 6, Bündel C und E (Z. 386-395)",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-19",
+   "titel": "E-14 · eine gebaute Spalte stützt sich auf eine Analogie statt auf eine Regel",
+   "worum": "Ein Prüffall hatte gemeldet, dass eine Spalte der Zweckbestimmung keine gezeichnete Regel trägt, sondern nur eine Ähnlichkeit zu einer anderen Bauart; vier Wege stehen zur Wahl, keiner ist angekreuzt.",
+   "wer": "A. Han (Eigentümer K04)",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "'Klausel in K04 nachziehen' ankreuzen und als Übergabeblatt in den Ordner für die Konzept-Fabrik legen. Grund aus der Quelle: die Spalte leistet etwas Echtes — sie ist die Aussage 'die Erklärung liegt vor', und wer sie streicht, verliert einen Nachweis; sie steht aber in keiner gezeichneten Klausel. Wichtig für die Einordnung: der Prüffall meldet seit der Trägerzeichnung vom 16.08. wieder bestanden, der Lauf vom 19.08. hat null Fehlschläge — die Klausel ist damit aber nicht nachgezogen, und der Zustand, den die Reißleine gefunden hat, besteht fort.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/entscheidung_tor1_260816.md:544-547 (vier Kästchen, keines gesetzt, Empfehlung markiert) · /Users/andi/freiraum-delivery/arbeit/Vorlagen/entscheidung_traeger_zweckbestimmung_260816.md:140 (Weg C, gez. M. Veil 16.08.2026) · /Users/andi/freiraum-delivery/arbeit/Bauberichte/m4_nachrechnung_260819.md:50-54 ('Tor 1c: kein Fehlschlag')",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-20",
+   "titel": "Fünf Regeln, die keine Klausel haben oder die falsche tragen",
+   "worum": "Fünf Punkte hängen daran, dass eine Regel, nach der schon gebaut oder geprüft wird, im Konzepttext gar nicht oder anders steht — jeder braucht eine Zeichnung in der Konzept-Fabrik, und für keinen liegt ein Übergabeblatt bereit.",
+   "wer": "O-K23-7: M. Veil · K02-M17: A. Han (Eigentümer K02) · Punkt 10.2 Kunden-Code: M. Veil · O-K08-12: Founder (K08) · O-K04-9/10: Konzept-Fabrik",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Für alle fünf ein Übergabeblatt anlegen, so wie es für F41, F42 und den EN-04a-Kasten schon geschehen ist, und sie in einer Runde zeichnen lassen. Zu Punkt 10.2 empfiehlt das Blatt Weg a (außerhalb des Umfangs, als benannter Befund mit Träger und Frist) — sechzehn Tage vor dem Endtermin ist jede Umfangserweiterung teurer als der Schaden, den sie abwendet; ausdrücklich nicht zulässig ist die dritte Möglichkeit, es still mitlaufen zu lassen. Zu K02-M17 ist der Bau durch einen Beschluss gedeckt, nur der Klauseltext sagt das Gegenteil. Zu O-K04-9/10 gilt: es sind die einzigen zwei Punkte im ganzen Bestand mit der Frist 'vor dem Bau', und der Bau ist am 19.08. angelaufen.",
+   "beleg": "O-K23-7: /Users/andi/freiraum-delivery/CLAUDE.md:181-184 ('offener Punkt O-K23-7', Entscheider Konzept-Fabrik-Owner), dieselbe Stelle in .claude/agents/pruef-agent.md:41 und .claude/commands/scheibe.md:68 · K02-M17: /Users/andi/freiraum-delivery/nachweise/befunde/BEF-K02M17_260816.md:133 (Schritt 2, 'Aufwand: eine Zeichnung') · 10.2: /Users/andi/freiraum-delivery/arbeit/Vorlagen/zeichnung_M7-M10_260815.md:46-47 (zwei Kästchen leer) mit dem Schlussvermerk 'Punkt 10.2 ist ausdrücklich nicht übertragen' · O-K08-12: /Users/andi/freiraum-delivery/nachweise/befunde/BEF-D_260809.md:136 ('Zu entscheiden … Entscheider: Founder · K08') · O-K04-9/10: /Users/andi/freiraum-delivery/arbeit/Vorlagen/offene_entscheidungen_260815.md:109 · in /Users/andi/freiraum-delivery/arbeit/an_konzeptfabrik/ liegt zu keinem der fünf ein Blatt",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-21",
+   "titel": "Drei getragene Restrisiken ohne Träger und ohne Frist",
+   "worum": "Bei drei Restrisiken steht das Kreuz auf 'wird getragen', aber genau die Felder, die ein getragenes Risiko erst zu einem getragenen machen — Träger, Frist, teils auch die Kritikalität — sind leer geblieben.",
+   "wer": "M. Veil",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Alle drei in einem Zug füllen. Zusätzlich beim ersten das Kreuz nachziehen: die Entscheidung vom 18.08. läuft sachlich auf 'gemessen wird der Sachverhalt, nicht die Buchstabenfolge' hinaus, während auf dem Befundblatt weiter der andere Weg gekreuzt ist — zwei Blätter sagen Verschiedenes über dieselbe Frage. Beim dritten geht es nur darum, einen abgeleiteten Namen zu bestätigen oder zu ersetzen. Grund aus der Quelle: K23-D07 sagt, ein Restrisiko darf nicht stillschweigend übernommen werden, es trägt einen Namen und einen Träger — ein Kreuz auf 'tragen' ohne Träger ist genau dieses Stillschweigen.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/befunde/BEF-F_260816.md:118-127 (Kritikalität '⟨von einem Menschen einzutragen⟩', Träger/Annahmeentscheidung/Frist leer; Weg B [x] gez. M. Veil 16.08.) gegen /Users/andi/freiraum-delivery/nachweise/befunde/ENTSCHEIDUNG-VP-08b_260818.md, Abschnitt 3 · /Users/andi/freiraum-delivery/nachweise/vorbedingungen/blindheit_mechanisch_260816.md:223 ('[x] Die Bash-Lücke wird als Restrisiko getragen — Träger: ⟨…⟩ · Frist: ⟨…⟩') · /Users/andi/freiraum-delivery/nachweise/restrisiken/restrisiken.md:173 (RR-02, Träger 'abgeleitet, nicht angewiesen … wird der Name hier ersetzt')",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-22",
+   "titel": "Die Verzugsmeldung vom 14.08. hat nie eine Antwort bekommen",
+   "worum": "Am 16.08. ist gezeichnet worden, dass die Verzugsmeldung mit 'Kenntnis genommen' abgehakt wird — das Datum, bis zu dem die Berichtigung angestoßen wird, ist dabei offen geblieben, und in der Meldung selbst sind Kästchen, Datum und beide Namenszeilen bis heute leer.",
+   "wer": "beide (das fehlende Datum) · Harness (die Übertragung des gezeichneten Kreuzes)",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Das Datum nennen — der Harness setzt es nicht — und den Harness danach das Kreuz mit Wortlaut und Datum in die Meldung übertragen lassen. Das ist keine neue Entscheidung, sondern der Vollzug einer erteilten; das anweisende Blatt sagt selbst: 'Ein Kreuz auf diesem Blatt hier ersetzt es nicht — es weist es nur an.' Grund: sonst findet ein Dritter in einem Jahr eine Verzugsmeldung ohne Empfänger und kann nicht erkennen, dass der Auftraggeber gehandelt hat, obwohl er es getan hat.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/vorlage_neun_entscheidungen_260816.md:119-126 (Zeichnung B-8: erstes Kästchen [x] gez. M. Veil, drittes 'Datum für die Berichtigung: ⟨Datum⟩' leer; Ausführungshinweis auf VERZUG_260814.md) · /Users/andi/freiraum-delivery/nachweise/meldungen/VERZUG_260814.md:186-196 (beide Kästchen leer, beide Datumsfelder ⟨Datum⟩, Namenstabelle leer)",
+   "harness_darf_nicht_empfehlen": true
+  },
+  {
+   "nr": "Z-23",
+   "titel": "Der Zeichnungsweg selbst ist nicht festgelegt",
+   "worum": "Es gibt zwei Kanäle, über die Weisungen hereinkommen, und sie verhalten sich verschieden; nirgends steht, über welchen eine Zeichnung gelten darf — ein Satz dafür liegt formuliert vor, beide Kästchen sind leer.",
+   "wer": "beide",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "'Zeichnungsweg wie vorgeschlagen festlegen' ankreuzen. Der vorgeschlagene Satz beschreibt die heutige Praxis, statt sie zu ändern: eine Weisung gilt, wenn sie aus dem eigenen Konto der zeichnenden Person stammt oder vom Auftraggeber in dessen Sitzung wiedergegeben wird, und wenn der Harness sie mit Wortlaut und Datum in das betroffene Blatt einträgt. Grund: die Frage ist nicht theoretisch — am 17.08. hat im zweiten Kanal jemand 'Ich bin A. Han' geschrieben und um E-9 und E-14 gebeten, und dieser Kanal hat es zu Recht abgewiesen, während der andere dieselbe Art von Weisung annimmt. Auf genau diesem Weg sind die heutigen M5-Eintragungen entstanden.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/befunde/BEF-ZEICHNUNG-1_260817.md:240-255 (Vorschlag im Wortlaut, beide Kästchen leer)",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-24",
+   "titel": "Der Nachtrag zu Entscheidung 3 trägt überhaupt keinen Zeichnungsblock",
+   "worum": "Ein Blatt vom 19.08. holt zehn übersehene Regeln aus zwei Konzepten in die Liste und sagt, gezeichnet werde die Liste als Ganzes — 35 plus 10 gleich 45; ein Kästchen oder eine Namenstabelle, in die das eingetragen werden könnte, gibt es auf dem Blatt nicht.",
+   "wer": "beide",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Einen Zeichnungsblock anlegen lassen und die erweiterte Liste als Ganzes zeichnen. Grund: die Kriterien der zehn sind einzeln längst gezeichnet und die Klausellage von M5 führt den Nachtrag bereits als eine ihrer drei Grundlagen — die erweiterte Liste selbst bleibt aber ein Vorschlag ohne Unterschrift, und der Bauzug arbeitet damit gegen eine Klausellage, die formal noch die alte ist. Nicht mitzeichnen lässt sich die Gewichtung 'tragend gegen mitwirkend' ohne Weiteres: das Blatt weist sie selbst als Einschätzung aus.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Plaene/scheibe4_m5_entscheidung3_nachtrag_k03_k17.md — Kopfzeile 3 ('noch nicht gezeichnet'), Schlussabschnitt ('Gezeichnet wird die Liste als Ganzes: 35 + 10 = 45'), nachgezählt: null Kästchen und keine Namenstabelle in der Datei · /Users/andi/freiraum-delivery/nachweise/klauselregister/M5_klausellage_260819.json, Feld 'grundlage', dritter Eintrag",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-25",
+   "titel": "A. Hans Mitzeichnung fehlt auf neun Blättern der Runde vom 16.08.",
+   "worum": "Auf diesen Blättern stehen die Kreuze samt Weisungswortlaut und dem Vermerk 'gez. M. Veil, 16.08.2026', die Namenstabelle am Ende ist aber nie ausgefüllt worden — meist fehlt genau die Zeile von A. Han mit dem Zusatz 'soweit mitzeichnungsbedürftig'.",
+   "wer": "A. Han",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "In einem Zug zeichnen — und dabei je Blatt eintragen, ob die Mitzeichnung wirklich erforderlich war oder nur vorsorglich steht. Grund: sachlich ist entschieden, formal fehlt der Beleg an der Stelle, an der ein Dritter ihn sucht; aus dem Blatt heraus lässt sich heute nicht unterscheiden, welche Punkte eine Mitzeichnung wirklich brauchen — genau die Verwechslung, die am 17.08. schon einmal als Befund geendet ist. Ausgerechnet das Blatt, das die Regel 'kein Kreuz ohne Weisung' trägt, weist selbst diesen Formmangel auf.",
+   "beleg": "Alle geprüft, A. Hans Datumsspalte jeweils leer: /Users/andi/freiraum-delivery/arbeit/Vorlagen/ENTSCHEIDUNGEN_260816.md:255 · entscheidung_steuertexte_260816.md (Namenstabelle am Ende) · entscheidung_anlagefunktion_fassung_260816.md · vollzugsblatt_nachtraege_anlage_260816.md · sichtung_offene_konzeptpunkte_260816.md:506 · vorlage_neun_entscheidungen_260816.md:1220 · /Users/andi/freiraum-delivery/nachweise/vorbedingungen/formvermerk_uebertragene_kreuze_260816.md:123-124 (dort beide Datumsspalten leer) · pruefsumme_anlage_baustrategie_260816.md (siehe Z-12) · korrekturblatt_BA-1/BA-2 (siehe Z-2)",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-26",
+   "titel": "Sechs überholte Blätter führen Entscheidungen als offen, die anderswo gezeichnet sind",
+   "worum": "Sechs Blätter zeigen leere Kästchen und leere Namenstabellen zu Fragen, die auf einem anderen Blatt längst entschieden sind — wer eines davon zuerst aufschlägt, hält den Punkt für offen und stellt die Frage ein zweites Mal.",
+   "wer": "beide (ein Federstrich je Blatt: entweder nachtragen oder Schließvermerk)",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Je Blatt einen Schließvermerk setzen, der auf das tragende Blatt verweist — genau so, wie es für eines davon schon empfohlen wurde ('die Vorlage mit einem Schließvermerk versehen, der auf S28 und die berichtigte Fassung verweist. Kein neues Kreuz'). Beim Aufräumlauf für Einladungen ist zusätzlich eine kurze Feststellung nötig, welcher der beiden Stände gilt: drei Blätter führen ihn als offen, ein viertes als gezeichnet. Die sechs K17-Zellen im Register sind reine Nachtragsarbeit des Harness, keine Zeichnung.",
+   "beleg": "/Users/andi/freiraum-delivery/arbeit/Vorlagen/vollzugsauftrag_VA-1_260815.md:232-238 (drei leere Kästchen, leere Namenstabelle) gegen zeichnung_M1-M10_260815.md:27 (M-1 '[x]') · /Users/andi/freiraum-delivery/arbeit/Plaene/scheibe4_m5_entscheidung2_nachtrag_ablage.md:134-141 (A, B, C leer) gegen m5_vor_dem_bauzug_260819.md Entscheidung 5 und m5_teil1_fuenf_ohne_massstab_260819.md T-5 · /Users/andi/freiraum-delivery/nachweise/vorbedingungen/starttor_11_13_nachweis_260816.md:82-88 gegen starttore_abnahme_260816.md Z. 180-186 ('[x] übertragen 16.08.2026') · /Users/andi/freiraum-delivery/arbeit/Vorlagen/entscheidung_einladung_mandantengrenze_260814.md:205-217 (drei Lesarten, sechs leere ☐, leere Unterschriftenzeilen) gegen zeichnung_M1-M10_260815.md:40-95 ('ist gegenstandslos … Kein neues Kreuz') · O-K15-3: vorlage_neun_entscheidungen_260816.md:852-854, ZUR_ZEICHNUNG_260816.md:274 und empfehlungen_offene_punkte_260816.md:309-310 (je leer) gegen empfehlungen_offene_punkte_260816.md, Zeichnungstabelle E-5 '[x]', beide Namen mit Datum 16.08.2026 · /Users/andi/freiraum-delivery/nachweise/klauselregister/register.json, K17-D03/D13/M02/M06/M07/M23 ('STEHT AUS') gegen m5_bauzug_freigabe_260819.md, B-3 '[x]'",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-27",
+   "titel": "Welche Zeilen eines Bildschirmkastens Platzhalter sind, ist nicht festgelegt",
+   "worum": "Ein Bildschirm wird vom Prüflauf nicht gemessen, obwohl sein Beschreibungskasten vollständig ist — weil der Kasten Aufschriften mit Beispielwerten mischt und niemand festgelegt hat, welche Zeilen was sind.",
+   "wer": "fachlicher Eigentümer K19",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Eine kurze Festlegung zeichnen, wie eine Platzhalterzeile in einem K19-Kasten erkennbar ist. Grund aus der Quelle: der Lauf weist den Bildschirm ausdrücklich aus, statt ihn stillschweigend wegzulassen, und sagt selbst, ein Fall dafür brauche zuerst diese Festlegung — ohne sie müsste der Prüfstand einen Selektor erfinden, und genau das darf er nicht. Dieselbe Frage kehrt bei jedem weiteren Kasten mit Beispielwerten wieder, auch bei dem aus Z-13.",
+   "beleg": "/Users/andi/freiraum-delivery/pruefungen/klauseln/k19_kasten_lauf.sh, Kommentarblock 'WELCHE BILDSCHIRME DIESER LAUF FUEHRT', Z. 143-150",
+   "harness_darf_nicht_empfehlen": false
+  },
+  {
+   "nr": "Z-28",
+   "titel": "E-6 · die Nachmessung schlägt einen anderen Abschluss vor als den gezeichneten",
+   "worum": "Am 16.08. ist gezeichnet worden, die vier ungemessenen Zustände der Gestaltung nachzumessen; die Nachmessung selbst empfiehlt danach etwas anderes — E-6 für den heutigen Stand zu schließen und den Rest an ein Ereignis statt an einen Kalendertag zu hängen — und dieses Blatt hat weder Kästchen noch Namenstabelle.",
+   "wer": "M. Veil",
+   "wirkung": "sperrt nichts, sollte aber weg",
+   "empfehlung": "Einen Zeichnungsblock anlegen lassen und der Empfehlung folgen: E-6 gilt für den heutigen Stand als geschlossen und läuft als auflösend bedingter Punkt weiter, fällig beim Einbau von E-1 bis E-5. Grund aus der Quelle: vier der Restpunkte lassen sich heute gar nicht messen — 'der Einbau hat nicht stattgefunden' —, heute vorgezogen misst man die Voreinstellung des Browsers. Ohne Zeichnung ist nicht entscheidbar, ob E-6 geschlossen, zurückgestellt oder weiter offen ist, und das Blatt hält fest, kein Teil davon dürfe als bestanden zusammengefasst werden.",
+   "beleg": "/Users/andi/freiraum-delivery/nachweise/gestaltung/E6_nachmessung_260816.md, Abschnitt 6 (Handlungsempfehlung) und Kopfzeile 11 ('Kein Teil dieses Blattes darf als bestanden zusammengefasst werden'); nachgezählt: null Kästchen in der Datei · /Users/andi/freiraum-delivery/arbeit/Vorlagen/vorlage_neun_entscheidungen_260816.md, B-21, '[x] Nachmessen … gez. M. Veil, 16.08.2026'",
+   "harness_darf_nicht_empfehlen": false
+  }
+ ],
+ "verworfen": [
+  {
+   "titel": "F41 und F42 in die Verfassung der Konzept-Fabrik eintragen",
+   "warum": "Keine Zeichnung, sondern Vollzug. Beide Wortlaute sind gezeichnet (F41 aus Blatt 94 Punkt 6 vom 18.08., F42 aus M. Veils Vorgabe vom 18.08.); der Übergabeordner sagt 'Einfügen tut ein Mensch', und das Freigabeblatt vom 19.08. führt F42 ausdrücklich unter 'Was keine Unterschrift löst — hier muss jemand etwas tun'. Zu tun bleibt, nicht zu entscheiden."
+  },
+  {
+   "titel": "K05 Abschnitt 5 nachziehen",
+   "warum": "Die Entscheidung ist gefallen: m5_vor_dem_bauzug_260819.md, Entscheidung 2, 'x nachziehen', gez. beide 19.08.2026. Was bleibt, ist die Ausführung in einer Datei der Konzept-Fabrik, die der Harness nicht anfassen darf — Arbeit. (Nebenbefund, kein Zeichnungspunkt: der Übergabeordner-README listet in seiner Tabelle nur 01 bis 03 und führt dieses vierte Blatt nicht; wer nach der Liste arbeitet, findet es nie.)"
+  },
+  {
+   "titel": "Die sechs K17-Zellen sagen 'STEHT AUS'",
+   "warum": "Überholt. B-3 auf m5_bauzug_freigabe_260819.md trägt '[x] M. Veil bestätigt die sechs K17-Kriterien', gezeichnet 19.08.2026 mit beiden Namen. Das Register ist nur älter geschrieben (register.json 18:53, Freigabeblatt 20:55). Nachtragsarbeit des Harness, keine offene Zeichnung. Ebenso hinfällig ist die Meldung, dies sperre den Bau."
+  },
+  {
+   "titel": "E-14 hält Tor 1c rot / VP-24 ist gescheitert",
+   "warum": "Nachgemessen: der Lauf vom 19.08. meldet 'Pruefpunkte: bestanden 13 · fehlgeschlagen 0 · gesperrt 4' und 'Tor 1c: kein Fehlschlag'. VP-24 stützt sich seit der Trägerzeichnung vom 16.08. auf Weg C. Die Meldung war am 17.08. richtig und ist es heute nicht mehr. E-14 bleibt als Punkt bestehen (Z-19), aber ohne Sperrwirkung."
+  },
+  {
+   "titel": "O-K15-3 · der Aufräumlauf nach 90 Tagen ist unbeschlossen",
+   "warum": "Auf empfehlungen_offene_punkte_260816.md trägt E-5 ('invitation klassifizieren, dann 90 Tage') ein [x] und beide Namen mit Datum 16.08.2026, Weisung im Wortlaut. Die drei leeren Kästchen auf den anderen Blättern und der Satz 'noch nicht beschlossen' in restrisiken.md sind veraltete Stände desselben Punktes — geführt unter Z-26, nicht als eigene offene Entscheidung."
+  },
+  {
+   "titel": "Die drei Kästchen im Blatt zur Benennung des Teilschnitts",
+   "warum": "Ausführungsschritte, keine Entscheidung: Etikett anlegen, Ablauf auf beide Etiketten hören lassen, Schritt 10 nachziehen. Das Blatt sagt es selbst — 'Die Benennung selbst ist gezeichnet (B-2, 16.08.2026). Was hier offen ist, sind die drei Ausführungsschritte.'"
+  },
+  {
+   "titel": "Das leere Kästchen 'Die Anforderung ist so abgeschickt worden' im Tor-3-Blatt",
+   "warum": "Vollzugsvermerk über eine Handlung, keine Entscheidung. Es gehört zum Vorgang aus Z-9 und wird gesetzt, wenn abgeschickt worden ist."
+  },
+  {
+   "titel": "Das leere Kästchen 'Der Nachweis aus Abschnitt 6 ist geführt' im Blindheitsblatt",
+   "warum": "Belegt einen Vollzug, der noch nicht geschehen ist — das Blatt schreibt es selbst dazu. Die Arbeit dahinter ist V-12 und liegt seit der Zeichnung B-1 vom 19.08. beim Orchestrator. Arbeit, kein Kreuz."
+  },
+  {
+   "titel": "Leere Kästchen neben gesetzten Kreuzen",
+   "warum": "Ausgeschieden nach Prüfung in: arbeitspakete_M7-M10_260815.md:281-282 · entscheidung_termin_nach_halt_260815.md:129-131 (Lesart A gez. 15.08.) · eigentuemer_zuweisung_260816.md:223-224 (gez. A. Han 16.08.) · entscheidung_steuertexte_260816.md · entscheidung_anlagefunktion_fassung_260816.md (Weg C gez.) · vollzugsblatt_nachtraege_anlage_260816.md (vier Kreuze gesetzt) · pruefsumme_anlage_baustrategie_260816.md Wege B und C · entscheidung_traeger_zweckbestimmung_260816.md · m5_vor_dem_bauzug_260819.md und m5_teil1_fuenf_ohne_massstab_260819.md (nicht gewählte Alternativen)."
+  },
+  {
+   "titel": "Kästchen in Vorlagen und Mustern",
+   "warum": "nachweise/scheiben/VORLAGE_abnahme.md und nachweise/fremdreview/VORLAGE.md sind zum Kopieren da. Nicht zu verwechseln mit nachweise/scheiben/m5-vorbereitung/abnahme_VORBEREITET.md — das ist das echte Blatt dieser Scheibe und steht als Z-9."
+  },
+  {
+   "titel": "Alte Sammelvorlagen mit ungesetzten Kästchen (ZUR_ZEICHNUNG_260816, entscheidungen_schlussrunde_260816, vorfrage_BA1_vollzug_260816, entscheidungsvorlage_MVeil_260815)",
+   "warum": "Sie führen keine eigenen Entscheidungen, sondern Übersichten über Punkte, die anderswo entschieden oder hier einzeln aufgeführt sind (BA-1/BA-2 → Z-2, Starttor 14 → Z-11, die Kriterien → Z-7, O-K15-3 → Z-26). Alle vier tragen null gesetzte Kreuze und sind durch die Blätter vom 19.08. überholt; als Doppelstände gehören sie unter Z-26."
+  },
+  {
+   "titel": "'409 Kritikalitäts-Vorschläge'",
+   "warum": "Nachgezählt sind es 405 — in register.json wie in pflege.json (510 gepflegte Zeilen, 405 mit Kritikalitätsvorschlag, alle ungezeichnet). Die Zahl ist in Z-6 berichtigt; die Aussage selbst hält stand."
+  }
+ ]
+}
