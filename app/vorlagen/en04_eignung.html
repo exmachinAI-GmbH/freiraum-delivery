@@ -185,7 +185,22 @@
 
     {% for frage in fragen %}
       <fieldset>
-        <legend>Frage {{ frage.position }} von 3</legend>
+        {#
+          Die Dimensionsmarke. Der Kasten aus K19 fuehrt sie an jeder der
+          drei Fragen -- [ART] [NUTZUNG] [DATEN] -- und sie fehlte hier
+          (Blatt 94 Abschn. 4). Sie sagt, WORAUF die Frage zielt; ohne sie
+          steht eine Frage ohne ihren Gegenstand.
+
+          Der Wert kommt aus fit_question.dimension (Aufzaehlung mit genau
+          diesen drei Werten, schema/freiraum_datamodel.sql:46) und liegt
+          seit jeher im Kontext -- er wurde nur nie ausgegeben.
+
+          Sie traegt keine Farbe: nach K16-D11 darf ein Merkmal nie allein
+          durch Farbe unterschieden werden, und hier ist der Text selbst das
+          Merkmal.
+        #}
+        <legend>Frage {{ frage.position }} von 3
+          <span class="marke">{{ frage.dimension }}</span></legend>
         <p>{{ frage.prompt }}</p>
 
         {% if halt %}
