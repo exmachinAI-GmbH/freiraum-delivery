@@ -133,7 +133,8 @@ while IFS= read -r f; do
   [ -f "$QUELLE/$rel" ] && { echo "ÜBERSPRUNGEN (gibt es schon): $rel" >&2; continue; }
   mkdir -p "$QUELLE/$(dirname "$rel")"
   cp "$f" "$QUELLE/$rel"
-  NEU="$NEU$(printf '| `%s` | %s | %s |\n' "$rel" "$(shasum -a 256 "$f" | cut -c1-16)" "$(shasum -a 256 "$QUELLE/$rel" | cut -c1-16)")"
+  NEU="$NEU| \`$rel\` | $(shasum -a 256 "$f" | cut -c1-16) | $(shasum -a 256 "$QUELLE/$rel" | cut -c1-16) |
+"
 done < <(find "$ZIEL/pruefungen" -type f -newer "$ZIEL/auftrag.md" 2>/dev/null | sort)
 
 {
