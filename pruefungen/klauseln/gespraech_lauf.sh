@@ -984,7 +984,14 @@ else
   pruefe_sql_marke
 
   EIGENER_NAME="Pruefanwendung $$ $(date +%s 2>/dev/null || echo synth)"
-  vorher_state="$(dbz "SELECT journey_phase FROM app WHERE id='00000000-0000-4000-8000-00000000ed01'")"
+  # Voller Vorher-Zustand (journey_phase UND name) -- nicht nur die
+  # Stufe: die Ausgangslage traegt in name einen Platzhalter
+  # ('(Ausgangslage: Name noch nicht gesetzt)', gespraech_daten.sql
+  # Abschn. 7), keinen NULL-/Leerwert. Der Negativfall misst deshalb
+  # gegen den TATSAECHLICHEN Vorher-Wert, nicht gegen eine angenommene
+  # Leere -- dieselbe fachliche Aussage ("eine leere Namenseingabe
+  # aendert nichts"), unabhaengig vom konkreten Platzhaltertext.
+  vorher_voll="$(dbz "SELECT journey_phase, name FROM app WHERE id='00000000-0000-4000-8000-00000000ed01'")"
   pruefe_sql_marke
 
   if [ -n "$NAME_FELD" ]; then
@@ -994,12 +1001,12 @@ else
     fi
     nach_leer="$(dbz "SELECT journey_phase, name FROM app WHERE id='00000000-0000-4000-8000-00000000ed01'")"
     pruefe_sql_marke
-    if [ "$nach_leer" = "$vorher_state|" ] || printf '%s' "$nach_leer" | grep -q "^$vorher_state|"; then
-      ok K05-M07-negativ "-- erwartet: leeres Namensfeld wird abgelehnt, Stufe bleibt ORIENTIERUNG. Nach dem Versuch mit leerem Feld liest app: '$nach_leer' (Stufe unveraendert)."
+    if [ "$nach_leer" = "$vorher_voll" ]; then
+      ok K05-M07-negativ "-- erwartet: leeres Namensfeld wird abgelehnt, Stufe bleibt ORIENTIERUNG. Nach dem Versuch mit leerem Feld liest app unveraendert: '$nach_leer' (Vorher: '$vorher_voll')."
       ok K05-D04-negativ "Dieselbe Beobachtung: kein Name wurde ohne Marke/mit leerem Feld gesetzt."
     else
-      nok K05-M07-negativ "-- erwartet: journey_phase bleibt ORIENTIERUNG, kein Name gesetzt. app liest jetzt '$nach_leer'."
-      nok K05-D04-negativ "-- erwartet: kein Name ohne gueltige Eingabe. app liest '$nach_leer'."
+      nok K05-M07-negativ "-- erwartet: journey_phase und name bleiben wie vor dem Versuch ('$vorher_voll'). app liest jetzt '$nach_leer'."
+      nok K05-D04-negativ "-- erwartet: kein Name ohne gueltige Eingabe. app liest '$nach_leer' statt '$vorher_voll'."
     fi
 
     st_name="$(sende_frage "$NAME_QUELLE" gs_name_ok "$PFAD_KEKS" 'ki-vorschlag' "$NAME_FELD=$EIGENER_NAME")"

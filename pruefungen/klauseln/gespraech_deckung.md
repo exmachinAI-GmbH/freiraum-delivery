@@ -304,9 +304,39 @@ eine Sperre finden, die nur der tatsächliche Serverbefehl auflöst — nicht nu
 Pflichtangabe —, kippt diese Abwägung zugunsten Option B, und diese Zeile wird entsprechend
 nachgetragen. Bis dahin bleibt Option A die begründete Wahl für diese Datei.
 
+**Nachtrag 20.08.2026 (vierter Nachbesserungsauftrag) — zwei weitere `NOT NULL`-Spalten,
+still `name` beantwortet.** Ein Lauf ohne Abbruch beim ersten Fehler zeigte zwei weitere
+`NOT NULL`-Verletzungen in `app`: `created_at` und — für die sechs Anwendungen der Stufe
+ORIENTIERUNG (`ed01`-`ed06`) sowie die siebte, `ed0e` für `gs_gesperrt@` — `name`.
+
+- **`created_at`**: dieselbe Rolle wie `project_no` oben — reine Infrastruktur, `now()` je
+  Zeile, keine der 101 Klauseln stellt eine Anforderung an den Erstellungszeitpunkt, kein
+  Testfall in `gespraech_lauf.sh` liest die Spalte.
+- **`name`**: Fall 1 der beiden Möglichkeiten aus dem Nachbesserungsauftrag — **kein
+  Widerspruch**. K05-D06/K05-M07/K05-G06 beschreiben den fachlichen Zustand „kein
+  bestätigter Name" vor der Bestätigung in Stufe 01; keine der 101 Klauseln behauptet, die
+  Spalte `app.name` selbst müsse `NULL` sein — das war eine Ausgangslagen-Bequemlichkeit
+  dieser Datei, keine geprüfte Aussage. Der Platzhalter lautet
+  `'(Ausgangslage: Name noch nicht gesetzt)'` — bewusst nicht leer und bewusst nicht wie ein
+  echter oder KI-vorgeschlagener Name, damit er in keiner Anzeige verwechselbar ist. Einziger
+  betroffener Testfall: `K05-M07-negativ` verglich bisher gegen eine angenommene Leere nach
+  einer leeren Namenseingabe; er vergleicht jetzt den vollen Vorher- gegen den vollen
+  Nachher-Zustand (`journey_phase` und `name`) — dieselbe fachliche Aussage („eine leere
+  Namenseingabe ändert den Zustand nicht"), nur ohne die jetzt falsche Annahme über den
+  Platzhalterwert. Kein Prüfwert wurde gesenkt, keine Erwartung gelockert.
+
+**Der stille Fehlschlag.** Derselbe Lauf zeigte, dass die AUFBAUPRÜFUNG in Abschnitt 10 von
+`gespraech_daten.sql` bei 0 `app`-Zeilen nicht angeschlagen hätte — ihre Einzelprüfungen
+(a)-(i) vergleichen nur Eigenschaften vorhandener Zeilen, nie ob genug Zeilen vorhanden sind.
+Abschnitt 10 zählt jetzt zusätzlich (Punkt (j)): 16 Konten, 16 Mitgliedschaften, 14
+Eignungs-Checks, 13 Anwendungen — Zahlen, die aus den `INSERT`-Blöcken dieser Datei
+abgezählt sind. Weicht eine davon ab, bricht die Prüfung mit dem Wort `ABBRUCH` in der
+Meldung ab, statt eine leere Ausgangslage stillschweigend bestehen zu lassen.
+
 ---
 
-*Erstellt am 20.08.2026, Abschnitt 5 nachgetragen am 20.08.2026 (dritter Nachbesserungsauftrag).
+*Erstellt am 20.08.2026, Abschnitt 5 nachgetragen am 20.08.2026 (dritter Nachbesserungsauftrag),
+Nachtrag zu Abschnitt 5 am 20.08.2026 (vierter Nachbesserungsauftrag).
 Gelesen für diesen Bericht: `klauseln.md` (vollständig, 1186 Zeilen),
 `nachweise/klauselregister/M5_klausellage_260819.json`,
 `nachweise/klauselregister/register.md`/`register.json` (Zeilen zu K01-G05, K01-M26, K01-M27),

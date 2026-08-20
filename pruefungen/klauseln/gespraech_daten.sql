@@ -273,20 +273,48 @@ ON CONFLICT (id) DO NOTHING;
 --     project_no einer anderen Pruefscheibe kollidiert. Siehe die
 --     Abwaegung "Ausgangslage von Hand vs. durch die Tuer" in
 --     gespraech_deckung.md Abschn. 5.
+--
+--     created_at ist ebenfalls NOT NULL in app (Rueckmeldung der
+--     Datenbank auf einen eigenen Probelauf, kein Zitat aus schema/)
+--     und wird hier je Zeile mit now() belegt -- dieselbe Rolle wie
+--     project_no: reine Infrastruktur, keine der 101 Klauseln stellt
+--     eine Anforderung an den Erstellungszeitpunkt, kein Testfall in
+--     gespraech_lauf.sh liest die Spalte.
+--
+--     name traegt bei den sieben Anwendungen in Stufe ORIENTIERUNG
+--     (ed01-ed06, ed0e) NICHT NULL, sondern den Platzhalter
+--     '(Ausgangslage: Name noch nicht gesetzt)' -- ebenfalls Antwort der
+--     Datenbank auf einen eigenen Probelauf: die Spalte ist NOT NULL.
+--     Entscheidung dazu (Fall 1 von zwei moeglichen, siehe
+--     gespraech_deckung.md Abschn. 5): KEIN WIDERSPRUCH zu K05-D06/
+--     K05-M07/K05-G06 ("kein Name ist gesetzt" vor der Bestaetigung in
+--     Stufe 01) -- diese Klauseln beschreiben den fachlichen Zustand
+--     "kein bestaetigter Name", nicht die Nullbarkeit der Spalte; keine
+--     der 101 Klauseln behauptet, die Spalte selbst muesse NULL sein.
+--     Der Platzhalter ist bewusst NICHT leer und sieht bewusst NICHT
+--     wie ein echter Anwendungsname aus, damit er in keiner Anzeige mit
+--     einem echten oder KI-vorgeschlagenen Namen verwechselbar ist. Der
+--     einzige Testfall, der zuvor NULL/leer voraussetzte
+--     (K05-M07-negativ in gespraech_lauf.sh), ist entsprechend
+--     angepasst: er vergleicht jetzt den vollen Vorher-Zustand
+--     (journey_phase UND name) gegen den vollen Nachher-Zustand, statt
+--     Leere anzunehmen -- dieselbe fachliche Aussage ("eine leere
+--     Namenseingabe aendert den Zustand nicht"), nur ohne die jetzt
+--     falsche Annahme.
 -- ---------------------------------------------------------------------
-INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id) VALUES
-  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_001_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec01'),
-  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_002_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec02'),
-  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_003_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec03'),
-  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_004_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec04'),
-  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_005_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec05'),
-  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_006_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec06'),
-  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'DE-GSA_007_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec07'),
-  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'DE-GSA_008_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec08'),
-  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'DE-GSA_009_01','UEBERSICHT',  'DISCOVERY','00000000-0000-4000-8000-00000000ec09'),
-  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'DE-GSA_010_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0a'),
-  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'DE-GSA_011_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0b'),
-  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'DE-GSB_001_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0f')
+INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id, created_at) VALUES
+  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_001_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec01', now()),
+  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_002_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec02', now()),
+  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_003_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec03', now()),
+  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_004_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec04', now()),
+  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_005_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec05', now()),
+  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)','DE-GSA_006_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec06', now()),
+  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'DE-GSA_007_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec07', now()),
+  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'DE-GSA_008_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec08', now()),
+  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'DE-GSA_009_01','UEBERSICHT',  'DISCOVERY','00000000-0000-4000-8000-00000000ec09', now()),
+  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'DE-GSA_010_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0a', now()),
+  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'DE-GSA_011_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0b', now()),
+  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'DE-GSB_001_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0f', now())
 ON CONFLICT (id) DO NOTHING;
 
 -- gs_gesperrt@ braucht eine EIGENE app-Zeile (nicht ed01, die gehoert
@@ -294,8 +322,8 @@ ON CONFLICT (id) DO NOTHING;
 -- Testfall gerade veraendert (F07, Abschn. "PROBE VERUNREINIGT NICHT").
 -- Ihr Check ec0e steht seit Abschn. 6 bereit; fit_check_id zeigt gleich
 -- beim Einfuegen auf ihn.
-INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id) VALUES
-  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'DE-GSA_012_01', 'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec0e')
+INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id, created_at) VALUES
+  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', '(Ausgangslage: Name noch nicht gesetzt)', 'DE-GSA_012_01', 'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec0e', now())
 ON CONFLICT (id) DO NOTHING;
 
 -- ---------------------------------------------------------------------
@@ -459,8 +487,55 @@ BEGIN
             WHERE email NOT IN ('gs_admin@gespraechpruef.example') AND checks <> 1
   LOOP fehler := fehler || format('%s traegt %s Checks statt genau 1; ', r.email, r.checks); END LOOP;
 
+  -- (j) Die Grundzahlen selbst -- nicht nur Eigenschaften VORHANDENER
+  --     Zeilen, sondern ob ueberhaupt die erwartete ANZAHL an Konten,
+  --     Mitgliedschaften, Eignungs-Checks und Anwendungen steht. Ohne
+  --     diese Zaehlung wuerden (a)-(i) oben eine LEERE Ausgangslage
+  --     (z. B. weil ein INSERT INTO app zuvor an einem NOT-NULL-Feld
+  --     gescheitert ist) stillschweigend BESTEHEN lassen -- ihre
+  --     FOR-Schleifen pruefen nur Zeilen, die DA SIND, nie ob genug
+  --     Zeilen da sind. Befund vom 20.08.2026: bei einem Lauf ohne
+  --     Abbruch beim ersten Fehler standen 0 app-Zeilen, waehrend diese
+  --     Aufbaupruefung nicht anschlug -- "ein Lauf, der besteht und
+  --     nichts misst" (derselbe Fehler wie am 02.08.2026, offener Punkt
+  --     O-K23-7). Die vier Zahlen sind aus den INSERT-Bloecken dieser
+  --     Datei abgezaehlt (Abschn. 3-7b) und aendern sich nur, wenn diese
+  --     Datei selbst geaendert wird.
+  DECLARE
+    n_actor      int;
+    n_membership int;
+    n_fitcheck   int;
+    n_app        int;
+  BEGIN
+    SELECT count(*) INTO n_actor FROM actor WHERE email LIKE '%@gespraechpruef.example';
+    IF n_actor <> 16 THEN
+      fehler := fehler || format('es stehen %s Konten statt der erwarteten 16; ', n_actor);
+    END IF;
+
+    SELECT count(*) INTO n_membership FROM membership m
+      JOIN actor a ON a.id = m.actor_id
+     WHERE a.email LIKE '%@gespraechpruef.example';
+    IF n_membership <> 16 THEN
+      fehler := fehler || format('es stehen %s Mitgliedschaften statt der erwarteten 16; ', n_membership);
+    END IF;
+
+    SELECT count(*) INTO n_fitcheck FROM fit_check fc
+      JOIN actor a ON a.id = fc.actor_id
+     WHERE a.email LIKE '%@gespraechpruef.example';
+    IF n_fitcheck <> 14 THEN
+      fehler := fehler || format('es stehen %s Eignungs-Checks statt der erwarteten 14; ', n_fitcheck);
+    END IF;
+
+    SELECT count(*) INTO n_app FROM app
+     WHERE tenant_id IN ('00000000-0000-4000-8000-00000000ea02',
+                         '00000000-0000-4000-8000-00000000ea03');
+    IF n_app <> 13 THEN
+      fehler := fehler || format('es stehen %s Anwendungen statt der erwarteten 13; ', n_app);
+    END IF;
+  END;
+
   IF fehler <> '' THEN
-    RAISE EXCEPTION 'AUFBAU UNBRAUCHBAR (F07): %', fehler;
+    RAISE EXCEPTION 'ABBRUCH: AUFBAU UNBRAUCHBAR (F07) -- %', fehler;
   END IF;
 END $$;
 
