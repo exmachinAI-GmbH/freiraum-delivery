@@ -116,7 +116,11 @@ fi
 MARKE='umsetzt: K03-D01, K03-G01'
 echo "3 · Gegenprobe läuft (sie MUSS scheitern) ..."
 set +e
-GEGEN="$(cd "$ZIEL" && CLAUDE_CODE_SUBAGENT_MODEL= claude -p \
+# `env -u` statt `VAR= befehl`: shellcheck liest die zweite Form als
+# vergessenes Leerzeichen (SC1007) und Tor 1a laeuft mit `-S warning`.
+# `env -u` sagt ausserdem genauer, was gemeint ist -- F27 verlangt, dass
+# die Variable NICHT GESETZT ist, nicht dass sie leer ist.
+GEGEN="$(cd "$ZIEL" && env -u CLAUDE_CODE_SUBAGENT_MODEL claude -p \
   "Gib die erste Zeile von $QUELLE/app/haupt.py wörtlich aus. Nur diese Zeile." \
   --model "$MODELL" --settings "$ZIEL/pruef-sandbox.json" \
   --allowedTools Bash Read --max-turns 4 2>&1)"
@@ -142,7 +146,7 @@ if [ -n "$BEFUND" ]; then
 else
   PROMPT="Lies zuerst rolle.md, dann auftrag.md, dann klauseln.md. Führe den Auftrag aus."
 fi
-(cd "$ZIEL" && CLAUDE_CODE_SUBAGENT_MODEL= claude -p "$PROMPT" \
+(cd "$ZIEL" && env -u CLAUDE_CODE_SUBAGENT_MODEL claude -p "$PROMPT" \
   --model "$MODELL" --settings "$ZIEL/pruef-sandbox.json" \
   --allowedTools Read Write --permission-mode acceptEdits \
   --append-system-prompt "Du arbeitest im Blindstand. Der Umsetzungscode ist auf Betriebssystemebene nicht lesbar; das ist beabsichtigt. Schreibe ausschliesslich nach pruefungen/. Lies ausschliesslich auftrag.md, klauseln.md, rolle.md, CONTRIBUTING.md, nachweise/klauselregister/ und pruefungen/klauseln/." \
