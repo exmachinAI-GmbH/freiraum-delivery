@@ -1,4 +1,6 @@
-# Zehn Entscheidungen aus dem Fremdurteil — **zur Zeichnung**
+# Elf Entscheidungen — **zur Zeichnung**
+
+*Zehn aus dem Fremdurteil, eine (E-11) aus `BEF-ZB-1`, aufgenommen am 20.08.2026.*
 
 **20.08.2026 · ⟨VORSCHLAG · NICHT GEZEICHNET⟩ · elf Tage bis zum 31.08.2026**
 
@@ -227,6 +229,74 @@ ist dem blinden Prüf-Agenten als Frage vorgelegt, nicht als Vorgabe
 
 ---
 
+# Nachtrag · **E-11** — der Ablauf des freien Weges auf EN-04a
+
+*Aufgenommen am 20.08.2026 auf die Weisung „ok, formuliere e-11". Der Punkt stammt nicht aus
+dem Fremdurteil, sondern aus `BEF-ZB-1` — dem Befund, dass die dreizehn gesperrten
+Zweckbestimmungs-Fälle **kein Baufehler** sind.*
+
+## Warum es diese Entscheidung überhaupt braucht
+
+Der blinde Prüf-Agent misst EN-04a, indem er **zwei Zielmengen vergleicht**: einmal den
+freien Weg (beide Zweckfragen verneint), einmal den Weg mit Treffer in Frage 1. Was nur auf
+einer Seite steht, ist für ihn der gesuchte Weg.
+
+**Das setzt einen Zwischenschritt voraus, nach dem beide Wege sich noch auf derselben Seite
+gegenüberstehen.** Ob es den gibt, sagt keine Klausel.
+
+**Drei unabhängige Diagnosen, jede tatsächlich reproduziert, wurden von ihren Gegenprüfern
+widerlegt — und alle drei Gegenproben kamen unabhängig auf dieselbe Ursache:**
+
+> Auf dem freien Weg **ist** der Weiterweg die Anlage. Der Prüflauf bestimmt seinen
+> Weiterweg sogar an genau dieser Wirkung — *„derjenige, nach dessen Aufruf eine neue
+> Anwendungszeile entstanden ist"* — **verbraucht damit den einzigen Schritt beim Entdecken**
+> und misst danach auf der Seite danach. Deshalb bleiben seine beiden Ziele leer, und deshalb
+> sperren dreizehn Fälle.
+
+**Der Bau ist entlastet:** Die Vorlage kann in keinem Zweig eine zielfreie Seite liefern;
+gemessen trägt der Bestätigungszweig genau ein Ziel.
+
+## Was hier zu entscheiden ist
+
+**K04-M17 bis K04-M21 beschreiben die Zweckbestimmung, aber keine Klausel sagt, ob zwischen
+der letzten Antwort und der Anlage ein eigener, folgenloser Schritt liegt.** Genau das ist zu
+zeichnen.
+
+| | Lesart | Folge |
+|---|---|---|
+| **A** | **Ein Schritt.** Ist der Weg frei, legt „Weiter" die Anwendung an. Einen zustandsneutralen Zwischenschritt gibt es nicht | Der Prüf-Agent leitet sein Ablaufmodell neu ab und misst die dreizehn Fälle anders — **ohne Änderung am Bau**. Das entspricht dem, was heute gebaut ist |
+| **B** | **Zwei Schritte.** Zwischen Antwort und Anlage steht eine Bestätigungsseite, die nichts ändert | Der Prüflauf bleibt, wie er ist — **der Bau muss einen Schritt ergänzen.** Das ist Umfang: eine Seite, ein Weg, ein Prüffall, und der Bildschirmvertrag ist nachzuziehen |
+
+> **Empfehlung: A.** *(VORSCHLAG des Harness — die Auslegung gehört dem fachlichen
+> Eigentümer.)*
+>
+> **Der Grund ist keine Bequemlichkeit, sondern K01-M27:** *„Eine produktive Anwendungszeile
+> MUSS ausschließlich über den serverseitigen Befehl entstehen."* Ein folgenloser
+> Zwischenschritt vor der Anlage ist damit **nicht verlangt** — und wo eine Klausel nichts
+> fordert, ist der einfachere Weg der belegbare. **B wäre Umfang, den keine Klausel trägt**,
+> und der Harness erfindet keinen Umfang (`CLAUDE.md` Abschn. 6).
+>
+> **Wenn A gilt, ist Grund 12 des Fremdurteils erledigt und M4s Bildschirmseite zum ersten
+> Mal messbar** — genau der Punkt, den der Auftraggeber zu M4 einfordert.
+
+## Was dem Prüf-Agenten vorgelegt wird — und was nicht
+
+**Vorgelegt wird die gezeichnete Auslegung, ein Satz.** Aus ihm leitet er sein Ablaufmodell
+**selbst** ab.
+
+**Nicht vorgelegt wird**, wie der Bau es macht, welche Adresse welche Antwort liefert oder was
+`BEF-ZB-1` sonst enthält — das Blatt beschreibt Verhalten des Baus und bleibt bei ihm. Sonst
+schriebe er seinen nächsten Prüffall auf den Code statt auf die Klausel (K23-D05).
+
+`☐` **A** — ein Schritt; auf dem freien Weg ist der Weiterweg die Anlage *(Empfehlung)*
+`☐` **B** — zwei Schritte; der Bau ergänzt eine Bestätigungsseite
+`☐` anders: ⟨ ⟩
+
+**Fachlicher Eigentümer K04:** ⟨einzutragen — das Feld ist bei K04-M08 belegt, bei den
+Zweckbestimmungsklauseln zu prüfen⟩
+
+---
+
 # Was auffällt, wenn man alle zehn nebeneinander legt
 
 | | |
@@ -251,6 +321,7 @@ ist dem blinden Prüf-Agenten als Frage vorgelegt, nicht als Vorgabe
 | **E-8** | Terminweg — A oder B | **☒ A** · ⟨20.08.2026⟩ |
 | **E-9** | M-14 · Betriebsalarm · Eigentümer K03-M26 | ☐ · ⟨ ⟩ |
 | **E-10** | K04-G11 · Eigentümer und Kritikalität | ☐ · ⟨ ⟩ |
+| **E-11** | Ablauf des freien Weges auf EN-04a — ein Schritt oder zwei | ☐ A · ☐ B |
 
 | Name | Rolle | Datum |
 |---|---|---|
