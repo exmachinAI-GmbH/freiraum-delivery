@@ -99,14 +99,115 @@ Konzept-Fabrik · `BEF-ZB-1` an den Prüf-Agenten.
 
 ## Zeichnung
 
-| | Entscheidung | |
+**Zu jeder Entscheidung steht die Empfehlung des Harness — mit ihrem Etikett.**
+*Abgeleitet* heißt: der Wert folgt aus etwas Gezeichnetem durch Nachrechnen, es ist keine Wahl.
+*Vorschlag* heißt: der Harness hat sich etwas überlegt, es ist begründet, aber es ist gewählt.
+**Die Entscheidung gehört in jedem Fall dem Menschen.**
+
+### 1 · Der Stand oben wird zur Kenntnis genommen
+
+**Empfehlung: so.** *(abgeleitet)* — jede Zeile trägt ihre Fundstelle; wo nichts gemessen
+wurde, steht *gesperrt* und nicht *offen*. Wer widerspricht, widerspricht einer Messung, nicht
+einer Meinung — dann bitte mit der Zeile, die nicht stimmt.
+
+`☒` **so** — ⟨am 20.08.2026 von Hand im Blatt gesetzt; nicht vom Harness⟩
+`☐` Einwand zu Zeile ⟨ ⟩: ⟨ ⟩
+
+### 2 · Alle zwölf zum 31.08. — oder Weg A?
+
+**Empfehlung: Weg A.** *(Vorschlag des Harness — die Sachentscheidung gehört dem
+Auftraggeber.)*
+
+Der Grund ist eine Rechnung, keine Vorliebe: **neun der zwölf Meilensteine sind nicht
+begonnen**, und §6a sagt selbst, dass M5 bis M9 gegenstandslos sind, solange M4 nicht steht.
+Elf Tage reichen dafür nicht — unabhängig davon, wie viel gearbeitet wird.
+
+> **Der Punkt ist nicht, welcher Weg mehr Arbeit macht.** *Alle zwölf* zu zeichnen heißt nicht,
+> mehr zu schaffen, sondern **den Termin sehenden Auges zu verfehlen**. Weg A heißt, den Umfang
+> auf das zu setzen, was zum 31.08. tatsächlich eintreten kann, und dem Rest über BA-3 eigene
+> Termine zu geben. G2 verlangt ohnehin: **melden, sobald es sich abzeichnet — nicht am
+> 31. August.** Dieses Blatt ist diese Meldung.
+
+`☐` **Weg A** *(Empfehlung)* · `☐` alle zwölf · `☐` anders: ⟨ ⟩
+
+### 3 · BA-1 und BA-2 gegenzeichnen
+
+**Empfehlung: ja — aber erst nach dem Zusammenführen von #41.** *(Vorschlag zur Reihenfolge.
+Die Unterschrift selbst ist eine Willenserklärung nach §12.3 und gehört allein A. Han; der
+Harness trägt dort nichts ein, auch nicht auf Weisung — `BEF-ZEICHNUNG-1`.)*
+
+**Ab der Zeichnung ist keine Vorlage zur Freigabe mehr zulässig, bis alle 25 Haken sitzen**
+(§12.4 Nr. 5). Wer vorher nicht zusammenführt, sperrt fertige Arbeit hinter der eigenen
+Korrektur. Es sind **drei Zellen** — BA-1:655, BA-2:466, BA-2:656 —, danach 25 Eintragungen im
+Auftragstext.
+
+**Vorgeschlagenes Datum: Freitag, 21.08.2026.** *(Vorschlag)* — sie entscheidet Punkt 2, und
+solange sie fehlt, ist jede Aussage über „geschuldet" doppeldeutig.
+
+`☐` so, nach #41 *(Empfehlung)* · `☐` sofort, ohne #41 · Datum ⟨ ⟩
+
+### 4 · M1 gegen die Pilotumgebung
+
+**Empfehlung: Zugang bis Freitag, 21.08.2026.** *(Vorschlag)*
+
+Der Bau ist hier fertig — `migrations/n2_lauf.sh` liegt bereit. **Es fehlt nur der Zugang zur
+Umgebung und `frxfw`.** Von den drei Punkten, die den Stand bewegen, ist dieser der billigste:
+ein Lauf, keine Entscheidung, kein neuer Text. Und er schließt den **ersten** Meilenstein der
+Kette, an der nach §6a alles hängt.
+
+`☐` Zugang bis ⟨Datum: ⟩ *(Empfehlung: 21.08.2026)* · `☐` M1 bleibt vorerst ungemessen
+
+### 5 · Die Antwortlisten
+
+**Empfehlung: Montag, 24.08.2026 — ohne Uhrzeit.** *(Anker abgeleitet, Vorlaufdauer
+geschätzt.)*
+
+Rückwärts vom 31.08.: der 29./30.08. ist Wochenende, es bleiben **vier Arbeitstage**
+(Di 25. bis Fr 28.) für Einbau, blinde Prüffälle, Nachbesserung und Freigabe. **Vier Tage ist
+der optimistische Rand zweier gemessener Züge, nicht ihr Mittel — Puffer besteht nicht.**
+
+Zu liefern: **zwölf Themen · sieben Ziele · die drei Vorschlagslisten** (deren Länge keine
+Quelle nennt) — und **getrennt zu beauftragen** die Fachfragen der Stufe 02.
+
+> **Der Harness kann das nicht ersetzen.** Eine erfundene Themenliste wäre ein Wortlaut, den
+> niemand gezeichnet hat; die Prüffälle würden ihn messen und bestehen. Das wäre kein
+> Fortschritt, sondern eine Fälschung mit grüner Anzeige.
+
+`☐` **24.08.2026** *(Empfehlung)* · `☐` anderes Datum: ⟨ ⟩
+`☐` Die Fachfragen der Stufe 02 werden mitbeauftragt
+
+### 6 · Tor 3 anfordern
+
+**Empfehlung: diese Woche, spätestens Freitag, 21.08.2026.** *(Vorschlag)*
+
+**Die Zykluszeit ist unbekannt, weil Tor 3 nie gelaufen ist.** Wer den Weg zum ersten Mal am
+28.08. geht, erfährt zu spät, wie lange er dauert. Die Anforderung liegt fertig ausgefertigt
+(`tor3_anforderung_m5_gespraech_260820.md`) — abschicken und ablegen sind zwei Handgriffe.
+
+**Zum Namen gibt der Harness keine Empfehlung.** Wer anfordert, ist eine Personenentscheidung.
+Der Bestand nennt A. Han für Anfordern, Ablegen und Zeichnen des Tor-3-Nachweises — dieselbe
+Seite erzeugt aber auch den Prüfgegenstand. Ob das zusammenfallen darf, ist die offene Frage
+aus **B-3**, und sie gehört dem Auftraggeber.
+
+`☐` bis ⟨Datum: ⟩ *(Empfehlung: 21.08.2026)* · Anfordernde Person: ⟨Name: ⟩
+
+---
+
+### Die Empfehlungen auf einen Blick
+
+| | Empfehlung | Etikett |
 |---|---|---|
-| **1** | Der Stand oben wird als **zutreffend** zur Kenntnis genommen | ☐ so · ☐ Einwand: ⟨ ⟩ |
-| **2** | Es gilt: **alle zwölf zum 31.08.** — oder **Weg A** (Teilschnitt, M4–M12 zurückgestellt) | ☐ alle zwölf · ☐ Weg A · ☐ anders: ⟨ ⟩ |
-| **3** | **BA-1 und BA-2 werden gegengezeichnet** | ☐ so · Datum ⟨ ⟩ |
-| **4** | **M1 wird gegen die Pilotumgebung gefahren** — Zugang wird bereitgestellt bis | ⟨Datum: ⟩ |
-| **5** | **Die Antwortlisten kommen bis** | ⟨Datum: ⟩ · Vorschlag: 24.08.2026 |
-| **6** | **Tor 3 wird angefordert** — von | ⟨Name: ⟩ · bis ⟨Datum: ⟩ |
+| **1** | zur Kenntnis nehmen | abgeleitet |
+| **2** | **Weg A** | Vorschlag |
+| **3** | gegenzeichnen — **nach** #41, am 21.08.2026 | Vorschlag zur Reihenfolge |
+| **4** | Zugang zur Pilotumgebung bis **21.08.2026** | Vorschlag |
+| **5** | Antwortlisten bis **24.08.2026** | Anker abgeleitet, Dauer geschätzt |
+| **6** | Tor 3 anfordern bis **21.08.2026**, Name offen | Vorschlag |
+
+**Drei der sechs Empfehlungen fallen auf denselben Tag — Freitag, den 21.08.2026.** Das ist
+kein Zufall und keine Drängelei: Punkt 3 entscheidet den Umfang, Punkt 4 schließt den ersten
+Meilenstein, Punkt 6 startet eine Uhr, deren Laufzeit niemand kennt. **Alle drei werden mit
+jedem Tag Wartezeit teurer, keiner davon billiger.**
 
 | Name | Rolle | Datum |
 |---|---|---|
