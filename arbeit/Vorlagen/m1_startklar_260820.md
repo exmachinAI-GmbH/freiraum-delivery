@@ -115,14 +115,14 @@ gegen `freiraum_ci`, das alle drei Migrationen trägt: dort meldet derselbe Prü
 
 | | | |
 |---|---|---|
-| **1** | Die drei berichtigten Pfade werden übernommen | ☐ so |
-| **2** | Umfang von M1: | ☐ A · ☐ B · ☐ anders: ⟨ ⟩ |
-| **3** | Der Lauf wird gefahren am | ⟨Datum: ⟩ · von ⟨Name: ⟩ |
+| **1** | Die drei berichtigten Pfade werden übernommen | x so |
+| **2** | Umfang von M1: | ☐ A · x B · ☐ anders: ⟨ ⟩ |
+| **3** | Der Lauf wird gefahren am | ⟨Datum: 21.08.2026 ⟩ · von ⟨Name: ⟩ |
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | für den Auftragnehmer (Nr. 158) | ⟨ ⟩ |
-| M. Veil | für den Auftraggeber | ⟨ ⟩ |
+| A. Han | für den Auftragnehmer (Nr. 158) | ⟨20.08.2026 ⟩ |
+| M. Veil | für den Auftraggeber | ⟨20.08.2026 ⟩ |
 
 ---
 

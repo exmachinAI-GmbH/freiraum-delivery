@@ -41,6 +41,33 @@ mkdir -p "$ZIEL"
 
 MIG="$HIER/M30__pilot_sammelmigration.sql"
 
+# DIE MIGRATIONSKETTE, seit dem 20.08.2026 -- Entscheidung "Umfang von M1: B",
+# gezeichnet am 20.08.2026 (arbeit/Vorlagen/m1_startklar_260820.md, Punkt 2).
+#
+# WARUM NICHT M30 ALLEIN, wie es die Rangfolge zunaechst nahelegt: Die
+# Prueffaelle MT-95, MT-95b und MT-98 sind am 16.08.2026 im SELBEN Commit
+# (ab46289) entstanden wie M31 und pruefen `create_app_after_fit` OHNE den
+# Parameter p_project_no -- also genau den Zustand, den erst M31 herstellt.
+# Gemessen am 20.08. gegen eine Wegwerfdatenbank mit M30 allein:
+# "SUMME: 108 von 111 bestanden, 3 gescheitert". Ein Zustand, der seine
+# eigene Pruefdatei nie bestanden haette, ist kein Massstab.
+#
+# WAS DAMIT MITGEZEICHNET IST: CLAUDE.md Rang 1 nennt als autoritatives
+# Zielschema "eingefrorene Basis + M30". Der Zielbestand ist mit dieser
+# Entscheidung Basis + M30 + M31 + M32. Das ist eine FORTSCHREIBUNG des
+# Zielschemas und gehoert in den N2-Nachweis -- sonst redet der Beleg ueber
+# eine andere Fassung als die eingespielte.
+#
+# Uebersteuerbar: MIGRATIONEN="M30__... M31__... " ./n2_lauf.sh ...
+if [ -n "${MIGRATIONEN:-}" ]; then
+  KETTE=""
+  for m in $MIGRATIONEN; do
+    case "$m" in /*) KETTE="$KETTE $m" ;; *) KETTE="$KETTE $HIER/$m" ;; esac
+  done
+else
+  KETTE="$MIG $HIER/M31__projektnummer_und_zweckbestimmung.sql $HIER/M32__zeilenschutz_und_stufenwechsel.sql"
+fi
+
 # BERICHTIGT AM 20.08.2026. Hier stand "$HIER/M30__pruefung.sql" -- also
 # migrations/M30__pruefung.sql. DIESE DATEI GIBT ES NICHT; die Prueffaelle
 # liegen unter pruefungen/migration/. Das Skript waere an seiner eigenen
@@ -73,7 +100,7 @@ if [ -z "${GRUND_DATEI:-}" ] && [ -f "$HIER/../schema/freiraum_datamodel.sql" ];
 fi
 GRUND="${GRUND_DATEI:-$HIER/../../../../../../01_KNOWLEDGE_REPO/v2.9_PIVOT/freiraum_datamodel.sql}"
 
-for datei in "$MIG" "$TST" "$ALT" "$GRUND"; do
+for datei in $KETTE "$TST" "$ALT" "$GRUND"; do
   [ -f "$datei" ] || { echo "ABBRUCH: Datei nicht gefunden: $datei"; echo "         ALT_DATEI= bzw. GRUND_DATEI= setzen."; exit 1; }
 done
 
@@ -125,7 +152,10 @@ sagen "Beleg 1 · Migration zweimal, Schema-Vergleich"
 # Meldung nicht auf das englische Muster passte (dritter Lauf des
 # Auftragsreviews). PIPESTATUS liest den Wert des ersten Gliedes.
 set +e
-psql "$VERBINDUNG" -q -v ON_ERROR_STOP=1 -f "$MIG" 2>&1 | tee "$ZIEL/lauf1.log"
+for m in $KETTE; do
+  echo "--- $(basename "$m") ---"
+  psql "$VERBINDUNG" -q -v ON_ERROR_STOP=1 -f "$m" 2>&1
+done | tee "$ZIEL/lauf1.log"
 rc=${PIPESTATUS[0]}
 set -e
 if [ "$rc" -ne 0 ]; then
@@ -137,7 +167,10 @@ fi
 pg_dump --schema-only "$VERBINDUNG" | grep -vE "^\\\\(un)?restrict" > "$ZIEL/schema_nach_lauf1.sql"
 pg_dump --data-only --column-inserts "$VERBINDUNG" | grep -vE "^\\\\(un)?restrict" | LC_ALL=C sort > "$ZIEL/daten_nach_lauf1.sql"
 set +e
-psql "$VERBINDUNG" -q -v ON_ERROR_STOP=1 -f "$MIG" 2>&1 | tee "$ZIEL/lauf2.log"
+for m in $KETTE; do
+  echo "--- $(basename "$m") ---"
+  psql "$VERBINDUNG" -q -v ON_ERROR_STOP=1 -f "$m" 2>&1
+done | tee "$ZIEL/lauf2.log"
 rc=${PIPESTATUS[0]}
 set -e
 if [ "$rc" -ne 0 ]; then
@@ -280,7 +313,9 @@ SELECT 'rollen '    || count(*) FROM pg_roles WHERE rolname LIKE 'fr\_%';
 SQL
 
 sagen "Nachweis vorbefuellen"
-H_MIG=$(shasum -a 256 "$MIG" | cut -d' ' -f1)
+H_MIG=$(for m in $KETTE; do shasum -a 256 "$m"; done | shasum -a 256 | cut -d' ' -f1)
+# Eine Pruefsumme UEBER DIE KETTE, nicht ueber M30 allein -- sonst behauptet
+# der Nachweis einen Zielbestand, der nicht der eingespielte ist.
 H_TST=$(shasum -a 256 "$TST" | cut -d' ' -f1)
 cat > "$ZIEL/ABNAHMENACHWEIS_ENTWURF.md" <<NACHWEIS
 # N2 · Abnahmenachweis der Sammelmigration — ENTWURF, ungezeichnet
