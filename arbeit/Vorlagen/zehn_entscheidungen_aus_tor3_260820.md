@@ -288,7 +288,8 @@ zeichnen.
 `BEF-ZB-1` sonst enthält — das Blatt beschreibt Verhalten des Baus und bleibt bei ihm. Sonst
 schriebe er seinen nächsten Prüffall auf den Code statt auf die Klausel (K23-D05).
 
-`☐` **A** — ein Schritt; auf dem freien Weg ist der Weiterweg die Anlage *(Empfehlung)*
+`☒` **A** — ein Schritt; auf dem freien Weg ist der Weiterweg die Anlage
+⟨gezeichnet am 20.08.2026, übertragen vom Harness auf die Weisung im Wortlaut: **„E-11 ist A"**⟩
 `☐` **B** — zwei Schritte; der Bau ergänzt eine Bestätigungsseite
 `☐` anders: ⟨ ⟩
 
@@ -321,7 +322,7 @@ Zweckbestimmungsklauseln zu prüfen⟩
 | **E-8** | Terminweg — A oder B | **☒ A** · ⟨20.08.2026⟩ |
 | **E-9** | M-14 · Betriebsalarm · Eigentümer K03-M26 | ☐ · ⟨ ⟩ |
 | **E-10** | K04-G11 · Eigentümer und Kritikalität | ☐ · ⟨ ⟩ |
-| **E-11** | Ablauf des freien Weges auf EN-04a — ein Schritt oder zwei | ☐ A · ☐ B |
+| **E-11** | Ablauf des freien Weges auf EN-04a — ein Schritt oder zwei | **☒ A** · ⟨20.08.2026⟩ |
 
 | Name | Rolle | Datum |
 |---|---|---|
