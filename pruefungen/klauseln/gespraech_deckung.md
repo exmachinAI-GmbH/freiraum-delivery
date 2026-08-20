@@ -282,14 +282,30 @@ gemessen würde.
 **Korrektur einer eigenen Fehlangabe.** Der bisherige Kommentar vor Abschnitt 6 in
 `gespraech_daten.sql` schrieb das beobachtete Verhalten des EIGNUNGSRIEGELS (jeder `INSERT INTO
 app` ohne beim Einfügen schon gültige `fit_check_id` scheitert) der signierten Klausel
-„K01-M27, offener Punkt O-K01-6" zu. Beides war falsch: `O-K01-6` ist keine geführte
-Kennung — sie kommt in keiner anderen Datei dieses Prüfstands vor und wurde ohne Beleg
-erfunden. `K01-M27` ist keine der 101 Klauseln dieses Laufs; sie steht in
-`nachweise/klauselregister/register.md`:139 als `⟨VORSCHLAG · NICHT GEZEICHNET⟩` (ebenso
-`K01-M26`, register.md:136 — dort auch das Muster `^DE-[A-Z]{3}_[0-9]{3}_[0-9]{2}$` für
-`project_no`). Der Kommentar ist jetzt korrigiert: Der EIGNUNGSRIEGEL wird als beobachtetes
-Verhalten des laufenden Baus beschrieben, K01-M26/K01-M27 werden nur noch als unsignierter
-Hintergrund zitiert, nie als geprüfter Maßstab.
+„K01-M27, offener Punkt O-K01-6" zu. Das war in der Zuordnung falsch, nicht darin, ob die
+beiden Kennungen überhaupt bestehen — dieser Absatz stand hier zunächst selbst zu scharf und
+wird nach einem Nachbesserungsauftrag vom 20.08.2026 (fünfter) berichtigt.
+
+`K01-M27` ist eine echte, freigegebene Klausel (`260801_FREIRAUM_K01_Rahmenkonzept_v1.3.md`:77,
+mit gezeichnetem fachlichem Eigentümer: A. Han, 16.08.2026) — ungezeichnet ist allein ihr
+Akzeptanzkriterium (`nachweise/klauselregister/register.md`:139, das Feld
+`⟨VORSCHLAG · NICHT GEZEICHNET⟩` steht dort in der Kriteriums-, nicht in der Klauselspalte;
+ebenso `K01-M26`, register.md:136 — dort auch das Muster `^DE-[A-Z]{3}_[0-9]{3}_[0-9]{2}$` für
+`project_no`). Richtig an der ursprünglichen Beanstandung war der andere Punkt: `K01-M27`
+gehört nicht zu den 101 M5-Klauseln dieses Laufs (`nachweise/klauselregister/
+M5_klausellage_260819.json` führt sie nicht), sondern zu M4 — dort wird sie tatsächlich als
+Maßstab geprüft, siehe `pruefungen/klauseln/zweckbestimmung_lauf.sh` (z. B. Fälle ZB-12, ZB-20,
+ZB-21, ZB-23).
+
+`O-K01-6` wiederum ist kein ohne Beleg erfundener Verweis, sondern ein offener Punkt der
+Konzept-Fabrik: von diesem Repo aus nicht aufschlagbar, weil er nur in der Migration, ihrer
+Prüfung und den N2-Schemabelegen vorkommt — dieselbe Lage wie `O-K23-7` (`rolle.md`:25–30).
+Nicht belegbar ist nicht dasselbe wie unbelegt.
+
+Der Kommentar in `gespraech_daten.sql` ist jetzt entsprechend gefasst: Der EIGNUNGSRIEGEL wird
+als beobachtetes Verhalten des laufenden Baus beschrieben, K01-M26/K01-M27 werden nur noch als
+Hintergrund zitiert — freigegebene Klauseln außerhalb der 101 M5-Klauseln dieses Laufs, mit
+ungezeichnetem Akzeptanzkriterium —, nie als geprüfter Maßstab dieses Laufs.
 
 **`project_no`.** Die Spalte ist `NOT NULL`, aber kein Akzeptanzkriterium der 101 Klauseln
 nennt sie — deshalb misst kein Testfall in `gespraech_lauf.sh` ihren Wert oder ihr Format. Die
@@ -333,10 +349,24 @@ Eignungs-Checks, 13 Anwendungen — Zahlen, die aus den `INSERT`-Blöcken dieser
 abgezählt sind. Weicht eine davon ab, bricht die Prüfung mit dem Wort `ABBRUCH` in der
 Meldung ab, statt eine leere Ausgangslage stillschweigend bestehen zu lassen.
 
+**Nachtrag 20.08.2026 (fünfter Nachbesserungsauftrag) — `agent.model_ref_id`, ein zu enger
+Fangkorb.** Der Lauf scheiterte in Abschnitt 8 an `psql:gespraech_daten.sql:361: ERROR: null
+value in column "model_ref_id" of relation "agent" violates not-null constraint`. Die dortige
+`INSERT INTO agent`-Zeile für den Moderator-Datensatz (K17-M02) füllt `model_ref_id` jetzt über
+eine Unterabfrage auf den bereits vorhandenen Startbestand von `model_ref` (dort liegen sechs
+Zeilen) statt über eine festgeschriebene Kennung — die Datei bleibt damit wiederholbar, ohne
+selbst eine `model_ref`-Zeile anzulegen. Der `EXCEPTION`-Block dieses Abschnitts fing bisher nur
+`undefined_table` und `undefined_column`; die tatsächlich aufgetretene Ausnahme war
+`not_null_violation`, deshalb fängt er sie jetzt zusätzlich — mit derselben Absicht wie zuvor:
+eine `agent`-Tabelle, die anders aussieht als angenommen, soll den Lauf nicht umwerfen, K17-M02
+sperrt dann selbst. Keine der 101 Klauseln macht eine Aussage über `model_ref_id`, kein Testfall
+in `gespraech_lauf.sh` liest die Spalte — dieselbe Rolle wie `project_no` und `created_at` oben.
+
 ---
 
 *Erstellt am 20.08.2026, Abschnitt 5 nachgetragen am 20.08.2026 (dritter Nachbesserungsauftrag),
-Nachtrag zu Abschnitt 5 am 20.08.2026 (vierter Nachbesserungsauftrag).
+Nachtrag zu Abschnitt 5 am 20.08.2026 (vierter Nachbesserungsauftrag), zweiter Nachtrag zu
+Abschnitt 5 und Berichtigung zu K01-M27/O-K01-6 am 20.08.2026 (fünfter Nachbesserungsauftrag).
 Gelesen für diesen Bericht: `klauseln.md` (vollständig, 1186 Zeilen),
 `nachweise/klauselregister/M5_klausellage_260819.json`,
 `nachweise/klauselregister/register.md`/`register.json` (Zeilen zu K01-G05, K01-M26, K01-M27),

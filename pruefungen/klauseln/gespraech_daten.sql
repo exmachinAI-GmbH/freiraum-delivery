@@ -212,10 +212,12 @@ ON CONFLICT DO NOTHING;
 --     Hintergrund fest ("`fit_check_id` ist im DDL wegen der
 --     beidseitigen Verknuepfung technisch nullbar"), ohne eigenes
 --     Akzeptanzkriterium; K01-M26/K01-M27 (register.md :136/:139)
---     stehen als ⟨VORSCHLAG · NICHT GEZEICHNET⟩ -- keine der 101
---     Klauseln dieses Laufs (nachweise/klauselregister/
---     M5_klausellage_260819.json). Beide werden hier NUR als
---     Hintergrund zitiert, nie als getesteter Massstab. Die
+--     sind freigegebene Klauseln mit gezeichnetem Eigentuemer -- nur
+--     ihr Akzeptanzkriterium steht als ⟨VORSCHLAG · NICHT GEZEICHNET⟩
+--     -- keine der 101 Klauseln dieses Laufs (nachweise/
+--     klauselregister/M5_klausellage_260819.json), sondern M4. Beide
+--     werden hier NUR als Hintergrund zitiert, nie als getesteter
+--     Massstab dieses Laufs. Die
 --     Verknuepfung laeuft in BEIDE Richtungen
 --     (fit_check.app_id <-> app.fit_check_id); zum Zeitpunkt DIESES
 --     Inserts gibt es noch keine app-Zeile, also bleibt app_id hier
@@ -354,10 +356,16 @@ UPDATE fit_check SET app_id = a.id
 -- ---------------------------------------------------------------------
 DO $$
 BEGIN
-  INSERT INTO agent (id, name)
-  VALUES ('00000000-0000-4000-8000-00000000ee01','Pruef-Moderator Gespraech');
-EXCEPTION WHEN undefined_table OR undefined_column THEN
-  NULL; -- agent-Tabelle in dieser Form nicht vorhanden; K17-M02 sperrt dann selbst
+  INSERT INTO agent (id, name, model_ref_id)
+  VALUES ('00000000-0000-4000-8000-00000000ee01','Pruef-Moderator Gespraech',
+          (SELECT id FROM model_ref LIMIT 1));
+EXCEPTION WHEN undefined_table OR undefined_column OR not_null_violation THEN
+  NULL; -- agent-Tabelle in dieser Form nicht vorhanden, oder eine weitere
+        -- Pflichtspalte fehlt, die hier nicht gefuellt wird; K17-M02 sperrt
+        -- dann selbst (Befund 20.08.2026, fuenfter Nachbesserungsauftrag:
+        -- model_ref_id ist NOT NULL und wird ueber eine Unterabfrage auf
+        -- den Startbestand von model_ref gefuellt statt auf eine
+        -- festgeschriebene Kennung, damit die Datei wiederholbar bleibt)
 END $$;
 
 -- ---------------------------------------------------------------------
