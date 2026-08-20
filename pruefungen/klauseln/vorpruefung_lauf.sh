@@ -31,7 +31,7 @@
 #
 #   VP-13  der Halt            (outcome NICHT_GEEIGNET, completed_at)
 #   VP-17  Ausweg 1  Antwort aendern  (superseded_at, keine Zeile getilgt)
-#   VP-18  Ausweg 2  Termin            (Gespraech angestossen, outcome bleibt)
+#   VP-18  Ausweg 2  Termin            (Ereignis TERMIN_ANGEFRAGT vermerkt, outcome bleibt)
 #   VP-19  Ausweg 3  zur Uebersicht    (der Check bleibt erhalten)
 #
 # Die Reihenfolge der drei Auswege am selben Check ist kein Zufall:
@@ -1611,6 +1611,30 @@ pruefe_sql_marke
 #
 #         Laeuft ebenfalls vor Ausweg 1 -- gemessen wird "outcome bleibt
 #         NICHT_GEEIGNET", und das geht nur am Halt.
+#
+#         ZUR AUSLEGUNG: K04-M08 nennt diesen Ausweg im Wortlaut
+#         "Gespraech mit der Ansprechperson vereinbaren". Gezeichnete
+#         Auslegung vom 20.08.2026 (E-8, Weg A): fuer diesen Teilschnitt
+#         gilt der Ausweg als erfuellt, wenn er (i) auf dem
+#         Halt-Bildschirm erscheint (siehe VP-15) und (ii) der Wunsch
+#         als Ereignis vermerkt wird -- eine Zustellung an die
+#         Ansprechperson ist fuer diesen Schnitt NICHT verlangt. VP-18
+#         misst deshalb nur (ii): dass genau ein Ereignis
+#         TERMIN_ANGEFRAGT mit Bezug auf den Check entsteht und das
+#         Ergebnis unveraendert bleibt. Ob ein Gespraech zustandekommt
+#         oder eine Ansprechperson erreicht wird, misst dieser Fall
+#         NICHT.
+#
+#         OFFEN GELASSEN (Entscheidung, 20.08.2026): Eine negative
+#         Zusicherung -- dass KEINE Zustellung entsteht und KEINE
+#         Ansprechperson aufgeloest wird -- wird hier NICHT ergaenzt.
+#         Weder K04 noch K19 EN-04 nennen fuer diesen Teilschnitt ein
+#         Zustellungsmedium oder eine Ansprechperson-Entitaet mit
+#         messbarem Merkmal; ein Prueffall dazu waere geraten, nicht aus
+#         der Klausel abgeleitet (Regel 6). Die bestehenden Pruefungen
+#         weiter unten ("Ergebnis unveraendert", "keine Anwendung
+#         entstanden") messen bereits das Naheliegende, was die Klausel
+#         hergibt.
 # =====================================================================
 if [ -z "$KEKS_HALT" ]; then
   sperr VP-18 'Ausweg 2 nicht messbar: der Halt wurde nicht erreicht'
@@ -1641,7 +1665,7 @@ else
   [ "${mit_bezug:-0}" -ge 1 ] || m="$m kein Ereignis nimmt Bezug auf den Check $check_id;"
   [ "$vorher_stand" = "$nachher_stand" ] || m="$m das Ergebnis aenderte sich von '$vorher_stand' auf '$nachher_stand' -- der Termin darf es nicht anfassen;"
   [ "$apps" = "0" ] || m="$m es entstand eine Anwendung (K04-D04);"
-  [ -z "$m" ] && ok VP-18 'AUSWEG 2: Termin — genau ein Ereignis TERMIN_ANGEFRAGT mit Bezug auf den Check, das Ergebnis bleibt unveraendert (K04-M08, Wegetabelle)' \
+  [ -z "$m" ] && ok VP-18 'AUSWEG 2: Termin — genau ein Ereignis TERMIN_ANGEFRAGT mit Bezug auf den Check entsteht, das Ergebnis bleibt unveraendert; eine Zustellung an die Ansprechperson wird NICHT gemessen (K04-M08, Wegetabelle; Auslegung 20.08.2026 E-8)' \
               || nok VP-18 "Ausweg 2 (Termin):$m"
 fi
 pruefe_sql_marke
