@@ -156,7 +156,7 @@ from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from app.datenbank import verbindung
+from app.datenbank import mandantenvorgang, verbindung
 from app.sitzung import KEKS_NAME, keks_loeschen, merkmal_lesen, sitzung_pruefen
 
 PROTOKOLL = logging.getLogger(__name__)
@@ -386,9 +386,16 @@ MELDUNG_STAND_UNKLAR = (
 
 # Ausweg 2 nach dem Halt. Die Quittung nach der Umleitung -- sie sagt, was
 # geschehen ist, und verspricht nichts, was diese Scheibe nicht haelt.
+#
+# BERICHTIGT AM 20.08.2026, nach dem Tor-3-Urteil vom selben Tag (Grund 9),
+# gleichlautend mit app/vorpruefung.py. Der zweite Satz lautete "Ihre
+# Ansprechperson meldet sich bei Ihnen" und war eine Zusage, die dieser Bau
+# nicht einloest: die Ansprechperson wird nicht aufgeloest, `contact`
+# gehoert nicht zu dieser Scheibe. Gelesen hat die Nutzerin die Meldung,
+# nicht den Kommentar daneben.
 MELDUNG_TERMIN = (
-    "Ihr Wunsch nach einem Gespraech ist vermerkt. Ihre Ansprechperson "
-    "meldet sich bei Ihnen.")
+    "Ihr Wunsch nach einem Gespraech ist vermerkt. Wann und wie er "
+    "aufgenommen wird, ist noch nicht festgelegt.")
 
 # --- Die drei Ansagen aus K04-M20 -----------------------------------------
 # Sie sind KEINE freie Formulierung: die Klausel verlangt bei einem Treffer
@@ -1128,48 +1135,66 @@ def anwendung_anlegen(request: Request):
         stand = sitzung_pruefen(conn, merkmal_lesen(merkmal))
         if stand is None:
             return _zurueck_auf_en01(merkmal)
-        check, fehlweg = _vorbedingung(conn, stand)
-        if fehlweg is not None:
-            return fehlweg
 
-        zustand = auswerten(check)
-        if zustand != ZUSTAND_FREI:
-            meldung = {
-                ZUSTAND_UNVOLLSTAENDIG: MELDUNG_ANLAGE_UNVOLLSTAENDIG,
-                ZUSTAND_HALT: MELDUNG_HALT_ANLAGE,
-                ZUSTAND_KENNTNIS: MELDUNG_ANLAGE_OHNE_KENNTNIS,
-            }[zustand]
-            PROTOKOLL.warning(
-                "Anlage abgewiesen: der Stand der Zweckbestimmung ist %s. "
-                "Es ist keine Anwendung entstanden (K01-M27, K04-M21, "
-                "K04-D10).", zustand)
-            return _en04a(request, stand, check, meldung=meldung)
+        # DER ERSTE WEG, DER DEN MANDANTEN SETZT (Zug 2 des M5-Bauplans,
+        # 19.08.2026). Innerhalb dieser Klammer steht `freiraum.tenant_id`
+        # auf dem Mandanten der Sitzung, und damit greifen die Zeilenregeln
+        # aus M32 fuer app, document und event -- vorher lag der Wert
+        # nirgends an, und der gebaute Waechter liess ausdruecklich durch.
+        #
+        # WARUM AUSGERECHNET DIESER WEG ZUERST: er ist der einzige im
+        # Bestand, der eine Zeile in `app` entstehen laesst. Was der
+        # Zeilenschutz schuetzen soll, entsteht genau hier.
+        #
+        # WAS SICH DADURCH AENDERT, offen benannt: der fachliche Teil dieses
+        # Aufrufs faellt jetzt gemeinsam zurueck. Bisher war das ohnehin so
+        # -- es gibt nur einen Schreibvorgang, und der laeuft im
+        # Serverbefehl. Fuer die uebrigen Wege aus M1 bis M4 gilt das nicht,
+        # und sie werden deshalb einzeln und gemessen umgestellt, nicht im
+        # Vorbeigehen.
+        with mandantenvorgang(conn, stand["mandant"]):
+            check, fehlweg = _vorbedingung(conn, stand)
+            if fehlweg is not None:
+                return fehlweg
 
-        try:
-            zeile = conn.execute(
-                "SELECT create_app_after_fit(%s, %s, %s, %s)",
-                (stand["mandant"], NAME_VORLAEUFIG, check["id"],
-                 stand["actor_id"])).fetchone()
-        except (psycopg.errors.IntegrityError,
-                psycopg.errors.RaiseException) as fehler:
-            # Der Grund geht ins Protokoll des Betreibers, nicht auf den
-            # Bildschirm (K23-D09). Es ist KEINE Zeile entstanden: der
-            # Befehl laeuft in einer Transaktion, und was er auswirft,
-            # rollt alles zurueck -- auch die gezogene Projektnummer.
-            PROTOKOLL.error(
-                "Anlage abgewiesen durch create_app_after_fit; es ist keine "
-                "Anwendung entstanden (K01-M27): %s", fehler)
-            return _en04a(request, stand, check,
-                          meldung=MELDUNG_ANLAGE_ABGEWIESEN)
+            zustand = auswerten(check)
+            if zustand != ZUSTAND_FREI:
+                meldung = {
+                    ZUSTAND_UNVOLLSTAENDIG: MELDUNG_ANLAGE_UNVOLLSTAENDIG,
+                    ZUSTAND_HALT: MELDUNG_HALT_ANLAGE,
+                    ZUSTAND_KENNTNIS: MELDUNG_ANLAGE_OHNE_KENNTNIS,
+                }[zustand]
+                PROTOKOLL.warning(
+                    "Anlage abgewiesen: der Stand der Zweckbestimmung ist %s. "
+                    "Es ist keine Anwendung entstanden (K01-M27, K04-M21, "
+                    "K04-D10).", zustand)
+                return _en04a(request, stand, check, meldung=meldung)
 
-        if zeile is None or zeile[0] is None:
-            # Der Befehl hat nichts ausgeworfen und trotzdem keine Kennung
-            # geliefert. Fail-closed: das wird nicht als Erfolg gelesen.
-            PROTOKOLL.error(
-                "Anlage unklar: create_app_after_fit lieferte keine Kennung "
-                "und keinen Fehler. Es wird kein Erfolg angenommen.")
-            return _en04a(request, stand, check,
-                          meldung=MELDUNG_ANLAGE_ABGEWIESEN)
+            try:
+                zeile = conn.execute(
+                    "SELECT create_app_after_fit(%s, %s, %s, %s)",
+                    (stand["mandant"], NAME_VORLAEUFIG, check["id"],
+                     stand["actor_id"])).fetchone()
+            except (psycopg.errors.IntegrityError,
+                    psycopg.errors.RaiseException) as fehler:
+                # Der Grund geht ins Protokoll des Betreibers, nicht auf den
+                # Bildschirm (K23-D09). Es ist KEINE Zeile entstanden: der
+                # Befehl laeuft in einer Transaktion, und was er auswirft,
+                # rollt alles zurueck -- auch die gezogene Projektnummer.
+                PROTOKOLL.error(
+                    "Anlage abgewiesen durch create_app_after_fit; es ist keine "
+                    "Anwendung entstanden (K01-M27): %s", fehler)
+                return _en04a(request, stand, check,
+                              meldung=MELDUNG_ANLAGE_ABGEWIESEN)
+
+            if zeile is None or zeile[0] is None:
+                # Der Befehl hat nichts ausgeworfen und trotzdem keine Kennung
+                # geliefert. Fail-closed: das wird nicht als Erfolg gelesen.
+                PROTOKOLL.error(
+                    "Anlage unklar: create_app_after_fit lieferte keine Kennung "
+                    "und keinen Fehler. Es wird kein Erfolg angenommen.")
+                return _en04a(request, stand, check,
+                              meldung=MELDUNG_ANLAGE_ABGEWIESEN)
 
     # Weiterleitung mit 303, nicht 200: ein Neuladen der Bestaetigung darf
     # keine zweite Anwendung anlegen (POST, dann GET).

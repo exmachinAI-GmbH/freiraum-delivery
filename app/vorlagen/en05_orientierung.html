@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="de">
+<head>
+  {% include "_kopf.html" %}
+  <title>Orientierung · FREIRAUM</title>
+  {#
+    bildschirm: EN-05
+
+    Der Kasten der Quelle (schema/K19_build_referenz.md:252,
+    woertlich uebernommen -- K19-M01, F41, Blatt 94 Punkt 6):
+
+      ╭─ EN-05 · Stufe 01 Orientierung ────── [ORIENTIERUNG 1/5] ─╮
+      │  Zugang: nach Anmeldung  │
+      │  GESPRAECH                  |  IHR STAND                  │
+      │  Themenwahl, dann Branche   |  Branche                    │
+      │  Funktion und Anwendung     |  Funktion                   │
+      │  Ziele: Mehrfachwahl, die   |  Anwendung                  │
+      │  Reihenfolge zaehlt         |  Ziele  1 2 3               │
+      │  Ausgangsproblem bestaetigen|  Ausgangsproblem            │
+      │  [Ja, weiter zum Interview] |  Name  [KI-Vorschlag     ]  │
+      │  Jedes Feld mit Vorschlag ist auch ein Eingabefeld.       │
+      ╰───────────────────────────────────────────────────────────╯
+
+    umsetzt: K01-M07 (zweigeteilt -- links wird gesagt oder geklickt,
+             rechts erscheint das Ergebnis, auf DEMSELBEN Bildschirm und
+             ohne Wechsel zwischen getrennten Formularen), K05-M01 (die
+             offenste Frage steht zuerst und nimmt eigene Worte an),
+             K05-M03 (die drei Einordnungsfragen in fester Reihenfolge --
+             die Folgefrage erscheint erst, wenn die vorangehende
+             beantwortet ist), K05-M04 (je Frage GENAU EINE offene
+             Alternative, im gezeichneten Wortlaut), K05-M06 (das
+             Ausgangsproblem zusammengefasst und mit BEIDEN Wegen --
+             "Weitere Details angeben" korrigiert, "Ja, weiter zum
+             Interview" bestaetigt), K05-M07 und K05-D04 (Namensvorschlag
+             mit der Marke KI-Vorschlag in einem ueberschreibbaren Feld),
+             K19-M03 (genau eine Zugangsmarke), K19-M06 (an den beiden
+             Stellen, an denen die Bedingung vom Nutzer selbst erfuellbar
+             ist -- fehlendes Ziel, fehlende Beschreibung -- wird die
+             Schaltflaeche AUSGEBLENDET und an ihrer Stelle steht der
+             Hinweis, der die Bedingung benennt), K19-M13 (Statusansagen
+             ohne Fokuswechsel; `meldung`, `hinweis_weiterweg` und
+             `hinweis_name` tragen role="alert" und ziehen den Fokus
+             nicht), K19-G03 (die Herkunft ist sichtbar und in Worten
+             getrennt), K16-D11 (keine Marke, die allein durch Farbe
+             unterschieden wird -- der Text ist der Traeger)
+
+    ⟨BERICHTIGT 8⟩ zur Haelfte umgesetzt: K05-M02 -- und der Ladezustand
+             KOLLIDIERT mit dem Rueckfallweg. Der Bildschirmvertrag
+             zeichnet fuer thema_waehlen woertlich: "zwoelf Themen geladen;
+             die Gespraechsspalte bleibt inaktiv, bis sie stehen", und das
+             gezeichnete Kriterium wiederholt es: "Vor dem Stehen der
+             zwoelf bleibt die Gespraechsspalte inaktiv."
+
+             WOERTLICH GENOMMEN HIESSE DAS: solange der Seed fehlt, ist
+             EN-05 dauerhaft unbedienbar -- und der gezeichnete
+             Rueckfallweg S-G, der den freien Weg tragen laesst, liefe ins
+             Leere. Beides zugleich ist nicht zu haben. Diese Datei
+             entscheidet die Kollision NICHT still: die Gespraechsspalte
+             bleibt bedienbar, weil sonst kein Weg mehr uebrig ist, und der
+             Widerspruch wird als offener Punkt vorgelegt (siehe unten,
+             "WAS DIESER BILDSCHIRM NICHT ENTSCHEIDET", Punkt 1). Der
+             Entwurf vom selben Tag hatte den Ladezustand gar nicht
+             erwaehnt -- eine stille Entscheidung, und still entschiedene
+             offene Fragen sind in diesem Haus ausdruecklich verboten.
+
+    zur Haelfte umgesetzt: K05-M02 -- weil die freie Eingabe unter der
+             Eingangsfrage traegt, die ZWOELF Themen aber fehlen. Ihr
+             Wortlaut ist in keiner Quelle gezeichnet (O-K05-6 ist
+             geschlossen, der Wortlaut nicht). An ihrer Stelle steht die
+             benannte Meldung `meldung_themen` -- der gezeichnete
+             Rueckfallweg S-G, genau wie EN-03a ihn vormacht
+             (app/vorpruefung.py, "WAS HIER AUSDRUECKLICH NICHT GEBAUT
+             IST"). Zwoelf erfundene Themen waeren Umfang, den niemand
+             gezeichnet hat -- und sie wuerden gemessen, als waeren sie
+             es.
+
+    zur Haelfte umgesetzt: K05-M04 -- weil die drei offenen Alternativen
+             stehen und tragen ("Andere Branche", "Anderer
+             Funktionsbereich", "Andere Anwendung" sind im Klauselwortlaut
+             gezeichnet), die VORGESCHLAGENEN Antworten daneben aber
+             fehlen. Dieselbe Lage wie bei den zwoelf Themen, derselbe
+             Rueckfallweg: `meldung_einordnung`.
+
+    zur Haelfte umgesetzt: K05-M05 und K05-G04 -- weil die Mehrfachwahl
+             und der Rang aus der Klickreihenfolge gebaut sind (jede
+             Zielangabe ist ein eigener Absendevorgang, und der Server
+             haengt sie hinten an), die SIEBEN Ziele aber fehlen. Es
+             traegt allein "+ Anderes Ziel"; an der Stelle der sieben
+             steht `meldung_ziele`.
+
+    zur Haelfte umgesetzt: K05-M08, K05-G05, K05-G06 -- weil dieser
+             Bildschirm den Namensschritt erst ZEIGT, wenn das
+             Ausgangsproblem bestaetigt ist, und ihn nicht VERHINDERN
+             kann. Das Tor haelt der Serverpfad (`confirm_app_name` ueber
+             `set_journey_phase`, M32): ohne bestaetigtes Ausgangsproblem
+             kein Namensschritt, ohne Protokolleintrag kein Stufenwechsel.
+             Dieselbe Aufteilung wie auf EN-04 und EN-04a, aus demselben
+             Grund: "Was der Server entscheidet, entscheidet nicht der
+             Browser."
+
+    ⟨BERICHTIGT 3⟩ K19-M14 -- der Entwurf baute "Weitere Details angeben"
+             als eigenes Formular auf einen eigenen Weg
+             (/orientierung/details) mit einem eigenen Feld (details). Das
+             gezeichnete Kriterium zu K19-M14 misst genau das Gegenteil:
+             "Jede Aktion von EN-05 und EN-06 fuehrt in der Maschinenquelle
+             alle sieben ... Angaben ... und keine davon ist leer. ... Fehlt
+             einer Aktion eine der sieben Angaben, ist das Kriterium ohne
+             weiteren Lauf verletzt." Ein Formular auf einen Serverbefehl,
+             den schema/K19_screens.yaml nicht fuehrt, IST eine solche
+             Aktion -- und sie zu bauen heisst, den Verstoss zu bauen und
+             daneben zu vermerken, dass man ihn baut. Ein Vermerk hebt eine
+             MUSS-Klausel nicht auf.
+
+             DER WEG STEHT TROTZDEM, ALS VERWEIS UND NICHT ALS FORMULAR.
+             K05-M06 verlangt beide Wege, und der Korrekturweg ist da: die
+             zusammengefasste Beschreibung entsteht aus der Eingangsfrage,
+             und die Eingangsfrage steht auf demselben Bildschirm, gefuellt
+             und aenderbar. "Weitere Details angeben" fuehrt dorthin --
+             ueber #eingangsfrage, nicht ueber einen zweiten Serverbefehl.
+             Damit ist der Weg vorhanden UND die Beschreibung hat einen
+             einzigen Ort; ein zweites Feld waere ein zweiter Ort fuer
+             denselben Text, und der Server pruefte gegen den einen,
+             waehrend der Nutzer in den anderen schriebe.
+
+             DAS IST NICHT NEU ERFUNDEN, SONDERN DER VORGANG VON EN-04.
+             Nach GEEIGNET steht dort seit dem 16.08.2026 ein VERWEIS auf
+             EN-04a "-- ein Link und kein Formular, damit EN-04 keinen
+             vierten Weg bekommt" (app/vorpruefung.py, "WAS HIER
+             AUSDRUECKLICH NICHT GEBAUT IST"). Derselbe Grund, dieselbe
+             Loesung.
+
+             OFFEN BLEIBT, dass K19_screens.yaml fuer EN-05 keine Aktion
+             zum Korrekturweg fuehrt. Der Verweis kommt ohne sie aus; die
+             Luecke im Vertrag ist damit nicht geschlossen, nur nicht mehr
+             in dieser Datei aufgemacht (offener Punkt, siehe unten "DER
+             KORREKTURWEG").
+
+    EN-05 aus schema/K19_screens.yaml, uebernommen und nicht frei
+    gezeichnet (K19-M01). Der Bildschirmvertrag fuehrt fuenf Aktionen:
+    thema_waehlen, einordnung_beantworten, ziele_waehlen,
+    ausgangsproblem_bestaetigen, name_bestaetigen. Alle fuenf stehen hier.
+
+    ────────────────────────────────────────────────────────────────────
+    DIE ZWEI SPALTEN SIND DIE KLAUSEL, NICHT DIE GESTALTUNG (K01-M07)
+
+    Links steht, was gesagt oder geklickt wird. Rechts steht das Ergebnis
+    -- auf demselben Bildschirm, ohne dass dazwischen ein getrenntes
+    Formular oder ein zweiter Bildschirm aufgerufen wird. Jedes Formular
+    dieser Seite sendet an einen eigenen Weg und kehrt auf EN-05 zurueck;
+    keiner der Wege fuehrt auf eine Zwischenseite. Das ist der Grund, aus
+    dem hier viele kleine Formulare stehen und nicht ein grosses: ein
+    grosses Formular waere EIN Absenden fuer sechs Handlungen, und rechts
+    erschiene erst am Ende etwas.
+
+    IN DER QUELLREIHENFOLGE STEHT LINKS VOR RECHTS. Das ist der schmale
+    Darstellungsmodus aus K19-M13: faellt die Nebeneinanderstellung weg,
+    liest sich der Bildschirm als Gespraech, dann Stand -- verlustfrei und
+    in der Reihenfolge, in der gehandelt wird.
+
+    WAS DIESER BILDSCHIRM AN GESTALTUNG NICHT MITBRINGT. app/statisch/
+    token.css fuehrt heute keine Regel fuer zwei Spalten, und `main` ist
+    dort auf 34rem begrenzt. Die beiden Spalten sind hier deshalb nur
+    ausgezeichnet (`class="zwei_spalten"`, `class="gespraech"`,
+    `class="stand"`), nicht gesetzt. Ein eigener Farbwert oder eine eigene
+    Breite in dieser Datei waere ein zweiter Gestaltungsort neben dem
+    Token-Schema -- und das Schema ist der EINE Ort (Blatt 94 Punkt 2).
+    Die Regel gehoert nach token.css; bis sie dort steht, stehen die
+    Spalten untereinander. Das ist eine benannte Luecke, keine
+    Nachlaessigkeit: untereinander ist der schmale Modus, und der ist nach
+    K19-M13 ohnehin verlangt.
+
+    ────────────────────────────────────────────────────────────────────
+    DIE MARKE ENTSCHEIDET DER SERVER, NIE DIESE DATEI (K05-M11, K05-D02)
+
+    Jeder inhaltliche Eintrag der rechten Spalte traegt GENAU EINE
+    Herkunftsmarke. Welche das ist, leitet diese Vorlage nicht ab -- sie
+    gibt `eintrag.marke` aus, so wie der Serverpfad sie mitgibt. Der Grund
+    steht im gezeichneten Kriterium zu K05-M11 selbst: "Nicht gemessen
+    wird, welcher Vorgang einen Eintrag mit der Marke KI-Notiz erzeugt ...
+    welcher Vorgang das ist, muss der fachliche Eigentuemer benennen."
+    Eine Vorlage, die das entschiede, entschiede eine offene Frage im
+    Vorbeigehen.
+
+    EIN EINTRAG OHNE MARKE WIRD NICHT AUSGEGEBEN. K05-D02 nennt die
+    fehlende Marke ausdruecklich unzulaessig; der Serverpfad gibt einen
+    solchen Eintrag nach K05-M11 gar nicht erst mit ("Marke nicht
+    eindeutig bestimmbar -- kein Eintrag rechts"). Die Bedingung hier ist
+    das zweite Schloss, nicht das erste.
+
+    ────────────────────────────────────────────────────────────────────
+    WARUM DAS NAMENSFELD RECHTS STEHT
+
+    Der Kasten zeichnet es dort: "Name  [KI-Vorschlag     ]" ist die
+    letzte Zeile der Spalte IHR STAND, und die Fusszeile des Kastens sagt,
+    warum das kein Widerspruch zu K01-M07 ist: "Jedes Feld mit Vorschlag
+    ist auch ein Eingabefeld." Der Name IST der Stand der Stufe 01 -- er
+    ist zugleich das Ergebnis, das rechts erscheint, und die letzte
+    Eingabe, die links noch aussteht. Der Kasten loest das, indem er beide
+    Rollen in ein Feld legt. Diese Datei folgt ihm; sie zeichnet nicht
+    frei nach.
+
+    ────────────────────────────────────────────────────────────────────
+    DIE BENANNTEN ORTE. Sie tragen ihre Namen aus demselben Grund wie
+    `halt` und `hinweis` auf EN-04: ohne einen benannten Ort laesst sich
+    ein Bereich nur raten, und ein Prueffall, der raten muss, bleibt auf
+    GESPERRT -- ein Fall, der nur sperren kann, misst nichts.
+
+        id="eingangsfrage"        die offenste Frage (K05-M01)
+        id="themen"               der Ort der zwoelf; heute die Meldung
+        id="einordnung"           Branche, Funktion, Anwendung (K05-M03)
+        id="ziele"                Mehrfachwahl mit Rang (K05-M05)
+        id="ausgangsproblem"      Zusammenfassung und die zwei Wege
+        id="hinweis_weiterweg"    der Hinweis AN DER STELLE der
+                                  ausgeblendeten Schaltflaeche (K19-M06)
+        id="name"                 Namensvorschlag mit Marke (K05-M07)
+        id="hinweis_name"         die Ansage nach einer Abweisung
+        id="stand"                die rechte Spalte
+
+    ────────────────────────────────────────────────────────────────────
+    WAS RECHTS STEHT, UND WARUM DAS THEMA DAZUGEHOERT  ⟨BERICHTIGT 7⟩
+
+    Der Kasten fuehrt rechts sechs Zeilen: Branche, Funktion, Anwendung,
+    Ziele, Ausgangsproblem, Name. Der Entwurf vom selben Tag schloss
+    daraus, dass zum Thema RECHTS NICHTS stehen darf, und fuehrte das als
+    bewusste Nichtumsetzung.
+
+    DAS IST EINE ENTSCHEIDUNG GEGEN ZWEI GEZEICHNETE KRITERIEN. K05-M02
+    misst: "der eingegebene eigene Wortlaut wird als Thema uebernommen und
+    IM STAND GEFUEHRT" -- der Stand ist die rechte Spalte, sie traegt die
+    Ueberschrift. Und K01-M07 misst: "rechts erscheint das Ergebnis
+    DERSELBEN Handlung ... solange links keine Handlung erfolgt ist, steht
+    rechts kein Eintrag zu ihr" -- der Umkehrschluss ist, dass nach der
+    Handlung sehr wohl einer steht. Der Kasten regelt die ANORDNUNG
+    (CLAUDE.md, "die Oberflaeche hat eigene Quellen"); er ist keine
+    abschliessende Liste dessen, was ein gezeichnetes Kriterium verlangt.
+
+    DIE VORLAGE MUSSTE DAFUER NICHT GEAENDERT WERDEN. Sie gibt aus, was
+    `stand_eintraege` fuehrt, und sortiert nicht nach. Zu berichtigen war
+    die BEHAUPTUNG, nicht die Auszeichnung -- und der Vertrag zu Zug 4:
+    `stand_eintraege` fuehrt das Thema, sobald es erfasst ist, mit Feld,
+    Wert und Marke wie jeder andere Eintrag. Wo es in der Reihenfolge
+    steht, gehoert zum Kasten und ist vom fachlichen Eigentuemer zu sagen;
+    dass es steht, steht im gezeichneten Kriterium.
+
+    ────────────────────────────────────────────────────────────────────
+    WAS DIESER BILDSCHIRM NICHT ENTSCHEIDET
+
+    1  DEN LADEZUSTAND VON thema_waehlen. "Die Gespraechsspalte bleibt
+       inaktiv, bis sie stehen" gegen den Rueckfallweg S-G, der den freien
+       Weg tragen laesst, solange die zwoelf fehlen. Beides zugleich geht
+       nicht. Diese Datei laesst die Spalte bedienbar -- die Begruendung
+       steht oben -- und legt den Widerspruch vor.
+
+    2  OB DAS NAMENSFELD RECHTS GEHOERT. Der Kasten legt es dorthin und
+       loest den Widerspruch zu K01-M07 mit seiner Fusszeile. Diese Datei
+       folgt dem Kasten; ob der fachliche Eigentuemer es so gemeint hat,
+       ist zu bestaetigen.
+
+    3  WELCHER VORGANG EINE KI-NOTIZ ERZEUGT. Das gezeichnete Kriterium zu
+       K05-M11 sagt es selbst: "welcher Vorgang das ist, muss der fachliche
+       Eigentuemer benennen, bevor die Zuordnung KI-Notiz gegen Ihre
+       Angabe als Prueffall gefahren werden kann." Die Marke kommt deshalb
+       fertig aus dem Serverpfad.
+
+    4  DIE FORM DER STUFENMARKE. `stufe` kommt aus dem Serverpfad. Ob sie
+       in der Klammerform des Kastens steht ([ORIENTIERUNG 1/5]) oder
+       ausgeschrieben, ist nicht gezeichnet.
+
+    ────────────────────────────────────────────────────────────────────
+    DER VERWEIS AUF DIE UEBERSICHT IST KEINE AKTION  ⟨BERICHTIGT 4⟩
+
+    schema/K19_screens.yaml fuehrt fuer EN-05 fuenf Aktionen und fuer
+    EN-06 sechs; zur_uebersicht ist bei keiner von beiden dabei (auf EN-04
+    ist sie es). Die Fusszeile traegt deshalb einen VERWEIS und kein
+    Formular -- ein Link erzeugt keine Aktion, der die sieben Angaben aus
+    K19-M14 fehlten.
+
+    UND ER VERSPRICHT NICHTS. Der Entwurf schrieb daneben "Ihre Angaben
+    bleiben erhalten". Fuer Stufe 01 sichert das keine Klausel zu; die
+    Bedienung, die den Stand ueberleben laesst, steht nach K05-M15 erst ab
+    Stufe 02. Auf EN-06 stand "Ihr Gespraechsstand bleibt erhalten" -- das
+    widerspricht dem gezeichneten Negativfall b zu K05-M15 unmittelbar:
+    "nicht erfuellt waere, wenn nach dem Abmelden ein halber, nie
+    erfolgreich gespeicherter Stand erschiene." Ein Bildschirm, der den
+    Erhalt zusagt, bevor save_interview_progress Erfolg gemeldet hat, sagt
+    genau das zu, was der Prueffall verbietet. Beide Saetze sind gestrichen.
+
+    ────────────────────────────────────────────────────────────────────
+    DER KORREKTURWEG -- "Weitere Details angeben"  ⟨BERICHTIGT 3⟩
+
+    K05-M06 fuehrt zwei Wege am Ausgangsproblem, und das gezeichnete
+    Kriterium misst beide: "'Weitere Details angeben' waehlen, eine
+    Ergaenzung eintragen und zurueckkehren -- die Zusammenfassung fuehrt
+    die Ergaenzung".
+
+    ER IST EIN VERWEIS, KEIN FORMULAR. Die Ergaenzung wird dort
+    eingetragen, wo die Beschreibung ohnehin steht: im Feld der
+    Eingangsfrage, gefuellt mit dem bisherigen Wortlaut und aenderbar. Das
+    Kriterium verlangt "eine Ergaenzung eintragen und zurueckkehren" --
+    genau das leistet der Weg zu #eingangsfrage und der bekannte
+    Absendevorgang darueber (record_topic). Es verlangt NICHT einen
+    zweiten Serverbefehl, und der Bildschirmvertrag fuehrt keinen.
+
+    WARUM NICHT EIN EIGENES FELD. Zwei Felder fuer dieselbe Beschreibung
+    sind zwei Orte, an denen sie geaendert werden kann -- und der
+    Serverpfad fasst zusammen, was an EINEM steht. Das ist dieselbe
+    Ueberlegung, aus der der Wortlaut der beiden Fragen von EN-04a nicht
+    in der Vorlage steht, sondern in app/zweckbestimmung.py.
+
+    WAS DAMIT OFFEN BLEIBT. Der Vertrag fuehrt fuer EN-05 keine Aktion,
+    die den Korrekturweg traegt; ausgangsproblem_bestaetigen nennt ihn nur
+    im Fehlerzustand ("die Beschreibung bleibt korrigierbar"). Ob der
+    Korrekturweg eine eigene Aktion mit sieben Angaben bekommen soll oder
+    ob record_topic ihn traegt, entscheidet der fachliche Eigentuemer --
+    nicht diese Datei. Bis dahin ist der Weg vorhanden und erzeugt keine
+    ungezeichnete Aktion.
+
+    ────────────────────────────────────────────────────────────────────
+    WAS DIESER BILDSCHIRM ERWARTET (der Vertrag zu Zug 4, app/gespraech.py)
+
+        meldung                 Statusansage zu einem abgeschlossenen
+                                Vorgang, oder nichts
+        stufe                   Beschriftung der Stufenmarke
+        anzeigename             angemeldeter Nutzer
+        meldung_themen          benannte Meldung zum ungezeichneten
+                                Wortlaut der zwoelf Themen (S-G)
+        thema                   das erfasste Thema, oder nichts -- die
+                                Vorlage gibt es als `thema or ''` aus,
+                                weil None sonst als Wort im Feld stuende
+                                (⟨BERICHTIGT 1⟩)
+        einordnung              Liste in FESTER Reihenfolge, je Eintrag
+                                code, frage, alternative (der gezeichnete
+                                Wortlaut der offenen Alternative),
+                                antwort, gestellt (wahr, sobald die
+                                vorangehende Frage beantwortet ist)
+        meldung_einordnung      benannte Meldung zu den fehlenden
+                                Antwortlisten
+        meldung_ziele           benannte Meldung zu den sieben Zielen
+        ziele                   in der Reihenfolge der Auswahl, je Eintrag
+                                rang und text
+        zusammenfassung         das zusammengefasste Ausgangsproblem, oder
+                                nichts
+        zusammenfassung_laeuft  wahr, solange sie gestellt wird
+        bestaetigt              wahr nach confirm_initial_problem
+        hinweis_weiterweg       {satz, bedingungen[]} -- steht an der
+                                Stelle der ausgeblendeten Schaltflaeche
+        namensvorschlag         {text, marke} -- marke ist "KI-Vorschlag"
+        hinweis_name            Ansage nach einer Abweisung, oder nichts
+        stand_eintraege         die rechte Spalte: je Eintrag feld, wert,
+                                marke (Pflicht) und rang (nur bei Zielen)
+  #}
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-05 · Stufe 01 Orientierung</h1>
+    {#
+      Die Stufenmarke des Kastens ([ORIENTIERUNG 1/5]). Sie ist KEINE
+      Zugangsmarke -- K19-M03 verlangt genau eine davon, und das ist die
+      Zeile darunter. Deshalb zwei Klassen und nicht eine.
+    #}
+    <p class="stufe">{{ stufe }}</p>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). Sie blickt zurueck auf
+      einen abgeschlossenen Vorgang -- eine Abweisung, eine Sperre nach
+      K05-G01 mit ihrer Begruendung.
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Angemeldet als {{ anzeigename }}</p>
+
+    <div class="zwei_spalten">
+
+      {# ─── LINKS · hier wird gesagt oder geklickt (K01-M07) ─────────── #}
+      <section class="gespraech" aria-labelledby="spalte_gespraech">
+        <h2 id="spalte_gespraech">Gespraech</h2>
+
+        {#
+          DIE OFFENSTE FRAGE STEHT ZUERST (K05-M01). Vor ihr steht keine
+          Einordnungs-, Ziel-, Ausgangsproblem- oder Namensfrage -- und
+          zwar auch dann nicht, wenn sie schon beantwortet ist: die
+          Reihenfolge des Bildschirms ist nicht der Fortschritt des
+          Nutzers.
+
+          SIE IST EIN FREITEXTFELD UND KEINE AUSWAHL. "In eigenen Worten"
+          laesst sich nicht ankreuzen.
+
+          SIE IST ZUGLEICH DER KORREKTURWEG aus K05-M06. "Weitere Details
+          angeben" fuehrt hierher; das Feld traegt den bisherigen Wortlaut
+          und nimmt die Ergaenzung auf. Begruendung im Kopf, Abschnitt
+          "DER KORREKTURWEG".
+
+          ⟨BERICHTIGT 1⟩ `{{ thema or '' }}` UND NICHT `{{ thema }}`. Der
+          Vertrag zu Zug 4 fuehrt `thema` als "das erfasste Thema, ODER
+          NICHTS". Jinja2Templates laeuft mit der Standardeinstellung; ein
+          None wird darin nicht zu Leerraum, sondern zu den vier Buchstaben
+          "None". Beim ersten Betreten von Stufe 01 -- genau dem Aufbau,
+          den das gezeichnete Kriterium zu K05-M01 vorschreibt
+          ("Gespraechsstand ohne jeden Beitrag") -- stuende im Feld das
+          Wort None. Der Prueffall liest die Eingangsfrage und ihr Feld;
+          er faende dort einen Text, den niemand geschrieben hat.
+        #}
+        <div id="eingangsfrage">
+          <form method="post" action="/orientierung/thema">
+            <label for="feld_thema">Welchen Arbeitsalltag soll FREIRAUM
+              verbessern? Beschreiben Sie ihn in eigenen Worten.</label>
+            <textarea id="feld_thema" name="thema" rows="4">{{ thema or '' }}</textarea>
+            <div>
+              <button type="submit">Beschreibung uebernehmen</button>
+            </div>
+          </form>
+        </div>
+
+        {#
+          DER ORT DER ZWOELF THEMEN (K05-M02).
+
+          Der Wortlaut der zwoelf ist in keiner Quelle gezeichnet. Hier
+          steht deshalb die benannte Meldung und nicht eine erfundene
+          Liste -- der gezeichnete Rueckfallweg S-G. Der freie Weg
+          darueber traegt; er ist es, ueber den das Thema heute erfasst
+          wird. "Was anderes" braucht es dabei nicht als eigene
+          Schaltflaeche: solange die zwoelf fehlen, IST der freie Weg der
+          einzige, und eine Schaltflaeche, die in das Feld darueber
+          fuehrt, das schon offen steht, verspraeche einen Schritt, den es
+          nicht gibt.
+
+          Die Meldung steht, wo die zwoelf stehen wuerden -- unter der
+          Eingangsfrage, wie die Klausel es sagt, und nicht oben im
+          Kasten.
+
+          ⟨BERICHTIGT 11⟩ SIE STEHT NUR, SOLANGE SIE ETWAS ZU SAGEN HAT.
+          Der Entwurf gab den Absatz ohne Bedingung aus. Am Tag, an dem
+          der Seed nachgereicht ist und `meldung_themen` leer wird, bliebe
+          ein leerer Absatz unter der Eingangsfrage stehen -- eine
+          Zierleiste, die einmal eine Meldung war. Dasselbe an den beiden
+          anderen benannten Meldungen.
+        #}
+        <div id="themen">
+          {% if meldung_themen %}
+            <p class="leise">{{ meldung_themen }}</p>
+          {% endif %}
+        </div>
+
+        {#
+          DIE DREI EINORDNUNGSFRAGEN, IN FESTER REIHENFOLGE (K05-M03):
+          Branche, dann Funktionsbereich, dann Anwendung.
+
+          DIE REIHENFOLGE STEHT IM SERVERPFAD, NICHT HIER. Diese Vorlage
+          gibt `einordnung` in der Reihenfolge aus, in der sie kommt, und
+          sortiert nicht noch einmal. Zwei Sortierungen sind zwei
+          Wahrheiten (dieselbe Ueberlegung wie zu K04-M05 auf EN-04).
+
+          DIE FOLGEFRAGE ERSCHEINT ERST, WENN DIE VORANGEHENDE
+          BEANTWORTET IST -- `frage.gestellt` sagt es, und der Serverpfad
+          setzt es. Das ist NICHT der Fall aus K19-M06: hier wird keine
+          Schaltflaeche ausgeblendet, deren Bedingung an ihrer Stelle zu
+          benennen waere, sondern eine Frage ist noch nicht gestellt. Der
+          Vertrag sagt dazu woertlich: "die Folgefrage erscheint nicht,
+          die Zeile rechts bleibt leer".
+
+          JE FRAGE GENAU EINE OFFENE ALTERNATIVE (K05-M04). Ihr Wortlaut
+          -- "Andere Branche", "Anderer Funktionsbereich", "Andere
+          Anwendung" -- ist im Klauselwortlaut gezeichnet und kommt
+          deshalb als `frage.alternative` aus dem Serverpfad, damit er an
+          EINER Stelle steht und nicht an zweien.
+        #}
+        <div id="einordnung">
+          <h3>Einordnung</h3>
+          {% if meldung_einordnung %}
+            <p class="leise">{{ meldung_einordnung }}</p>
+          {% endif %}
+
+          {% for frage in einordnung %}
+            {% if frage.gestellt %}
+              <fieldset>
+                <legend>{{ frage.frage }}</legend>
+                {% if frage.antwort %}
+                  {#
+                    Beantwortet. Der Wortlaut steht rechts unter Branche,
+                    Funktion oder Anwendung (K01-M07); hier bleibt er
+                    stehen, damit die Frage nicht verschwindet, sobald sie
+                    beantwortet ist.
+                  #}
+                  <p class="gewaehlt">Ihre Antwort: {{ frage.antwort }}</p>
+                {% else %}
+                  <form method="post" action="/orientierung/einordnung">
+                    {#
+                      Der Server glaubt die Frage nicht, er prueft sie --
+                      und mit ihr die Reihenfolge (K05-M03, K05-G01).
+
+                      ⟨BERICHTIGT 6⟩ EIN FORMULAR JE FRAGE, UND DER CODE
+                      GEHT DARIN MIT. Der Entwurf schrieb hier, "der Name
+                      traegt trotzdem den Code" -- die Felder heissen aber
+                      `frage` und `antwort`, den Code traegt nur das
+                      verborgene Feld als WERT und die id des Eingabefelds.
+                      Ein Kopf, der etwas behauptet, das die Auszeichnung
+                      darunter nicht tut, ist in diesem Haus ein Mangel und
+                      kein Schoenheitsfehler: er wird gelesen wie eine
+                      Zusage.
+
+                      WAS TATSAECHLICH SCHUETZT. Nach K05-M03 steht immer
+                      genau EINE unbeantwortete Frage; jede Frage hat ihr
+                      eigenes Formular und ihren eigenen Absendevorgang,
+                      und der Code geht als Wert mit. Damit kann der Fall
+                      von EN-04a gar nicht entstehen: dort trugen ZWEI
+                      verborgene Felder DESSELBEN Formulars den Schluessel
+                      `frage`, der letzte Wert gewann, und die erste
+                      Antwort ging bis zum 16.08.2026 still verloren. Zwei
+                      Formulare teilen keinen Schluesselraum.
+                    #}
+                    <input type="hidden" name="frage" value="{{ frage.code }}">
+                    <label for="feld_{{ frage.code }}">{{ frage.alternative }}</label>
+                    <input type="text" id="feld_{{ frage.code }}"
+                           name="antwort" value="">
+                    <div>
+                      <button type="submit">Antwort speichern</button>
+                    </div>
+                  </form>
+                {% endif %}
+              </fieldset>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {#
+          DIE ZIELE (K05-M05, K05-G04). Mehrfachnennung, und die
+          Reihenfolge der Auswahl IST der Rang.
+
+          WARUM JEDES ZIEL EINZELN ABGESENDET WIRD. Der Rang entsteht aus
+          der Klickreihenfolge; diese Seite traegt kein Skript, das eine
+          Reihenfolge im Browser mitschriebe. Jede Angabe ist deshalb ein
+          eigener Absendevorgang, und der Serverpfad haengt sie hinten an.
+          Damit ist die Reihenfolge dort entstanden, wo sie auch
+          aufbewahrt wird -- und nicht in einem verborgenen Feld, das ein
+          Nachbau frei setzen koennte.
+
+          DER RANG IST EINE ANGABE DES NUTZERS, KEINE BEWERTUNG (K05-G04).
+          Diese Vorlage sortiert nichts um und rechnet nichts aus; sie
+          gibt `ziel.rang` aus, so wie er kommt.
+
+          DIE SIEBEN ZIELE FEHLEN. Wie bei den zwoelf Themen: benannte
+          Meldung an ihrer Stelle, der freie Weg traegt. Er heisst hier
+          "+ Anderes Ziel", und dieser Wortlaut IST gezeichnet (K05-M05).
+        #}
+        <div id="ziele">
+          <h3>Ihre Ziele</h3>
+          {% if meldung_ziele %}
+            <p class="leise">{{ meldung_ziele }}</p>
+          {% endif %}
+          <form method="post" action="/orientierung/ziel">
+            <label for="feld_ziel">+ Anderes Ziel</label>
+            <input type="text" id="feld_ziel" name="ziel" value="">
+            <div>
+              <button type="submit">Ziel hinzufuegen</button>
+            </div>
+          </form>
+          <p class="leise">Die Reihenfolge, in der Sie Ziele hinzufuegen,
+            ist ihre Rangfolge. Sie steht rechts mit ihren Ziffern.</p>
+        </div>
+
+        {#
+          DAS AUSGANGSPROBLEM (K05-M06, K05-G05).
+
+          Es wird ZUSAMMENGEFASST ANGEZEIGT, und beide Wege stehen
+          bereit. Der erste korrigiert, der zweite bestaetigt.
+
+          DIE BESTAETIGUNG IST EIN TOR, KEINE HOEFLICHKEIT (K05-G05).
+          Ohne sie gibt es keinen Namensschritt -- auch nicht ueber den
+          unmittelbaren Aufruf des Serverpfads. Was hier zu sehen ist,
+          ist die eine Haelfte; die andere haelt app/gespraech.py.
+        #}
+        <div id="ausgangsproblem">
+          <h3>Ihr Ausgangsproblem</h3>
+
+          {% if zusammenfassung %}
+            <p class="zusammenfassung">{{ zusammenfassung }}</p>
+          {% endif %}
+
+          {#
+            DER KORREKTURWEG -- "Weitere Details angeben" (K05-M06).
+            ⟨BERICHTIGT 3⟩ Er war ein Formular auf /orientierung/details
+            mit einem eigenen Feld; beides fuehrt schema/K19_screens.yaml
+            nicht. Jetzt ein VERWEIS auf das Feld der Eingangsfrage, das
+            die Beschreibung ohnehin traegt und aenderbar ist. Ein Link
+            erzeugt keine Aktion, der die sieben Angaben aus K19-M14
+            fehlten. Begruendung im Kopf, Abschnitt "DER KORREKTURWEG".
+          #}
+          <p><a href="#eingangsfrage">Weitere Details angeben</a> — die
+            Beschreibung steht oben und laesst sich dort ergaenzen.</p>
+
+          {% if bestaetigt %}
+            <p class="gewaehlt">Sie haben das Ausgangsproblem bestaetigt.
+              Der Namensvorschlag steht rechts.</p>
+
+          {% elif hinweis_weiterweg %}
+            {#
+              DER LEERZUSTAND, und hier greift K19-M06 ganz: die Bedingung
+              ist vom Nutzer selbst erfuellbar -- ein Ziel waehlen, eine
+              Beschreibung geben --, also ist die Schaltflaeche NICHT
+              VORHANDEN, nicht bloss inaktiv, und an ihrer Stelle steht
+              der Hinweis, der die Bedingung benennt.
+
+              ER STEHT HIER UND NICHT OBEN IM KASTEN. Oben ist die Stelle
+              fuer den Rueckblick auf einen abgeschlossenen Vorgang; der
+              Hinweis auf eine fehlende Bedingung ist die Bedingung des
+              naechsten Schritts, und der Nutzer sucht ihn dort, wo er
+              gerade geklickt hat (dieselbe Ueberlegung wie im Kopf von
+              app/vorlagen/en04_eignung.html, "WO DER HINWEIS STEHT").
+
+              ER BENENNT DIE BEDINGUNGEN IM WORTLAUT und nennt nur die,
+              die offen sind. Der Vertrag fuehrt zwei: "der Weiterweg ist
+              ausgeblendet, an seiner Stelle steht der Hinweis auf das
+              fehlende Ziel" und "ohne zusammengefasstes Ausgangsproblem
+              ist die Schaltflaeche ausgeblendet, an ihrer Stelle steht
+              der Hinweis auf die fehlende Beschreibung". Beide betreffen
+              DIESELBE Schaltflaeche -- deshalb ein Hinweis mit einer
+              Liste, nicht zwei Hinweise an zwei Orten.
+
+              WARUM HIER AUSGEBLENDET WIRD UND AUF EN-04 NICHT: dort
+              muesste [Weiter] nach der letzten Antwort ohne Neuladen
+              wieder erscheinen, und der Bildschirm traegt kein Skript.
+              Hier laedt jede Angabe die Seite ohnehin neu -- die
+              Schaltflaeche ist im selben Moment wieder da, in dem ihre
+              Bedingung erfuellt ist. K19-M06 verlangt beides; hier ist
+              beides zu haben (wie auf EN-04a).
+
+              ⟨BERICHTIGT 2⟩ ER STEHT VOR DEM LADEZUSTAND, NICHT DAHINTER.
+              Der Entwurf pruefte `zusammenfassung_laeuft` zuerst. Fallen
+              beide Lagen zusammen -- kein Ziel gewaehlt UND die
+              Zusammenfassung wird gerade gestellt --, gewann der
+              Ladezustand, und die (inaktive) Schaltflaeche stand im
+              Kasten. Genau das misst der gezeichnete Positivfall zu
+              K19-M06 als Fehlschlag: "EN-05 in den Leerzustand von
+              ziele_waehlen bringen, also kein Ziel waehlen ... DIE
+              SCHALTFLAECHE IST IM KASTEN NICHT AUFFINDBAR". Auffindbar
+              und inaktiv ist auffindbar.
+
+              DIE REIHENFOLGE IST DIE KLAUSEL. Was der Nutzer selbst
+              erfuellen kann, wird zuerst gefragt; erst wenn davon nichts
+              mehr offen ist, kommt die Lage zum Zug, die er nicht in der
+              Hand hat. Andersherum verdeckt ein Zustand, der ihn nichts
+              angeht, einen Hinweis, den er braucht.
+            #}
+            <div id="hinweis_weiterweg" role="alert">
+              <p>{{ hinweis_weiterweg.satz }}</p>
+              <ul>
+                {% for bedingung in hinweis_weiterweg.bedingungen %}
+                  <li>{{ bedingung }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+
+          {% elif zusammenfassung_laeuft %}
+            {#
+              DER LADEZUSTAND, und er ist ausdruecklich KEIN Fall fuer
+              K19-M06. Der Vertrag zeichnet ihn woertlich:
+              "Zusammenfassung wird gestellt, Schaltflaeche inaktiv bis
+              sie steht." Das gezeichnete Kriterium zu K19-M06 fuehrt
+              genau diese Stelle als Negativfall -- die Bedingung ist hier
+              NICHT vom Nutzer selbst erfuellbar, also steht die
+              Schaltflaeche sichtbar und inaktiv, und an ihrer Stelle
+              steht kein Hinweis. Wer sie hier ausbliende, wuerde die
+              Klausel weiter anwenden, als sie reicht.
+
+              ER STEHT ERST NACH DEM LEERZUSTAND, damit er ihn nicht
+              verdeckt -- Begruendung eine Bedingung hoeher.
+            #}
+            <form method="post" action="/orientierung/ausgangsproblem">
+              <button type="submit" disabled>Ja, weiter zum Interview</button>
+            </form>
+            <p class="leise">Die Zusammenfassung wird gerade gestellt.</p>
+
+          {% else %}
+            {#
+              Beide Bedingungen erfuellt und die Zusammenfassung steht: die
+              Schaltflaeche steht an der Stelle, an der eben noch der
+              Hinweis stand.
+            #}
+            <form method="post" action="/orientierung/ausgangsproblem">
+              <button type="submit">Ja, weiter zum Interview</button>
+            </form>
+          {% endif %}
+        </div>
+      </section>
+
+      {# ─── RECHTS · hier erscheint das Ergebnis (K01-M07) ───────────── #}
+      <section class="stand" id="stand" aria-labelledby="spalte_stand">
+        <h2 id="spalte_stand">Ihr Stand</h2>
+
+        {#
+          DIE REIHENFOLGE DES KASTENS: Branche, Funktion, Anwendung,
+          Ziele 1 2 3, Ausgangsproblem, Name. Sie kommt aus
+          `stand_eintraege` und wird hier NICHT noch einmal sortiert.
+
+          SOLANGE LINKS NICHTS GEWIRKT HAT, STEHT HIER NICHTS DAZU
+          (K01-M07, K05-M01: "rechts entsteht kein Eintrag"). Diese Spalte
+          zeigt nur, was der Serverpfad als erfasst mitgibt -- sie fuehrt
+          keine leeren Zeilen als Platzhalter.
+
+          JEDER EINTRAG TRAEGT GENAU EINE MARKE (K05-M11, K19-G03). Wer
+          keine traegt, wird nicht ausgegeben (K05-D02) -- die Begruendung
+          steht oben im Kopf.
+
+          DIE MARKE IST TEXT UND NICHT FARBE (K16-D11). Sie steht in
+          Worten neben dem Wert; nimmt man ihr die Farbe, bleibt sie
+          lesbar.
+
+          ⟨BERICHTIGT 10⟩ UND DIE RANGZIFFER IST ES AUCH. Der Entwurf gab
+          sie als blosse Ziffer vor dem Zieltext aus: "1 Durchlaufzeit
+          senken". Was diese 1 bedeutet, trug allein ihre Stellung -- und
+          K16-D11 sagt: "Farbe, Symbol oder POSITION DUERFEN NICHT der
+          einzige Traeger einer Zustandsinformation sein." Der Rang IST
+          eine Zustandsinformation; er ist nach K05-G04 sogar eine Angabe
+          des Nutzers, die keiner sonst gemacht hat. Jetzt traegt das Wort
+          ihn mit. Der Kasten zeichnet "Ziele  1 2 3" -- das ist eine
+          Skizze der Anordnung und keine Beschriftungsvorgabe; wo Kasten
+          und DARF-NICHT-Klausel sich streifen, gewinnt die Klausel.
+        #}
+        <dl>
+          {% for eintrag in stand_eintraege %}
+            {% if eintrag.marke %}
+              <dt>{{ eintrag.feld }}</dt>
+              <dd>
+                {% if eintrag.rang %}<span class="rang">Rang {{ eintrag.rang }}</span>{% endif %}
+                {{ eintrag.wert }}
+                <span class="herkunft">{{ eintrag.marke }}</span>
+              </dd>
+            {% endif %}
+          {% endfor %}
+        </dl>
+
+        {#
+          DER NAMENSVORSCHLAG (K05-M07, K05-D04, K19-G03).
+
+          ER TRAEGT DIE MARKE, UND ZWAR SICHTBAR. K05-D04 sagt: "Der
+          Namensvorschlag DARF NICHT ohne Marke erscheinen und DARF NICHT
+          unveraenderbar sein." Beides steht hier: die Marke daneben, der
+          Vorschlag IM Feld -- nicht als Beschriftung daneben, sondern als
+          Inhalt, der sich ueberschreiben laesst.
+
+          ER ERSCHEINT ERST NACH DER BESTAETIGUNG DES AUSGANGSPROBLEMS
+          (K05-G05). Der Serverpfad gibt `namensvorschlag` vorher nicht
+          mit; das Tor haelt er, nicht diese Datei.
+
+          DAS FELD IST NICHT VORBELEGT MIT LEER. Steht kein Vorschlag,
+          steht auch kein Feld -- ein leeres Namensfeld ohne Marke waere
+          genau der Zustand, den K05-D04 verbietet.
+
+          KEINE VERBORGENE STUFE. Dieses Formular sendet den Namen und
+          sonst nichts. Die Stufe setzt der Server (K05-G06: "die
+          uebergebene Stufe wirkt nicht"); ein Feld dafuer gibt es hier
+          nicht, auch kein verstecktes.
+        #}
+        {% if namensvorschlag %}
+          <div id="name">
+            <form method="post" action="/orientierung/name">
+              <label for="feld_name">Name der Anwendung
+                <span class="herkunft">{{ namensvorschlag.marke }}</span></label>
+              <input type="text" id="feld_name" name="name"
+                     value="{{ namensvorschlag.text }}">
+              <p class="leise">Das ist ein Vorschlag. Sie koennen ihn
+                ueberschreiben; erst mit dem Bestaetigen gilt er.</p>
+              <div>
+                <button type="submit">Namen bestaetigen und zum Interview</button>
+              </div>
+            </form>
+
+            {% if hinweis_name %}
+              {#
+                Die Ansage nach einer Abweisung (Vertrag, EN-05/
+                name_bestaetigen, zustand_leer: "Feld leer oder Marke
+                fehlt -- abgelehnt, Stufe bleibt ORIENTIERUNG"). Ohne
+                Fokuswechsel (K19-M13).
+              #}
+              <p id="hinweis_name" class="meldung" role="alert">{{ hinweis_name }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </section>
+    </div>
+
+    {#
+      ⟨BERICHTIGT 4⟩ EIN VERWEIS OHNE ZUSAGE. Hier stand "-- Ihre Angaben
+      bleiben erhalten." Fuer Stufe 01 sichert das keine Klausel zu: die
+      Bedienung, die einen Stand ueberleben laesst, steht nach K05-M15
+      erst ab Stufe 02. Was der Bildschirm nicht halten kann, sagt er
+      nicht zu. Begruendung im Kopf, "DER VERWEIS AUF DIE UEBERSICHT IST
+      KEINE AKTION".
+    #}
+    <p class="fuss"><a href="/uebersicht">Zur Uebersicht</a></p>
+  </div>
+</main>
+</body>
+</html>
+
+

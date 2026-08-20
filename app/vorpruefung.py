@@ -249,9 +249,21 @@ MELDUNG_AUSWAHL_UNGUELTIG = (
 
 # Ausweg 2 nach dem Halt. Die Quittung nach der Umleitung -- sie sagt, was
 # geschehen ist, und verspricht nichts, was diese Scheibe nicht haelt.
+#
+# BERICHTIGT AM 20.08.2026, nach dem Tor-3-Urteil vom selben Tag (Grund 9).
+# Hier stand: "Ihr Wunsch nach einem Gespraech ist vermerkt. Ihre
+# Ansprechperson meldet sich bei Ihnen." Der zweite Satz war eine Zusage,
+# die dieser Bau NICHT einloest -- und das steht im selben Modul, im
+# Serverpfad des Terminwegs: "DIE ANSPRECHPERSON WIRD NICHT AUFGELOEST ...
+# der Wunsch wird vermerkt, die Zustellung an die Ansprechperson ist ein
+# offener Punkt und wird NICHT BEHAUPTET." Der Kommentar sagte das eine,
+# die Meldung das andere; gelesen hat die Nutzerin die Meldung.
+#
+# Der Satz oben -- "verspricht nichts, was diese Scheibe nicht haelt" --
+# war damit selbst unwahr. Er steht jetzt zu Recht dort.
 MELDUNG_TERMIN = (
-    "Ihr Wunsch nach einem Gespraech ist vermerkt. Ihre Ansprechperson meldet "
-    "sich bei Ihnen.")
+    "Ihr Wunsch nach einem Gespraech ist vermerkt. Wann und wie er "
+    "aufgenommen wird, ist noch nicht festgelegt.")
 
 # Der Halt, serverseitig. K04-M08 laesst genau drei Auswege zu; "noch eine
 # Antwort speichern" ist keiner davon. Die Meldung nennt die drei, die es

@@ -60,6 +60,7 @@ from app.datenbank import verbindung
 from app.einladung import MELDUNG_MISSERFOLG as MELDUNG_EINLADUNG
 from app.einladung import einloesen, token_traegt
 from app.einladung_senden import MELDUNG_GESENDET, einladung_senden
+from app.gespraech import router as gespraech_router
 from app.sitzung import (
     KEKS_NAME,
     keks_loeschen,
@@ -107,6 +108,14 @@ app.include_router(vorpruefung_router)
 # fortsetzt, den jene bis GEEIGNET fuehrt -- die Reihenfolge der beiden
 # Zeilen entscheidet fachlich nichts, die Pfade ueberschneiden sich nicht.
 app.include_router(zweckbestimmung_router)
+
+# Scheibe 4, M5: das gefuehrte Gespraech (EN-05 und EN-06). Dritte eigene
+# Datei, derselbe Grund wie oben. Sie steht NACH der Zweckbestimmung, weil
+# sie deren Ergebnis voraussetzt: ohne eine ueber create_app_after_fit
+# angelegte Anwendung gibt es keinen Gespraechsstand, den sie fuehren
+# koennte (Bauauftrag §6a: "Faellt M4, entsteht keine Anwendung, und M5 bis
+# M9 haben keinen Gegenstand").
+app.include_router(gespraech_router)
 
 
 class TokenAusDemProtokoll(logging.Filter):

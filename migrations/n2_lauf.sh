@@ -40,9 +40,26 @@ ZIEL="${2:-$HIER/n2_belege_$STAND}"
 mkdir -p "$ZIEL"
 
 MIG="$HIER/M30__pilot_sammelmigration.sql"
-TST="$HIER/M30__pruefung.sql"
+
+# BERICHTIGT AM 20.08.2026. Hier stand "$HIER/M30__pruefung.sql" -- also
+# migrations/M30__pruefung.sql. DIESE DATEI GIBT ES NICHT; die Prueffaelle
+# liegen unter pruefungen/migration/. Das Skript waere an seiner eigenen
+# Vollstaendigkeitspruefung abgebrochen ("Datei nicht gefunden"), und zwar
+# ERST in dem Augenblick, in dem der Zugang zur Zielumgebung endlich da ist.
+# Uebersteuerbar wie ALT und GRUND, damit die Belege auch auf einem Rechner
+# ohne das volle Repo erzeugt werden koennen.
+TST="${TST_DATEI:-$HIER/../pruefungen/migration/M30__pruefung.sql}"
+
 # Uebersteuerbar (z. B. wenn die Belege auf einem Rechner ohne das volle
 # Repo erzeugt werden): ALT_DATEI=/pfad/zur/pruefung_v2.9.sql ./n2_lauf.sh ...
+#
+# BERICHTIGT AM 20.08.2026: Die Vorgabe zeigte sechs Ebenen nach oben in die
+# Konzept-Fabrik. Seit dem 09.08. bringt das Repo alle Bau-Eingaben selbst
+# mit -- pruefung_v2.9.sql liegt unter schema/. Der alte Pfad bleibt als
+# zweite Wahl stehen, falls jemand ausserhalb des Repos faehrt.
+if [ -z "${ALT_DATEI:-}" ] && [ -f "$HIER/../schema/pruefung_v2.9.sql" ]; then
+  ALT_DATEI="$HIER/../schema/pruefung_v2.9.sql"
+fi
 ALT="${ALT_DATEI:-$HIER/../../../../../../01_KNOWLEDGE_REPO/v2.9_PIVOT/pruefung_v2.9.sql}"
 # Das Grundschema v2.9. M30 baut DARAUF auf -- ohne es scheitert schon die
 # erste Anweisung an `type "retention_class" does not exist`. Bis zum
@@ -50,6 +67,10 @@ ALT="${ALT_DATEI:-$HIER/../../../../../../01_KNOWLEDGE_REPO/v2.9_PIVOT/pruefung_
 # Lauf gegen eine frische Datenbank brach sofort ab, ohne dass die Meldung
 # den Grund nannte. Gefunden, indem das Skript ausgefuehrt wurde -- nicht,
 # indem es gelesen wurde.
+# Dieselbe Berichtigung wie bei ALT: das Grundschema liegt im Repo.
+if [ -z "${GRUND_DATEI:-}" ] && [ -f "$HIER/../schema/freiraum_datamodel.sql" ]; then
+  GRUND_DATEI="$HIER/../schema/freiraum_datamodel.sql"
+fi
 GRUND="${GRUND_DATEI:-$HIER/../../../../../../01_KNOWLEDGE_REPO/v2.9_PIVOT/freiraum_datamodel.sql}"
 
 for datei in "$MIG" "$TST" "$ALT" "$GRUND"; do

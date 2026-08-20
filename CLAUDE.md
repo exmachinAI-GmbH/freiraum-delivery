@@ -8,7 +8,7 @@
 | Nachgerechnet mit | `./install.sh --pruefsumme` · Regel: `shasum -a 256 <Anlage>` |
 | Ausführbare Fassung | **diese Datei** |
 | Bauauftrag | erteilt 06.08.2026 · Endtermin 31.08.2026 (Bauauftrag :1, :39, :40) |
-| Repo | `exmachinai/freiraum-delivery` — GitHub ist Wahrheit, kein Klon in Dropbox. **Seit 09.08.2026 bringt das Repo alle Bau-Eingaben selbst mit**; außerhalb liegen nur noch die Anlage, ihre Zeichnung und das Zugangsblatt, je mit Grund (`03_AGENT_HARNESS_CODING/README.md`) |
+| Repo | `exmachinAI-GmbH/freiraum-delivery` — GitHub ist Wahrheit, kein Klon in Dropbox. Der alte persönliche Pfad `exmachinai/…` wird derzeit noch weitergeleitet; **darauf ist kein Verlass** — die Weiterleitung bricht, sobald dort jemand ein gleichnamiges Repo anlegt. **Seit 09.08.2026 bringt das Repo alle Bau-Eingaben selbst mit**; außerhalb liegen nur noch die Anlage, ihre Zeichnung und das Zugangsblatt, je mit Grund (`03_AGENT_HARNESS_CODING/README.md`). *Berichtigt am 20.08.2026 — der Wortlaut stammt aus Befund **C11**, `arbeit/Bauberichte/steuertexte_pruefung_260816.md`:626–633, und war dort seit dem 16.08. fertig formuliert; er ist nur nie hierher übertragen worden.* |
 
 **Zwei Texte, eine Sache.** Gezeichnet wird die Anlage, ausgeführt wird diese Datei.
 Bei Abweichung gilt die **Anlage**. Stimmt die Prüfsumme oben nicht, redet diese Datei über

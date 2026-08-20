@@ -29,13 +29,140 @@ BERICHT=""
 : "${PGHOST:=localhost}" "${PGPORT:=5432}" "${PGUSER:=postgres}" "${PGDATABASE:=freiraum_ci}"
 export PGHOST PGPORT PGUSER PGDATABASE
 
+# ---------------------------------------------------------------------
+#  NOTAUFRAEUMEN -- der Riegel fuer den Fall, dass dieser Lauf nicht
+#  ordentlich zu Ende kommt.
+#
+#  WAS ES SCHON GAB: `trap aufraeumen RETURN` in klausellauf(). Das
+#  greift, wenn die Funktion ZURUECKKEHRT -- also im Normalfall und auch
+#  nach einem gescheiterten Fall.
+#
+#  WAS ES NICHT GAB, UND WAS AM 20.08.2026 GEMESSEN WURDE: Wird der Lauf
+#  von aussen abgebrochen -- Strg-C, SIGTERM, ein Zeitablauf des
+#  Aufrufers, ein in den Hintergrund verschobener Auftrag --, kehrt
+#  klausellauf() nie zurueck. Der RETURN-Riegel feuert dann nicht, und
+#  Server und Mailfaenger bleiben stehen. Gezaehlt an diesem Tag: 41
+#  vergessene uvicorn-Prozesse, die aelteste acht Tage alt, jeder mit
+#  einer offenen Datenbankverbindung.
+#
+#  Das ist keine Kosmetik. Genau daran ist am 10.08.2026 ein Lauf
+#  falsch gemessen worden: ein vergessener Server hielt den Port, der
+#  neue startete nie, und zehn Faelle meldeten Fehlschlaege gegen den
+#  ALTEN Stand (siehe Abschn. 3). Der freie Port entschaerft das; die
+#  vergessenen Prozesse selbst blieben.
+#
+#  WARUM DIE PRUEFUNG VOR DEM TOETEN: Eine Prozessnummer wird vom
+#  Betriebssystem wiederverwendet. Blind auf eine gemerkte Nummer zu
+#  schiessen, kann einen fremden Prozess treffen, der zufaellig dieselbe
+#  bekommen hat. Getoetet wird deshalb nur, was sich noch als der eigene
+#  Server oder der eigene Mailfaenger ausweist.
+#
+#  Der Riegel aendert an keiner Messung etwas: er laeuft erst, wenn der
+#  Lauf schon vorbei oder abgebrochen ist, und er beruehrt weder einen
+#  Prueffall noch eine Schwelle noch einen Zustand (K23-D05).
+# ---------------------------------------------------------------------
+#  JE KIND EIN ERKENNUNGSMERKMAL, nicht nur eine Nummer. Der Mailfaenger
+#  laeuft als "python3 - <port> <mailfangdatei>" und traegt kein Wort, an
+#  dem man ihn erkennen koennte -- ausser der Wegwerfdatei, die nur dieser
+#  Lauf kennt. Sie ist das Merkmal. Beim Server ist es "app.haupt:app".
+#  UND EIN ZWEITER RIEGEL, WEIL DER ERSTE NICHT ALLES SIEHT.
+#
+#  Gemessen am 20.08.2026: Auch mit dem Riegel oben ueberlebte JE LAUF
+#  genau ein Server. Die Ursache liegt nicht hier, sondern in
+#  pruefungen/klauseln/anmeldung_lauf.sh: dort wird uvicorn in einer
+#  Unterschale gestartet --  ( cd "$REPO" ... uvicorn ) &  -- und `$!`
+#  liefert die Nummer der UNTERSCHALE, nicht die des Servers. Wird die
+#  Unterschale getoetet, bleibt der Server als Waise stehen (Elternteil
+#  wird 1). So sind bis zum 20.08.2026 41 Prozesse aufgelaufen, der
+#  aelteste acht Tage alt.
+#
+#  Die Ursache gehoert dem Pruef-Agenten -- der Bau fasst pruefungen/
+#  nicht an. Dieser Lauf kann sie aber EINGRENZEN, ohne etwas zu raten:
+#  Er merkt sich beim Start, welche Server es SCHON gab, und raeumt am
+#  Ende nur das ab, was WAEHREND seiner Laufzeit dazugekommen ist.
+#
+#  Damit bleibt ein Server, den jemand nebenher zum Entwickeln laufen
+#  laesst, unangetastet -- er stand vorher da und steht nachher noch.
+# `|| true` ist hier nicht Zierde: pgrep meldet 1, wenn es NICHTS findet --
+# also genau auf einer sauber aufgeraeumten Maschine. Unter `set -e` beendet
+# das den Lauf, bevor die erste Zeile Ausgabe entsteht. GEMESSEN AM
+# 20.08.2026, unmittelbar nach dem Einbau dieses Riegels: ein leeres
+# Protokoll und Rueckgabewert 1. Der Riegel gegen vergessene Prozesse haette
+# den Lauf also ausgerechnet dann umgeworfen, wenn keiner vergessen war.
+FREMDE_SERVER="$(pgrep -f 'app\.haupt:app' 2>/dev/null | tr '\n' ' ' || true)"
+
+KINDER=""          # je Zeile: <Prozessnummer><TAB><Erkennungsmerkmal>
+
+kind_merken() {    # $1 Prozessnummer · $2 Merkmal in seiner Kommandozeile
+  KINDER="${KINDER}$1	$2
+"
+}
+
+notaufraeumen() {
+  rc_vorher=$?
+  [ -n "$KINDER" ] || return $rc_vorher
+  uebrig=""
+  while IFS='	' read -r p muster; do
+    [ -n "${p:-}" ] || continue
+    kill -0 "$p" 2>/dev/null || continue
+    # Nur toeten, was sich noch als eigenes Kind ausweist.
+    case "$(ps -o command= -p "$p" 2>/dev/null)" in
+      *"$muster"*) kill "$p" 2>/dev/null || true
+                   uebrig="${uebrig}${uebrig:+ }$p" ;;
+    esac
+  done <<KINDERLISTE
+$KINDER
+KINDERLISTE
+
+  # NACHFASSEN. Gemessen am 20.08.2026, unmittelbar nach dem Einbau dieses
+  # Riegels: EIN Server ueberlebte einen ordentlich beendeten Lauf. Er ging
+  # anschliessend auf ein einzelnes SIGTERM sofort weg -- er hatte also nie
+  # eines bekommen oder es im Anlauf verschluckt. Ein Server, der ein Signal
+  # verschluckt, ist kein seltener Fall: uvicorn setzt seinen eigenen
+  # Griff auf SIGTERM erst, wenn es hochgefahren ist.
+  #
+  # Deshalb wird nicht einmal geschossen und geglaubt, sondern nachgesehen.
+  # Wer nach einer Atempause noch lebt, bekommt SIGKILL -- und wieder nur,
+  # wenn er sich noch als eigenes Kind ausweist.
+  if [ -n "$uebrig" ]; then
+    sleep 2
+    for p in $uebrig; do
+      kill -0 "$p" 2>/dev/null || continue
+      case "$(ps -o command= -p "$p" 2>/dev/null)" in
+        *app.haupt:app*|*python3*) kill -9 "$p" 2>/dev/null || true ;;
+      esac
+    done
+  fi
+
+  # Der zweite Riegel: die Waisen, die dieser Lauf nicht selbst gestartet
+  # hat, die es aber vor ihm noch nicht gab.
+  for p in $(pgrep -f 'app\.haupt:app' 2>/dev/null || true); do
+    case " $FREMDE_SERVER " in
+      *" $p "*) continue ;;              # stand schon vorher da -- nicht anfassen
+    esac
+    kill "$p" 2>/dev/null || true
+  done
+  return $rc_vorher
+}
+trap notaufraeumen EXIT
+trap 'notaufraeumen; exit 130' INT
+trap 'notaufraeumen; exit 143' TERM
+
 ok=0; fehl=0; gesperrt=0
 zeilen=""
 # Glied 7 nach K23-M18 verlangt Beginn UND Ende. Der Beginn ist jetzt.
 BEGINN="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+# JSON-Maskierung, seit 20.08.2026. Vorher baute diese Funktion die Zeile
+# durch blosses Aneinanderhaengen -- ein Anfuehrungszeichen in der Anmerkung
+# haette den Bericht unlesbar gemacht. Bis dahin fiel es nicht auf, weil
+# keine Anmerkung eines fuehrte. Mit der Fehlermeldung aus dem Erfolgszweig
+# der Negativfaelle fuehrt sie sofort welche: PostgreSQL schreibt
+# `violates check constraint "frist_ge_mindestfrist"`.
+json_wert() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\t/ /g' | tr -d '\n\r'; }
+
 merke() {  # kennung · zustand · anmerkung
-  zeilen="${zeilen}${zeilen:+,}{\"kennung\":\"$1\",\"zustand\":\"$2\",\"anmerkung\":\"$3\"}"
+  zeilen="${zeilen}${zeilen:+,}{\"kennung\":\"$(json_wert "$1")\",\"zustand\":\"$(json_wert "$2")\",\"anmerkung\":\"$(json_wert "$3")\"}"
   case "$2" in
     bestanden)      ok=$((ok+1)) ;;
     fehlgeschlagen) fehl=$((fehl+1)) ;;
@@ -181,8 +308,28 @@ for f in migrations/negativfaelle/*.sql; do
     printf '%s\n' "$aus" | head -2 | sed 's/^/      /'
     merke "$kennung" gesperrt "psql kam nicht durch"
   elif printf '%s' "$aus" | grep -qF "$erwartet"; then
+    # DIE MELDUNG IM WORTLAUT, seit 20.08.2026.
+    #
+    # Hier stand nur `scheitert an $erwartet` -- also der Name, den die
+    # Datei SELBST als erwartete Bedingung fuehrt. Der Lauf behauptete
+    # damit, der Fall sei an seiner eigenen Bedingung gescheitert, und
+    # warf den einzigen Beleg dafuer weg.
+    #
+    # CLAUDE.md:180-182 verlangt ihn: "Ein Negativfall gilt erst als
+    # bestanden, wenn er an seiner eigenen Bedingung scheitert; DIE
+    # FEHLERMELDUNG IM WORTLAUT IST TEIL DER EVIDENZ." Gezeichnete
+    # Grundlage: Bauauftrag §9 Tor I Nr. 6 (:649), README.md:204.
+    #
+    # GEFUNDEN HAT ES TOR 3 am 20.08.2026, nicht dieser Harness: "Im
+    # Erfolgszweig verwirft der Harness die tatsaechliche Fehlermeldung
+    # und gibt nur 'scheitert an $erwartet' aus. Darum kann ich die
+    # verlangten vier tatsaechlichen Fehlermeldungen im Wortlaut nicht
+    # ehrlich zitieren."
+    meldung="$(printf '%s\n' "$aus" | grep -m1 -E 'ERROR|FEHLER' | sed 's/^[[:space:]]*//')"
+    : "${meldung:=(keine ERROR-Zeile in der Ausgabe gefunden)}"
     echo "   $kennung — scheitert an $erwartet"
-    merke "$kennung" bestanden "$erwartet"
+    echo "      $meldung"
+    merke "$kennung" bestanden "scheitert an $erwartet · $meldung"
   else
     echo "   $kennung — FALSCHE BEDINGUNG. Erwartet: $erwartet"
     printf '%s\n' "$aus" | head -2 | sed 's/^/      /'
@@ -397,6 +544,7 @@ while True:
     threading.Thread(target=bedienen, args=(draht,), daemon=True).start()
 PY
   smtp_pid=$!
+  kind_merken "$smtp_pid" "$mailfang"
 
   if [ "${FREIRAUM_ECHTVERSAND:-}" = "ja" ]; then
     : # keine Kopie -- $db IST $PGDATABASE (Blatt 91)
@@ -470,6 +618,7 @@ PY
       .venv/bin/uvicorn app.haupt:app --host 127.0.0.1 --port "$port" >"$log" 2>&1 &
   fi
   pid=$!
+  kind_merken "$pid" "app.haupt:app"
 
   # Warten, bis er antwortet -- und aufgeben, statt ewig zu haengen.
   local i=0
