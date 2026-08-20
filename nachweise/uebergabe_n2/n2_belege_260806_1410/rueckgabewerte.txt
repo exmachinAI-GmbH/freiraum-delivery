@@ -1,0 +1,3 @@
+Prueffaelle M30: psql-Rueckgabewert 0
+Eingefrorene Faelle T0-T21: psql-Rueckgabewert 0
+Ersatz-Setup T22/T23: psql-Rueckgabewert 0

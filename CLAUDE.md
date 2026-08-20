@@ -169,6 +169,14 @@ daran vorbei; genau so ist am 18.08.2026 in `config/kanon.yaml` geschrieben word
 **Die Blindheit des Prüf-Agenten ist unverändert Anweisung, nicht Mechanik.**
 Beides steht in Blatt 97 (BEF-HARNESS-1) mit Vorschlag zur Behebung.
 
+*Nachtrag vom 19.08.2026, aus dem M5-Zweig:* Für die Blindheit gibt es seit demselben Tag
+`werkzeuge/blindstand.sh` — es stellt sie **über die Sandbox** her (`sandbox.filesystem.denyRead`,
+vom Betriebssystem durchgesetzt, auch gegen `cat >>` und jeden Kindprozess) statt über
+Pfadregeln. Damit ist der offene Punkt ein anderer geworden: nicht mehr *„die Regeln greifen nach
+Werkzeug, nicht nach Pfad"*, sondern **„der Blindstand ist an keinen Lauf angeschlossen"** (V-13,
+gezeichnet am 19.08. als Aufgabe des Orchestrators).
+
+
 **Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
 die Fehlermeldung im Wortlaut ist Teil der Evidenz.** Gezeichnete Grundlage: Bauauftrag
 §9 Tor I Nr. 6 (:649) und `README.md`:204 des Repos. Als **Klausel** ist die Regel **noch

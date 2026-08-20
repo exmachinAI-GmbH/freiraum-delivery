@@ -16,7 +16,7 @@ Auftraggebers.
 
 | Teil | Datei | Was darin steht | Einträge |
 |---|---|---|---|
-| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen | **2** — `RR-01` **geschlossen**, `RR-02` **offen und getragen** |
+| **A · aus Entscheidungen** | **dieses Blatt** | Restrisiken, die keiner einzelnen Klausel zugeordnet sind, sondern aus einer Entscheidung folgen | **5** — `RR-01` **geschlossen** · `RR-02`, `RR-04`, `RR-05`, `RR-06` **offen und getragen**. *`RR-03` ist auf dem Zweig `konzeptfabrik-unberuehrt` vergeben (Blatt 99, Punkt 3) und hier bewusst freigelassen — eine Nummer wird nie zweimal vergeben* |
 | **B · aus fehlenden Prüffällen** | **`restrisiken_teilschnitt.md`** | je Klausel des Teilschnitts, die als kritisch vorgeschlagen ist und **keinen Prüffall** hat — einzeln, wie `K23-M04` es verlangt | **113, alle offen** |
 
 **Der Stand von Teil B, gemessen am 16.08.2026:**
@@ -264,6 +264,64 @@ wird hier nur genannt, damit er nicht im Schatten von RR-02 verschwindet.
 
 ---
 
+## RR-04 · Die Mandantengrenze wird für M5 nur an drei Tabellen zweifach durchgesetzt — **OFFEN, getragen seit 19.08.2026**
+
+| Feld | Wert |
+|---|---|
+| **Betroffene Klauseln** | **`K02-M20`** und **`K13-M08`** (beide *tragend* in der M5-Klausellage): *„Die Mandantengrenze MUSS zweifach durchgesetzt werden — im Serverpfad und im Datenbestand"* · mittelbar `K05-M27` (Ableitung über `document.app_id → app.tenant_id`) |
+| **Kritikalität** | **kritisch — mandantenkritisch.** Nach `K23-M04` ersetzt in dieser Klasse eine Annahmeentscheidung **den Test nicht**. Für die drei Tabellen von M5 wird er geführt; außerhalb bleibt er offen |
+| **Befund** | Im Repo gibt es **kein** `ENABLE ROW LEVEL SECURITY` und **kein** `CREATE POLICY` — gemessen am 19.08.2026 über `schema/`, `migrations/`, `app/`, `werkzeuge/`, `pruefungen/`. `M30:1713–1716` hält es selbst fest: *„das vollständige RLS-Regime … die Zeilenregeln je Tabelle sind Punkt 09 und bleiben offen."* Der gebaute Wächter `sitzungs_mandant()` **lässt durch**, wenn `freiraum.tenant_id` nicht gesetzt ist (`M30:2166–2172`) — und der Serverpfad setzt sie heute nirgends |
+| **Entscheidung** | **Der mittlere Weg.** Zeilenregeln entstehen mit M5 für die drei Tabellen, die M5 anfasst — `app`, `document`, `event`. Der ganze **Punkt 09** bleibt ein eigener Zug; er ist damit **nicht** erledigt. Unabhängig davon setzt **jeder** Serverbefehl `freiraum.tenant_id` |
+| **Grundlage** | `arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md`, **Entscheidung 1**, gez. M. Veil und A. Han, 19.08.2026. Weisung im Wortlaut: *„wir folgen deinen empfehlungen. bitte eintragen."* |
+| **Träger** | **M. Veil** — die Terminierung von Punkt 09 gegen den 31.08.2026 ist eine Entscheidung des Auftraggebers |
+| **Annahmeentscheidung** | **gezeichnet am 19.08.2026** — und sie genügt nach `K23-M04` **nicht** für die Tabellen außerhalb der drei |
+| **Frist** | **ereignisgebunden:** mit dem ersten Bildschirm außerhalb von EN-05/EN-06, der auf denselben Bestand schreibt. Spätestens mit Punkt 09 |
+
+> **Was dieser Eintrag nicht leistet.** Er deckt `app`, `document` und `event` ab. Für die
+> übrigen Tabellen des Pilotstands ist die zweite Hälfte der Mandantengrenze weiterhin **nicht
+> gebaut** — und dort steht auch kein Eintrag dieser Liste dafür. Wer aus RR-04 liest, die
+> Mandantengrenze sei geschlossen, liest ihn falsch.
+
+---
+
+## RR-05 · Die Verlaufszeile führt den Stufenwechsel nicht — **OFFEN, getragen seit 19.08.2026**
+
+| Feld | Wert |
+|---|---|
+| **Betroffene Klauseln** | **`K01-M21`** (*„Jeder Zustandswechsel MUSS nachweisbar geschrieben werden … die Verlaufszeile `app_state_history` und der Sicht `app_state_aktuell` (beide K11)"*) · **`K11-M10`** (Verlaufszeile und Protokolleintrag **atomar**) |
+| **Kritikalität** | **mittel — nachweisgebunden.** Der Nachweis des Stufenwechsels entsteht, nur an anderer Stelle |
+| **Befund** | `app_state_history.state` ist vom Typ `lifecycle_state` (`freiraum_datamodel.sql:487–493`); der Synchron-Trigger feuert `AFTER INSERT OR UPDATE OF lifecycle_state` (`M30:725–727`). Eine Stufe (`journey_phase`) kann die Tabelle **nicht aufnehmen**. `K01-M05` führt aber **zwei** Zustandsachsen, und M5 wechselt genau die zweite — zweimal (`confirm_app_name`, `complete_interview`) |
+| **Entscheidung** | **Die Verlaufszeile gilt nur für `lifecycle_state`.** Der Stufenwechsel wird über den `event`-Eintrag nachgewiesen, atomar mit dem Schreibvorgang (`K02-D04`, `K13-M20`). Das ist eine **Auslegung**, keine Messung — und deshalb steht sie hier |
+| **Grundlage** | `arbeit/Vorlagen/m5_vor_dem_bauzug_260819.md`, **Entscheidung 4**, gez. M. Veil und A. Han, 19.08.2026 |
+| **Träger** | **M. Veil** — die Auslegung einer gezeichneten Klausel gegen das eingefrorene Schema ist keine Bauentscheidung |
+| **Annahmeentscheidung** | **gezeichnet am 19.08.2026** |
+| **Frist** | **ereignisgebunden:** verlangt der fachliche Eigentümer K11 später eine Verlaufszeile für `journey_phase`, ist das eine **Migration** — kein Umbau von M5 |
+
+> **Warum das nicht stillschweigend gehen durfte.** Der Wortlaut von `K01-M21` sagt *„jeder
+> Zustandswechsel"*. Wer ihn auf eine Achse verengt, ohne es aufzuschreiben, hat eine Klausel
+> gekürzt und nennt es Umsetzung.
+
+---
+
+## RR-06 · Zu `K05-G12` entsteht in M5 kein Prüffall — **OFFEN, getragen seit 19.08.2026**
+
+| Feld | Wert |
+|---|---|
+| **Betroffene Klausel** | **`K05-G12`** — *„Solange O-K05-1 und O-K05-2 offen sind, bleibt K05 Freigabekandidat. Für Gesprächsinhalt und Herkunftsmarke fehlt der belegte Träger; der Produktivweg bleibt gesperrt."* |
+| **Kritikalität** | **kritisch — freigabekritisch** (Triagevorschlag: *„Freigabekandidat"*). Nach `K23-M04` ersetzt in dieser Klasse eine Annahmeentscheidung **den Test nicht** |
+| **Befund** | Die Klausel richtet sich an den **Freigabeprozess**, nicht an den Bau. Gemessen am Bildschirmvertrag: EN-05 führt fünf, EN-06 sechs Aktionen mit zusammen zehn Serverbefehlen — **keiner** ist ein *Produktivweg*, keiner setzt einen *Freigabestand*. Für M5 ist an ihr nichts zu messen; das Feld `test` trägt deshalb den Vermerk *„kein Test — Restrisiko"* |
+| **Entscheidung** | **Feststellen und führen, nicht aufheben.** Zu K05-G12 entsteht in M5 kein Prüffall; das Akzeptanzkriterium bleibt insoweit offen, und der Bauauftrag ist an dieser Stelle unvollständig. **Ausdrücklich nicht** als erfüllt gekennzeichnet — `K05-G11` verbietet es im Wortlaut |
+| **Grundlage** | `arbeit/Vorlagen/m5_teil1_fuenf_ohne_massstab_260819.md`, **T-2**, gez. A. Han, 19.08.2026. Weisung im Wortlaut: *„T-1 bis T-5 alle so zeichnen, 10 Minuten bei T-5"* |
+| **Träger** | **M. Veil** — die Sperre hängt an K05 Abschn. 5, und die Konzept-Fabrik gehört ihm |
+| **Annahmeentscheidung** | **gezeichnet am 19.08.2026, abends** — Weisung im Wortlaut: *[hiermit alles freigezeichnet, setze um was fehlt, lege ggf. Handlungsempfehlung zur Zeichnung vor, fuehre PR aus]*. Die Weisung ist am Harness von A. Han erteilt worden, in einem Satz und ohne Aufteilung nach Personen; die Annahme steht dem Auftraggeber zu. **Nach `K23-M04` ersetzt sie den fehlenden Test in dieser Kritikalitätsklasse nicht** — der Eintrag bleibt offen, bis K05 Abschn. 5 nachgezogen ist |
+| **Erledigungsbedingung** | **„K05 Abschn. 5 nachgezogen"** — Entscheidung 2 vom 19.08.2026 (`m5_vor_dem_bauzug_260819.md`). Mit dem Nachzug entfällt die Sperre, und dieser Eintrag schließt sich |
+
+> **Was dieser Eintrag nicht leistet.** Er ersetzt den fehlenden Test nicht — nach `K23-M04`
+> kann er das in dieser Kritikalitätsklasse auch nicht. Er macht nur sichtbar, dass an dieser
+> Klausel in M5 nichts gemessen wird, und wer das zu ändern hat.
+
+---
+
 ## Wie diese Liste geführt wird
 
 Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte Wahrheit
@@ -271,8 +329,8 @@ Sie ist eine **erzeugte Sicht auf einen Datenbestand**, keine von Hand gepflegte
 Klauselregister (`nachweise/klauselregister/register.json`).
 
 **Auf diesem Blatt stehen nur Restrisiken, die keiner Klausel zugeordnet sind** — solche, die
-aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 (geschlossen) und
-RR-02 (offen, getragen).
+aus einer Entscheidung folgen statt aus einer fehlenden Prüfung. RR-01 (geschlossen), RR-02,
+RR-04, RR-05 und RR-06 (offen, getragen); RR-03 ist auf einem anderen Zweig vergeben.
 
 **Die klauselgebundenen Restrisiken stehen seit dem 16.08.2026 in
 `restrisiken_teilschnitt.md`** — dort einzeln, mit `RR-T-001` bis `RR-T-113`, jeweils mit

@@ -44,8 +44,13 @@ Bauplan und deine Schreibgrenzen. Mehr brauchst du nicht, und mehr sollst du nic
 | `arbeit/Bauberichte/` | `nachweise/manifeste/` (schreibt der Orchestrator) |
 | | `CLAUDE.md`, `.claude/`, `.github/` |
 
-`schema/` gibt es im Repo heute nicht. Ob das eingefrorene DDL plus M30 dorthin gespiegelt
-wird, ist **offen** — lege die Datei nicht auf eigene Faust an, sondern melde den Bedarf.
+*Berichtigt am 19.08.2026:* **`schema/` gibt es**, und zwar mit dem eingefrorenen DDL
+(`freiraum_datamodel.sql`), dem Bildschirmvertrag (`K19_screens.yaml`), der Bau-Referenz
+(`K19_build_referenz.md`) und seit dem 19.08. `pruefung_v2.9.sql` — je mit `.sha256`. Der
+frühere Satz *„gibt es im Repo heute nicht … lege die Datei nicht auf eigene Faust an"*
+stand im Widerspruch zur Zeile darüber, die `schema/` als beschreibbar führt. **Was gilt:**
+Die vier Dateien sind Quellen mit hinterlegter Prüfsumme — eine Änderung daran ist keine
+Bauarbeit, sondern eine Quellenänderung und gehört vorgelegt.
 
 **Warum `pruefungen/` gesperrt ist:** Wer baut und zugleich prüft, senkt den Prüfwert,
 sobald es eng wird — meist ohne Absicht. **K23-D05** verbietet genau das. Ein Prüffall,
