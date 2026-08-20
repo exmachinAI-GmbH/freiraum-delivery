@@ -201,68 +201,100 @@ SELECT a.id, 'ENDUSER', r.id, a.tenant_id
 ON CONFLICT DO NOTHING;
 
 -- ---------------------------------------------------------------------
--- 6 · Die Anwendungen (app) -- ausschliesslich die AUSGANGSLAGE:
---     journey_phase, lifecycle_state, ggf. bereits gesetzter Name.
---     KEIN Beitrag, KEINE Herkunftsmarke, KEIN document, KEIN Uebersprung-
---     vermerk -- das ist der Pruefgegenstand von gespraech_lauf.sh
---     selbst (Abschn. "MASSSTAB F07" oben).
--- ---------------------------------------------------------------------
-INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state) VALUES
-  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'UEBERSICHT',  'DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'INTERVIEW',   'DISCOVERY')
-ON CONFLICT (id) DO NOTHING;
-
--- ---------------------------------------------------------------------
--- 7 · Die vorbereiteten Eignungs-Checks (fit_check)
+-- 6 · Die vorbereiteten Eignungs-Checks (fit_check) -- ZUERST, noch
+--     OHNE app_id
 --
---     Jede Anwendung aus Abschn. 6 (ausser den beiden ohne app-Zeile,
---     gs_offen@ und gs_ohnecheck@) traegt genau EINEN GEEIGNET-Check,
---     der schon vor dem Lauf auf sie zeigt -- so, wie ein Konto nach
---     M4 dort ankaeme. gs_offen@ traegt einen Check mit OFFEN und OHNE
---     app-Zeile; gs_ohnecheck@ traegt gar keinen.
+--     EIGNUNGSRIEGEL (K01-M27, offener Punkt O-K01-6) weist jede
+--     INSERT INTO app ab, der nicht schon beim Einfuegen ueber
+--     app.fit_check_id auf einen bestandenen (GEEIGNET-)Check zeigt
+--     (nachweise/klauselregister/register.json, K01-G05: "`fit_check_id`
+--     ist im DDL wegen der beidseitigen Verknuepfung technisch
+--     nullbar"). Die Verknuepfung laeuft in BEIDE Richtungen
+--     (fit_check.app_id <-> app.fit_check_id); zum Zeitpunkt DIESES
+--     Inserts gibt es noch keine app-Zeile, also bleibt app_id hier
+--     NULL -- Abschnitt 7 setzt beim Anlegen der app-Zeile
+--     fit_check_id, Abschnitt 7b schliesst danach app_id rueckwaerts.
+--
+--     Jede Anwendung aus Abschn. 7 (ausser den beiden ohne app-Zeile,
+--     gs_offen@ und gs_ohnecheck@) traegt genau EINEN GEEIGNET-Check --
+--     so, wie ein Konto nach M4 dort ankaeme. gs_offen@ traegt einen
+--     Check mit OFFEN und OHNE app-Zeile; gs_ohnecheck@ traegt gar
+--     keinen.
 -- ---------------------------------------------------------------------
 INSERT INTO fit_check (id, tenant_id, actor_id, app_id, outcome, completed_at, retention_class) VALUES
-  ('00000000-0000-4000-8000-00000000ec01','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb01','00000000-0000-4000-8000-00000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec02','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb02','00000000-0000-4000-8000-00000000ed02','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec03','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb03','00000000-0000-4000-8000-00000000ed03','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec04','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb04','00000000-0000-4000-8000-00000000ed04','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec05','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb05','00000000-0000-4000-8000-00000000ed05','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec06','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb06','00000000-0000-4000-8000-00000000ed06','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec07','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb07','00000000-0000-4000-8000-00000000ed07','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec08','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb08','00000000-0000-4000-8000-00000000ed08','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec09','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb09','00000000-0000-4000-8000-00000000ed09','GEEIGNET', now() - interval '30 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec0a','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0a','00000000-0000-4000-8000-00000000ed0a','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec0b','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0b','00000000-0000-4000-8000-00000000ed0b','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec0e','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0e','00000000-0000-4000-8000-00000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-00000000ec0f','00000000-0000-4000-8000-00000000ea03','00000000-0000-4000-8000-00000000eb0f','00000000-0000-4000-8000-00000000ed0c','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS')
+  ('00000000-0000-4000-8000-00000000ec01','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb01', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec02','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb02', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec03','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb03', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec04','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb04', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec05','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb05', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec06','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb06', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec07','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb07', NULL,'GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec08','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb08', NULL,'GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec09','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb09', NULL,'GEEIGNET', now() - interval '30 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0a','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0a', NULL,'GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0b','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0b', NULL,'GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0e','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0e', NULL,'GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0f','00000000-0000-4000-8000-00000000ea03','00000000-0000-4000-8000-00000000eb0f', NULL,'GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS')
 ON CONFLICT (id) DO NOTHING;
-
--- gs_gesperrt@ braucht eine EIGENE app-Zeile (nicht ed01, die gehoert
--- gs_frisch@) -- sonst maesse K03-D01 an einer app, die ein anderer
--- Testfall gerade veraendert (F07, Abschn. "PROBE VERUNREINIGT NICHT").
-INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state) VALUES
-  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'ORIENTIERUNG','DISCOVERY')
-ON CONFLICT (id) DO NOTHING;
-UPDATE fit_check SET app_id = '00000000-0000-4000-8000-00000000ed0e'
- WHERE id = '00000000-0000-4000-8000-00000000ec0e';
 
 -- gs_offen@: OFFEN, KEINE app-Zeile (K04-M11 Vorgabewert; K04-G04
--- Negativfall).
+-- Negativfall). Ohne GEEIGNET beruehrt sie den EIGNUNGSRIEGEL nicht.
 INSERT INTO fit_check (id, tenant_id, actor_id, app_id, outcome, completed_at, retention_class)
 VALUES ('00000000-0000-4000-8000-00000000ec0c','00000000-0000-4000-8000-00000000ea02',
         '00000000-0000-4000-8000-00000000eb0c', NULL, 'OFFEN', NULL, 'KI_NACHWEIS')
 ON CONFLICT (id) DO NOTHING;
 -- gs_ohnecheck@ traegt bewusst KEINEN fit_check -- kein INSERT.
+
+-- ---------------------------------------------------------------------
+-- 7 · Die Anwendungen (app) -- ausschliesslich die AUSGANGSLAGE:
+--     journey_phase, lifecycle_state, ggf. bereits gesetzter Name, und
+--     fit_check_id auf den in Abschn. 6 schon vorhandenen GEEIGNET-
+--     Check (das erfuellt den EIGNUNGSRIEGEL beim Einfuegen).
+--     KEIN Beitrag, KEINE Herkunftsmarke, KEIN document, KEIN Uebersprung-
+--     vermerk -- das ist der Pruefgegenstand von gespraech_lauf.sh
+--     selbst (Abschn. "MASSSTAB F07" oben).
+-- ---------------------------------------------------------------------
+INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state, fit_check_id) VALUES
+  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec01'),
+  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec02'),
+  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec03'),
+  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec04'),
+  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec05'),
+  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec06'),
+  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec07'),
+  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec08'),
+  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'UEBERSICHT',  'DISCOVERY','00000000-0000-4000-8000-00000000ec09'),
+  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0a'),
+  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0b'),
+  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0f')
+ON CONFLICT (id) DO NOTHING;
+
+-- gs_gesperrt@ braucht eine EIGENE app-Zeile (nicht ed01, die gehoert
+-- gs_frisch@) -- sonst maesse K03-D01 an einer app, die ein anderer
+-- Testfall gerade veraendert (F07, Abschn. "PROBE VERUNREINIGT NICHT").
+-- Ihr Check ec0e steht seit Abschn. 6 bereit; fit_check_id zeigt gleich
+-- beim Einfuegen auf ihn.
+INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state, fit_check_id) VALUES
+  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec0e')
+ON CONFLICT (id) DO NOTHING;
+
+-- ---------------------------------------------------------------------
+-- 7b · Rueckverknuepfung fit_check.app_id (schliesst die beidseitige
+--      Verknuepfung aus Abschn. 6/7 -- vor Abschn. 8 zeigt jeder
+--      GEEIGNET-Check wieder auf seine app-Zeile, wie es Abschn. 7's
+--      Kommentar und die Aufbaupruefung in Abschn. 10(f)/(i) voraussetzen).
+-- ---------------------------------------------------------------------
+UPDATE fit_check SET app_id = a.id
+  FROM app a
+ WHERE a.fit_check_id = fit_check.id
+   AND fit_check.id IN (
+     '00000000-0000-4000-8000-00000000ec01','00000000-0000-4000-8000-00000000ec02',
+     '00000000-0000-4000-8000-00000000ec03','00000000-0000-4000-8000-00000000ec04',
+     '00000000-0000-4000-8000-00000000ec05','00000000-0000-4000-8000-00000000ec06',
+     '00000000-0000-4000-8000-00000000ec07','00000000-0000-4000-8000-00000000ec08',
+     '00000000-0000-4000-8000-00000000ec09','00000000-0000-4000-8000-00000000ec0a',
+     '00000000-0000-4000-8000-00000000ec0b','00000000-0000-4000-8000-00000000ec0e',
+     '00000000-0000-4000-8000-00000000ec0f');
 
 -- ---------------------------------------------------------------------
 -- 8 · Zwei Agenten-Zeilen fuer K17-M02 (plattformweit eindeutiger Name)
