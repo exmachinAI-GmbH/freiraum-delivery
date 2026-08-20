@@ -57,11 +57,14 @@
 #
 #        Ziel "Weiter"        = das Ziel, das erst erscheint, wenn BEIDE
 #                               Fragen beantwortet sind
-#        Ziel "Kenntnisnahme" = das Ziel, das nur nach Treffer in
-#                               Frage 1 erscheint (verglichen gegen die
-#                               Halt-Seite -- Treffer in Frage 2, seit
-#                               der gezeichneten Auslegung vom
-#                               20.08.2026, Abschnitt 6 unten)
+#        Ziel "Kenntnisnahme" = das Ziel, das nach Treffer in Frage 1 auf
+#                               ZIELE_ANHANG uebrig bleibt, wenn man die
+#                               bekannten Nicht-Kandidaten abzieht, die
+#                               ZB-09 fuer die Halt-Seite schon zaehlt
+#                               (Selbstbezug, Antwort aendern, Abmelden,
+#                               Gesundheitscheck) -- seit der
+#                               Nachbesserung vom 20.08.2026, Abschnitt 7
+#                               unten
 #        Ziel "Anlage"        = auf dem freien Weg dasselbe Ziel wie
 #                               "Weiter" (seit 20.08.2026, Abschnitt 6:
 #                               dort gibt es keinen eigenen
@@ -209,6 +212,63 @@
 # weiter gemessen, an denselben Merkmalen. Nur die VERGLEICHSSEITE fuer
 # zwei der drei Ziele ist eine andere, echte statt einer, die es fuer
 # diesen Zweck nicht gibt.
+#
+# ---------------------------------------------------------------------
+# 7. NACHBESSERUNG VOM 20.08.2026, RUNDE 12 -- die Vergleichsseite aus
+#    Abschnitt 6 war selbst nicht vergleichbar
+# ---------------------------------------------------------------------
+# Abschnitt 6 loeste das Zustandsproblem (ZIELE_FREI ist NACHHER, nicht
+# VORHER), indem er die Kenntnisnahme gegen ZIELE_HALT (Fahrt 3) statt
+# gegen ZIELE_FREI ableitete -- eine echte, VOR der Anlage stehende
+# Landeseite. Das behob das Zustandsproblem, aber nicht ein zweites:
+# K04-M08 zwingt die Halt-Seite auf GENAU DREI Auswege; K04-D09 sagt,
+# ein Treffer in Frage 1 sei KEIN Halt -- die Landeseite ZIELE_ANHANG
+# traegt also keine solche Deckelung. Zwei Seiten, von denen eine
+# klauselgemaess auf drei Ziele eingeengt ist und die andere nicht,
+# unterscheiden sich um mehr als die Kenntnisnahme allein -- ihre
+# Differenz muss bei einem klauselgemaessen Bau nicht 1 sein, auch wenn
+# der Bau K04-M08 und K04-D09 vollstaendig erfuellt. Und das misst diese
+# Datei an anderer Stelle selbst: ZB-09 zaehlt die Auswege der
+# Halt-Seite und ist bestanden, wenn es genau drei sind -- die Halt-Seite
+# traegt in einem klauselgemaessen Bau also nie mehr als drei Ziele,
+# waehrend ZIELE_ANHANG als normale Weiterweg-Seite ihre volle Umgebung
+# behaelt (Menue, Hilfe, Abmelden, Gesundheitscheck). Ein Fall, der so
+# nur scheitern kann, misst so wenig wie einer, der nur bestehen kann.
+#
+# NEU (ab dieser Runde): keine Differenz zweier Seiten mehr. Von
+# ZIELE_ANHANG selbst werden dieselben bekannten Nicht-Kandidaten
+# abgezogen, die ZB-09 fuer die Halt-Seite schon zaehlt und misst --
+# Selbstbezug auf den Bildschirm ($ZWECK_PFAD), der Weg "Antwort
+# aendern" ($ANTWORT_ZIEL), /abmelden, /gesundheit (dasselbe Muster wie
+# unten bei ZB-09, Zeile ~1886). Was danach von ZIELE_ANHANG uebrig
+# bleibt, MUSS genau ein Ziel sein: die Aufforderung zu bestaetigen.
+# ZIELE_HALT wird fuer DIESE Ableitung nicht mehr gebraucht; die Variable
+# bleibt bestehen und traegt weiter ZB-07 und ZB-09, die je eigene
+# Bedingungen an der Halt-Seite selbst messen.
+#
+# KEIN PRUEFWERT WIRD GESENKT (K23-D05): weiterhin MUSS genau ein Ziel
+# uebrig bleiben, sonst faellt ZB-06 (ABLEITUNG LIEF) oder sperrt
+# (ABLEITUNG LIEF NICHT) -- nur die Menge, von der abgezogen wird, ist
+# jetzt eine, die ein klauselgemaesser Bau tatsaechlich auf 1 bringen
+# kann, statt eine, bei der das strukturell ausgeschlossen war.
+#
+# DAZU, UNABHAENGIG VOM BAU: die Meldung von ZB-06 behauptete bislang
+# "es gibt keine Aufforderung zu bestaetigen" auch dann, wenn die
+# Ableitung LIEF und mehrere Ziele fand -- und nannte im selben Satz
+# eines davon im Wortlaut. Das war eine falsche Aussage ueber das
+# Ergebnis dieses Prueffalls, nicht nur ein falsches Ergebnis (Befund
+# vom 20.08.2026). Die Meldung sagt jetzt, was tatsaechlich zutrifft:
+# die Aufforderung ist nicht EINDEUTIG bestimmbar.
+#
+# UND: ZB-12 sendet die Anlage auf derselben Fahrt, fuer die ZB-10 zuvor
+# die Kenntnisnahme haette bestaetigen muessen. Lief die Ableitung nicht
+# oder blieb sie mehrdeutig, hat ZB-10 nichts bestaetigt -- ZB-12 wuerde
+# dann eine Ablehnung messen, die an der FREMDEN Bedingung "keine
+# Kenntnisnahme" scheitert, nicht an K04-M17 (F07). ZB-12 prueft das jetzt
+# vor dem Versuch und sperrt mit Grund, statt rot zu werden. ZB-14 und
+# ZB-24 haengen bereits ueber APP_NR_1 an ZB-12 und sperren von selbst,
+# wenn ZB-12 keine Anlage zustande bringt -- fuer sie war keine eigene
+# Aenderung noetig.
 # =====================================================================
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
@@ -1267,29 +1327,39 @@ fi
 #                          Kontostand (Kenntnisnahme, Eignung), nicht die
 #                          Adresse selbst -- das messen ZB-11, ZB-12
 #                          eigenstaendig.
-#   Ziel "Kenntnisnahme" = das Ziel, das nur nach Treffer in Frage 1
-#                          erscheint -- verglichen gegen ZIELE_HALT
-#                          (Fahrt 3, Treffer in Frage 2), nicht mehr
-#                          gegen ZIELE_FREI. ZIELE_HALT ist eine ECHTE,
-#                          bestehende Landeseite nach demselben
-#                          Weiterweg, nur mit anderer Antwort -- anders
-#                          als ZIELE_FREI vergleicht sie also wieder
-#                          Vergleichbares.
+#   Ziel "Kenntnisnahme" = das Ziel, das auf ZIELE_ANHANG (Fahrt 2,
+#                          Treffer in Frage 1) uebrig bleibt, wenn man
+#                          die bekannten Nicht-Kandidaten abzieht, die
+#                          ZB-09 fuer die Halt-Seite schon zaehlt und
+#                          misst: Selbstbezug auf den Bildschirm,
+#                          "Antwort aendern", /abmelden, /gesundheit
+#                          (Zeile ~1886 unten -- dasselbe Muster, nur
+#                          hier auf ZIELE_ANHANG selbst angewandt).
+#                          NICHT MEHR als Differenz zu ZIELE_HALT
+#                          (Runde 12, Abschnitt 7 oben): K04-M08 zwingt
+#                          die Halt-Seite auf genau drei Auswege,
+#                          K04-D09 legt ZIELE_ANHANG keine solche
+#                          Deckelung auf -- die Differenz zweier so
+#                          ungleich beschraenkter Seiten muss bei einem
+#                          klauselgemaessen Bau nicht 1 sein.
 #
 # ---------------------------------------------------------------------
-# ZWEI GRUENDE, DIE NICHT DASSELBE SIND (Befund vom 19.08.2026, weiterhin
-# gueltig fuer die Kenntnisnahme-Ableitung)
+# ZWEI GRUENDE, DIE NICHT DASSELBE SIND (Befund vom 19.08.2026, an die
+# Ableitung aus Runde 12 angepasst -- Abschnitt 7 oben)
 #
 # Ein Ziel kann aus zwei ganz verschiedenen Gruenden fehlen:
 #
-#   ABLEITUNG LIEF NICHT   Eine der beiden Zielmengen fehlt. Dann ist
-#                          ueber die Aufforderung zu bestaetigen NICHTS
-#                          gesagt -- der Fall hat sie nicht gesucht,
-#                          sondern konnte nicht suchen. Zustand:
-#                          GESPERRT (K23-M22).
-#   ABLEITUNG LIEF         Beide Zielmengen liegen vor, der Unterschied
-#                          ergibt aber nicht genau ein Ziel. DAS ist eine
-#                          Aussage ueber den Bau. Zustand: der Fall faellt.
+#   ABLEITUNG LIEF NICHT   Die Zielmenge, aus der abgeleitet wird
+#                          (WEITER_ZIEL fuer die Anlage, ZIELE_ANHANG
+#                          fuer die Kenntnisnahme), fehlt selbst. Dann
+#                          ist ueber die Aufforderung zu bestaetigen
+#                          NICHTS gesagt -- der Fall hat sie nicht
+#                          gesucht, sondern konnte nicht suchen.
+#                          Zustand: GESPERRT (K23-M22).
+#   ABLEITUNG LIEF         Die Zielmenge liegt vor, aber nach Abzug der
+#                          bekannten Nicht-Kandidaten bleibt nicht genau
+#                          ein Ziel. DAS ist eine Aussage ueber den Bau.
+#                          Zustand: der Fall faellt.
 #
 # Es wird dabei KEINE Bedingung weggenommen: faellt die Ableitung aus,
 # zaehlt der Fall weiterhin als nicht bestanden (sperr() zaehlt zu den
@@ -1309,22 +1379,32 @@ else
   ANLEGEN_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
 fi
 
-# Ziel "Kenntnisnahme": Unterschied gegen ZIELE_HALT (Fahrt 3), nicht
-# mehr gegen ZIELE_FREI (Begruendung oben).
-if [ -n "$ZIELE_ANHANG" ] && [ -n "$ZIELE_HALT" ]; then
-  neu="$(comm -13 <(printf '%s\n' "$ZIELE_HALT" | sort -u) <(printf '%s\n' "$ZIELE_ANHANG" | sort -u))"
+# Ziel "Kenntnisnahme": bekannte Nicht-Kandidaten von ZIELE_ANHANG selbst
+# abziehen (Fahrt 2, Treffer in Frage 1) -- dasselbe Muster, das ZB-09
+# fuer die Halt-Seite verwendet (Zeile ~1886 unten: Selbstbezug, Antwort
+# aendern, Abmelden, Gesundheitscheck). NICHT MEHR die Differenz gegen
+# ZIELE_HALT (Begruendung: Abschnitt 7 oben -- die Halt-Seite ist per
+# K04-M08 auf drei Ziele gedeckelt, ZIELE_ANHANG nicht; die beiden Seiten
+# sind deshalb nicht vergleichbar).
+if [ -n "$ZIELE_ANHANG" ]; then
+  neu=""
+  while read -r z; do
+    [ -n "$z" ] || continue
+    case "$z" in
+      "$ZWECK_PFAD"|"$ANTWORT_ZIEL"|/abmelden|/gesundheit) : ;;
+      *) neu="$neu$z
+";;
+    esac
+  done <<EOF
+$ZIELE_ANHANG
+EOF
+  neu="$(printf '%s\n' "$neu" | sort -u)"
   anz="$(printf '%s\n' "$neu" | grep -c . || true)"
   if [ "$anz" = "1" ]; then KENNTNIS_ZIEL="$(printf '%s\n' "$neu" | grep . | head -1)"
-  else KENNTNIS_GRUND="nach Treffer in Frage 1 erscheinen $anz Ziele, die es auf der Halt-Seite nicht gibt, statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
+  else KENNTNIS_GRUND="nach Abzug der bekannten Nicht-Kandidaten (Selbstbezug, Antwort aendern, Abmelden, Gesundheitscheck) bleiben nach Treffer in Frage 1 $anz Ziele statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
 else
   KENNTNIS_ABLEITUNG="fehlt"
-  if [ -z "$ZIELE_ANHANG" ] && [ -z "$ZIELE_HALT" ]; then
-    KENNTNIS_GRUND="KEINE der beiden Fahrten kam bis zur Auswertung -- Treffer in Frage 1: ${ANHANG_GRUND:-ohne benannten Grund}; Treffer in Frage 2 (Halt): ${VERBOTEN_GRUND:-ohne benannten Grund}"
-  elif [ -z "$ZIELE_ANHANG" ]; then
-    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 1 kam nicht bis zur Auswertung -- ${ANHANG_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Halt-Fahrt kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
-  else
-    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 2 (HALT) kam nicht bis zur Auswertung -- ${VERBOTEN_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
-  fi
+  KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 1 kam nicht bis zur Auswertung -- ${ANHANG_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}"
 fi
 
 printf 'Entdeckung: Ziel Weiter = %s · Ziel Kenntnisnahme = %s · Ziel Anlage = %s\n\n' \
@@ -1701,7 +1781,7 @@ else
   # ueber die Aufforderung nichts -- er scheiterte dann an der fremden
   # Fahrt, nicht an K04-M20 (F07). Der Fall sperrt in diesem Fall unten.
   if [ "$KENNTNIS_ABLEITUNG" = "lief" ]; then
-    [ -n "$KENNTNIS_ZIEL" ] || m="$m es gibt keine Aufforderung zu bestaetigen: $KENNTNIS_GRUND (K04-M20);"
+    [ -n "$KENNTNIS_ZIEL" ] || m="$m die Aufforderung zu bestaetigen ist nicht eindeutig bestimmbar: $KENNTNIS_GRUND (K04-M20);"
   fi
   # K04-D09: kein Halt. Das Ergebnis bleibt GEEIGNET, und der Weg endet
   # nicht in den drei Auswegen.
@@ -2016,9 +2096,23 @@ pruefe_sql_marke
 #         geschlossene Tuer: ein Server, der jede Anlage abweist,
 #         bestuende ZB-04, ZB-11, ZB-15, ZB-16 und ZB-17 -- und liefe
 #         nicht.
+#
+#         VORBEDINGUNG (Befund vom 20.08.2026): "nach der Kenntnisnahme"
+#         heisst, dass ZB-10 sie auf DIESER Fahrt (KEKS_ANHANG) zuvor
+#         tatsaechlich bestaetigt hat. Lief die Kenntnisnahme-Ableitung
+#         nicht oder blieb sie mehrdeutig, hat ZB-10 nichts bestaetigt --
+#         dann wuerde dieser Fall eine Ablehnung messen, die an der
+#         FREMDEN Bedingung "keine Kenntnisnahme" scheitert, nicht an
+#         K04-M17 (F07). Gewaechtert wird deshalb ueber denselben
+#         Nachweis, den ZB-10 und ZB-24 schon lesen (nachweise()).
 # ---------------------------------------------------------------------
-if [ -z "$ANLEGEN_ZIEL" ] || [ -z "$KEKS_ANHANG" ]; then
+kenntnis_belegt="$(nachweise 'zb_anhang@zbpruef.example')"
+if [ -z "$ANLEGEN_ZIEL" ]; then
   sperr ZB-12 "Nicht messbar: ${ANLEGEN_GRUND:-der Weg zur Anlage ist nicht bestimmbar}"
+elif [ -z "$KEKS_ANHANG" ]; then
+  sperr ZB-12 "Nicht messbar: ${ANHANG_GRUND:-die Fahrt mit Treffer in Frage 1 kam nicht bis zur Auswertung}"
+elif [ "${kenntnis_belegt:-0}" = "0" ]; then
+  sperr ZB-12 "Nicht messbar: auf dieser Fahrt liegt kein Nachweis der Kenntnisnahme vor -- ZB-10 haengt an derselben Ableitung wie ZB-06 und konnte nicht bestaetigen ($(grund "$KENNTNIS_GRUND")). Ohne Kenntnisnahme wuerde eine abgewiesene Anlage die fremde Bedingung messen, nicht K04-M17 (F07)"
 else
   cid="$(check_von 'zb_anhang@zbpruef.example')"
   vorher="$(anz_apps "$MANDANT_A")"
@@ -2248,7 +2342,7 @@ pruefe_sql_marke
 #                   ein Fall, der nichts gemessen hat, ist nicht gruen.
 # ---------------------------------------------------------------------
 if [ -z "$KENNTNIS_ZIEL" ]; then
-  sperr ZB-16 "Nicht messbar: die Aufforderung zu bestaetigen wurde nicht gefunden -- $(grund "$KENNTNIS_GRUND")"
+  sperr ZB-16 "Nicht messbar: die Aufforderung zu bestaetigen ist nicht eindeutig bestimmbar -- $(grund "$KENNTNIS_GRUND")"
 elif [ "${ACK_SPALTE:-0}" != "1" ]; then
   sperr ZB-16 'Nicht messbar: die Kenntnisnahme haengt an keiner Spalte von fit_check; mit welchem Mittel sie unschreibbar zu machen waere, ist ohne Kenntnis des Traegers nicht entscheidbar (K04-G12)'
 elif ! bis_geeignet 'zb_nachweis@zbpruef.example' '820009' zbnw; then
