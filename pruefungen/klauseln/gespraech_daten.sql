@@ -491,8 +491,23 @@ BEGIN
   -- (i) Kein Konto traegt schon mehr als einen fit_check aus einem
   --     frueheren, nicht zurueckgesetzten Lauf (die Zahl "genau einer
   --     GEEIGNET-Check" ist Voraussetzung fuer K04-M11/K05-G01).
+  --     Ausnahmen -- beide sind AUSGANGSLAGE, kein Mangel:
+  --       gs_admin@      traegt gar keinen fit_check (Abschn. 3 -- kein
+  --                      Endnutzer-Konto, nie Ziel eines fit_check).
+  --       gs_ohnecheck@  traegt MIT ABSICHT keinen fit_check -- ihr
+  --                      eigener Negativfall "Check nicht lesbar"
+  --                      (Zeilen 164, 230, 255 sowie Pruefteil (g)
+  --                      oben, der genau das bestaetigt). Ohne diese
+  --                      Ausnahme widerspraeche (i) (g) direkt (Befund
+  --                      20.08.2026, sechster Nachbesserungsauftrag).
+  --     gs_offen@ dagegen braucht KEINE Ausnahme: sie traegt genau
+  --     einen fit_check (outcome OFFEN statt GEEIGNET, Abschn. 6/10(f))
+  --     -- (i) zaehlt nur die Anzahl, nicht den outcome, also steht sie
+  --     bei checks=1 und faellt hier nicht auf.
   FOR r IN SELECT * FROM pruef_gespraech_konten
-            WHERE email NOT IN ('gs_admin@gespraechpruef.example') AND checks <> 1
+            WHERE email NOT IN ('gs_admin@gespraechpruef.example',
+                                'gs_ohnecheck@gespraechpruef.example')
+              AND checks <> 1
   LOOP fehler := fehler || format('%s traegt %s Checks statt genau 1; ', r.email, r.checks); END LOOP;
 
   -- (j) Die Grundzahlen selbst -- nicht nur Eigenschaften VORHANDENER
