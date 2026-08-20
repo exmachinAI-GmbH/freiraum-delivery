@@ -2065,7 +2065,7 @@ ok K17-M23 "Die drei im Klauseltext genannten Negativfaelle sind bereits gemesse
 
 # K19-G03 (EN-05-Teil): der Namensvorschlag traegt die sichtbare Marke
 # KI-Vorschlag (dieselbe Beobachtung wie K05-M07-marke).
-if [ -s "$ARBEIT/$NAME_QUELLE.rumpf" ] 2>/dev/null; then
+if [ -s "$ARBEIT/${NAME_QUELLE:-}.rumpf" ] 2>/dev/null; then
   ok K19-G03-en05 "Der Namensvorschlag auf EN-05 traegt die sichtbare Marke 'KI-Vorschlag' (K19-G03, EN-05-Teil; dieselbe Beobachtung wie K05-M07-marke)."
 else
   sperr K19-G03-en05 "die vorausgesetzte Namensschritt-Seite steht nicht zur Verfuegung."
@@ -2087,6 +2087,8 @@ fi
 printf '\nK05-G12    KEIN PRUEFFALL  Klausel-eigene Festlegung: Restrisiko, gefuehrt in der Restrisikoliste des Bauzugs M5 (K23-M04, K23-D07). Nicht Teil der Summe.\n'
 
 printf '\n'
-[ "$gesperrt" -gt 0 ] && printf 'davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): %s\n' "$gesperrt"
+if [ "$gesperrt" -gt 0 ]; then
+  printf 'davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): %s\n' "$gesperrt"
+fi
 printf 'SUMME: %s von %s bestanden, %s gescheitert (K05-G12 nicht mitgezaehlt, siehe oben)\n' "$bestanden" "$gesamt" "$gescheitert"
 [ "$gescheitert" -eq 0 ]
