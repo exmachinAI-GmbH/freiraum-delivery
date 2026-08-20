@@ -256,8 +256,60 @@ K05-G12 — Restrisiko, siehe Abschnitt 1.
 
 ---
 
-*Erstellt am 20.08.2026. Gelesen für diesen Bericht: `klauseln.md` (vollständig, 1186
-Zeilen), `nachweise/klauselregister/M5_klausellage_260819.json`,
+## 5 · Ausgangslage der Anwendungen (`app`) — von Hand oder durch die Tür
+
+**Anlass.** Der dritte Lauf der Aufbaudaten scheiterte am 20.08.2026 an
+`psql:pruefungen/klauseln/gespraech_daten.sql:270: ERROR: null value in column "project_no" of
+relation "app" violates not-null constraint`. Die Bauleitung stellte daraufhin die
+grundsätzlichere Frage: Ist eine von Hand mit `INSERT` angelegte `app`-Zeile für M5 überhaupt
+die richtige Ausgangslage, oder muss sie — wie beim Vorbild `zweckbestimmung_daten.sql` —
+durch den Serverpfad entstehen, den auch eine Nutzerin durchliefe?
+
+**Entscheidung: Option A — die Ausgangslage legt weiter `app`-Zeilen von Hand an.** Begründung:
+Bei `zweckbestimmung_daten.sql` ist die Entstehung der `app`-Zeile selbst der Prüfgegenstand
+(K01-M26/K01-M27, siehe unten) — dort verböte ein von Hand gesetzter Zustand genau das, was
+gemessen werden soll. Bei M5/`gespraech_daten.sql` ist die `app`-Zeile dagegen reine
+Ausgangslage: keine der 101 Klauseln dieses Laufs (K01, K02, K03, K04, K05, K10, K13, K17, K19 —
+Zählung `nachweise/klauselregister/M5_klausellage_260819.json`) macht eine Aussage darüber,
+*wie* eine `app`-Zeile entsteht; sie machen Aussagen darüber, was mit einer bereits bestehenden
+Zeile geschehen darf (K05, K19) oder wie ihr Zustand geführt wird (K01-M05, K01-M07, K01-M09).
+Der Prüfgegenstand von `gespraech_lauf.sh` ist der Gesprächsinhalt (Beiträge, Herkunftsmarken,
+Übersprungvermerke, der Dreischritt Datei/document/event), nicht die Entstehung der `app`-Zeile
+— das legt bereits der Abschnitt „MASSSTAB F07" am Kopf dieser Datei fest, unverändert seit dem
+ersten Entwurf. Eine von Hand gesetzte Ausgangslage misst hier also nichts vor, was sonst
+gemessen würde.
+
+**Korrektur einer eigenen Fehlangabe.** Der bisherige Kommentar vor Abschnitt 6 in
+`gespraech_daten.sql` schrieb das beobachtete Verhalten des EIGNUNGSRIEGELS (jeder `INSERT INTO
+app` ohne beim Einfügen schon gültige `fit_check_id` scheitert) der signierten Klausel
+„K01-M27, offener Punkt O-K01-6" zu. Beides war falsch: `O-K01-6` ist keine geführte
+Kennung — sie kommt in keiner anderen Datei dieses Prüfstands vor und wurde ohne Beleg
+erfunden. `K01-M27` ist keine der 101 Klauseln dieses Laufs; sie steht in
+`nachweise/klauselregister/register.md`:139 als `⟨VORSCHLAG · NICHT GEZEICHNET⟩` (ebenso
+`K01-M26`, register.md:136 — dort auch das Muster `^DE-[A-Z]{3}_[0-9]{3}_[0-9]{2}$` für
+`project_no`). Der Kommentar ist jetzt korrigiert: Der EIGNUNGSRIEGEL wird als beobachtetes
+Verhalten des laufenden Baus beschrieben, K01-M26/K01-M27 werden nur noch als unsignierter
+Hintergrund zitiert, nie als geprüfter Maßstab.
+
+**`project_no`.** Die Spalte ist `NOT NULL`, aber kein Akzeptanzkriterium der 101 Klauseln
+nennt sie — deshalb misst kein Testfall in `gespraech_lauf.sh` ihren Wert oder ihr Format. Die
+Datei füllt sie je Zeile mit einem synthetischen, eindeutigen Wert der Form `DE-GSA_NNN_01`
+(Mandant A) bzw. `DE-GSB_001_01` (Mandant B) — reine Infrastruktur wie die `id`-Spalte, in
+derselben Rolle wie die frei erfundenen UUIDs. Das Muster ist dem ungezeichneten Vorschlag
+K01-M26 entnommen, damit der Wert plausibel und lesbar bleibt; das ist eine Bequemlichkeit,
+keine Behauptung über ein gezeichnetes Kriterium.
+
+**Was das nicht abschließt.** Sollte ein künftiger Lauf eine weitere `NOT NULL`-Spalte oder
+eine Sperre finden, die nur der tatsächliche Serverbefehl auflöst — nicht nur eine fehlende
+Pflichtangabe —, kippt diese Abwägung zugunsten Option B, und diese Zeile wird entsprechend
+nachgetragen. Bis dahin bleibt Option A die begründete Wahl für diese Datei.
+
+---
+
+*Erstellt am 20.08.2026, Abschnitt 5 nachgetragen am 20.08.2026 (dritter Nachbesserungsauftrag).
+Gelesen für diesen Bericht: `klauseln.md` (vollständig, 1186 Zeilen),
+`nachweise/klauselregister/M5_klausellage_260819.json`,
+`nachweise/klauselregister/register.md`/`register.json` (Zeilen zu K01-G05, K01-M26, K01-M27),
 `pruefungen/klauseln/zweckbestimmung_daten.sql`/`zweckbestimmung_lauf.sh`,
 `pruefungen/klauseln/k19_kasten_lauf.sh` und `pruefungen/klauseln/ZOOM200_nicht_messbar_260818.md`
 als Formvorbild. Nicht gelesen: `app/`, `install/`, `mail/`, `migrations/`, `seeds/`,

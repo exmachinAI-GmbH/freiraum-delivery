@@ -204,12 +204,19 @@ ON CONFLICT DO NOTHING;
 -- 6 · Die vorbereiteten Eignungs-Checks (fit_check) -- ZUERST, noch
 --     OHNE app_id
 --
---     EIGNUNGSRIEGEL (K01-M27, offener Punkt O-K01-6) weist jede
---     INSERT INTO app ab, der nicht schon beim Einfuegen ueber
---     app.fit_check_id auf einen bestandenen (GEEIGNET-)Check zeigt
---     (nachweise/klauselregister/register.json, K01-G05: "`fit_check_id`
---     ist im DDL wegen der beidseitigen Verknuepfung technisch
---     nullbar"). Die Verknuepfung laeuft in BEIDE Richtungen
+--     EIGNUNGSRIEGEL weist jede INSERT INTO app ab, der nicht schon
+--     beim Einfuegen ueber app.fit_check_id auf einen bestandenen
+--     (GEEIGNET-)Check zeigt -- beobachtetes Verhalten des laufenden
+--     Baus, kein Zitat aus einer gezeichneten Klausel: K01-G05
+--     (nachweise/klauselregister/register.json) haelt dazu nur GILT-
+--     Hintergrund fest ("`fit_check_id` ist im DDL wegen der
+--     beidseitigen Verknuepfung technisch nullbar"), ohne eigenes
+--     Akzeptanzkriterium; K01-M26/K01-M27 (register.md :136/:139)
+--     stehen als ⟨VORSCHLAG · NICHT GEZEICHNET⟩ -- keine der 101
+--     Klauseln dieses Laufs (nachweise/klauselregister/
+--     M5_klausellage_260819.json). Beide werden hier NUR als
+--     Hintergrund zitiert, nie als getesteter Massstab. Die
+--     Verknuepfung laeuft in BEIDE Richtungen
 --     (fit_check.app_id <-> app.fit_check_id); zum Zeitpunkt DIESES
 --     Inserts gibt es noch keine app-Zeile, also bleibt app_id hier
 --     NULL -- Abschnitt 7 setzt beim Anlegen der app-Zeile
@@ -253,20 +260,33 @@ ON CONFLICT (id) DO NOTHING;
 --     KEIN Beitrag, KEINE Herkunftsmarke, KEIN document, KEIN Uebersprung-
 --     vermerk -- das ist der Pruefgegenstand von gespraech_lauf.sh
 --     selbst (Abschn. "MASSSTAB F07" oben).
+--
+--     project_no ist NOT NULL in app und wird hier je Zeile mit einem
+--     synthetischen, mandantengebundenen Wert belegt -- reine
+--     Infrastruktur wie die id-Spalte, KEIN gepruefter Wert: keine der
+--     101 Klauseln dieses Laufs stellt eine Anforderung an project_no,
+--     also misst kein Testfall in gespraech_lauf.sh diese Spalte. Das
+--     Muster `DE-XXX_NNN_NN` steht nur im ungezeichneten Vorschlag
+--     K01-M26 (register.md :136); es wird hier NICHT als getesteter
+--     Massstab behauptet, nur als plausible, eindeutige Schreibweise
+--     uebernommen, damit die Ausgangslage lesbar bleibt und nicht mit
+--     project_no einer anderen Pruefscheibe kollidiert. Siehe die
+--     Abwaegung "Ausgangslage von Hand vs. durch die Tuer" in
+--     gespraech_deckung.md Abschn. 5.
 -- ---------------------------------------------------------------------
-INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state, fit_check_id) VALUES
-  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec01'),
-  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec02'),
-  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec03'),
-  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec04'),
-  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec05'),
-  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec06'),
-  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec07'),
-  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec08'),
-  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'UEBERSICHT',  'DISCOVERY','00000000-0000-4000-8000-00000000ec09'),
-  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0a'),
-  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0b'),
-  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0f')
+INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id) VALUES
+  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_001_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec01'),
+  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_002_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec02'),
+  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_003_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec03'),
+  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_004_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec04'),
+  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_005_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec05'),
+  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'DE-GSA_006_01','ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec06'),
+  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'DE-GSA_007_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec07'),
+  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'DE-GSA_008_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec08'),
+  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'DE-GSA_009_01','UEBERSICHT',  'DISCOVERY','00000000-0000-4000-8000-00000000ec09'),
+  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'DE-GSA_010_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0a'),
+  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'DE-GSA_011_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0b'),
+  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'DE-GSB_001_01','INTERVIEW',   'DISCOVERY','00000000-0000-4000-8000-00000000ec0f')
 ON CONFLICT (id) DO NOTHING;
 
 -- gs_gesperrt@ braucht eine EIGENE app-Zeile (nicht ed01, die gehoert
@@ -274,8 +294,8 @@ ON CONFLICT (id) DO NOTHING;
 -- Testfall gerade veraendert (F07, Abschn. "PROBE VERUNREINIGT NICHT").
 -- Ihr Check ec0e steht seit Abschn. 6 bereit; fit_check_id zeigt gleich
 -- beim Einfuegen auf ihn.
-INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state, fit_check_id) VALUES
-  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec0e')
+INSERT INTO app (id, tenant_id, name, project_no, journey_phase, lifecycle_state, fit_check_id) VALUES
+  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'DE-GSA_012_01', 'ORIENTIERUNG','DISCOVERY','00000000-0000-4000-8000-00000000ec0e')
 ON CONFLICT (id) DO NOTHING;
 
 -- ---------------------------------------------------------------------
