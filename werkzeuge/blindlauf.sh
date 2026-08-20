@@ -43,7 +43,23 @@ QUELLE="$(pwd)"
 NAME="${1:?Aufruf: $0 <name> <auftrag.md> <klauseln.md>}"
 AUFTRAG="${2:?Aufruf: $0 <name> <auftrag.md> <klauseln.md>}"
 KLAUSELN="${3:?Aufruf: $0 <name> <auftrag.md> <klauseln.md>}"
+BEFUND="${4:-}"          # optional: Nachbesserungslauf
 MODELL="${FREIRAUM_PRUEF_MODELL:-sonnet}"
+
+# NACHBESSERUNG -- und die Grenze, die dabei gilt
+#     Ein Prueffall, der gar nicht erst laeuft, misst nichts. Die
+#     Nachbesserung gehoert dem Pruef-Agenten: der Bau-Agent fasst
+#     pruefungen/ nicht an, "auch nicht nur den Tippfehler"
+#     (CLAUDE.md Abschn. 6).
+#     Was der Befund enthalten darf, ist eng: NUR Maengel an den eigenen
+#     Dateien des Pruef-Agenten -- eine ungueltige UUID, ein Syntax-
+#     fehler, eine Datei, die psql abweist. NIE das Verhalten der
+#     Anwendung, nie eine Fehlermeldung aus dem Umsetzungscode, nie ein
+#     Testergebnis. Sonst schriebe der Pruef-Agent seinen naechsten Fall
+#     auf den Code statt auf die Klausel -- genau der Fehler, gegen den
+#     die Blindheit gebaut ist (K23-D05).
+#     Diese Grenze zieht der Mensch, der den Befund schreibt. Das
+#     Werkzeug kann sie nicht messen -- es sagt sie nur an.
 
 [ -f "$AUFTRAG" ]  || { echo "ABBRUCH: Auftragsdatei fehlt: $AUFTRAG"  >&2; exit 2; }
 [ -f "$KLAUSELN" ] || { echo "ABBRUCH: Klauseldatei fehlt: $KLAUSELN" >&2; exit 2; }
@@ -84,7 +100,13 @@ cp "$QUELLE/CONTRIBUTING.md" "$ZIEL/CONTRIBUTING.md" 2>/dev/null || true
 # für Subagenten, hier setzt --model.
 awk 'NR==1 && $0=="---" {inf=1; next} inf && $0=="---" {inf=0; next} !inf' \
   "$QUELLE/.claude/agents/pruef-agent.md" > "$ZIEL/rolle.md"
-echo "2 · Auftrag, Klauseln und Rolle liegen im Blindstand"
+if [ -n "$BEFUND" ]; then
+  [ -f "$BEFUND" ] || { echo "ABBRUCH: Befunddatei fehlt: $BEFUND" >&2; exit 2; }
+  cp "$BEFUND" "$ZIEL/befund.md"
+  echo "2 · Auftrag, Klauseln, Rolle und BEFUND liegen im Blindstand (Nachbesserungslauf)"
+else
+  echo "2 · Auftrag, Klauseln und Rolle liegen im Blindstand"
+fi
 
 # --- 3 · Gegenprobe · MUSS scheitern (F07) --------------------------
 # Gemessen wird nicht "es kam ein Fehler", sondern: die erste Zeile von
@@ -115,8 +137,12 @@ if [ -n "${CLAUDE_CODE_SUBAGENT_MODEL:-}" ]; then
   echo "         diesen Lauf geleert (F27, Modellvielfalt)." >&2
 fi
 echo "4 · Prüf-Agent läuft auf Modell '$MODELL' ..."
-(cd "$ZIEL" && CLAUDE_CODE_SUBAGENT_MODEL= claude -p \
-  "Lies zuerst rolle.md, dann auftrag.md, dann klauseln.md. Führe den Auftrag aus." \
+if [ -n "$BEFUND" ]; then
+  PROMPT="Lies zuerst rolle.md, dann befund.md. befund.md nennt Maengel an DEINEN EIGENEN Dateien unter pruefungen/klauseln/ -- Dateien, die du selbst geschrieben hast. Bessere sie nach. auftrag.md und klauseln.md stehen unveraendert daneben, falls du eine Klausel nachschlagen musst. Aendere NICHTS an der fachlichen Aussage eines Falles und senke keinen Pruefwert -- behebe nur, was den Lauf am Starten hindert."
+else
+  PROMPT="Lies zuerst rolle.md, dann auftrag.md, dann klauseln.md. Führe den Auftrag aus."
+fi
+(cd "$ZIEL" && CLAUDE_CODE_SUBAGENT_MODEL= claude -p "$PROMPT" \
   --model "$MODELL" --settings "$ZIEL/pruef-sandbox.json" \
   --allowedTools Read Write --permission-mode acceptEdits \
   --append-system-prompt "Du arbeitest im Blindstand. Der Umsetzungscode ist auf Betriebssystemebene nicht lesbar; das ist beabsichtigt. Schreibe ausschliesslich nach pruefungen/. Lies ausschliesslich auftrag.md, klauseln.md, rolle.md, CONTRIBUTING.md, nachweise/klauselregister/ und pruefungen/klauseln/." \
@@ -125,17 +151,25 @@ echo "4 · Prüf-Agent läuft auf Modell '$MODELL' ..."
 # --- 5 · Zurücktragen und Vermerk -----------------------------------
 ENDE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 mkdir -p "$QUELLE/nachweise/blindlauf"
-VERMERK="$QUELLE/nachweise/blindlauf/${NAME}_$(date -u +%y%m%d).md"
+SUFFIX=""; [ -n "$BEFUND" ] && SUFFIX="_nachbesserung"
+VERMERK="$QUELLE/nachweise/blindlauf/${NAME}_$(date -u +%y%m%d)${SUFFIX}.md"
+n=1; while [ -f "$VERMERK" ]; do
+  n=$((n+1)); VERMERK="$QUELLE/nachweise/blindlauf/${NAME}_$(date -u +%y%m%d)${SUFFIX}_$n.md"
+done
 
 NEU=""
+ANKER="$ZIEL/auftrag.md"; [ -n "$BEFUND" ] && ANKER="$ZIEL/befund.md"
 while IFS= read -r f; do
   rel="${f#$ZIEL/}"
-  [ -f "$QUELLE/$rel" ] && { echo "ÜBERSPRUNGEN (gibt es schon): $rel" >&2; continue; }
+  if [ -f "$QUELLE/$rel" ] && [ -z "$BEFUND" ]; then
+    echo "ÜBERSPRUNGEN (gibt es schon): $rel" >&2; continue
+  fi
+  cmp -s "$f" "$QUELLE/$rel" 2>/dev/null && continue   # unveraendert, kein Transport
   mkdir -p "$QUELLE/$(dirname "$rel")"
   cp "$f" "$QUELLE/$rel"
   NEU="$NEU| \`$rel\` | $(shasum -a 256 "$f" | cut -c1-16) | $(shasum -a 256 "$QUELLE/$rel" | cut -c1-16) |
 "
-done < <(find "$ZIEL/pruefungen" -type f -newer "$ZIEL/auftrag.md" 2>/dev/null | sort)
+done < <(find "$ZIEL/pruefungen" -type f -newer "$ANKER" 2>/dev/null | sort)
 
 {
   echo "# Blindlauf · $NAME"
@@ -149,6 +183,11 @@ done < <(find "$ZIEL/pruefungen" -type f -newer "$ZIEL/auftrag.md" 2>/dev/null |
   echo "| Auftrag | \`${AUFTRAG#$QUELLE/}\` · \`$(shasum -a 256 "$AUFTRAG" | cut -c1-16)\` |"
   echo "| Klauseln | \`${KLAUSELN#$QUELLE/}\` · \`$(shasum -a 256 "$KLAUSELN" | cut -c1-16)\` |"
   echo "| Gegenprobe | **bestanden** — der Umsetzungscode war im Blindstand nicht erreichbar |"
+  if [ -n "$BEFUND" ]; then
+    echo "| Art des Laufs | **Nachbesserung** — Befund \`${BEFUND#$QUELLE/}\` · \`$(shasum -a 256 "$BEFUND" | cut -c1-16)\` |"
+  else
+    echo "| Art des Laufs | Erstlauf |"
+  fi
   echo
   echo "## Die Gegenprobe im Wortlaut"
   echo
