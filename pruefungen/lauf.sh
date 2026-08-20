@@ -83,7 +83,13 @@ export PGHOST PGPORT PGUSER PGDATABASE
 #
 #  Damit bleibt ein Server, den jemand nebenher zum Entwickeln laufen
 #  laesst, unangetastet -- er stand vorher da und steht nachher noch.
-FREMDE_SERVER="$(pgrep -f 'app\.haupt:app' 2>/dev/null | tr '\n' ' ')"
+# `|| true` ist hier nicht Zierde: pgrep meldet 1, wenn es NICHTS findet --
+# also genau auf einer sauber aufgeraeumten Maschine. Unter `set -e` beendet
+# das den Lauf, bevor die erste Zeile Ausgabe entsteht. GEMESSEN AM
+# 20.08.2026, unmittelbar nach dem Einbau dieses Riegels: ein leeres
+# Protokoll und Rueckgabewert 1. Der Riegel gegen vergessene Prozesse haette
+# den Lauf also ausgerechnet dann umgeworfen, wenn keiner vergessen war.
+FREMDE_SERVER="$(pgrep -f 'app\.haupt:app' 2>/dev/null | tr '\n' ' ' || true)"
 
 KINDER=""          # je Zeile: <Prozessnummer><TAB><Erkennungsmerkmal>
 
@@ -130,7 +136,7 @@ KINDERLISTE
 
   # Der zweite Riegel: die Waisen, die dieser Lauf nicht selbst gestartet
   # hat, die es aber vor ihm noch nicht gab.
-  for p in $(pgrep -f 'app\.haupt:app' 2>/dev/null); do
+  for p in $(pgrep -f 'app\.haupt:app' 2>/dev/null || true); do
     case " $FREMDE_SERVER " in
       *" $p "*) continue ;;              # stand schon vorher da -- nicht anfassen
     esac
