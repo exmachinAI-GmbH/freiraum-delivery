@@ -59,9 +59,9 @@ $$ SELECT encode(sha256(convert_to(pfeffer || klartext, 'utf8')), 'hex') $$;
 --           K05-M27, K17-D13)
 -- ---------------------------------------------------------------------
 INSERT INTO tenant (id, kind, name, customer_code, legal_space) VALUES
-  ('00000000-0000-4000-8000-0000000ea01','OPERATOR','Pruefbetreiber Gespraech',  NULL,     'DE'),
-  ('00000000-0000-4000-8000-0000000ea02','CUSTOMER','Pruefkunde Gespraech A',    'DE-GSA', 'DE'),
-  ('00000000-0000-4000-8000-0000000ea03','CUSTOMER','Pruefkunde Gespraech B',    'DE-GSB', 'DE')
+  ('00000000-0000-4000-8000-00000000ea01','OPERATOR','Pruefbetreiber Gespraech',  NULL,     'DE'),
+  ('00000000-0000-4000-8000-00000000ea02','CUSTOMER','Pruefkunde Gespraech A',    'DE-GSA', 'DE'),
+  ('00000000-0000-4000-8000-00000000ea03','CUSTOMER','Pruefkunde Gespraech B',    'DE-GSB', 'DE')
 ON CONFLICT (id) DO NOTHING;
 
 -- ---------------------------------------------------------------------
@@ -72,20 +72,20 @@ ON CONFLICT (id) DO NOTHING;
 --     actor. Er ist Aufbau, kein Prueffall.
 -- ---------------------------------------------------------------------
 INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on)
-VALUES ('00000000-0000-4000-8000-0000000eb00',
-        '00000000-0000-4000-8000-0000000ea01',
+VALUES ('00000000-0000-4000-8000-00000000eb00',
+        '00000000-0000-4000-8000-00000000ea01',
         'gs_admin@gespraechpruef.example', 'Pruef Plattform-Admin Gespraech',
         'EMAIL_CODE', 'AKTIV', current_date)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO membership (actor_id, portal_code, role_id, tenant_scope)
-SELECT '00000000-0000-4000-8000-0000000eb00', 'EXMA', r.id,
-       '00000000-0000-4000-8000-0000000ea01'
+SELECT '00000000-0000-4000-8000-00000000eb00', 'EXMA', r.id,
+       '00000000-0000-4000-8000-00000000ea01'
   FROM role r WHERE r.portal_code = 'EXMA' AND r.name = 'Plattform-Admin'
 ON CONFLICT DO NOTHING;
 
 UPDATE actor SET status = 'AKTIV'
- WHERE id = '00000000-0000-4000-8000-0000000eb00' AND status <> 'AKTIV';
+ WHERE id = '00000000-0000-4000-8000-00000000eb00' AND status <> 'AKTIV';
 
 -- ---------------------------------------------------------------------
 -- 4 · Alten Lauf zuruecksetzen
@@ -98,16 +98,16 @@ UPDATE actor SET status = 'AKTIV'
 --     Gesamtstand (Regel aus zweckbestimmung_lauf.sh, Abschn. 3).
 -- ---------------------------------------------------------------------
 UPDATE fit_check SET app_id = NULL
- WHERE tenant_id IN ('00000000-0000-4000-8000-0000000ea02',
-                     '00000000-0000-4000-8000-0000000ea03');
+ WHERE tenant_id IN ('00000000-0000-4000-8000-00000000ea02',
+                     '00000000-0000-4000-8000-00000000ea03');
 
 DELETE FROM app
- WHERE tenant_id IN ('00000000-0000-4000-8000-0000000ea02',
-                     '00000000-0000-4000-8000-0000000ea03');
+ WHERE tenant_id IN ('00000000-0000-4000-8000-00000000ea02',
+                     '00000000-0000-4000-8000-00000000ea03');
 
 DELETE FROM fit_check
- WHERE tenant_id IN ('00000000-0000-4000-8000-0000000ea02',
-                     '00000000-0000-4000-8000-0000000ea03');
+ WHERE tenant_id IN ('00000000-0000-4000-8000-00000000ea02',
+                     '00000000-0000-4000-8000-00000000ea03');
 
 DELETE FROM login_code
  WHERE actor_id IN (SELECT id FROM actor WHERE email LIKE '%@gespraechpruef.example');
@@ -170,21 +170,21 @@ DELETE FROM login_attempt
 --                            K05-M27, K17-D13
 -- ---------------------------------------------------------------------
 INSERT INTO actor (id, tenant_id, email, display_name, mfa_method, status, created_on) VALUES
-  ('00000000-0000-4000-8000-0000000eb01','00000000-0000-4000-8000-0000000ea02','gs_frisch@gespraechpruef.example',       'Pruef Stufe Eins Frisch',    'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb02','00000000-0000-4000-8000-0000000ea02','gs_zielrang@gespraechpruef.example',     'Pruef Zielrangfolge',        'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb03','00000000-0000-4000-8000-0000000ea02','gs_namensweg@gespraechpruef.example',    'Pruef Namensschritt',        'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb04','00000000-0000-4000-8000-0000000ea02','gs_ueberspringen@gespraechpruef.example','Pruef Stufe ueberspringen',  'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb05','00000000-0000-4000-8000-0000000ea02','gs_unmittelbar@gespraechpruef.example',  'Pruef Unmittelbarer Zugriff','EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb06','00000000-0000-4000-8000-0000000ea02','gs_isoliert@gespraechpruef.example',     'Pruef Isolationskontrolle',  'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb07','00000000-0000-4000-8000-0000000ea02','gs_interview@gespraechpruef.example',    'Pruef Stufe Zwei',           'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb08','00000000-0000-4000-8000-0000000ea02','gs_interview2@gespraechpruef.example',   'Pruef Stufe Zwei Zweitlauf', 'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb09','00000000-0000-4000-8000-0000000ea02','gs_fertig@gespraechpruef.example',       'Pruef Interview Fertig',     'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb0a','00000000-0000-4000-8000-0000000ea02','gs_gleich1@gespraechpruef.example',      'Pruef Gleicher Anzeigename', 'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb0b','00000000-0000-4000-8000-0000000ea02','gs_gleich2@gespraechpruef.example',      'Pruef Gleicher Anzeigename', 'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb0c','00000000-0000-4000-8000-0000000ea02','gs_offen@gespraechpruef.example',        'Pruef Check Offen',          'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb0d','00000000-0000-4000-8000-0000000ea02','gs_ohnecheck@gespraechpruef.example',    'Pruef Ohne Check',           'EMAIL_CODE','AKTIV',current_date),
-  ('00000000-0000-4000-8000-0000000eb0e','00000000-0000-4000-8000-0000000ea02','gs_gesperrt@gespraechpruef.example',     'Pruef Gesperrtes Konto',     'EMAIL_CODE','GESPERRT',current_date),
-  ('00000000-0000-4000-8000-0000000eb0f','00000000-0000-4000-8000-0000000ea03','gs_fremd@gespraechpruef.example',        'Pruef Fremder Mandant',      'EMAIL_CODE','AKTIV',current_date)
+  ('00000000-0000-4000-8000-00000000eb01','00000000-0000-4000-8000-00000000ea02','gs_frisch@gespraechpruef.example',       'Pruef Stufe Eins Frisch',    'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb02','00000000-0000-4000-8000-00000000ea02','gs_zielrang@gespraechpruef.example',     'Pruef Zielrangfolge',        'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb03','00000000-0000-4000-8000-00000000ea02','gs_namensweg@gespraechpruef.example',    'Pruef Namensschritt',        'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb04','00000000-0000-4000-8000-00000000ea02','gs_ueberspringen@gespraechpruef.example','Pruef Stufe ueberspringen',  'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb05','00000000-0000-4000-8000-00000000ea02','gs_unmittelbar@gespraechpruef.example',  'Pruef Unmittelbarer Zugriff','EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb06','00000000-0000-4000-8000-00000000ea02','gs_isoliert@gespraechpruef.example',     'Pruef Isolationskontrolle',  'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb07','00000000-0000-4000-8000-00000000ea02','gs_interview@gespraechpruef.example',    'Pruef Stufe Zwei',           'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb08','00000000-0000-4000-8000-00000000ea02','gs_interview2@gespraechpruef.example',   'Pruef Stufe Zwei Zweitlauf', 'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb09','00000000-0000-4000-8000-00000000ea02','gs_fertig@gespraechpruef.example',       'Pruef Interview Fertig',     'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb0a','00000000-0000-4000-8000-00000000ea02','gs_gleich1@gespraechpruef.example',      'Pruef Gleicher Anzeigename', 'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb0b','00000000-0000-4000-8000-00000000ea02','gs_gleich2@gespraechpruef.example',      'Pruef Gleicher Anzeigename', 'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb0c','00000000-0000-4000-8000-00000000ea02','gs_offen@gespraechpruef.example',        'Pruef Check Offen',          'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb0d','00000000-0000-4000-8000-00000000ea02','gs_ohnecheck@gespraechpruef.example',    'Pruef Ohne Check',           'EMAIL_CODE','AKTIV',current_date),
+  ('00000000-0000-4000-8000-00000000eb0e','00000000-0000-4000-8000-00000000ea02','gs_gesperrt@gespraechpruef.example',     'Pruef Gesperrtes Konto',     'EMAIL_CODE','GESPERRT',current_date),
+  ('00000000-0000-4000-8000-00000000eb0f','00000000-0000-4000-8000-00000000ea03','gs_fremd@gespraechpruef.example',        'Pruef Fremder Mandant',      'EMAIL_CODE','AKTIV',current_date)
 ON CONFLICT (id) DO UPDATE SET
   tenant_id    = EXCLUDED.tenant_id,
   email        = EXCLUDED.email,
@@ -208,18 +208,18 @@ ON CONFLICT DO NOTHING;
 --     selbst (Abschn. "MASSSTAB F07" oben).
 -- ---------------------------------------------------------------------
 INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state) VALUES
-  ('00000000-0000-4000-8000-0000000ed01','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed02','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed03','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed04','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed05','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed06','00000000-0000-4000-8000-0000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed07','00000000-0000-4000-8000-0000000ea02','Pruefanwendung Stufe Zwei',       'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed08','00000000-0000-4000-8000-0000000ea02','Pruefanwendung Stufe Zwei Zweit', 'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed09','00000000-0000-4000-8000-0000000ea02','Pruefanwendung Fertig',           'UEBERSICHT',  'DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed0a','00000000-0000-4000-8000-0000000ea02','Pruefanwendung Gleich Eins',      'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed0b','00000000-0000-4000-8000-0000000ea02','Pruefanwendung Gleich Zwei',      'INTERVIEW',   'DISCOVERY'),
-  ('00000000-0000-4000-8000-0000000ed0c','00000000-0000-4000-8000-0000000ea03','Pruefanwendung Fremd',            'INTERVIEW',   'DISCOVERY')
+  ('00000000-0000-4000-8000-00000000ed01','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed02','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed03','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed04','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed05','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed06','00000000-0000-4000-8000-00000000ea02', NULL,                             'ORIENTIERUNG','DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed07','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei',       'INTERVIEW',   'DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed08','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Stufe Zwei Zweit', 'INTERVIEW',   'DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed09','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Fertig',           'UEBERSICHT',  'DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed0a','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Eins',      'INTERVIEW',   'DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed0b','00000000-0000-4000-8000-00000000ea02','Pruefanwendung Gleich Zwei',      'INTERVIEW',   'DISCOVERY'),
+  ('00000000-0000-4000-8000-00000000ed0c','00000000-0000-4000-8000-00000000ea03','Pruefanwendung Fremd',            'INTERVIEW',   'DISCOVERY')
 ON CONFLICT (id) DO NOTHING;
 
 -- ---------------------------------------------------------------------
@@ -232,35 +232,35 @@ ON CONFLICT (id) DO NOTHING;
 --     app-Zeile; gs_ohnecheck@ traegt gar keinen.
 -- ---------------------------------------------------------------------
 INSERT INTO fit_check (id, tenant_id, actor_id, app_id, outcome, completed_at, retention_class) VALUES
-  ('00000000-0000-4000-8000-0000000ec01','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb01','00000000-0000-4000-8000-0000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec02','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb02','00000000-0000-4000-8000-0000000ed02','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec03','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb03','00000000-0000-4000-8000-0000000ed03','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec04','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb04','00000000-0000-4000-8000-0000000ed04','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec05','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb05','00000000-0000-4000-8000-0000000ed05','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec06','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb06','00000000-0000-4000-8000-0000000ed06','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec07','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb07','00000000-0000-4000-8000-0000000ed07','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec08','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb08','00000000-0000-4000-8000-0000000ed08','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec09','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb09','00000000-0000-4000-8000-0000000ed09','GEEIGNET', now() - interval '30 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec0a','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb0a','00000000-0000-4000-8000-0000000ed0a','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec0b','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb0b','00000000-0000-4000-8000-0000000ed0b','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec0e','00000000-0000-4000-8000-0000000ea02','00000000-0000-4000-8000-0000000eb0e','00000000-0000-4000-8000-0000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
-  ('00000000-0000-4000-8000-0000000ec0f','00000000-0000-4000-8000-0000000ea03','00000000-0000-4000-8000-0000000eb0f','00000000-0000-4000-8000-0000000ed0c','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS')
+  ('00000000-0000-4000-8000-00000000ec01','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb01','00000000-0000-4000-8000-00000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec02','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb02','00000000-0000-4000-8000-00000000ed02','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec03','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb03','00000000-0000-4000-8000-00000000ed03','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec04','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb04','00000000-0000-4000-8000-00000000ed04','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec05','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb05','00000000-0000-4000-8000-00000000ed05','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec06','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb06','00000000-0000-4000-8000-00000000ed06','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec07','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb07','00000000-0000-4000-8000-00000000ed07','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec08','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb08','00000000-0000-4000-8000-00000000ed08','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec09','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb09','00000000-0000-4000-8000-00000000ed09','GEEIGNET', now() - interval '30 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0a','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0a','00000000-0000-4000-8000-00000000ed0a','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0b','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0b','00000000-0000-4000-8000-00000000ed0b','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0e','00000000-0000-4000-8000-00000000ea02','00000000-0000-4000-8000-00000000eb0e','00000000-0000-4000-8000-00000000ed01','GEEIGNET', now() - interval '5 minutes','KI_NACHWEIS'),
+  ('00000000-0000-4000-8000-00000000ec0f','00000000-0000-4000-8000-00000000ea03','00000000-0000-4000-8000-00000000eb0f','00000000-0000-4000-8000-00000000ed0c','GEEIGNET', now() - interval '20 minutes','KI_NACHWEIS')
 ON CONFLICT (id) DO NOTHING;
 
 -- gs_gesperrt@ braucht eine EIGENE app-Zeile (nicht ed01, die gehoert
 -- gs_frisch@) -- sonst maesse K03-D01 an einer app, die ein anderer
 -- Testfall gerade veraendert (F07, Abschn. "PROBE VERUNREINIGT NICHT").
 INSERT INTO app (id, tenant_id, name, journey_phase, lifecycle_state) VALUES
-  ('00000000-0000-4000-8000-0000000ed0e','00000000-0000-4000-8000-0000000ea02', NULL, 'ORIENTIERUNG','DISCOVERY')
+  ('00000000-0000-4000-8000-00000000ed0e','00000000-0000-4000-8000-00000000ea02', NULL, 'ORIENTIERUNG','DISCOVERY')
 ON CONFLICT (id) DO NOTHING;
-UPDATE fit_check SET app_id = '00000000-0000-4000-8000-0000000ed0e'
- WHERE id = '00000000-0000-4000-8000-0000000ec0e';
+UPDATE fit_check SET app_id = '00000000-0000-4000-8000-00000000ed0e'
+ WHERE id = '00000000-0000-4000-8000-00000000ec0e';
 
 -- gs_offen@: OFFEN, KEINE app-Zeile (K04-M11 Vorgabewert; K04-G04
 -- Negativfall).
 INSERT INTO fit_check (id, tenant_id, actor_id, app_id, outcome, completed_at, retention_class)
-VALUES ('00000000-0000-4000-8000-0000000ec0c','00000000-0000-4000-8000-0000000ea02',
-        '00000000-0000-4000-8000-0000000eb0c', NULL, 'OFFEN', NULL, 'KI_NACHWEIS')
+VALUES ('00000000-0000-4000-8000-00000000ec0c','00000000-0000-4000-8000-00000000ea02',
+        '00000000-0000-4000-8000-00000000eb0c', NULL, 'OFFEN', NULL, 'KI_NACHWEIS')
 ON CONFLICT (id) DO NOTHING;
 -- gs_ohnecheck@ traegt bewusst KEINEN fit_check -- kein INSERT.
 
@@ -275,7 +275,7 @@ ON CONFLICT (id) DO NOTHING;
 DO $$
 BEGIN
   INSERT INTO agent (id, name)
-  VALUES ('00000000-0000-4000-8000-0000000ee01','Pruef-Moderator Gespraech');
+  VALUES ('00000000-0000-4000-8000-00000000ee01','Pruef-Moderator Gespraech');
 EXCEPTION WHEN undefined_table OR undefined_column THEN
   NULL; -- agent-Tabelle in dieser Form nicht vorhanden; K17-M02 sperrt dann selbst
 END $$;
@@ -339,12 +339,12 @@ BEGIN
 
   -- (c) Der Mandantenschnitt: gs_fremd@ gehoert zu B, alle anderen zu A.
   IF (SELECT tenant_id FROM pruef_gespraech_konten WHERE email='gs_fremd@gespraechpruef.example')
-     <> '00000000-0000-4000-8000-0000000ea03' THEN
+     <> '00000000-0000-4000-8000-00000000ea03' THEN
     fehler := fehler || 'gs_fremd@ steht nicht im fremden Mandanten B; ';
   END IF;
   FOR r IN SELECT * FROM pruef_gespraech_konten
             WHERE email NOT IN ('gs_admin@gespraechpruef.example','gs_fremd@gespraechpruef.example')
-              AND tenant_id <> '00000000-0000-4000-8000-0000000ea02'
+              AND tenant_id <> '00000000-0000-4000-8000-00000000ea02'
   LOOP fehler := fehler || format('%s steht nicht im Mandanten A; ', r.email); END LOOP;
 
   -- (d) journey_phase/outcome stehen so, wie die Faelle sie brauchen.
