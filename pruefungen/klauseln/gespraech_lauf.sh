@@ -509,8 +509,8 @@ sende_frage() {       # $1 quelle(seite, elemente geladen)  $2 zielname  $3 keks
   local quelle="$1" zielname="$2" keks="$3" knopf="$4"; shift 4
   local pfad; pfad="$(ziel_zu "$quelle" "$knopf")"
   case "$pfad" in ""|"(ausserhalb eines Formulars)"|"(leeres Formularziel)") return 1;; esac
-  local hidden=() art name typ wert besch zf
-  while IFS='|' read -r art name typ wert besch zf; do
+  local hidden=() art name typ wert
+  while IFS='|' read -r art name typ wert _ _; do
     if [ "$art" = "FELD" ] && [ "$typ" = "hidden" ] && [ -n "$name" ]; then
       hidden+=("$name=$wert")
     fi
@@ -534,12 +534,23 @@ else
     ok K19-D09-thema "Auf EN-05 ist mit erfuellter Vorbedingung (gs_frisch@, fit_check GEEIGNET) die Schaltflaeche zur offenen Themen-Alternative 'Was anderes' bedienbar (K19-D09)."
 
     EIGENES_THEMA="Pruefthema $$ $(date +%s 2>/dev/null || echo synth)"
+    # K05-G01 verlangt mehr als einen erfolgreichen HTTP-Status: das
+    # Thema muss "als Beitrag im INTERVIEW_PROTOCOL-Stand gefuehrt"
+    # sein. Gemessen wird deshalb ein Vorher/Nachher am event-Zaehler,
+    # nicht nur das blosse Vorkommen einer Erfolgsantwort.
+    vorher_ev="$(dbz "SELECT count(*) FROM event WHERE tenant_id='$MANDANT_A' AND (action ILIKE '%TOPIC%' OR action ILIKE '%THEMA%')" 2>/dev/null)"
     st_thema="$(sende_frage gs_frisch_en05 gs_thema_antwort "$PFAD_KEKS" 'was anderes' "thema=$EIGENES_THEMA" "antwort=$EIGENES_THEMA" "wert=$EIGENES_THEMA")"
     if [ -n "$st_thema" ] && [ "$st_thema" != "000" ]; then
-      vorher_ev="$(dbz "SELECT count(*) FROM event WHERE tenant_id='$MANDANT_A' AND action ILIKE '%TOPIC%' OR action ILIKE '%THEMA%'" 2>/dev/null)"
-      ok K05-G01     "Positivfall: thema_waehlen mit GEEIGNETem fit_check laeuft durch (Status $st_thema) -- die Vorbedingung ist erfuellt und pruefbar, keine Sperre erscheint (K05-G01)."
-      ok K04-G04     "Positivfall: mit fit_check.outcome=GEEIGNET wird die vom Check abhaengige Aktion nicht gesperrt (K04-G04, Positivteil)."
-      ok K04-M11     "fit_check.outcome=GEEIGNET treibt thema_waehlen zum Erfolg -- der Wert steht wie in K04-M11 vorgesehen in fit_check.outcome (Zustand Erfolg, HTTP $st_thema)."
+      nachher_ev="$(dbz "SELECT count(*) FROM event WHERE tenant_id='$MANDANT_A' AND (action ILIKE '%TOPIC%' OR action ILIKE '%THEMA%')" 2>/dev/null)"
+      if [ -n "$vorher_ev" ] && [ -n "$nachher_ev" ] && [ "$nachher_ev" -gt "$vorher_ev" ]; then
+        ok K05-G01     "Positivfall: thema_waehlen mit GEEIGNETem fit_check laeuft durch (Status $st_thema) und legt einen neuen Beitrag als event an (vorher $vorher_ev, nachher $nachher_ev) -- die Vorbedingung ist erfuellt und pruefbar, keine Sperre erscheint (K05-G01)."
+        ok K04-G04     "Positivfall: mit fit_check.outcome=GEEIGNET wird die vom Check abhaengige Aktion nicht gesperrt (K04-G04, Positivteil)."
+        ok K04-M11     "fit_check.outcome=GEEIGNET treibt thema_waehlen zum Erfolg -- der Wert steht wie in K04-M11 vorgesehen in fit_check.outcome (Zustand Erfolg, HTTP $st_thema)."
+      else
+        nok K05-G01 "-- erwartet: ein neuer Beitrag entsteht als event (Zaehler steigt). thema_waehlen antwortete mit Status $st_thema, doch der event-Zaehler blieb bei vorher $vorher_ev, nachher $nachher_ev unveraendert."
+        sperr K04-G04 "Positivfall an thema_waehlen beantwortete die Anfrage, legte aber keinen auswertbaren Beitrag an -- nichts gemessen."
+        sperr K04-M11 "Positivfall an thema_waehlen beantwortete die Anfrage, legte aber keinen auswertbaren Beitrag an -- nichts gemessen."
+      fi
     else
       nok K05-G01 "thema_waehlen mit GEEIGNETem fit_check lieferte keinen auswertbaren Status -- die Aktion war erwartungsgemaess bedienbar (K19-D09), lief aber nicht durch."
       sperr K04-G04 "Positivfall an thema_waehlen scheiterte bereits am Aufruf, nicht an der Bedingung -- nichts gemessen."
@@ -690,10 +701,21 @@ else
     if enthaelt_lose gs_thema_antwort 'andere branche'; then
       # die Branchenfrage stand schon auf der Ausgangsseite -- ein
       # Aufruf der Anwendungsfrage ausser der Reihe muss abgewiesen
-      # werden UND darf die Branche nicht beantworten.
+      # werden UND darf die Branche nicht beantworten. Beides wird
+      # gemessen: der Status des Aufrufs UND ein Vorher/Nachher, ob die
+      # offene Branchenfrage noch auffindbar (= unbeantwortet) ist.
       branche_frueher="$(enthaelt_lose "$EINORDNUNG_QUELLE" 'andere branche'; echo $?)"
       if [ "$st_ausserreihe" = "200" ] || [ "$st_ausserreihe" = "303" ] || [ "$st_ausserreihe" = "302" ]; then
-        ok K05-M03-reihenfolge "-- erwartet: Anwendungsfrage ausser der Reihe (vor Branche) wird abgewiesen, die bisherigen Antworten bleiben unveraendert. Aufruf beantwortet mit $st_ausserreihe, ohne dass die Branche als beantwortet erscheint."
+        branche_nachher=1
+        if [ -s "$ARBEIT/gs_ausserreihe.rumpf" ]; then
+          elemente_schreiben gs_ausserreihe
+          vorhanden_zu gs_ausserreihe 'andere branche' && branche_nachher=0
+        fi
+        if [ "$branche_frueher" = "0" ] && [ "$branche_nachher" = "0" ]; then
+          ok K05-M03-reihenfolge "-- erwartet: Anwendungsfrage ausser der Reihe (vor Branche) wird abgewiesen, die bisherigen Antworten bleiben unveraendert. Aufruf beantwortet mit $st_ausserreihe; die offene Branchenfrage steht auf der Antwortseite weiterhin auffindbar -- sie wurde durch den Aufruf ausser der Reihe nicht mitbeantwortet."
+        else
+          nok K05-M03-reihenfolge "-- erwartet: die Branchenfrage bleibt unbeantwortet. Aufruf beantwortet mit $st_ausserreihe; Branchenfrage vorher offen: $([ "$branche_frueher" = 0 ] && echo ja || echo nein), auf der Antwortseite noch offen: $([ "$branche_nachher" = 0 ] && echo ja || echo nein) -- sie waere durch den Aufruf ausser der Reihe mitbeantwortet worden."
+        fi
       else
         sperr K05-M03-reihenfolge "der Aufruf ausser der Reihe lieferte keinen auswertbaren Status ($st_ausserreihe)."
       fi
@@ -837,15 +859,15 @@ elif [ "${ZIELE_RANG_C_A_B_OK:-0}" != "1" ]; then
   sperr K05-G04 "der erste Lauf (gs_frisch@, Reihenfolge C,A,B) kam nicht zustande -- ohne ihn hat der zweite Lauf nichts, wogegen er umgekehrt sein muesste."
 else
   if entdecke_bildschirm 'gs_zielrang@gespraechpruef.example' '150006' gs_zr_anm 'was anderes' 'diese frage ignorieren'; then
-    ZR_KEKS="$PFAD_KEKS"; ZR_PFAD="$PFAD_GEFUNDEN"
+    ZR_KEKS="$PFAD_KEKS"
     st_zr_thema="$(sende_frage gs_zr_anm_kand gs_zr_thema "$ZR_KEKS" 'was anderes' 'thema=Pruefthema Zielrang' 'antwort=Pruefthema Zielrang')"
     if [ -n "$st_zr_thema" ] && [ "$st_zr_thema" != "000" ] && [ -s "$ARBEIT/gs_zr_thema.rumpf" ]; then
       elemente_schreiben gs_zr_thema
-      st_zrb="$(sende_frage gs_zr_thema gs_zr_b "$ZR_KEKS" 'andere branche' 'branche=Zielrangbranche' 'antwort=Zielrangbranche')"
+      sende_frage gs_zr_thema gs_zr_b "$ZR_KEKS" 'andere branche' 'branche=Zielrangbranche' 'antwort=Zielrangbranche' >/dev/null
       [ -s "$ARBEIT/gs_zr_b.rumpf" ] && elemente_schreiben gs_zr_b
-      st_zrf="$(sende_frage gs_zr_b gs_zr_f "$ZR_KEKS" 'anderer funktionsbereich' 'funktionsbereich=Zielrangfunktion' 'antwort=Zielrangfunktion')"
+      sende_frage gs_zr_b gs_zr_f "$ZR_KEKS" 'anderer funktionsbereich' 'funktionsbereich=Zielrangfunktion' 'antwort=Zielrangfunktion' >/dev/null
       [ -s "$ARBEIT/gs_zr_f.rumpf" ] && elemente_schreiben gs_zr_f
-      st_zra="$(sende_frage gs_zr_f gs_zr_a "$ZR_KEKS" 'andere anwendung' 'anwendung=Zielranganwendung' 'antwort=Zielranganwendung')"
+      sende_frage gs_zr_f gs_zr_a "$ZR_KEKS" 'andere anwendung' 'anwendung=Zielranganwendung' 'antwort=Zielranganwendung' >/dev/null
       if [ -s "$ARBEIT/gs_zr_a.rumpf" ]; then
         elemente_schreiben gs_zr_a
         st1="$(sende_frage gs_zr_a gs_zr_zb "$ZR_KEKS" 'anderes ziel' 'ziel=Pruefziel B')"
@@ -1093,6 +1115,12 @@ pruefe_sql_marke
 
 if [ -z "$EN06_PFAD" ]; then
   en06_gesperrt K05-D06-uebersprungen
+elif [ "$VORHER_D06" != "ORIENTIERUNG" ]; then
+  # Die Ausgangslage von gs_ueberspringen@ (ed04) ist am Kopf dieses
+  # Abschnitts als dauerhaft ORIENTIERUNG dokumentiert -- gemessen statt
+  # angenommen: liest sie hier schon anders, scheitert der Fall an einer
+  # fremden Bedingung (Ausgangslage), nicht an der geprueften Stufenfolge.
+  sperr K05-D06-uebersprungen "die Ausgangslage von gs_ueberspringen@ (ed04) liest vor dem Versuch nicht ORIENTIERUNG, sondern '$VORHER_D06' -- ohne diese Ausgangslage laesst sich 'Aktion waehrend ORIENTIERUNG wird abgewiesen' nicht an der eigenen Bedingung messen."
 else
   if anmelden 'gs_ueberspringen@gespraechpruef.example' '150007' gs_ue_d06; then
     UE_KEKS="$ANM_KEKS"
@@ -1101,15 +1129,15 @@ else
       cp "$ARBEIT/gs_ue_en06_frueh.rumpf" "$ARBEIT/gs_ue_en06_seite.rumpf"
       elemente_schreiben gs_ue_en06_seite
       if vorhanden_zu gs_ue_en06_seite 'diese frage ignorieren'; then
-        st_ue_skip="$(sende_frage gs_ue_en06_seite gs_ue_skip "$UE_KEKS" 'diese frage ignorieren')"
+        sende_frage gs_ue_en06_seite gs_ue_skip "$UE_KEKS" 'diese frage ignorieren' >/dev/null
       fi
     fi
     nach_d06="$(dbz "SELECT journey_phase FROM app WHERE id='00000000-0000-4000-8000-00000000ed04'")"
     pruefe_sql_marke
-    if [ "$nach_d06" = "ORIENTIERUNG" ]; then
-      ok K05-D06-uebersprungen "-- erwartet: eine EN-06-Aktion waehrend ORIENTIERUNG wird abgewiesen, journey_phase bleibt ORIENTIERUNG. gs_ueberspringen@ liest weiterhin ORIENTIERUNG nach dem Versuch (Status EN-06 fuer sie: ${st_en06_zu_frueh:-kein Zugriff})."
+    if [ "$nach_d06" = "$VORHER_D06" ]; then
+      ok K05-D06-uebersprungen "-- erwartet: eine EN-06-Aktion waehrend ORIENTIERUNG wird abgewiesen, journey_phase bleibt ORIENTIERUNG. gs_ueberspringen@ liest vorher wie nachher '$VORHER_D06' (Status EN-06 fuer sie: ${st_en06_zu_frueh:-kein Zugriff})."
     else
-      nok K05-D06-uebersprungen "-- erwartet: journey_phase bleibt ORIENTIERUNG. Sie liest jetzt '$nach_d06'."
+      nok K05-D06-uebersprungen "-- erwartet: journey_phase bleibt ORIENTIERUNG ('$VORHER_D06'). Sie liest jetzt '$nach_d06'."
     fi
   else
     sperr K05-D06-uebersprungen "Anmeldung von gs_ueberspringen@ scheiterte (Status $ANM_STATUS)."
@@ -1175,6 +1203,12 @@ else
     # Referenzantwort: ein NIRGENDS vergebenes, aber formal gueltiges
     # Ziel, mit derselben fremden Sitzung.
     st_nirgends="$(hole "$EN06_PFAD/00000000-0000-4000-8000-0000000eeeee" gs_fremd_nirgends "$ANM_KEKS")"
+    # Referenzantwort auf ein EIGENES, echtes Objekt derselben Sitzung --
+    # der von K01-M15 verlangte dritte von drei Laeufen (eigenes Objekt /
+    # fremdes echtes Objekt / nirgends vergebene Kennung). Ohne sie waere
+    # eine Uebereinstimmung zwischen "fremd" und "nirgends vergeben" nicht
+    # von einer generellen Sperre zu unterscheiden, die auf jede Kennung
+    # gleich antwortet und damit gar nichts ueber die Mandantengrenze zeigt.
     st_fremd_zugriff="$(hole "$EN06_PFAD" gs_fremd_zugriff "$ANM_KEKS")"
     # gs_fremd@ traegt eine EIGENE app (ed0c) in Stufe INTERVIEW; ruft sie
     # EN-06 mit ihrer eigenen, gueltigen Sitzung auf, erreicht sie IHR
@@ -1184,8 +1218,12 @@ else
     # von A -- liefert dieselbe Antwort wie eine nirgends vergebene
     # Kennung.
     st_fremd_auf_a="$(hole "$EN06_PFAD?app=00000000-0000-4000-8000-00000000ed01" gs_fremd_auf_a "$ANM_KEKS")"
-    if [ "$st_fremd_auf_a" = "$st_nirgends" ]; then
-      ok K01-M15 "-- erwartet: ein Objekt eines fremden Mandanten antwortet wie ein nirgends vergebenes. Aufruf mit der Kennung der Anwendung von Mandant A unter der Sitzung von Mandant B: Status $st_fremd_auf_a, identisch mit der Antwort auf eine nirgends vergebene Kennung ($st_nirgends)."
+    if [ "$st_fremd_zugriff" = "$st_nirgends" ]; then
+      sperr K01-M15 "die Referenzantwort auf ein EIGENES, echtes Objekt von gs_fremd@ (Status $st_fremd_zugriff) liest bereits gleich wie auf eine nirgends vergebene Kennung (Status $st_nirgends) -- ohne einen Unterschied zwischen 'gefunden' und 'nicht vorhanden' misst der Vergleich mit dem Fremdzugriff auf A nichts."
+      sperr K02-M20-server "derselbe Grund: keine auswertbare Referenzantwort."
+      sperr K02-M21-server "derselbe Grund."
+    elif [ "$st_fremd_auf_a" = "$st_nirgends" ]; then
+      ok K01-M15 "-- erwartet: ein Objekt eines fremden Mandanten antwortet wie ein nirgends vergebenes, waehrend ein eigenes echtes Objekt erkennbar anders antwortet. Aufruf mit der Kennung der Anwendung von Mandant A unter der Sitzung von Mandant B: Status $st_fremd_auf_a, identisch mit der Antwort auf eine nirgends vergebene Kennung ($st_nirgends) und verschieden von der Antwort auf das eigene Objekt ($st_fremd_zugriff)."
       ok K02-M20-server "Derselbe Vergleich belegt die Serverpfad-Haelfte von K02-M20: der Zugriff auf einen fremden Mandantensatz wird am Serverpfad abgewiesen. Die Datenbestand-Haelfte (Policy bei umgangenem Serverpfad) ist NICHT PRUEFBAR -- Grund wie K13-M05-unmittelbar."
       ok K02-M21-server "Der Aufruf unter Mandant B auf ein Objekt von Mandant A veraendert keine Zeile von A (siehe K01-M01 oben, unveraendert) -- die Mandantenpruefung des Serverpfads laesst nichts durch. Die uebrigen benannten Negativfaelle b/c/d (event.tenant_id leer/abweichend/fremde Projektnummer) sind NICHT PRUEFBAR: event.tenant_id wird serverseitig gesetzt, der Client kann sie nicht mitgeben, und ein Weg, sie dennoch zu verfaelschen, ist nicht dokumentiert. Fall (e)/(f) (Betreiberzugriff) entfaellt strukturell: EN-05/EN-06 sind ENDUSER-Bildschirme, kein Betreiberzugang ruft sie auf."
     else
@@ -1224,17 +1262,31 @@ if [ -z "$EN05_PFAD" ] || [ -z "$EN06_PFAD" ]; then
 else
   db "UPDATE app SET journey_phase='ORIENTIERUNG' WHERE id='00000000-0000-4000-8000-00000000ed01'" >/dev/null
   pruefe_sql_marke
+  # Die Klausel nennt beide gezeichneten standtragenden Stellen -- die
+  # Stufenanzeige in EN-05 UND in EN-06 -- also werden beide gemessen,
+  # nicht nur EN-06.
   st_en05_zurueck="$(hole "$EN05_PFAD" gs_d11_en05 "$PFAD_KEKS")"
   st_en06_zurueck="$(hole "$EN06_PFAD" gs_d11_en06 "$PFAD_KEKS")"
-  folgt=1
+  folgt=1; en05_befund="nicht abrufbar (Status $st_en05_zurueck)"; en06_befund="nicht abrufbar (Status $st_en06_zurueck)"
+  if [ "$st_en05_zurueck" = "200" ]; then
+    if enthaelt_lose gs_d11_en05 'orientierung'; then
+      en05_befund="zeigt weiterhin den Wortlaut ORIENTIERUNG"
+    else
+      en05_befund="zeigt den Wortlaut ORIENTIERUNG nicht mehr"; folgt=0
+    fi
+  fi
   if [ "$st_en06_zurueck" = "200" ]; then
     cp "$ARBEIT/gs_d11_en06.rumpf" "$ARBEIT/gs_d11_en06_seite.rumpf"; elemente_schreiben gs_d11_en06_seite
-    vorhanden_zu gs_d11_en06_seite 'diese frage ignorieren' && folgt=0
+    if vorhanden_zu gs_d11_en06_seite 'diese frage ignorieren'; then
+      en06_befund="zeigt weiterhin Stufe-02-Inhalt"; folgt=0
+    else
+      en06_befund="zeigt keinen Stufe-02-Inhalt mehr"
+    fi
   fi
   if [ "$folgt" = "1" ]; then
-    ok K05-D11 "Nach unmittelbarem Zuruecksetzen von app.journey_phase auf ORIENTIERUNG (am Bestand, ausserhalb des Serverpfads) zeigt EN-06 fuer dieselbe Anwendung keinen Stufe-02-Inhalt mehr (kein 'Diese Frage ignorieren' auf der erneut geladenen Seite) -- keine standtragende Stelle haelt einen eigenen, gespiegelten Wert (K05-D11)."
+    ok K05-D11 "Nach unmittelbarem Zuruecksetzen von app.journey_phase auf ORIENTIERUNG (am Bestand, ausserhalb des Serverpfads) folgen beide gezeichneten standtragenden Stellen dem geaenderten Wert: EN-05 $en05_befund, EN-06 $en06_befund -- keine haelt einen eigenen, gespiegelten Wert (K05-D11)."
   else
-    nok K05-D11 "-- erwartet: alle standtragenden Stellen folgen dem geaenderten Wert. EN-06 zeigt weiterhin Stufe-02-Inhalt trotz auf ORIENTIERUNG zurueckgesetztem journey_phase -- ein zweiter Strang waere die einzige Erklaerung."
+    nok K05-D11 "-- erwartet: beide gezeichneten standtragenden Stellen folgen dem geaenderten Wert. EN-05 $en05_befund, EN-06 $en06_befund -- ein zweiter Strang waere die Erklaerung."
   fi
   # Aufraeumen: den fuer spaetere Faelle (Wiederaufnahme, Speichern)
   # noetigen Stand wiederherstellen.
@@ -1332,9 +1384,6 @@ fi
 # statt gezielt nur den Protokolleintrag zu unterdruecken)
 # =====================================================================
 if [ -n "${NAME_QUELLE:-}" ] && [ -n "${NAME_FELD:-}" ]; then
-  ev_vor_d04="$(dbz "SELECT count(*) FROM event WHERE tenant_id='$MANDANT_A'
-                       AND (action ILIKE '%THEMA%' OR action ILIKE '%TOPIC%')")"
-  pruefe_sql_marke
   hole "$EN05_PFAD" gs_d04_frisch "$PFAD_KEKS" >/dev/null
   # Ein zweites, unabhaengiges Konto ohne fit_check GEEIGNET: der
   # fachliche Schreibvorgang MUSS scheitern (K04-G04) -- geprueft wird,
@@ -1390,10 +1439,6 @@ else
   else
     nok K05-M09 "-- erwartet: Vorschlag UND Freitextfeld stehen an derselben Frage bereit. Vorschlag gefunden: $([ "$hat_vorschlag" = 1 ] && echo ja || echo nein), Freitextfeld gefunden: $([ "$hat_freitext" = 1 ] && echo ja || echo nein)."
   fi
-
-  vorher_frei_count="$(dbz "SELECT count(*) FROM event WHERE tenant_id='$MANDANT_A'
-                             AND actor_id=(SELECT id FROM actor WHERE email='gs_interview@gespraechpruef.example')")"
-  pruefe_sql_marke
 
   if [ -n "$FREITEXT_FELD" ]; then
     FREITEXT_WORTLAUT="Pruefantwort frei $$ ohne Vorschlagsuebereinstimmung"
@@ -1723,9 +1768,9 @@ else
       versuch_umschreiben="$(dbf "UPDATE event SET actor_id='$aid2' WHERE tenant_id='$MANDANT_A' AND actor_id='$aid1' ORDER BY occurred_at DESC LIMIT 1")"
       nach_versuch="$(dbz "SELECT actor_id FROM event WHERE tenant_id='$MANDANT_A' AND actor_id='$aid1' ORDER BY occurred_at DESC LIMIT 1" 2>/dev/null)"
       if [ "$nach_versuch" = "$aid1" ] || [ -z "$nach_versuch" ]; then
-        ok K03-M20-negativ "-- erwartet: ein Aenderungsversuch an der actor_id eines bereits geschriebenen Beitrags bleibt wirkungslos. Nach dem Versuch liest der Eintrag weiterhin actor_id=$aid1 (bzw. ist unter der alten Kennung unveraendert auffindbar)."
+        ok K03-M20-negativ "-- erwartet: ein Aenderungsversuch an der actor_id eines bereits geschriebenen Beitrags bleibt wirkungslos. Nach dem Versuch liest der Eintrag weiterhin actor_id=$aid1 (bzw. ist unter der alten Kennung unveraendert auffindbar); SQL-Antwort des Versuchs: $versuch_umschreiben."
       else
-        nok K03-M20-negativ "-- erwartet: wirkungslos. Der Eintrag traegt jetzt actor_id='$nach_versuch'."
+        nok K03-M20-negativ "-- erwartet: wirkungslos. Der Eintrag traegt jetzt actor_id='$nach_versuch'; SQL-Antwort des Versuchs: $versuch_umschreiben."
       fi
     else
       nok K03-M20 "-- erwartet: verschiedene, je eindeutig zurechenbare actor_id trotz gleichem Anzeigenamen. Gelesen: ev1='$ev1' (soll $aid1), ev2='$ev2' (soll $aid2)."
