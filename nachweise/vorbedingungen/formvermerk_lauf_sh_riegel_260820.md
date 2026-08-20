@@ -57,3 +57,51 @@ wurde: er hat den Lauf überlebt.**
 *Der Anlass und die Grenze stehen hier, damit später nachvollziehbar ist, warum eine Datei
 unter `pruefungen/` einen Commit des Bau-Agenten trägt. Die Vorlage für diese Form ist
 `formvermerk_uebertragene_kreuze_260816.md`.*
+
+---
+
+# Zweiter Eingriff am selben Tag — die Fehlermeldung der Negativfälle
+
+**20.08.2026, abends.**
+
+## Die Weisung, im Wortlaut
+
+Auf die Vorlage der drei sofort möglichen Berichtigungen aus dem Tor-3-Bericht — darunter
+ausdrücklich der Hinweis, der dritte betreffe `pruefungen/` und brauche deshalb eine Weisung:
+
+> **„Ja, mach die drei"**
+
+## Was geändert wurde
+
+| | |
+|---|---|
+| **`merke()`** | maskiert die drei Felder jetzt für JSON. Vorher wurde die Zeile durch bloßes Aneinanderhängen gebaut — ein Anführungszeichen in der Anmerkung hätte den Bericht unlesbar gemacht. Es fiel nicht auf, weil bis dahin keine Anmerkung eines führte |
+| **Erfolgszweig der Negativfälle** | zieht die erste `ERROR`-Zeile aus der Ausgabe, druckt sie und gibt sie an `merke()` weiter. Vorher stand dort nur `scheitert an $erwartet` — also der Name, den die Datei **selbst** als erwartete Bedingung führt |
+
+## Warum das kein Schönheitsfehler war
+
+`CLAUDE.md`:180-182, gezeichnete Grundlage Bauauftrag §9 Tor I Nr. 6 und `README.md`:204:
+
+> *„Ein Negativfall gilt erst als bestanden, wenn er an seiner eigenen Bedingung scheitert;
+> **die Fehlermeldung im Wortlaut ist Teil der Evidenz**."*
+
+Der Lauf behauptete, jeder Fall scheitere an seiner eigenen Bedingung — und warf den einzigen
+Beleg dafür weg. **Gefunden hat es Tor 3 am 20.08.2026, nicht dieser Harness.**
+
+## Der Nachweis, dass keine Messung berührt ist
+
+| | vorher | nachher |
+|---|---|---|
+| Prüfpunkte | 17 · 0 · 5 | **gleich** |
+| Einzelfälle | 144 · 0 · 132 | **gleich** |
+| Bericht als JSON lesbar | ja | **ja** — mit Anführungszeichen in jeder der zwölf Anmerkungen |
+
+Alle zwölf Negativfälle tragen jetzt ihre Meldung, zum Beispiel:
+
+```
+M30_N1_frist_ge_mindestfrist — scheitert an frist_ge_mindestfrist
+   psql:…/M30_N1_frist_ge_mindestfrist.sql:15: ERROR:  new row for relation
+   "retention_rule" violates check constraint "frist_ge_mindestfrist"
+```
+
+**Damit ist F07 für diese zwölf Fälle zum ersten Mal belegt und nicht nur behauptet.**

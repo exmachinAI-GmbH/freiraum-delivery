@@ -16,10 +16,18 @@
 #          den Fremdzugriff ueber die Autorisierung abweist, waehrend die
 #          Policy fuer dieses Objekt abgeschaltet ist. Diese Datei
 #          autorisiert nichts -- sie kennt keine Sitzung, kein Objekt und
-#          keine Rolle. Und sie hat nach diesem Zug KEINEN Aufrufer: kein
-#          Weg im Bestand betritt `mandantenvorgang`. Solange das so ist,
-#          ist beides nicht messbar, und der Zug ist ein Angebot ohne
-#          Abnehmer. Siehe "WAS NACH DIESEM ZUG OFFEN BLEIBT"
+#          keine Rolle. BERICHTIGT AM 20.08.2026: Hier stand, sie habe
+#          "nach diesem Zug KEINEN Aufrufer". Das ist seit dem Bauzug W7
+#          falsch -- `app/zweckbestimmung.py`:159 und :1148 betreten
+#          `mandantenvorgang`, und das galt schon am Stand, der am
+#          20.08.2026 dem Fremdmodell vorlag. DER SATZ HAT SCHADEN
+#          ANGERICHTET: das Fremdmodell hat ihn uebernommen und daraus
+#          geschlossen, die Mechanik werde "von keinem vorhandenen Weg
+#          benutzt" (Tor-3-Blatt vom 20.08., Grund 8). Richtig ist: EIN
+#          Weg betritt sie, und er gehoert zu M4. IM TEILSCHNITT BIS ZUR
+#          ANMELDUNG betritt sie weiterhin keiner -- insofern traegt der
+#          Befund des Fremdmodells fuer seinen Pruefumfang unveraendert.
+#          Siehe "WAS NACH DIESEM ZUG OFFEN BLEIBT"
 # beruehrt, nicht beansprucht: K01-M15 -- der Mandantenschnitt fuer `app`,
 #          `document` und `event` gilt ab dem Setzen der Einstellung ohne
 #          Zutun der einzelnen Abfrage. Das gezeichnete Kriterium misst aber
@@ -116,7 +124,10 @@ frueh und verschiebt die Verantwortung auf die falsche Funktion.
 Bis heute setzt die Einstellung niemand, und der Schalter steht aus. Die drei
 Regeln standen damit scharf und trafen nichts. Diese Datei liefert die
 Mechanik zum Setzen. Sie setzt es nicht selbst -- setzen tut es, wer
-`mandantenvorgang` betritt, und das tut nach diesem Zug noch kein Weg.
+`mandantenvorgang` betritt. BERICHTIGT AM 20.08.2026: hier stand "und das
+tut nach diesem Zug noch kein Weg". Seit dem Bauzug W7 tut es einer --
+`app/zweckbestimmung.py`:1148. Im Teilschnitt bis zur Anmeldung tut es
+weiterhin keiner.
 
 DIE TRENNLINIE: ZWEI WEGE, ZWEI FUNKTIONEN
 ------------------------------------------
@@ -221,11 +232,19 @@ WAS DIESE DATEI NICHT TUT
     (Echtdaten-Tor E2, O-K13-1). Ihn hier mitzuschalten hiesse, den Bauzug
     an der Stelle zu beenden, an der er noch nicht gemessen ist.
   * SIE STELLT DIE BESTEHENDEN ROUTEN NICHT UM. app/haupt.py,
-    app/vorpruefung.py, app/zweckbestimmung.py und app/einladung_senden.py
-    rufen weiterhin `verbindung()` und sonst nichts. Sie laufen dadurch
-    unveraendert -- und ungeschuetzt. Das ist eine offene Kante, kein
-    erledigter Punkt; sie steht unten unter "WAS NACH DIESEM ZUG OFFEN
-    BLEIBT" und ist dort gegen die gezeichnete Unterlage gehalten.
+    app/vorpruefung.py und app/einladung_senden.py rufen weiterhin
+    `verbindung()` und sonst nichts. Sie laufen dadurch unveraendert --
+    und ungeschuetzt. Das ist eine offene Kante, kein erledigter Punkt;
+    sie steht unten unter "WAS NACH DIESEM ZUG OFFEN BLEIBT" und ist dort
+    gegen die gezeichnete Unterlage gehalten.
+
+    BERICHTIGT AM 20.08.2026: In dieser Aufzaehlung stand auch
+    `app/zweckbestimmung.py`. Das war falsch -- W7 hat genau diesen Weg
+    umgestellt (:1148). Damit ist die Zahl der ungeschuetzten Wege eine
+    andere, als hier stand, und die Aufzaehlung nannte ausgerechnet den
+    einen um, der es nicht mehr ist. Gemessen am 20.08.2026:
+    `grep -n mandantenvorgang app/*.py` findet ausserhalb dieser Datei
+    genau zwei Zeilen, beide in app/zweckbestimmung.py.
   * SIE KENNT KEINE SITZUNG. Kein Import aus app/sitzung.py -- der liefe
     im Kreis, weil app/sitzung.py von hier `SITZUNG_SCHLUESSEL` und `TLS`
     holt. Diese Datei nimmt einen Mandantenwert entgegen und fragt nicht,

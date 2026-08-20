@@ -153,8 +153,16 @@ zeilen=""
 # Glied 7 nach K23-M18 verlangt Beginn UND Ende. Der Beginn ist jetzt.
 BEGINN="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+# JSON-Maskierung, seit 20.08.2026. Vorher baute diese Funktion die Zeile
+# durch blosses Aneinanderhaengen -- ein Anfuehrungszeichen in der Anmerkung
+# haette den Bericht unlesbar gemacht. Bis dahin fiel es nicht auf, weil
+# keine Anmerkung eines fuehrte. Mit der Fehlermeldung aus dem Erfolgszweig
+# der Negativfaelle fuehrt sie sofort welche: PostgreSQL schreibt
+# `violates check constraint "frist_ge_mindestfrist"`.
+json_wert() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\t/ /g' | tr -d '\n\r'; }
+
 merke() {  # kennung · zustand · anmerkung
-  zeilen="${zeilen}${zeilen:+,}{\"kennung\":\"$1\",\"zustand\":\"$2\",\"anmerkung\":\"$3\"}"
+  zeilen="${zeilen}${zeilen:+,}{\"kennung\":\"$(json_wert "$1")\",\"zustand\":\"$(json_wert "$2")\",\"anmerkung\":\"$(json_wert "$3")\"}"
   case "$2" in
     bestanden)      ok=$((ok+1)) ;;
     fehlgeschlagen) fehl=$((fehl+1)) ;;
@@ -300,8 +308,28 @@ for f in migrations/negativfaelle/*.sql; do
     printf '%s\n' "$aus" | head -2 | sed 's/^/      /'
     merke "$kennung" gesperrt "psql kam nicht durch"
   elif printf '%s' "$aus" | grep -qF "$erwartet"; then
+    # DIE MELDUNG IM WORTLAUT, seit 20.08.2026.
+    #
+    # Hier stand nur `scheitert an $erwartet` -- also der Name, den die
+    # Datei SELBST als erwartete Bedingung fuehrt. Der Lauf behauptete
+    # damit, der Fall sei an seiner eigenen Bedingung gescheitert, und
+    # warf den einzigen Beleg dafuer weg.
+    #
+    # CLAUDE.md:180-182 verlangt ihn: "Ein Negativfall gilt erst als
+    # bestanden, wenn er an seiner eigenen Bedingung scheitert; DIE
+    # FEHLERMELDUNG IM WORTLAUT IST TEIL DER EVIDENZ." Gezeichnete
+    # Grundlage: Bauauftrag §9 Tor I Nr. 6 (:649), README.md:204.
+    #
+    # GEFUNDEN HAT ES TOR 3 am 20.08.2026, nicht dieser Harness: "Im
+    # Erfolgszweig verwirft der Harness die tatsaechliche Fehlermeldung
+    # und gibt nur 'scheitert an $erwartet' aus. Darum kann ich die
+    # verlangten vier tatsaechlichen Fehlermeldungen im Wortlaut nicht
+    # ehrlich zitieren."
+    meldung="$(printf '%s\n' "$aus" | grep -m1 -E 'ERROR|FEHLER' | sed 's/^[[:space:]]*//')"
+    : "${meldung:=(keine ERROR-Zeile in der Ausgabe gefunden)}"
     echo "   $kennung — scheitert an $erwartet"
-    merke "$kennung" bestanden "$erwartet"
+    echo "      $meldung"
+    merke "$kennung" bestanden "scheitert an $erwartet · $meldung"
   else
     echo "   $kennung — FALSCHE BEDINGUNG. Erwartet: $erwartet"
     printf '%s\n' "$aus" | head -2 | sed 's/^/      /'

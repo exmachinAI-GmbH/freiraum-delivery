@@ -386,9 +386,16 @@ MELDUNG_STAND_UNKLAR = (
 
 # Ausweg 2 nach dem Halt. Die Quittung nach der Umleitung -- sie sagt, was
 # geschehen ist, und verspricht nichts, was diese Scheibe nicht haelt.
+#
+# BERICHTIGT AM 20.08.2026, nach dem Tor-3-Urteil vom selben Tag (Grund 9),
+# gleichlautend mit app/vorpruefung.py. Der zweite Satz lautete "Ihre
+# Ansprechperson meldet sich bei Ihnen" und war eine Zusage, die dieser Bau
+# nicht einloest: die Ansprechperson wird nicht aufgeloest, `contact`
+# gehoert nicht zu dieser Scheibe. Gelesen hat die Nutzerin die Meldung,
+# nicht den Kommentar daneben.
 MELDUNG_TERMIN = (
-    "Ihr Wunsch nach einem Gespraech ist vermerkt. Ihre Ansprechperson "
-    "meldet sich bei Ihnen.")
+    "Ihr Wunsch nach einem Gespraech ist vermerkt. Wann und wie er "
+    "aufgenommen wird, ist noch nicht festgelegt.")
 
 # --- Die drei Ansagen aus K04-M20 -----------------------------------------
 # Sie sind KEINE freie Formulierung: die Klausel verlangt bei einem Treffer
