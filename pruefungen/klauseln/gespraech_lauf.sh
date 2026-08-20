@@ -1148,10 +1148,10 @@ sperr K13-M09-unmittelbar "Derselbe Grund wie K13-M05-unmittelbar: kein bekannte
 # =====================================================================
 ISOL_VORHER="$(dbz "SELECT concat_ws('|', journey_phase, lifecycle_state, coalesce(name,'')) FROM app WHERE id='00000000-0000-4000-8000-00000000ed06'")"
 pruefe_sql_marke
-if [ "$ISOL_VORHER" = "ORIENTIERUNG|DISCOVERY|" ]; then
-  ok K01-M01-vorher "gs_isoliert@ traegt vor allen Schreibvorgaengen dieser Datei den Ausgangsstand ORIENTIERUNG/DISCOVERY/ohne Namen."
+if [ "$ISOL_VORHER" = "ORIENTIERUNG|DISCOVERY|(Ausgangslage: Name noch nicht gesetzt)" ]; then
+  ok K01-M01-vorher "gs_isoliert@ traegt vor allen Schreibvorgaengen dieser Datei den Ausgangsstand ORIENTIERUNG/DISCOVERY/Platzhalter '(Ausgangslage: Name noch nicht gesetzt)'."
 else
-  nok K01-M01-vorher "-- erwartet: gs_isoliert@ traegt den unberuehrten Ausgangsstand. Gelesen: '$ISOL_VORHER'."
+  nok K01-M01-vorher "-- erwartet: gs_isoliert@ traegt den unberuehrten Ausgangsstand ORIENTIERUNG/DISCOVERY/Platzhalter '(Ausgangslage: Name noch nicht gesetzt)'. Gelesen: '$ISOL_VORHER'."
 fi
 ISOL_NACHHER="$(dbz "SELECT concat_ws('|', journey_phase, lifecycle_state, coalesce(name,'')) FROM app WHERE id='00000000-0000-4000-8000-00000000ed06'")"
 pruefe_sql_marke
