@@ -58,13 +58,18 @@
 #        Ziel "Weiter"        = das Ziel, das erst erscheint, wenn BEIDE
 #                               Fragen beantwortet sind
 #        Ziel "Kenntnisnahme" = das Ziel, das nur nach Treffer in
-#                               Frage 1 erscheint
-#        Ziel "Anlage"        = das Ziel, das nur erscheint, wenn der
-#                               Weg frei ist
+#                               Frage 1 erscheint (verglichen gegen die
+#                               Halt-Seite -- Treffer in Frage 2, seit
+#                               der gezeichneten Auslegung vom
+#                               20.08.2026, Abschnitt 6 unten)
+#        Ziel "Anlage"        = auf dem freien Weg dasselbe Ziel wie
+#                               "Weiter" (seit 20.08.2026, Abschnitt 6:
+#                               dort gibt es keinen eigenen
+#                               Zwischenschritt zu einem dritten Ziel)
 #
 #      Diese Ableitung ist zugleich die Messung: erscheint "Weiter"
-#      schon bei einer Antwort, faellt F5 durch; erscheint "Anlage"
-#      schon vor der Kenntnisnahme, faellt F2 durch.
+#      schon bei einer Antwort, faellt F5 durch; entsteht eine
+#      Anwendung, obwohl die Kenntnisnahme fehlt, faellt F2 durch.
 #      Laesst sich ein Ziel nicht eindeutig bestimmen, meldet jeder
 #      Fall, der es braucht, GESPERRT -- nie bestanden (K23-M22).
 #
@@ -169,6 +174,41 @@
 # hat (F07, K23-M22). Was ZB-06 messen KONNTE -- Anhang III, die fuenf
 # Anbieterpflichten, der ausbleibende Halt --, wird weiter gemessen und
 # laesst ihn weiter FALLEN, wenn es nicht stimmt.
+#
+# ---------------------------------------------------------------------
+# 6. DIE GEZEICHNETE AUSLEGUNG VOM 20.08.2026 (E-11, Weg A) -- warum die
+#    Frage aus Abschnitt 5 anders beantwortet wird, als dort vermutet
+# ---------------------------------------------------------------------
+# Abschnitt 5 fragte, ob ZIELE_FREI leer blieb, WEIL Ursache (a) (ein
+# Pruefstellungsfehler dieser Datei) oder (b) (ein Baubefund) vorlag.
+# Der naechste Lauf sollte entscheiden. Er entschied etwas Drittes:
+# ZIELE_FREI selbst war -- nach Behebung von (a) -- nicht mehr leer. Was
+# leer blieb, waren KENNTNIS_ZIEL und ANLEGEN_ZIEL, weil dieser Lauf sie
+# gegen ZIELE_FREI verglich, als sei sie eine Seite, die noch eine Wahl
+# anbietet.
+#
+# Am 20.08.2026 hat der fachliche Eigentuemer das entschieden (E-11,
+# Weg A), gestuetzt auf K01-M27:
+#
+#   "Auf dem freien Weg -- beide Zweckfragen verneint -- ist der
+#    Weiterweg zugleich die Anlage. Einen zustandsneutralen
+#    Zwischenschritt zwischen der letzten Antwort und der Anlage gibt es
+#    nicht."
+#
+# ZIELE_FREI ist deshalb die Seite NACH einer bereits vollzogenen Anlage
+# -- kein Gegenstueck zu ZIELE_ANHANG (einer Seite VOR der Anlage). Der
+# Block "Die beiden verbleibenden Ziele" (nach den vier Fahrten) leitet
+# seither:
+#
+#   Ziel "Anlage"        = WEITER_ZIEL selbst, ohne zweite Zielmenge.
+#   Ziel "Kenntnisnahme" = weiterhin ein UNTERSCHIED, aber jetzt gegen
+#                          ZIELE_HALT (Fahrt 3) -- eine echte, vor der
+#                          Anlage stehende Landeseite, kein Nachher.
+#
+# KEIN PRUEFWERT WIRD GESENKT (K23-D05): dieselben Bedingungen werden
+# weiter gemessen, an denselben Merkmalen. Nur die VERGLEICHSSEITE fuer
+# zwei der drei Ziele ist eine andere, echte statt einer, die es fuer
+# diesen Zweck nicht gibt.
 # =====================================================================
 
 BASIS="${FREIRAUM_PRUEF_URL:-http://localhost:8099}"
@@ -315,9 +355,30 @@ sitzungswert() { grep -i '^set-cookie:[[:space:]]*fr_sitzung=' "$ARBEIT/$1.kopf"
                  | head -1 | sed 's/^[^=]*=//' | cut -d';' -f1; }
 
 # Aus einer Location-Kopfzeile den PFAD machen -- ohne Wirt, ohne
-# Abfrageteil, ohne Anker. Der Lauf vergleicht nur Pfade.
+# Abfrageteil, ohne Anker. NUR FUER DEN VERGLEICH (z. B. gegen
+# $ZWECK_PFAD): der Lauf vergleicht dabei nur Pfade, der Abfrageteil
+# waere fuer einen Vergleich ohnehin ohne Bedeutung.
 nur_pfad() {         # $1 adresse
   printf '%s' "$1" | sed -e 's|^https\{0,1\}://[^/]*||' -e 's|[?#].*$||'
+}
+
+# ---------------------------------------------------------------------
+# BEFUND VOM 20.08.2026: nur_pfad() WURDE AUCH ZUM FOLGEN BENUTZT
+#
+# nur_pfad() ist mit der Begruendung "der Lauf vergleicht nur Pfade"
+# gebaut (siehe oben) -- aber an mehreren Stellen wurde ihr gekuerztes
+# Ergebnis nicht verglichen, sondern als Adresse fuer den NAECHSTEN
+# Aufruf verwendet. Eine Weiterleitung kann einen Abfrageteil fuehren,
+# der zu ihr gehoert (z. B. eine Kennung); wer ihn wegschneidet, folgt
+# einer ANDEREN Adresse als der genannten und misst danach eine fremde
+# Seite (F07).
+#
+# ziel_adresse() ist fuer genau diesen zweiten Fall da: FOLGEN, nicht
+# vergleichen. Sie nimmt nur Wirt und Anker weg -- der Abfrageteil
+# bleibt, weil er zur Weiterleitung gehoeren kann.
+# ---------------------------------------------------------------------
+ziel_adresse() {     # $1 adresse -> Pfad samt Abfrageteil, ohne Wirt und Anker
+  printf '%s' "$1" | sed -e 's|^https\{0,1\}://[^/]*||' -e 's|#.*$||'
 }
 
 # ---------------------------------------------------------------------
@@ -782,7 +843,9 @@ bis_geeignet() {     # $1 email  $2 code  $3 namensvorsatz
     return 1
   fi
   FAHRT_KEKS="$keks"
-  FAHRT_ZIEL="$(nur_pfad "$(kopfzeile "${3}_w" location)")"
+  # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026),
+  # da FAHRT_ZIEL gleich als Kandidat gehole()t wird.
+  FAHRT_ZIEL="$(ziel_adresse "$(kopfzeile "${3}_w" location)")"
   return 0
 }
 
@@ -1005,7 +1068,10 @@ if [ -n "$ZWECK_PFAD" ]; then
           # Ein GET veraendert nichts (das misst ZB-19), also wird hier
           # sofort gefolgt -- im Stand, den dieser Kandidat hinterlassen
           # hat, und in keinem anderen.
-          z_w="$(nur_pfad "$(kopfzeile "zb_f3_probe$i_w" location)")"
+          # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom
+          # 20.08.2026): ein Abfrageteil der Weiterleitung darf hier
+          # nicht wegfallen, sonst wird eine andere Seite gefolgt.
+          z_w="$(ziel_adresse "$(kopfzeile "zb_f3_probe$i_w" location)")"
           if [ -n "$z_w" ]; then
             hole "$z_w" "zb_f3_probe${i_w}_folge" "$KEKS_FREI" >/dev/null
           else
@@ -1042,8 +1108,11 @@ EOF
     # ZWEIMAL gegangen. Beim zweiten Mal war er verbraucht: die Anwendung
     # bestand bereits. Was danach als "Seite nach dem Weiterweg" gelesen
     # wurde, war in Wahrheit die Seite nach einem WIEDERHOLTEN Weiterweg.
-    # Aus dieser Seite entstehen ZIELE_FREI und daraus KENNTNIS_ZIEL und
-    # ANLEGEN_ZIEL -- deshalb fand ZB-06 "drei Ziele statt einem".
+    # Aus dieser Seite entsteht ZIELE_FREI -- deshalb fand ZB-06 damals
+    # "drei Ziele statt einem" (ZIELE_FREI diente bis zum 20.08.2026 als
+    # Vergleichsseite fuer KENNTNIS_ZIEL und ANLEGEN_ZIEL; seither nicht
+    # mehr, siehe Abschnitt 6 oben -- die Spur der Probe bliebe trotzdem
+    # ein Fehler, weil ZIELE_FREI auch fuer ZB-05 selbst sauber sein muss).
     #
     # Die Probe kann ihre Spur nicht vermeiden. Also wird sie abgezogen,
     # indem der Schritt NICHT wiederholt wird: die Antwort der Probe IST
@@ -1062,7 +1131,8 @@ EOF
       ziel3="$WEITER_FOLGEZIEL"
     else
       st3=$(sende "$WEITER_ZIEL" zb_f3 "$KEKS_FREI" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
-      ziel3="$(nur_pfad "$(kopfzeile zb_f3 location)")"
+      # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+      ziel3="$(ziel_adresse "$(kopfzeile zb_f3 location)")"
       [ -n "$ziel3" ] && hole "$ziel3" zb_f3s "$KEKS_FREI" >/dev/null || cp "$ARBEIT/zb_f3.rumpf" "$ARBEIT/zb_f3s.rumpf" 2>/dev/null
     fi
     ZIELE_FREI="$(zieltexte zb_f3s)"
@@ -1099,7 +1169,8 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_anhang@zbpruef.example' '820002' zba
     ANHANG_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
   else
     sta=$(sende "$WEITER_ZIEL" zb_a3 "$KEKS_ANHANG" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
-    z="$(nur_pfad "$(kopfzeile zb_a3 location)")"
+    # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+    z="$(ziel_adresse "$(kopfzeile zb_a3 location)")"
     [ -n "$z" ] && hole "$z" zb_a3s "$KEKS_ANHANG" >/dev/null || cp "$ARBEIT/zb_a3.rumpf" "$ARBEIT/zb_a3s.rumpf" 2>/dev/null
     ZIELE_ANHANG="$(zieltexte zb_a3s)"
     [ -n "$ZIELE_ANHANG" ] || ANHANG_GRUND="die Antwort auf den Weiterweg '$WEITER_ZIEL' (Status $sta, Weiterleitung '${z:-keine}') fuehrt auf eine Seite ohne jedes Ziel"
@@ -1125,7 +1196,8 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_verboten@zbpruef.example' '820003' z
     VERBOTEN_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
   else
     stv=$(sende "$WEITER_ZIEL" zb_v3 "$KEKS_VERBOTEN" ${VERBORGEN[@]+"${VERBORGEN[@]}"})
-    z="$(nur_pfad "$(kopfzeile zb_v3 location)")"
+    # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+    z="$(ziel_adresse "$(kopfzeile zb_v3 location)")"
     [ -n "$z" ] && hole "$z" zb_v3s "$KEKS_VERBOTEN" >/dev/null || cp "$ARBEIT/zb_v3.rumpf" "$ARBEIT/zb_v3s.rumpf" 2>/dev/null
     ZIELE_HALT="$(zieltexte zb_v3s)"
     [ -n "$ZIELE_HALT" ] || VERBOTEN_GRUND="die Antwort auf den Weiterweg '$WEITER_ZIEL' (Status $stv, Weiterleitung '${z:-keine}') fuehrt auf eine Halt-Seite ohne jedes Ziel"
@@ -1147,7 +1219,8 @@ if [ -n "$ZWECK_PFAD" ] && bis_geeignet 'zb_beide@zbpruef.example' '820004' zbbe
   zweck_antwort "$KEKS_BEIDE" zb_b2 "$FELD2" "$JA2" >/dev/null
   if [ -n "$WEITER_ZIEL" ]; then
     sende "$WEITER_ZIEL" zb_b3 "$KEKS_BEIDE" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-    z="$(nur_pfad "$(kopfzeile zb_b3 location)")"
+    # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+    z="$(ziel_adresse "$(kopfzeile zb_b3 location)")"
     [ -n "$z" ] && hole "$z" zb_b3s "$KEKS_BEIDE" >/dev/null || cp "$ARBEIT/zb_b3.rumpf" "$ARBEIT/zb_b3s.rumpf" 2>/dev/null
   fi
   APPS_NACH_BEIDE="$(anz_apps "$MANDANT_A")"
@@ -1156,10 +1229,56 @@ else
 fi
 
 # ---------------------------------------------------------------------
-# Die beiden verbleibenden Ziele aus dem UNTERSCHIED der Fahrten
+# DIE GEZEICHNETE AUSLEGUNG VOM 20.08.2026 (E-11, Weg A) -- Ziel Anlage
+# und Ziel Kenntnisnahme werden NICHT MEHR gegen dieselbe Zielmenge
+# (ZIELE_FREI) abgeleitet
+#
+# BIS HEUTE leitete dieser Block ZWEI Ziele aus dem UNTERSCHIED derselben
+# zwei Zielmengen ab -- einmal ZIELE_FREI \ ZIELE_ANHANG (Kenntnisnahme),
+# einmal ZIELE_ANHANG \ ZIELE_FREI (Anlage). Das setzte voraus, dass sich
+# der freie Weg und der Weg mit Treffer in Frage 1 nach dem Weiterweg
+# noch auf einer VERGLEICHBAREN Seite gegenueberstehen.
+#
+# GENAU DAS IST AUF DEM FREIEN WEG NICHT DER FALL. Gezeichnet (E-11,
+# Weg A, 20.08.2026), gestuetzt auf K01-M27 ("Eine produktive
+# Anwendungszeile MUSS ausschliesslich ueber den serverseitigen Befehl
+# entstehen"):
+#
+#   "Auf dem freien Weg -- beide Zweckfragen verneint -- ist der
+#    Weiterweg zugleich die Anlage. Einen zustandsneutralen
+#    Zwischenschritt zwischen der letzten Antwort und der Anlage gibt es
+#    nicht."
+#
+# ZIELE_FREI ist also die Seite NACH einer bereits vollzogenen Anlage --
+# keine Seite, die noch eine Wahl anbietet. Sie mit ZIELE_ANHANG (einer
+# Seite VOR der Anlage) zu vergleichen, vergleicht zwei verschiedene
+# Zustaende und lieferte deshalb leere Mengen: dreizehn Faelle meldeten
+# GESPERRT, ohne dass irgendetwas am Bau gemessen wurde.
+#
+# NEU ABGELEITET:
+#
+#   Ziel "Anlage"        = WEITER_ZIEL selbst. Keine zweite Zielmenge
+#                          noetig -- auf dem freien Weg SIND Weiterweg
+#                          und Anlage derselbe Aufruf (siehe auch ZB-11:
+#                          "die Adresse ist die, die der Server beim
+#                          freien Weg selbst ausgibt"). Auf den anderen
+#                          Faellen bleibt es dieselbe Adresse; ob sie
+#                          dort etwas anlegt, entscheidet der jeweilige
+#                          Kontostand (Kenntnisnahme, Eignung), nicht die
+#                          Adresse selbst -- das messen ZB-11, ZB-12
+#                          eigenstaendig.
+#   Ziel "Kenntnisnahme" = das Ziel, das nur nach Treffer in Frage 1
+#                          erscheint -- verglichen gegen ZIELE_HALT
+#                          (Fahrt 3, Treffer in Frage 2), nicht mehr
+#                          gegen ZIELE_FREI. ZIELE_HALT ist eine ECHTE,
+#                          bestehende Landeseite nach demselben
+#                          Weiterweg, nur mit anderer Antwort -- anders
+#                          als ZIELE_FREI vergleicht sie also wieder
+#                          Vergleichbares.
+#
 # ---------------------------------------------------------------------
-# ---------------------------------------------------------------------
-# ZWEI GRUENDE, DIE NICHT DASSELBE SIND (Befund vom 19.08.2026)
+# ZWEI GRUENDE, DIE NICHT DASSELBE SIND (Befund vom 19.08.2026, weiterhin
+# gueltig fuer die Kenntnisnahme-Ableitung)
 #
 # Ein Ziel kann aus zwei ganz verschiedenen Gruenden fehlen:
 #
@@ -1172,11 +1291,6 @@ fi
 #                          ergibt aber nicht genau ein Ziel. DAS ist eine
 #                          Aussage ueber den Bau. Zustand: der Fall faellt.
 #
-# Bis heute war beides derselbe leere String, und ZB-06 fiel in beiden
-# Lagen mit "es gibt keine Aufforderung zu bestaetigen". Im ersten Fall
-# scheiterte er damit an einer FREMDEN Bedingung -- der freien Fahrt --
-# und mass ueber seine eigene nichts (F07).
-#
 # Es wird dabei KEINE Bedingung weggenommen: faellt die Ableitung aus,
 # zaehlt der Fall weiterhin als nicht bestanden (sperr() zaehlt zu den
 # gescheiterten). Nur der NAME des Ergebnisses wird richtig -- und der
@@ -1184,26 +1298,33 @@ fi
 # ---------------------------------------------------------------------
 KENNTNIS_ZIEL=""; KENNTNIS_GRUND=""; KENNTNIS_ABLEITUNG="lief"
 ANLEGEN_ZIEL="";  ANLEGEN_GRUND="";  ANLEGEN_ABLEITUNG="lief"
-if [ -n "$ZIELE_ANHANG" ] && [ -n "$ZIELE_FREI" ]; then
-  neu="$(comm -13 <(printf '%s\n' "$ZIELE_FREI" | sort -u) <(printf '%s\n' "$ZIELE_ANHANG" | sort -u))"
+
+# Ziel "Anlage": keine Ableitung, kein zweiter Vergleich -- WEITER_ZIEL
+# IST die Anlage auf dem freien Weg (E-11, Weg A). Fehlt WEITER_ZIEL
+# selbst, fehlt damit auch dieses Ziel.
+if [ -n "$WEITER_ZIEL" ]; then
+  ANLEGEN_ZIEL="$WEITER_ZIEL"
+else
+  ANLEGEN_ABLEITUNG="fehlt"
+  ANLEGEN_GRUND="${WEITER_GRUND:-der Weiterweg ist nicht bestimmbar}"
+fi
+
+# Ziel "Kenntnisnahme": Unterschied gegen ZIELE_HALT (Fahrt 3), nicht
+# mehr gegen ZIELE_FREI (Begruendung oben).
+if [ -n "$ZIELE_ANHANG" ] && [ -n "$ZIELE_HALT" ]; then
+  neu="$(comm -13 <(printf '%s\n' "$ZIELE_HALT" | sort -u) <(printf '%s\n' "$ZIELE_ANHANG" | sort -u))"
   anz="$(printf '%s\n' "$neu" | grep -c . || true)"
   if [ "$anz" = "1" ]; then KENNTNIS_ZIEL="$(printf '%s\n' "$neu" | grep . | head -1)"
-  else KENNTNIS_GRUND="nach Treffer in Frage 1 erscheinen $anz Ziele, die es beim freien Weg nicht gibt, statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
-
-  neu="$(comm -13 <(printf '%s\n' "$ZIELE_ANHANG" | sort -u) <(printf '%s\n' "$ZIELE_FREI" | sort -u))"
-  anz="$(printf '%s\n' "$neu" | grep -c . || true)"
-  if [ "$anz" = "1" ]; then ANLEGEN_ZIEL="$(printf '%s\n' "$neu" | grep . | head -1)"
-  else ANLEGEN_GRUND="beim freien Weg erscheinen $anz Ziele, die es nach Treffer in Frage 1 nicht gibt, statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
+  else KENNTNIS_GRUND="nach Treffer in Frage 1 erscheinen $anz Ziele, die es auf der Halt-Seite nicht gibt, statt genau einem ($(printf '%s' "$neu" | tr '\n' ' '))"; fi
 else
-  KENNTNIS_ABLEITUNG="fehlt"; ANLEGEN_ABLEITUNG="fehlt"
-  if [ -z "$ZIELE_FREI" ] && [ -z "$ZIELE_ANHANG" ]; then
-    KENNTNIS_GRUND="KEINE der beiden Fahrten kam bis zur Auswertung -- freier Weg: ${FREI_GRUND:-ohne benannten Grund}; Treffer in Frage 1: ${ANHANG_GRUND:-ohne benannten Grund}"
-  elif [ -z "$ZIELE_FREI" ]; then
-    KENNTNIS_GRUND="die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- ${FREI_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
+  KENNTNIS_ABLEITUNG="fehlt"
+  if [ -z "$ZIELE_ANHANG" ] && [ -z "$ZIELE_HALT" ]; then
+    KENNTNIS_GRUND="KEINE der beiden Fahrten kam bis zur Auswertung -- Treffer in Frage 1: ${ANHANG_GRUND:-ohne benannten Grund}; Treffer in Frage 2 (Halt): ${VERBOTEN_GRUND:-ohne benannten Grund}"
+  elif [ -z "$ZIELE_ANHANG" ]; then
+    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 1 kam nicht bis zur Auswertung -- ${ANHANG_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Halt-Fahrt kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
   else
-    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 1 kam nicht bis zur Auswertung -- ${ANHANG_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Der freie Weg kam durch"
+    KENNTNIS_GRUND="die Fahrt TREFFER IN FRAGE 2 (HALT) kam nicht bis zur Auswertung -- ${VERBOTEN_GRUND:-ohne benannten Grund; das ist selbst ein Befund ueber diesen Prueflauf}. Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird"
   fi
-  ANLEGEN_GRUND="$KENNTNIS_GRUND"
 fi
 
 printf 'Entdeckung: Ziel Weiter = %s · Ziel Kenntnisnahme = %s · Ziel Anlage = %s\n\n' \
@@ -1950,6 +2071,15 @@ pruefe_sql_marke
 #         formwidriger Wert waere an der Formpruefung gescheitert --
 #         also an einer FREMDEN Bedingung. Genau dieser Fehler machte am
 #         02.08.2026 drei von vier Negativfaellen wertlos.
+#
+#         ANGEPASST AM 20.08.2026 (E-11, Weg A, Abschnitt 6 im Kopf
+#         dieser Datei): auf dem freien Weg (beide Fragen verneint) ist
+#         der Weiterweg zugleich die Anlage -- ein eigener
+#         Zwischenschritt, in den sich die Projektnummer nachtraeglich
+#         einschmuggeln liesse, besteht nicht. Gemessen wird deshalb der
+#         EINE Aufruf, der beides zugleich ist, mit den mitgesendeten
+#         Feldern. Die Aussage bleibt dieselbe: die Nummer wird
+#         verworfen, kein Bildschirm bietet sie zur Eingabe an.
 # ---------------------------------------------------------------------
 if [ -z "$ANLEGEN_ZIEL" ]; then
   sperr ZB-13 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- $(grund "$ANLEGEN_GRUND")"
@@ -1959,15 +2089,15 @@ else
   KEKS_ZWEIT="$FAHRT_KEKS"
   zweck_antwort "$KEKS_ZWEIT" zb_z1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_ZWEIT" zb_z2 "$FELD2" "$NEIN2" >/dev/null
-  sende "$WEITER_ZIEL" zb_z3 "$KEKS_ZWEIT" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-  z="$(nur_pfad "$(kopfzeile zb_z3 location)")"
-  [ -n "$z" ] && hole "$z" zb_z3s "$KEKS_ZWEIT" >/dev/null || cp "$ARBEIT/zb_z3.rumpf" "$ARBEIT/zb_z3s.rumpf" 2>/dev/null
 
   UNTERGESCHOBEN='DE-ZBA_777_77'
   vorher="$(anz_apps "$MANDANT_A")"
-  st=$(sende "$ANLEGEN_ZIEL" zb_z4 "$KEKS_ZWEIT" ${VERBORGEN[@]+"${VERBORGEN[@]}"} \
+  st=$(sende "$ANLEGEN_ZIEL" zb_z3 "$KEKS_ZWEIT" ${VERBORGEN[@]+"${VERBORGEN[@]}"} \
         "project_no=$UNTERGESCHOBEN" "projektnummer=$UNTERGESCHOBEN")
   nachher="$(anz_apps "$MANDANT_A")"
+  # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+  z="$(ziel_adresse "$(kopfzeile zb_z3 location)")"
+  [ -n "$z" ] && hole "$z" zb_z3s "$KEKS_ZWEIT" >/dev/null || cp "$ARBEIT/zb_z3.rumpf" "$ARBEIT/zb_z3s.rumpf" 2>/dev/null
   cid="$(check_von 'zb_zweit@zbpruef.example')"
   nr="$(dbz "SELECT coalesce(a.project_no,'(keine)') FROM app a WHERE a.fit_check_id='$cid'")"
   uebernommen="$(dbz "SELECT count(*) FROM app WHERE project_no='$UNTERGESCHOBEN'")"
@@ -2037,18 +2167,27 @@ pruefe_sql_marke
 # ---------------------------------------------------------------------
 # ZB-15 · F7 + K04-M18 · "Der Server MUSS Ergebnis, drei aktive
 #         Antworten und Mandant UNMITTELBAR VOR der Anlage erneut lesen.
-#         Ein veralteter Bildschirmstand berechtigt nicht zur Anlage."
+#         Ein veralteter Stand berechtigt nicht zur Anlage."
 #
-#         SO WIRD ES GEMESSEN: ein Konto faehrt bis zu dem Bildschirm,
-#         auf dem der Weg zur Anlage offen steht. DANN -- und erst dann
-#         -- kippt der Eignungs-Check in der Datenbank auf
-#         NICHT_GEEIGNET. Der Bildschirm der Nutzerin weiss davon
-#         nichts; er zeigt den Weg weiter an. Jetzt wird er gefahren.
+#         SO WIRD ES GEMESSEN: ein Konto beantwortet beide Zweckfragen
+#         (GEEIGNET steht zu diesem Zeitpunkt noch). DANN -- und erst
+#         dann -- kippt der Eignungs-Check in der Datenbank auf
+#         NICHT_GEEIGNET. Jetzt erst wird der Weiterweg gefahren.
 #
-#         Ein Server, der die Eignung beim Anzeigen gelesen und sich
-#         gemerkt hat, legt die Zeile an -- und faellt durch. Nur ein
-#         Server, der UNMITTELBAR VOR der Anlage noch einmal liest,
-#         weist ab. Genau diese Unterscheidung ist K04-M18.
+#         Ein Server, der die Eignung frueher gelesen und sich gemerkt
+#         hat, legt die Zeile an -- und faellt durch. Nur ein Server,
+#         der UNMITTELBAR VOR der Anlage noch einmal liest, weist ab.
+#         Genau diese Unterscheidung ist K04-M18.
+#
+#         ANGEPASST AM 20.08.2026 (E-11, Weg A, Abschnitt 6 im Kopf
+#         dieser Datei): auf dem freien Weg gibt es zwischen der letzten
+#         Antwort und der Anlage keinen eigenen, den Zustand nicht
+#         veraendernden Zwischenschritt mehr, auf dem sich ein
+#         "veralteter Bildschirm" zeigen liesse -- der Weiterweg IST die
+#         Anlage. Der Wechsel geschieht deshalb jetzt direkt nach den
+#         beiden Antworten, unmittelbar vor demselben EINEN Aufruf, der
+#         beides zugleich ist. Die Aussage bleibt dieselbe: ein
+#         zwischenzeitlicher Wechsel muss die Anlage verhindern.
 # ---------------------------------------------------------------------
 if [ -z "$ANLEGEN_ZIEL" ]; then
   sperr ZB-15 "Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- $(grund "$ANLEGEN_GRUND")"
@@ -2058,14 +2197,10 @@ else
   KEKS_WECHSEL="$FAHRT_KEKS"
   zweck_antwort "$KEKS_WECHSEL" zb_w1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_WECHSEL" zb_w2 "$FELD2" "$NEIN2" >/dev/null
-  sende "$WEITER_ZIEL" zb_w3 "$KEKS_WECHSEL" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-  z="$(nur_pfad "$(kopfzeile zb_w3 location)")"
-  [ -n "$z" ] && hole "$z" zb_w3s "$KEKS_WECHSEL" >/dev/null || cp "$ARBEIT/zb_w3.rumpf" "$ARBEIT/zb_w3s.rumpf" 2>/dev/null
   cid="$(check_von 'zb_wechsel@zbpruef.example')"
-  weg_offen=0
-  fuehrt_zu zb_w3s "$ANLEGEN_ZIEL" && weg_offen=1
+  stand_vor_wechsel="$(dbz "SELECT outcome::text FROM fit_check WHERE id='$cid'")"
 
-  # Der Wechsel -- NACH der Anzeige, VOR der Anlage.
+  # Der Wechsel -- NACH den beiden Antworten, VOR dem Aufruf, der anlegt.
   db "UPDATE fit_check SET outcome='NICHT_GEEIGNET',
              completed_at=coalesce(completed_at, now())
        WHERE id='$cid'" >/dev/null
@@ -2074,7 +2209,7 @@ else
   nachher="$(anz_apps "$MANDANT_A")"
   appid="$(dbz "SELECT coalesce(app_id::text,'(leer)') FROM fit_check WHERE id='$cid'")"
   m=""
-  [ "$weg_offen" = "1" ] || m="$m der Aufbau des Falls stimmt nicht: der Weg zur Anlage stand auf dem Bildschirm gar nicht offen, es gab also keinen veralteten Stand zu messen;"
+  [ "$stand_vor_wechsel" = "GEEIGNET" ] || m="$m der Aufbau des Falls stimmt nicht: der Eignungs-Check stand vor dem Wechsel nicht auf GEEIGNET, sondern auf '$stand_vor_wechsel' -- es gab also keinen guten Stand, der veralten konnte;"
   case "$st" in
     2*|4*) : ;;
     303) ziel="$(nur_pfad "$(kopfzeile zb_w4 location)")"
@@ -2085,10 +2220,10 @@ else
     5*) m="$m Status $st -- abgewiesen wird die Anlage damit nicht, der Weg stuerzt ab;";;
     *)  m="$m unerwarteter Status $st;";;
   esac
-  [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher) auf einem veralteten Bildschirmstand (K04-M18, F7);"
+  [ "$vorher" = "$nachher" ] || m="$m es entstand eine Anwendung ($vorher -> $nachher), obwohl die Eignung unmittelbar zuvor auf NICHT_GEEIGNET gesetzt wurde (K04-M18, F7);"
   [ "$appid" = "(leer)" ] || m="$m fit_check.app_id traegt '$appid' statt leer;"
-  [ -z "$m" ] && ok ZB-15 'Wechselt die Eignung zwischen Anzeige und Anlage, scheitert die Anlage: der Server liest sie unmittelbar vorher erneut (K04-M18, F7)' \
-              || nok ZB-15 "Veralteter Bildschirmstand:$m"
+  [ -z "$m" ] && ok ZB-15 'Wechselt die Eignung zwischen der letzten Antwort und der Anlage, scheitert die Anlage: der Server liest sie unmittelbar vorher erneut (K04-M18, F7)' \
+              || nok ZB-15 "Veralteter Eignungsstand:$m"
 fi
 pruefe_sql_marke
 
@@ -2164,7 +2299,8 @@ else
   zweck_antwort "$KEKS_AEND" zb_e1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_AEND" zb_e2 "$FELD2" "$JA2"   >/dev/null
   sende "$WEITER_ZIEL" zb_e3 "$KEKS_AEND" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-  z="$(nur_pfad "$(kopfzeile zb_e3 location)")"
+  # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+  z="$(ziel_adresse "$(kopfzeile zb_e3 location)")"
   [ -n "$z" ] && hole "$z" zb_e3s "$KEKS_AEND" >/dev/null || cp "$ARBEIT/zb_e3.rumpf" "$ARBEIT/zb_e3s.rumpf" 2>/dev/null
   cid="$(check_von 'zb_aendern@zbpruef.example')"
   zeilen_vorher="$(dbz "SELECT count(*) FROM fit_answer WHERE fit_check_id='$cid'")"
@@ -2215,7 +2351,8 @@ else
   zweck_antwort "$KEKS_TERM" zb_t1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_TERM" zb_t2 "$FELD2" "$JA2"   >/dev/null
   sende "$WEITER_ZIEL" zb_t3 "$KEKS_TERM" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-  z="$(nur_pfad "$(kopfzeile zb_t3 location)")"
+  # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+  z="$(ziel_adresse "$(kopfzeile zb_t3 location)")"
   [ -n "$z" ] && hole "$z" zb_t3s "$KEKS_TERM" >/dev/null || cp "$ARBEIT/zb_t3.rumpf" "$ARBEIT/zb_t3s.rumpf" 2>/dev/null
   ausweg=""
   while read -r zz; do
@@ -2266,7 +2403,8 @@ else
   zweck_antwort "$KEKS_UEB" zb_u1 "$FELD1" "$NEIN1" >/dev/null
   zweck_antwort "$KEKS_UEB" zb_u2 "$FELD2" "$JA2"   >/dev/null
   sende "$WEITER_ZIEL" zb_u3 "$KEKS_UEB" ${VERBORGEN[@]+"${VERBORGEN[@]}"} >/dev/null
-  z="$(nur_pfad "$(kopfzeile zb_u3 location)")"
+  # FOLGEN, nicht vergleichen -- ziel_adresse() (Befund vom 20.08.2026).
+  z="$(ziel_adresse "$(kopfzeile zb_u3 location)")"
   [ -n "$z" ] && hole "$z" zb_u3s "$KEKS_UEB" >/dev/null || cp "$ARBEIT/zb_u3.rumpf" "$ARBEIT/zb_u3s.rumpf" 2>/dev/null
   ausweg=""
   while read -r zz; do
