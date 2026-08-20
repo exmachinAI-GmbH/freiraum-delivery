@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="de">
+<head>
+  {% include "_kopf.html" %}
+  <title>Interview · FREIRAUM</title>
+  {#
+    bildschirm: EN-06
+
+    Der Kasten der Quelle (schema/K19_build_referenz.md:267,
+    woertlich uebernommen -- K19-M01, F41, Blatt 94 Punkt 6):
+
+      ╭─ EN-06 · Stufe 02 Interview ──────────── [INTERVIEW 2/5] ──╮
+      │  Zugang: nach Anmeldung  │
+      │  GESPRAECH                  |  ZUSAMMENFASSUNG             │
+      │  Fachfrage mit Vorschlaegen |  Teilnehmer des Gespraechs   │
+      │  [Vorschlag] [Vorschlag]    |  KI-Notiz                    │
+      │  [Freitext          ][Datei]|  Ihre Angabe                 │
+      │  [Diese Frage ignorieren]   |  (Frage uebersprungen)       │
+      │  [Bin fertig mit dem Interview]                            │
+      │  [Speichern, spaeter weitermachen]                         │
+      ╰────────────────────────────────────────────────────────────╯
+
+    umsetzt: K01-M07 (zweigeteilt, links Handlung, rechts Ergebnis, auf
+             demselben Bildschirm), K05-M10 (jede Frage ist ueberspringbar;
+             der Vermerk traegt AUSSCHLIESSLICH den Wortlaut "(Frage
+             uebersprungen)" -- keinen Inhalt und deshalb auch keine
+             Herkunftsmarke), K05-M11 (jeder INHALTLICHE Eintrag genau
+             eine Marke; der Uebersprungvermerk zaehlt nicht dazu),
+             K05-M15 (unter dem Gespraech steht "Speichern, spaeter
+             weitermachen" -- immer, nicht nur wenn es etwas zu speichern
+             gibt), K05-M16 (die Teilnehmer stehen OBEN in der rechten
+             Spalte, vor und unabhaengig von allem anderen, und nennen
+             mindestens den angemeldeten Nutzer und den Assistenten als
+             Moderator), K05-D01 (eine uebersprungene Frage verschwindet
+             nicht spurlos), K05-D02 (keine gemischte, keine fehlende
+             Marke; der Uebersprungvermerk traegt keinen Gespraechsinhalt),
+             K05-D05 (die Vorschlaege begrenzen die Antwortmenge nicht --
+             das Freitextfeld steht neben ihnen, nicht hinter ihnen),
+             K19-M03 (genau eine Zugangsmarke), K19-M13 (Statusansagen
+             ohne Fokuswechsel), K19-G03 (KI-Notiz gegen Ihre Angabe,
+             sichtbar getrennt), K16-D11 (die Marke ist Text)
+
+    zur Haelfte umgesetzt: K05-M09 -- weil von den DREI gleichrangigen
+             Antwortwegen zwei gebaut sind und der dritte, das Anhaengen
+             eines Dokuments, nach Blatt 100 Entscheidung 4
+             ZURUECKGESTELLT ist (Aktion datei_anhaengen, Serverbefehl
+             upload_interview_document). Das gezeichnete Kriterium sagt es
+             selbst: "bis zum Nachziehen ist die Bedingung nur fuer die
+             ersten beiden Wege messbar; der dritte bleibt offen und wird
+             nicht als erfuellt gefuehrt."
+
+             DIE SCHALTFLAECHE [Datei] AUS DEM KASTEN STEHT DESHALB HIER
+             NICHT. Eine Schaltflaeche zu zeigen, die nirgends hinfuehrt,
+             waere schlimmer als keine -- sie verspricht einen Weg, den es
+             nicht gibt (dieselbe Ueberlegung wie im Kopf von
+             app/vorlagen/en02_uebersicht.html). Sie fehlt benannt, nicht
+             unbemerkt. Mit ihr bleibt auch K05-G09 aussen vor: die
+             Einordnung der angehaengten Datei als Antwort und nicht als
+             Wissensmodul wird hier nicht gemessen.
+
+    zur Haelfte umgesetzt: K05-M21 -- weil das Freitextfeld ein
+             gewoehnliches Textfeld ist: was das Diktat des
+             Betriebssystems hineinschreibt, steht vor dem Senden sichtbar
+             darin und laesst sich aendern, und was abgesendet wird, geht
+             denselben Weg wie getippter Text (Marke "Ihre Angabe"). Eine
+             EIGENE Spracherkennung baut dieser Bildschirm nicht; ohne sie
+             ist die Klausel erfuellbar, aber nicht in ihrem eigenen
+             Aufbau ("funktionierende Spracherkennung") messbar.
+
+    zur Haelfte umgesetzt: K05-M19 -- weil dieser Bildschirm den Weg
+             "Bin fertig mit dem Interview" ZEIGT; dass ohne
+             Protokolleintrag kein Stufenwechsel stattfindet und nichts an
+             K06 uebergeben wird, haelt `complete_interview` ueber
+             `set_journey_phase` (M32). Ein Bildschirm kann einen
+             Rueckrollvorgang nicht garantieren.
+
+    zur Haelfte umgesetzt: K05-M15, K05-M25, K05-M26 -- weil hier die
+             Bedienung steht und der wiederaufgenommene Stand ausgegeben
+             wird; dass der Stand das Abmelden ueberlebt, haelt der
+             Dreischritt Datei -> document -> event in app/gespraech.py.
+             Diese Datei zeigt einen Stand; sie erzeugt ihn nicht.
+
+    zur Haelfte umgesetzt: K19-M06 -- weil an der einen Stelle, an der die
+             Bedingung vom Nutzer selbst erfuellbar ist und die
+             Schaltflaeche entbehrlich ist ("Bin fertig mit dem
+             Interview" ohne einen einzigen Beitrag), ausgeblendet und der
+             Hinweis an ihre Stelle gesetzt wird -- am FREITEXTFELD aber
+             nicht. Der Vertrag zeichnet dort "Senden inaktiv, solange
+             kein Text vorliegt"; ohne Skript kann diese Seite die
+             Schaltflaeche nicht in dem Augenblick zurueckholen, in dem
+             der erste Buchstabe steht. Sie bleibt deshalb stehen, und der
+             Serverpfad weist fail-closed ab, ohne etwas zu schreiben
+             (K05-G01). Dieselbe benannte Abweichung wie bei [Weiter] auf
+             EN-04, aus demselben Grund.
+
+    ⟨BERICHTIGT 9⟩ abgewichen und benannt: K19-M06 gegen den Vertrag bei
+             interview_beenden. Der Vertrag fuehrt dessen Leerzustand als
+             "entfaellt -- ohne Gespraechsstand gibt es keine Uebergabe
+             (Begruendung nach K19-M06)". Der Zustand tritt aber sehr wohl
+             ein: ein frisch begonnenes Interview hat keinen Beitrag, und
+             die Bedingung ist vom Nutzer selbst erfuellbar -- eine Frage
+             beantworten. Dieser Bildschirm blendet die Schaltflaeche
+             deshalb aus und setzt den Hinweis an ihre Stelle, folgt also
+             K19-M06 und nicht dem "entfaellt" des Vertrags.
+
+             WARUM DIE ANDERE STELLE ANDERS ENTSCHIEDEN IST. Bei
+             zwischenspeichern steht dieselbe Formel ("entfaellt -- die
+             Aktion steht erst ab Stufe 02 und immer mit vorhandenem
+             Stand"), und dort bleibt die Bedienung stehen. Der Unterschied
+             ist nicht Geschmack, sondern eine zweite MUSS-Klausel:
+             K05-M15 verlangt, dass "Speichern, spaeter weitermachen"
+             UNTER DEM GESPRAECH STEHT -- als solches, ohne Bedingung. Fuer
+             [Bin fertig mit dem Interview] verlangt keine Klausel das
+             Stehen. Wo eine MUSS-Klausel das Stehen verlangt, steht die
+             Schaltflaeche; wo keine es tut und die Bedingung dem Nutzer
+             gehoert, greift K19-M06.
+
+             DER ENTWURF VOM SELBEN TAG HATTE BEIDES GENAUSO GEBAUT, den
+             Unterschied aber nicht begruendet -- zwei gleichlautende
+             Vertragsstellen, zwei gegenlaeufige Entscheidungen, kein
+             Wort dazu. Das ist als Abweichung vom Bildschirmvertrag
+             vorzulegen, nicht stillschweigend zu machen.
+
+    EN-06 aus schema/K19_screens.yaml, uebernommen und nicht frei
+    gezeichnet (K19-M01). Der Bildschirmvertrag fuehrt SECHS Aktionen:
+    vorschlag_waehlen, freitext_antworten, datei_anhaengen,
+    frage_ignorieren, zwischenspeichern, interview_beenden. Fuenf stehen
+    hier; die sechste ist zurueckgestellt und oben benannt.
+
+    ────────────────────────────────────────────────────────────────────
+    DREI WEGE NEBENEINANDER, NICHT HINTEREINANDER (K05-M09, K05-D05)
+
+    Die Vorschlaege und das Freitextfeld stehen an DERSELBEN Frage und
+    sind beide ohne Zwischenschritt bedienbar. Keiner ist dem anderen
+    vorgeschaltet: das Freitextfeld ist nicht "Was anderes" hinter den
+    Vorschlaegen, sondern ein Weg neben ihnen. K05-D05 sagt, warum das
+    kein Gestaltungsdetail ist: "Die Vorschlaege DUERFEN NICHT die
+    Antwortmenge begrenzen." Ein Freitextfeld, das erst nach einem Klick
+    auf "Sonstiges" erscheint, begrenzt sie -- es macht die eigene Antwort
+    zu einem Sonderfall der Vorschlaege.
+
+    BEIDE WEGE LAUFEN AUF DENSELBEN SERVERBEFEHL (record_interview_answer,
+    Vertrag). Deshalb zwei Formulare mit zwei Adressen und einem Befehl
+    dahinter, nicht ein Formular mit einer Fallunterscheidung: getrennt
+    angeboten heisst getrennt absendbar (dieselbe Ueberlegung wie zu
+    K04-M19 auf EN-04a).
+
+    ────────────────────────────────────────────────────────────────────
+    DER UEBERSPRUNGVERMERK IST DER EINZIGE EINTRAG OHNE MARKE (K05-M10)
+
+    Er traegt AUSSCHLIESSLICH den Wortlaut "(Frage uebersprungen)" -- kein
+    Fragetext, kein angefangener Satz, keine Marke. K05-D02 nennt den
+    Grund: traegt er Inhalt, umgeht er die Markenpflicht. Deshalb steht
+    sein Wortlaut in dieser Vorlage FEST und kommt nicht als Wert aus dem
+    Serverpfad: ein Wert, der aus dem Gespraech kaeme, koennte Inhalt aus
+    dem Gespraech tragen. Der Serverpfad sagt nur, DASS uebersprungen
+    wurde, nicht WAS dort stuende.
+
+    ER VERSCHWINDET NICHT (K05-D01). Er steht rechts, er steht nach dem
+    Neuladen, und er geht in das Protokoll ein. Scheitert sein Schreiben,
+    bleibt die Frage links offen stehen -- in keinem der beiden Faelle ist
+    die Frage spurlos fort.
+
+    ────────────────────────────────────────────────────────────────────
+    DIE TEILNEHMER STEHEN OBEN, IMMER (K05-M16)
+
+    Vor und unabhaengig von allem anderen: im Ladezustand steht rechts nur
+    diese Liste. Sie nennt mindestens den angemeldeten Nutzer und den
+    Assistenten als Moderator, und sie ist nicht abgeschlossen -- tritt
+    ein eingeladener Mitarbeiter hinzu, kommt er dazu, ohne dass einer
+    entfaellt (K05-M17). Diese Vorlage entfernt niemanden aus der Liste;
+    sie gibt aus, was `teilnehmer` fuehrt.
+
+    UND `teilnehmer` HAT IM SCHEMA KEINEN TRAEGER -- nachgeschlagen am
+    19.08.2026 in schema/freiraum_datamodel.sql und in M30, M31, M32:
+    keine Tabelle, keine Spalte, kein Enum-Wert fuehrt Teilnehmer eines
+    Gespraechs. Der Assistent als Moderator ist ohnehin kein `actor`. Die
+    Liste ist also abzuleiten -- angemeldetes Konto ueber actor und
+    membership, der Moderator als feste Nennung des Serverpfads --, und
+    fuer K05-M17 (Beitritt eines eingeladenen Mitarbeiters) gibt es
+    heute nichts, woran der Beitritt haengen koennte. Das ist kein Mangel
+    dieser Vorlage: sie gibt aus, was sie bekommt. Es ist ein offener
+    Punkt fuer Zug 4 und fuer das Schema, und er gehoert benannt, bevor
+    der Prueffall zu K05-M16 gefahren wird -- sein Positivfall verlangt
+    ausdruecklich, dass ein hinzutretender Mitarbeiter in der Liste
+    erscheint.
+
+    ────────────────────────────────────────────────────────────────────
+    DIE BENANNTEN ORTE
+
+        id="fachfrage"        die gestellte Fachfrage
+        id="vorschlaege"      die angebotenen Antworten
+        id="freitext"         der eigene Wortlaut
+        id="hinweis_beenden"  der Hinweis AN DER STELLE von [Bin fertig
+                              mit dem Interview] (K19-M06)
+        id="keine_frage"      die Ansage, wenn keine Frage gestellt ist
+        id="teilnehmer"       die Teilnehmerliste, oben rechts (K05-M16)
+        id="zusammenfassung"  die rechte Spalte
+
+    ────────────────────────────────────────────────────────────────────
+    WAS DIESER BILDSCHIRM ERWARTET (der Vertrag zu Zug 4, app/gespraech.py)
+
+        meldung            Statusansage zu einem abgeschlossenen Vorgang
+        stufe              Beschriftung der Stufenmarke
+        anzeigename        angemeldeter Nutzer
+        frage              {code, text, vorschlaege[]} -- vorschlaege je
+                           mit code und text; leer ist zulaessig. NICHTS
+                           heisst: keine Frage gestellt (⟨BERICHTIGT 5⟩)
+        keine_frage        benannter Satz fuer den Fall ohne gestellte
+                           Frage; steht im Serverpfad, nicht in der Vorlage
+        teilnehmer         Liste, je Eintrag name und rolle
+        beitraege          die rechte Spalte in ihrer Reihenfolge, je
+                           Eintrag art ("inhalt" oder "uebersprungen"),
+                           text und marke (Pflicht bei art = "inhalt")
+        stand_vorhanden    wahr, sobald mindestens ein Beitrag vorliegt
+        hinweis_beenden    Satz, der die fehlende Bedingung benennt
+  #}
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-06 · Stufe 02 Interview</h1>
+    <p class="stufe">{{ stufe }}</p>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {#
+      Statusansage ohne Fokuswechsel (K19-M13). Sie traegt unter anderem
+      den Fehlerzustand aus K05-M11 ("Marke nicht eindeutig bestimmbar --
+      kein Eintrag rechts, Meldung, Antwort bleibt waehlbar") und den aus
+      K05-M26 (unvollstaendiger Dreischritt).
+    #}
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Angemeldet als {{ anzeigename }}</p>
+
+    <div class="zwei_spalten">
+
+      {# ─── LINKS · hier wird gesagt oder geklickt (K01-M07) ─────────── #}
+      <section class="gespraech" aria-labelledby="spalte_gespraech">
+        <h2 id="spalte_gespraech">Gespraech</h2>
+
+        {#
+          ⟨BERICHTIGT 5⟩ OHNE GESTELLTE FRAGE STEHT HIER KEINE FRAGE.
+
+          Der Entwurf gab diesen ganzen Block ohne Bedingung aus. Ist
+          `frage` nicht gesetzt -- am Ende des Fragebogens, nach einem
+          Fehlschlag, oder solange der Serverpfad die naechste Frage noch
+          nicht hat --, stand dort eine leere Ueberschrift, ein
+          Freitextfeld ohne Frage und, das Schlimmste, [Diese Frage
+          ignorieren] mit `frage=""` im verborgenen Feld: eine
+          Schaltflaeche, die anbietet, nichts zu ueberspringen, und dabei
+          eine leere Kennung absendet.
+
+          K05-M10 IST DER MASSSTAB, UND SIE SAGT "JEDE GESTELLTE FRAGE":
+          "Zu jeder in Stufe 02 GESTELLTEN Frage steht 'Diese Frage
+          ignorieren' bereit." Nicht: zu jedem Aufruf des Bildschirms. Der
+          gezeichnete Prueffall ist "an einer regulaer gestellten Frage" zu
+          fahren -- ohne Frage misst er nichts, und mit einer leeren
+          Kennung misst er die falsche Sache.
+
+          WAS STATTDESSEN STEHT. Kein Platzhalter und keine erfundene
+          Ansage: der Satz kommt als `keine_frage` aus dem Serverpfad,
+          nach demselben Muster wie die benannten Meldungen. Die beiden
+          Wege unter dem Gespraech -- beenden und speichern -- stehen
+          weiter, denn sie haengen am Gespraechsstand und nicht an der
+          Frage.
+        #}
+        {% if frage %}
+        <div id="fachfrage">
+          <h3>{{ frage.text }}</h3>
+
+          {#
+            WEG 1 · einen Vorschlag anklicken (vorschlag_waehlen).
+
+            JE VORSCHLAG EIN EIGENES FORMULAR MIT EINER EIGENEN
+            SCHALTFLAECHE. Der Kasten zeichnet sie als Schaltflaechen --
+            "[Vorschlag] [Vorschlag]" -- und nicht als Auswahlliste mit
+            einem Absenden dahinter. Der Unterschied ist K01-M07: ein
+            Klick, ein Ergebnis rechts, ohne Zwischenschritt.
+
+            DER SERVER GLAUBT WEDER FRAGE NOCH VORSCHLAG. Beide gehen
+            mit, beide werden geprueft -- gehoert der Vorschlag nicht zu
+            dieser Frage, wird nichts geschrieben (K05-G01, fail-closed).
+
+            STEHEN KEINE VORSCHLAEGE, STEHT HIER NICHTS. Kein
+            Platzhalter, keine leere Leiste: die Frage bleibt trotzdem
+            beantwortbar, denn das Freitextfeld darunter ist kein
+            Ersatzweg, sondern ein gleichrangiger (K05-D05).
+          #}
+          {% if frage.vorschlaege %}
+            <div id="vorschlaege">
+              {% for vorschlag in frage.vorschlaege %}
+                <form method="post" action="/interview/vorschlag">
+                  <input type="hidden" name="frage" value="{{ frage.code }}">
+                  <input type="hidden" name="vorschlag" value="{{ vorschlag.code }}">
+                  <button type="submit">{{ vorschlag.text }}</button>
+                </form>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {#
+            WEG 2 · in eigenen Worten schreiben (freitext_antworten).
+
+            EIN GEWOEHNLICHES TEXTFELD, UND DAS IST ABSICHT (K05-M21):
+            was das Diktat des Betriebssystems hineinschreibt, steht
+            sichtbar darin, bevor gesendet wird, und laesst sich vorher
+            aendern. Ein Feld, das ein Diktat unmittelbar absendet, waere
+            genau der Negativfall der Klausel.
+
+            DER TEXT IST DATEN, KEINE ANWEISUNG (K05-M22, K05-M29). Er
+            wird ausgezeichnet ausgegeben wie jeder andere Wert; eine
+            Handlungsanweisung darin ist ein Satz und kein Befehl. Dass
+            personenbezogene Angaben vor jedem Modellaufruf maskiert
+            werden (K05-M23), haelt der Serverpfad -- diese Datei ruft
+            kein Modell.
+
+            [Senden] BLEIBT BEI LEEREM FELD STEHEN. Die benannte
+            Abweichung von K19-M06; die Begruendung steht oben im Kopf.
+          #}
+          <div id="freitext">
+            <form method="post" action="/interview/freitext">
+              <input type="hidden" name="frage" value="{{ frage.code }}">
+              <label for="feld_antwort">Oder antworten Sie in eigenen
+                Worten. Sie koennen auch diktieren; der Text steht dann
+                hier, bevor er gesendet wird.</label>
+              <textarea id="feld_antwort" name="antwort" rows="4"></textarea>
+              <div>
+                <button type="submit">Antwort senden</button>
+              </div>
+            </form>
+          </div>
+
+          {#
+            WEG 3 · ein Dokument anhaengen -- ZURUECKGESTELLT (Blatt 100,
+            Entscheidung 4). Der Kasten zeichnet an dieser Stelle
+            "[Datei]". Sie steht hier nicht, weil sie nirgends hinfuehrte;
+            oben im Kopf steht, was damit offen bleibt (K05-M09, K05-G09).
+          #}
+
+          {#
+            [Diese Frage ignorieren] (frage_ignorieren, K05-M10).
+
+            SIE STEHT AN JEDER GESTELLTEN FRAGE -- die Klausel sagt
+            "jede", nicht "jede, auf die keine Antwort passt". Ihr
+            Leerzustand entfaellt nach dem Vertrag ausdruecklich: die
+            Aktion braucht keinen Bestand.
+          #}
+          <form method="post" action="/interview/ignorieren">
+            <input type="hidden" name="frage" value="{{ frage.code }}">
+            <button type="submit">Diese Frage ignorieren</button>
+          </form>
+        </div>
+        {% else %}
+          {#
+            Keine Frage gestellt. Der Satz kommt benannt aus dem
+            Serverpfad; diese Vorlage erfindet ihn nicht. Ohne
+            Fokuswechsel (K19-M13).
+          #}
+          <p id="keine_frage" role="alert">{{ keine_frage }}</p>
+        {% endif %}
+
+        {#
+          DIE BEIDEN WEGE UNTER DEM GESPRAECH, in der Reihenfolge des
+          Kastens: erst "Bin fertig mit dem Interview", dann "Speichern,
+          spaeter weitermachen". Sie stehen unabhaengig davon, ob gerade
+          eine Frage gestellt ist -- sie haengen am Gespraechsstand.
+        #}
+        {% if stand_vorhanden %}
+          {#
+            interview_beenden. Uebergibt an K06 und setzt journey_phase
+            auf UEBERSICHT -- beides serverseitig und beides oder keines
+            (K05-M19). Diese Seite uebergibt keine Stufe; ein Feld dafuer
+            gibt es nicht.
+          #}
+          <form method="post" action="/interview/beenden">
+            <button type="submit">Bin fertig mit dem Interview</button>
+          </form>
+        {% else %}
+          {#
+            K19-M06, und hier ganz: ohne einen einzigen Beitrag gibt es
+            nichts zu uebergeben, und die Bedingung ist vom Nutzer selbst
+            erfuellbar -- eine Frage beantworten. Also ist die
+            Schaltflaeche NICHT VORHANDEN, und an ihrer Stelle steht der
+            Hinweis, der die Bedingung benennt. Mit dem ersten Beitrag
+            weicht der Hinweis und die Schaltflaeche steht an seiner
+            Stelle; die Seite laedt bei jedem Beitrag ohnehin neu.
+
+            Dass der Vertrag den Leerzustand hier als "entfaellt" fuehrt
+            und diese Datei ihn trotzdem baut, steht im Kopf, Abschnitt
+            ⟨BERICHTIGT 9⟩.
+
+            ⟨BERICHTIGT 12⟩ OHNE `leise`. Der Entwurf gab diesen Hinweis
+            gedaempft aus, sein Gegenstueck auf EN-05 nicht. Ein Hinweis,
+            der AN DER STELLE einer ausgeblendeten Schaltflaeche steht
+            (K19-M06), ist der einzige Traeger der Auskunft, warum der
+            Weiterweg fehlt -- er wird nicht kleiner gesetzt als das, was
+            er ersetzt. `leise` ist in token.css `--muted` und .9rem; das
+            ist die Auszeichnung fuer Beiwerk.
+          #}
+          <p id="hinweis_beenden" role="alert">{{ hinweis_beenden }}</p>
+        {% endif %}
+
+        {#
+          zwischenspeichern (K05-M15). "Ab Stufe 02 MUSS unter dem
+          Gespraech 'Speichern, spaeter weitermachen' stehen."
+
+          SIE WIRD NIE AUSGEBLENDET -- auch nicht ohne Beitrag. Das ist
+          kein Widerspruch zu K19-M06: die Klausel dort setzt voraus, dass
+          eine Bedingung ueberhaupt zu benennen ist, und K05-M15 verlangt
+          das Stehen dieser Bedienung als solches. Wo eine MUSS-Klausel
+          das Stehen verlangt und eine andere das Ausblenden erlaubte,
+          steht sie. Ihr Leerzustand entfaellt nach dem Vertrag
+          ausdruecklich ("die Aktion steht erst ab Stufe 02 und immer mit
+          vorhandenem Stand").
+        #}
+        <form method="post" action="/interview/speichern">
+          <button type="submit">Speichern, spaeter weitermachen</button>
+        </form>
+      </section>
+
+      {# ─── RECHTS · hier erscheint das Ergebnis (K01-M07) ───────────── #}
+      <section class="stand" id="zusammenfassung" aria-labelledby="spalte_stand">
+        <h2 id="spalte_stand">Zusammenfassung</h2>
+
+        {#
+          DIE TEILNEHMER, OBEN (K05-M16). Sie stehen vor den Beitraegen
+          und unabhaengig von ihnen: im Ladezustand ist diese Liste das
+          Einzige, was rechts steht.
+
+          DIE ROLLE STEHT DABEI. "Der Assistent als Moderator" ist eine
+          Rolle und kein Name; ohne sie waere die Liste eine Aufzaehlung
+          von Namen und die Klausel nicht abzulesen.
+        #}
+        <div id="teilnehmer">
+          <h3>Teilnehmer des Gespraechs</h3>
+          <ul>
+            {% for person in teilnehmer %}
+              <li>{{ person.name }} — {{ person.rolle }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {#
+          DIE BEITRAEGE, in der Reihenfolge des Gespraechs. Zwei Arten,
+          und sie werden verschieden behandelt:
+
+            art = "inhalt"        traegt GENAU EINE Marke (K05-M11).
+                                  Fehlt sie, wird der Eintrag nicht
+                                  ausgegeben (K05-D02) -- der Serverpfad
+                                  gibt ihn nach K05-M11 gar nicht erst
+                                  mit; die Bedingung hier ist das zweite
+                                  Schloss.
+            art = "uebersprungen" traegt KEINE Marke und keinen Text aus
+                                  dem Gespraech (K05-M10). Der Wortlaut
+                                  steht fest in dieser Vorlage, damit
+                                  nichts aus dem Gespraech in ihn
+                                  hineingeraten kann.
+
+          ES GIBT KEINE DRITTE ART. Was weder das eine noch das andere
+          ist, erscheint nicht -- fail-closed (K05-G01): ein Eintrag,
+          dessen Art nicht bestimmt ist, ist ein Eintrag, dessen Herkunft
+          nicht bestimmt ist.
+        #}
+        <ol class="beitraege">
+          {% for beitrag in beitraege %}
+            {% if beitrag.art == 'inhalt' and beitrag.marke %}
+              <li>
+                {{ beitrag.text }}
+                <span class="herkunft">{{ beitrag.marke }}</span>
+              </li>
+            {% elif beitrag.art == 'uebersprungen' %}
+              <li class="uebersprungen">(Frage uebersprungen)</li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </section>
+    </div>
+
+    {#
+      ⟨BERICHTIGT 4⟩ EIN VERWEIS OHNE ZUSAGE. Hier stand "-- Ihr
+      Gespraechsstand bleibt erhalten." Das widerspricht dem gezeichneten
+      Negativfall b zu K05-M15 unmittelbar: "nicht erfuellt waere, wenn
+      nach dem Abmelden ein halber, nie erfolgreich gespeicherter Stand
+      erschiene." Der Stand ueberlebt nach der Klausel, wenn
+      save_interview_progress Erfolg gemeldet hat -- nicht, weil eine
+      Fusszeile es sagt. Wer den Bildschirm ueber diesen Verweis verlaesst,
+      hat unter Umstaenden gar nicht gespeichert; die Bedienung dafuer
+      steht darueber und heisst so.
+    #}
+    <p class="fuss"><a href="/uebersicht">Zur Uebersicht</a></p>
+  </div>
+</main>
+</body>
+</html>
