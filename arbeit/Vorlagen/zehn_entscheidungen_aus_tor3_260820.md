@@ -178,8 +178,11 @@ Ihnen."* — eine Zusage, die der Bau nicht einlöst. Sie ist berichtigt.
 **Empfehlung: A** *(VORSCHLAG)*, zu zeichnen sinnvollerweise von demselben, der BEF-M3-3
 gezeichnet hat — dieselbe Klausel, dieselbe Lesart.
 
-`☐` A · `☐` B · `☐` **Auflage:** VP-18 um die negative Zusicherung ergänzen *(„es entsteht
-keine Zustellung, `contact` wird nicht gelesen")* — liegt beim blinden Prüf-Agenten
+`☒` **A** — ⟨gezeichnet am 20.08.2026, übertragen vom Harness auf die Weisung im Wortlaut:
+**„E-8 ist A"**⟩
+`☐` B
+`☐` **Auflage:** VP-18 um die negative Zusicherung ergänzen — **bewusst offen gelassen**; sie
+ist dem blinden Prüf-Agenten als Frage vorgelegt, nicht als Vorgabe
 
 ## E-9 · Secret-Handling und Betriebsalarm *(Grund 5 · teilweise)*
 
@@ -245,7 +248,7 @@ keine Zustellung, `contact` wird nicht gelesen")* — liegt beim blinden Prüf-A
 | **E-5** | Ausnahmekonto Nr. 59 | ☐ · ⟨ ⟩ |
 | **E-6** | Eigene Meldung beim fehlenden Versandweg | ☐ · ⟨ ⟩ |
 | **E-7** | Anmeldecode = Zugang · Eigentümer K20-M18 | ☐ · ⟨ ⟩ |
-| **E-8** | Terminweg — A oder B | ☐ · ⟨ ⟩ |
+| **E-8** | Terminweg — A oder B | **☒ A** · ⟨20.08.2026⟩ |
 | **E-9** | M-14 · Betriebsalarm · Eigentümer K03-M26 | ☐ · ⟨ ⟩ |
 | **E-10** | K04-G11 · Eigentümer und Kritikalität | ☐ · ⟨ ⟩ |
 
