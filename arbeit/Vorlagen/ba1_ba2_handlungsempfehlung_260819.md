@@ -4,10 +4,19 @@
 
 Du hast angeboten zu zeichnen. Bevor du das tust, gehört auf den Tisch, **was die Unterschrift
 auslöst** — denn sie tut zwei Dinge gleichzeitig: sie macht die Korrektur wirksam, **und sie
-sperrt im selben Augenblick jede weitere Vorlage zur Freigabe**, bis der letzte der dreizehn
-Haken sitzt (§12.4 Nr. 5).
+sperrt im selben Augenblick jede weitere Vorlage zur Freigabe**, bis der letzte der
+**fünfundzwanzig** Haken sitzt (§12.4 Nr. 5).
 
 Deshalb steht hier eine **Reihenfolge**, nicht nur eine Empfehlung.
+
+> **Berichtigt am 20.08.2026 — die Zahl der Haken.** Dieses Blatt nannte an drei Stellen
+> *„dreizehn"* bzw. *„12 Haken (7 aus BA-1 + 5 aus BA-2)"*. **Beides war falsch.** Richtig sind
+> **25**: dreizehn aus BA-1, sieben aus BA-2 Korrektur 2.1-d, fünf aus BA-2 Korrektur 2.2 — an
+> den drei Blättern nachgezählt und durch `nachweise/befunde/BEF-ZEICHNUNG-1_260817.md`:83–87
+> bestätigt. **Die Sperre nach §12.4 Nr. 5 läuft bis zum letzten der 25**, nicht bis zum
+> dreizehnten. Unberührt bleibt Schritt 2: **BA-1 allein hat dreizehn Vollzugsstellen** — diese
+> Zahl war und ist richtig. Aufgefallen bei der Gegenprobe zu
+> `loesungsvorschlaege_neun_offene_260820.md`, Punkt 7.
 
 ---
 
@@ -18,7 +27,7 @@ Deshalb steht hier eine **Reihenfolge**, nicht nur eine Empfehlung.
 | **Ohne die Gegenzeichnung** | gilt §12.9: *„Vorschlag bleibt liegen · **AM AUFTRAG IST NICHTS GEÄNDERT**."* Der Auftrag v1.1 verlangt an fünf Stellen unverändert, dass **zum 31.08.2026 alle zwölf Meilensteine eingetreten** sind. **M5 wäre geschuldet, nicht Vorarbeit** — der Satz aus dem Vorbereitungsblatt hätte keine Grundlage |
 | **Mit der Gegenzeichnung** | wird **Weg A** wirksam: Tor II wird auf den Teilschnitt bis zur Anmeldung eingeengt, M4 bis M12 werden zurückgestellt, und BA-2 setzt ihnen eigene Termine |
 | **Was sie nicht tut** | Sie ändert den Auftragstext **nicht**. Das tut erst der **Vollzug** — dreizehn Eintragungen von Hand, im Text, der in der Konzept-Fabrik liegt |
-| **Die Falle** | **Ab der Zeichnung ist keine Vorlage zur Freigabe mehr zulässig, bis alle dreizehn Haken sitzen.** Wer vorher nicht zusammenführt, sperrt fertige Arbeit hinter der eigenen Korrektur |
+| **Die Falle** | **Ab der Zeichnung ist keine Vorlage zur Freigabe mehr zulässig, bis alle fünfundzwanzig Haken sitzen** — dreizehn aus BA-1, sieben aus BA-2 Korrektur 2.1-d, fünf aus BA-2 Korrektur 2.2. Wer vorher nicht zusammenführt, sperrt fertige Arbeit hinter der eigenen Korrektur |
 
 ---
 
@@ -106,7 +115,7 @@ Nach §12.5, in dieser Reihenfolge:
 
 | | | |
 |---|---|---|
-| 1 | **12 Haken** (7 aus BA-1 + 5 aus BA-2, Fassung 2.1-d) | §12.4 Nr. 4 |
+| 1 | **25 Haken** — 13 aus BA-1, 7 aus BA-2 Korrektur 2.1-d, 5 aus BA-2 Korrektur 2.2 | §12.4 Nr. 4 |
 | 2 | Fassungsnummer **v1.2** | §12.5 Nr. 1 |
 | 3 | Datei **einfrieren** | §12.5 Nr. 2 |
 | 4 | **SHA-256 bilden** — in die Zeichnungsdatei, **nie** in den Auftrag selbst | §12.5 Nr. 3 |
