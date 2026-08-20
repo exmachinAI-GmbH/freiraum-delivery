@@ -128,7 +128,7 @@ Elf Tage reichen dafür nicht — unabhängig davon, wie viel gearbeitet wird.
 > Termine zu geben. G2 verlangt ohnehin: **melden, sobald es sich abzeichnet — nicht am
 > 31. August.** Dieses Blatt ist diese Meldung.
 
-`☐` **Weg A** *(Empfehlung)* · `☐` alle zwölf · `☐` anders: ⟨ ⟩
+`x` **Weg A** *(Empfehlung)* · `☐` alle zwölf · `☐` anders: ⟨ ⟩
 
 ### 3 · BA-1 und BA-2 gegenzeichnen
 
@@ -144,7 +144,7 @@ Auftragstext.
 **Vorgeschlagenes Datum: Freitag, 21.08.2026.** *(Vorschlag)* — sie entscheidet Punkt 2, und
 solange sie fehlt, ist jede Aussage über „geschuldet" doppeldeutig.
 
-`☐` so, nach #41 *(Empfehlung)* · `☐` sofort, ohne #41 · Datum ⟨ ⟩
+`x` so, nach #41 *(Empfehlung)* · `☐` sofort, ohne #41 · Datum ⟨21.08.2026 ⟩
 
 ### 4 · M1 gegen die Pilotumgebung
 
@@ -155,7 +155,7 @@ Umgebung und `frxfw`.** Von den drei Punkten, die den Stand bewegen, ist dieser 
 ein Lauf, keine Entscheidung, kein neuer Text. Und er schließt den **ersten** Meilenstein der
 Kette, an der nach §6a alles hängt.
 
-`☐` Zugang bis ⟨Datum: ⟩ *(Empfehlung: 21.08.2026)* · `☐` M1 bleibt vorerst ungemessen
+`x` Zugang bis ⟨Datum: 21.08.2026 ⟩ *(Empfehlung: 21.08.2026)* · `☐` M1 bleibt vorerst ungemessen
 
 ### 5 · Die Antwortlisten
 
@@ -173,7 +173,7 @@ Quelle nennt) — und **getrennt zu beauftragen** die Fachfragen der Stufe 02.
 > niemand gezeichnet hat; die Prüffälle würden ihn messen und bestehen. Das wäre kein
 > Fortschritt, sondern eine Fälschung mit grüner Anzeige.
 
-`☐` **24.08.2026** *(Empfehlung)* · `☐` anderes Datum: ⟨ ⟩
+`x` **24.08.2026** *(Empfehlung)* · `☐` anderes Datum: ⟨ ⟩
 `☐` Die Fachfragen der Stufe 02 werden mitbeauftragt
 
 ### 6 · Tor 3 anfordern
@@ -189,7 +189,7 @@ Der Bestand nennt A. Han für Anfordern, Ablegen und Zeichnen des Tor-3-Nachweis
 Seite erzeugt aber auch den Prüfgegenstand. Ob das zusammenfallen darf, ist die offene Frage
 aus **B-3**, und sie gehört dem Auftraggeber.
 
-`☐` bis ⟨Datum: ⟩ *(Empfehlung: 21.08.2026)* · Anfordernde Person: ⟨Name: ⟩
+`x` bis ⟨Datum: 21.08.2026 ⟩ *(Empfehlung: 21.08.2026)* · Anfordernde Person: ⟨Name: A. Han⟩
 
 ---
 
@@ -211,8 +211,8 @@ jedem Tag Wartezeit teurer, keiner davon billiger.**
 
 | Name | Rolle | Datum |
 |---|---|---|
-| A. Han | für den Auftragnehmer (Nr. 158) | ⟨ ⟩ |
-| M. Veil | für den Auftraggeber | ⟨ ⟩ |
+| A. Han | für den Auftragnehmer (Nr. 158) | ⟨20.08.2026⟩ |
+| M. Veil | für den Auftraggeber | ⟨20.08.2026⟩ |
 
 ---
 
