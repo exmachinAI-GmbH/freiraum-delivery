@@ -108,6 +108,43 @@ Alle Dateien am 20.08.2026 nachgesehen und geprüfsummt. **Vier Pfade sind beric
 > Blick prüft gegen **Roh-Evidenz, nicht gegen Erklärungen des Baus** (`CLAUDE.md`:75).
 > Die Ordner gehen als Zusatz mit, nicht an Stelle der Dateien darüber.
 
+## 4a · Die zweite Messung dieses Durchlaufs — **die Zeit, jetzt gemessen**
+
+Abschnitt 8 des Blattes vom 16.08. verlangt zwei Zeitpunkte und lässt sie bewusst leer:
+
+> *„Deshalb steht im Kopf dieses Blattes keine Frist für die Rückgabe des Urteils. Sie zu
+> setzen hieße zu behaupten, wie lange der Weg dauert — und genau das ist unbekannt.
+> **Nach diesem Durchlauf ist es gemessen**, und dann trägt jede spätere Terminaussage zu
+> Tor 3."*
+
+**Er ist gelaufen. Hier sind die Zahlen.**
+
+| | |
+|---|---|
+| **Anforderung abgeschickt am** | **20.08.2026, 14:58 Uhr** — A. Han, an eine frische Instanz von GPT 5.6 Sol *(Angabe des Absenders; die Belegbündel entstanden um 14:42, davor kann es nicht gewesen sein)* |
+| **Urteil abgelegt und Formprüfung bestanden am** | **20.08.2026, 16:19 Uhr** — Zeitstempel von Blatt und Prüfsummendatei; die Formprüfung lief um 16:21 ohne Beanstandung |
+| **Dauer des Zyklus** | **1 Stunde 21 Minuten** |
+
+### Was diese Zahl trägt — und was nicht
+
+**Sie trägt:** Ein Tor-3-Durchlauf passt in einen Nachmittag. Die Sorge, der Weg könnte
+Tage brauchen und deshalb vor dem 31.08. nicht mehr gehen, ist damit **entkräftet** — sie
+war berechtigt, solange niemand es gemessen hatte, und ist es jetzt nicht mehr.
+
+**Sie trägt nicht** als reine Rechenzeit des fremden Modells. In den 81 Minuten stecken:
+das Wählen des Modells, eine Vorabfrage zur Vollständigkeit der Anhänge, das Nachreichen
+von `B_Messungen.txt` mit einer zweiten Antwort, eine Rückfrage nach dem Schlusswort, ein
+abgebrochener Kopiervorgang, und das Ausfüllen und Zeichnen des Blattes.
+
+**Und sie trägt nur mit einem Menschen darin.** Kein Schritt lief unbeaufsichtigt; das ist
+keine Reibung, sondern die Bedingung (C-4).
+
+> **Für die nächste Terminaussage zu Tor 3 gilt damit: ein Arbeitstag ist reichlich, ein
+> halber genügt — sofern ein Mensch in dieser Zeit ansprechbar ist.** Beim zweiten Mal
+> dürfte es kürzer werden; die Belegbündel und der Auftragstext liegen jetzt fertig.
+
+---
+
 ## 5 · Was am Blatt vom 16.08. unverändert gilt
 
 Alles Übrige: der Vorbehalt in Abschnitt 0, der Prüfgegenstand in Abschnitt 2, die
