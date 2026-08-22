@@ -1121,3 +1121,30 @@ sagen "FERTIG"
 echo "Alle fünf Belege bestanden. Der Nachweis trägt Messwerte, keine Unterschrift."
 echo "Nächster Schritt: gegentest_meldungen.txt LESEN, die Umgebung in NACHWEIS.md"
 echo "eintragen, dann zeichnen lassen -- das tut ein Mensch, nicht dieses Skript."
+
+# =====================================================================
+# GESPERRT — 22.08.2026, durch die Gegenpruefung des Fremdmodell-Laufs
+# =====================================================================
+# Dieses Skript darf gegen die Zielumgebung NICHT gefahren werden.
+# Drei nachgewiesene Befunde, je gemessen, nicht vermutet:
+#
+#  P0-1  Beleg 1 misst den ERSTEN Lauf nie als ersten. Auf einer bereits
+#        migrierten Datenbank meldet er "bestanden" -- der Frischetest
+#        (:702) fragt nur nach dem Grundschema, nicht nach den Migrationen.
+#        Bewiesen ist damit nur: Lauf n+1 gleicht Lauf n+2.
+#
+#  P0-2  Unter --umfang alle bricht Beleg 1 auf Azure ab. M32 setzt FORCE
+#        ROW LEVEL SECURITY; "pg_dump --data-only" schreibt
+#        "SET row_security = off", und frxadmin ist kein SUPERUSER.
+#        Lokal unsichtbar, weil der Probelauf als SUPERUSER fuhr -- genau
+#        das Muster, vor dem M30:2029-2031 selbst warnt.
+#
+#  P0-3  Beleg 4 schreibt synthetische Pruefdaten UNWIDERRUFLICH in die
+#        Zieldatenbank: "psql -1 -f $ALT" committet, und
+#        schema/pruefung_v2.9.sql hat keinen abschliessenden ROLLBACK.
+#        Der Kopf dieses Skripts behauptet das Gegenteil.
+#
+# Bis diese drei behoben und erneut gemessen sind, gilt der Zustand als
+# GESPERRT (K23-M22). Ein Lauf gegen die Pilotumgebung wuerde sie mit
+# Testbestand verunreinigen und trotzdem keinen tragfaehigen Nachweis
+# liefern.

@@ -470,42 +470,16 @@ Das Prüfskript für die Installation **erzeugt den Schaden heute selbst**. Nach
 | 10.6 | **Zwei Dauermessungen am Bestand** aufnehmen (Zähldifferenz, Zuordnungstreue) | Prüf-Agent | **Übernehmen.** Sie laufen ohne neue Bedingung und finden auch Codes, die auf unbekanntem Weg entstanden sind |
 | 10.7 | **Wenn eine Bestandszeile die neue Bedingung verletzt:** nicht automatisch aufräumen | M. Veil | **Zustimmen.** Ein stiller Änderungslauf auf Bestandsdaten wäre genau die Art von Vorgang, die niemand bemerkt — und der Befund handelt davon, dass eine Codevergabe still passiert. Heute ist die Liste in beiden Datenbanken leer |
 
-### Zeichnung zu 10.3 · Der Maßstab
+### Zeichnung zu 10.3 · Der Maßstab — **liegt woanders**
 
-*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+Die Zeichnung zu Punkt 10.3 steht **nicht hier**, sondern in der dafür bestehenden Datei
+`arbeit/Vorlagen/zeichnung_M7-M10_260815.md`, Abschnitt *„Nachtrag vom 22.08.2026"*.
 
-> „Setze die Kreuze genau hier. Gez. M. Veil, 22.8.26 - dies ist eine Zeichnung, kein Zuruf:
-> `arbeit/Vorlagen/arbeitspakete_M7-M10_260815.md`, Punkt 10.3 — der Maßstab. Rang 1 ist
-> künftig eingefrorenes Datenmodell plus M30, M31, M32. Das ist die tragende Entscheidung."
-
-- [x] **Rang 1 ist künftig das eingefrorene Datenmodell `freiraum_datamodel.sql` plus die
-      Migrationen M30, M31 und M32** · **gez. M. Veil, 22.08.2026**
-
-**Was daraus folgt — nicht Teil der Zeichnung, sondern ihre Wirkung:**
-
-| | |
-|---|---|
-| `CLAUDE.md`:44 | Rang 1 lautet dort noch *„`freiraum_datamodel.sql` **plus** Sammelmigration **M30**"* und ist damit **veraltet**. Der Wortlaut ist nachzuziehen |
-| Bauauftrag :80–86 | Die Rangfolge steht dort wortgleich und ist damit überholt. **Die Berichtigung ist angewiesen** — siehe Nachtrag unten — und gehört zu Arbeitspaket **A-1** |
-| M1 | Der Umfang folgt hieraus: Lesart B. Eingetragen in `m1_startklar_260820.md` |
-| MT-95, MT-95b, MT-98 | Sie scheiterten gegen M30 allein, weil dort `p_project_no` noch entgegengenommen wird — ein Verstoß gegen K01-M38, den M31 behebt. Mit dem neuen Maßstab entfällt der Grund für eine benannte Ausnahme. **Gemessen am 22.08.2026:** `--umfang m30` meldet 108 von 111, `--umfang alle` meldet 111 von 111 |
-
-#### Nachtrag vom 22.08.2026 · Die Auftragsberichtigung
-
-*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
-
-> „Das ist hiermit auch angewiesen und gezeichnet. M. Veil, 22.8.26 … Die Auftragsberichtigung —
-> der Bauauftragstext führt die Rangfolge wortgleich (:80–86)."
-
-- [x] **Der Bauauftragstext :80–86 wird auf die erweiterte Rangfolge nachgezogen.** Die
-      Durchführung gehört zu Arbeitspaket **A-1** (Fassung v1.2 in die Konzept-Fabrik legen)
-      · **gez. M. Veil, 22.08.2026**
-
-**Bis zum Vollzug weichen zwei Stände voneinander ab.** `CLAUDE.md`:44 ist nachgezogen, der
-Auftragstext noch nicht. **Die Zeichnung gewinnt** — sie ist jünger und ausdrücklich. Wer sich
-in dieser Zeit auf :80–86 beruft, beruft sich auf einen überholten Stand. Der Harness vollzieht
-die Berichtigung **nicht selbst**: Der Auftragstext liegt in der Konzept-Fabrik, und dorthin
-schreibt der Harness nie.
+**Warum der Hinweis hier steht:** Am 22.08.2026 hatte der Orchestrator den Zeichnungsblock
+zunächst in dieses Blatt geschrieben. Das war ein Formfehler — F40 verlangt eine **getrennte**
+Zeichnungsdatei, und ihr Anlass war genau dieser Fall: eine neu erzeugte Vorlage hat einen
+Zeichnungsblock fünfmal überschrieben. Der Block ist am selben Tag umgezogen; hier bleibt der
+Verweis, damit niemand ihn sucht und nicht findet.
 
 ---
 
