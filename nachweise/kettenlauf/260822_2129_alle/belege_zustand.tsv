@@ -1,0 +1,6 @@
+0	Grundschema und Vorläufer	bestanden	Grundschema eingespielt; Vorläufer nicht verlangt (wie n2_lauf.sh)	`lauf0_grundschema.log`
+1	Lauf 1 verändert etwas, Lauf 2 verändert nichts	bestanden	Lauf 1 hat gewirkt: 3337 Zeile(n) Unterschied im Schema-Abzug, 166 im Daten-Abzug; nach Lauf 2 beide diffs leer, 3 Migration(en) je zweimal; verglichen wurden 82 Datenzeile(n), so viele wie die Datenbank trägt	`erstlauf_schema_diff.txt` · `erstlauf_daten_diff.txt` · `schema_diff.txt` · `daten_diff.txt` · `daten_zeilen_lauf1.txt` · `daten_zeilen_lauf2.txt`
+2	Prüffälle	bestanden	SUMME: 111 von 111 bestanden, 0 gescheitert	`pruefung_ausgabe.log` · `summe.txt`
+3	Gegentest-Meldungen einzeln festgehalten	bestanden	111 Meldungen bei 111 Fällen -- zu LESEN, nicht zu zählen	`gegentest_meldungen.txt`
+4	Eingefrorene Prüffälle T0 bis T23	bestanden	T0 bis T21 je genau einmal ohne Abweichung; T22 und T23 mit Ersatz-Setup; Zeilen vorher = nachher (tenant 0 actor 0 membership 0 invitation 0 fit_check 0 app 0 event 0)	`t0_t23_ergebnis.txt` · `t22_t23_ergebnis.txt` · `beleg4_zeilen_diff.txt`
+5	Objektzahlen gemessen	bestanden	tabellen 57 sichten 12 trigger 27 funktionen 29 davon_mit_suchpfad 29 enums 44 rollen 6 	`objektzahlen.txt`

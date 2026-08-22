@@ -1,0 +1,2 @@
+OK       T22 Bestaetigung ohne Siegel|Fehler|Fehler
+OK       T23 Bestaetigung mit Siegel|1|1

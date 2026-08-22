@@ -1,0 +1,83 @@
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:62: NOTICE:  enum label "KURZFRIST" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:63: NOTICE:  enum label "PROJEKT_VORVERTRAG" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:67: NOTICE:  enum label "ARBEITSERGEBNIS" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:70: NOTICE:  enum label "EREIGNIS" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:87: NOTICE:  relation "schema_migration" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:100: NOTICE:  column "regelfrist_tage" of relation "retention_rule" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:166: NOTICE:  relation "auth_session" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:167: NOTICE:  relation "auth_session_actor_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:209: NOTICE:  relation "login_code" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:210: NOTICE:  relation "login_code_actor_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:215: NOTICE:  relation "login_code_nur_einer_offen" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:243: NOTICE:  relation "login_attempt" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:244: NOTICE:  relation "login_attempt_email_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:245: NOTICE:  relation "login_attempt_origin_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:303: NOTICE:  relation "mail_delivery" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:304: NOTICE:  relation "mail_delivery_actor_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:331: NOTICE:  relation "invitation_decision" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:349: NOTICE:  relation "project_contract" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:363: NOTICE:  relation "contract_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:372: NOTICE:  relation "quick_question" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:381: NOTICE:  relation "quick_question_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:393: NOTICE:  relation "quick_option" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:402: NOTICE:  relation "quick_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:414: NOTICE:  relation "quick_answer" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:421: NOTICE:  column "zweckbestimmung_ack_at" of relation "fit_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:450: NOTICE:  relation "template_element" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:457: NOTICE:  column "elementbedarf_geprueft_at" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:468: NOTICE:  column "content_ref" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:469: NOTICE:  column "content_sha256" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:470: NOTICE:  column "content_media_type" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:471: NOTICE:  column "content_size_bytes" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:492: NOTICE:  column "content_ref" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:493: NOTICE:  column "content_sha256" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:494: NOTICE:  column "content_media_type" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:495: NOTICE:  column "content_size_bytes" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:496: NOTICE:  column "template_id" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:497: NOTICE:  column "template_version" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:517: NOTICE:  column "body_md" of relation "policy_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:533: NOTICE:  column "output_form" of relation "agent" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:534: NOTICE:  column "allowed_actions" of relation "agent" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:546: NOTICE:  column "auswahlvermerk" of relation "app" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:547: NOTICE:  column "auswahlvermerk_at" of relation "app" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:617: NOTICE:  column "function_kind" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:618: NOTICE:  column "dialog_mode" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:619: NOTICE:  column "result_kind" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:620: NOTICE:  column "status_content" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:621: NOTICE:  column "input_density" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:622: NOTICE:  column "confirm_density" of relation "template_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:735: NOTICE:  column "actor_id" of relation "event" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:736: NOTICE:  relation "event_actor_idx" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:753: NOTICE:  rule "event_no_update" for relation "event" does not exist, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:754: NOTICE:  rule "event_no_delete" for relation "event" does not exist, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:810: NOTICE:  relation "state_transition" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:993: NOTICE:  relation "actor_ausnahmekonto_uq" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1125: NOTICE:  column "concept_kind" of relation "document" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1154: NOTICE:  relation "document_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1178: NOTICE:  column "document_id" of relation "event" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1179: NOTICE:  column "document_version" of relation "event" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1205: NOTICE:  relation "model_manifest" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1224: NOTICE:  relation "model_manifest_version" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1228: NOTICE:  column "manifest_id" of relation "model_ref" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1229: NOTICE:  column "manifest_version" of relation "model_ref" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1297: NOTICE:  relation "nummernvorrat" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1352: NOTICE:  column "objekt_art" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1353: NOTICE:  column "objekt_id" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1354: NOTICE:  column "objekt_version" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1355: NOTICE:  column "anlass" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1359: NOTICE:  column "tenant_id" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1451: NOTICE:  column "short_description" of relation "knowledge_source" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1452: NOTICE:  column "meta_tags" of relation "knowledge_source" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1454: NOTICE:  column "owner_id" of relation "knowledge_source" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1455: NOTICE:  column "owner_label" of relation "knowledge_source" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1456: NOTICE:  column "zweck" of relation "knowledge_source" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1570: NOTICE:  column "geteilt_bis" of relation "direct_prototype" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1585: NOTICE:  column "telemetrie_stand_at" of relation "agent" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1619: NOTICE:  column "mandantenbezug" of relation "approval" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:1829: NOTICE:  relation "tenant_invite_domain" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:2093: NOTICE:  column "einschraenkung_ab" of relation "app" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M30__pilot_sammelmigration.sql:2094: NOTICE:  column "einschraenkung_grund" of relation "app" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M31__projektnummer_und_zweckbestimmung.sql:106: NOTICE:  column "zweck_bewertung_menschen" of relation "fit_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M31__projektnummer_und_zweckbestimmung.sql:108: NOTICE:  column "zweck_verbotene_praktik" of relation "fit_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M31__projektnummer_und_zweckbestimmung.sql:110: NOTICE:  column "zweckbestimmung_erklaert_am" of relation "fit_check" already exists, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M32__zeilenschutz_und_stufenwechsel.sql:299: NOTICE:  M32 · drei Zeilenregeln mit FORCE, change_app_state mit Protokoll, set_journey_phase angelegt.

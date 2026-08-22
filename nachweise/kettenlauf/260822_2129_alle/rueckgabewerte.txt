@@ -1,0 +1,3 @@
+Prüffälle: psql-Rückgabewert 0
+Eingefrorene Fälle T0 bis T21: psql-Rückgabewert 0
+Ersatz-Setup T22/T23: psql-Rückgabewert 0
