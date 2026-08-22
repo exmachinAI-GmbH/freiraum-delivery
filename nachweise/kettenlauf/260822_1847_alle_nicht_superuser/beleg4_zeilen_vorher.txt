@@ -1,0 +1,7 @@
+tenant     0
+actor      0
+membership 0
+invitation 0
+fit_check  0
+app        0
+event      0

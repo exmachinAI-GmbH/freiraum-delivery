@@ -38,6 +38,27 @@
 #   * Es zeichnet nicht. Die `NACHWEIS.md` trägt Messwerte und leere
 #     Unterschriftsfelder.
 #   * Es setzt keinen Status, gibt nichts frei, spielt nichts aus.
+#   * Es lässt KEINE Prüfdaten in der Datenbank zurück. Alle drei
+#     Prüfdateien laufen in einer Transaktion, die am Ende zurückgerollt
+#     wird: `pruefungen/migration/M30__pruefung.sql` bringt die Klammer
+#     selbst mit (dort :20 `BEGIN;` und :1794 `ROLLBACK;`), das
+#     Ersatz-Setup für T22/T23 weiter unten ebenfalls, und
+#     `schema/pruefung_v2.9.sql` bekommt sie seit dem 22.08.2026 von
+#     aussen durch `migrations/_werkzeug/pruefklammer.sql`.
+#
+#     BERICHTIGT AM 22.08.2026. Bis dahin stand diese Zusage hier ohne
+#     den dritten Fall -- und sie stimmte nicht: Beleg 4 fuhr
+#     `psql -1 -f schema/pruefung_v2.9.sql`, und `-1` COMMITTET am
+#     Dateiende. Gemessen an einer Kopie der Prüfdatei bis Zeile 171 auf
+#     einer frischen Datenbank: 8 Zeilen blieben dauerhaft stehen --
+#     2 Mandanten, 2 Akteure, 2 Mitgliedschaften, 2 Einladungen.
+#     Mit der Klammer sind es 0, bei unveränderter Ausgabe (je 22
+#     Ergebniszeilen T0 bis T21).
+#
+#     WAS DER LAUF SEHR WOHL SCHREIBT: das Grundschema und die gewählten
+#     Migrationen. Das IST die Messung und bleibt in der Datenbank
+#     stehen -- deshalb gilt weiterhin "eine eigene Datenbank je
+#     Pilot-Anlauf" (CLAUDE.md Abschnitt 5).
 #   * Es fasst `migrations/_abgeloest/` und `migrations/uebernahme/`
 #     NIEMALS an. `_abgeloest/` ist ersetzt, `uebernahme/` ist ein
 #     Vorschlag aus fremder Zuständigkeit und kein Liefergegenstand.
@@ -73,7 +94,7 @@
 #    <verbindung>    psql-Verbindung als Freitext, erstes Stellungsargument
 #                    wie in `migrations/n2_lauf.sh`:36
 #    [zielordner]    Ablage der Belege; Vorgabe:
-#                    ./kettenlauf_belege_<umfang>_<datum_uhrzeit>
+#                    ../nachweise/kettenlauf/<datum_uhrzeit>_<umfang>
 #
 #  BEISPIEL FÜR EINE AZURE-ZIELUMGEBUNG (Flexible Server erzwingt TLS)
 #
@@ -198,6 +219,69 @@
 #  Lauf scheitert. Deshalb wird er — wie das Grundschema — nur auf einer
 #  leeren Datenbank eingespielt und sonst übersprungen. Der Nachweis
 #  vermerkt, welcher der beiden Fälle vorlag.
+#
+#  ---------------------------------------------------------------------
+#  WIE DIESER LAUF PRÜFT, DASS DER ERSTE LAUF WIRKLICH DER ERSTE IST
+#  ---------------------------------------------------------------------
+#  BERICHTIGT AM 22.08.2026. Anlass ist ein gemessener Befund aus der
+#  Gegenprüfung des Fremdmodell-Laufs (unten als P0-1 geführt): Beleg 1
+#  meldete auf einer BEREITS MIGRIERTEN Datenbank "bestanden". Der
+#  Frischetest fragte nur nach dem Grundschema — ob die Migrationen schon
+#  lagen, prüfte niemand —, und es gab keinen Abzug VOR Lauf 1. Bewiesen
+#  war damit allein, dass Lauf n+1 dasselbe Ergebnis hat wie Lauf n+2.
+#  Genau der grüne Lauf, der nichts gemessen hat, den `CLAUDE.md`
+#  Abschnitt 6 verbietet.
+#
+#  Seitdem stehen zwei Riegel, und Beleg 1 gilt erst als bestanden, wenn
+#  BEIDE Hälften stimmen: Lauf 1 verändert etwas, Lauf 2 verändert nichts.
+#
+#  1 · FRISCHETEST MIT MERKMAL JE MIGRATION (Beleg 0)
+#      Zu jeder Migration, die gefahren werden soll, ist ein Merkmal
+#      hinterlegt: ein Objekt in der Datenbank, das es NACH ihrem Lauf
+#      gibt und vorher nicht. Findet der Lauf eines davon vor, ist die
+#      Datenbank nicht frisch — dann bricht er ab und nennt die
+#      Migration und ihr Merkmal.
+#
+#        M30 · die Versionstabelle `schema_migration` (M30:83)
+#        M31 · die Spalte `fit_check.zweck_verbotene_praktik` (M31:108)
+#        M32 · die Funktion `rls_erzwungen()` (M32:60)
+#        Vorläufer 260801 · die Spalte `tenant.avv_datum` (dort :34)
+#
+#      Alle vier Merkmale werden im Systemkatalog von PostgreSQL
+#      nachgesehen (`pg_class`, `pg_attribute`, `pg_proc`). Der Lauf
+#      liest dafür keine Anwendungstabelle an und braucht kein Recht,
+#      das ein Administratorkonto eines Azure Flexible Server nicht hat.
+#
+#      KOMMT EINE MIGRATION HINZU, ohne dass ein Merkmal hinterlegt ist,
+#      bricht der Lauf ebenfalls ab — er misst dann lieber nicht, als
+#      ungeprüft grün zu melden. Das Merkmal wird entweder in der
+#      Tabelle `merkmal_zeilen()` weiter unten in dieser Datei ergänzt
+#      oder, ohne diese Datei anzufassen, in
+#      `migrations/frischetest_merkmale.tsv` — eine Zeile je Migration,
+#      drei Felder, durch Tabulator getrennt:
+#
+#        <Dateiname>  <Merkmal im Klartext>  <SQL, das 0 oder mehr zählt>
+#
+#      Die Datei ist freiwillig; fehlt sie, gilt allein die Tabelle in
+#      dieser Datei. Zeilen, die mit `#` beginnen, werden überlesen. Nennt
+#      die Datei einen Dateinamen, der auch in der Tabelle steht, gilt die
+#      Datei — sie kann ein Merkmal also nicht nur ergänzen, sondern auch
+#      ersetzen. Wer sie einsetzt, legt sie zum Nachweis mit ab.
+#
+#  2 · ABZUG VOR LAUF 1 UND EIN DRITTER VERGLEICH (Beleg 1)
+#      Vor der ersten Migration entstehen `schema_vor.sql` und
+#      `daten_vor.sql` — mit denselben Filtern wie die Abzüge danach.
+#      Verglichen wird deshalb dreimal:
+#
+#        vor  ↔ nach Lauf 1   MUSS Unterschiede zeigen
+#                             (`erstlauf_schema_diff.txt`,
+#                              `erstlauf_daten_diff.txt`)
+#        nach Lauf 1 ↔ nach Lauf 2   darf KEINE zeigen
+#                             (`schema_diff.txt`, `daten_diff.txt`)
+#
+#      Ändert Lauf 1 weder Schema noch Daten, bricht der Lauf ab. Das
+#      ist der Auffangriegel für den Fall, dass ein Merkmal fehlt oder
+#      danebengreift: er misst die Wirkung statt der Vorbedingung.
 # =====================================================================
 set -euo pipefail
 
@@ -341,7 +425,7 @@ fi
 
 VERBINDUNG="${STELLUNG[0]}"
 STAND="$(date +%y%m%d_%H%M)"
-ZIEL="${STELLUNG[1]:-$HIER/kettenlauf_belege_${UMFANG}_$STAND}"
+ZIEL="${STELLUNG[1]:-$HIER/../nachweise/kettenlauf/${STAND}_${UMFANG}}"
 
 # ---------------------------------------------------------------------
 # 2 · Verbindung zerlegen — Wirt für den Nachweis, Kennwort für die Probe
@@ -399,6 +483,18 @@ GRUND="${GRUND_DATEI:-$WURZEL/schema/freiraum_datamodel.sql}"
 VORLAEUFER="${VORLAEUFER_DATEI:-$WURZEL/migrations/_vorlaeufer/260801_tenant.sql}"
 TST="${TST_DATEI:-$WURZEL/pruefungen/migration/M30__pruefung.sql}"
 ALT="${ALT_DATEI:-$WURZEL/schema/pruefung_v2.9.sql}"
+# Die Klammer um die Prüfdatei. NEU AM 22.08.2026, Behebung von P0-3:
+# `$ALT` legt sich ihre Ausgangslage selbst an und räumt sie nicht ab.
+# `migrations/_werkzeug/pruefklammer.sql` fährt sie in BEGIN … ROLLBACK, ohne die
+# Prüfdatei anzufassen. Der Kopf jener Datei erklärt das im Einzelnen.
+#
+# Sie liegt bewusst im UNTERORDNER `_werkzeug/` und nicht direkt in
+# `migrations/`: das Suchmuster `migrations/*.sql` unten und in
+# `.github/workflows/tore.yml`:330, :360 und :447 fasst alles, was direkt
+# dort liegt, als MIGRATION auf. Eine Klammerdatei in `migrations/` würde
+# vom Umfang `alle` eingespielt. Unterordner fasst der Glob nicht -- aus
+# demselben Grund tragen `_vorlaeufer/` und `_abgeloest/` einen Unterstrich.
+KLAMMER="${KLAMMER_DATEI:-$WURZEL/migrations/_werkzeug/pruefklammer.sql}"
 
 # Die Migrationen des gewählten Umfangs, in der Reihenfolge, in der sie
 # eingespielt werden. `alle` bildet den Glob aus
@@ -425,14 +521,15 @@ if [ "${#MIGRATIONEN[@]}" -eq 0 ]; then
   exit 1
 fi
 
-PFLICHT_EINGAENGE=("$GRUND" "$TST" "$ALT" "${MIGRATIONEN[@]}")
+PFLICHT_EINGAENGE=("$GRUND" "$TST" "$ALT" "$KLAMMER" "${MIGRATIONEN[@]}")
 [ "$MIT_VORLAEUFER" = "ja" ] && PFLICHT_EINGAENGE+=("$VORLAEUFER")
 for datei in "${PFLICHT_EINGAENGE[@]}"; do
   if [ ! -f "$datei" ]; then
     echo "ABBRUCH: Eingang nicht gefunden: $datei"
     echo "         Ohne diese Datei kann der Kettenlauf nicht messen."
     echo "         Nächster Schritt: die Datei bereitstellen oder den Pfad über"
-    echo "         GRUND_DATEI=, VORLAEUFER_DATEI=, TST_DATEI= bzw. ALT_DATEI= setzen."
+    echo "         GRUND_DATEI=, VORLAEUFER_DATEI=, TST_DATEI=, ALT_DATEI= bzw."
+    echo "         KLAMMER_DATEI= setzen."
     exit 1
   fi
 done
@@ -506,6 +603,127 @@ abbruch() {
 }
 
 # ---------------------------------------------------------------------
+# 4a · Merkmal je Migration — woran der Frischetest sie wiedererkennt
+# ---------------------------------------------------------------------
+# NEU AM 22.08.2026, Behebung von P0-1. Bis dahin fragte der Frischetest
+# allein nach dem Grundschema (Typ `retention_class`). Auf einer bereits
+# migrierten Datenbank hiess das: Grundschema überspringen, Migration
+# zweimal fahren, beide Male ohne Wirkung, beide diffs leer -- und Beleg 1
+# meldete "bestanden". Gemessen wurde dabei nichts.
+#
+# Ein Merkmal ist ein Objekt in der Datenbank, das es NACH dem Lauf einer
+# Migration gibt und vorher nicht. Alle vier stehen im Systemkatalog von
+# PostgreSQL; der Lauf liest dafür keine Anwendungstabelle an und braucht
+# kein Recht, das ein Administratorkonto eines Azure Flexible Server nicht
+# hat. Ein Merkmal, das eine Anwendungstabelle abfragt, wäre auf einer
+# Datenbank mit Zeilenschutz nicht verlässlich zu messen.
+#
+# Drei Felder je Zeile, durch TABULATOR getrennt:
+#   1 Dateiname der Migration (ohne Pfad)
+#   2 das Merkmal im Klartext -- es steht so in der Abbruchmeldung
+#   3 SQL, das eine Zahl liefert: 0 = Migration liegt noch nicht
+MERKMAL_DATEI="${MERKMAL_DATEI:-$WURZEL/migrations/frischetest_merkmale.tsv}"
+
+merkmal_zeilen() {
+  cat <<'MERKMALE'
+M30__pilot_sammelmigration.sql	die Versionstabelle schema_migration (M30:83)	SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname='schema_migration' AND c.relkind='r'
+M31__projektnummer_und_zweckbestimmung.sql	die Spalte fit_check.zweck_verbotene_praktik (M31:108)	SELECT count(*) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname='fit_check' AND a.attname='zweck_verbotene_praktik' AND NOT a.attisdropped
+M32__zeilenschutz_und_stufenwechsel.sql	die Funktion rls_erzwungen() (M32:60)	SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.proname='rls_erzwungen'
+260801_tenant.sql	die Spalte tenant.avv_datum (Vorläufer 260801:34)	SELECT count(*) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname='tenant' AND a.attname='avv_datum' AND NOT a.attisdropped
+MERKMALE
+  # Nachtrag aus der Datei -- damit eine neue Migration ein Merkmal
+  # bekommt, ohne dass dieses Skript geändert werden muss. Die Datei
+  # steht HINTER der Tabelle, `merkmal_von` nimmt den letzten Treffer:
+  # eine Zeile aus der Datei ersetzt also eine gleichnamige aus der
+  # Tabelle.
+  if [ -f "$MERKMAL_DATEI" ]; then
+    grep -vE '^[[:space:]]*(#|$)' "$MERKMAL_DATEI" || true
+  fi
+}
+
+MERKMAL_TEXT=""
+MERKMAL_SQL=""
+merkmal_von() {   # $1 = Dateiname; setzt MERKMAL_TEXT und MERKMAL_SQL
+  local datei text sql
+  MERKMAL_TEXT=""; MERKMAL_SQL=""
+  while IFS=$'\t' read -r datei text sql; do
+    [ "$datei" = "$1" ] || continue
+    MERKMAL_TEXT="$text"; MERKMAL_SQL="$sql"
+  done < <(merkmal_zeilen)
+  [ -n "$MERKMAL_SQL" ]
+}
+
+# Die zweite Hälfte des Frischetests: liegt eine der Migrationen, die
+# gleich gefahren werden sollen, schon in der Datenbank?
+frischetest_migrationen() {
+  local liste=("${MIGRATIONEN[@]}")
+  [ "$MIT_VORLAEUFER" = "ja" ] && liste+=("$VORLAEUFER")
+  local m name zahl rc
+  for m in "${liste[@]}"; do
+    name="$(basename "$m")"
+    if ! merkmal_von "$name"; then
+      abbruch \
+        "Für \"$name\" ist kein Merkmal hinterlegt." \
+        "Woran es liegt: Der Frischetest erkennt eine bereits eingespielte" \
+        "Migration an einem Merkmal -- einem Objekt, das es nach ihrem Lauf" \
+        "gibt und vorher nicht. Für diese Datei kennt er keines und kann" \
+        "deshalb nicht messen, ob die Datenbank frisch ist. Ein Lauf, der" \
+        "das nicht messen kann, meldet nicht \"bestanden\" (K23-M22 -- die" \
+        "Klausel, die je Prüfung genau vier Zustände zulässt: bestanden," \
+        "fehlgeschlagen, gesperrt, nicht ausgeführt)." \
+        "Nächster Schritt: ein Merkmal ergänzen -- entweder in der Tabelle" \
+        "\`merkmal_zeilen()\` in migrations/kettenlauf.sh oder, ohne diese" \
+        "Datei anzufassen, als Zeile in $MERKMAL_DATEI." \
+        "Drei Felder, durch TABULATOR getrennt:" \
+        "  $name<TAB>Merkmal im Klartext<TAB>SELECT count(*) FROM pg_… " \
+        "Das SQL liefert 0, solange die Migration nicht eingespielt ist."
+    fi
+    set +e
+    zahl="$(psql "$VERBINDUNG" -tA -c "$MERKMAL_SQL" 2>&1)"
+    rc=$?
+    set -e
+    if [ "$rc" -ne 0 ]; then
+      abbruch \
+        "Das Merkmal für \"$name\" liess sich nicht abfragen." \
+        "Gesucht wurde: $MERKMAL_TEXT" \
+        "Meldung der Datenbank: $zahl" \
+        "Nächster Schritt: die Verbindung und die Leserechte des Kontos auf" \
+        "den Systemkatalog prüfen; ohne diese Abfrage ist der Frischetest" \
+        "nicht zu führen."
+    fi
+    case "$zahl" in
+      ''|*[!0-9]*)
+        abbruch \
+          "Das Merkmal für \"$name\" hat keine Zahl geliefert, sondern: $zahl" \
+          "Gesucht wurde: $MERKMAL_TEXT" \
+          "Nächster Schritt: das hinterlegte SQL prüfen -- es muss genau" \
+          "eine Zahl liefern (0 = Migration liegt noch nicht)." ;;
+    esac
+    if [ "$zahl" != "0" ]; then
+      abbruch \
+        "Die Datenbank ist NICHT frisch: \"$name\" ist bereits eingespielt." \
+        "Gefunden wurde $MERKMAL_TEXT -- das Merkmal, das es erst nach dem" \
+        "Lauf dieser Migration gibt." \
+        "Warum das ein Abbruch ist: Auf einer bereits migrierten Datenbank" \
+        "verändert der erste Lauf nichts mehr. Beide Läufe wären wirkungslos," \
+        "beide Abzüge gleich, und Beleg 1 meldete \"bestanden\", ohne etwas" \
+        "gemessen zu haben. Bewiesen wäre allein, dass Lauf n+1 dasselbe" \
+        "Ergebnis hat wie Lauf n+2 -- nicht, dass die Migration einspielbar" \
+        "und wiederholbar ist. Das ist Befund P0-1 vom 22.08.2026." \
+        "Nächster Schritt: gegen eine FRISCHE Datenbank fahren. Nach der" \
+        "Betriebsregel \"eigene Datenbank je Pilot-Anlauf\" (CLAUDE.md" \
+        "Abschnitt 5) wird dafür eine neue Datenbank angelegt, nicht die" \
+        "vorhandene geleert -- gelöscht wird nach F36 nichts." \
+        "Soll nur nachgesehen werden, was in der vorhandenen Datenbank" \
+        "steht, ist dieser Lauf das falsche Werkzeug: er misst einen" \
+        "Erstlauf, keinen Bestand."
+    fi
+    echo "  · $name: noch nicht eingespielt ($MERKMAL_TEXT nicht gefunden)"
+  done
+  echo "Frischetest bestanden: keine der ${#liste[@]} zu fahrenden Dateien liegt bereits."
+}
+
+# ---------------------------------------------------------------------
 # 5 · Der Abschluss — er läuft auch nach einem Abbruch
 # ---------------------------------------------------------------------
 # Ein Lauf, der auf halber Strecke endet, hinterlässt trotzdem einen
@@ -515,7 +733,7 @@ abbruch() {
 # wäre.
 BELEG_NAMEN=(
   "0|Grundschema und Vorläufer"
-  "1|Migration zweimal, Schema und Daten unverändert"
+  "1|Lauf 1 verändert etwas, Lauf 2 verändert nichts"
   "2|Prüffälle"
   "3|Gegentest-Meldungen einzeln festgehalten"
   "4|Eingefrorene Prüffälle T0 bis T23"
@@ -699,6 +917,15 @@ sagen "Beleg 0 · Grundschema v2.9 und Vorläufer 260801 (Vorbedingung von M30)"
 # das Grundschema da, und dann wird nichts erneut geladen. Der Vorläufer
 # hängt an derselben Bedingung, weil er selbst NICHT wiederholbar ist.
 vorhanden="$(psql "$VERBINDUNG" -tA -c "SELECT count(*) FROM pg_type WHERE typname='retention_class'")"
+
+# ZWEITE HÄLFTE DES FRISCHETESTS, neu am 22.08.2026 (Behebung von P0-1).
+# Sie läuft VOR jeder Entscheidung über das Grundschema und in beiden
+# Fällen -- auch dann, wenn das Grundschema schon steht. Genau das war die
+# Lücke: eine Datenbank mit Grundschema UND Migrationen sah aus wie eine
+# Datenbank, auf der nur das Grundschema übersprungen wird.
+echo "Frischetest: liegt eine der zu fahrenden Migrationen schon in der Datenbank?"
+frischetest_migrationen
+
 if [ "$vorhanden" = "0" ]; then
   echo "leere Datenbank -- Grundschema wird geladen: $GRUND"
   set +e
@@ -791,8 +1018,207 @@ migrationen_einspielen() {   # $1 = Laufnummer
   return 0
 }
 
+# ---------------------------------------------------------------------
+# Der Datenabzug und der zeilengenaue Zugriffsschutz (RLS)
+# ---------------------------------------------------------------------
+# ANLASS — Befund P0-2, gemessen am 22.08.2026 gegen PostgreSQL 16.13:
+# `M32__zeilenschutz_und_stufenwechsel.sql` schaltet auf `app`, `document`
+# und `event` den zeilengenauen Zugriffsschutz ein -- die Sperre in der
+# Datenbank, die Zeile für Zeile entscheidet, wer sie sehen darf -- und
+# zwar mit ENABLE *und* FORCE (M32:70-80). FORCE heisst: die Regel gilt
+# auch für die Eigentümerin der Tabelle.
+#
+# `pg_dump --data-only` stellt seine eigene Sitzung auf
+# `row_security = off`. Sobald eine Abfrage dann eine Tabelle mit
+# Zeilenregel anfasst, weist PostgreSQL sie ab:
+#
+#     pg_dump: error: query failed: ERROR:  query would be affected by
+#     row-level security policy for table "app"
+#
+# Nur ein SUPERUSER darf diese Abschaltung mit Wirkung setzen. Auf der
+# Azure-Zielumgebung ist das Administratorkonto keiner -- der Lauf stirbt
+# also genau dort, wo er lokal als `postgres` durchlief. Der Abzug nach
+# Lauf 1 entsteht gar nicht erst, Beleg 1 ist nicht zu führen.
+#
+# BEHOBEN mit `--enable-row-security`: pg_dump lässt den Zeilenschutz an
+# und zieht die Zeilen, die seine Sitzung sehen darf. Auf dem heutigen
+# Stand sind das ALLE -- die Regel aus M32:92-95 lautet
+#   (tenant_id = sitzungs_mandant())
+#   OR (sitzungs_mandant() IS NULL AND NOT rls_erzwungen())
+# und der zweite Zweig ist für eine Sitzung ohne Mandanten wahr, solange
+# der Schalter `freiraum.rls_enforce` nicht auf `on` steht (M32:60-63).
+# Gemessen als Rolle `frx` (LOGIN, NOSUPERUSER, NOBYPASSRLS): 2 von 2
+# `app`-Zeilen aus 2 Mandanten im Abzug, und je Tabelle dieselbe Zahl wie
+# `count(*)` als Superuser.
+#
+# NICHT GEÄNDERT und ausdrücklich nicht zu ändern: M32 und die Tabellen.
+# Weder `ALTER TABLE … NO FORCE ROW LEVEL SECURITY` -- was PostgreSQL im
+# HINT selbst vorschlägt und was gemessen ebenfalls hilft -- noch eine
+# gelockerte Zeilenregel. Beides nähme dem Eigentümer die Regel wieder ab,
+# und die Anwendung verbindet sich heute als Eigentümer. Das wäre eine
+# gesenkte Schwelle (K23-D05) und legte genau die Vorrichtung still, um
+# die es hier geht. `--role=` und `-S/--superuser=` helfen nicht: das eine
+# setzt nur `SET ROLE`, das andere ist Textkosmetik im Ausgabeformat.
+#
+# WAS DER SCHALTER ERKAUFT -- und warum die beiden Proben unten stehen:
+# Der Abzug trägt jetzt nur noch, was die Sitzung SIEHT. Steht
+# `freiraum.rls_enforce` auf `on` oder ein Mandant in
+# `freiraum.tenant_id`, liefert pg_dump einen Abzug OHNE die Zeilen der
+# geschützten Tabellen -- ohne Fehler, ohne Warnung, mit Rückgabewert 0.
+# Gemessen: mit `PGOPTIONS='-c freiraum.rls_enforce=on'` stehen 0 von 2
+# `app`-Zeilen im Abzug, die 2 `tenant`-Zeilen dagegen schon, weil
+# `tenant` keine Zeilenregel trägt. Zwei so verkürzte Abzüge sind
+# untereinander gleich; der Vergleich in Beleg 1 wäre leer und meldete
+# "bestanden", ohne etwas gemessen zu haben -- der grüne Lauf ohne
+# Messung, den CLAUDE.md Abschnitt 6 verbietet. Schlimmer noch: Zeilen,
+# die Lauf 2 einfügt, wären in beiden Abzügen unsichtbar, und eine nicht
+# wiederholbare Migration käme durch.
+#
+# Dagegen stehen zwei Proben, beide gemessen, keine geschätzt:
+#   * `rls_lage_pruefen` VOR jedem Abzug -- liest Schalter und
+#     Sitzungsmandanten und bricht ab, wenn der Abzug verkürzt würde.
+#   * `zeilenprobe` NACH jedem Abzug -- zählt je Tabelle die Zeilen im
+#     Abzug gegen `count(*)` in der Datenbank und schreibt beide Zahlen
+#     als Beleg.
+# Die Grenze der zweiten Probe wird hier benannt statt verschwiegen: sie
+# zählt aus derselben Sitzungslage heraus, in der auch pg_dump zieht. Wäre
+# die Sitzung blind, wären beide Zahlen gemeinsam blind. Genau diesen Fall
+# deckt die erste Probe ab -- deshalb sind es zwei und nicht eine.
+
+# Zählt, wie viele `INSERT INTO <schema>.<tabelle>`-Zeilen ein Abzug für
+# eine Tabelle trägt. `--column-inserts` schreibt genau eine solche Zeile
+# je Datenzeile. Anführungszeichen um Schema oder Tabelle werden vorher
+# entfernt, damit ein Name, den pg_dump zitieren muss, mitgezählt wird;
+# das abschliessende Leerzeichen trennt `app` von `app_state_history`.
+zeilen_im_abzug() {   # $1 Abzugsdatei  $2 Schema  $3 Tabelle
+  awk -v s="$2" -v t="$3" '
+    index($0, "INSERT INTO ") == 1 {
+      rest = substr($0, 13)
+      gsub(/"/, "", rest)
+      if (index(rest, s "." t " ") == 1) n++
+    }
+    END { print n + 0 }' "$1"
+}
+
+# Zahl der Datenzeilen im zuletzt genommenen Abzug, gesetzt von
+# `zeilenprobe` und im Nachweis von Beleg 1 ausgewiesen.
+ZEILEN_ABZUG=0
+
+# Vorbedingung des Datenabzugs: sieht die Sitzung alle Zeilen?
+rls_lage_pruefen() {
+  local antwort rc tabellen schalter mandant
+  set +e
+  antwort="$(psql "$VERBINDUNG" -tAq -F$'\t' -c "
+    SELECT (SELECT count(*)
+              FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+             WHERE c.relkind = 'r' AND c.relrowsecurity
+               AND n.nspname <> 'information_schema' AND n.nspname !~ '^pg_'),
+           coalesce(current_setting('freiraum.rls_enforce', true), 'aus'),
+           coalesce(current_setting('freiraum.tenant_id',   true), '');" 2>&1)"
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || abbruch \
+    "Die Lage des Zeilenschutzes liess sich nicht messen (Rückgabewert $rc)." \
+    "Ohne diese Messung ist nicht zu sagen, ob ein Datenabzug vollständig wäre." \
+    "Antwort des Servers: $antwort" \
+    "Nächster Schritt: die Verbindung prüfen und den Lauf wiederholen."
+  IFS=$'\t' read -r tabellen schalter mandant <<< "$antwort"
+
+  if [ "${tabellen:-0}" -eq 0 ]; then
+    echo "  Zeilenschutz: keine Tabelle trägt eine Zeilenregel -- der Datenabzug"
+    echo "  kann durch ihn nicht verkürzt werden."
+    return 0
+  fi
+  if [ "$schalter" = "on" ]; then
+    abbruch \
+      "Der Schalter freiraum.rls_enforce steht auf \"on\" -- der Datenabzug wäre verkürzt." \
+      "Woran es liegt: $tabellen Tabelle(n) tragen den zeilengenauen Zugriffsschutz." \
+      "Der Abzug läuft mit --enable-row-security, zieht also nur, was diese Sitzung" \
+      "sehen darf. Mit eingeschaltetem Schalter und ohne Sitzungsmandanten ist das" \
+      "KEINE Zeile dieser Tabellen -- pg_dump meldet das nicht, es liefert" \
+      "Rückgabewert 0 und einen stillschweigend leeren Abzug." \
+      "Zwei solche Abzüge wären untereinander gleich und meldeten einen bestandenen" \
+      "Vergleich, der nichts gemessen hat." \
+      "Nächster Schritt: den Schalter für diesen Lauf nicht setzen -- also PGOPTIONS" \
+      "ohne freiraum.rls_enforce fahren und prüfen, ob er per ALTER DATABASE oder" \
+      "ALTER ROLE hinterlegt ist (\\drds in psql zeigt es). Der Kettenlauf misst eine" \
+      "Migration, nicht den Betrieb; die Durchsetzung wird nicht hier eingeschaltet."
+  fi
+  if [ -n "$mandant" ]; then
+    abbruch \
+      "In freiraum.tenant_id steht ein Mandant -- der Datenabzug wäre verkürzt." \
+      "Woran es liegt: $tabellen Tabelle(n) tragen den zeilengenauen Zugriffsschutz." \
+      "Mit gesetztem Mandanten zieht der Abzug nur dessen Zeilen; die Zeilen aller" \
+      "anderen Mandanten fehlen, ohne dass pg_dump das meldet." \
+      "Nächster Schritt: den Lauf ohne gesetzten Sitzungsmandanten fahren -- also" \
+      "PGOPTIONS ohne freiraum.tenant_id, und prüfen, ob der Wert per ALTER DATABASE" \
+      "oder ALTER ROLE hinterlegt ist (\\drds in psql zeigt es)."
+  fi
+  echo "  Zeilenschutz: auf $tabellen Tabelle(n) aktiv; Schalter aus, kein"
+  echo "  Sitzungsmandant -- die Sitzung sieht alle Zeilen (nachgezählt unten)."
+}
+
+# Gegenprobe nach dem Abzug: trägt er je Tabelle so viele Zeilen, wie die
+# Datenbank hat? Die Zahlen kommen in einen eigenen Beleg, damit im
+# Nachweis eine Zahl steht und nicht ein Adjektiv (SPR-5).
+zeilenprobe() {   # $1 = Laufnummer
+  local nummer="$1" datei="$ZIEL/daten_nach_lauf$1.sql"
+  local bericht="$ZIEL/daten_zeilen_lauf$1.txt"
+  local liste rc schema tabelle soll ist abweichungen=0 summe_db=0 summe_abzug=0
+  set +e
+  liste="$(psql "$VERBINDUNG" -tAq -F$'\t' -c "
+    SELECT n.nspname, c.relname,
+           (xpath('/row/z/text()',
+                  query_to_xml(format('SELECT count(*) AS z FROM %I.%I',
+                                      n.nspname, c.relname), false, true, '')
+                 ))[1]::text::bigint
+      FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+     WHERE c.relkind = 'r' AND NOT c.relispartition
+       AND n.nspname <> 'information_schema' AND n.nspname !~ '^pg_'
+       AND NOT EXISTS (SELECT 1 FROM pg_depend d
+                        WHERE d.classid = 'pg_class'::regclass
+                          AND d.objid = c.oid AND d.deptype = 'e')
+     ORDER BY 1, 2;" 2>&1)"
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || abbruch \
+    "Die Zeilen der Datenbank liessen sich nach Lauf $nummer nicht zählen (Rückgabewert $rc)." \
+    "Ohne diese Zahl ist nicht zu belegen, dass der Datenabzug vollständig ist." \
+    "Antwort des Servers: $liste" \
+    "Nächster Schritt: die Verbindung prüfen und den Lauf wiederholen."
+
+  printf 'Tabelle\tZeilen im Abzug\tZeilen in der Datenbank\n' > "$bericht"
+  while IFS=$'\t' read -r schema tabelle soll; do
+    [ -n "$tabelle" ] || continue
+    ist="$(zeilen_im_abzug "$datei" "$schema" "$tabelle")"
+    printf '%s.%s\t%s\t%s\n' "$schema" "$tabelle" "$ist" "$soll" >> "$bericht"
+    summe_db=$((summe_db + soll))
+    summe_abzug=$((summe_abzug + ist))
+    [ "$ist" -eq "$soll" ] || abweichungen=$((abweichungen + 1))
+  done <<< "$liste"
+  printf 'SUMME\t%s\t%s\n' "$summe_abzug" "$summe_db" >> "$bericht"
+
+  if [ "$abweichungen" -ne 0 ]; then
+    abbruch \
+      "Der Datenabzug nach Lauf $nummer ist unvollständig: bei $abweichungen Tabelle(n)" \
+      "stehen im Abzug weniger oder mehr Zeilen als in der Datenbank." \
+      "Woran es liegt: Der Abzug läuft mit --enable-row-security und zieht nur, was" \
+      "seine Sitzung sehen darf. Fehlen Zeilen, hat eine Zeilenregel sie ausgeblendet." \
+      "Ein solcher Abzug darf nicht verglichen werden -- zwei gleich verkürzte Abzüge" \
+      "ergäben einen leeren Vergleich und einen bestandenen Beleg ohne Messung." \
+      "Die Gegenüberstellung je Tabelle steht in: $bericht" \
+      "Nächster Schritt: die Tabellen mit Abweichung im Bericht ablesen und prüfen," \
+      "ob für diese Sitzung ein Mandant oder der Schalter freiraum.rls_enforce gesetzt" \
+      "ist (\\drds in psql zeigt hinterlegte Werte)."
+  fi
+  ZEILEN_ABZUG="$summe_abzug"
+  echo "  Datenabzug nach Lauf $nummer: $summe_abzug Zeile(n) -- so viele hat die"
+  echo "  Datenbank auch (\`$(basename "$bericht")\`)."
+}
+
 abzug_nehmen() {   # $1 = Laufnummer
   local nummer="$1" rc
+  rls_lage_pruefen
   set +e
   pg_dump --schema-only "$VERBINDUNG" > "$ZIEL/schema_roh_lauf$nummer.sql"
   rc=$?
@@ -803,13 +1229,28 @@ abzug_nehmen() {   # $1 = Laufnummer
     "Nächster Schritt: prüfen, ob pg_dump dieselbe Fassung hat wie der Server" \
     "und ob das Konto alle Objekte lesen darf."
   set +e
-  pg_dump --data-only --column-inserts "$VERBINDUNG" > "$ZIEL/daten_roh_lauf$nummer.sql"
+  # --enable-row-security: siehe den Block über dieser Funktion. Ohne den
+  # Schalter bricht dieser Aufruf auf jeder Datenbank ab, die M32 trägt,
+  # sobald das Konto kein SUPERUSER ist -- also auf der Zielumgebung.
+  pg_dump --data-only --column-inserts --enable-row-security "$VERBINDUNG" \
+    > "$ZIEL/daten_roh_lauf$nummer.sql"
   rc=$?
   set -e
   [ "$rc" -eq 0 ] || abbruch \
     "Der Daten-Abzug nach Lauf $nummer endete mit Rückgabewert $rc." \
-    "Nächster Schritt: siehe oben." \
-    "Ein Abzug, der nur zur Hälfte entstand, wird nicht verglichen."
+    "Ein Abzug, der nur zur Hälfte entstand, wird nicht verglichen." \
+    "Drei Gründe kommen in Frage, in dieser Reihenfolge zu prüfen:" \
+    "1. Der zeilengenaue Zugriffsschutz (RLS) -- die Sperre, die Zeile für Zeile" \
+    "   entscheidet, wer sie sehen darf. M32 setzt ihn auf app, document und event" \
+    "   mit ENABLE und FORCE. Meldet pg_dump \"query would be affected by row-level" \
+    "   security policy for table ...\", fehlt diesem Aufruf --enable-row-security." \
+    "   Nächster Schritt: prüfen, ob der Schalter in der pg_dump-Zeile oben steht;" \
+    "   NICHT die Tabelle auf NO FORCE stellen -- das schaltet den Schutz ab" \
+    "   (K23-D05: kein Prüfwert wird gesenkt, damit ein Lauf besteht)." \
+    "2. Die Fassung von pg_dump ist älter als die des Servers." \
+    "3. Das Konto darf nicht alle Objekte lesen." \
+    "Der Wortlaut der Meldung steht in der Bildschirmausgabe unmittelbar über" \
+    "dieser Zeile und entscheidet, welcher der drei Fälle vorliegt."
   entrausche < "$ZIEL/schema_roh_lauf$nummer.sql" > "$ZIEL/schema_nach_lauf$nummer.sql"
   # Daten getrennt: Eine Migration kann schemagleich sein und trotzdem beim
   # zweiten Lauf Zeilen einfügen. Genau das fällt sonst niemandem auf.
@@ -823,8 +1264,48 @@ abzug_nehmen() {   # $1 = Laufnummer
     "Zwei leere Abzüge wären inhaltsgleich und würden einen bestandenen" \
     "Vergleich melden, der nichts gemessen hat." \
     "Nächster Schritt: prüfen, ob die Verbindung auf die richtige Datenbank zeigt."
+  # Dieselbe Prüfung für den DATENABZUG. Bis zum 22.08.2026 stand sie nur
+  # für den Schemaabzug hier -- ein abgeschnittener Datenabzug wäre also
+  # unbemerkt in den Vergleich gegangen. Eine leere Datei heisst nicht
+  # "keine Daten": selbst eine Datenbank ohne eine einzige Zeile liefert
+  # den Kopf von pg_dump. Wie viele DATENZEILEN darin stehen, misst
+  # `zeilenprobe` gleich danach -- eine Zahl, keine Schwelle.
+  [ -s "$ZIEL/daten_nach_lauf$nummer.sql" ] || abbruch \
+    "Der Daten-Abzug nach Lauf $nummer ist leer -- nicht einmal der Kopf von pg_dump" \
+    "steht darin." \
+    "Zwei leere Abzüge wären inhaltsgleich und würden einen bestandenen" \
+    "Vergleich melden, der nichts gemessen hat." \
+    "Nächster Schritt: prüfen, ob auf dem Datenträger noch Platz ist und ob die" \
+    "Verbindung auf die richtige Datenbank zeigt."
+  zeilenprobe "$nummer"
 }
 
+# ---------------------------------------------------------------------
+# Der Abzug VOR Lauf 1 — neu am 22.08.2026, Behebung von P0-1
+# ---------------------------------------------------------------------
+# Ohne ihn ist nicht zu messen, ob Lauf 1 überhaupt etwas verändert hat.
+# Ein Lauf 1, der nichts verändert, ist kein erster Lauf: dann sind auch
+# Lauf 1 und Lauf 2 gleich, der Vergleich "zweiter Lauf ändert nichts"
+# besteht von selbst, und Beleg 1 meldet grün, ohne etwas gemessen zu
+# haben. Bewiesen wäre allein, dass Lauf n+1 dasselbe Ergebnis hat wie
+# Lauf n+2.
+#
+# Der Abzug entsteht mit DERSELBEN Funktion und denselben Filtern wie die
+# Abzüge danach -- sonst verglichen die drei Vergleiche verschieden
+# aufbereitete Dateien. `abzug_nehmen` kennt nur Laufnummern; dieser Abzug
+# läuft deshalb als "Lauf 0" durch und wird danach unter dem Namen
+# abgelegt, unter dem er im Belegordner zu suchen ist.
+abzug_vor_lauf1() {
+  abzug_nehmen 0
+  mv "$ZIEL/schema_nach_lauf0.sql" "$ZIEL/schema_vor.sql"
+  mv "$ZIEL/daten_nach_lauf0.sql"  "$ZIEL/daten_vor.sql"
+  [ -f "$ZIEL/daten_zeilen_lauf0.txt" ] \
+    && mv "$ZIEL/daten_zeilen_lauf0.txt" "$ZIEL/daten_zeilen_vor.txt"
+  echo "  abgelegt als schema_vor.sql und daten_vor.sql"
+}
+
+echo "Abzug VOR Lauf 1 (die Zwischenmeldungen nennen ihn \"Lauf 0\"):"
+abzug_vor_lauf1
 echo "Lauf 1:"
 migrationen_einspielen 1
 abzug_nehmen 1
@@ -832,6 +1313,58 @@ echo "Lauf 2:"
 migrationen_einspielen 2
 abzug_nehmen 2
 
+# ---- Erste Hälfte von Beleg 1: Lauf 1 MUSS etwas verändert haben ------
+# Beleg 1 gilt erst als bestanden, wenn BEIDE Hälften stimmen. Diese hier
+# ist die neue: sie misst die WIRKUNG des ersten Laufs. Der Frischetest in
+# Beleg 0 misst die Vorbedingung; diese Prüfung fängt den Fall auf, dass
+# dort ein Merkmal fehlt oder danebengreift.
+# Zählt, um wie viele Zeilen sich zwei Abzüge unterscheiden. Das ist eine
+# Zahl für den Nachweis (SPR-5: Zahlen statt Adjektive), keine Schwelle --
+# gefordert ist nur, dass sie nicht null ist. Sie zählt Zeilen der
+# Abzugsdateien, nicht Zeilen der Datenbank: fügt eine Migration eine
+# Tabelle hinzu, verschieben sich im sortierten Datenabzug auch Leer- und
+# Kommentarzeilen, und die zählen mit.
+zaehle_aenderungen() {   # $1 = Vergleichsprotokoll von `diff -u`
+  # Die Kopfzeilen von `diff -u` beginnen mit --- und +++ und werden
+  # ausgenommen; sonst zählte auch ein leerer Vergleich Änderungen.
+  awk '/^(\+\+\+|---)/ {next} /^[+-]/ {n++} END {print n+0}' "$1"
+}
+erstlauf_schema=0
+erstlauf_daten=0
+diff -u "$ZIEL/schema_vor.sql" "$ZIEL/schema_nach_lauf1.sql" \
+  > "$ZIEL/erstlauf_schema_diff.txt" || erstlauf_schema=1
+diff -u "$ZIEL/daten_vor.sql" "$ZIEL/daten_nach_lauf1.sql" \
+  > "$ZIEL/erstlauf_daten_diff.txt" || erstlauf_daten=1
+n_erst_schema="$(zaehle_aenderungen "$ZIEL/erstlauf_schema_diff.txt")"
+n_erst_daten="$(zaehle_aenderungen "$ZIEL/erstlauf_daten_diff.txt")"
+if [ "$erstlauf_schema" -eq 0 ] && [ "$erstlauf_daten" -eq 0 ]; then
+  abbruch \
+    "Lauf 1 hat weder das Schema noch die Daten verändert." \
+    "Woran es liegt: Entweder stand die Datenbank schon auf diesem Stand," \
+    "oder die gewählten Migrationen tun nichts. Beides heisst dasselbe --" \
+    "dies war kein erster Lauf." \
+    "Warum das ein Abbruch ist und keine Nebenbemerkung: Sind beide Läufe" \
+    "wirkungslos, sind auch beide Abzüge danach gleich. Der Vergleich" \
+    "\"zweiter Lauf ändert nichts\" besteht dann von selbst, und Beleg 1" \
+    "meldete bestanden, ohne etwas gemessen zu haben. Bewiesen wäre allein," \
+    "dass Lauf n+1 dasselbe Ergebnis hat wie Lauf n+2 (Befund P0-1 vom" \
+    "22.08.2026)." \
+    "Verglichen wurden schema_vor.sql gegen schema_nach_lauf1.sql und" \
+    "daten_vor.sql gegen daten_nach_lauf1.sql. Beide Vergleichsprotokolle" \
+    "sind leer:" \
+    "  $ZIEL/erstlauf_schema_diff.txt" \
+    "  $ZIEL/erstlauf_daten_diff.txt" \
+    "Nächster Schritt: gegen eine frische Datenbank fahren -- nach der" \
+    "Betriebsregel \"eigene Datenbank je Pilot-Anlauf\" (CLAUDE.md Abschnitt" \
+    "5) eine neue anlegen, nicht die vorhandene leeren." \
+    "Schlägt dieser Riegel an, OBWOHL die Datenbank frisch war, hat der" \
+    "Frischetest in Beleg 0 ein Merkmal nicht erkannt. Dann gehört das" \
+    "Merkmal in \`merkmal_zeilen()\` berichtigt und der Befund gemeldet --" \
+    "die Schwelle wird nicht gesenkt (K23-D05)."
+fi
+echo "Lauf 1 hat gewirkt: $n_erst_schema Zeile(n) Unterschied im Schema-Abzug, $n_erst_daten im Daten-Abzug."
+
+# ---- Zweite Hälfte von Beleg 1: Lauf 2 darf nichts verändert haben ----
 if ! diff -u "$ZIEL/schema_nach_lauf1.sql" "$ZIEL/schema_nach_lauf2.sql" > "$ZIEL/schema_diff.txt"; then
   abbruch \
     "Der zweite Lauf hat das SCHEMA geändert." \
@@ -851,9 +1384,9 @@ if ! diff -u "$ZIEL/daten_nach_lauf1.sql" "$ZIEL/daten_nach_lauf2.sql" > "$ZIEL/
     "zweithäufigste Grund."
 fi
 echo "beide diffs leer -- Schema und Daten sind nach dem zweiten Lauf gleich."
-zustand 1 "Migration zweimal, Schema und Daten unverändert" "bestanden" \
-  "beide diffs leer, ${#MIGRATIONEN[@]} Migration(en) je zweimal" \
-  "\`schema_diff.txt\` · \`daten_diff.txt\`"
+zustand 1 "Lauf 1 verändert etwas, Lauf 2 verändert nichts" "bestanden" \
+  "Lauf 1 hat gewirkt: $n_erst_schema Zeile(n) Unterschied im Schema-Abzug, $n_erst_daten im Daten-Abzug; nach Lauf 2 beide diffs leer, ${#MIGRATIONEN[@]} Migration(en) je zweimal; verglichen wurden $ZEILEN_ABZUG Datenzeile(n), so viele wie die Datenbank trägt" \
+  "\`erstlauf_schema_diff.txt\` · \`erstlauf_daten_diff.txt\` · \`schema_diff.txt\` · \`daten_diff.txt\` · \`daten_zeilen_lauf1.txt\` · \`daten_zeilen_lauf2.txt\`"
 
 # ---------------------------------------------------------------------
 # Beleg 2 und 3 · Prüffälle und Gegentest-Meldungen
@@ -981,11 +1514,132 @@ zustand 3 "Gegentest-Meldungen einzeln festgehalten" "bestanden" \
   "\`gegentest_meldungen.txt\`"
 
 # ---------------------------------------------------------------------
+# Beleg 4 · Vorbereitung: die Klammer, die nichts hinterlässt
+# ---------------------------------------------------------------------
+# NEU AM 22.08.2026. Anlass ist ein gemessener Befund aus der Gegenprüfung
+# des Fremdmodell-Laufs (unten als P0-3 geführt).
+#
+# Bis dahin fuhr Beleg 4 die eingefrorenen Prüffälle mit `psql -1 -f $ALT`.
+# Der Schalter `-1` klammert die Datei in BEGIN … COMMIT und COMMITTET am
+# Dateiende. `schema/pruefung_v2.9.sql` legt sich ihre Ausgangslage selbst
+# an -- zwei Mandanten, zwei Akteure, zwei Mitgliedschaften, zwei
+# Einladungen, eine Eignungsprüfung, eine Anwendung -- und räumt davon
+# nichts ab: sie kennt 14 Teilrücknahmen der Form `ROLLBACK TO s<n>`, aber
+# keinen abschliessenden `ROLLBACK`. Die synthetischen Prüfdaten standen
+# danach UNWIDERRUFLICH in der Zieldatenbank; nach F36 -- der Festlegung,
+# dass in diesem Projekt nichts gelöscht wird -- wären sie nicht wieder
+# herauszubekommen.
+#
+# Behoben wird das VON AUSSEN, in `migrations/_werkzeug/pruefklammer.sql`: BEGIN,
+# dann die Prüfdatei über `\i`, dann ROLLBACK. Die Prüfdatei selbst wird
+# NICHT angefasst -- sie liegt unter `schema/` mit der Änderungsregel
+# "keine" (`schema/README.md`), und eine Messung wird nicht umgeschrieben.
+# Die Ausgabe, die Beleg 4 auswertet, bleibt dabei vollständig und trägt
+# weiterhin die Zeilennummern der Prüfdatei in ihren Fehlermeldungen.
+#
+# Dazu zwei Riegel, damit die Klammer nicht bloss behauptet ist:
+#   * `klammer_tragfaehig` VOR dem Lauf -- sieht in der Prüfdatei nach, ob
+#     sie ihre Transaktion selbst beendet. Ein `COMMIT`, ein `BEGIN`, ein
+#     `END;` oder ein alleinstehendes `ROLLBACK;` zerrisse die Klammer.
+#     Gefunden wird das BENANNT, nicht überlistet.
+#   * `pruefdaten_zaehlen` VOR und NACH Beleg 4 -- Mandanten, Akteure,
+#     Mitgliedschaften, Einladungen, Eignungsprüfungen, Anwendungen und
+#     Ereignisse. Weicht eine Zahl ab, ist etwas liegen geblieben, und der
+#     Lauf bricht ab. Das misst die Wirkung, nicht die Absicht.
+#
+# Zur Aussagekraft der Zählung: `app`, `document` und `event` tragen seit
+# M32 den zeilengenauen Zugriffsschutz. Diese Sitzung sieht dort alle
+# Zeilen -- `rls_lage_pruefen` in Beleg 1 bricht vorher ab, wenn
+# `freiraum.rls_enforce` auf "on" steht oder ein Sitzungsmandant gesetzt
+# ist. Die vier Tabellen, in denen der Befund die Rückstände gemessen hat
+# (`tenant`, `actor`, `membership`, `invitation`), tragen ohnehin keine
+# Zeilenregel und sind vollständig zählbar.
+
+# Sieht nach, ob die Prüfdatei ihre eigene Transaktion beendet.
+klammer_tragfaehig() {   # $1 = Prüfdatei
+  local datei="$1" treffer
+  case "$datei" in
+    *[[:space:]]*)
+      abbruch \
+        "Der Pfad der Prüfdatei enthält ein Leerzeichen: $datei" \
+        "Woran es liegt: die Klammer reicht den Pfad als psql-Variable weiter," \
+        "und psql setzt ihn in \\i unverändert ein. Die Anführungsform" \
+        "\\i :'pruefdatei' hilft nicht -- gemessen mit psql 16.13 landen die" \
+        "Anführungszeichen im Dateinamen." \
+        "Nächster Schritt: die Prüfdatei an einen Pfad ohne Leerzeichen legen" \
+        "und ALT_DATEI= darauf setzen."
+      ;;
+  esac
+  treffer="$(grep -nEi '^[[:space:]]*(BEGIN|START[[:space:]]+TRANSACTION|COMMIT|END|ROLLBACK)[[:space:]]*(WORK|TRANSACTION)?[[:space:]]*;' "$datei" || true)"
+  if [ -n "$treffer" ]; then
+    abbruch \
+      "Die Prüfdatei beendet ihre Transaktion selbst -- die Klammer trüge nicht." \
+      "Woran es liegt: $datei enthält mindestens eine Anweisung, die eine" \
+      "Transaktion öffnet oder schliesst. Gefunden wurde:" \
+      "$treffer" \
+      "Wirkung: alles vor einem COMMIT bliebe dauerhaft in der Zieldatenbank" \
+      "stehen, auch wenn die Klammer am Ende ein ROLLBACK absetzt." \
+      "Falls es sich um ein BEGIN oder END aus einem PL/pgSQL-Block handelt" \
+      "(\$\$ … BEGIN … END \$\$;), ist es ein Fehlalarm -- daran zu erkennen," \
+      "dass die Zeile innerhalb eines Dollar-Zitats steht." \
+      "Nächster Schritt: den Befund melden, nicht die Prüfung umgehen. Die" \
+      "Prüfdatei zu ändern ist eine Änderung an einer gezeichneten Messung" \
+      "und gehört gezeichnet, nicht nebenbei gemacht."
+  fi
+  echo "  Prüfdatei öffnet und schliesst keine eigene Transaktion -- die Klammer trägt."
+}
+
+# Zählt die Zeilen, in denen sich Prüfdaten niederschlagen würden.
+pruefdaten_zaehlen() {   # $1 = Zieldatei
+  local ziel="$1" rc
+  set +e
+  P -tA > "$ziel" 2>&1 <<'SQL'
+SELECT 'tenant     ' || count(*) FROM tenant;
+SELECT 'actor      ' || count(*) FROM actor;
+SELECT 'membership ' || count(*) FROM membership;
+SELECT 'invitation ' || count(*) FROM invitation;
+SELECT 'fit_check  ' || count(*) FROM fit_check;
+SELECT 'app        ' || count(*) FROM app;
+SELECT 'event      ' || count(*) FROM event;
+SQL
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || abbruch \
+    "Die Zeilen der Prüfdaten liessen sich nicht zählen (Rückgabewert $rc)." \
+    "Ohne diese Zahl ist nicht zu sagen, ob Beleg 4 etwas in der Zieldatenbank" \
+    "zurücklässt -- und dann ist Beleg 4 gesperrt, nicht bestanden." \
+    "Antwort des Servers: siehe $ziel" \
+    "Nächster Schritt: die Leserechte des Kontos auf tenant, actor, membership," \
+    "invitation, fit_check, app und event prüfen."
+}
+
+# ---------------------------------------------------------------------
 # Beleg 4 · Eingefrorene Prüffälle T0 bis T23
 # ---------------------------------------------------------------------
 sagen "Beleg 4 · Eingefrorene Prüffälle T0 bis T23"
-set +e; P -1 -f "$ALT" > "$ZIEL/t0_t23_ausgabe.log" 2>&1; rc=$?; set -e
+klammer_tragfaehig "$ALT"
+pruefdaten_zaehlen "$ZIEL/beleg4_zeilen_vorher.txt"
+echo "  Zeilen vor Beleg 4: $(tr '\n' ' ' < "$ZIEL/beleg4_zeilen_vorher.txt" | sed 's/  */ /g')"
+set +e
+P -v pruefdatei="$ALT" -f "$KLAMMER" > "$ZIEL/t0_t23_ausgabe.log" 2>&1
+rc=$?
+set -e
 lauf_pruefen "$rc" "$ZIEL/t0_t23_ausgabe.log" "Eingefrorene Fälle T0 bis T21"
+# Die Schlusszeile der Klammer. Fehlt sie, hat die Prüfdatei die Sitzung
+# vorzeitig beendet -- dann ist das ROLLBACK nie abgesetzt worden.
+if ! grep -q '^-- KLAMMER: ROLLBACK abgesetzt' "$ZIEL/t0_t23_ausgabe.log"; then
+  abbruch \
+    "Die Klammer hat ihr Ende nicht erreicht -- das ROLLBACK ist nicht belegt." \
+    "Woran es liegt: in $ZIEL/t0_t23_ausgabe.log fehlt die Schlusszeile" \
+    "\"-- KLAMMER: ROLLBACK abgesetzt\". Die Prüfdatei hat die Sitzung vorzeitig" \
+    "beendet (etwa durch \\quit) oder die Verbindung ist abgerissen." \
+    "Wirkung: ob Prüfdaten in der Zieldatenbank stehen geblieben sind, ist damit" \
+    "NICHT gemessen -- die Zählung nach Beleg 4 wird hier nicht mehr erreicht." \
+    "Die Zählung VOR Beleg 4 steht in $ZIEL/beleg4_zeilen_vorher.txt; die Zahlen" \
+    "von Hand dagegen zu halten sagt, ob die Datenbank noch brauchbar ist." \
+    "Nächster Schritt: $ZIEL/t0_t23_ausgabe.log von unten lesen; die letzte" \
+    "genannte Zeile der Prüfdatei sagt, wo es endete."
+fi
 grep -E "^T[0-9]+" "$ZIEL/t0_t23_ausgabe.log" \
   | awk -F'|' '{print ($2==$3?"OK      ":"ABWEICHT")" "$0}' \
   | tee "$ZIEL/t0_t23_ergebnis.txt"
@@ -1087,9 +1741,31 @@ if grep -q "falsche Regel" "$ZIEL/t22_t23_ergebnis.txt"; then
     "Nächster Schritt: die Meldung in $ZIEL/t22_t23_ergebnis.txt lesen."
 fi
 echo "T22/T23 mit Ersatz-Setup ausgeführt und bestanden."
+
+# Die Wirkungsprobe zu P0-3: nach Beleg 4 steht keine Zeile mehr, die
+# vorher nicht schon da war. Gezählt wird über BEIDE Teile -- die
+# geklammerte Prüfdatei UND das Ersatz-Setup für T22/T23, das seine eigene
+# BEGIN … ROLLBACK-Klammer mitbringt.
+pruefdaten_zaehlen "$ZIEL/beleg4_zeilen_nachher.txt"
+echo "  Zeilen nach Beleg 4: $(tr '\n' ' ' < "$ZIEL/beleg4_zeilen_nachher.txt" | sed 's/  */ /g')"
+if ! diff -u "$ZIEL/beleg4_zeilen_vorher.txt" "$ZIEL/beleg4_zeilen_nachher.txt" \
+       > "$ZIEL/beleg4_zeilen_diff.txt" 2>&1; then
+  abbruch \
+    "Beleg 4 hat Prüfdaten in der Zieldatenbank zurückgelassen." \
+    "Woran es liegt: vor und nach Beleg 4 wurden die Zeilen von tenant, actor," \
+    "membership, invitation, fit_check, app und event gezählt -- die Zahlen" \
+    "weichen ab. Welche, steht in $ZIEL/beleg4_zeilen_diff.txt." \
+    "Wirkung: die Zieldatenbank trägt jetzt synthetischen Prüfbestand. Nach F36" \
+    "wird in diesem Projekt nichts gelöscht; die Datenbank ist für einen" \
+    "Pilotlauf verbraucht." \
+    "Nächster Schritt: diesen Lauf verwerfen, auf einer frischen Datenbank" \
+    "wiederholen und den Befund melden -- die Klammer $KLAMMER hat nicht gehalten."
+fi
+echo "Beleg 4 hat nichts hinterlassen: alle sieben Zählungen vorher = nachher."
 zustand 4 "Eingefrorene Prüffälle T0 bis T23" "bestanden" \
-  "T0 bis T21 je genau einmal ohne Abweichung; T22 und T23 mit Ersatz-Setup" \
-  "\`t0_t23_ergebnis.txt\` · \`t22_t23_ergebnis.txt\`"
+  "T0 bis T21 je genau einmal ohne Abweichung; T22 und T23 mit Ersatz-Setup; \
+Zeilen vorher = nachher ($(tr '\n' ' ' < "$ZIEL/beleg4_zeilen_nachher.txt" | sed 's/  */ /g;s/ *$//'))" \
+  "\`t0_t23_ergebnis.txt\` · \`t22_t23_ergebnis.txt\` · \`beleg4_zeilen_diff.txt\`"
 
 # ---------------------------------------------------------------------
 # Beleg 5 · Objektzahlen
@@ -1123,28 +1799,28 @@ echo "Nächster Schritt: gegentest_meldungen.txt LESEN, die Umgebung in NACHWEIS
 echo "eintragen, dann zeichnen lassen -- das tut ein Mensch, nicht dieses Skript."
 
 # =====================================================================
-# GESPERRT — 22.08.2026, durch die Gegenpruefung des Fremdmodell-Laufs
+# ENTSPERRT — 22.08.2026, nach Behebung und Messung
 # =====================================================================
-# Dieses Skript darf gegen die Zielumgebung NICHT gefahren werden.
-# Drei nachgewiesene Befunde, je gemessen, nicht vermutet:
+# Die drei P0 der Gegenpruefung vom 22.08.2026 sind behoben und gegen eine
+# Rolle OHNE Superuser-Rechte gemessen (Belege: nachweise/kettenlauf/
+# 260822_1847_alle_nicht_superuser):
 #
-#  P0-1  Beleg 1 misst den ERSTEN Lauf nie als ersten. Auf einer bereits
-#        migrierten Datenbank meldet er "bestanden" -- der Frischetest
-#        (:702) fragt nur nach dem Grundschema, nicht nach den Migrationen.
-#        Bewiesen ist damit nur: Lauf n+1 gleicht Lauf n+2.
+#  P0-1  Der Frischetest prueft jetzt auch, ob eine der zu fahrenden
+#        Migrationen bereits eingespielt ist, und es entsteht ein Abzug VOR
+#        Lauf 1. Beleg 1 gilt nur als bestanden, wenn Lauf 1 etwas VERAENDERT
+#        und Lauf 2 nichts mehr. Gemessen: erstlauf_schema_diff 135 796 Byte,
+#        schema_diff 0 Byte. Gegenprobe gegen eine bespielte Datenbank:
+#        "ABBRUCH: Die Datenbank ist NICHT frisch".
 #
-#  P0-2  Unter --umfang alle bricht Beleg 1 auf Azure ab. M32 setzt FORCE
-#        ROW LEVEL SECURITY; "pg_dump --data-only" schreibt
-#        "SET row_security = off", und frxadmin ist kein SUPERUSER.
-#        Lokal unsichtbar, weil der Probelauf als SUPERUSER fuhr -- genau
-#        das Muster, vor dem M30:2029-2031 selbst warnt.
+#  P0-2  Der Datenabzug laeuft mit --enable-row-security und kommt damit an
+#        FORCE ROW LEVEL SECURITY vorbei, ohne die Vorrichtung anzufassen.
+#        Gemessen als Rolle ohne SUPERUSER: Rueckgabewert 0.
 #
-#  P0-3  Beleg 4 schreibt synthetische Pruefdaten UNWIDERRUFLICH in die
-#        Zieldatenbank: "psql -1 -f $ALT" committet, und
-#        schema/pruefung_v2.9.sql hat keinen abschliessenden ROLLBACK.
-#        Der Kopf dieses Skripts behauptet das Gegenteil.
+#  P0-3  Beleg 4 laeuft in einer Klammer, die zurueckgerollt wird. Gemessen:
+#        alle sieben Zaehlungen vorher = nachher, beleg4_zeilen_diff 0 Byte.
 #
-# Bis diese drei behoben und erneut gemessen sind, gilt der Zustand als
-# GESPERRT (K23-M22). Ein Lauf gegen die Pilotumgebung wuerde sie mit
-# Testbestand verunreinigen und trotzdem keinen tragfaehigen Nachweis
-# liefern.
+# WAS WEITER GILT: Dieser Lauf hat die ZIELUMGEBUNG nie gesehen. Er lief gegen
+# ein lokales PostgreSQL 16. Ein Prueflauf, der durchlaeuft, ist kein Beweis
+# ueber das Ziel -- das ist die Lehre von M30:2029-2031 und war heute schon
+# zweimal der Fehler. Das Feld "War es die Zielumgebung?" in NACHWEIS.md
+# bleibt deshalb leer, bis ein Mensch es ausfuellt.
