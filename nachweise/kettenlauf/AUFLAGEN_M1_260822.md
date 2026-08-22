@@ -86,5 +86,30 @@ sind, und übersieht welche, die es sind.
 
 ---
 
-*Angelegt vom Orchestrator. Die Auflagen sind vorgelegt, nicht beschlossen — sie gelten, wenn
-ein Mensch sie zeichnet.*
+---
+
+## Zeichnung
+
+*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+
+> „A-1, A-2, A-3 werden getragen, gez. M. Veil, 22.08.2026."
+
+- [x] **A-1** · Beleg 4 ist auf leeren Tabellen gemessen — **getragen**, Träger A. Han, Frist mit M11
+- [x] **A-2** · `bestand_pilot` ist nachzuziehen — **getragen**, Träger M. Veil über die Konzept-Fabrik (F6)
+- [x] **A-3** · Der Auftragstext führt die alte Rangfolge — **getragen**, Träger M. Veil, Arbeitspaket A-1
+
+**gez. M. Veil, Auftraggeber, 22.08.2026**
+
+| Name | Rolle | Datum |
+|---|---|---|
+| **M. Veil** | Auftraggeber | **22.08.2026** |
+| A. Han | für den Auftragnehmer | ⟨ ⟩ |
+
+**Was „getragen" heisst.** Die drei Punkte sind damit nicht behoben, sondern **benannt,
+zugeordnet und terminiert**. Sie bleiben offen und sichtbar, bis ihr jeweiliges „Erledigt,
+wenn" eintritt. Ein getragener Punkt ist kein erledigter — er ist einer, der niemandem mehr
+unbemerkt durchgeht.
+
+---
+
+*Angelegt vom Orchestrator, gezeichnet vom Auftraggeber am 22.08.2026.*
