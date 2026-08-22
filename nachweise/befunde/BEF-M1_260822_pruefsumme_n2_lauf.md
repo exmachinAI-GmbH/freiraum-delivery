@@ -52,11 +52,28 @@ wieder sichtbar — **das ist der richtige Zustand**, nicht der Mangel.
 Nicht vom Harness. Die Fassung vom 19.08. ist übertragen und mit Summe belegt; die Fassung
 vom 20.08. trägt drei Berichtigungen, die im Probelauf gebraucht wurden.
 
-- [ ] **A** — Die Fassung vom 20.08. wird als neue Übertragung gezeichnet, die Summe
+*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung: „3A".*
+
+- [x] **A** — Die Fassung vom 20.08. wird als neue Übertragung gezeichnet, die Summe
       anschliessend neu hinterlegt. Der Vorgang wird beurkundet, nicht stillgelegt
+      · **gez. M. Veil, 22.08.2026**
 - [ ] **B** — Die drei Pfadberichtigungen werden zurückgenommen; `n2_lauf.sh` kehrt auf die
       gezeichnete Fassung zurück
 - [ ] anders: ⟨ ⟩
+
+## Vollzug am 22.08.2026
+
+| | |
+|---|---|
+| **Gezeichnete Fassung** | `n2_lauf.sh` in der Fassung nach Commit `15595ad` vom 20.08.2026 — die drei Pfadberichtigungen (`TST_DATEI`, `ALT_DATEI`, `GRUND_DATEI`) |
+| **Abgelöste Summe** | `c57f298c5045e0f8280dda45b6972b5c1490767ce5322689ef90125a73cc958b` (Fassung `f149d89`, hinterlegt 19.08.2026) |
+| **Neu hinterlegt** | `60f14e4f2ba90972146f20e466e446dd6ff934ff236b192400474daaac7df167` |
+
+**Der Unterschied zum 22.08. vormittags ist nicht der Wert, sondern die Grundlage.** Damals
+wurde die Summe nachgezogen, weil sie abwich — das ist die Anreizrichtung, vor der K23-D05
+warnt. Jetzt wird sie nachgezogen, weil eine zeichnende Person die neue Fassung übertragen
+hat. Die abgelöste Summe steht oben im Wortlaut und ist damit weiter belegt; sie ist nicht
+gelöscht, sondern archiviert.
 
 *Angelegt vom Orchestrator, nachdem eine eigene Gegenprüfung den Fehler in der eigenen
 Lieferung nachgewiesen hat. Er ist hier benannt, weil ein stillgelegter Riegel beim nächsten
