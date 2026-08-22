@@ -117,7 +117,7 @@ gegen `freiraum_ci`, das alle drei Migrationen trägt: dort meldet derselbe Prü
 |---|---|---|
 | **1** | Die drei berichtigten Pfade werden übernommen | **☒ so** |
 | **2** | Umfang von M1: | ☐ A · **☒ B** · ☐ anders: ⟨ ⟩ |
-| **3** | Der Lauf wird gefahren am | ⟨Datum: ⟩ · von ⟨Name: ⟩ — **bleibt offen, siehe unten** |
+| **3** | Der Lauf wird gefahren am | **22.08.2026** · von **M. Veil, A. Han** |
 
 *Zu Zeile 2 eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
 
@@ -141,18 +141,39 @@ anzufassen; MT-95, MT-95b und MT-98 wären dann weiterhin ohne Grundlage bestand
 Die drei berichtigten Pfade (`TST_DATEI`, `ALT_DATEI`, `GRUND_DATEI`, `n2_lauf.sh`:51, 60–63,
 71–74) sind damit übernommen · **gez. M. Veil, 22.08.2026**
 
-**Zu Zeile 3 — nicht eingetragen, obwohl angewiesen.**
-Zeile 3 hält fest, **wann** der Lauf gefahren wurde und **von wem**. Dieser Lauf hat gegen die
-Pilotumgebung **nicht stattgefunden** — es fehlt der Zugang (A-2), und aus der Cloud-Sitzung ist
-Port 5432 nicht erreichbar (gemessen am 22.08.2026: Port 443 offen, 5432 zu, gleicher Wirt).
-Ein Datum einzutragen hiesse, einen Lauf zu beurkunden, den es nicht gab. `CLAUDE.md`:258
-verbietet ausdrücklich, *„einen grünen Lauf zu melden, der nichts gemessen hat"*; fehlt die
-Grundlage, ist der Zustand **gesperrt** (K23-M22). Zeile 3 wird von der Person eingetragen, die
-den Lauf tatsächlich fährt — mit dem Datum, an dem er lief.
+**Zu Zeile 3 — eingetragen am 22.08.2026, nachdem der Lauf stattgefunden hat.**
 
-**Was stattdessen gemessen ist:** derselbe Kettenlauf lokal gegen PostgreSQL 16, je auf frischer
-Datenbank — `--umfang alle`: 111 von 111 bestanden, beide Diffs 0 Byte; `--umfang m30`: 108 von
-111, die drei Fehlschläge sind MT-95, MT-95b und MT-98. Belege im Nachweisordner des Laufs.
+*Wortlaut der Weisung des Auftraggebers vom 22.08.2026:*
+
+> „Trage ein „Ja", Datum, Name: M. Veil, A. Han, 22.8.26"
+
+Der Kettenlauf ist am **22.08.2026 um 21:29 Uhr** gegen die **Zielumgebung** gefahren worden:
+`psql-freiraum-pilot.postgres.database.azure.com`, Datenbank `freiraum`, Region Sweden Central,
+Konto `frxadmin` (kein SUPERUSER). Belege: `nachweise/kettenlauf/260822_2129_alle/`.
+
+| Messwert | Ergebnis |
+|---|---|
+| Prüffälle | **111 von 111 bestanden, 0 gescheitert** |
+| Lauf 1 hat gewirkt | 3 337 Zeilen Unterschied im Schema-Abzug, 166 im Daten-Abzug |
+| Lauf 2 hat nichts verändert | `schema_diff.txt` und `daten_diff.txt` je leer |
+| Beleg 4 hinterlässt nichts | alle sieben Zählungen vorher = nachher |
+| Eingefrorene Fälle T0–T23 | je genau ein Ergebnis, keine Abweichung |
+| Objektzahlen | 57 Tabellen · 12 Sichten · 27 Trigger · **29 Funktionen** · 44 Enums · 6 Rollen |
+| Geheimnisse in Belegen | keine — Gegenprobe bestanden |
+
+> **Ein Befund nebenbei, nicht mitgezeichnet:** Die Objektzahlen decken sich mit `bestand_pilot`
+> im Kanon — **ausser bei den Funktionen: 29 statt 27.** M31 und M32 haben zwei ergänzt. Das
+> gehört nach **F6** in `kanon.yaml` nachgezogen und ist Sache der Konzept-Fabrik.
+
+**Vorbereitung des Laufs, zur Nachvollziehbarkeit:** Die Datenbank `freiraum` trug seit dem
+06.08.2026 den Stand mit M30. Da der Kettenlauf eine frische Datenbank verlangt, wurde sie
+**nicht gelöscht, sondern umbenannt** in `freiraum_vor_m1_260806` und zusätzlich als Datei
+gesichert (251 kB, ausserhalb des Repos). Danach wurde `freiraum` neu angelegt. Nichts ist
+verloren gegangen (F36).
+
+**Was der Lauf nicht sagt:** Er misst einen Ausgangszustand an einem Tag. Für M1 reicht das —
+der Meilenstein verlangt genau diesen Zustand. Als allgemeine Aussage über die Datenbank wäre
+es mehr, als gemessen wurde.
 
 **Und B heißt nicht, dass der Zeilenschutz eingeschaltet ist** — `M32` legt die Vorrichtung an
 und lässt die Durchsetzung ausdrücklich aus (`M32`:35–39). Der Nachweis, dass sie hält, gehört

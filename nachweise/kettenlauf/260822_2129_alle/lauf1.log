@@ -1,0 +1,4 @@
+psql:/Users/mveil/freiraum-delivery/migrations/M32__zeilenschutz_und_stufenwechsel.sql:91: NOTICE:  policy "mandant_app" for relation "app" does not exist, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M32__zeilenschutz_und_stufenwechsel.sql:104: NOTICE:  policy "mandant_document" for relation "document" does not exist, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M32__zeilenschutz_und_stufenwechsel.sql:123: NOTICE:  policy "mandant_event" for relation "event" does not exist, skipping
+psql:/Users/mveil/freiraum-delivery/migrations/M32__zeilenschutz_und_stufenwechsel.sql:299: NOTICE:  M32 · drei Zeilenregeln mit FORCE, change_app_state mit Protokoll, set_journey_phase angelegt.
