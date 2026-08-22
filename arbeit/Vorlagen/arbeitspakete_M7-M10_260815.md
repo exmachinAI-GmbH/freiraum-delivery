@@ -470,6 +470,26 @@ Das Prüfskript für die Installation **erzeugt den Schaden heute selbst**. Nach
 | 10.6 | **Zwei Dauermessungen am Bestand** aufnehmen (Zähldifferenz, Zuordnungstreue) | Prüf-Agent | **Übernehmen.** Sie laufen ohne neue Bedingung und finden auch Codes, die auf unbekanntem Weg entstanden sind |
 | 10.7 | **Wenn eine Bestandszeile die neue Bedingung verletzt:** nicht automatisch aufräumen | M. Veil | **Zustimmen.** Ein stiller Änderungslauf auf Bestandsdaten wäre genau die Art von Vorgang, die niemand bemerkt — und der Befund handelt davon, dass eine Codevergabe still passiert. Heute ist die Liste in beiden Datenbanken leer |
 
+### Zeichnung zu 10.3 · Der Maßstab
+
+*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+
+> „Setze die Kreuze genau hier. Gez. M. Veil, 22.8.26 - dies ist eine Zeichnung, kein Zuruf:
+> `arbeit/Vorlagen/arbeitspakete_M7-M10_260815.md`, Punkt 10.3 — der Maßstab. Rang 1 ist
+> künftig eingefrorenes Datenmodell plus M30, M31, M32. Das ist die tragende Entscheidung."
+
+- [x] **Rang 1 ist künftig das eingefrorene Datenmodell `freiraum_datamodel.sql` plus die
+      Migrationen M30, M31 und M32** · **gez. M. Veil, 22.08.2026**
+
+**Was daraus folgt — nicht Teil der Zeichnung, sondern ihre Wirkung:**
+
+| | |
+|---|---|
+| `CLAUDE.md`:44 | Rang 1 lautet dort noch *„`freiraum_datamodel.sql` **plus** Sammelmigration **M30**"* und ist damit **veraltet**. Der Wortlaut ist nachzuziehen |
+| Bauauftrag :80–86 | Die Rangfolge steht dort wortgleich. Ob eine Auftragsberichtigung nötig ist, ist **nicht** mit dieser Zeichnung entschieden — sie gehört zu A-1 |
+| M1 | Der Umfang folgt hieraus: Lesart B. Eingetragen in `m1_startklar_260820.md` |
+| MT-95, MT-95b, MT-98 | Sie scheiterten gegen M30 allein, weil dort `p_project_no` noch entgegengenommen wird — ein Verstoß gegen K01-M38, den M31 behebt. Mit dem neuen Maßstab entfällt der Grund für eine benannte Ausnahme |
+
 ---
 
 ## 7 · Was ich nicht messen konnte

@@ -116,13 +116,32 @@ gegen `freiraum_ci`, das alle drei Migrationen trägt: dort meldet derselbe Prü
 | | | |
 |---|---|---|
 | **1** | Die drei berichtigten Pfade werden übernommen | ☐ so |
-| **2** | Umfang von M1: | ☐ A · ☐ B · ☐ anders: ⟨ ⟩ |
+| **2** | Umfang von M1: | ☐ A · **☒ B** · ☐ anders: ⟨ ⟩ |
 | **3** | Der Lauf wird gefahren am | ⟨Datum: ⟩ · von ⟨Name: ⟩ |
+
+*Zu Zeile 2 eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+
+> „Setze die Kreuze genau hier. Gez. M. Veil, 22.8.26 - dies ist eine Zeichnung, kein Zuruf:
+> … `arbeit/Vorlagen/m1_startklar_260820.md`, Abschnitt „Zeichnung", Zeile 2 — Kästchen B,
+> mit der Notiz, dass B aus Punkt 10.3 folgt."
+
+**Notiz zu Zeile 2 — die Reihenfolge ist Teil der Entscheidung.**
+B folgt aus der Zeichnung zu **Punkt 10.3** in `arbeit/Vorlagen/arbeitspakete_M7-M10_260815.md`
+vom selben Tag, nicht umgekehrt. Dort ist der **Maßstab** erweitert worden: Rang 1 ist künftig
+das eingefrorene Datenmodell plus M30, M31 und M32. Der Umfang von M1 ist die **Folge** dieser
+Erweiterung — M1 misst gegen den geltenden Maßstab, und der ist seit dem 22.08.2026 ein anderer.
+Wer die Reihenfolge umdreht, hätte den Umfang eines Meilensteins geändert, ohne den Maßstab
+anzufassen; MT-95, MT-95b und MT-98 wären dann weiterhin ohne Grundlage bestanden.
+
+**Nicht mitgezeichnet:** Zeile 1 und Zeile 3 sind offen. Zeile 3 wird erst eingetragen, wenn der
+Lauf tatsächlich gefahren ist. Und **B heißt nicht, dass der Zeilenschutz eingeschaltet ist** —
+`M32` legt die Vorrichtung an und lässt die Durchsetzung ausdrücklich aus (`M32`:35–39). Der
+Nachweis, dass sie hält, gehört zu M11.
 
 | Name | Rolle | Datum |
 |---|---|---|
 | A. Han | für den Auftragnehmer (Nr. 158) | ⟨ ⟩ |
-| M. Veil | für den Auftraggeber | ⟨ ⟩ |
+| M. Veil | für den Auftraggeber | **22.08.2026** *(nur Zeile 2)* |
 
 ---
 
