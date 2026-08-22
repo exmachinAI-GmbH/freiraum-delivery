@@ -1,0 +1,109 @@
+Output format is unaligned.
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+T0  Ausgangslage: ein aktiver Plattform-Admin|1|1
+T1  Status ausserhalb der Domaene|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:31: ERROR:  new row for relation "actor" violates check constraint "actor_lock_state"
+DETAIL:  Failing row contains (9398424a-fcde-4b21-ad2c-1f2563c4c76d, 11111111-1111-1111-1111-111111111111, null, t2@exmachinai.com, T2, EMAIL_CODE, AKTIV, AKTIV, f, f, null, null).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:32: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T2  status_before_lock ohne Sperre|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:39: ERROR:  new row for relation "actor" violates check constraint "actor_sealed_no_money"
+DETAIL:  Failing row contains (5124786b-18f1-4078-949f-7dea229e8c45, 11111111-1111-1111-1111-111111111111, null, t3@exmachinai.com, T3, EMAIL_CODE, WARTET_2FA, null, t, t, null, null).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:40: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T3  versiegelt mit Geldrechten|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:47: ERROR:  new row for relation "actor" violates check constraint "actor_user_code_check"
+DETAIL:  Failing row contains (4fecb9b4-ea31-4696-bff0-5a0b57f29157, 11111111-1111-1111-1111-111111111111, exma-adm-1, t4@exmachinai.com, T4, EMAIL_CODE, WARTET_2FA, null, f, f, null, null).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:48: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T4  Kennung ausserhalb des Musters|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:55: ERROR:  duplicate key value violates unique constraint "actor_user_code_key"
+DETAIL:  Key (user_code)=(EXMA-ADM-0001) already exists.
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:56: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T5  Kennung doppelt|Fehler|Fehler
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+T6  Einladung im Rahmen der Frist|1|1
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:75: ERROR:  Nur Adressen der Domaene @exmachinai.com sind zulaessig
+CONTEXT:  PL/pgSQL function invitation_guard() line 8 at RAISE
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:76: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T7  Einladung in fremde Domaene|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:83: ERROR:  Einladung ueberschreitet die konfigurierte Gueltigkeit von 24 Stunden
+CONTEXT:  PL/pgSQL function invitation_guard() line 12 at RAISE
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:84: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T8  Einladung ueber 24 h hinaus|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:91: ERROR:  duplicate key value violates unique constraint "invitation_offen_uq"
+DETAIL:  Key (actor_id)=(aaaaaaaa-0000-0000-0000-000000000002) already exists.
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:92: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T9  zweite offene Einladung|Fehler|Fehler
+UPDATE 1
+INSERT 0 1
+T10 Wiederversand: genau eine offene Einladung|1|1
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:105: ERROR:  new row for relation "invitation" violates check constraint "invitation_einloesung"
+DETAIL:  Failing row contains (bbbbbbbb-0000-0000-0000-000000000002, aaaaaaaa-0000-0000-0000-000000000002, EXMA, maike.jensen@exmachinai.com, sha256:91ab…, 2026-08-22 17:20:47.133296+00, 2026-08-23 17:20:47.133296+00, null, EINGELOEST, 2).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:106: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T11 Einloesung ohne Zeitstempel|Fehler|Fehler
+UPDATE 1
+UPDATE 1
+T12 nach Einloesung zwei aktive Admins|2|2
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:120: ERROR:  Mindestens ein aktiver Plattform-Admin muss bestehen bleiben
+CONTEXT:  PL/pgSQL function platform_admin_guard() line 8 at RAISE
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:121: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T13 alle Plattform-Admins sperren|Fehler|Fehler
+UPDATE 1
+T14 einen von zwei Admins sperren|1|1
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:132: ERROR:  Erst-Admin: loeschbar erst, wenn ein zweiter aktiver Plattform-Admin besteht
+CONTEXT:  PL/pgSQL function sealed_actor_guard() line 9 at RAISE
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:133: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T15 versiegelten Erst-Admin loeschen|Fehler|Fehler
+UPDATE 1
+T16 Entsperren stellt Vorzustand her|AKTIV|AKTIV
+SAVEPOINT
+DELETE 1
+T17 Erst-Admin bei zweitem Aktiven loeschbar|geloescht|geloescht
+ROLLBACK
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:151: ERROR:  new row for relation "tenant" violates check constraint "region_release_1"
+DETAIL:  Failing row contains (11111111-1111-1111-1111-111111111111, OPERATOR, exmachinAI GmbH, null, null, null, null, DE, EMAIL_CODE, 24, exmachinai.com, eastus, R1, null).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:152: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T18 Region ausserhalb EU/EWR|Fehler|Fehler
+SAVEPOINT
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:158: ERROR:  new row for relation "tenant" violates check constraint "tenant_invite_ttl_hours_check"
+DETAIL:  Failing row contains (11111111-1111-1111-1111-111111111111, OPERATOR, exmachinAI GmbH, null, null, null, null, DE, EMAIL_CODE, 0, exmachinai.com, swedencentral, R1, null).
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:159: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+T19 Einladungsfrist 0 Stunden|Fehler|Fehler
+T20 Journey-Stufe MITBESTIMMUNG entfernt|Fehler|Fehler
+T21 Journey hat fuenf Stufen|5|5
+INSERT 0 1
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:177: ERROR:  UEBERGANG: ein Projekt entsteht auf DISCOVERY (W01, H02), nicht auf IN_BEARBEITUNG
+CONTEXT:  PL/pgSQL function lifecycle_transition_guard() line 30 at RAISE
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:179: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:180: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:181: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:182: ERROR:  savepoint "s22" does not exist
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:183: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:186: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+psql:/home/claude/freiraum-delivery/schema/pruefung_v2.9.sql:188: ERROR:  current transaction is aborted, commands ignored until end of transaction block

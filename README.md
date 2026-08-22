@@ -102,7 +102,7 @@ Teilen gebaut und antworten deshalb verschieden.
 
 | | Name · Anschluss | gebaut aus | wofür |
 |---|---|---|---|
-| **Prüfumgebung** | `freiraum` · Port 55432 | Bauplan + Vorläufer 260801 + M30 + Startdaten + B1 | entwickeln, die Vorbedingungen B1/B2 nachvollziehen |
+| **Prüfumgebung** | `freiraum` · Port 55432 | Bauplan + Vorläufer 260801 + M30 + M31 + M32 + Startdaten + B1 | entwickeln, die Vorbedingungen B1/B2 nachvollziehen |
 | **Tor 1b** | `freiraum_ci` · Port 55433 | Bauplan + alle Dateien aus `migrations/` — **ohne** Vorläufer, **ohne** Startdaten | denselben Lauf fahren, den GitHub automatisch fährt |
 
 Kurz übersetzt: **Bauplan** ist die Datei `schema/freiraum_datamodel.sql`, die festlegt,
