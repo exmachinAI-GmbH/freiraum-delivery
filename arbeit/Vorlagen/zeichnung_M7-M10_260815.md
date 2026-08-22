@@ -123,6 +123,59 @@ nach dem 31.08.**
 
 ---
 
+## Nachtrag vom 22.08.2026 · Der Maßstab, im Wortlaut
+
+**Die Kreuze sind vom Orchestrator übertragen, nicht selbsttätig gesetzt** (`CLAUDE.md`:244).
+Wortlaut der Weisung des Auftraggebers vom 22.08.2026:
+
+> „Setze die Kreuze genau hier gem. Empfehlung - dies ist eine Anweisung. Gez. M. Veil,
+> 22.8.26 - dies ist eine Zeichnung, kein Zuruf: `arbeit/Vorlagen/arbeitspakete_M7-M10_260815.md`,
+> Punkt 10.3 — der Maßstab. Rang 1 ist künftig eingefrorenes Datenmodell plus M30, M31, M32.
+> Das ist die tragende Entscheidung."
+
+Und zur Auftragsberichtigung, am selben Tag:
+
+> „Das ist hiermit auch angewiesen und gezeichnet. M. Veil, 22.8.26 … Die Auftragsberichtigung —
+> der Bauauftragstext führt die Rangfolge wortgleich (:80–86)."
+
+| | Entschieden | Zustand |
+|---|---|---|
+| **10.3 a** | **Rang 1 ist künftig `schema/freiraum_datamodel.sql` plus die Migrationen M30, M31 und M32.** `CLAUDE.md`:44 ist am 22.08.2026 nachgezogen | **[x]** · gez. M. Veil, 22.08.2026 |
+| **10.3 b** | **Der Bauauftragstext :80–86 wird auf die erweiterte Rangfolge nachgezogen.** Durchführung über Arbeitspaket **A-1**; der Harness vollzieht sie nicht selbst, der Text liegt in der Konzept-Fabrik | **[x]** · gez. M. Veil, 22.08.2026 |
+
+**Was 10.3 am 15.08. war und was es heute ist.** Am 15.08. war gezeichnet, *dass* eine
+Sammeländerung gezeichnet wird, bevor gebaut wird. Heute ist gezeichnet, *was* sie besagt.
+Das eine ist die Form, das andere der Inhalt — der Nachtrag ersetzt die Zeichnung vom 15.08.
+nicht, er löst sie ein.
+
+> **Vorbehalt aus der Gegenprüfung vom 22.08.2026 — inzwischen gezeichnet, siehe unten.**
+> Der Kasten oben hält fest: *„10.1 und 10.3 hängen an 10.2"*, und **10.2 ist offen**. Der
+> Kasten sagt zugleich, die Entscheidung bleibe und nur ihr Zeitpunkt ändere sich — und M31
+> und M32 liegen inzwischen gebaut im Bestand, womit die Zeitfrage gegenstandslos ist.
+> **Entschieden ist das damit nicht.** Wer 10.2 noch schliessen will, sollte es tun, bevor der
+> Abnahmelauf gefahren wird; sonst steht der Maßstab auf einem Punkt, dessen Umfangsfrage
+> offen geblieben ist. Der Orchestrator legt das vor und entscheidet es nicht.
+
+### Erledigung des Vorbehalts · 22.08.2026
+
+*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+
+> „10.2: die Zeitfrage ist durch den gebauten Bestand gegenstandslos geworden.
+> Gez. M. Veil, 22.8.26"
+
+- [x] **Die Abhängigkeit „10.1 und 10.3 hängen an 10.2" ist in ihrer Zeitwirkung erledigt.**
+      Der Kasten vom 15.08. sagte, bei Weg a verschöben sich Klauseländerung und M31 hinter
+      den 31.08.; M31 und M32 liegen seit dem 20.08. gebaut im Bestand, die Verschiebung kann
+      also nicht mehr eintreten · **gez. M. Veil, 22.08.2026**
+
+> **Punkt 10.2 selbst bleibt offen.** Gezeichnet ist die **Zeitfrage**, nicht die Sachfrage.
+> Ob der Kunden-Code überhaupt in den Umfang von Tor II gehört — Weg a gegen Weg b im Kasten
+> oben —, ist damit **nicht** entschieden, und beide Kästchen dort bleiben leer. Der Maßstab
+> aus 10.3 steht davon unberührt: er misst, was gebaut ist, und das ist unabhängig davon,
+> ob der Kunden-Code im Umfang liegt.
+
+---
+
 ## Was daraus jetzt zu tun ist
 
 | | Was | Wer |

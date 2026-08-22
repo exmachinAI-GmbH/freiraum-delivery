@@ -1,0 +1,111 @@
+MT-01 · BESTANDEN — Versionseintrag vorhanden (Nr. 26) · schema_migration fuehrt v3.0-pilot-01
+MT-02 · BESTANDEN — Anlegen schreibt Verlaufszeile (Nr. 46) · app_state_history traegt die offene DISCOVERY-Zeile
+MT-03 · BESTANDEN — Anlegen auf EINGELADEN scheitert (H02/W01) · Meldung: UEBERGANG: ein Projekt entsteht auf DISCOVERY (W01, H02), nicht auf EINGELADEN
+MT-04 · BESTANDEN — N01 Discovery->Beauftragt scheitert · Meldung: UEBERGANG: DISCOVERY -> BEAUFTRAGT ist nicht erlaubt (Uebergangstabelle, Nr. 53)
+MT-05 · BESTANDEN — N03 Discovery->In Prod scheitert · Meldung: UEBERGANG: DISCOVERY -> IN_PROD ist nicht erlaubt (Uebergangstabelle, Nr. 53)
+MT-06 · BESTANDEN — N04 Rueckweg nach EINGELADEN scheitert · Meldung: UEBERGANG: IN_BEARBEITUNG -> EINGELADEN ist nicht erlaubt (Uebergangstabelle, Nr. 53)
+MT-07 · BESTANDEN — N06 Beauftragt ohne Festschreibung scheitert · Meldung: UEBERGANG: BEAUFTRAGT verlangt ein festgeschriebenes Projekt (sealed_at, Nr. 53)
+MT-08 · BESTANDEN — N05 Beauftragt ohne Freigabe scheitert an der Kopplung · Meldung: UEBERGANG: BEAUFTRAGT verlangt die Zwei-Personen-Freigabe (Nr. 53), object_ref=APP:00000000-0000-0000-0000-0000000000f1:BEAUFTRAGUNG
+MT-09 · BESTANDEN — Selbstfreigabe scheitert (sod) · Meldung: new row for relation "approval" violates check constraint "sod_editor_ne_approver"
+MT-10 · BESTANDEN — W03 mit Freigabe gelingt · Verlauf gekoppelt · drei Verlaufszeilen, offene Zeile = BEAUFTRAGT
+MT-100 · BESTANDEN — Eine Anwendung laesst sich einschraenken (H1) · app_eingeschraenkt zeigt die gesperrte Zeile
+MT-101 · BESTANDEN — Einschraenkung ohne Grund wird abgewiesen (H1) · Meldung: new row for relation "app" violates check constraint "einschraenkung_ganz"
+MT-102 · BESTANDEN — Eine Einschraenkung ist nicht still aufhebbar (H1) · Meldung: EINSCHRAENKUNG: einmal gesetzt, nicht stillschweigend aufhebbar (H1, K15)
+MT-103 · BESTANDEN — Eine Freigabe fuer einen fremden Sitzungsmandanten scheitert (T4) · Meldung: SITZUNGSMANDANT: die Freigabe nennt Mandant 00000000-0000-0000-0000-000000000002, die Sitzung laeuft fuer 00000000-0000-0000-0000-000000000001 (K14-D07, T4)
+MT-104 · BESTANDEN — Eingeschaltete Durchsetzung weist eine Zeile ohne Sitzung ab (T4) · Meldung: SITZUNGSMANDANT: keine Sitzung gesetzt, und die Durchsetzung ist eingeschaltet — die Freigabe wird abgewiesen (K14-D07, T4, fail-closed)
+MT-104b · BESTANDEN — Passende Sitzung wird auch bei Durchsetzung angenommen (T4) · angenommen
+MT-105 · BESTANDEN — Mittelbarer Bezug wird ueber den Eigentuemer geprueft (T4) · Meldung: MITTELBARER BEZUG: die Freigabe nennt Mandant 00000000-0000-0000-0000-000000000001, der Eigentuemer der Quelle gehoert zu 00000000-0000-0000-0000-000000000002 (O-K14-2, T4)
+MT-106 · BESTANDEN — Ein Fehlversuch erhoeht den Zaehler am Code (K03-M16) · failed_count vorher 0, nachher 1
+MT-107 · BESTANDEN — Der fuenfte Fehlversuch entwertet den Code (K03-M16) · failed_count 5, superseded_at gesetzt
+MT-108 · BESTANDEN — Agent direkt als RELEASED eingefuegt wird abgewiesen (Nr. 32, N-2) · Meldung: AGENT-FREIGABE: braucht Vier-Augen-Freigabe (Nr. 32), object_ref=AGENT:8c7f6170-48b6-4dcf-bd5c-ef13326837b8
+MT-109 · BESTANDEN — Keine fr_*-Rolle ist anmeldbar (T1, N-1) · keine anmeldbar
+MT-11 · BESTANDEN — N10 falscher Rueckweg aus Pausiert scheitert am Verlauf · Meldung: UEBERGANG: Rueckweg aus PAUSIERT fuehrt nach BEAUFTRAGT (Verlauf), nicht nach IN_BEARBEITUNG
+MT-12 · BESTANDEN — N13 Pausiert->Beauftragt ohne zwei Personen scheitert · Meldung: UEBERGANG: PAUSIERT -> BEAUFTRAGT verlangt zwei Personen (approval fehlt fuer object_ref=APP:00000000-0000-0000-0000-0000000000f1:PAUSIERT->BEAUFTRAGT)
+MT-13 · BESTANDEN — W17 mit zwei Personen gelingt · Rueckweg in den Vertragszustand mit Vier-Augen
+MT-14 · BESTANDEN — Anmeldung erzeugt Protokollzeile (Nr. 16) · genau eine ANMELDUNG-Zeile mit fester Kontoverknuepfung (Nr. 48)
+MT-15 · BESTANDEN — Protokoll: UPDATE wird abgewiesen (F02-Haertung) · Meldung: APPEND-ONLY: event erlaubt weder UPDATE noch DELETE
+MT-16 · BESTANDEN — Protokoll: DELETE wird abgewiesen · Meldung: APPEND-ONLY: event erlaubt weder UPDATE noch DELETE
+MT-17 · BESTANDEN — Protokollzeile weder faellig noch anonymisiert (Nr. 60, K02-M17) · weder faellig_am noch pseudonymisieren_ab -- die Zeile bleibt, wie sie ist
+MT-18 · BESTANDEN — Code laenger als 10 Minuten scheitert (Nr. 61) · Meldung: new row for relation "login_code" violates check constraint "login_code_frist"
+MT-19 · BESTANDEN — 6. Fehlversuch je Konto wird gesperrt (Nr. 35) · Meldung: KONTO-SPERRE: 5 Fehlversuche, 15 Minuten Wartezeit (Nr. 35)
+MT-20 · BESTANDEN — 21. Fehlversuch je Herkunft wird gesperrt (Nr. 35) · Meldung: HERKUNFTS-SPERRE: 20 Fehlversuche je Herkunft, 60 Minuten (Nr. 35)
+MT-21 · BESTANDEN — Versandnachweis unveraenderbar · Meldung: APPEND-ONLY: mail_delivery erlaubt weder UPDATE noch DELETE
+MT-22 · BESTANDEN — Zweitanmeldung frischt erste Sitzung nicht auf (Nr. 34) · last_activity_at der Rechner-Sitzung unveraendert
+MT-23 · BESTANDEN — Nachweisliste: Aenderung scheitert (Nr. 10) · Meldung: APPEND-ONLY: invitation_decision erlaubt weder UPDATE noch DELETE
+MT-24 · BESTANDEN — Nachweisliste: Loeschung scheitert (Nr. 10) · Meldung: APPEND-ONLY: invitation_decision erlaubt weder UPDATE noch DELETE
+MT-25 · BESTANDEN — Siegelruecknahme scheitert (Nr. 38) · Meldung: SIEGEL: die Ruecknahme des Siegels ist ausgeschlossen (Nr. 38)
+MT-26 · BESTANDEN — Zweites Ausnahmekonto scheitert (Nr. 59) · Meldung: duplicate key value violates unique constraint "actor_ausnahmekonto_uq"
+MT-27 · BESTANDEN — Kenntnisnahme nur mit KI_NACHWEIS (F1) · Meldung: new row for relation "fit_check" violates check constraint "ack_klasse_ki_nachweis"
+MT-28 · BESTANDEN — Kenntnisnahme erst nach GEEIGNET (F1) · Meldung: new row for relation "fit_check" violates check constraint "ack_nach_eignung"
+MT-29 · BESTANDEN — Kenntnisnahme am GEEIGNET-Check gelingt (F1) · Feld gesetzt, Klasse KI_NACHWEIS
+MT-30 · BESTANDEN — Agentenfreigabe ohne Vier-Augen scheitert (Nr. 32) · Meldung: AGENT-FREIGABE: braucht Vier-Augen-Freigabe (Nr. 32), object_ref=AGENT:00000000-0000-0000-0000-0000000000b1
+MT-31 · BESTANDEN — Freigabe ohne Handlungsliste scheitert (Nr. 29) · Meldung: new row for relation "agent" violates check constraint "agent_released_vollstaendig"
+MT-32 · BESTANDEN — Agent vollstaendig + Vier-Augen -> RELEASED (Nr. 29/32) · Freigabe mit editor <> approver
+MT-33 · BESTANDEN — Auswahlvermerk unveraenderlich (Nr. 25) · Meldung: AUSWAHLVERMERK: einmal gesetzt, unveraenderlich (Nr. 25)
+MT-34 · BESTANDEN — Ueberschreitung ohne Ausweis scheitert (H01) · Meldung: new row for relation "contract_check" violates check constraint "ueberschreitung_ausgewiesen"
+MT-35 · BESTANDEN — Ueberschreitung MIT Ausweis haelt nicht an (H01) · Pruefergebnis festgehalten, Vorgang laeuft weiter
+MT-36 · BESTANDEN — Zweite geltende Vertragsfassung scheitert (Nr. 50) · Exclusion-Verletzung: conflicting key value violates exclusion constraint "project_contract_app_id_gueltig_excl"
+MT-37 · BESTANDEN — Geaenderte Frage aendert alte Antwort nicht (Nr. 55) · Antwort verweist weiter auf die beantwortete Fassung v1
+MT-38 · BESTANDEN — Vorlage verlangt sich nicht selbst (F6) · Meldung: new row for relation "template_element" violates check constraint "element_nicht_selbst"
+MT-39 · BESTANDEN — Umfang zaehlbar, nicht erhoben unterscheidbar (F6) · eine verlangte Elementvorlage; Feststellung noch offen -> fail-closed
+MT-40 · BESTANDEN — Abschalten der Schranke erzeugt Nachweis (Nr. 54 B) · Protokollzeile mit altem und neuem Wert
+MT-41 · BESTANDEN — Neue Klassen vorhanden (Nr. 17/35/49) · KURZFRIST (30 Tage, seit Stufe 9a tagesgenau) und PROJEKT_VORVERTRAG (6 Monate)
+MT-42 · BESTANDEN — Anmeldecode-Faelligkeit in der Sicht (Nr. 35) · Zweig login_code liefert Faelligkeit 30 Tage nach Verbrauch/Ablauf
+MT-43 · BESTANDEN — Uebergangstabelle vollstaendig (H02, W02-W20) · 19 eingetragene Wechsel; W17 traegt ZWEI_PERSONEN (entschieden 4.8.2026)
+MT-44 · BESTANDEN — Selbstwechsel scheitert (N11) · Meldung: new row for relation "state_transition" violates check constraint "kein_selbstwechsel"
+MT-45 · BESTANDEN — Neuer Code entwertet den aelteren (K03-M15) · genau ein offener Code je Konto; der aeltere traegt superseded_at
+MT-46 · BESTANDEN — 6 Fehlversuche je Code scheitern (K03-M16) · Meldung: new row for relation "login_code" violates check constraint "login_code_fehlversuche"
+MT-47 · BESTANDEN — Schriftstueck-Vorlage ohne Merkmale zulaessig (E2/A) · alle sechs Angaben leer, Fassung angelegt
+MT-48 · BESTANDEN — Halbes Merkmalsprofil scheitert (E2/A) · Meldung: new row for relation "template_version" violates check constraint "tv_merkmale_ganz"
+MT-49 · BESTANDEN — Funktionale Art bleibt ueber Fassungen (Nr. 24) · Meldung: FUNKTIONALE ART: Fassungen von T-HAUPT tragen bereits GESPRAECHSVORLAGE, nicht STATUSVORLAGE (Nr. 24)
+MT-50 · BESTANDEN — Gestrichener Wert ZUSTAND existiert nicht (E2/A) · Meldung: invalid input value for enum template_status_content: "ZUSTAND"
+MT-51 · BESTANDEN — Elementbedarf nur auf Elementvorlagen (Nr. 24) · Meldung: ELEMENTBEDARF: T-DOK ist keine Elementvorlage (K25-M14, Nr. 24)
+MT-52 · BESTANDEN — Fristen sind tagesgenau darstellbar (Stufe 9a) · KURZFRIST 30 Tage, ARBEITSERGEBNIS 90 Tage -- keine Monatsnaeherung mehr
+MT-53 · BESTANDEN — Zwei Fristen an einer Klasse scheitern (Stufe 9a) · Meldung: new row for relation "retention_rule" violates check constraint "genau_eine_frist"
+MT-54 · BESTANDEN — Telemetriestand hat einen Ort (O-K17-5) · agent.telemetrie_stand_at -- die 26-Stunden-Schwelle ist berechenbar
+MT-55 · BESTANDEN — policy_aktuell fuehrt body_md (O-K21-6) · elf benannte Spalten statt SELECT *; der veroeffentlichte Text ist lesbar
+MT-56 · BESTANDEN — Traeger fuer die 14-Tage-Frist (Punkt 20) · direct_prototype.geteilt_bis vorhanden; Vorgabeklasse ARBEITSERGEBNIS (A-K12-2)
+MT-57 · BESTANDEN — Anwendung ohne Eignungsnachweis scheitert (O-K01-6) · Meldung: EIGNUNGSRIEGEL: eine Anwendung entsteht nur zu einem bestandenen Eignungs-Check (K01-M27, O-K01-6)
+MT-58 · BESTANDEN — Offener Eignungs-Check reicht nicht (O-K01-6) · Meldung: EIGNUNGSRIEGEL: der Eignungs-Check 00000000-0000-0000-0000-0000000000e9 steht nicht auf GEEIGNET (K01-M27, O-K01-6)
+MT-59 · BESTANDEN — Dokumentfassung traegt Stand und Pruefsumme (O-K06-1..3) · document_version mit Speicherverweis, Pruefsumme, Medientyp und Groesse
+MT-60 · BESTANDEN — Freigegebene Dokumentfassung unveraenderlich (K06-M28) · Meldung: FASSUNG: eine freigegebene Dokumentfassung wird nicht geaendert (K06-M28)
+MT-61 · BESTANDEN — Zwei geltende Dokumentfassungen scheitern (BF-4) · Meldung: conflicting key value violates exclusion constraint "document_version_document_id_gueltig_excl"
+MT-62 · BESTANDEN — Konzept ohne Artefaktkennung scheitert (K06-M01) · Meldung: new row for relation "document" violates check constraint "concept_braucht_kennung"
+MT-63 · BESTANDEN — Manifest ohne Pruefsumme nicht freigebbar (K17-M06) · Meldung: new row for relation "model_manifest_version" violates check constraint "mmv_released_braucht_inhalt"
+MT-64 · BESTANDEN — OSS-Freigabe ohne Registernummer scheitert (K08-M24) · Meldung: new row for relation "knowledge_source" violates check constraint "ks_released_braucht_register_no"
+MT-65 · BESTANDEN — OSS nur unter MIT oder Apache-2.0 (K08-M18) · Meldung: new row for relation "knowledge_source" violates check constraint "oss_nur_mit_apache"
+MT-66 · BESTANDEN — Lizenz nur in SPDX-Schreibweise (V4/B) · Meldung: new row for relation "knowledge_source" violates check constraint "lizenz_spdx_form"
+MT-67 · BESTANDEN — LicenseRef fuer Nicht-SPDX-Bedingungen zulaessig (V4/B) · BaFin-Nutzungsbedingungen als LicenseRef -- SPDX sieht die Form dafuer vor
+MT-68 · BESTANDEN — Registernummer unveraenderlich (K08-M24) · Meldung: REGISTERNUMMER: einmal vergeben, unveraenderlich (K08-M24)
+MT-69 · BESTANDEN — Nummernvorrat fuehrt die drei Kennungen (V5/B) · je Praefix eine Zeile: Konto-Kennung, Registernummer, Projektnummer
+MT-70 · BESTANDEN — Freigabebezug typisiert, object_ref abgeleitet (K14-M08) · Objektart, Schluessel und Anlass getrennt; der Text entsteht daraus
+MT-71 · BESTANDEN — Beauftragung und Rueckweg sind verschiedene Anlaesse (V6/B) · die Freigabe zur Beauftragung deckt den Rueckweg aus der Pause nicht mit ab
+MT-72 · BESTANDEN — Freigabe auf ein fehlendes Objekt scheitert (K14-M08) · Meldung: FREIGABEBEZUG: KNOWLEDGE_SOURCE Q-GIBTS-NICHT existiert nicht (K14-M08)
+MT-73 · BESTANDEN — Halber Freigabebezug scheitert (V6/B) · Meldung: new row for relation "approval" violates check constraint "approval_bezug_ganz"
+MT-74 · BESTANDEN — K08-M23: die drei Spalten existieren (O-K08-1/5) · short_description, meta_tags, owner_id, owner_label, zweck
+MT-75 · BESTANDEN — Freigabe ohne Pflichtangaben scheitert (K08-M23) · Meldung: new row for relation "knowledge_source" violates check constraint "ks_released_braucht_pflichtangaben"
+MT-76 · BESTANDEN — Konto ohne Namensschnappschuss scheitert (Nr. 48) · Meldung: new row for relation "knowledge_source" violates check constraint "ks_owner_paarweise"
+MT-77 · BESTANDEN — Tagesfrist wird in der Sicht gerechnet (K15, Stufe 9a) · faellig_am = 2026-08-12 (90 Tage nach Erstellung, ueberfaellig)
+MT-78 · BESTANDEN — Anmeldecode-Faelligkeit tagesgenau (Nr. 35) · faellig_am = 2026-09-21
+MT-79 · BESTANDEN — Protokollzeilen tragen die Ereignisklasse (Nr. 60) · Klasse EREIGNIS ohne Frist und ohne Anonymisierung, Vorgabewert an event
+MT-80 · BESTANDEN — Projekte vor Stufe 05: 90 Tage, nicht 6 Monate (Nr. 58) · Nr. 58 verlangt die 30/60/90-Regel; Nr. 49 meint KI_NACHWEIS und BETRIEBSPROTOKOLL
+MT-81 · BESTANDEN — Konto ohne Namensschnappschuss scheitert (Nr. 48, K02-G13) · Meldung: new row for relation "event" violates check constraint "event_actor_paarweise"
+MT-82 · BESTANDEN — Freigabezeile unveraenderlich (K14-D09) · Meldung: APPEND-ONLY: approval erlaubt weder UPDATE noch DELETE
+MT-83 · BESTANDEN — Typisierte Agentenfreigabe wird erkannt (F-12) · der Release-Waechter liest den typisierten Bezug
+MT-84 · BESTANDEN — Anwendungsfreigabe mit richtigem Mandanten wird angenommen (T4) · angenommen
+MT-85 · BESTANDEN — Anwendungsfreigabe ohne Mandant scheitert (T4, O-K14-2) · Meldung: new row for relation "approval" violates check constraint "approval_mandant_passt"
+MT-86 · BESTANDEN — Anwendungsfreigabe mit fremdem Mandanten scheitert (T4) · Meldung: MANDANTENBEZUG: die Freigabe nennt Mandant 00000000-0000-0000-0000-000000000001, die Anwendung gehoert Mandant 00000000-0000-0000-0000-000000000002 (K14, O-K14-2, Zeichnung T4)
+MT-87 · BESTANDEN — Globale Freigabe mit Mandant scheitert (T4) · Meldung: new row for relation "approval" violates check constraint "approval_mandant_passt"
+MT-88 · BESTANDEN — Jede eigene Funktion hat einen festen Suchpfad (F-05) · 29 Funktionen, 0 ohne search_path
+MT-89 · BESTANDEN — Die Abnahmerolle darf nicht schreiben (T1, K13-M18) · Meldung: permission denied for table event
+MT-90 · BESTANDEN — Der Quellenbroker sieht die Konten nicht (T1) · Meldung: permission denied for table actor
+MT-91 · BESTANDEN — Ein Mandant fuehrt mehrere Einladungsdomaenen (P3) · mehrere Zeilen je Mandant moeglich
+MT-92 · BESTANDEN — Grossgeschriebene Domaene wird abgewiesen (P3) · Meldung: new row for relation "tenant_invite_domain" violates check constraint "invite_domain_klein"
+MT-93 · BESTANDEN — Etwas ohne Punkt ist keine Domaene (P3) · Meldung: new row for relation "tenant_invite_domain" violates check constraint "invite_domain_form"
+MT-94 · BESTANDEN — Entfernen einer Domaene wird protokolliert (P3) · Protokollzeilen vorher 2, nachher 3
+MT-95 · BESTANDEN — create_app_after_fit legt die Anwendung an, Nummer vergeben (O-K01-20, K01-M38) · Zeile angelegt: 6508624d-5fc4-4850-87b2-28bd9a72213c, vergebene Nummer: DE-DMB_002_01 (Kunden-Code des Mandanten: DE-DMB, K01-M35)
+MT-95b · BESTANDEN — Der Portalpfad DARF den Serverbefehl aufrufen (L1) · unter fr_portal angelegt: dfa3cf79-a6c6-4062-9139-fcaa178a220a, Zeilen zu dieser Kennung: 1, vergebene Nummer: DE-DMB_003_01
+MT-96 · BESTANDEN — Der Portalpfad darf app nicht direkt beschreiben (O-K01-20) · Meldung: permission denied for table app
+MT-97 · BESTANDEN — Der Portalpfad darf actor.sealed nicht aendern (T1) · Meldung: permission denied for table actor
+MT-98 · BESTANDEN — Ein Konto fremden Mandanten legt nichts an (K01-M27) · Meldung: ANLAGE: das Konto gehoert Mandant 00000000-0000-0000-0000-000000000001, angelegt wird fuer 00000000-0000-0000-0000-000000000002 (K01-M27)
+MT-99 · BESTANDEN — Eine zweite Verarbeitungsregion wird abgewiesen (Nr. 85) · Meldung: new row for relation "tenant" violates check constraint "region_release_1"

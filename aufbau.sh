@@ -3,7 +3,7 @@
 #  FREIRAUM · Pruefumgebung aufbauen
 #
 #  Stellt den Pilotstand in rund zwei Minuten her: frische Datenbank,
-#  DDL v2.9, Vorlaeufermigration 260801, Sammelmigration M30, Seed Welle 1, B1.
+#  DDL v2.9, Vorlaeufer 260801, Migrationen M30/M31/M32, Seed Welle 1, B1.
 #
 #  GEAENDERT AM 09.08.2026: Das Skript lud bis dahin
 #  migrations/260802_anmeldecode.sql -- diese Datei ist beim BEF-C1-Fix nach
@@ -33,10 +33,29 @@ HIER="$(cd "$(dirname "$0")" && pwd)"
 DDL="$HIER/schema/freiraum_datamodel.sql"
 VORLAEUFER="$HIER/migrations/_vorlaeufer/260801_tenant.sql"
 M30="$HIER/migrations/M30__pilot_sammelmigration.sql"
+# ERGAENZT AM 22.08.2026 (Befund A3): Der Pilotpfad lud bis heute DDL,
+# Vorlaeufer, M30 und Seed -- M31 und M32 fehlten. Gemessen und benannt in
+# arbeit/Bauberichte/m4_messbericht_260816.md:152 ("M31 laeuft gegen
+# freiraum-pilot nicht mit. Nur --ci zieht den Glob").
+#
+# Die Folge war keine Kleinigkeit: `freiraum-pilot` und `freiraum_ci` trugen
+# verschiedene Staende derselben Anwendung. M31 ersetzt
+# create_app_after_fit(uuid,text,text,uuid,uuid) durch die vierstellige
+# Fassung ohne Projektnummer (K01-M38); M32 setzt den Zeilenschutz fuer
+# `app`, `document`, `event` und den geprueften Stufenwechsel. Wer gegen die
+# Pruefumgebung baute, baute gegen einen Serverbefehl, den es im CI-Stand
+# nicht mehr gibt.
+#
+# REIHENFOLGE: streng aufsteigend nach Kennung, dieselbe Ordnung, die der
+# Glob `migrations/*.sql` in --ci und in Messstufe 1b herstellt
+# (.github/workflows/tore.yml). M31 setzt auf M30 auf, M32 auf M31 -- eine
+# andere Reihenfolge ist keine Variante, sondern ein Fehler.
+M31="$HIER/migrations/M31__projektnummer_und_zweckbestimmung.sql"
+M32="$HIER/migrations/M32__zeilenschutz_und_stufenwechsel.sql"
 SEED="$HIER/seeds/Seed_Welle1_M1-M4.sql"
 C=freiraum-pilot
 
-for f in "$DDL" "$VORLAEUFER" "$M30" "$SEED"; do
+for f in "$DDL" "$VORLAEUFER" "$M30" "$M31" "$M32" "$SEED"; do
   [ -f "$f" ] || { echo "Eingang fehlt: $f"; exit 1; }
 done
 
@@ -47,11 +66,57 @@ done
 # 02.08.2026 nur den nackten Hash, die neueren Dateien das shasum-Format
 # "<hash>  <datei>". Wir lesen das erste 64-stellige Hexwort und vergleichen
 # selbst, statt eine vorhandene Nachweisdatei umzuschreiben.
+#
+# GEAENDERT AM 22.08.2026 (Befund A6): Die Zeile lautete hier bis heute
+# `[ -f "$summendatei" ] || return 0` -- fehlte die Summendatei, kehrte die
+# Pruefung STILL zurueck und der Eingang galt als geprueft. Ein Riegel, der
+# schweigt, ist keiner: der Lauf sah genauso aus wie ein Lauf mit lueckenlos
+# nachgerechneten Eingaengen, und die Ausgabe unterschied beide nicht.
+#
+# WARUM ABBRUCH UND NICHT WARNUNG. Drei Gruende, in dieser Reihenfolge:
+#   1  K23-M22 -- genau ein Zustand je Pruefung. Was nicht gemessen werden
+#      konnte, ist GESPERRT, nicht bestanden. Eine Warnung, nach der der
+#      Aufbau weiterlaeuft und am Ende "Fertig" meldet, fuehrt den Lauf als
+#      bestanden, obwohl ein Glied der Pruefsummenkette fehlt.
+#   2  Die Nachweiskette (CLAUDE.md Abschn. 4, Glied 8) verlangt die
+#      Pruefsummen ALLER Eingaben. Eine fehlende Summe ist dort kein
+#      kleinerer Mangel als eine abweichende -- in beiden Faellen ist
+#      unbelegt, gegen welchen Stand gebaut wurde.
+#   3  Die abweichende Summe bricht seit jeher ab (unten, exit 1). Haette
+#      die fehlende nur gewarnt, waere der schwaechere Beleg die mildere
+#      Folge -- wer die Summendatei loescht, kaeme durch, wer sie pflegt,
+#      nicht. Das ist genau die Anreizrichtung, die K23-D05 verbietet.
+#
+# Gemessen am 22.08.2026: alle sechs Eingaenge dieses Skripts fuehren eine
+# Summendatei, der Abbruch trifft heute keinen gueltigen Lauf.
 pruefe_eingang() {
   local datei="$1" summendatei="${1%.sql}.sha256" soll ist
-  [ -f "$summendatei" ] || return 0
-  soll=$(grep -oE '[0-9a-f]{64}' "$summendatei" | head -1)
+  if [ ! -f "$summendatei" ]; then
+    echo "X  Pruefsumme fehlt: $summendatei"
+    echo "   Eingang: $datei"
+    echo "   Ohne hinterlegte Summe ist nicht belegbar, gegen welchen Stand"
+    echo "   gebaut wird. Zustand nach K23-M22: gesperrt -- nicht bestanden."
+    echo "   Anzulegen mit: shasum -a 256 \"$datei\" | cut -d' ' -f1 > \"$summendatei\""
+    exit 1
+  fi
+  # Das `|| true` ist Pflicht, nicht Bequemlichkeit: findet grep kein Hexwort,
+  # gibt es 1 zurueck, und `set -o pipefail` reicht diese 1 durch head hindurch
+  # als Wert der ganzen Zuweisung weiter. Unter `set -e` beendet das den Aufbau
+  # STILL -- gemessen am 22.08.2026 an einer leeren Summendatei: Rueckgabewert
+  # 1, keine einzige Zeile Ausgabe. Genau die Sorte Schweigen, gegen die dieser
+  # Riegel gebaut ist. Der leere Wert wird zwei Zeilen tiefer sprechend gemeldet.
+  soll=$(grep -oE '[0-9a-f]{64}' "$summendatei" | head -1 || true)
   ist=$(shasum -a 256 "$datei" | cut -d' ' -f1)
+  if [ -z "$soll" ]; then
+    # Eine Summendatei ohne 64-stelliges Hexwort ist kein Beleg, sondern eine
+    # leere Huelle. Ohne diese Klausel verglich das Skript "" gegen den
+    # Istwert und meldete eine Abweichung mit leerem Sollwert -- richtig im
+    # Ergebnis, irrefuehrend in der Meldung.
+    echo "X  Pruefsumme unlesbar: $summendatei"
+    echo "   Die Datei enthaelt kein 64-stelliges Hexwort."
+    echo "   Zustand nach K23-M22: gesperrt -- nicht bestanden."
+    exit 1
+  fi
   if [ "$soll" != "$ist" ]; then
     echo "X  Pruefsumme weicht ab: $datei"
     echo "   erwartet: $soll"
@@ -60,7 +125,7 @@ pruefe_eingang() {
     exit 1
   fi
 }
-for f in "$DDL" "$VORLAEUFER" "$M30" "$SEED"; do pruefe_eingang "$f"; done
+for f in "$DDL" "$VORLAEUFER" "$M30" "$M31" "$M32" "$SEED"; do pruefe_eingang "$f"; done
 
 # --- CI-Fassung ------------------------------------------------------
 # Tor 1b und pruefungen/lauf.sh messen gegen eine ANDERE Datenbank als die
@@ -89,7 +154,13 @@ if [ "${1:-}" = "--ci" ]; then
   exit 0
 fi
 
-echo "1/6 · Datenbank starten"
+# SCHRITTZAEHLER: seit dem 22.08.2026 acht statt sechs Schritte -- M31 und
+# M32 sind je ein eigener Schritt und keine Anhaengsel von M30. Der Grund ist
+# die Ablesbarkeit im Fehlerfall: bricht der Aufbau ab, nennt die letzte
+# gedruckte Zeile die Migration, an der er abbrach. Waeren die drei
+# Migrationen ein Schritt, stuende dort nur "Migrationen" und der Abbruch
+# waere nicht zuzuordnen.
+echo "1/8 · Datenbank starten"
 docker rm -f "$C" >/dev/null 2>&1 || true
 docker run -d --name "$C" -e POSTGRES_PASSWORD=pilot -e POSTGRES_DB=freiraum \
   -p 55432:5432 postgres:16 >/dev/null
@@ -97,13 +168,22 @@ for _ in $(seq 1 30); do docker exec "$C" pg_isready -U postgres >/dev/null 2>&1
 
 lade() { docker cp "$1" "$C:/tmp/x.sql" >/dev/null; docker exec "$C" psql -U postgres -d freiraum -v ON_ERROR_STOP=1 -q -f /tmp/x.sql; }
 
-echo "2/6 · Schema v2.9"
+echo "2/8 · Schema v2.9"
 lade "$DDL"
-echo "3/6 · Migration 260801 (Vertragsnachweis, Partneraufgabe)"
+echo "3/8 · Migration 260801 (Vertragsnachweis, Partneraufgabe)"
 lade "$VORLAEUFER"
-echo "4/6 · Sammelmigration M30 (Pilotstand)"
+echo "4/8 · Sammelmigration M30 (Pilotstand)"
 lade "$M30"
-echo "5/6 · Seed Welle 1"
+echo "5/8 · M31 · Projektnummer und Zweckbestimmung"
+lade "$M31"
+echo "6/8 · M32 · Zeilenschutz fuer drei Tabellen und Stufenwechsel"
+lade "$M32"
+# Der Seed laeuft NACH allen drei Migrationen, nicht zwischen ihnen. Er
+# schreibt Wissensbestand (Quellen, Bausteine, Vorlagen, Richtlinien) und
+# setzt den vollstaendigen Bedingungsstand voraus -- unter anderem
+# lizenz_spdx_form aus M30. Vorgezogen wuerde er gegen ein halbes Schema
+# laufen und der Befund BEF-D1 unten waere nicht mehr zuzuordnen.
+echo "7/8 · Seed Welle 1"
 SEED_ZUSTAND=bestanden
 if ! seed_aus=$(lade "$SEED" 2>&1); then
   SEED_ZUSTAND=gesperrt
@@ -116,7 +196,7 @@ if ! seed_aus=$(lade "$SEED" 2>&1); then
   echo "     Kopie hier (seeds/README.md, Aenderungsregel: keine)."
   echo "     Zustand nach K23-M22: gesperrt -- nicht bestanden."
 fi
-echo "6/6 · B1 · Betreiber-Mandant und Erst-Admin"
+echo "8/8 · B1 · Betreiber-Mandant und Erst-Admin"
 docker cp "$HIER/install/01_betreiber_und_erstadmin.sql" "$C:/tmp/b1.sql" >/dev/null
 docker exec "$C" psql -U postgres -d freiraum -v ON_ERROR_STOP=1 -q \
   -v admin_email="${FREIRAUM_ADMIN_MAIL:-michael.veil@exmachinai.com}" \

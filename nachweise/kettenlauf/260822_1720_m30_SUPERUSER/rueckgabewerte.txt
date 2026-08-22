@@ -1,0 +1,1 @@
+Prüffälle: psql-Rückgabewert 3

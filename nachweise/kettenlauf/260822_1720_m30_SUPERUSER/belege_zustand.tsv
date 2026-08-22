@@ -1,0 +1,4 @@
+0	Grundschema und Vorläufer	bestanden	Grundschema eingespielt; Vorläufer nicht verlangt (wie n2_lauf.sh)	`lauf0_grundschema.log`
+1	Migration zweimal, Schema und Daten unverändert	bestanden	beide diffs leer, 1 Migration(en) je zweimal	`schema_diff.txt` · `daten_diff.txt`
+2	Prüffälle	fehlgeschlagen	SUMME: 108 von 111 bestanden, 3 gescheitert — Folge von Lesart A, siehe Abbruchtext	`pruefung_ausgabe.log` · `summe.txt`
+3	-	fehlgeschlagen	Lauf endete hier	siehe Bildschirmausgabe

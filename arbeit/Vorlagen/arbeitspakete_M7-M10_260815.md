@@ -470,6 +470,17 @@ Das Prüfskript für die Installation **erzeugt den Schaden heute selbst**. Nach
 | 10.6 | **Zwei Dauermessungen am Bestand** aufnehmen (Zähldifferenz, Zuordnungstreue) | Prüf-Agent | **Übernehmen.** Sie laufen ohne neue Bedingung und finden auch Codes, die auf unbekanntem Weg entstanden sind |
 | 10.7 | **Wenn eine Bestandszeile die neue Bedingung verletzt:** nicht automatisch aufräumen | M. Veil | **Zustimmen.** Ein stiller Änderungslauf auf Bestandsdaten wäre genau die Art von Vorgang, die niemand bemerkt — und der Befund handelt davon, dass eine Codevergabe still passiert. Heute ist die Liste in beiden Datenbanken leer |
 
+### Zeichnung zu 10.3 · Der Maßstab — **liegt woanders**
+
+Die Zeichnung zu Punkt 10.3 steht **nicht hier**, sondern in der dafür bestehenden Datei
+`arbeit/Vorlagen/zeichnung_M7-M10_260815.md`, Abschnitt *„Nachtrag vom 22.08.2026"*.
+
+**Warum der Hinweis hier steht:** Am 22.08.2026 hatte der Orchestrator den Zeichnungsblock
+zunächst in dieses Blatt geschrieben. Das war ein Formfehler — F40 verlangt eine **getrennte**
+Zeichnungsdatei, und ihr Anlass war genau dieser Fall: eine neu erzeugte Vorlage hat einen
+Zeichnungsblock fünfmal überschrieben. Der Block ist am selben Tag umgezogen; hier bleibt der
+Verweis, damit niemand ihn sucht und nicht findet.
+
 ---
 
 ## 7 · Was ich nicht messen konnte

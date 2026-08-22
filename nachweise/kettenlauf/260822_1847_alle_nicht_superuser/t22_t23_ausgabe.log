@@ -1,0 +1,10 @@
+BEGIN
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+NOTICE:  T22 Bestaetigung ohne Siegel|Fehler|Fehler
+DO
+UPDATE 1
+T23 Bestaetigung mit Siegel|1|1
+ROLLBACK
