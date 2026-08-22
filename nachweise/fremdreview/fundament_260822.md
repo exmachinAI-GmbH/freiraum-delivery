@@ -15,6 +15,7 @@
 | evidenz | `nachweise/kettenlauf/260822_2129_alle/` (30 Dateien im Wortlaut) · `SOLL_zielbestand_M1.md` · `AUFLAGEN_M1_260822.md` · `arbeit/Vorlagen/m1_startklar_260820.md` · `arbeit/Vorlagen/zeichnung_M7-M10_260815.md` |
 | angefordert_von | `M. Veil` |
 | harness_hat_nicht_geschrieben | `ja` |
+| befunde | `A-1, A-2, A-3 — benannt, zugeordnet, terminiert und getragen; siehe nachweise/kettenlauf/AUFLAGEN_M1_260822.md` |
 | urteil | `traegt mit auflagen` |
 
 <!-- ENDE KOPF -->
