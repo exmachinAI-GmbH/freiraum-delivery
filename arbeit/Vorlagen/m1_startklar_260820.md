@@ -115,9 +115,9 @@ gegen `freiraum_ci`, das alle drei Migrationen trägt: dort meldet derselbe Prü
 
 | | | |
 |---|---|---|
-| **1** | Die drei berichtigten Pfade werden übernommen | ☐ so |
+| **1** | Die drei berichtigten Pfade werden übernommen | **☒ so** |
 | **2** | Umfang von M1: | ☐ A · **☒ B** · ☐ anders: ⟨ ⟩ |
-| **3** | Der Lauf wird gefahren am | ⟨Datum: ⟩ · von ⟨Name: ⟩ |
+| **3** | Der Lauf wird gefahren am | ⟨Datum: ⟩ · von ⟨Name: ⟩ — **bleibt offen, siehe unten** |
 
 *Zu Zeile 2 eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
 
@@ -133,10 +133,30 @@ Erweiterung — M1 misst gegen den geltenden Maßstab, und der ist seit dem 22.0
 Wer die Reihenfolge umdreht, hätte den Umfang eines Meilensteins geändert, ohne den Maßstab
 anzufassen; MT-95, MT-95b und MT-98 wären dann weiterhin ohne Grundlage bestanden.
 
-**Nicht mitgezeichnet:** Zeile 1 und Zeile 3 sind offen. Zeile 3 wird erst eingetragen, wenn der
-Lauf tatsächlich gefahren ist. Und **B heißt nicht, dass der Zeilenschutz eingeschaltet ist** —
-`M32` legt die Vorrichtung an und lässt die Durchsetzung ausdrücklich aus (`M32`:35–39). Der
-Nachweis, dass sie hält, gehört zu M11.
+**Zu Zeile 1** — eingetragen auf dieselbe Weisung vom 22.08.2026:
+
+> „Das ist hiermit auch angewiesen und gezeichnet. M. Veil, 22.8.26 … Zeile 1 (die drei
+> berichtigten Pfade)"
+
+Die drei berichtigten Pfade (`TST_DATEI`, `ALT_DATEI`, `GRUND_DATEI`, `n2_lauf.sh`:51, 60–63,
+71–74) sind damit übernommen · **gez. M. Veil, 22.08.2026**
+
+**Zu Zeile 3 — nicht eingetragen, obwohl angewiesen.**
+Zeile 3 hält fest, **wann** der Lauf gefahren wurde und **von wem**. Dieser Lauf hat gegen die
+Pilotumgebung **nicht stattgefunden** — es fehlt der Zugang (A-2), und aus der Cloud-Sitzung ist
+Port 5432 nicht erreichbar (gemessen am 22.08.2026: Port 443 offen, 5432 zu, gleicher Wirt).
+Ein Datum einzutragen hiesse, einen Lauf zu beurkunden, den es nicht gab. `CLAUDE.md`:258
+verbietet ausdrücklich, *„einen grünen Lauf zu melden, der nichts gemessen hat"*; fehlt die
+Grundlage, ist der Zustand **gesperrt** (K23-M22). Zeile 3 wird von der Person eingetragen, die
+den Lauf tatsächlich fährt — mit dem Datum, an dem er lief.
+
+**Was stattdessen gemessen ist:** derselbe Kettenlauf lokal gegen PostgreSQL 16, je auf frischer
+Datenbank — `--umfang alle`: 111 von 111 bestanden, beide Diffs 0 Byte; `--umfang m30`: 108 von
+111, die drei Fehlschläge sind MT-95, MT-95b und MT-98. Belege im Nachweisordner des Laufs.
+
+**Und B heißt nicht, dass der Zeilenschutz eingeschaltet ist** — `M32` legt die Vorrichtung an
+und lässt die Durchsetzung ausdrücklich aus (`M32`:35–39). Der Nachweis, dass sie hält, gehört
+zu M11.
 
 | Name | Rolle | Datum |
 |---|---|---|

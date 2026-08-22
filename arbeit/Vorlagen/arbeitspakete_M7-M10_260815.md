@@ -486,9 +486,26 @@ Das Prüfskript für die Installation **erzeugt den Schaden heute selbst**. Nach
 | | |
 |---|---|
 | `CLAUDE.md`:44 | Rang 1 lautet dort noch *„`freiraum_datamodel.sql` **plus** Sammelmigration **M30**"* und ist damit **veraltet**. Der Wortlaut ist nachzuziehen |
-| Bauauftrag :80–86 | Die Rangfolge steht dort wortgleich. Ob eine Auftragsberichtigung nötig ist, ist **nicht** mit dieser Zeichnung entschieden — sie gehört zu A-1 |
+| Bauauftrag :80–86 | Die Rangfolge steht dort wortgleich und ist damit überholt. **Die Berichtigung ist angewiesen** — siehe Nachtrag unten — und gehört zu Arbeitspaket **A-1** |
 | M1 | Der Umfang folgt hieraus: Lesart B. Eingetragen in `m1_startklar_260820.md` |
-| MT-95, MT-95b, MT-98 | Sie scheiterten gegen M30 allein, weil dort `p_project_no` noch entgegengenommen wird — ein Verstoß gegen K01-M38, den M31 behebt. Mit dem neuen Maßstab entfällt der Grund für eine benannte Ausnahme |
+| MT-95, MT-95b, MT-98 | Sie scheiterten gegen M30 allein, weil dort `p_project_no` noch entgegengenommen wird — ein Verstoß gegen K01-M38, den M31 behebt. Mit dem neuen Maßstab entfällt der Grund für eine benannte Ausnahme. **Gemessen am 22.08.2026:** `--umfang m30` meldet 108 von 111, `--umfang alle` meldet 111 von 111 |
+
+#### Nachtrag vom 22.08.2026 · Die Auftragsberichtigung
+
+*Eingetragen auf Weisung des Auftraggebers vom 22.08.2026. Wortlaut der Weisung:*
+
+> „Das ist hiermit auch angewiesen und gezeichnet. M. Veil, 22.8.26 … Die Auftragsberichtigung —
+> der Bauauftragstext führt die Rangfolge wortgleich (:80–86)."
+
+- [x] **Der Bauauftragstext :80–86 wird auf die erweiterte Rangfolge nachgezogen.** Die
+      Durchführung gehört zu Arbeitspaket **A-1** (Fassung v1.2 in die Konzept-Fabrik legen)
+      · **gez. M. Veil, 22.08.2026**
+
+**Bis zum Vollzug weichen zwei Stände voneinander ab.** `CLAUDE.md`:44 ist nachgezogen, der
+Auftragstext noch nicht. **Die Zeichnung gewinnt** — sie ist jünger und ausdrücklich. Wer sich
+in dieser Zeit auf :80–86 beruft, beruft sich auf einen überholten Stand. Der Harness vollzieht
+die Berichtigung **nicht selbst**: Der Auftragstext liegt in der Konzept-Fabrik, und dorthin
+schreibt der Harness nie.
 
 ---
 

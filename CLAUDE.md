@@ -41,13 +41,20 @@ Tor 4 dieses Harness ist **nicht** Tor II des Auftrags. Tor II ist der Wechsel n
 | Rang | Quelle | gewinnt gegen |
 |---|---|---|
 | **0** | Festlegungen **F01–F40** und gezeichnete Founder-Beschlüsse (`config/kanon.yaml`, `arbeit/Founder_Beschluesse/`) | **alles Weitere.** F28 nimmt K22 aus, F04 nimmt drei Portale aus |
-| 1 | `freiraum_datamodel.sql` **plus** Sammelmigration **M30** | Datenmodell-Doku, Handbücher, Prüffälle |
+| 1 | `freiraum_datamodel.sql` **plus** die Migrationen **M30, M31 und M32** | Datenmodell-Doku, Handbücher, Prüffälle |
 | 2 | `freiraum_datamodel_v2.9.md` | Handbücher, Prüffälle |
 | 3 | die beiden Handbücher v2.9 | Prüffälle |
 | 4 | `pruefung_v2.9.sql` | — |
 
-Wortgleich aus Bauauftrag :80–86. Das autoritative Zielschema ist eingefrorene Basis + M30
-in der Fassung mit der Prüfsumme aus dem gezeichneten N2-Nachweis (:88–90).
+Bis zum 21.08.2026 wortgleich aus Bauauftrag :80–86: dort lautete Rang 1 *„plus Sammelmigration
+M30"*. **Am 22.08.2026 hat der Auftraggeber den Maßstab erweitert** — Zeichnung zu Punkt 10.3 in
+`arbeit/Vorlagen/arbeitspakete_M7-M10_260815.md`, Wortlaut der Weisung dort. Der Eintrag oben ist
+nachgezogen; das autoritative Zielschema ist seither eingefrorene Basis **plus M30, M31 und M32**.
+
+> **Der Bauauftragstext :80–86 führt die alte Rangfolge noch.** Seine Berichtigung ist am
+> 22.08.2026 angewiesen und gehört zu Arbeitspaket **A-1**; bis sie vollzogen ist, weichen
+> Steuerdatei und Auftragstext voneinander ab. **Die Zeichnung gewinnt** — sie ist jünger und
+> ausdrücklich. Wer sich auf :80–86 beruft, beruft sich auf einen überholten Stand.
 
 ### Die Oberfläche hat eigene Quellen — und sie sind zwei
 
