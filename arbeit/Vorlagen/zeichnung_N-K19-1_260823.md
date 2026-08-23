@@ -51,11 +51,35 @@ Der Nachtrag sagt es selbst: „Kein hier als *nicht belegt* geführter Punkt gi
 
 ---
 
-## Zeichnung
+## Zeichnung — VOLLZOGEN am 23.08.2026
+
+**Gezeichnet wurde nicht auf diesem Blatt, sondern auf dem Nachtrag selbst.** Das ist der richtige Ort: dieses Blatt war die Vorlage, `N-K19-1__EN-03a_EN-04a.md` ist der Gegenstand.
 
 | Feld | Wert |
 |---|---|
-| Gegenstand | `N-K19-1__EN-03a_EN-04a.md` vom 14.08.2026, unverändert |
-| Gezeichnet durch | ________________________  ·  Datum: ____________ |
-| Gegenzeichnung | ________________________  ·  Datum: ____________ |
-| Wirkung | Auftrag an K19, die zwei Kästen, zwei Sitemap-Zeilen und zwei Zuordnungszeilen in die Fassung v1.4 aufzunehmen. K19 v1.3 bleibt unverändert. Kein als *nicht belegt* geführter Punkt gilt damit als entschieden. |
+| Ort der Zeichnung | Konzept-Fabrik › `ITERATION_2/02_AGENT_HARNESS_KONZEPTE/ITERATION_2/entscheidungsvorlagen/260814_nachtrag_k19_k16/N-K19-1__EN-03a_EN-04a.md` |
+| Gezeichnet durch | **A. Han · 23.08.2026** |
+| Gegenzeichnung | **M. Veil · 23.08.2026** |
+| Zusatz im Dokument | „Hiermit alles gezeichnet: A. Han, M. Veil, 23.8.26" |
+| Beleg | Dateistand der Quelle 23.08.2026, 12:26 UTC — gelesen am selben Tag |
+| Die Unterschriftszeilen dieses Blattes | bleiben leer. Sie zweimal zu füllen hiesse, zwei Zeichnungen zu führen, wo es eine gibt |
+
+### Was die Zeichnung bewirkt
+
+Der gezeichnete Wortlaut sagt es selbst: **„Auftrag an K19, die beiden Kästen, die Sitemap-Zeilen und die Zuordnungszeilen in eine künftige Fassung aufzunehmen. K19 v1.3 bleibt unverändert."**
+
+Damit ist der Auftrag erteilt, aber **K19 führt die Kästen noch nicht**. Nach K19-G01 gelten EN-03a und EN-04a bis zur Aufnahme in eine Fassung v1.4 weiterhin als *nicht belegt*. Der nächste Schritt liegt bei K19, nicht mehr bei der Unterschrift.
+
+### Was die Zeichnung ausdrücklich NICHT entscheidet
+
+Ebenfalls im gezeichneten Wortlaut: **„Kein hier als *nicht belegt* geführter Punkt gilt mit dieser Zeichnung als entschieden."**
+
+Offen bleiben damit alle Punkte A1 bis A15 und B1 bis B14 des Nachtrags — für den Bau von M3 vor allem:
+
+| Punkt | Bleibt offen |
+|---|---|
+| **A4 / O-K19-11** | „höchstens fünf" gegen „genau fünf". Der Bau zeigt fünf fest |
+| **A5 / O-M3-5** | Der Träger der fünf Fragen und die fehlende Zuordnungsspalte |
+| **A11** | Ob die drei Antwortmöglichkeiten Schaltfläche, Kontrollkästchen oder Auswahlliste sind |
+
+Beide Entscheidungsvorlagen liegen daneben: `entscheidung_O-K19-11_260823.md` und `M36_entwurf_zuordnungsspalte_260823.sql`.
