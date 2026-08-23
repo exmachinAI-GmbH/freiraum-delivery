@@ -1,0 +1,145 @@
+Lauf gegen freiraum_ac16 · Empfaenger michael.veil@icloud.com
+Kopfdatei: /Users/mveil/mailkopf.txt
+
+== Migrationsprueffaelle ==
+psql:pruefungen/migration/M30__pruefung.sql:1792: NOTICE:  MT-88 · *** GESCHEITERT *** — Jede eigene Funktion hat einen festen Suchpfad (F-05) · 29 Funktionen, 2 ohne search_path
+psql:pruefungen/migration/M30__pruefung.sql:1792: NOTICE:  SUMME: 110 von 111 bestanden, 1 gescheitert
+::error::Migrationsprueffaelle nicht bestanden
+
+== Negativfaelle ==
+   M30_N1_frist_ge_mindestfrist — scheitert an frist_ge_mindestfrist
+      psql:migrations/negativfaelle/M30_N1_frist_ge_mindestfrist.sql:15: ERROR:  new row for relation "retention_rule" violates check constraint "frist_ge_mindestfrist"
+   M30_N2_mail_fehler_braucht_grund — scheitert an mail_fehler_braucht_grund
+      psql:migrations/negativfaelle/M30_N2_mail_fehler_braucht_grund.sql:14: ERROR:  new row for relation "mail_delivery" violates check constraint "mail_fehler_braucht_grund"
+   M30_N3_pseudonym_vor_frist — scheitert an pseudonym_vor_frist
+      psql:migrations/negativfaelle/M30_N3_pseudonym_vor_frist.sql:28: ERROR:  new row for relation "retention_rule" violates check constraint "pseudonym_vor_frist"
+   M30_N4_tagesfrist_positiv — scheitert an tagesfrist_positiv
+      psql:migrations/negativfaelle/M30_N4_tagesfrist_positiv.sql:13: ERROR:  new row for relation "retention_rule" violates check constraint "tagesfrist_positiv"
+   M31_N1_anlage_ohne_eignung — scheitert an ANLAGE: der Eignungs-Check steht nicht auf GEEIGNET
+      psql:migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql:43: ERROR:  ANLAGE: der Eignungs-Check steht nicht auf GEEIGNET (K01-M27)
+   M31_N2_treffer_frage1_ohne_kenntnisnahme — scheitert an ZWECKBESTIMMUNG: die Kenntnisnahme zu Anhang III fehlt
+      psql:migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql:42: ERROR:  ZWECKBESTIMMUNG: die Kenntnisnahme zu Anhang III fehlt; ohne sie ist die Auskunftspflicht nach Art. 25 Abs. 4 nicht belegbar (K04-M21)
+   M31_N3_treffer_frage2_wird_nicht_weitergefuehrt — scheitert an ZWECKBESTIMMUNG: verbotene Praktik nach Art. 5
+      psql:migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql:43: ERROR:  ZWECKBESTIMMUNG: verbotene Praktik nach Art. 5 der KI-Verordnung bejaht; der Weg wird nicht weitergefuehrt (K04-D10)
+   M31_N4_erklaerung_ohne_zweite_antwort — scheitert an zweck_erklaerung_vollstaendig
+      psql:migrations/negativfaelle/M31_N4_erklaerung_ohne_zweite_antwort.sql:54: ERROR:  new row for relation "fit_check" violates check constraint "zweck_erklaerung_vollstaendig"
+   M32_N1_stufe_uebersprungen — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: ORIENTIERUNG nach UEBERSICHT ist kein Uebergang von M5
+               create_app_after_fit         
+      --------------------------------------
+   M32_N2_fremder_mandant — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: das Konto gehoert Mandant
+               create_app_after_fit         
+      --------------------------------------
+   M32_N3_ohne_mitgliedschaft — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: keine Mitgliedschaft im Endnutzer-Portal fuer diesen Mandanten
+               create_app_after_fit         
+      --------------------------------------
+   M32_N4_zeilenschutz_haelt — DURCHGELAUFEN, die Bedingung fehlt
+
+== Klausel-Prueffaelle ==
+::warning::ECHTVERSAND-LAUF — dieser Lauf misst NUR AC-16.
+   Der Server verschickt ueber den echten Wirt (mail.bytecamp.net).
+   Die uebrigen Faelle brauchen den oertlichen Faenger und TRAGEN HIER NICHT:
+   Adressen @pruef.example nimmt kein fremder Anbieter an, der Versand
+   scheitert, und die Anwendung entwertet daraufhin den Code (mail/versand.py).
+   Ihre Fehlschlaege sind KEIN Baubefund (Blatt 90, Abschn. 4).
+   Fuer einen vollstaendigen Lauf: FREIRAUM_ECHTVERSAND leer lassen.
+
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_anmeldecode.log
+      AC-01   GESCHEITERT  [EN-01, K03-M05, K03-M15] Codeversand nach Einloesung: im Mailfang steht keine sechsstellige Ziffernfolge in einer Mail an ac_kette@pruef.example;
+      AC-02   GESPERRT     [EN-01, K03-M15] Anmeldung mit dem versandten Code nicht pruefbar: AC-01 hat keinen lesbaren Code geliefert
+      AC-04   GESPERRT     [K03-M15, EN-01, K03-G01, K03-G05] Codefrist-Negativfall nicht aufbaubar: Einloesung fuer ac_frist@pruef.example schlug fehl oder kein lesbarer Code (Status 303, Code 'leer')
+      AC-05   GESPERRT     [K03-M15, EN-01] Einmalverwendung nicht pruefbar: AC-01/AC-02 haben keinen verwendbaren Code geliefert
+      AC-06   GESPERRT     [K03-M16] Gegenprobe zu K03-M16 nicht aufbaubar: Einloesung fuer ac_unterschwelle@pruef.example schlug fehl oder kein lesbarer Code
+      AC-07   GESPERRT     [K03-M16, K03-G05] Fuenf-Fehlversuche-Sperre nicht aufbaubar: Einloesung fuer ac_gesperrt5@pruef.example schlug fehl oder kein lesbarer Code
+      AC-08   GESPERRT     [K03-M16, K03-G01] Ununterscheidbarkeit nicht aufbaubar: Einloesung fuer ac_gegenprobe@pruef.example schlug fehl oder kein lesbarer Code
+      AC-09   GESPERRT     [K03-M16, K03-G01, EN-01] Kontoexistenz nicht pruefbar: kein Vergleichsrumpf aus AC-08 vorhanden
+      AC-12   GESPERRT     [K23-D09] Fehlerausgabe nicht pruefbar: kein Code oder keine Antwort aus AC-08 vorhanden
+      AC-13   GESPERRT     [K23-D09] Kreuzpruefung nicht moeglich: keine Antwort aus AC-08 vorhanden
+      AC-15   GESPERRT     [K20-M18] Nachweis der Anmeldung nicht pruefbar: AC-01/AC-02 haben keine erfolgreiche Anmeldung fuer ac_kette@pruef.example geliefert
+      AC-16   GESPERRT     [B2 (Zustellnachweis, Teilaussage 1 der M2-Nachrechnung)] Echter Versand ausgeloest und von mail_delivery bestaetigt (sent_at=2026-08-23 12:48:35.405921+00, kind=ANMELDECODE, status=UEBERGEBEN). Jetzt binnen 20 Minuten den ZUGESTELLTEN Rohkopf bei michael.veil@icloud.com lesen (mit DKIM-Signature und Authentication-Results), unveraendert nach /Users/mveil/mailkopf.txt ablegen und DIESEN Lauf mit denselben Umgebungswerten wiederholen -- anmeldecode_daten.sql dabei NICHT erneut einspielen, das wuerfe den soeben erzeugten, einmaligen Token weg und entwertete diesen Beleg.
+      ... 1 weitere Zeile(n) hier nicht gezeigt;
+      vollstaendig im Bericht (--bericht) und im Klausellauf selbst.
+::error::anmeldecode — 5 von 17 bestanden, 12 gescheitert
+   anmeldung — GESPERRT: pruefungen/klauseln/anmeldung_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       62da272e14db942574e367c047b33276
+      (1 row)
+      
+   einloesung — GESPERRT: pruefungen/klauseln/einloesung_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       d92f5611265e31878cd5878f2a3bde4f
+      (1 row)
+      
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_gespraech.log
+      K04-G04   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K04-M11   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K05-G01   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K19-D09-thema GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K04-G04-offen GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K04-G04-ohnecheck GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K03-D01   BESTANDEN    -- erwartet: status=GESPERRT fuehrt zur Ablehnung, nie zum Teil-Zugang. Anmeldung von gs_gesperrt@ scheiterte (Status 200, kein fr_sitzung) -- kein Teil-Zugang entstanden.
+      K05-M01   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K05-M02   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K05-M03-reihenfolge GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K05-M03-positiv GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      K05-M04   GESPERRT     EN-05 nicht entdeckt: unter keinem der von der Startseite erreichbaren Ziele steht ein Inhalt mit dem Merkmal 'was anderes' (ohne diese frage ignorieren)
+      ... 105 weitere Zeile(n) hier nicht gezeigt;
+      vollstaendig im Bericht (--bericht) und im Klausellauf selbst.
+::warning::gespraech — 13 von 128 bestanden, 115 gescheitert (K05-G12 nicht mitgezaehlt, siehe oben); alle offenen Punkte GESPERRT, keiner gescheitert
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_k19_kasten.log
+      EN-04a-A       GESPERRT     Die Build-Referenz fuehrt fuer EN-04a keinen Kasten -- es gibt nichts, dem die Seite folgen koennte (K19-G01: fail-closed, der Bildschirm gilt als nicht belegt). Kein Baufehler.
+      EN-04a-B       GESPERRT     Ohne Kasten keine Reihenfolge.
+      davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): 2
+::warning::k19_kasten — 4 von 6 bestanden, 2 gescheitert; alle offenen Punkte GESPERRT, keiner gescheitert
+   mitgliedschaft — GESPERRT: pruefungen/klauseln/mitgliedschaft_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       a9036aae0b9f95ba5fa1c84d154ef958
+      (1 row)
+      
+   versand — GESPERRT: pruefungen/klauseln/versand_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       5a4bda9e640b276ee2f5f9ce3353b021
+      (1 row)
+      
+   vorpruefung — GESPERRT: pruefungen/klauseln/vorpruefung_daten.sql laeuft nicht durch
+      psql:pruefungen/klauseln/vorpruefung_daten.sql:254: ERROR:  duplicate key value violates unique constraint "fit_check_pkey"
+      DETAIL:  Key (id)=(00000000-0000-4000-8000-00000000ec01) already exists.
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_zweckbestimmung.log
+      ZB-05   GESPERRT     Nicht messbar: die Fahrt mit zwei Nein-Antworten kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen)
+      ZB-06   GESPERRT     Warnung, Anbieterpflichten und der ausbleibende Halt sind gemessen und in Ordnung; nicht messbar blieb allein, ob eine Aufforderung zu bestaetigen erscheint: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-07   GESPERRT     Halt, Grund und Artikel-5-Verweis sind gemessen und in Ordnung; ungemessen blieb: ob die Kenntnisnahme offen steht (ihr Ziel ist nicht bestimmbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird); ob der Weg zur Anlage offen steht (sein Ziel ist nicht bestimmbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird);
+      ZB-08   GESPERRT     Artikel-5-Verweis, ausbleibende Anhang-III-Warnung, keine Anwendung und kein Nachweis der Kenntnisnahme sind gemessen und in Ordnung; ungemessen blieb: ob die Kenntnisnahme offen steht (ihr Ziel ist nicht bestimmbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird); ob der Weg zur Anlage offen steht (sein Ziel ist nicht bestimmbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird);
+      ZB-10   GESPERRT     Nicht messbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-11   GESPERRT     Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-12   GESPERRT     Nicht messbar: die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-13   GESPERRT     Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-14   GESPERRT     Nicht messbar: es kamen nicht zwei Anlagen zustande, deren Nummern sich vergleichen liessen
+      ZB-15   GESPERRT     Nicht messbar: der Weg zur Anlage ist nicht bestimmbar -- die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-16   GESPERRT     Nicht messbar: die Aufforderung zu bestaetigen wurde nicht gefunden -- die Fahrt FREIER WEG (beide Fragen verneint) kam nicht bis zur Auswertung -- die Antwort auf den Weiterweg '/zweckbestimmung/anlegen' (Status 'HTTP/1.1 303 See Other', Weiterleitung '/zweckbestimmung') fuehrt auf eine Seite OHNE JEDES ZIEL: dort steht weder ein <form action=/...> noch ein <a href=/...>. Ohne Ziele laesst sich weder der Weg zur Kenntnisnahme noch der zur Anlage ableiten (sie entstehen aus dem Unterschied der Zielmengen). Die Fahrt mit Treffer in Frage 1 kam durch; es fehlt die Vergleichsmenge, gegen die das Ziel der Kenntnisnahme abgeleitet wird
+      ZB-24   GESPERRT     Nicht messbar: die Anlage nach der Kenntnisnahme kam nicht zustande
+      ... 2 weitere Zeile(n) hier nicht gezeigt;
+      vollstaendig im Bericht (--bericht) und im Klausellauf selbst.
+::warning::zweckbestimmung — 14 von 27 bestanden, 13 gescheitert; alle offenen Punkte GESPERRT, keiner gescheitert
+
+=======================================================
+Pruefpunkte: bestanden: 8 · fehlgeschlagen: 6 · gesperrt: 8
+Einzelfaelle: bestanden: 36 · fehlgeschlagen: 1 · gesperrt: 141
+Bericht: /Users/mveil/ac16_senden.json
+Manifest: /Users/mveil/ac16_senden_manifest.json
+Pruefsumme: /Users/mveil/ac16_senden_manifest.json.sha256  (c2c4fa5199102d2a…)
+::error::Tor 1c: 6 Fehlschlag/Fehlschlaege
+
+───────────────────────────────────────────────────────────
+ERWARTET: AC-16 GESPERRT mit 'Echter Versand ausgeloest'.
+Das ist der ERFOLG dieses Durchgangs, nicht sein Fehlschlag.
+
+Jetzt binnen 20 Minuten:
+  1. Mail bei michael.veil@icloud.com oeffnen
+  2. Rohkopf anzeigen (Gmail: drei Punkte -> Original anzeigen)
+  3. kopieren, dann:  pbpaste > /Users/mveil/mailkopf.txt
+  4. dann:            ./werkzeuge/ac16_echtlauf.sh pruefen
+
+NICHT 'vorbereiten' wiederholen -- das wuerfe den Token weg.
