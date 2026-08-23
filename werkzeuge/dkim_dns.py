@@ -319,7 +319,7 @@ def main():
     if sel is None:
         for zeile in warnungen:
             print(f"   {zeile}")
-        print(f"\nGESPERRT · kein Selektor benennbar — nichts gemessen (K23-M22).")
+        print("\nGESPERRT · kein Selektor benennbar — nichts gemessen (K23-M22).")
         print("RUECKGABE: 2")
         return 2
 
