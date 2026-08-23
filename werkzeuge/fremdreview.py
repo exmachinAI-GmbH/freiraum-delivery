@@ -65,6 +65,22 @@ PFLICHT = [
 BEJAHUNG = ["frische_instanz", "getrennter_kontext", "gegen_roh_evidenz",
             "harness_hat_nicht_geschrieben"]
 
+# Erwartet, aber NICHT erzwungen. `weg` sagt, ueber welchen Kanal das Urteil
+# eingeholt wurde -- die Anlage "Bauverfahren" :114 schreibt "direkt zu OpenAI
+# ueber MCP, nicht ueber die Azure-OpenAI-Ressource" vor, und bis zum 24.08.2026
+# konnte kein Werkzeug pruefen, ob das eingehalten wurde: der Kopf hatte kein
+# Feld dafuer. Genau so ist es einmal danebengegangen, siehe
+# arbeit/Vorlagen/entscheidung_fremdmodell_mcp_260824.md, Abschnitt 8.1.
+#
+# WARUM NICHT IN PFLICHT: Die bereits abgelegten Blaetter sind von Menschen
+# GEZEICHNET. Nimmt man `weg` in PFLICHT auf, werden sie rueckwirkend
+# "gesperrt" -- und der einzige Ausweg waere, dass jemand ein Feld in einen
+# gezeichneten Kopf nachtraegt. Ein nachtraeglich ergaenzter Kopf ist aber
+# genau das, wogegen dieses Werkzeug gebaut ist. Das Feld wird deshalb
+# gemeldet, nicht erzwungen; erzwingen kann es erst ein Antrag, der die alten
+# Blaetter neu zeichnen laesst.
+ERWARTET = ["weg"]
+
 URTEILE = {"traegt", "traegt mit auflagen", "traegt nicht",
            "trägt", "trägt mit auflagen", "trägt nicht"}
 
@@ -160,8 +176,18 @@ def gezeichnet(text):
 
 def blatt_pruefen(datei):
     befunde = []
+    hinweise = []
     text = datei.read_text(encoding="utf-8")
     kopf = kopf_lesen(text)
+
+    for feld in ERWARTET:
+        wert = kopf.get(feld, "")
+        if not wert or PLATZHALTER.match(wert):
+            hinweise.append(
+                f"Kopffeld '{feld}' fehlt. Das Blatt sagt damit nicht, ueber "
+                "welchen Kanal das Urteil eingeholt wurde -- die Anlage "
+                "'Bauverfahren' :114 schreibt einen bestimmten vor. Kein "
+                "Formfehler: der Zustand bleibt unveraendert.")
 
     for feld in PFLICHT:
         wert = kopf.get(feld, "")
@@ -215,7 +241,7 @@ def blatt_pruefen(datei):
         zustand = "fehlgeschlagen"
     else:
         zustand = "bestanden"
-    return zustand, kopf, befunde
+    return zustand, kopf, befunde, hinweise
 
 
 def stand(ort, scheibe=None):
@@ -247,7 +273,7 @@ def stand(ort, scheibe=None):
                 "der Harness schreibt es nie selbst." + woher)
     zeilen = []
     for b in blaetter:
-        zustand, kopf, _ = blatt_pruefen(b)
+        zustand, kopf, _, _ = blatt_pruefen(b)
         zeilen.append(
             "Tor 3 · Scheibe {s}: angefordert am {d} von {w} · Modell {m} {f} · "
             "Urteil *{u}* · Nachweis {z}".format(
@@ -295,7 +321,7 @@ def main():
 
     gesperrt = fehl = gut = 0
     for b in blaetter:
-        zustand, kopf, befunde = blatt_pruefen(b)
+        zustand, kopf, befunde, hinweise = blatt_pruefen(b)
         if a.scheibe and kopf.get("scheibe") != a.scheibe:
             continue
         marke = {"bestanden": "BESTANDEN", "gesperrt": "GESPERRT",
@@ -306,6 +332,8 @@ def main():
               f"{modell} {fassung}")
         for f in befunde:
             print(f"               - {f}")
+        for h in hinweise:
+            print(f"               ~ HINWEIS: {h}")
         gesperrt += zustand == "gesperrt"
         fehl += zustand == "fehlgeschlagen"
         gut += zustand == "bestanden"
