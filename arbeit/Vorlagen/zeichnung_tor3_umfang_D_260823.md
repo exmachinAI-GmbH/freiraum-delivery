@@ -40,7 +40,9 @@ Nachfrage nachgereicht wird. **Gruppe D: ~124 KiB.**
 `x` **B · Ausschnitt der geprüften Klauseln** — nur die Klauseln der Abnahmeeinheit, mit
 Wortlaut und Akzeptanzkriterium, als eigene Datei erzeugt. Wie beim Blindauftrag M5, der
 101 Klauseln als `klauseln.md` mitgab. **Gruppe D: geschätzt 150–400 KiB, je nach Schnitt.**
-⟨Schnitt: …………………………⟩
+⟨Schnitt: Klauseln der Konzepte K03, K04, K13, K19, K20 — Wortlaut und, wo
+vorhanden, Akzeptanzkriterium; fehlende Kriterien bleiben sichtbar als „ohne
+Kriterium" und werden nicht weggelassen⟩
 
 `☐` **C · Alles** — das vollständige Register. **Gruppe D: 4254 KiB.**
 *Der Harness rät ab; die Begründung steht im Kasten oben.*
