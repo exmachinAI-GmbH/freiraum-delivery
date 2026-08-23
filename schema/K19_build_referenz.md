@@ -1,13 +1,15 @@
-# K19 · Build-Referenz (ASCII) — Konzept v1.3
+# K19 · Build-Referenz (ASCII) — Konzept v1.4
 | Feld | Wert |
 |---|---|
 | Konzept | K19 · Build-Referenz (ASCII) |
-| Version / Status | v1.3 · **Freigegeben** |
-| Datum / Freigabe | 01.08.2026 · Vier-Augen: 01.08.2026, M. Veil (Founder) |
+| Version / Status | v1.4 · **Freigegeben** |
+| Datum / Freigabe | 23.08.2026 · Vier-Augen: 23.08.2026, M. Veil (Founder) |
+| Vorgaengerfassung | v1.3, freigegeben 01.08.2026 — abgeloest am 23.08.2026 |
+| Aenderung gegenueber v1.3 | Aufnahme von EN-03a und EN-04a: zwei Kaesten und zwei Sitemap-Zeilen (Abschn. 6), zwei Zuordnungszeilen (Abschn. 8), O-K19-11 (Abschn. 11). Wortlaut aus N-K19-1 vom 14.08.2026 (A. Han); drei Verweise auf K04-Klauseln in der Schreibweise angepasst. Sonst keine Aenderung. |
 | Quellen | `quellen/build-inventar.md` · `quellen/build-tot.md` · Endnutzer-Handbuch Kap. 2–12 · EXMA-Handbuch Kap. 2–11 · `config/kanon.yaml` |
-| Seitenlimit | ≤ 12 Seiten (Ist: 11.7 — 5857 Wörter, gemessen von `werkzeuge/lint.py`) |
-| Lint | **grün · 0 Fehler · 0 Hinweise** |
-| Tabletop | **bestanden** · 13/14 · 93 % · Lauf 2 |
+| Seitenlimit | ≤ 13 Seiten (Ist: 12.8 — 6407 Wörter, 500 je Seite). Berichtigt: v1.3 nannte 12, `config/konzepte.yaml` führt für K19 seit dem 05.08.2026 `umfang: 13` (F30). |
+| Lint | Struktur, Klauseln, Enums, Diagramme nachgefahren: **0 Fehler** |
+| Tabletop | Stand v1.3: bestanden · 13/14 · 93 %. Für v1.4 **nicht wiederholt** |
 | Vorbehalt | Nicht vorhandene Release-1-Felder und Demo-Reset sind aus den Kästen entfernt. Technische Umsetzung von Accessibility, Autorisierung und Produktionssperren bleibt Abnahmegegenstand der Eigentümerkonzepte. |
 | Anhang | `03_KONZEPTE_v2.9/schemas/K19_spalten-herkunft.md` |
 | Maschinenlesbare Screenquelle | `03_KONZEPTE_v2.9/schemas/K19_screens.yaml` |
@@ -168,15 +170,18 @@ ENDUSER · Endnutzer-Portal        (portal_code ENDUSER · release_status ENABLE
 │   └─ Code falsch oder Link aelter als 24 h ──▶ bleibt auf EN-01
 ├─ EN-02  Startseite — links Gespraech, rechts Ihre Anwendungen
 │   ├─ EN-03  Direkt-Prototyp-Check ──▶ EN-12
+│   │   └─ EN-03a  Die fuenf Fragen ──▶ EN-12 · EN-04
 │   └─ EN-04  Eignungs-Check, drei Fragen
 │       ├─ NICHT_GEEIGNET ──▶ Halt, kein Weiterweg
-│       └─ Gespraech in fuenf Stufen (journey_phase)
-│           ├─ EN-05  Stufe 01 ORIENTIERUNG
-│           ├─ EN-06  Stufe 02 INTERVIEW
-│           ├─ EN-07  Stufe 03 UEBERSICHT
-│           │   └─ Haekchen fehlt ──▶ Weiter-Schaltflaeche ausgeblendet
-│           ├─ EN-08  Stufe 04 PROTOTYP
-│           └─ EN-09  Stufe 05 ANGEBOT ──▶ EN-10  Bestaetigung
+│       └─ GEEIGNET ──▶ EN-04a  Zweckbestimmung, zwei Fragen
+│           ├─ Treffer Frage 2 ──▶ Halt, kein Weiterweg
+│           └─ Gespraech in fuenf Stufen (journey_phase)
+│               ├─ EN-05  Stufe 01 ORIENTIERUNG
+│               ├─ EN-06  Stufe 02 INTERVIEW
+│               ├─ EN-07  Stufe 03 UEBERSICHT
+│               │   └─ Haekchen fehlt ──▶ Weiter-Schaltflaeche ausgeblendet
+│               ├─ EN-08  Stufe 04 PROTOTYP
+│               └─ EN-09  Stufe 05 ANGEBOT ──▶ EN-10  Bestaetigung
 ├─ EN-11  Meine Anwendungen
 ├─ EN-12  Direkt-Prototypen
 ├─ EN-13  Einstellungen
@@ -236,6 +241,31 @@ Beleg: Endnutzer-Handbuch 2.2 und 2.3, Abbildungen 2 und 3.
 Beleg: Endnutzer-Handbuch 3.1, Abbildung 4.
 
 ```
+╭─ EN-03a · Die fuenf Fragen ─────── [Vorpruefung 1 von 2] ─╮
+│  Zugang: nach Anmeldung  │
+│  Frage 1 von 5                                            │
+│  Was haetten Sie am liebsten in der Hand?                 │
+│  [a  eine Datei, die ich oeffne, lese und weitergebe]     │
+│  [b  etwas, das ich aufrufe und in dem ich arbeite]       │
+│  [c  weiss ich noch nicht]                                │
+│  danach an derselben Stelle Frage 2 Wiederholung, Frage 3 │
+│  Beteiligte, Frage 4 Daten, Frage 5 Verbindlichkeit       │
+│  Auswertung serverseitig: Vetorecht der Fragen 5 und 1,   │
+│  Zaehlung der Fragen 2 bis 4 — der Bildschirm liefert     │
+│  kein Ergebnis mit                                        │
+│  Ergebnis  Vorschlag Direkt-Prototyp oder Anwendung, mit  │
+│  genau einem Satz, der die ausschlaggebende Antwort nennt │
+│  Solange eine Frage offen ist, steht an Stelle der beiden │
+│  Weiterwege ein Hinweis, der die offene Frage nennt       │
+│  Erst mit dem Ergebnis erscheinen die beiden Weiterwege:  │
+│  [Arbeitsdokument]  [Vorpruefung 2]                       │
+│  Der Direkt-Prototyp bleibt ungeprueft und ist nie        │
+│  Gegenstand einer Angebotsanfrage.                        │
+╰───────────────────────────────────────────────────────────╯
+```
+Beleg: Endnutzer-Handbuch 3.1, ohne Abbildung.
+
+```
 ╭─ EN-04 · Eignungs-Check ────────── [Vorpruefung 2 von 2] ─╮
 │  Zugang: nach Anmeldung  │
 │  Frage 1  Was soll am Ende entstehen?      [ART]          │
@@ -247,6 +277,27 @@ Beleg: Endnutzer-Handbuch 3.1, Abbildung 4.
 ╰───────────────────────────────────────────────────────────╯
 ```
 Beleg: Endnutzer-Handbuch 3.2 und 3.3, Abbildungen 5 bis 8.
+
+```
+╭─ EN-04a · Zweckbestimmung ─────────────── [nicht belegt] ─╮
+│  Zugang: nach Anmeldung  │
+│  Frage 1  Bewertung von Menschen (Anhang III) [Ja] [Nein] │
+│  Frage 2  Verbotene Praktik (Art. 5)          [Ja] [Nein] │
+│  Vorrang  Treffer in Frage 2 geht Frage 1 vor             │
+│  Keine Eignungsfrage: Art, Nutzung, Daten unberuehrt      │
+│  [Weiter] ausgeblendet, bis beide Fragen beantwortet sind │
+│  Treffer Frage 1  Warnung: Anhang III kann greifen. Sie   │
+│  bringen die Anwendung als Anbieter unter eigenem Namen   │
+│  in Verkehr, Pflichten aus Art. 9, 11, 14, 17 und 43.     │
+│  [Kenntnis genommen]                                      │
+│  Treffer Frage 2  Halt-Feld mit dem Grund und Verweis auf │
+│  Art. 5, auch wenn Frage 1 zutrifft. Kein Weiterweg:      │
+│  [Antwort aendern] [Termin] [Zur Uebersicht]              │
+│  Kein Treffer  Anwendung wird angelegt, weiter nach EN-05 │
+╰───────────────────────────────────────────────────────────╯
+```
+Beleg: `K19_screens.yaml` v1.2 Z. 219–278 · K04 v1.7 Abschn. 3.1 (Klauseln M19 bis M21) ·
+K00 Beschluss-Log v1.10 Z. 250 (S23, Founder, 31.07.2026), ohne Abbildung.
 
 ```
 ╭─ EN-05 · Stufe 01 Orientierung ────── [ORIENTIERUNG 1/5] ─╮
@@ -646,6 +697,8 @@ Beleg: EXMA-Handbuch 11, Abbildung 19. Die Vorführ-Zurücksetzung ist kein Betr
 | EN-01 · EX-01 | Anmeldung | K03 | Einmal-Link, Code, Kontozustand |
 | EN-02 | Startseite | K01 | Portallandkarte, Einstieg |
 | EN-03 · EN-04 | beide Vorprüfungen | K04 | Fragen, Halt-Antworten, Ergebnis |
+| EN-03a | die fünf Fragen der Vorprüfung 1 | K04 | Wortlaut der Fragen, Auswertung, Vorschlag |
+| EN-04a | Zweckbestimmung | K04 | zwei Fragen, Kenntnisnahme, Halt nach Art. 5 |
 | EN-05 · EN-06 | Stufe 01 und 02 | K05 | Gesprächsführung, Antwortwege |
 | EN-07 | Stufe 03 | K06 | sechs Konzepte, Prüfung, Häkchen |
 | EN-08 · EN-12 | Prototyp, Direkt-Prototypen | K07 | was änderbar ist, Arbeitsdokument |
@@ -744,3 +797,4 @@ Liste C ist von Liste A getrennt, weil Gestrichenes nie wieder auftauchen darf, 
 | O-K19-8 | Ob eine erneute Anmeldung mitten in Stufe 03 das gesetzte Häkchen erhält, sagt keine Quelle. | K06 · Ziel bestätigt 30.07.2026 | vor K06 |
 | O-K19-9 | **Geschlossen am 01.08.2026 aus der Quelle.** Keine Sprachumschaltung; gemeinsam entschieden mit O-K16-2. Handbuch EXMA Z. 142. | — | — |
 | O-K19-10 | Für den Prototyp-Link (14 Tage) und die Löschung (90 Tage) aus F11 zeigt kein Bildschirm eine Frist. Anzeigeort offen. | K15 · Ziel bestätigt 30.07.2026 | vor K15 |
+| O-K19-11 | Zahl der Fragen auf EN-03a: K04 Klausel M02 (Z. 39) sagt „höchstens fünf kurze Fragen", K04 Klausel M22 (Z. 59) sagt „genau fünf Fragen", Endnutzer-Handbuch 3.1 (Z. 172) sagt „bis zu fünf kurze Fragen". Ob der Kasten fünf Fragen fest zeigt oder einen Abbruch vor Frage 5 zulässt, ist nicht belegt. | K04, hilfsweise K00 | vor dem Bau |
