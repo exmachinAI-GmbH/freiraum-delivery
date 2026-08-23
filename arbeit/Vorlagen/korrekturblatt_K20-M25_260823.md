@@ -92,8 +92,8 @@ K15 minimiert. |
 
 | Nr. | vollzogen am | Zeichen |
 |---|---|---|
-| 1 | ⟨………………⟩ | ⟨………⟩ |
-| 2 | ⟨………………⟩ | ⟨………⟩ |
+| 1 | ⟨……23.8.26…………⟩ | ⟨……A.Han…⟩ |
+| 2 | ⟨……23.8.26…………⟩ | ⟨…A.Han……⟩ |
 
 **Nach dem Vollzug:** Fassung auf **v1.4** heben, Kopftabelle nachziehen (Version, Datum,
 Freigabe) und die Prüfsumme in der zugehörigen Zeichnungsdatei erneuern — **nie im Konzept
@@ -103,15 +103,15 @@ selbst.**
 
 **Was hiermit entschieden wird:** dass die Klausel dem Beschluss folgt und nicht umgekehrt.
 
-`☐` **Korrektur K20-1 gezeichnet** — beide Stellen werden wie oben vollzogen
+`x` **Korrektur K20-1 gezeichnet** — beide Stellen werden wie oben vollzogen
 `☐` **abweichend:** ⟨……………………………………………………⟩
 
 *Nach §12.3 zeichnen beide Vertragsparteien jedes Korrekturblatt.*
 
 | Rolle | Name | Datum | Kreuz |
 |---|---|---|---|
-| Auftraggeber | **M. Veil** | ⟨…………⟩ | ⟨…………⟩ |
-| Auftragnehmer | **A. Han** (Nr. 158) | ⟨…………⟩ | ⟨…………⟩ |
+| Auftraggeber | **M. Veil** | ⟨…23.8.26………⟩ | ⟨…M. Veil………⟩ |
+| Auftragnehmer | **A. Han** (Nr. 158) | ⟨……23.8.26……⟩ | ⟨……A. Han……⟩ |
 
 > **Vorentscheidung liegt vor:** Weg B wurde am 23.08.2026 gekreuzt und von beiden
 > gezeichnet — A. Han und M. Veil, in

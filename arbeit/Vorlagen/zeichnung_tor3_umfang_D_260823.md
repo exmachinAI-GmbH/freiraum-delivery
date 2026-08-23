@@ -37,7 +37,7 @@ Nachweise wären fast doppelt so groß wie alles, worüber geurteilt werden soll
 Das Register bleibt draußen; im `STAND.txt` steht ausdrücklich, dass es besteht und auf
 Nachfrage nachgereicht wird. **Gruppe D: ~124 KiB.**
 
-`☐` **B · Ausschnitt der geprüften Klauseln** — nur die Klauseln der Abnahmeeinheit, mit
+`x` **B · Ausschnitt der geprüften Klauseln** — nur die Klauseln der Abnahmeeinheit, mit
 Wortlaut und Akzeptanzkriterium, als eigene Datei erzeugt. Wie beim Blindauftrag M5, der
 101 Klauseln als `klauseln.md` mitgab. **Gruppe D: geschätzt 150–400 KiB, je nach Schnitt.**
 ⟨Schnitt: …………………………⟩
@@ -56,7 +56,7 @@ Wortlaut und Akzeptanzkriterium, als eigene Datei erzeugt. Wie beim Blindauftrag
 
 ---
 
-⟨zeichnet: …………………⟩ ⟨am: …………………⟩
+⟨zeichnet: …M. Veil, A.Han………………⟩ ⟨am: ……23.8.26……………⟩
 
 *Danach trage ich den gewählten Schnitt in `werkzeuge/tor3_belege.py` ein und schnüre das
 Paket gegen den dann sauberen Arbeitsbaum neu.*

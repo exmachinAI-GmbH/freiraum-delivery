@@ -141,7 +141,7 @@ abnehmen?"*, sondern:
 > davon behoben ist?
 
 `☐` **A** — M2 feststellen, die zwölf laufen als geführte Punkte weiter
-`☐` **B** — erst die beiden Messfehler (11, 12) klären, dann M2 feststellen
+`x` **B** — erst die beiden Messfehler (11, 12) klären, dann M2 feststellen
 `☐` **C** — erst eine größere Teilmenge beheben: ⟨Nummern: …………⟩
 
 > **Empfehlung des Harness zum Vorgang, nicht zum Inhalt:** **B.** Die beiden Messfehler
@@ -177,4 +177,4 @@ gezeichnet und nicht durch Fristsetzung ersetzt.
 > Zeichnung.** Sie stehen nebeneinander, damit sichtbar bleibt, wo jemand abgewichen ist.
 > Die Reihenfolge ist die vorgeschlagene Bearbeitungsreihenfolge, nicht die Nummernfolge.
 
-**Gezeichnet:** ⟨………………………⟩ **am** ⟨………………⟩
+**Gezeichnet:** ⟨……M. Veil…………………⟩ **am** ⟨……23.8.26…………⟩
