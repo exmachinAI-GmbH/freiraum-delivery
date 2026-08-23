@@ -67,13 +67,13 @@ def heft_lesen():
         raise SystemExit(2)
     text = HEFT.read_text(encoding="utf-8")
     stellen = []
-    for teil in re.split(r"^### Stelle ", text, flags=re.M)[1:]:
+    for teil in re.split(r"^### Stelle ", text, flags=re.MULTILINE)[1:]:
         kopf = teil.split("\n", 1)[0]
         nr = kopf.split(" ")[0]
         entfaellt = "ENTFÄLLT" in kopf.upper()
-        anker = re.search(r"\*\*Ankerzitat\*\*.*?```\s*\n(.*?)\n```", teil, re.S)
-        neu = re.search(r"\*\*Neuer Wortlaut:?\*\*.*?```\s*\n(.*?)\n```", teil, re.S)
-        hinweis = re.search(r"^> \*\*Zu beachten\.\*\*\s*(.+)$", teil, re.M)
+        anker = re.search(r"\*\*Ankerzitat\*\*.*?```\s*\n(.*?)\n```", teil, re.DOTALL)
+        neu = re.search(r"\*\*Neuer Wortlaut:?\*\*.*?```\s*\n(.*?)\n```", teil, re.DOTALL)
+        hinweis = re.search(r"^> \*\*Zu beachten\.\*\*\s*(.+)$", teil, re.MULTILINE)
         stellen.append({
             "nr": nr,
             "titel": re.sub(r"\s*—\s*\*\*ENTFÄLLT\*\*", "", kopf).strip(),
