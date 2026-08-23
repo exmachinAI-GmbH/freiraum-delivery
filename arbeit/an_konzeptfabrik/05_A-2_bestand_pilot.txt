@@ -1,0 +1,48 @@
+# ─────────────────────────────────────────────────────────────────────────
+# BERICHTIGUNG · zum Einfügen in config/kanon.yaml, Block `bestand_pilot`
+#
+# Der Harness fügt es NICHT selbst ein — kanon.yaml ist Rang 0 und liegt in
+# der Konzept-Fabrik. Dürfte der Bauende sie fortschreiben, schriebe er
+# seine eigene Verfassung (README dieses Ordners).
+#
+# Grundlage: Kettenlauf vom 22.08.2026 gegen die Zielumgebung,
+# Belege in nachweise/kettenlauf/260822_2129_alle/.
+# Schliesst Auflage A-2 aus nachweise/kettenlauf/AUFLAGEN_M1_260822.md.
+# Vom Fremdmodell als P2 bestätigt (nachweise/fremdreview/fundament_260822.md:70).
+# ─────────────────────────────────────────────────────────────────────────
+
+# ZU ÄNDERN sind ZWEI Dinge, nicht eines:
+#
+#   1. die Zahl der Funktionen:  27  →  29
+#   2. die Bezeichnung des Standes: "v2.9 + M30" → "v2.9 + M30 + M31 + M32"
+#
+# Die zweite ist die wichtigere. Eine Zahl zu berichtigen und den Maßstab
+# alt zu lassen, ergäbe ein Soll, das sich selbst widerspricht: 29
+# Funktionen kann der Stand "v2.9 + M30" gar nicht haben — die zwei
+# zusätzlichen kommen aus M31 und M32.
+#
+# GEMESSEN am 22.08.2026 um 21:29 Uhr gegen
+# psql-freiraum-pilot.postgres.database.azure.com, Datenbank freiraum,
+# Region Sweden Central, Konto ohne Administratorrechte:
+#
+#   57 Tabellen · 12 Sichten · 27 Trigger · 29 Funktionen · 44 Enums · 6 Rollen
+#
+# Fünf der sechs Werte stimmen mit dem bisherigen Soll überein. Nur die
+# Funktionen weichen ab, und die Abweichung ist erklärt.
+
+  bestand_pilot:
+    stand: "v2.9 + M30 + M31 + M32"
+    tabellen:   57
+    sichten:    12
+    trigger:    27
+    funktionen: 29    # war 27 (Stand v2.9 + M30); M31 und M32 ergänzen zwei
+    enums:      44
+    rollen:      6
+
+# BEIM EINFÜGEN: Die Schlüsselnamen oben sind aus dem Beleg gebildet, nicht
+# aus der Datei — der Harness liest kanon.yaml nicht. Übernimm die Namen und
+# die Einrückung, die dort tatsächlich stehen; geändert werden nur die
+# beiden Werte aus dem Kopf dieses Blatts.
+#
+# ERLEDIGT, WENN bestand_pilot den geltenden Maßstab führt. Danach kann
+# dieses Blatt gelöscht werden — es ist eine Übergabe, kein Nachweis.
