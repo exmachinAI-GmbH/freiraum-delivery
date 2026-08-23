@@ -1,0 +1,190 @@
+{
+  "gegenstand": "M3 · EN-03a · Direkt-Prototyp-Check",
+  "zweig": "scheibe/m3-schnellweg",
+  "server": "FREIRAUM auf uvicorn, PostgreSQL 16.13, frische Datenbank",
+  "bestand": "schema/freiraum_datamodel.sql + M30 + M31 + M32 + Seed_Vorpruefung_K04 + Seed_Direkt_Prototyp_Check_K04",
+  "zaehlung": {
+    "BESTANDEN": 23,
+    "GESPERRT": 2
+  },
+  "faelle": [
+    {
+      "kennung": "VP-01",
+      "klausel": "K03-D01",
+      "aussage": "Ohne Sitzung fuehrt GET /schnellweg auf die Anmeldung",
+      "zustand": "BESTANDEN",
+      "beleg": "303 -> /anmeldung"
+    },
+    {
+      "kennung": "VP-02",
+      "klausel": "K04-G04",
+      "aussage": "Ohne laufenden Vorgang fuehrt EN-03a zurueck auf EN-03",
+      "zustand": "BESTANDEN",
+      "beleg": "303 -> /vorpruefung"
+    },
+    {
+      "kennung": "VP-03",
+      "klausel": "K04-M02",
+      "aussage": "Check starten fuehrt nach EN-03a und legt genau einen Vorgang an",
+      "zustand": "BESTANDEN",
+      "beleg": "303 -> /schnellweg, quick_check=1, Mandant stimmt"
+    },
+    {
+      "kennung": "VP-04",
+      "klausel": "K04-M22",
+      "aussage": "EN-03a zeigt genau eine Frage mit genau drei Antwortmoeglichkeiten",
+      "zustand": "BESTANDEN",
+      "beleg": "Fragen=1, Antwortmoeglichkeiten=3, Frage='Was hätten Sie am liebsten in der Hand?'"
+    },
+    {
+      "kennung": "VP-05",
+      "klausel": "K04-M22",
+      "aussage": "EN-03a fuehrt kein Freitextfeld",
+      "zustand": "BESTANDEN",
+      "beleg": "keine Eingabefelder vom Typ text, kein textarea"
+    },
+    {
+      "kennung": "VP-06",
+      "klausel": "K19-M06",
+      "aussage": "Solange eine Frage offen ist, fehlen beide Weiterwege und der Hinweis nennt sie im Wortlaut",
+      "zustand": "BESTANDEN",
+      "beleg": "Weiterwege ausgeblendet (nicht ausgegraut); Hinweis traegt den Fragewortlaut"
+    },
+    {
+      "kennung": "VP-07",
+      "klausel": "K19-M03",
+      "aussage": "EN-03a traegt genau eine Zugangsmarke",
+      "zustand": "BESTANDEN",
+      "beleg": "Zugangsmarken=1"
+    },
+    {
+      "kennung": "VP-08",
+      "klausel": "K04-G04",
+      "aussage": "Eine Antwortmoeglichkeit, die es nicht gibt, schreibt nichts",
+      "zustand": "BESTANDEN",
+      "beleg": "HTTP 200, quick_answer 0 -> 0"
+    },
+    {
+      "kennung": "VP-09",
+      "klausel": "K04-M23",
+      "aussage": "Verbindlichkeit auf Anwendung gibt allein den Ausschlag",
+      "zustand": "BESTANDEN",
+      "beleg": "vier Dokument-Antworten, dennoch Vorschlag Anwendung; der Satz nennt die Veto-Antwort"
+    },
+    {
+      "kennung": "VP-10",
+      "klausel": "K04-M23",
+      "aussage": "Ergebnis auf 'darin arbeiten' gibt allein den Ausschlag",
+      "zustand": "BESTANDEN",
+      "beleg": "vier Dokument-Antworten, dennoch Vorschlag Anwendung"
+    },
+    {
+      "kennung": "VP-11",
+      "klausel": "K04-M24",
+      "aussage": "Kein Treffer in den Fragen 2 bis 4 ergibt Direkt-Prototyp",
+      "zustand": "BESTANDEN",
+      "beleg": "0 Treffer"
+    },
+    {
+      "kennung": "VP-12",
+      "klausel": "K04-M24",
+      "aussage": "Ein Treffer ergibt Direkt-Prototyp UND nennt die abweichende Antwort",
+      "zustand": "BESTANDEN",
+      "beleg": "1 Treffer; der Satz nennt die abweichende Antwort im Wortlaut"
+    },
+    {
+      "kennung": "VP-13",
+      "klausel": "K04-M24",
+      "aussage": "Zwei Treffer in den Fragen 2 bis 4 ergeben Anwendung",
+      "zustand": "BESTANDEN",
+      "beleg": "2 Treffer"
+    },
+    {
+      "kennung": "VP-14",
+      "klausel": "K04-M25",
+      "aussage": "Der Vorschlag traegt genau einen Begruendungssatz, der eine Antwort nennt",
+      "zustand": "BESTANDEN",
+      "beleg": "'Mehrere Ihrer Antworten sprechen dafuer, zuerst „immer wieder, im laufenden Betrieb“: das trägt ein Dokument nicht.'"
+    },
+    {
+      "kennung": "VP-15",
+      "klausel": "K04-M22",
+      "aussage": "Mit der fuenften Antwort traegt der Vorgang completed_at",
+      "zustand": "BESTANDEN",
+      "beleg": "completed_at gesetzt: True"
+    },
+    {
+      "kennung": "VP-16",
+      "klausel": "K04-M15",
+      "aussage": "Eine geaenderte Antwort wird zurueckgenommen, nicht entfernt",
+      "zustand": "BESTANDEN",
+      "beleg": "2 Zeilen zu 'beteiligte', davon 1 zurueckgenommen"
+    },
+    {
+      "kennung": "VP-17",
+      "klausel": "K01-M15",
+      "aussage": "Der Vorgang eines fremden Mandanten gilt als nicht vorhanden",
+      "zustand": "BESTANDEN",
+      "beleg": "Bert: 303 -> /vorpruefung; Annas Vorgang bleibt unsichtbar"
+    },
+    {
+      "kennung": "VP-18",
+      "klausel": "K04-D07",
+      "aussage": "Der Weg Arbeitsdokument legt weder ein Dokument noch eine Anwendung an",
+      "zustand": "BESTANDEN",
+      "beleg": "HTTP 200, direct_prototype=0, app=0, benannte Meldung"
+    },
+    {
+      "kennung": "VP-19",
+      "klausel": "K04-M03",
+      "aussage": "Beide Weiterwege stehen gleichwertig; keiner ist ausgegraut",
+      "zustand": "BESTANDEN",
+      "beleg": "beide Formulare vorhanden, kein disabled"
+    },
+    {
+      "kennung": "VP-20",
+      "klausel": "K04-D01",
+      "aussage": "Vorpruefung 2 legt genau einen Eignungs-Check an, Ergebnis OFFEN",
+      "zustand": "BESTANDEN",
+      "beleg": "303 -> /eignung, fit_check=1, outcome=OFFEN, Klasse=KI_NACHWEIS"
+    },
+    {
+      "kennung": "VP-21",
+      "klausel": "K04-D11",
+      "aussage": "Ohne Ergebnis legt Vorpruefung 2 keinen Eignungs-Check an",
+      "zustand": "BESTANDEN",
+      "beleg": "HTTP 200, fit_check=0"
+    },
+    {
+      "kennung": "VP-22",
+      "klausel": "K04-G04",
+      "aussage": "Abbruch fuehrt ohne Vorschlag zurueck; der Vorgang bleibt unvollstaendig",
+      "zustand": "BESTANDEN",
+      "beleg": "303 -> /vorpruefung, completed_at leer: True"
+    },
+    {
+      "kennung": "VP-23",
+      "klausel": "K04-M22",
+      "aussage": "Fehlt eine Frage im Bestand, entsteht kein Vorgang (fail-closed)",
+      "zustand": "BESTANDEN",
+      "beleg": "HTTP 200, quick_check=0, benannte Meldung, Verbleib auf EN-03"
+    },
+    {
+      "kennung": "VP-24",
+      "klausel": "O-M3-5",
+      "aussage": "Die Zuordnung Dokument/Anwendung hat keine eigene Spalte",
+      "zustand": "GESPERRT",
+      "beleg": "quick_option traegt sie als Endung am value_token. Ob das fuer K04-M22 genuegt, ist nicht entschieden (BEF-K04-2)."
+    },
+    {
+      "kennung": "VP-25",
+      "klausel": "K04-M02 gegen K04-M22",
+      "aussage": "Ob EN-03a vor Frage 5 abbrechen darf",
+      "zustand": "GESPERRT",
+      "beleg": "K04-M02 sagt 'hoechstens fuenf', K04-M22 'genau fuenf'. Der Widerspruch ist nicht entschieden (O-K19-11)."
+    }
+  ],
+  "gefahren_am": "2026-08-23",
+  "einordnung": "Tor 1 · mechanisch · Selbstmessung des Baus. NICHT Tor 2 — der blinde Pruefauftrag steht aus.",
+  "einschraenkung": "Gefahren gegen eine frische PostgreSQL 16.13 im Container des Bau-Agenten, NICHT gegen die Pilotumgebung (A-2 offen). Ob der Wertungslauf dort liegen muss, entscheidet K23 — ausgewiesen, nicht entschieden."
+}
