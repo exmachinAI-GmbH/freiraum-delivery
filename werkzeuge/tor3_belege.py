@@ -59,11 +59,55 @@ GRUPPEN = {
                    "schema/freiraum_datamodel.sql"],
     },
     "D_Nachweise": {
-        "was": "Register und Herkunft — am 20.08.2026 NICHT vorgelegt",
-        "muster": ["nachweise/klauselregister/*.json", "nachweise/klauselregister/*.md",
-                   "nachweise/herkunft/*", "nachweise/befunde/*.md"],
+        "was": "Klauselschnitt und Herkunft — am 20.08.2026 NICHT vorgelegt",
+        "muster": ["nachweise/herkunft/herkunft.md", "nachweise/befunde/*.md"],
+        "klauselschnitt": ("K03", "K04", "K13", "K19", "K20"),
     },
 }
+
+# GEZEICHNET AM 23.08.2026 (zeichnung_tor3_umfang_D_260823.md, Weg B, M. Veil und A. Han):
+# "Klauseln der Konzepte K03, K04, K13, K19, K20 -- Wortlaut und, wo vorhanden,
+# Akzeptanzkriterium; fehlende Kriterien bleiben sichtbar als 'ohne Kriterium' und
+# werden nicht weggelassen."
+#
+# Gemessen: 230 der 1231 Klauseln, 249 KiB statt 4254 KiB fuer das ganze Register.
+# 154 der 230 tragen kein Kriterium -- und genau das muss sichtbar bleiben. Gaebe man
+# nur die 76 mit Kriterium mit, saehe der Massstab vollstaendiger aus, als er ist; das
+# fremde Modell koennte "dazu kann ich nicht urteilen" nicht mehr sagen, obwohl der
+# Auftragstext diese Antwort ausdruecklich als gueltig fuehrt.
+REGISTER = "nachweise/klauselregister/register.json"
+
+
+def klauselschnitt(konzepte):
+    """Die Klauseln der genannten Konzepte im Wortlaut -- erzeugt, nicht kopiert."""
+    quelle = WURZEL / REGISTER
+    if not quelle.is_file():
+        return None, f"{REGISTER} fehlt -- der Klauselschnitt kann nicht gezogen werden"
+    import json
+    zeilen = json.loads(quelle.read_text(encoding="utf-8")).get("zeilen", [])
+    teil = [e for e in zeilen if e.get("konzept") in konzepte]
+    if not teil:
+        return None, f"kein Treffer fuer {', '.join(konzepte)} im Register"
+    ohne = 0
+    aus = [f"KLAUSELSCHNITT · {', '.join(konzepte)}",
+           f"{len(teil)} Klauseln von {len(zeilen)} im Register.",
+           "Gezeichnet am 23.08.2026 als Umfang der Gruppe D (Weg B).", ""]
+    for e in sorted(teil, key=lambda x: str(x.get("klausel"))):
+        aus.append("-" * 74)
+        aus.append(f"{e.get('klausel')} · {e.get('konzept')} · {e.get('art')}")
+        aus.append(f"Wortlaut: {e.get('wortlaut') or '(fehlt)'}")
+        k = (e.get("akzeptanzkriterium") or "").strip()
+        if k:
+            aus.append(f"Akzeptanzkriterium: {k}")
+        else:
+            ohne += 1
+            aus.append("Akzeptanzkriterium: OHNE KRITERIUM -- fuer diese Klausel ist nicht "
+                       "gezeichnet, wann sie als erfuellt gilt.")
+        aus.append("")
+    aus.insert(3, f"{ohne} der {len(teil)} tragen KEIN Akzeptanzkriterium. Das ist kein "
+                  "Auslassen,\nsondern der Stand -- und eine gueltige Antwort dazu lautet: "
+                  "dazu kann ich nicht urteilen.")
+    return "\n".join(aus), None
 
 
 def git(*args):
@@ -160,6 +204,14 @@ def main():
     with zipfile.ZipFile(paket, "w", zipfile.ZIP_DEFLATED) as z:
         for name, dateien in gefunden.items():
             teile = []
+            schnitt = GRUPPEN[name].get("klauselschnitt")
+            if schnitt:
+                text, grund = klauselschnitt(schnitt)
+                if text:
+                    teile.append(f"\n{'='*78}\n=== erzeugter Klauselschnitt\n{'='*78}\n")
+                    teile.append(text + "\n")
+                else:
+                    teile.append(f"\n(Klauselschnitt nicht erzeugt: {grund})\n")
             for p in dateien:
                 rel = p.relative_to(WURZEL).as_posix()
                 teile.append(f"\n{'='*78}\n=== {rel}\n{'='*78}\n")
