@@ -2,9 +2,12 @@
 --  M36 · ENTWURF · Die Zuordnung bekommt eine eigene Spalte
 --  Vorgelegt 23.08.2026 · schliesst O-M3-5 · Befund BEF-K04-2
 --
---  NICHT GEZEICHNET. Diese Datei liegt in arbeit/Vorlagen/ und NICHT in
---  migrations/. Eine Migration entsteht erst mit der Zeichnung; bis dahin
---  waere sie eine Schemaaenderung ohne Beschluss.
+--  NICHT GEZEICHNET, UND NICHT ZU ZEICHNEN. Eine SQL-Datei ist kein
+--  Blatt mit Unterschriftszeilen. Gezeichnet wird
+--      arbeit/Vorlagen/zeichnung_O-M3-5_zuordnungsspalte_260823.md
+--  Diese Datei ist die ANLAGE dazu. Sie liegt in arbeit/Vorlagen/ und
+--  NICHT in migrations/: eine Migration entsteht erst mit der
+--  Zeichnung; bis dahin waere sie eine Schemaaenderung ohne Beschluss.
 --
 --  ---------------------------------------------------------------------
 --  WORUM ES GEHT
