@@ -126,7 +126,8 @@ def _vollzug(conn, adresse, eingabe):
     # Index ueber lower(email). Das ist eine Aenderung am gezeichneten Modell
     # und gehoert in einen Migrationsnachtrag, nicht in diesen Pfad.
     zeilen = conn.execute(
-        "SELECT id, status FROM actor WHERE lower(email) = %s ORDER BY id FOR UPDATE",
+        "SELECT id, status, mfa_method FROM actor WHERE lower(email) = %s"
+        " ORDER BY id FOR UPDATE",
         (adresse,)).fetchall()
 
     # ZEITSEITENKANAL (Gegenlesung 10.08.2026): Ein Abbruch an dieser Stelle
@@ -142,11 +143,45 @@ def _vollzug(conn, adresse, eingabe):
     tragfaehig = len(zeilen) == 1
     actor_id = zeilen[0][0] if tragfaehig else _KEIN_KONTO
     status = zeilen[0][1] if tragfaehig else "AKTIV"
+    # Derselbe Umweg wie bei `status`: Ein unbekanntes Konto rechnet gegen einen
+    # unverfaenglichen Wert weiter, damit die Uhr nichts verraet (siehe oben).
+    verfahren = zeilen[0][2] if tragfaehig else "EMAIL_CODE"
 
     # K03-D01: GESPERRT fuehrt zur Ablehnung, nie zum Teil-Zugang. WARTET_2FA
     # bleibt hier zulaessig -- genau dieser Vorgang ist die bestaetigte
     # zweite Stufe, aus der der Uebergang nach AKTIV entsteht (K03-M09).
     if status not in ("AKTIV", "WARTET_2FA"):
+        tragfaehig = False
+
+    # K03-M05, Punkt 3: `mfa_method` traegt den Wert EMAIL_CODE.
+    #
+    # NEU AM 23.08.2026. Bis hierher wurde `actor.mfa_method` auf dem
+    # Anmeldeweg ueberhaupt nicht gelesen -- gemessen: kein Treffer in `app/`
+    # und `mail/`. Das Zielschema laesst neben EMAIL_CODE auch OFF zu
+    # (schema/freiraum_datamodel.sql). Ein Konto mit OFF und einem gueltigen
+    # login_code waere also angemeldet worden, obwohl es den zweiten Faktor
+    # gar nicht fuehrt. Befund: Fremdreview vom 20.08.2026, Grund 2.
+    #
+    # DIE ENTSCHEIDUNG IST GEZEICHNET, nicht hier getroffen: A. Han,
+    # 23.08.2026, `arbeit/Vorlagen/zeichnung_akzeptanzkriterien_260823.md`,
+    # Abschnitt 1 -- "abweisen mit der bestehenden Meldung, die keinen Grund
+    # nennt". Eine eigene Meldung fuer diesen Fall waere das Kontoorakel, das
+    # K03-M25 verbietet: Wer den Unterschied liest, weiss, dass es das Konto
+    # gibt und wie es eingestellt ist.
+    #
+    # Deshalb steht die Pruefung HIER und nicht frueher: Sie setzt nur
+    # `tragfaehig` zurueck und laesst den Weg weiterlaufen -- derselbe Grund
+    # wie beim Zeitseitenkanal oben.
+    #
+    # OFFEN UND NICHT VON DIESER STELLE ZU LOESEN: Beschluss Nr. 59 sieht in
+    # migrations/M30__pilot_sammelmigration.sql:988-993 GENAU EIN Konto mit
+    # mfa_method = OFF vor. Es ist vorgesehen, aber unbenutzt -- der
+    # Erst-Admin wird mit EMAIL_CODE angelegt
+    # (install/01_betreiber_und_erstadmin.sql:101). Ab hier wuerde es sich
+    # nicht mehr anmelden koennen. Ob die Vorsorge zurueckgenommen wird, ist
+    # eine Aenderung an der Sammelmigration und gehoert in einen
+    # Migrationsnachtrag, nicht in diesen Pfad.
+    if verfahren != "EMAIL_CODE":
         tragfaehig = False
 
     # K03-M15 in einer Anweisung: den offenen, nicht abgelaufenen, nicht
