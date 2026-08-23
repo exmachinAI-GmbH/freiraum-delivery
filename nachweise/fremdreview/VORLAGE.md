@@ -29,9 +29,19 @@ ist kein Nachweis, sondern seine Fälschung.
 | evidenz | `<welche Roh-Evidenz vorlag, mit Pfaden — nicht "der Baubericht">` |
 | angefordert_von | `<Name des Menschen>` |
 | harness_hat_nicht_geschrieben | `ja` |
+| befunde | `<was gefunden wurde, kurz — oder `keine`. NIE leer lassen>` |
 | urteil | `<traegt | traegt mit auflagen | traegt nicht>` |
 
 <!-- ENDE KOPF -->
+
+> **Zum Feld `befunde`:** `werkzeuge/tor3_pflicht.py`:132 verlangt es und lässt jeden nicht
+> leeren Wert zu. Fehlt es, bricht **Tor 1a** ab — mit der Meldung *„führt kein Feld `befunde`.
+> Wurde nichts gefunden, muss 'keine' dastehen — ein leeres Feld ist zweideutig."*
+> Der Grund steht in `README.md`: Niemand kann einem leeren Feld ansehen, ob nichts gefunden
+> oder nichts eingetragen wurde.
+>
+> *Ergänzt am 22.08.2026. Bis dahin fehlte das Feld in dieser Vorlage, während der Prüfer es
+> verlangte — siehe `nachweise/befunde/BEF-VORLAGE-TOR3_260822.md`.*
 
 ## Zeichnung der Anforderung
 
