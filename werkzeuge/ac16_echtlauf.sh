@@ -22,7 +22,16 @@
 #  Datenbank an (freiraum_ac16) und laesst die Vorlage unberuehrt.
 # =====================================================================
 set -euo pipefail
-cd "$(dirname "$0")"
+# BERICHTIGT AM 23.08.2026: hier stand `cd "$(dirname "$0")"`. Das Skript
+# landete damit in werkzeuge/ -- und alle Pfade darunter zeigen ins Leere:
+#   psql -f pruefungen/klauseln/anmeldecode_daten.sql  ->  werkzeuge/pruefungen/...
+#   ./pruefungen/lauf.sh                               ->  werkzeuge/pruefungen/...
+# Gemessen am 23.08.2026 beim ersten vollstaendigen Versuch: Durchgang 0 brach
+# nach "2/3" ab mit "No such file or directory". Die Wegwerfdatenbank war da
+# schon angelegt, der Merker noch nicht geschrieben -- danach meldete `senden`
+# "kein Empfaenger vorgemerkt", was wie ein Bedienfehler aussieht und keiner war.
+# Gebraucht wird die WURZEL des Bestandes, nicht das Verzeichnis des Skripts.
+cd "$(cd "$(dirname "$0")/.." && pwd)"
 
 DB=freiraum_ac16
 KOPF="${FREIRAUM_PRUEF_ECHT_MAILKOPF:-$HOME/mailkopf.txt}"
@@ -30,7 +39,18 @@ MERKER=".ac16_empfaenger"
 
 # --- Zugang und Prüfstand, in DIESER Shell -----------------------------
 export FREIRAUM_SMTP_HOST=mail.bytecamp.net
-export FREIRAUM_SMTP_USER=einladung@zaa.freiraum.top
+# GEAENDERT AM 23.08.2026 (BEF-B2-4, Handprobe 3). Bis hierher stand hier
+# einladung@zaa.freiraum.top -- der Wert aus B2_Zugangsablage_260806.md.
+# Gemessen am zugestellten Kopf: ueber dieses Konto signiert der Anbieter mit
+#   d=zaa.freiraum.top   (nicht d=freiraum.top)
+# und zaa.freiraum.top hat KEINEN SPF-Eintrag, also
+#   Received-SPF: none   (nicht spf=pass).
+# AC-16 sucht woertlich nach 'd=freiraum.top' UND 'spf=pass'. Zwei seiner sieben
+# Kopfbedingungen koennen ueber dieses Konto also NIE erfuellt werden -- der Lauf
+# waere rot geworden, ohne dass am Bau etwas falsch ist.
+# Ueber noreply@freiraum.top ist dieselbe Messung zweimal vollstaendig gruen
+# (d=freiraum.top, dkim=pass, spf=pass, dmarc=pass).
+export FREIRAUM_SMTP_USER=noreply@freiraum.top
 export FREIRAUM_SMTP_TLS=1
 export FREIRAUM_ECHTVERSAND=ja
 export FREIRAUM_PRUEF_ECHT_MAILKOPF="$KOPF"
@@ -39,9 +59,13 @@ export PGDATABASE="$DB"
 export FREIRAUM_CODE_PFEFFER="${FREIRAUM_CODE_PFEFFER:-ac16-pfeffer-fest}"
 
 # Das Kennwort kommt aus dem Schluesselbund und wird nie ausgegeben.
-if ! FREIRAUM_SMTP_PASS="$(security find-generic-password -s FREIRAUM_SMTP_PASS -w 2>/dev/null)"; then
+# -a ERGAENZT AM 23.08.2026: ohne Konto liefert find-generic-password den
+# ERSTEN Treffer zum Dienstnamen. Liegt der alte Eintrag fuer
+# einladung@zaa.freiraum.top noch im Schluesselbund, kaeme dessen Kennwort --
+# der Versand scheiterte mit 535, und gesucht wuerde am falschen Ort.
+if ! FREIRAUM_SMTP_PASS="$(security find-generic-password -s FREIRAUM_SMTP_PASS -a "$FREIRAUM_SMTP_USER" -w 2>/dev/null)"; then
   echo "ABBRUCH: FREIRAUM_SMTP_PASS nicht im Schluesselbund lesbar." >&2
-  echo "  Pruefen mit: security find-generic-password -s FREIRAUM_SMTP_PASS -w >/dev/null && echo da" >&2
+  echo "  Pruefen mit: security find-generic-password -s FREIRAUM_SMTP_PASS -a $FREIRAUM_SMTP_USER -w >/dev/null && echo da" >&2
   exit 2
 fi
 export FREIRAUM_SMTP_PASS
