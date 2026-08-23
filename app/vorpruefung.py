@@ -162,6 +162,11 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app.datenbank import verbindung
+# Nur die beiden Lesehilfen, damit dieser Weg VOR dem Schreiben pruefen
+# kann, ob der Startbestand traegt. app/schnellweg.py bindet diese Datei
+# nicht ein -- es gibt also keinen Ringschluss.
+from app.schnellweg import fragen_lesen as schnellweg_fragen_lesen
+from app.schnellweg import fragen_tragen as schnellweg_fragen_tragen
 from app.sitzung import KEKS_NAME, keks_loeschen, merkmal_lesen, sitzung_pruefen
 
 PROTOKOLL = logging.getLogger(__name__)
@@ -202,10 +207,17 @@ ERGEBNIS_SCHREIBEND_ZULAESSIG = ("OFFEN", "GEEIGNET")
 # Der Fehlerzustand, den schema/K19_screens.yaml fuer EN-03/check_starten
 # vorsieht: "Fragenfluss nicht ladbar -- Meldung, Verbleib auf EN-03;
 # [Ueberspringen] bleibt offen, es entsteht kein Vorschlag."
+# Bis zum 23.08.2026 stand hier eine Meldung, der Wortlaut der fuenf Fragen
+# sei "nicht gezeichnet (H09/Punkt 13)". Das war seit dem 01.08.2026 falsch:
+# K04 v1.7 Abschn. 5.0 fuehrt ihn vollstaendig und schliesst O-K04-1.
+# Siehe arbeit/Bauberichte/BEF-K04-1_Wortlaut_ist_gezeichnet.md.
+# Die Meldung bleibt als FEHLERZUSTAND stehen -- der Bildschirmvertrag
+# sieht ihn ausdruecklich vor ("Fragenfluss nicht ladbar"). Sie erscheint
+# jetzt nur noch, wenn der Startbestand fehlt, nicht mehr als Regelfall.
 MELDUNG_VORPRUEFUNG_1 = (
-    "Vorpruefung 1 ist noch nicht verfuegbar: der Wortlaut der fuenf Fragen "
-    "ist nicht gezeichnet (H09/Punkt 13). Sie koennen diesen Schritt "
-    "ueberspringen und mit dem Eignungs-Check fortfahren.")
+    "Die Fragen der ersten Vorprüfung stehen gerade nicht bereit. Sie "
+    "können diesen Schritt überspringen und mit dem Eignungs-Check "
+    "fortfahren.")
 
 # K04-G04, fail-closed: fehlt eine Antwort, bleibt das Ergebnis OFFEN.
 #
@@ -649,29 +661,43 @@ def vorpruefung(request: Request):
 
 @router.post("/vorpruefung/starten", response_class=HTMLResponse)
 def vorpruefung_starten(request: Request):
-    """"Check starten" -- und der benannte Halt davor. LEGT NICHTS AN.
+    """"Check starten" -- hier entsteht der Schnellweg (EN-03a).
 
-    K04-M22 verlangt fuer den Direkt-Prototyp-Check genau fuenf Fragen zu je
-    drei Antwortmoeglichkeiten. Der WORTLAUT dieser fuenf Fragen ist in keinem
-    der gezeichneten Konzepte enthalten; die Sammelmigration M30 sagt es
-    selbst: er wird nachgereicht, sobald H09/Punkt 13 ihn zeichnet.
+    BIS ZUM 23.08.2026 FUEHRTE DIESER WEG AUF EINE MELDUNG. Die Begruendung
+    lautete, der Wortlaut der fuenf Fragen sei nirgends gezeichnet. Sie war
+    seit dem 01.08.2026 ueberholt: K04 v1.7 Abschn. 5.0 fuehrt Wortlaut,
+    Antworten und Zuordnung vollstaendig, angenommen vom Founder, und
+    schliesst damit O-K04-1. Der Bau hatte richtig gehandelt und sich auf
+    eine falsche Aktenlage gestuetzt (BEF-K04-1).
 
-    Fuenf Fragen zu erfinden, waere Umfang ohne Zeichnung -- und zwar an der
-    heikelsten Stelle: der Vorschlag aus diesem Check lenkt den Nutzer auf den
-    Dokument- oder den Anwendungsweg. Ein erfundener Fragebogen faellte eine
-    Entscheidung, die niemand getroffen hat.
+    FAIL-CLOSED VOR DEM SCHREIBEN (K04-G04): stehen nicht genau fuenf Fragen
+    zu je drei Antwortmoeglichkeiten im Bestand, entsteht kein Vorgang -- der
+    Bildschirmvertrag fuehrt fuer diesen Fall "Verbleib auf EN-03;
+    [Ueberspringen] bleibt offen, es entsteht kein Vorschlag".
 
-    Also 200 und Verbleib auf EN-03, mit der benannten Meldung. Genau so
-    fuehrt der Bildschirmvertrag den Fehlerzustand dieser Aktion:
-    "Fragenfluss nicht ladbar -- Meldung, Verbleib auf EN-03; [Ueberspringen]
-    bleibt offen, es entsteht kein Vorschlag." Der zweite Weg bleibt bedienbar.
+    Der Vorgang traegt bei der Anlage Mandant und Konto aus der Sitzung. Die
+    Aufbewahrungsklasse setzt das Schema (BETRIEBSPROTOKOLL) -- anders als
+    beim Eignungs-Check, der KI_NACHWEIS traegt: ein Vorschlag ist kein
+    Nachweis ueber ein KI-System.
     """
     merkmal = request.cookies.get(KEKS_NAME)
     with verbindung() as conn:
         stand = sitzung_pruefen(conn, merkmal_lesen(merkmal))
-    if stand is None:
-        return _zurueck_auf_en01(merkmal)
-    return _en03(request, stand, meldung=MELDUNG_VORPRUEFUNG_1)
+        if stand is None:
+            return _zurueck_auf_en01(merkmal)
+
+        if not schnellweg_fragen_tragen(schnellweg_fragen_lesen(conn)):
+            PROTOKOLL.error(
+                "Schnellweg nicht angelegt: der Bestand fuehrt nicht genau "
+                "fuenf Fragen zu je drei Antwortmoeglichkeiten (K04-M22). "
+                "Startbestand: seeds/Seed_Direkt_Prototyp_Check_K04.sql")
+            return _en03(request, stand, meldung=MELDUNG_VORPRUEFUNG_1)
+
+        conn.execute(
+            "INSERT INTO quick_check (tenant_id, actor_id) VALUES (%s, %s)",
+            (stand["mandant"], stand["actor_id"]))
+
+    return _umleitung("/schnellweg")
 
 
 @router.post("/vorpruefung/ueberspringen")

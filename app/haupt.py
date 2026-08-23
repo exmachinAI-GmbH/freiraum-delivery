@@ -69,6 +69,7 @@ from app.sitzung import (
     sitzung_beenden,
     sitzung_pruefen,
 )
+from app.schnellweg import router as schnellweg_router
 from app.vorpruefung import router as vorpruefung_router
 from app.zweckbestimmung import router as zweckbestimmung_router
 
@@ -102,6 +103,10 @@ app.mount("/statisch",
 # nicht erreichbare Datenbank gilt fuer beide: sie haengt am `app`-Objekt,
 # nicht an einer einzelnen Route (siehe `datenbank_weg` weiter unten).
 app.include_router(vorpruefung_router)
+# EN-03a, der Direkt-Prototyp-Check. Eigene Datei und eigener Router,
+# weil app/vorpruefung.py EN-02, EN-03 und EN-04 traegt und den
+# Fragenfluss ausdruecklich nicht kannte (Stand bis 23.08.2026).
+app.include_router(schnellweg_router)
 
 # Scheibe 2, M4: die Zweckbestimmung (EN-04a). Ebenfalls eine eigene Datei
 # und hier nur eingebunden. Sie steht NACH der Vorpruefung, weil sie den Weg

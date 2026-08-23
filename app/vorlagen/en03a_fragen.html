@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+<head>
+  {% include "_kopf.html" %}
+  <title>Vorprüfung 1 von 2 · Die fünf Fragen · FREIRAUM</title>
+  {#
+    bildschirm: EN-03a
+
+    Der Kasten der Quelle (Nachtrag N-K19-1 vom 14.08.2026, Abschn. 2.1,
+    gezogen aus schema/K19_screens.yaml Z. 145-172 -- woertlich, K19-M01):
+
+      ╭─ EN-03a · Die fuenf Fragen ─────── [Vorpruefung 1 von 2] ─╮
+      │  Zugang: nach Anmeldung  │
+      │  Frage 1 von 5                                            │
+      │  Was haetten Sie am liebsten in der Hand?                 │
+      │  [a  eine Datei, die ich oeffne, lese und weitergebe]     │
+      │  [b  etwas, das ich aufrufe und in dem ich arbeite]       │
+      │  [c  weiss ich noch nicht]                                │
+      │  danach an derselben Stelle Frage 2 Wiederholung, Frage 3 │
+      │  Beteiligte, Frage 4 Daten, Frage 5 Verbindlichkeit       │
+      │  Auswertung serverseitig: Vetorecht der Fragen 5 und 1,   │
+      │  Zaehlung der Fragen 2 bis 4 -- der Bildschirm liefert    │
+      │  kein Ergebnis mit                                        │
+      │  Ergebnis  Vorschlag Direkt-Prototyp oder Anwendung, mit  │
+      │  genau einem Satz, der die ausschlaggebende Antwort nennt │
+      │  Solange eine Frage offen ist, steht an Stelle der beiden │
+      │  Weiterwege ein Hinweis, der die offene Frage nennt       │
+      │  Erst mit dem Ergebnis erscheinen die beiden Weiterwege:  │
+      │  [Arbeitsdokument]  [Vorpruefung 2]                       │
+      │  Der Direkt-Prototyp bleibt ungeprueft und ist nie        │
+      │  Gegenstand einer Angebotsanfrage.                        │
+      ╰───────────────────────────────────────────────────────────╯
+
+    umsetzt: K04-M22 (eine Frage je Schritt, genau drei Antwortmoeglichkeiten
+             aus dem Bestand, kein Freitextfeld), K04-M25 (genau EIN
+             Begruendungssatz), K04-M03 (beide Weiterwege gleichwertig; der
+             Weg Arbeitsdokument bleibt auch GEGEN den Vorschlag waehlbar --
+             deshalb wird er nicht ausgegraut, K16-D02), K19-M03 (genau eine
+             Zugangsmarke), K19-M06 (solange eine Frage offen ist, sind die
+             Weiterwege AUSGEBLENDET, nicht ausgegraut, und an ihrer Stelle
+             steht der Hinweis mit dem Wortlaut der offenen Frage),
+             K19-M13 (Statusansagen ohne Fokuswechsel)
+
+    DIESER BILDSCHIRM LIEFERT KEIN ERGEBNIS MIT. Er bekommt `vorschlag` und
+    `begruendung` fertig vom Server und rechnet nichts nach. Die Antworten,
+    aus denen sie entstehen, erreichen ihn gar nicht -- sonst gaebe es zwei
+    Stellen, an denen der Vorschlag entstehen koennte.
+
+    DER WORTLAUT DER FRAGEN STEHT NICHT IN DIESER DATEI. Er kommt aus
+    quick_question_version und quick_option, angelegt von
+    seeds/Seed_Direkt_Prototyp_Check_K04.sql aus K04 v1.7 Abschn. 5.0.
+    Stuende er hier, gaebe es zwei Orte, an denen er geaendert werden
+    koennte -- und der Server wertete gegen den einen, der Bildschirm zeigte
+    den anderen.
+
+    ZUR SCHREIBWEISE: der angezeigte Text traegt echte Umlaute, weil die
+    Quelle sie traegt und ein Endnutzer ihn liest. Die Umschreibung im
+    uebrigen Bestand gilt fuer Code und Kommentar. Dass EN-03 und EN-04
+    daneben umschriebenen Text zeigen, ist ein eigener kleiner Befund und
+    wird hier nicht fortgeschrieben.
+
+    NICHT GEZEICHNET, deshalb nicht behauptet: ob die drei
+    Antwortmoeglichkeiten Schaltflaeche, Kontrollkaestchen oder Auswahlliste
+    sind, ist offen (N-K19-1, offener Punkt A11). Gewaehlt ist die Form mit
+    Wahlfeld und einer Absende-Schaltflaeche je Frage: sie zeigt die Wahl
+    an, bevor sie wirkt, und kommt ohne Skript aus.
+  #}
+</head>
+<body>
+<main>
+  <div class="kasten">
+    <h1 id="titel">EN-03a · Die fünf Fragen</h1>
+    <p class="marke">Zugang: nach Anmeldung</p>
+
+    {% if meldung %}
+      <p class="meldung" role="alert">{{ meldung }}</p>
+    {% endif %}
+
+    <p>Angemeldet als {{ anzeigename }}</p>
+
+    {% if frage %}
+      {#
+        EINE FRAGE JE SCHRITT, an derselben Stelle (Bildschirmvertrag:
+        "fuenf Fragen nacheinander", "naechste Frage wird geladen").
+      #}
+      <p class="marke" id="zaehler">Frage {{ nummer }} von {{ anzahl }}</p>
+
+      <form method="post" action="/schnellweg/antwort">
+        <fieldset>
+          <legend id="frage">{{ frage.prompt }}</legend>
+          <input type="hidden" name="frage" value="{{ frage.code }}">
+          <ul class="wahlliste">
+            {% for option in frage.optionen %}
+              <li>
+                <label class="wahl">
+                  <input type="radio" name="option" value="{{ option.position }}"
+                         {% if option.position == frage.gewaehlt %}checked{% endif %}>
+                  {{ option.label }}
+                </label>
+              </li>
+            {% endfor %}
+          </ul>
+        </fieldset>
+        <button type="submit">Weiter</button>
+      </form>
+
+      {#
+        K19-M06: solange eine Frage offen ist, stehen die beiden Weiterwege
+        NICHT da. Der Hinweis steht an ihrer Stelle und nennt die offene
+        Frage im Wortlaut -- nicht ihre Nummer. Wer nur eine Nummer liest,
+        weiss nicht, was fehlt.
+      #}
+      <div id="hinweis" role="alert">
+        <p>Diese Frage ist noch offen: „{{ frage.prompt }}“ — sobald sie
+          beantwortet ist, sehen Sie den Vorschlag und die beiden
+          Weiterwege.</p>
+      </div>
+    {% else %}
+      {#
+        DAS ERGEBNIS. Genau ein Begruendungssatz (K04-M25), und er nennt die
+        ausschlaggebende Antwort.
+      #}
+      <h2 id="vorschlag">
+        {% if vorschlag == "DIREKT_PROTOTYP" %}
+          Unser Vorschlag: ein Arbeitsdokument
+        {% else %}
+          Unser Vorschlag: eine Anwendung
+        {% endif %}
+      </h2>
+      <p id="begruendung">{{ begruendung }}</p>
+      <p class="hinweis">Der Vorschlag ist keine Entscheidung. Sie können
+        beide Wege wählen.</p>
+
+      <div class="wege" id="wege">
+        <form method="post" action="/schnellweg/arbeitsdokument">
+          <button type="submit">Arbeitsdokument</button>
+        </form>
+        <form method="post" action="/schnellweg/vorpruefung2">
+          <button type="submit">Vorprüfung 2</button>
+        </form>
+      </div>
+
+      <p class="hinweis">Der Direkt-Prototyp bleibt ungeprüft und ist nie
+        Gegenstand einer Angebotsanfrage.</p>
+    {% endif %}
+
+    <form method="post" action="/schnellweg/abbruch">
+      <button type="submit">Abbrechen</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>
