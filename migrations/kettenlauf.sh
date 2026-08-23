@@ -723,6 +723,67 @@ frischetest_migrationen() {
   echo "Frischetest bestanden: keine der ${#liste[@]} zu fahrenden Dateien liegt bereits."
 }
 
+# Der Umgebungsnachweis. NEU AM 23.08.2026.
+#
+# Das Fremdmodell konnte am 22.08.2026 drei Dinge NICHT beurteilen, weil
+# der Lauf sie nirgends aufgeschrieben hat: gegen WELCHE Datenbank er
+# lief, MIT WELCHEN Rechten, und WIE genau die Abzüge gezogen wurden.
+# Alle drei sind messbar, und keines davon kostet mehr als eine Abfrage.
+#
+# Diese Funktion misst die ersten beiden. Die dritte schreibt
+# `abzug_nehmen` mit, sobald sie pg_dump aufruft.
+#
+# WARUM DAS KEIN BELEG IST: Ein Beleg trägt einen der vier Zustände aus
+# K23-M22 und beweist eine Aussage aus M1. Diese Datei beweist keine --
+# sie hält fest, unter welchen Bedingungen die anderen fünf gemessen
+# wurden. Sie ersetzt deshalb auch nicht die Zeile "War es die
+# Zielumgebung?" im Nachweis: was der Server über sich sagt, ist eine
+# Messung; ob das die GEMEINTE Umgebung war, weiss nur ein Mensch.
+#
+# KEIN ABBRUCH bei Fehlschlag: ein Abnahmelauf endet nicht daran, dass
+# eine Zusatzabfrage scheitert. Der Fehlschlag steht dann aber im Klartext
+# in der Datei, und der Nachweis zeigt darauf.
+umgebung_festhalten() {
+  local ziel="$ZIEL/umgebung.txt" rc
+  # Zwei Fallen, beide beim Fahren aufgeschlagen und deshalb hier notiert:
+  #
+  # 1. EIN E-Literal, nicht neun aneinandergereihte. PostgreSQL setzt
+  #    benachbarte Zeichenketten über einen Zeilenumbruch hinweg zwar
+  #    zusammen -- aber nicht, wenn jede ihr eigenes E-Präfix trägt.
+  # 2. KEIN doppeltes Anführungszeichen in der Abfrage. Sie steht in einem
+  #    doppelt gequoteten Argument; ein solches Zeichen beendet es, und
+  #    psql bekommt den Rest als lose Wörter serviert.
+  set +e
+  psql "$VERBINDUNG" -tA -c "
+SELECT format(
+  E'Datenbank:       %s\nAngemeldet als:  %s   (Sitzungskonto: %s)\nServer:          %s   Port %s\nFassung:         %s\nSUPERUSER:       %s\nBYPASSRLS:       %s\nCREATEDB:        %s\nCREATEROLE:      %s\nVerschlüsselt:   %s',
+  current_database(), current_user, session_user,
+  coalesce(host(inet_server_addr()), '⟨lokaler Sockel⟩'),
+  coalesce(inet_server_port()::text, '—'),
+  version(),
+  (SELECT rolsuper      FROM pg_roles WHERE rolname = current_user),
+  (SELECT rolbypassrls  FROM pg_roles WHERE rolname = current_user),
+  (SELECT rolcreatedb   FROM pg_roles WHERE rolname = current_user),
+  (SELECT rolcreaterole FROM pg_roles WHERE rolname = current_user),
+  coalesce((SELECT ssl::text FROM pg_stat_ssl WHERE pid = pg_backend_pid()),
+           '⟨unbekannt⟩')
+)" > "$ziel" 2>&1
+  rc=$?
+  set -e
+  if [ "$rc" -ne 0 ]; then
+    {
+      echo
+      echo "NICHT GEMESSEN: Die Abfrage endete mit Rückgabewert $rc."
+      echo "Der Lauf ist deshalb nicht abgebrochen -- aber die Bedingungen,"
+      echo "unter denen die fünf Belege entstanden sind, sind hier nicht belegt."
+    } >> "$ziel"
+    echo "WARNUNG: Umgebungsnachweis nicht gemessen (Rückgabewert $rc), siehe $ziel"
+    return 0
+  fi
+  echo "Umgebung festgehalten:"
+  sed 's/^/  /' "$ziel"
+}
+
 # ---------------------------------------------------------------------
 # 5 · Der Abschluss — er läuft auch nach einem Abbruch
 # ---------------------------------------------------------------------
@@ -825,7 +886,9 @@ Dieses Blatt trägt Messwerte, keine Unterschrift. Es entsteht aus
 | Umfang | \`--umfang $UMFANG\` — $UMFANG_KLARTEXT |
 | Vorläufer 260801 eingespielt | $([ "$MIT_VORLAEUFER" = "ja" ] && echo "**ja** — mit \`--mit-vorlaeufer\`; Aufbau wie die Prüfumgebung aus \`aufbau.sh\`" || echo "nein — wie im gezeichneten Lauf \`n2_lauf.sh\`") |
 | Verbindung | $WIRT_ANGABE |
-| War es die Zielumgebung? | **VON DER ZEICHNENDEN PERSON EINZUTRAGEN** |
+| Was der Server über sich sagt | \`umgebung.txt\` — Datenbank, Konto, Rechte, Fassung, Verschlüsselung |
+| Wie die Abzüge gezogen wurden | \`pg_dump_aufrufe.txt\` — Fassung und beide Aufrufzeilen je Lauf |
+| War es die Zielumgebung? | **VON DER ZEICHNENDEN PERSON EINZUTRAGEN** — \`umgebung.txt\` sagt, *welche* Datenbank geantwortet hat; ob das die gemeinte war, sagt sie nicht |
 | Prüfsummen der Eingänge nachgerechnet | $([ "$PRUEFSUMMEN" = "ja" ] && echo "ja" || echo "**nein** — mit \`--ohne-pruefsummen\` gefahren") |
 | Belegordner | \`$ZIEL\` |
 
@@ -925,6 +988,10 @@ vorhanden="$(psql "$VERBINDUNG" -tA -c "SELECT count(*) FROM pg_type WHERE typna
 # Datenbank, auf der nur das Grundschema übersprungen wird.
 echo "Frischetest: liegt eine der zu fahrenden Migrationen schon in der Datenbank?"
 frischetest_migrationen
+
+# Erst hier, nicht früher: vorher steht nicht fest, dass überhaupt gegen
+# eine brauchbare Datenbank gefahren wird.
+umgebung_festhalten
 
 if [ "$vorhanden" = "0" ]; then
   echo "leere Datenbank -- Grundschema wird geladen: $GRUND"
@@ -1219,6 +1286,20 @@ zeilenprobe() {   # $1 = Laufnummer
 abzug_nehmen() {   # $1 = Laufnummer
   local nummer="$1" rc
   rls_lage_pruefen
+  # Die dritte Frage, die das Fremdmodell nicht beurteilen konnte: WIE die
+  # Abzüge gezogen wurden. Beide Aufrufzeilen und die Fassung von pg_dump
+  # gehen hier mit -- vor dem Aufruf, damit sie auch dann dastehen, wenn er
+  # scheitert.
+  #
+  # Die Verbindung steht als ⟨Verbindung⟩ und NICHT im Klartext: sie trägt
+  # das Kennwort. Ein Zugangswert in einem Beleg sperrt den Lauf (K23-D09),
+  # und `kennwort_probe` würde ihn am Ende finden.
+  {
+    echo "--- Lauf $nummer · $(date '+%d.%m.%Y %H:%M:%S') ---"
+    echo "pg_dump-Fassung: $(pg_dump --version 2>&1)"
+    echo "Schema: pg_dump --schema-only ⟨Verbindung⟩ > schema_roh_lauf$nummer.sql"
+    echo "Daten:  pg_dump --data-only --column-inserts --enable-row-security ⟨Verbindung⟩ > daten_roh_lauf$nummer.sql"
+  } >> "$ZIEL/pg_dump_aufrufe.txt"
   set +e
   pg_dump --schema-only "$VERBINDUNG" > "$ZIEL/schema_roh_lauf$nummer.sql"
   rc=$?
