@@ -244,6 +244,41 @@ ausgeführt.* Was nicht gemessen werden konnte, ist **gesperrt** — nicht besta
 | **Stop statt Endlosschleife** | Max. drei Anläufe je Gate, dann Eskalation an die Founder — **übertragen** aus der Konzept-Fabrik (`CLAUDE.md`:179), dort für Tabletop-Runden gesetzt. Für Code **nicht gezeichnet** |
 | **Bei Verzug: melden, sobald es sich abzeichnet** | nicht am 31. August. Über Umfang oder Termin entscheidet der Auftraggeber (G2, Blatt 11:26) |
 
+### Deutsch, und zwar richtig
+
+**Eingetragen auf Weisung des Auftraggebers vom 22.08.2026.** Wortlaut der Weisung:
+
+> „das muss in der claude .md stehen, ich sehe dass bestimmte Bildschirme falsches Deutsch
+> haben, in Claude Code wird Kauderwelsch-Deutsch ausgegeben und Begriffe in Deutsch erzeugt,
+> die es gar nicht auf Deutsch gibt. Das muss aufhören."
+
+| Regel | Umsetzung |
+|---|---|
+| **Echte Umlaute überall, wo ein Mensch liest** | ä ö ü Ä Ö Ü ß — **nie** `ae oe ue ss`. Gilt für Bildschirmtext (`app/vorlagen/`), für **jede Ausgabe des Harness** im Gespräch und auf der Konsole, für Fehlermeldungen, Commits, Anträge, Befunde und Nachweisblätter |
+| **Ausgenommen: was eine Maschine vergleicht** | Datei-, Zweig-, Funktions-, Feld- und Prüffallnamen, Werte in Manifesten, Eingaben in Prüfsummen. Ein Umlaut dort bricht die Sperre, die er schützen soll — dieselbe Grenze wie in `CONTRIBUTING.md` SPR-10 |
+| **Keine erfundenen Wörter** | Wo ein gebräuchliches deutsches Wort besteht, wird es benutzt. Ein neu geprägter Begriff wird bei der **ersten Nennung erklärt** und in das Glossar (`CONTRIBUTING.md` §6) aufgenommen. Ein Begriff, der nirgends erklärt ist, ist keiner |
+| **Keine deutsch-englischen Mischformen** | „Eignungs-Check" und „Direkt-Prototyp-Check" stehen heute auf EN-02, EN-03 und EN-04. Sie sind Verlegenheitsbildungen. Ersetzt wird **im K19-Kasten**, nicht in der Vorlage — der Kasten führt die Beschriftung (Abschn. 1) |
+| **Bestandsschutz** | Gezeichnete Klauselwortlaute, abgelegte Nachweise und Prüffälle, die Zeichen für Zeichen vergleichen, bleiben unverändert. Berichtigt wird beim nächsten Anfassen einer Datei, **nicht** durch einen Sammellauf über den Bestand |
+
+**Warum diese Zeile nötig war.** `CONTRIBUTING.md` §2 führt acht Textsorten und nimmt Quelltext
+ausdrücklich aus. **Bildschirmtext steht in keiner der beiden Spalten.** Deshalb liest ein Kunde
+auf EN-01 heute „Kuenstlicher", ohne dass eine Regel verletzt wäre: gemessen am 22.08.2026
+tragen die sieben gebauten Vorlagen **83 ersatzgeschriebene Wörter und null echte Umlaute**.
+
+**Noch nicht gemessen.** Für Tor 1a gibt es keine Prüfung, die das durchsetzt. Bis es sie gibt,
+gilt die Regel, aber niemand misst sie — sie gehört bis dahin auf die Restrisikoliste.
+
+> **Ein Widerspruch bleibt offen und wird hier nicht still entschieden.** Die Klausel **K05-M10**
+> schreibt „(Frage übersprungen)" **mit** Umlaut; das gezeichnete Akzeptanzkriterium schreibt an
+> derselben Stelle „(Frage uebersprungen)", und der Prüffall vergleicht Zeichen für Zeichen
+> (`app/gespraech.py`:785–790, dort seit dem Bau als offener Punkt vermerkt). Nach Rang 1 gewinnt
+> die Klausel. Wer umstellt, ändert einen Prüffall — das gehört gezeichnet, nicht nebenbei getan.
+
+**Diese Zeile ist ausgeführt, aber noch nicht gezeichnet.** Nach dem Kopf dieser Datei fließen
+Änderungen ausschließlich von der Anlage „Bauverfahren" hierher, nie umgekehrt. Der zu
+zeichnende Text liegt in `arbeit/Vorlagen/zeichnung_deutsch_und_begriffe_260822.md`. Bis er in
+der Anlage steht, bindet diese Regel den Harness — aber sie ist keine Verfassungsänderung.
+
 ---
 
 ## 6 · Was du nie tust
