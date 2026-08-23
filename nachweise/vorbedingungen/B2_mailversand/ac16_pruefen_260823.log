@@ -1,0 +1,113 @@
+Lauf gegen freiraum_ac16 · Empfaenger michael.veil@icloud.com
+Kopfdatei: /Users/mveil/mailkopf.txt
+
+== Migrationsprueffaelle ==
+psql:pruefungen/migration/M30__pruefung.sql:1792: NOTICE:  MT-88 · *** GESCHEITERT *** — Jede eigene Funktion hat einen festen Suchpfad (F-05) · 29 Funktionen, 2 ohne search_path
+psql:pruefungen/migration/M30__pruefung.sql:1792: NOTICE:  SUMME: 110 von 111 bestanden, 1 gescheitert
+::error::Migrationsprueffaelle nicht bestanden
+
+== Negativfaelle ==
+   M30_N1_frist_ge_mindestfrist — scheitert an frist_ge_mindestfrist
+      psql:migrations/negativfaelle/M30_N1_frist_ge_mindestfrist.sql:15: ERROR:  new row for relation "retention_rule" violates check constraint "frist_ge_mindestfrist"
+   M30_N2_mail_fehler_braucht_grund — scheitert an mail_fehler_braucht_grund
+      psql:migrations/negativfaelle/M30_N2_mail_fehler_braucht_grund.sql:14: ERROR:  new row for relation "mail_delivery" violates check constraint "mail_fehler_braucht_grund"
+   M30_N3_pseudonym_vor_frist — scheitert an pseudonym_vor_frist
+      psql:migrations/negativfaelle/M30_N3_pseudonym_vor_frist.sql:28: ERROR:  new row for relation "retention_rule" violates check constraint "pseudonym_vor_frist"
+   M30_N4_tagesfrist_positiv — scheitert an tagesfrist_positiv
+      psql:migrations/negativfaelle/M30_N4_tagesfrist_positiv.sql:13: ERROR:  new row for relation "retention_rule" violates check constraint "tagesfrist_positiv"
+   M31_N1_anlage_ohne_eignung — scheitert an ANLAGE: der Eignungs-Check steht nicht auf GEEIGNET
+      psql:migrations/negativfaelle/M31_N1_anlage_ohne_eignung.sql:43: ERROR:  ANLAGE: der Eignungs-Check steht nicht auf GEEIGNET (K01-M27)
+   M31_N2_treffer_frage1_ohne_kenntnisnahme — scheitert an ZWECKBESTIMMUNG: die Kenntnisnahme zu Anhang III fehlt
+      psql:migrations/negativfaelle/M31_N2_treffer_frage1_ohne_kenntnisnahme.sql:42: ERROR:  ZWECKBESTIMMUNG: die Kenntnisnahme zu Anhang III fehlt; ohne sie ist die Auskunftspflicht nach Art. 25 Abs. 4 nicht belegbar (K04-M21)
+   M31_N3_treffer_frage2_wird_nicht_weitergefuehrt — scheitert an ZWECKBESTIMMUNG: verbotene Praktik nach Art. 5
+      psql:migrations/negativfaelle/M31_N3_treffer_frage2_wird_nicht_weitergefuehrt.sql:43: ERROR:  ZWECKBESTIMMUNG: verbotene Praktik nach Art. 5 der KI-Verordnung bejaht; der Weg wird nicht weitergefuehrt (K04-D10)
+   M31_N4_erklaerung_ohne_zweite_antwort — scheitert an zweck_erklaerung_vollstaendig
+      psql:migrations/negativfaelle/M31_N4_erklaerung_ohne_zweite_antwort.sql:54: ERROR:  new row for relation "fit_check" violates check constraint "zweck_erklaerung_vollstaendig"
+   M32_N1_stufe_uebersprungen — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: ORIENTIERUNG nach UEBERSICHT ist kein Uebergang von M5
+               create_app_after_fit         
+      --------------------------------------
+   M32_N2_fremder_mandant — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: das Konto gehoert Mandant
+               create_app_after_fit         
+      --------------------------------------
+   M32_N3_ohne_mitgliedschaft — FALSCHE BEDINGUNG. Erwartet: STUFENWECHSEL: keine Mitgliedschaft im Endnutzer-Portal fuer diesen Mandanten
+               create_app_after_fit         
+      --------------------------------------
+   M32_N4_zeilenschutz_haelt — DURCHGELAUFEN, die Bedingung fehlt
+
+== Klausel-Prueffaelle ==
+::warning::ECHTVERSAND-LAUF — dieser Lauf misst NUR AC-16.
+   Der Server verschickt ueber den echten Wirt (mail.bytecamp.net).
+   Die uebrigen Faelle brauchen den oertlichen Faenger und TRAGEN HIER NICHT:
+   Adressen @pruef.example nimmt kein fremder Anbieter an, der Versand
+   scheitert, und die Anwendung entwertet daraufhin den Code (mail/versand.py).
+   Ihre Fehlschlaege sind KEIN Baubefund (Blatt 90, Abschn. 4).
+   Fuer einen vollstaendigen Lauf: FREIRAUM_ECHTVERSAND leer lassen.
+
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_anmeldecode.log
+      AC-01   GESCHEITERT  [EN-01, K03-M05, K03-M15] Codeversand nach Einloesung: im Mailfang steht keine sechsstellige Ziffernfolge in einer Mail an ac_kette@pruef.example;
+      AC-02   GESPERRT     [EN-01, K03-M15] Anmeldung mit dem versandten Code nicht pruefbar: AC-01 hat keinen lesbaren Code geliefert
+      AC-04   GESPERRT     [K03-M15, EN-01, K03-G01, K03-G05] Codefrist-Negativfall nicht aufbaubar: Einloesung fuer ac_frist@pruef.example schlug fehl oder kein lesbarer Code (Status 303, Code 'leer')
+      AC-05   GESPERRT     [K03-M15, EN-01] Einmalverwendung nicht pruefbar: AC-01/AC-02 haben keinen verwendbaren Code geliefert
+      AC-06   GESPERRT     [K03-M16] Gegenprobe zu K03-M16 nicht aufbaubar: Einloesung fuer ac_unterschwelle@pruef.example schlug fehl oder kein lesbarer Code
+      AC-07   GESPERRT     [K03-M16, K03-G05] Fuenf-Fehlversuche-Sperre nicht aufbaubar: Einloesung fuer ac_gesperrt5@pruef.example schlug fehl oder kein lesbarer Code
+      AC-08   GESPERRT     [K03-M16, K03-G01] Ununterscheidbarkeit nicht aufbaubar: Einloesung fuer ac_gegenprobe@pruef.example schlug fehl oder kein lesbarer Code
+      AC-09   GESPERRT     [K03-M16, K03-G01, EN-01] Kontoexistenz nicht pruefbar: kein Vergleichsrumpf aus AC-08 vorhanden
+      AC-12   GESPERRT     [K23-D09] Fehlerausgabe nicht pruefbar: kein Code oder keine Antwort aus AC-08 vorhanden
+      AC-13   GESPERRT     [K23-D09] Kreuzpruefung nicht moeglich: keine Antwort aus AC-08 vorhanden
+      AC-15   GESPERRT     [K20-M18] Nachweis der Anmeldung nicht pruefbar: AC-01/AC-02 haben keine erfolgreiche Anmeldung fuer ac_kette@pruef.example geliefert
+      davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): 10
+::error::anmeldecode — 6 von 17 bestanden, 11 gescheitert
+   anmeldung — GESPERRT: pruefungen/klauseln/anmeldung_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       53794e4171d4a3a8b9b7944df63f2140
+      (1 row)
+      
+   einloesung — GESPERRT: pruefungen/klauseln/einloesung_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       a0791be3c3f3b122fef914558c047844
+      (1 row)
+      
+   gespraech — GESPERRT: pruefungen/klauseln/gespraech_daten.sql laeuft nicht durch
+      psql:pruefungen/klauseln/gespraech_daten.sql:369: ERROR:  duplicate key value violates unique constraint "agent_pkey"
+      DETAIL:  Key (id)=(00000000-0000-4000-8000-00000000ee01) already exists.
+      CONTEXT:  SQL statement "INSERT INTO agent (id, name, model_ref_id)
+        VALUES ('00000000-0000-4000-8000-00000000ee01','Pruef-Moderator Gespraech',
+                (SELECT id FROM model_ref LIMIT 1))"
+   Serverprotokoll aufgehoben: /tmp/freiraum_server_k19_kasten.log
+      EN-04a-A       GESPERRT     Die Build-Referenz fuehrt fuer EN-04a keinen Kasten -- es gibt nichts, dem die Seite folgen koennte (K19-G01: fail-closed, der Bildschirm gilt als nicht belegt). Kein Baufehler.
+      EN-04a-B       GESPERRT     Ohne Kasten keine Reihenfolge.
+      davon GESPERRT (nicht messbar, zaehlt nach K23-M22 nicht als bestanden): 2
+::warning::k19_kasten — 4 von 6 bestanden, 2 gescheitert; alle offenen Punkte GESPERRT, keiner gescheitert
+   mitgliedschaft — GESPERRT: pruefungen/klauseln/mitgliedschaft_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       2877502cda6bfef7f532a901673a0125
+      (1 row)
+      
+   versand — GESPERRT: pruefungen/klauseln/versand_daten.sql laeuft nicht durch
+                  set_config            
+      ----------------------------------
+       4eb0a1e1298beedc28f36cd4bfda0789
+      (1 row)
+      
+   vorpruefung — GESPERRT: pruefungen/klauseln/vorpruefung_daten.sql laeuft nicht durch
+      psql:pruefungen/klauseln/vorpruefung_daten.sql:208: NOTICE:  relation "pruef_vorpruefung_herkunft" already exists, skipping
+      psql:pruefungen/klauseln/vorpruefung_daten.sql:254: ERROR:  duplicate key value violates unique constraint "fit_check_pkey"
+      DETAIL:  Key (id)=(00000000-0000-4000-8000-00000000ec01) already exists.
+   zweckbestimmung — GESPERRT: pruefungen/klauseln/zweckbestimmung_daten.sql laeuft nicht durch
+      psql:pruefungen/klauseln/zweckbestimmung_daten.sql:78: NOTICE:  relation "pruef_zweck_herkunft" already exists, skipping
+      psql:pruefungen/klauseln/zweckbestimmung_daten.sql:132: ERROR:  APPEND-ONLY: event erlaubt weder UPDATE noch DELETE
+      CONTEXT:  PL/pgSQL function append_only_guard() line 3 at RAISE
+      SQL statement "UPDATE ONLY "public"."event" SET "project_no" = NULL WHERE $1 OPERATOR(pg_catalog.=) "project_no""
+
+=======================================================
+Pruefpunkte: bestanden: 8 · fehlgeschlagen: 6 · gesperrt: 8
+Einzelfaelle: bestanden: 10 · fehlgeschlagen: 1 · gesperrt: 12
+Bericht: /Users/mveil/ac16_pruefen.json
+Manifest: /Users/mveil/ac16_pruefen_manifest.json
+Pruefsumme: /Users/mveil/ac16_pruefen_manifest.json.sha256  (66d3a81ea83fe8b6…)
+::warning::Arbeitsbaum war nicht sauber -- der Commit-Hash beschreibt nicht den gelaufenen Stand (K23-M18 Glied 1).
+::error::Tor 1c: 6 Fehlschlag/Fehlschlaege
+
