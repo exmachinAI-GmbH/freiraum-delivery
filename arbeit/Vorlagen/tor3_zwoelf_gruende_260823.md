@@ -185,7 +185,7 @@ gezeichnet und nicht durch Fristsetzung ersetzt.
 | ⟨…⟩ | ⟨………………⟩ | ⟨………………⟩ | ⟨ja/nein⟩ |
 | ⟨…⟩ | ⟨………………⟩ | ⟨………………⟩ | ⟨ja/nein⟩ |
 
-⟨zeichnet: …………………⟩ ⟨am: …………………⟩
+⟨zeichnet: …M. Veil, A. Han………………⟩ ⟨am: ……23.8.26……………⟩
 
 > **Ein Kreuz statt sechsunddreißig Feldern.** Die Vorschläge stehen unverändert darüber;
 > das Kreuz macht sie zur Zeichnung. Nach K23-M04 ersetzt eine Annahmeentscheidung keinen
