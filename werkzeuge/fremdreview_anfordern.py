@@ -220,7 +220,7 @@ def main():
     print()
     print("DER HARNESS SCHICKT NICHTS AB. Ein Mensch fuehrt aus (Anlage :114, :201):")
     print()
-    print(f"    codex exec --model gpt-5.6-sol --sandbox read-only \\")
+    print("    codex exec --model gpt-5.6-sol --sandbox read-only \\")
     print(f"        \"$(cat {ziel.relative_to(WURZEL)})\"")
     print()
     print("Danach: Urteil UNVERAENDERT in ein Blatt nach "
