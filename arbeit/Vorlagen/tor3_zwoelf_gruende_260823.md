@@ -158,8 +158,23 @@ der Harness trägt sie nicht ein. Nach K23-M04 ersetzt eine Annahmeentscheidung 
 fehlenden Prüffall — wo ein Grund als Restrisiko angenommen wird, gehört das ausdrücklich
 gezeichnet und nicht durch Fristsetzung ersetzt.
 
-| Nr. | Träger | Frist | angenommen als Restrisiko? |
-|---|---|---|---|
-| 1 · 2 · 3 · 4 · 5 · 6 · 7 · 8 · 9 · 10 · 11 · 12 | ⟨………⟩ | ⟨………⟩ | ⟨………⟩ |
+| Nr. | Grund, kurz | Träger *(Vorschlag)* | Frist *(Vorschlag)* | Träger — **gezeichnet** | Frist — **gezeichnet** | als Restrisiko angenommen? |
+|---|---|---|---|---|---|---|
+| **12** | VP-18 misst zugunsten des Standes | Prüf-Agent | zuerst | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **11** | Fehlermeldungen gehen im Erfolgszweig verloren | Prüf-Agent | zuerst | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **2** | K03-M05 · mfa_method nicht gelesen | Bau | erledigt 23.08. | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **7** | K20-M25 · retention_class | M. Veil | entschieden 23.08. | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **4** | K03-M25 · Kontobestand in Fehlermeldungen | Bau | vor Pilotstart | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **3** | K03-G01 · Sperre ohne Grund | M. Veil · Bau | mit dem Einladungswortlaut | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **6** | K20-M18 · keine Vorher/Nachher-Spur | Bau | vor Pilotstart | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **5** | K03-M26 · Secret-Handling, volle Adresse | A. Han · Bau | vor Echtdaten (Tor III) | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **10** | K04-G11 · kein Produktivsperrriegel | Bau | vor Echtdaten (Tor III) | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **9** | K04-M08 · Termin löst Ansprechperson nicht auf | Bau | mit Nr. 12 | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **1** | K13-M05 · Rolle und Objektbezug fehlen | Bau · Abnahme A. Han | vor M11 | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+| **8** | Mandantengrenze · 22 Stellen | Bau · Abnahme A. Han | vor M11 | ⟨………⟩ | ⟨………⟩ | ⟨ja/nein⟩ |
+
+> **Die beiden linken Spalten sind Vorschläge des Harness, die beiden rechten sind die
+> Zeichnung.** Sie stehen nebeneinander, damit sichtbar bleibt, wo jemand abgewichen ist.
+> Die Reihenfolge ist die vorgeschlagene Bearbeitungsreihenfolge, nicht die Nummernfolge.
 
 **Gezeichnet:** ⟨………………………⟩ **am** ⟨………………⟩
