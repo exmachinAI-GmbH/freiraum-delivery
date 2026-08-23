@@ -1,0 +1,36 @@
+Return-path: <noreply@freiraum.top>
+Original-recipient: rfc822;michael.veil@icloud.com
+Received: from p00-icloudmta-smtpin-us-central-1n-60-percent-9 by p143-mailgateway-smtp-5499dbd685-nzwcj (mailgateway 2632B98)
+with SMTP id 710d260f-4207-4047-a93b-d0f2e598c793 
+for <michael.veil@icloud.com>; Sun, 23 Aug 2026 12:48:41 GMT
+X-ICLOUD-MAIL-BWL: 1
+X-Apple-MoveToFolder: INBOX 
+X-Apple-Action: WL/INBOX
+Received: from mxout01.bytecamp.net (mxout01.bytecamp.net [212.204.60.217])
+by p00-icloudmta-smtpin-us-central-1n-60-percent-9 (Postfix) with ESMTPS id 73F22C00126
+for <michael.veil@icloud.com>; Sun, 23 Aug 2026 12:48:37 +0000 (UTC)
+X-ICL-Score: 3.33303334422
+Authentication-Results: bimi.icloud.com; bimi=skipped reason="insufficient dmarc"
+X-ARC-Info: policy=fail; arc=none; r1=-20; r2=0
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com; dmarc=pass header.from=freiraum.top
+X-DMARC-Policy: v=DMARC1; p=quarantine; rua=mailto:dmarc@freiraum.top; adkim=s; aspf=s; pct=25
+X-DMARC-Info: pass=pass; dmarc-policy=quarantine; s=s1; d=s1; pdomain=freiraum.top
+Authentication-Results: dkim-verifier.icloud.com; dkim=pass header.d=freiraum.top header.i=@freiraum.top header.b=l6fziH0Y
+Received-SPF: pass (spf.icloud.com: domain of noreply@freiraum.top designates 212.204.60.217 as permitted sender) receiver=spf.icloud.com; client-ip=212.204.60.217; helo=mxout01.bytecamp.net; envelope-from=noreply@freiraum.top
+Authentication-Results: spf.icloud.com; spf=pass (spf.icloud.com: domain of noreply@freiraum.top designates 212.204.60.217 as permitted sender) smtp.mailfrom=noreply@freiraum.top
+Received: by mxout01.bytecamp.net (Postfix, from userid 1001)
+id 88FD234849; Sun, 23 Aug 2026 14:48:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=freiraum.top; h=from:to:subject:content-type:content-transfer-encoding:mime-version:message-id:date; s=20260803; bh=KG3L583jtuzQCIp23lX0KMp4lfY2SfVlUpc7e/dM8kg=; b=l6fziH0Y9BuBDr3mW7bpWgKB/+qXT7OHL4M23xOdU8+H4xQXflF3KFF5CepFc55ylYvE9JuJ1k1+z1d6WW/MJ3x5VBWrDYHm6+4+sx8WnE6H9qFgOof3YyHS+ufpGZTSo8ZWWM7p0+52/G11X+TopYX0Hv345hBrRs1AZsXGCjQ/WBtTPvMLLbKR3sMKqAf4rmuSaPA19UcQaXV1xD0lvXON1Zixu7JtEruWOibV1rcms9j8cOhVo8ya3cnLQnfqT6kJUFxsJuP3LnnBFCse2pbmEV1w4CHY3DG6D5wq9V3haM7mnZ7OcV1zJyBPDy3ejEXqnjAFTzFanXzur055Sg==
+Received: from mail.bytecamp.net (mail.bytecamp.net [212.204.60.9])
+by mxout01.bytecamp.net (Postfix) with ESMTP id 6014734846
+for <michael.veil@icloud.com>; Sun, 23 Aug 2026 14:48:35 +0200 (CEST)
+Received: (qmail 69199 invoked from network); 23 Aug 2026 14:48:35 +0200
+From: noreply@freiraum.top
+To: michael.veil@icloud.com
+Subject: Ihr FREIRAUM-Anmeldecode
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Message-Id: <20260823124835.6014734846@mxout01.bytecamp.net>
+Date: Sun, 23 Aug 2026 14:48:35 +0200 (CEST)
