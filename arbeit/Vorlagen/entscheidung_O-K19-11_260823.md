@@ -61,8 +61,10 @@ Zwei Klauseln desselben freigegebenen Konzepts sagen Verschiedenes. Nach K19-G05
 
 | Feld | Wert |
 |---|---|
-| Gewählt | ☐ **A** genau fünf ·  ☐ **B** adaptiver Abbruch |
-| Gezeichnet durch | ________________________  ·  Datum: ____________ |
-| Gegenzeichnung | ________________________  ·  Datum: ____________ |
+| Gewählt | ☒ **A** genau fünf ·  ☐ ~~B adaptiver Abbruch~~ |
+| Gezeichnet durch | ____A. Han____________________  ·  Datum: ______23.8.26______ |
+| Gegenzeichnung | _______________M. Veil_________  ·  Datum: ____23.8.26________ |
 
 *Mit der Zeichnung wird O-K19-11 geschlossen und VP-25 im Klausellauf von GESPERRT auf messbar gestellt. Bei A ist danach nichts zu bauen; bei B ein halber Tag.*
+
+**Vermerk des Baus zur Wahl.** Die beiden Unterschriften standen am 23.08.2026 auf dem Blatt, die Zeile *Gewählt* war leer. Die Wahl **A** ist am selben Tag im Gespräch erteilt und vom Bau hier eingetragen worden — sie stammt nicht von einer Hand auf diesem Blatt. Wer das später prüft, soll den Unterschied sehen können.

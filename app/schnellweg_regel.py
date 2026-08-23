@@ -23,6 +23,10 @@ ANZAHL_FRAGEN = 5
 # Gelesen wird nicht "die neueste", sondern die HEUTE GUELTIGE -- das ist
 # eine Angabe der Datenbank (`gueltig @> CURRENT_DATE`), keine des Codes.
 
+# Die beiden Werte des Aufzaehlungstyps quick_zuordnung (M36).
+ZUORDNUNG_ANWENDUNG = "ANWENDUNG"
+ZUORDNUNG_DOKUMENT = "DOKUMENT"
+
 VORSCHLAG_ANWENDUNG = "ANWENDUNG"
 VORSCHLAG_PROTOTYP = "DIREKT_PROTOTYP"
 
@@ -67,7 +71,7 @@ GEZAEHLT = ("wiederholung", "beteiligte", "daten")
 def auswerten(antworten):
     """Vorschlag und Begruendungssatz aus den fuenf Antworten (K04-M23 bis M25).
 
-    `antworten` ist eine Abbildung {frage_code: (label, token)}. Zurueck kommt
+    `antworten` ist eine Abbildung {frage_code: (label, token, zuordnung)}. Zurueck kommt
     (vorschlag, begruendung). Diese Funktion liest nichts und schreibt nichts
     -- sie ist die einzige Stelle, an der die Regel steht, und sie laesst sich
     ohne Server gegen alle 243 Kombinationen fahren.
@@ -86,7 +90,7 @@ def auswerten(antworten):
     # Schritt 1 und 2 -- das Veto. Die Reihenfolge ist die des Ablaufbildes:
     # erst die Verbindlichkeit, dann das Ergebnis.
     for code in ("verbindlichkeit", "ergebnis"):
-        label, token = antworten[code]
+        label, token, _ = antworten[code]
         if token in VETO[code]:
             return VORSCHLAG_ANWENDUNG, (
                 f"Ihre Antwort „{label}“ gibt allein den Ausschlag: "
@@ -94,8 +98,11 @@ def auswerten(antworten):
             )
 
     # Schritt 3 -- die Zaehlung der Fragen 2 bis 4.
+    # Gezaehlt wird nach der Spalte `zuordnung` (M36, 23.08.2026), nicht
+    # mehr nach der Endung am Token. Der Name ist ein Name, die Spalte ist
+    # die Wahrheit -- der Seed misst nach, dass beide uebereinstimmen.
     treffer = [(code, antworten[code][0]) for code in GEZAEHLT
-               if antworten[code][1].endswith("__app")]
+               if antworten[code][2] == ZUORDNUNG_ANWENDUNG]
 
     if len(treffer) >= 2:
         genannt = treffer[0][1]

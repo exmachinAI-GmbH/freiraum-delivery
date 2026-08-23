@@ -304,7 +304,8 @@ zuruecksetzen()
 with db() as conn:
     conn.execute("CREATE TEMP TABLE t AS SELECT 1")
     gesichert = conn.execute(
-        "SELECT question_code, version, position, label_de, value_token"
+        "SELECT question_code, version, position, label_de, value_token,"
+        "       zuordnung::text"
         "  FROM quick_option").fetchall()
     conn.execute("DELETE FROM quick_option WHERE question_code = 'daten'")
 a = httpx.post(f"{BASIS}/vorpruefung/starten", cookies=keks(ANNA),
@@ -312,22 +313,63 @@ a = httpx.post(f"{BASIS}/vorpruefung/starten", cookies=keks(ANNA),
 with db() as conn:
     angelegt = conn.execute("SELECT count(*) FROM quick_check").fetchone()[0]
     for zeile in gesichert:
-        conn.execute("INSERT INTO quick_option VALUES (%s,%s,%s,%s,%s)"
+        conn.execute("INSERT INTO quick_option"
+                     " (question_code, version, position, label_de,"
+                     "  value_token, zuordnung)"
+                     " VALUES (%s,%s,%s,%s,%s,%s::quick_zuordnung)"
                      " ON CONFLICT DO NOTHING", zeile)
 fall("VP-23", "K04-M22",
      "Fehlt eine Frage im Bestand, entsteht kein Vorgang (fail-closed)",
      a.status_code == 200 and angelegt == 0 and "nicht bereit" in a.text,
      f"HTTP {a.status_code}, quick_check={angelegt}, benannte Meldung, Verbleib auf EN-03")
 
-# --- Was dieser Lauf NICHT messen kann ------------------------------------
-gesperrt("VP-24", "O-M3-5",
-         "Die Zuordnung Dokument/Anwendung hat keine eigene Spalte",
-         "quick_option traegt sie als Endung am value_token. Ob das fuer "
-         "K04-M22 genuegt, ist nicht entschieden (BEF-K04-2).")
-gesperrt("VP-25", "K04-M02 gegen K04-M22",
-         "Ob EN-03a vor Frage 5 abbrechen darf",
-         "K04-M02 sagt 'hoechstens fuenf', K04-M22 'genau fuenf'. Der "
-         "Widerspruch ist nicht entschieden (O-K19-11).")
+# --- VP-24 · Die Zuordnung hat eine eigene Spalte (O-M3-5 geschlossen) ----
+# Bis zum 23.08.2026 stand dieser Fall auf GESPERRT: die Zuordnung lag als
+# Endung am value_token, und ob das fuer K04-M22 genuegt, war nicht
+# entschieden. Gezeichnet am 23.08.2026, umgesetzt in migrations/M36.
+with db() as conn:
+    pflicht = conn.execute(
+        "SELECT attnotnull FROM pg_attribute"
+        " WHERE attrelid = 'quick_option'::regclass AND attname = 'zuordnung'"
+    ).fetchone()
+    ohne = conn.execute(
+        "SELECT count(*) FROM quick_option WHERE zuordnung IS NULL").fetchone()[0]
+    uneins = conn.execute(
+        "SELECT count(*) FROM quick_option"
+        " WHERE (value_token LIKE '%\\_\\_dok' AND zuordnung <> 'DOKUMENT')"
+        "    OR (value_token LIKE '%\\_\\_app' AND zuordnung <> 'ANWENDUNG')"
+    ).fetchone()[0]
+    verteilung = dict(conn.execute(
+        "SELECT zuordnung::text, count(*) FROM quick_option GROUP BY 1").fetchall())
+fall("VP-24", "K04-M22",
+     "Jede Antwort traegt eine Zuordnung, und das Schema erzwingt sie",
+     pflicht is not None and pflicht[0] is True and ohne == 0 and uneins == 0,
+     f"Spalte zuordnung NOT NULL, {ohne} ohne Wert, {uneins} im Widerspruch "
+     f"zur Kennung, Verteilung {verteilung}")
+
+# --- VP-25 · Genau fuenf Fragen, kein vorzeitiger Abbruch (O-K19-11) ------
+# Ebenfalls bis zum 23.08.2026 GESPERRT: K04-M02 sagte "hoechstens fuenf",
+# K04-M22 "genau fuenf". Gezeichnet: A -- genau fuenf.
+zuruecksetzen()
+httpx.post(f"{BASIS}/vorpruefung/starten", cookies=keks(ANNA), follow_redirects=False)
+gestellt = []
+with httpx.Client(base_url=BASIS, cookies=keks(ANNA), follow_redirects=False) as k:
+    # Erste Antwort loest sofort das Veto der Ergebnisfrage aus.
+    wahl = {"ergebnis": 2, "wiederholung": 1, "beteiligte": 1, "daten": 1,
+            "verbindlichkeit": 1}
+    for _ in range(6):
+        seite = k.get("/schnellweg").text
+        code = re.search(r'name="frage" value="([a-z_]+)"', seite)
+        if code is None:
+            break
+        gestellt.append(code.group(1))
+        k.post("/schnellweg/antwort",
+               data={"frage": code.group(1), "option": wahl[code.group(1)]})
+fall("VP-25", "K04-M22",
+     "EN-03a stellt genau fuenf Fragen; ein Veto beendet die Befragung nicht vorzeitig",
+     len(gestellt) == 5,
+     f"gestellte Fragen: {len(gestellt)} ({', '.join(gestellt)}) -- trotz Veto "
+     f"in Frage 1 werden alle fuenf gestellt (Zeichnung O-K19-11, Wahl A)")
 
 # ---------------------------------------------------------------------------
 zaehler = {}

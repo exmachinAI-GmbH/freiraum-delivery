@@ -4,8 +4,7 @@
   "server": "FREIRAUM auf uvicorn, PostgreSQL 16.13, frische Datenbank",
   "bestand": "schema/freiraum_datamodel.sql + M30 + M31 + M32 + Seed_Vorpruefung_K04 + Seed_Direkt_Prototyp_Check_K04",
   "zaehlung": {
-    "BESTANDEN": 23,
-    "GESPERRT": 2
+    "BESTANDEN": 25
   },
   "faelle": [
     {
@@ -171,20 +170,21 @@
     },
     {
       "kennung": "VP-24",
-      "klausel": "O-M3-5",
-      "aussage": "Die Zuordnung Dokument/Anwendung hat keine eigene Spalte",
-      "zustand": "GESPERRT",
-      "beleg": "quick_option traegt sie als Endung am value_token. Ob das fuer K04-M22 genuegt, ist nicht entschieden (BEF-K04-2)."
+      "klausel": "K04-M22",
+      "aussage": "Jede Antwort traegt eine Zuordnung, und das Schema erzwingt sie",
+      "zustand": "BESTANDEN",
+      "beleg": "Spalte zuordnung NOT NULL, 0 ohne Wert, 0 im Widerspruch zur Kennung, Verteilung {'DOKUMENT': 6, 'ANWENDUNG': 9}"
     },
     {
       "kennung": "VP-25",
-      "klausel": "K04-M02 gegen K04-M22",
-      "aussage": "Ob EN-03a vor Frage 5 abbrechen darf",
-      "zustand": "GESPERRT",
-      "beleg": "K04-M02 sagt 'hoechstens fuenf', K04-M22 'genau fuenf'. Der Widerspruch ist nicht entschieden (O-K19-11)."
+      "klausel": "K04-M22",
+      "aussage": "EN-03a stellt genau fuenf Fragen; ein Veto beendet die Befragung nicht vorzeitig",
+      "zustand": "BESTANDEN",
+      "beleg": "gestellte Fragen: 5 (ergebnis, wiederholung, beteiligte, daten, verbindlichkeit) -- trotz Veto in Frage 1 werden alle fuenf gestellt (Zeichnung O-K19-11, Wahl A)"
     }
   ],
   "gefahren_am": "2026-08-23",
+  "lauf": "zweiter Lauf, nach der Zeichnung von O-K19-11 (Wahl A) und O-M3-5 (Wahl A) und nach migrations/M36",
   "einordnung": "Tor 1 · mechanisch · Selbstmessung des Baus. NICHT Tor 2 — der blinde Pruefauftrag steht aus.",
   "einschraenkung": "Gefahren gegen eine frische PostgreSQL 16.13 im Container des Bau-Agenten, NICHT gegen die Pilotumgebung (A-2 offen). Ob der Wertungslauf dort liegen muss, entscheidet K23 — ausgewiesen, nicht entschieden."
 }

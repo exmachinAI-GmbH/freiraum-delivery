@@ -127,14 +127,17 @@ def fragen_lesen(conn):
         fragen.append(frage)
         nach_code[code] = frage
 
-    for frage_code, version, position, label, token in conn.execute(
-            "SELECT question_code, version, position, label_de, value_token"
+    for frage_code, version, position, label, token, zuordnung in conn.execute(
+            "SELECT question_code, version, position, label_de, value_token,"
+            "       zuordnung::text"
             "  FROM quick_option ORDER BY question_code, position").fetchall():
         frage = nach_code.get(frage_code)
         if frage is None or frage["version"] != version:
             continue
+        # `zuordnung` seit dem 23.08.2026 (M36). Die Endung __dok/__app am
+        # Token ist nur noch ein Name -- gelesen wird die Spalte.
         frage["optionen"].append({"position": position, "label": label,
-                                  "token": token})
+                                  "token": token, "zuordnung": zuordnung})
     return fragen
 
 
@@ -189,14 +192,15 @@ def naechste_frage(fragen):
 
 
 def antwortabbildung(fragen):
-    """{frage_code: (label, token)} fuer die Auswertung."""
+    """{frage_code: (label, token, zuordnung)} fuer die Auswertung."""
     abbildung = {}
     for frage in fragen:
         if frage["gewaehlt"] is None:
             continue
         for option in frage["optionen"]:
             if option["position"] == frage["gewaehlt"]:
-                abbildung[frage["code"]] = (option["label"], option["token"])
+                abbildung[frage["code"]] = (option["label"], option["token"],
+                                            option["zuordnung"])
     return abbildung
 
 

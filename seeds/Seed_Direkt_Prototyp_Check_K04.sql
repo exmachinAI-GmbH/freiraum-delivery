@@ -105,7 +105,20 @@ ON CONFLICT DO NOTHING;
 -- ---------------------------------------------------------------------
 -- 3 · Die fuenfzehn Antwortmoeglichkeiten  (K04-M22)
 --
---     DIE ZUORDNUNG HAT KEINE EIGENE SPALTE, UND DAS IST EIN BEFUND.
+--     DIE ZUORDNUNG HAT SEIT DEM 23.08.2026 EINE EIGENE SPALTE.
+--     Gezeichnet auf dem Blatt zeichnung_O-M3-5_zuordnungsspalte_260823.md
+--     (A. Han, Gegenzeichnung M. Veil), umgesetzt in migrations/M36. Damit
+--     ist K04-M22 vom Schema getragen und nicht mehr von einer Verabredung.
+--
+--     DIE ENDUNG __dok / __app AM value_token BLEIBT STEHEN -- als NAME,
+--     nicht als Wahrheit. Ein stabiler Schluessel wird nicht umbenannt,
+--     nur weil seine Herkunft sich geaendert hat; das waere eine zweite
+--     Aenderung, die niemand gezeichnet hat. Massgeblich ist ab jetzt
+--     allein die Spalte `zuordnung`. Damit die beiden nicht stillschweigend
+--     auseinanderlaufen, misst die Gegenprobe in Abschnitt 4 ihre
+--     UEBEREINSTIMMUNG.
+--
+--     Die urspruengliche Lage, zur Vorgeschichte:
 --     `fit_option` -- das Vorbild, nach dem M30 Abschn. 3f gebaut wurde --
 --     traegt drei Sachspalten: label_de, value_token, is_eligible. Beim
 --     Nachbau ist die dritte entfallen und NICHT ersetzt worden.
@@ -125,46 +138,46 @@ ON CONFLICT DO NOTHING;
 --     arbeit/Bauberichte/BEF-K04-2_Traeger_ohne_Zuordnung.md
 --     und ist eine MIGRATION, nicht dieser Seed.
 -- ---------------------------------------------------------------------
-INSERT INTO quick_option (question_code, version, position, label_de, value_token) VALUES
+INSERT INTO quick_option (question_code, version, position, label_de, value_token, zuordnung) VALUES
   -- Frage 1 · Ergebnis -- VETORECHT nach K04-M23
   ('ergebnis',        'v1', 1,
-   'eine Datei, die ich öffne, lese und weitergebe',    'datei_weitergeben__dok'),
+   'eine Datei, die ich öffne, lese und weitergebe',    'datei_weitergeben__dok', 'DOKUMENT'),
   ('ergebnis',        'v1', 2,
-   'etwas, das ich aufrufe und in dem ich arbeite',     'darin_arbeiten__app'),
+   'etwas, das ich aufrufe und in dem ich arbeite',     'darin_arbeiten__app', 'ANWENDUNG'),
   ('ergebnis',        'v1', 3,
-   'weiß ich noch nicht',                               'noch_offen__app'),
+   'weiß ich noch nicht',                               'noch_offen__app', 'ANWENDUNG'),
 
   -- Frage 2 · Wiederholung -- gezaehlt nach K04-M24
   ('wiederholung',    'v1', 1,
-   'einmal, für eine bestimmte Frage',                  'einmalig__dok'),
+   'einmal, für eine bestimmte Frage',                  'einmalig__dok', 'DOKUMENT'),
   ('wiederholung',    'v1', 2,
-   'immer wieder, im laufenden Betrieb',                'laufender_betrieb__app'),
+   'immer wieder, im laufenden Betrieb',                'laufender_betrieb__app', 'ANWENDUNG'),
   ('wiederholung',    'v1', 3,
-   'erst einmal, später vielleicht öfter',              'spaeter_vielleicht__app'),
+   'erst einmal, später vielleicht öfter',              'spaeter_vielleicht__app', 'ANWENDUNG'),
 
   -- Frage 3 · Beteiligte -- gezaehlt nach K04-M24
   ('beteiligte',      'v1', 1,
-   'nur ich',                                           'nur_ich__dok'),
+   'nur ich',                                           'nur_ich__dok', 'DOKUMENT'),
   ('beteiligte',      'v1', 2,
-   'mehrere Personen, jede mit eigener Sicht',          'mehrere_sichten__app'),
+   'mehrere Personen, jede mit eigener Sicht',          'mehrere_sichten__app', 'ANWENDUNG'),
   ('beteiligte',      'v1', 3,
-   'ich erstelle es, andere lesen es',                  'ich_schreibe__dok'),
+   'ich erstelle es, andere lesen es',                  'ich_schreibe__dok', 'DOKUMENT'),
 
   -- Frage 4 · Daten -- gezaehlt nach K04-M24
   ('daten',           'v1', 1,
-   'ich bringe sie mit oder gebe sie einmal ein',       'mitgebracht__dok'),
+   'ich bringe sie mit oder gebe sie einmal ein',       'mitgebracht__dok', 'DOKUMENT'),
   ('daten',           'v1', 2,
-   'sie stehen in Systemen, die laufend weiterlaufen',  'laufende_systeme__app'),
+   'sie stehen in Systemen, die laufend weiterlaufen',  'laufende_systeme__app', 'ANWENDUNG'),
   ('daten',           'v1', 3,
-   'sie entstehen erst beim Benutzen',                  'entstehen_beim_tun__app'),
+   'sie entstehen erst beim Benutzen',                  'entstehen_beim_tun__app', 'ANWENDUNG'),
 
   -- Frage 5 · Verbindlichkeit -- VETORECHT nach K04-M23
   ('verbindlichkeit', 'v1', 1,
-   'nein, es ist eine Arbeitsgrundlage für mich',       'arbeitsgrundlage__dok'),
+   'nein, es ist eine Arbeitsgrundlage für mich',       'arbeitsgrundlage__dok', 'DOKUMENT'),
   ('verbindlichkeit', 'v1', 2,
-   'ja, andere verlassen sich darauf',                  'andere_verlassen_sich__app'),
+   'ja, andere verlassen sich darauf',                  'andere_verlassen_sich__app', 'ANWENDUNG'),
   ('verbindlichkeit', 'v1', 3,
-   'es geht um Geld, Fristen oder Personen',            'geld_fristen_personen__app')
+   'es geht um Geld, Fristen oder Personen',            'geld_fristen_personen__app', 'ANWENDUNG')
 ON CONFLICT DO NOTHING;
 
 -- ---------------------------------------------------------------------
@@ -206,22 +219,30 @@ BEGIN
   SELECT string_agg(value_token, ', ') INTO abweichler
     FROM quick_option
    WHERE version = 'v1' AND question_code = ANY(fragen)
-     AND value_token !~ '(__dok|__app)$';
+     AND zuordnung IS NULL;
   IF abweichler IS NOT NULL THEN
     RAISE EXCEPTION 'K04-M22 verletzt: Antwort ohne Zuordnung (%)', abweichler;
+  END IF;
+
+  -- Name und Wahrheit muessen uebereinstimmen. Laufen sie auseinander,
+  -- liest jemand irgendwann den Namen und meint die Wahrheit.
+  SELECT string_agg(value_token || '=' || zuordnung, ', ') INTO abweichler
+    FROM quick_option
+   WHERE version = 'v1' AND question_code = ANY(fragen)
+     AND ((value_token LIKE '%\_\_dok' AND zuordnung <> 'DOKUMENT')
+       OR (value_token LIKE '%\_\_app' AND zuordnung <> 'ANWENDUNG'));
+  IF abweichler IS NOT NULL THEN
+    RAISE EXCEPTION 'Kennung und Zuordnung widersprechen einander: %', abweichler;
   END IF;
 END $$;
 
 COMMIT;
 
 -- =====================================================================
---  OFFENER PUNKT, der an diesem Startbestand haengt
+--  O-M3-5 IST GESCHLOSSEN (23.08.2026)
 --
---  O-M3-5 (neu): quick_option traegt keine Spalte fuer die Zuordnung.
---  Solange sie fehlt, ist K04-M22 im Schema NICHT durchgesetzt -- er ist
---  nur in diesem Seed und in seiner Gegenprobe nachgehalten. Derselbe
---  Fall wie der fehlende Schema-Riegel fuer die Rubrik-Fassung: eine
---  Pflicht, die so lange gilt, wie sich alle daran halten.
---  Entscheiden muessten Founder und Datenmodell -- wie bei O-K04-8 und
---  O-K04-10.
+--  Der Punkt lautete: quick_option traegt keine Spalte fuer die Zuordnung,
+--  K04-M22 ist im Schema nicht durchgesetzt. Gezeichnet auf dem Blatt
+--  arbeit/Vorlagen/zeichnung_O-M3-5_zuordnungsspalte_260823.md, umgesetzt
+--  in migrations/M36__zuordnung_quick_option.sql.
 -- =====================================================================

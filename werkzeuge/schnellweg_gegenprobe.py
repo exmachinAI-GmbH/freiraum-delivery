@@ -39,29 +39,29 @@ from app.schnellweg_regel import (GEZAEHLT, VETO, VORSCHLAG_PROTOTYP,  # noqa: E
 # eine zweite ist.
 BESTAND = {
     "ergebnis": [
-        ("eine Datei, die ich öffne, lese und weitergebe", "datei_weitergeben__dok"),
-        ("etwas, das ich aufrufe und in dem ich arbeite", "darin_arbeiten__app"),
-        ("weiß ich noch nicht", "noch_offen__app"),
+        ("eine Datei, die ich öffne, lese und weitergebe", "datei_weitergeben__dok", "DOKUMENT"),
+        ("etwas, das ich aufrufe und in dem ich arbeite", "darin_arbeiten__app", "ANWENDUNG"),
+        ("weiß ich noch nicht", "noch_offen__app", "ANWENDUNG"),
     ],
     "wiederholung": [
-        ("einmal, für eine bestimmte Frage", "einmalig__dok"),
-        ("immer wieder, im laufenden Betrieb", "laufender_betrieb__app"),
-        ("erst einmal, später vielleicht öfter", "spaeter_vielleicht__app"),
+        ("einmal, für eine bestimmte Frage", "einmalig__dok", "DOKUMENT"),
+        ("immer wieder, im laufenden Betrieb", "laufender_betrieb__app", "ANWENDUNG"),
+        ("erst einmal, später vielleicht öfter", "spaeter_vielleicht__app", "ANWENDUNG"),
     ],
     "beteiligte": [
-        ("nur ich", "nur_ich__dok"),
-        ("mehrere Personen, jede mit eigener Sicht", "mehrere_sichten__app"),
-        ("ich erstelle es, andere lesen es", "ich_schreibe__dok"),
+        ("nur ich", "nur_ich__dok", "DOKUMENT"),
+        ("mehrere Personen, jede mit eigener Sicht", "mehrere_sichten__app", "ANWENDUNG"),
+        ("ich erstelle es, andere lesen es", "ich_schreibe__dok", "DOKUMENT"),
     ],
     "daten": [
-        ("ich bringe sie mit oder gebe sie einmal ein", "mitgebracht__dok"),
-        ("sie stehen in Systemen, die laufend weiterlaufen", "laufende_systeme__app"),
-        ("sie entstehen erst beim Benutzen", "entstehen_beim_tun__app"),
+        ("ich bringe sie mit oder gebe sie einmal ein", "mitgebracht__dok", "DOKUMENT"),
+        ("sie stehen in Systemen, die laufend weiterlaufen", "laufende_systeme__app", "ANWENDUNG"),
+        ("sie entstehen erst beim Benutzen", "entstehen_beim_tun__app", "ANWENDUNG"),
     ],
     "verbindlichkeit": [
-        ("nein, es ist eine Arbeitsgrundlage für mich", "arbeitsgrundlage__dok"),
-        ("ja, andere verlassen sich darauf", "andere_verlassen_sich__app"),
-        ("es geht um Geld, Fristen oder Personen", "geld_fristen_personen__app"),
+        ("nein, es ist eine Arbeitsgrundlage für mich", "arbeitsgrundlage__dok", "DOKUMENT"),
+        ("ja, andere verlassen sich darauf", "andere_verlassen_sich__app", "ANWENDUNG"),
+        ("es geht um Geld, Fristen oder Personen", "geld_fristen_personen__app", "ANWENDUNG"),
     ],
 }
 

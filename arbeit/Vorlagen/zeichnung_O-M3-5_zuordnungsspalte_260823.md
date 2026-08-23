@@ -58,8 +58,10 @@ Das hält — aber es hält nur, solange sich alle daran halten. Das Schema erzw
 
 | Feld | Wert |
 |---|---|
-| Gewählt | ☐ **A** eigene Spalte (Migration M36) ·  ☐ **B** beim Behelf bleiben |
-| Gezeichnet durch | ________________________  ·  Datum: ____________ |
-| Gegenzeichnung | ________________________  ·  Datum: ____________ |
+| Gewählt | ☒ **A** eigene Spalte (Migration M36) ·  ☐ ~~B beim Behelf bleiben~~ |
+| Gezeichnet durch | _____A. Han___________________  ·  Datum: ______23.8.26______ |
+| Gegenzeichnung | _________M. Veil_______________  ·  Datum: ____23.8.26________ |
 | Wirkung bei A | `M36_entwurf_zuordnungsspalte_260823.sql` wird nach `migrations/M36__zuordnung_quick_option.sql` übernommen und gefahren. O-M3-5 geschlossen |
 | Wirkung bei B | O-M3-5 bleibt als benannter Restpunkt stehen und geht mit der Abnahme in die Restrisikoliste. Der Prüf-Agent misst VP-24 nicht |
+
+**Vermerk des Baus zur Wahl.** Die beiden Unterschriften standen am 23.08.2026 auf dem Blatt, die Zeile *Gewählt* war leer. Die Wahl **A** ist am selben Tag im Gespräch erteilt und vom Bau hier eingetragen worden — sie stammt nicht von einer Hand auf diesem Blatt. Wer das später prüft, soll den Unterschied sehen können.
