@@ -37,7 +37,6 @@ import json
 import os
 import re
 import smtplib
-import socket
 import ssl
 import sys
 from datetime import datetime, timezone
@@ -173,6 +172,7 @@ def pruefe_adressen(p):
 def pruefe_dns(p, domaene, selektor_weisung):
     print(f"\n3 · Namensauflösung für {domaene} — was AC-16 im Kopf sehen will")
     try:
+        import dns.exception
         import dns.flags
         import dns.message
         import dns.query
@@ -202,7 +202,7 @@ def pruefe_dns(p, domaene, selektor_weisung):
         spf = [w for w in txt(domaene) if w.lower().startswith("v=spf1")]
         p.melde("SPF", BESTANDEN if spf else VERLETZT,
                 spf[0] if spf else "kein SPF-Eintrag — AC-16 will spf=pass im Kopf sehen")
-    except Exception as f:
+    except (dns.exception.DNSException, OSError, RuntimeError) as f:
         p.melde("SPF", GESPERRT, f"nicht gemessen ({type(f).__name__})")
 
     try:
@@ -215,7 +215,7 @@ def pruefe_dns(p, domaene, selektor_weisung):
             if "adkim=s" in satz.replace(" ", ""):
                 hinweis = " · adkim=s: die Signatur muss auf genau diese Domäne lauten"
             p.melde("DMARC", BESTANDEN, satz + hinweis)
-    except Exception as f:
+    except (dns.exception.DNSException, OSError, RuntimeError) as f:
         p.melde("DMARC", GESPERRT, f"nicht gemessen ({type(f).__name__})")
 
     selektor = selektor_weisung or os.environ.get("FREIRAUM_DKIM_SELEKTOR")
@@ -236,7 +236,7 @@ def pruefe_dns(p, domaene, selektor_weisung):
             p.melde("DKIM", VERLETZT, f"{name} trägt ein LEERES p= — der Schlüssel ist widerrufen")
         else:
             p.melde("DKIM", BESTANDEN, f"Schlüssel unter {name} veröffentlicht (Selektor {selektor})")
-    except Exception as f:
+    except (dns.exception.DNSException, OSError, RuntimeError) as f:
         p.melde("DKIM", GESPERRT, f"{name} nicht gemessen ({type(f).__name__})")
 
 
@@ -265,6 +265,7 @@ def pruefe_zustellweg(p):
     """
     print("\n3b · Zustellweg — schreibt der Empfänger überhaupt Authentication-Results?")
     try:
+        import dns.exception
         import dns.resolver
     except ImportError:
         p.melde("Zustellweg", GESPERRT, "dnspython fehlt — nicht gemessen")
@@ -279,7 +280,7 @@ def pruefe_zustellweg(p):
     r.lifetime = 10
     try:
         mx = sorted((x.preference, str(x.exchange)) for x in r.resolve(empf.split("@")[-1], "MX"))
-    except Exception as f:
+    except (dns.exception.DNSException, OSError) as f:
         p.melde("Zustellweg", VERLETZT,
                 f"{empf.split('@')[-1]} hat keinen erreichbaren MX-Eintrag ({type(f).__name__}) — "
                 f"eine Mail dorthin kommt nicht an")
@@ -313,7 +314,7 @@ def pruefe_smtp(p):
 
     try:
         s = smtplib.SMTP(wirt, port, timeout=20)
-    except (socket.timeout, OSError) as f:
+    except OSError as f:
         p.melde("SMTP-Verbindung", GESPERRT,
                 f"{wirt}:{port} nicht erreichbar ({type(f).__name__}) — nichts gemessen. "
                 f"Häufig eine Sperre des ausgehenden Ports, nicht des Wirts")
@@ -354,7 +355,11 @@ def pruefe_smtp(p):
     finally:
         try:
             s.quit()
-        except Exception:
+        except (smtplib.SMTPException, OSError):
+            # Das Aufraeumen darf das Messergebnis nicht ueberschreiben: Was
+            # geprueft werden sollte, steht zu diesem Zeitpunkt schon in der
+            # Liste. Ein Wirt, der die Verbindung hart schliesst, ist kein
+            # Befund ueber die Bereitschaft.
             pass
 
 
@@ -427,7 +432,7 @@ def pruefe_datenbank(p):
                         "abgelaufen (expires_at liegt zurück) — neu einspielen")
             else:
                 p.melde("Offene Einladung", BESTANDEN, "VERSANDT und noch gültig")
-    except Exception as f:
+    except (psycopg.Error, OSError) as f:
         # ERWEITERT AM 23.08.2026: Die vorige Fassung meldete nur den
         # Klassennamen ("OperationalError") -- und damit nicht den Unterschied
         # zwischen "die Datenbank gibt es noch nicht" (der Normalfall VOR

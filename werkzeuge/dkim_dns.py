@@ -46,6 +46,7 @@ ae/oe/ue — wenn das hier stören soll, ist es eine Suchen-und-Ersetzen-Änderu
 Textkonstanten und an nichts sonst.
 """
 import argparse
+import binascii
 import json
 import os
 import re
@@ -174,7 +175,9 @@ def autoritative_server(domaene):
     server = {}
     try:
         ns = r.resolve(domaene, "NS")
-    except Exception:
+    except (dns.exception.DNSException, OSError):
+        # Kein autoritativer Server ermittelbar: der Aufrufer misst dann nur
+        # gegen Zwischenspeicher und sagt das auch. Kein Grund zu scheitern.
         return server
     for eintrag in ns:
         name = str(eintrag.target).rstrip(".")
@@ -182,8 +185,12 @@ def autoritative_server(domaene):
             for a in r.resolve(name, "A"):
                 server[f"autoritativ:{name}"] = a.to_text()
                 break
-        except Exception:
-            continue
+        except (dns.exception.DNSException, OSError) as f:
+            # EIN nicht aufloesbarer Nameserver darf die uebrigen nicht
+            # mitnehmen -- gemeldet wird er trotzdem, sonst faellt eine
+            # halbe Messung als ganze durch.
+            print(f"   Hinweis: {name} nicht aufloesbar ({type(f).__name__})",
+                  file=sys.stderr)
     return server
 
 
@@ -198,7 +205,7 @@ def fragen(name, server):
                                use_edns=0, payload=EDNS_PUFFER)
     try:
         antwort = dns.query.udp(m, server, timeout=ZEITGRENZE_SEK)
-    except Exception as f:
+    except (dns.exception.DNSException, OSError) as f:
         return "gesperrt", None, f"kein Zustandekommen ({type(f).__name__})"
 
     if antwort.flags & dns.flags.TC:
@@ -255,7 +262,7 @@ def schluessellaenge(p):
     try:
         roh = base64.b64decode(p + "=" * (-len(p) % 4), validate=False)
         _, spki, _ = _tlv(roh, 0)                 # SEQUENCE { algid, BIT STRING }
-        kennung, algid, weiter = _tlv(spki, 0)    # SEQUENCE algid
+        kennung, _algid, weiter = _tlv(spki, 0)   # SEQUENCE algid
         kennung, bitfolge, _ = _tlv(spki, weiter) # BIT STRING
         if kennung != 0x03:
             return None
@@ -265,7 +272,10 @@ def schluessellaenge(p):
         if kennung != 0x02:
             return None
         return len(modulus.lstrip(b"\x00")) * 8
-    except Exception:
+    except (ValueError, IndexError, TypeError, binascii.Error):
+        # Der Wert ist keine lesbare RSA-Struktur. Das ist eine Aussage ueber
+        # den Schluessel, kein Fehler dieses Laufs -- None heisst hier
+        # "Laenge nicht bestimmt", nie "zu kurz".
         return None
 
 
@@ -346,7 +356,7 @@ def main():
                            if tc else
                            "→ Die Antwort passt heute auch ohne EDNS0. Das kann sich mit "
                            "jedem längeren Schlüssel ändern — die Sperre bleibt nötig."))
-        except Exception as f:
+        except (dns.exception.DNSException, OSError) as f:
             print(f"   Selbstprobe nicht zustande gekommen ({type(f).__name__})")
 
     server = dict(RESOLVER)
@@ -388,7 +398,7 @@ def main():
                       "ist uneinheitlich. In 30 Minuten wiederholen; bis dahin ist nichts belegt.")
     else:
         wert = werte.pop()
-        traegt, begruendung, felder = schluessel_pruefen(wert)
+        traegt, begruendung, _felder = schluessel_pruefen(wert)
         if traegt:
             urteil, rueckgabe = "BESTANDEN", 0
             saetze.append(f"Ein Schlüssel ist veröffentlicht: {begruendung}.")
