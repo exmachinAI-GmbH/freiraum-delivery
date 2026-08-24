@@ -112,7 +112,7 @@ Bei Dokumenten misst Tor 1 den Text gegen die Quelle. Bei Code genügt das nicht
 |---|---|---|---|
 | **1 · mechanisch** | Lint · Shell- und Python-Syntax · Migration gegen eine **frische** Datenbank · zweiter Lauf ändert **Schema und Daten** nicht · Negativfälle scheitern · Geheimnisschranke | CI | `.github/workflows/tore.yml` |
 | **2 · blind** | Erfüllt der Stand die **Akzeptanzkriterien** der Klauseln? Prüffälle, geschrieben **ohne den Code gesehen zu haben** | `pruef-agent` | `/scheibe`, `/pruefe` |
-| **3 · fremd** | Fachliche Eignung gegen **Roh-Evidenz**, nicht gegen Erklärungen des Baus | Fremdmodell, **frische Instanz je Scheibenabnahme** (C-4, Blatt 26:30) | außerhalb dieses Harness |
+| **3 · fremd** | Fachliche Eignung gegen **Roh-Evidenz**, nicht gegen Erklärungen des Baus | Fremdmodell, **frische Instanz je Scheibenabnahme** (C-4, Blatt 26:30) | **eigener Pfad, direkt zu OpenAI über MCP** (Anlage :114, :201). Die Anfrage erzeugt `werkzeuge/fremdreview_anfordern.py` mechanisch aus Commit und Belegpaket; **abgeschickt wird sie von einem Menschen** — der Harness fordert nicht an und schreibt nicht (HV-D16, Anlage :229) |
 | **4 · Mensch** | Wird es getragen? | **Mensch** — die zeichnenden Personen sind offen (V-11) | Zeichnung, nie automatisch |
 
 ```
@@ -123,6 +123,16 @@ Bei Dokumenten misst Tor 1 den Text gegen die Quelle. Bei Code genügt das nicht
                                         └─ ein Tor, das nicht messen kann,
                                            meldet GESPERRT — nie grün
 ```
+
+*Berichtigt am 24.08.2026.* In der Spalte *Werkzeug* stand bis dahin „außerhalb dieses
+Harness". Die gezeichnete Anlage sagt an derselben Stelle etwas anderes und Genaueres:
+*„extern, **direkt zu OpenAI über MCP**, nicht über die Azure-OpenAI-Ressource"* (:114) und
+*„eigener Pfad"* (:201). „Externer Pfad" sagt, **wohin** die Anfrage geht; „außerhalb dieses
+Harness" sagte zusätzlich, **wer sie nicht absetzen darf** — die ausführbare Fassung war
+damit enger als der unterschriebene Text. Nach dem Satz zwei Absätze über dieser Tabelle
+gilt bei Abweichung die Anlage; deshalb ist dies eine **Berichtigung, keine Regeländerung**,
+und die Prüfsumme der Anlage bleibt unberührt. Die Schranke, die bleibt, ist nicht der
+Kanal, sondern die Urheberschaft: **HV-D16 — kein Tor-3-Review selbst schreiben.**
 
 **Die fünfzehn sperrenden Gates aus K23 Abschn. 6 (:239–255) gelten unverändert.** Sie
 schlagen an bei Abweichung zur Quelle · fehlendem oder unwirksamem Zeilenschutz · Zugriff

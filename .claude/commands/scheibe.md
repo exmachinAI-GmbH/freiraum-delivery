@@ -97,12 +97,34 @@ Ende-zu-Ende-Lauf; sie gilt erst als bestanden, wenn der **ganze** Faden wieder 
 
     > **Tor 3 · Scheibe $ARGUMENTS.** Der Stand ist: `<Ausgabe von --stand>`.
     > Soll das Fremdreview jetzt angefordert werden — ja oder nein?
-    > · **Ja** → die Anforderung geht als Vorlage hinaus; der Mensch führt sie aus,
-    >   legt das Blatt unter `nachweise/fremdreview/` ab und zeichnet seinen Kopf.
+    > · **Ja** → die Anforderung wird **mechanisch erzeugt** (siehe unten); der Mensch
+    >   schickt sie ab, legt das Blatt unter `nachweise/fremdreview/` ab und zeichnet
+    >   seinen Kopf.
     > · **Nein** → der Grund wird als benannter offener Punkt in die Vorlage
     >   geschrieben. Tor 3 bleibt **gesperrt** — nicht übersprungen.
 
     **Warte die Antwort ab.** Ohne sie wird Schritt 11 nicht ausgeführt.
+
+    **Bei „Ja" — der Weg, gezeichnet am 24.08.2026.** Die Anlage „Bauverfahren" schreibt
+    den Kanal vor: *„eigener Pfad, direkt zu OpenAI über MCP, nicht über die
+    Azure-OpenAI-Ressource"* (:114, :201). Die Anfrage wird **nicht formuliert, sondern
+    erzeugt** — aus Commit, Zweig und Belegpaket:
+
+    ```
+    python3 werkzeuge/tor3_belege.py --einheit $ARGUMENTS
+    python3 werkzeuge/fremdreview_anfordern.py --einheit $ARGUMENTS \
+        --auftragstext arbeit/Auftraege/<blatt>.md --paket <paket>.zip
+    ```
+
+    Das Werkzeug druckt danach den Befehl, den **ein Mensch** ausführt. **Führe ihn nicht
+    aus.** Der Unterschied zwischen „der Harness ruft an" und „der Harness legt die
+    Anfrage bereit" ist der ganze Gegenstand von HV-D16 (Anlage :229): *„Kein Tor-3-Review
+    selbst schreiben."* Wer den Versand automatisiert, hebt ihn auf.
+
+    Warum die Anfrage erzeugt und nicht geschrieben wird: Formuliert der Orchestrator sie
+    frei, reist die Lesart des Baus mit, und das Modell prüft die Erzählung über den Stand
+    statt den Stand. `gegen_roh_evidenz: ja` wäre dann eine Behauptung statt einer
+    Eigenschaft des Ablaufs.
 
     Der Grund für diesen Halt ist gemessen, nicht vermutet: Bis zum 15.08.2026 ist Tor 3
     **kein einziges Mal** mit einem gültigen Nachweisblatt gelaufen — nicht weil jemand es

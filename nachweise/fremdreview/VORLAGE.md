@@ -29,10 +29,25 @@ ist kein Nachweis, sondern seine Fälschung.
 | evidenz | `<welche Roh-Evidenz vorlag, mit Pfaden — nicht "der Baubericht">` |
 | angefordert_von | `<Name des Menschen>` |
 | harness_hat_nicht_geschrieben | `ja` |
+| weg | `<über welchen Kanal eingeholt, z. B. mcp-direkt-openai>` |
 | befunde | `<was gefunden wurde, kurz — oder `keine`. NIE leer lassen>` |
 | urteil | `<traegt | traegt mit auflagen | traegt nicht>` |
 
 <!-- ENDE KOPF -->
+
+> **Zum Feld `weg`:** Es sagt, über welchen Kanal das Urteil eingeholt wurde. Die Anlage
+> „Bauverfahren" :114 schreibt einen bestimmten vor — *„direkt zu OpenAI über MCP, nicht
+> über die Azure-OpenAI-Ressource"*. Bis zum 24.08.2026 hatte der Kopf kein Feld dafür, und
+> genau deshalb konnte ein Blatt über den ausgeschlossenen Weg entstehen, ohne dass ein
+> Werkzeug es merken konnte (`arbeit/Vorlagen/entscheidung_fremdmodell_mcp_260824.md`,
+> Abschnitt 8.1).
+>
+> `fremdreview.py` **meldet** ein fehlendes `weg`, **sperrt aber nicht**: die bereits
+> abgelegten Blätter sind gezeichnet, und ein nachträglich in einen gezeichneten Kopf
+> ergänztes Feld wäre genau das, wogegen dieses Verfahren gebaut ist. Erzwingen kann es
+> erst ein Antrag, der die alten Blätter neu zeichnen lässt.
+>
+> *Ergänzt am 24.08.2026.*
 
 > **Zum Feld `befunde`:** `werkzeuge/tor3_pflicht.py`:132 verlangt es und lässt jeden nicht
 > leeren Wert zu. Fehlt es, bricht **Tor 1a** ab — mit der Meldung *„führt kein Feld `befunde`.
